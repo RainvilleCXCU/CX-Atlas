@@ -15,8 +15,8 @@ export function PageComponent({ page }: PageProps) {
 
   const enqueuedStylesheets = page.enqueuedStylesheets().edges;
   const addAsset = asset => {
-    if (asset.src !== null) {
-      return (<link rel="stylesheet" href={asset.src} key={asset.id} />)
+    if (asset.src !== null && asset.src !== undefined) {
+      return (<link rel="stylesheet" href={(asset.src.includes('http') ? '' : process.env.NEXT_PUBLIC_WORDPRESS_URL) + asset.src} key={asset.id} />)
     }
   }
 
