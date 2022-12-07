@@ -13,12 +13,12 @@ export function PageComponent({ page }: PageProps) {
   const { useQuery } = client;
   const generalSettings = useQuery().generalSettings;
 
-  const enqueuedStylesheets = page.enqueuedStylesheets().edges;
+  /*const enqueuedStylesheets = page.enqueuedStylesheets().edges;
   const addAsset = asset => {
     if (asset.src !== null) {
       return (<link rel="stylesheet" href={asset.src} key={asset.id} />)
     }
-  }
+  }*/
 
   return (
     <>
@@ -31,9 +31,9 @@ export function PageComponent({ page }: PageProps) {
         <title>
           {page?.title()} - {generalSettings.title}
         </title>
-        {enqueuedStylesheets.map((sheet) => {
+          {/*enqueuedStylesheets.map((sheet) => {
           return addAsset(sheet.node);
-        })}
+        })*/}
       </Head>
 
       <div id="page" className='container site'>
