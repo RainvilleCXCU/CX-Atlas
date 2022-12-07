@@ -34,11 +34,13 @@ export function PageComponent({ page }: PageProps) {
           return addAsset(sheet.node);
         })}
       </Head>
+      
+
       <div id="page" className='container site'>
-      <main className="content content-single">
-        <div dangerouslySetInnerHTML={{ __html: page?.content() ?? '' }} />
-      </main>
-       </div>
+        <main className="content content-single">
+            <article className='entry-content' dangerouslySetInnerHTML={{ __html: page?.content() ?? '' }} />
+        </main>
+      </div>
       <Footer copyrightHolder={generalSettings.title} />
     </>
   );
