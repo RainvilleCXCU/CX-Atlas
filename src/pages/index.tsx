@@ -4,6 +4,7 @@ import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
 import { client, Page as PageType, PageIdType } from 'client';
 import React from 'react';
+import parseHtml from "../lib/parser";
 
 export interface PageProps {
   page: PageType | PageType['preview']['node'] | null | undefined;
@@ -38,7 +39,9 @@ export function PageComponent({ page }: PageProps) {
 
       <div id="page" className='container site'>
         <main className="content content-single">
-            <article className='entry-content' dangerouslySetInnerHTML={{ __html: page?.content() ?? '' }} />
+            <article className='entry-content'>
+              {parseHtml(page?.content() ?? '')}
+              </article>
         </main>
       </div>
 
