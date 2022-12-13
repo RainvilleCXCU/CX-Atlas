@@ -14,6 +14,7 @@
   "dependencies": {
     "@faustjs/core": "^0.13.1",
     "@faustjs/next": "^0.13.1",
+    "@wordpress/block-library": "^7.19.0",
     "html-react-parser": "^3.0.4",
     "next": "^11.1.3",
     "normalize.css": "^8.0.1",

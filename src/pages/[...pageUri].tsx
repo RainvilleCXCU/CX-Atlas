@@ -4,6 +4,7 @@ import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
 import { client, Page as PageType } from 'client';
 import parseHtml from "../lib/parser";
+import {addCSSAsset, addJSAsset} from "../lib/enqueuedFiles";
 
 export interface PageProps {
   page: PageType | PageType['preview']['node'] | null | undefined;
@@ -12,19 +13,17 @@ export interface PageProps {
 export function PageComponent({ page }: PageProps) {
   const { useQuery } = client;
   const generalSettings = useQuery().generalSettings;
+  const registeredScripts = useQuery().registeredScripts().edges;
 
   const enqueuedStylesheets = page.enqueuedStylesheets().edges;
-  const addAsset = asset => {
-    if (asset.src !== null && asset.src !== undefined) {
-      return (<link rel="stylesheet" href={(asset.src.includes('http') ? '' : process.env.NEXT_PUBLIC_WORDPRESS_URL) + asset.src} key={asset.id} />)
-    }
-  }
+  const enqueuedScripts = page.enqueuedScripts().edges;
 
   return (
     <>
       <Header
         title={generalSettings.title}
         description={generalSettings.description}
+        logo={generalSettings.logo}
       />
 
       <Head>
@@ -32,7 +31,7 @@ export function PageComponent({ page }: PageProps) {
           {page?.title()} - {generalSettings.title}
         </title>
         {enqueuedStylesheets.map((sheet) => {
-          return addAsset(sheet.node);
+          return addCSSAsset(sheet.node);
         })}
       </Head>
       
@@ -45,6 +44,14 @@ export function PageComponent({ page }: PageProps) {
         </main>
       </div>
       <Footer copyrightHolder={generalSettings.title} />
+        {registeredScripts.map((script) => {
+          if(script.node.handle == 'jquery-core') {
+            return addJSAsset(script.node);
+          }
+        })}
+        {enqueuedScripts.map((sheet) => {
+          return addJSAsset(sheet.node);
+        })}
     </>
   );
 }
@@ -52,6 +59,8 @@ export function PageComponent({ page }: PageProps) {
 export default function Page() {
   const { usePage } = client;
   const page = usePage();
+
+  console.log(page.uri);
 
   return <PageComponent page={page} />;
 }

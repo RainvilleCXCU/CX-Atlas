@@ -1,17 +1,20 @@
 import React, { Fragment } from 'react';
 import styles from 'scss/components/Header.module.scss';
 import Link from 'next/link';
+import Image from 'next/image';
 import { client, MenuLocationEnum } from 'client';
 import MenuNavigation from './Navigation/Menu';
 
 interface Props {
   title?: string;
   description?: string;
+  logo?: string;
 }
 
 function Header({
   title = 'Headless by WP Engine',
   description,
+  logo
 }: Props): JSX.Element {
   const { menuItems } = client.useQuery()
   const links = menuItems({
@@ -26,7 +29,7 @@ function Header({
       <section className="cx-header__util-nav cx-header__desktop">
         <div className="cx-header__wrapper">
           <Link href="/">
-            <a>{title}</a>
+            <a><img src={logo} alt={title} /></a>
           </Link>
           <ul className="cx-header__util-nav-list">
             <li>

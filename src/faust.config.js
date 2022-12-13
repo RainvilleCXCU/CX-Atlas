@@ -1,4 +1,5 @@
 import { config as coreConfig } from '@faustjs/core';
+import { withFaust } from '@faustjs/next';
 
 if (!process.env.NEXT_PUBLIC_WORDPRESS_URL) {
   console.error(
@@ -9,7 +10,19 @@ if (!process.env.NEXT_PUBLIC_WORDPRESS_URL) {
 /**
  * @type {import("@faustjs/core").Config}
  */
-export default coreConfig({
+const faustConfig = coreConfig({
   wpUrl: process.env.NEXT_PUBLIC_WORDPRESS_URL,
   apiClientSecret: process.env.WP_HEADLESS_SECRET,
 });
+const nextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: '/test',
+        destination: process.env.NEXT_PUBLIC_WORDPRESS_URL + '/pay-my-loan',
+      },
+    ]
+  }
+};
+
+module.exports = withFaust(nextConfig);
