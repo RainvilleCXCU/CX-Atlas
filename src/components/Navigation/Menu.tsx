@@ -1,10 +1,14 @@
-import Link from 'next/link';
+ import Link from 'next/link';
 import { MenuItem } from 'client';
+import { client, MenuLocationEnum } from 'client';
+import React from 'react';
 
 interface HeaderNavigationProps {
     device: string;
     menuItems: Array<MenuItem>;
 }
+
+
 
 const nestData = data => {
     let nestedData = [];
@@ -100,17 +104,49 @@ const flatListToHierarchical = (
 };
 
 function DesktopHeaderNavigation(props: HeaderNavigationProps) {
-    const data = JSON.stringify(flatListToHierarchical(props.menuItems));
+
+    const getMenuItems = (id) => {
+        const { menuItems } = client.useQuery();
+        const links = menuItems({
+            first: 255,
+            where: { location: MenuLocationEnum.PRIMARY, parentDatabaseId: id},
+        }).nodes;
+        return links;
+    }
+
     return (
         <ul className="navbar-nav me-auto mb-2 mb-lg-0 cx-nav__navbar">
             {props.menuItems?.map((link, index) => {
-                if (link.parentId === null) {
-                    return (
-                        <li className={`menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children dropdown nav-item dropdown cx-nav__item cx-nav__dropdown nav-item-${index}`} key={`${link.label}$-menu${index}`}>
-                            <a className="nav-link dropdown-toggle cx-nav__link cx-dropdown-toggle cx-dropdown-toggle__main-dropdown" data-bs-toggle="dropdown" href={link.path}>{link.label}</a>
-                        </li>
-                    );
-                }
+                return (
+                    <li className={`menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children dropdown nav-item dropdown cx-nav__item cx-nav__dropdown nav-item-${index}`} key={`${link.label}$-menu${index}`}>
+                        <a className="nav-link dropdown-toggle cx-nav__link cx-dropdown-toggle cx-dropdown-toggle__main-dropdown" data-bs-toggle="dropdown" href={link.path}>{link.label}</a>
+                        <ul className="dropdown-menu cx-nav__dropdown-menu depth_0" aria-labelledby="navbadropdown">
+                            <div className="cx-nav__dropdown-menu-container">
+                                {getMenuItems(link.databaseId).map((title, index) => {
+                                    return (
+                                        <li className="cx-nav__dropdown-menu-section" key={`${title.id}-${title.databaseId}`}>
+                                            {
+                                                title.label != '[column]' &&
+                                                <h2>{title.label}</h2>
+                                            }
+                                            <ul className="cx-nav__dropdown-menu-list">
+                                                {getMenuItems(title.databaseId).map((navLink, index) => {
+                                                    return (
+                                                        <li key={`${navLink.id}-${navLink.databaseId}`}>
+                                                            <Link href={navLink.uri || ''}>
+                                                                <a className='dropdown-item cx-nav__dropdown-item'>{navLink.label}</a>
+                                                            </Link>
+                                                        </li>
+                                                    );
+                                                })}
+                                            </ul>
+                                        </li>
+                                    );
+                                })}
+                            </div>
+                        </ul>
+                    </li>
+                );
             })}
         </ul>
     );
@@ -120,7 +156,7 @@ function MobileHeaderNavigation(props: HeaderNavigationProps) {
     return (
         <ul className="navbar-nav me-auto mb-2 mb-lg-0 cx-nav__navbar">
             {props.menuItems?.map((link, index) => (
-                <li key={`${link.label}$-menu${index}`}>
+                <li key={`${link.label}$-mobile-menu${index}`}>
                     <Link href={link.path ?? ''}>
                         <a href={link.path}>{link.label}</a>
                     </Link>
