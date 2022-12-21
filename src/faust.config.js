@@ -14,15 +14,5 @@ const faustConfig = coreConfig({
   wpUrl: process.env.NEXT_PUBLIC_WORDPRESS_URL,
   apiClientSecret: process.env.WP_HEADLESS_SECRET,
 });
-const nextConfig = {
-  async rewrites() {
-    return [
-      {
-        source: '/test',
-        destination: process.env.NEXT_PUBLIC_WORDPRESS_URL + '/pay-my-loan',
-      },
-    ]
-  }
-};
 
-module.exports = withFaust(nextConfig);
+module.exports = withFaust();
