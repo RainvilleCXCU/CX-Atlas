@@ -21,9 +21,8 @@ function Header({
 const { menuItems } = client.useQuery()
 const links = menuItems({
     first: 255,
-    where: { location: MenuLocationEnum.PRIMARY, parentDatabaseId: 0 },
+    where: { location: MenuLocationEnum.PRIMARY },
   }).nodes;
-
 
   return (
     <header className="cx-header">

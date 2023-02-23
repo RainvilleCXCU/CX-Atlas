@@ -15,7 +15,6 @@ export interface PageProps {
 export function PageComponent({ page }: PageProps) {
   const { useQuery } = client;
   const generalSettings = useQuery().generalSettings;
-  const registeredScripts = useQuery().registeredScripts().edges;
 
   const enqueuedStylesheets = page.enqueuedStylesheets().edges;
   const enqueuedScripts = page.enqueuedScripts().edges;
@@ -46,11 +45,6 @@ export function PageComponent({ page }: PageProps) {
       </div>
 
       <Footer copyrightHolder={generalSettings.title} />
-        {registeredScripts.map((script) => {
-          if(script.node.handle == 'jquery-core') {
-            return addJSAsset(script.node);
-          }
-        })}
         {enqueuedScripts.map((sheet) => {
           return addJSAsset(sheet.node);
         })}
@@ -60,6 +54,7 @@ export function PageComponent({ page }: PageProps) {
 
 export default function Page() {
   const { usePage } = client;
+  console.log('INDEX');
   const page = usePage({
     id: '/',
     idType: PageIdType.URI
