@@ -19,7 +19,7 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                 } else {
                     return (
                         <li className={`menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children dropdown nav-item dropdown cx-nav__item cx-nav__dropdown nav-item-${index}`} key={`${link.label}$-menu${index}`}>
-                            <a className={`nav-link dropdown-toggle cx-nav__link cx-dropdown-toggle cx-dropdown-toggle__main-dropdown${navSelected === link.label ? ' show' : ''}`} data-bs-toggle="dropdown" href={link.uri}
+                            <a className={`nav-link dropdown-toggle cx-nav__link cx-dropdown-toggle cx-dropdown-toggle__main-dropdown${navSelected === link.label ? ' show' : ''}`} aria-expanded={navSelected === link.label ? true : false} data-bs-toggle="dropdown" href={link.uri}
                                 onMouseOver={() => {
                                     setIsNavExpanded(!isNavExpanded);
                                     setNavSelected(link?.label);

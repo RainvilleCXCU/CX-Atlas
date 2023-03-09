@@ -2,6 +2,7 @@ import { getNextStaticProps, is404 } from '@faustjs/next';
 import { Footer, Header, Hero } from 'components';
 import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
+import Styleguide from 'components/Styles/styleguide';
 import { client, Page as PageType, PageIdType } from 'client';
 import React from 'react';
 import { useState, useEffect } from 'react'
@@ -47,9 +48,11 @@ export function PageComponent({ page }: PageProps) {
         <title>
           {page?.title()} - {generalSettings.title}
         </title>
+
         {enqueuedStylesheets.map((sheet) => {
           return addCSSAsset(sheet.node);
         })}
+        <Styleguide />
       </Head>
       <div id="page" className='container site'>
         <main className="content content-single">

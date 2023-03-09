@@ -8,6 +8,7 @@ import parseHtml from "../lib/parser";
 import { addCSSAsset, addJSAsset } from "../lib/enqueuedFiles";
 import { useState, useEffect } from 'react';
 import "../lib/loader";
+import Styleguide from 'components/Styles/styleguide';
 export interface PageProps {
   page: PageType | PageType['preview']['node'] | null | undefined;
 }
@@ -31,6 +32,7 @@ export function PageComponent({ page }: PageProps) {
         {enqueuedStylesheets.map((sheet) => {
           return addCSSAsset(sheet.node);
         })}
+        <Styleguide />
       </Head>
 
       <Header

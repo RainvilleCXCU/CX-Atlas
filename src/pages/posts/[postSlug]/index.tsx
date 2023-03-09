@@ -1,6 +1,7 @@
 import { getNextStaticProps, is404 } from '@faustjs/next';
 import { client, Post } from 'client';
 import { Footer, Header, Hero } from 'components';
+import Styleguide from 'components/Styles/styleguide';
 import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
 
@@ -23,6 +24,7 @@ export function PostComponent({ post }: PostProps) {
         <title>
           {post?.title()} - {generalSettings.title}
         </title>
+        <Styleguide />
       </Head>
 
       <Hero

@@ -1,6 +1,7 @@
 import { getNextStaticProps } from '@faustjs/next';
 import { client, OrderEnum, PostObjectsConnectionOrderbyEnum } from 'client';
 import { Footer, Header, Pagination, Posts } from 'components';
+import Styleguide from 'components/Styles/styleguide';
 import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -37,6 +38,7 @@ export default function Page() {
         <title>
           {generalSettings.title} - {generalSettings.description}
         </title>
+        <Styleguide />
       </Head>
 
       <main className="content content-index">

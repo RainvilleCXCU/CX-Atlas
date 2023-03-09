@@ -7,6 +7,7 @@ import parseHtml from "../../lib/parser";
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import LocationListing from 'components/Locations/listing';
+import Styleguide from 'components/Styles/styleguide';
 
 export default function Page() {
   const { useQuery } = client;
@@ -38,7 +39,7 @@ export default function Page() {
 
       <Head>
         <title>Custom Page - {generalSettings.title}</title>
-        <link rel="stylesheet" href={`${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp-content/themes/CXCU/assets/${generalSettings.styleguideVersion}/cxcu.css`} />
+        <Styleguide />
       </Head>
 
       <main className="content content-single">
