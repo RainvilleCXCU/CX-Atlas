@@ -4,7 +4,9 @@ import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
 import { client, Page as PageType, PageIdType } from 'client';
 import React from 'react';
+import { useState, useEffect } from 'react'
 import parseHtml from "../lib/parser";
+import Script from 'next/script';
 import {addCSSAsset, addJSAsset} from "../lib/enqueuedFiles";
 
 
@@ -18,6 +20,20 @@ export function PageComponent({ page }: PageProps) {
 
   const enqueuedStylesheets = page.enqueuedStylesheets().edges;
   const enqueuedScripts = page.enqueuedScripts().edges;
+  
+  const [data, setData] = useState(null)
+  const [isLoading, setLoading] = useState(false)
+/*
+  useEffect(() => {
+    setLoading(true)
+    fetch('/api/profile-data')
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data)
+        setLoading(false)
+      })
+  }, [])
+  */
 
   return (
     <>
@@ -34,7 +50,6 @@ export function PageComponent({ page }: PageProps) {
         {enqueuedStylesheets.map((sheet) => {
           return addCSSAsset(sheet.node);
         })}
-        <link rel="stylesheet" href={`${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp-content/themes/CXCU/assets/${generalSettings.styleguideVersion}/cxcu.css`} />
       </Head>
       <div id="page" className='container site'>
         <main className="content content-single">
@@ -45,9 +60,6 @@ export function PageComponent({ page }: PageProps) {
       </div>
 
       <Footer copyrightHolder={generalSettings.title} />
-        {enqueuedScripts.map((sheet) => {
-          return addJSAsset(sheet.node);
-        })}
     </>
   );
 }

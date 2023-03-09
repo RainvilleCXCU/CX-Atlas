@@ -3,7 +3,7 @@ import styles from 'scss/components/Header.module.scss';
 import Link from 'next/link';
 import Image from 'next/image';
 import { client, MenuLocationEnum } from 'client';
-import MenuNavigation from './Navigation/Menu';
+import MenuNavigation from './Navigation/Navbar';
 
 interface Props {
   title?: string;
