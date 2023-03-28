@@ -12,24 +12,24 @@
     "wpe-build": "next build"
   },
   "dependencies": {
-    "@faustjs/core": "^0.13.1",
-    "@faustjs/next": "^0.13.1",
+    "@faustjs/core": "^0.15.7",
+    "@faustjs/next": "^0.15.9",
     "@wordpress/block-library": "^8.6.0",
-    "html-react-parser": "^3.0.4",
     "next": "^13.2.4",
     "normalize.css": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sass": "^1.42.1",
     "underscore": "^1.13.6"
   },
   "devDependencies": {
-    "@gqty/cli": "^2.0.1",
+    "@gqty/cli": "^3.4.0-alpha-e8dd298d.0",
     "@types/react": "^18.0.30",
     "dotenv-flow": "3.2.0",
-    "eslint": "^7.32.0",
-    "eslint-config-next": "^11.1.2",
-    "rimraf": "^3.0.2",
-    "typescript": "^4.4.3"
+    "eslint": "^8.36.0",
+    "eslint-config-next": "^13.2.4",
+    "html-react-parser": "^3.0.15",
+    "rimraf": "^4.4.1",
+    "sass": "^1.60.0",
+    "typescript": "^5.0.2"
   }
 }
