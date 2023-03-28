@@ -32,7 +32,6 @@ export function PageComponent({ page }: PageProps) {
         {enqueuedStylesheets.map((sheet) => {
           return addCSSAsset(sheet.node);
         })}
-        <Styleguide />
       </Head>
 
       <Header

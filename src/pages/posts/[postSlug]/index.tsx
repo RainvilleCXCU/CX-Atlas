@@ -1,7 +1,7 @@
 import { getNextStaticProps, is404 } from '@faustjs/next';
 import { client, Post } from 'client';
 import { Footer, Header, Hero } from 'components';
-import Styleguide from 'components/Styles/styleguide';
+import { addCSSAsset, addJSAsset } from "../../../lib/enqueuedFiles";
 import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
 
@@ -12,6 +12,10 @@ export interface PostProps {
 export function PostComponent({ post }: PostProps) {
   const { useQuery } = client;
   const generalSettings = useQuery().generalSettings;
+  const regScripts = useQuery().registeredScripts().edges;
+
+  const enqueuedStylesheets = post.enqueuedStylesheets().edges;
+  const enqueuedScripts = post.enqueuedScripts().edges;   
 
   return (
     <>
@@ -24,7 +28,9 @@ export function PostComponent({ post }: PostProps) {
         <title>
           {post?.title()} - {generalSettings.title}
         </title>
-        <Styleguide />
+        {enqueuedStylesheets.map((sheet) => {
+          return addCSSAsset(sheet.node);
+        })}
       </Head>
 
       <Hero
