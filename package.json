@@ -20,7 +20,7 @@
     "html-react-parser": "^3.0.4",
     "jquery": "^3.5.1",
     "marionette": "^5.0.0-alpha.2",
-    "next": "^11.1.3",
+    "next": "^13.2.4",
     "normalize.css": "^8.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
