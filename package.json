@@ -8,6 +8,8 @@
     "start": "next start",
     "clean": "rimraf .next node_modules",
     "lint": "next lint",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "generate": "gqty generate",
     "wpe-build": "next build"
   },
@@ -23,14 +25,20 @@
   },
   "devDependencies": {
     "@gqty/cli": "^3.4.0-alpha-e8dd298d.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
+    "@types/jest": "^29.5.0",
     "@types/node": "18.15.10",
     "@types/react": "^18.0.30",
     "dotenv-flow": "3.2.0",
     "eslint": "^8.36.0",
     "eslint-config-next": "^13.2.4",
     "html-react-parser": "^3.0.15",
+    "jest": "^29.5.0",
     "rimraf": "^4.4.1",
     "sass": "^1.60.0",
+    "ts-jest": "^29.0.5",
+    "ts-node": "^10.9.1",
     "typescript": "^5.0.2"
   }
 }

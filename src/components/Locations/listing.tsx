@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 
-interface Props {
+export interface Props {
   id: string;
   address?: string;
   city?: string;
