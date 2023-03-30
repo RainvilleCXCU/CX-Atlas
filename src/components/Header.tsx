@@ -28,8 +28,7 @@ const links = menuItems({
     <header className="cx-header">
       <section className="cx-header__util-nav cx-header__desktop">
         <div className="cx-header__wrapper">
-          <Link href="/">
-            <a><img src={logo} alt={title} /></a>
+          <Link href="/" passHref><img src={logo} alt={title} />
           </Link>
           <ul className="cx-header__util-nav-list">
             <li>
@@ -61,8 +60,7 @@ const links = menuItems({
               </form>
             </li>
             <li>
-              <Link href="/about/branch-and-atm-locations/">
-                <a className="cx-nav__link cx-nav__link--secondary">
+              <Link href="/about/branch-and-atm-locations/" passHref className="cx-nav__link cx-nav__link--secondary">
                   <svg aria-hidden="true" focusable="false" className="cx-icon" width="24px" height="24px"
                     viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg"
                   >
@@ -75,12 +73,10 @@ const links = menuItems({
                       </g>
                     </g>
                   </svg> ATMs &amp; Locations
-                </a>
               </Link>
             </li>
             <li>
-              <Link href="/about/contact-us/">
-                <a className="cx-nav__link cx-nav__link--secondary">
+              <Link href="/about/contact-us/" className="cx-nav__link cx-nav__link--secondary" passHref>
                   <svg aria-hidden="true" focusable="false" className="cx-icon" width="24px" height="24px"
                     viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
                     <g id="Iconly/Bold/Message" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
@@ -92,7 +88,6 @@ const links = menuItems({
                       </g>
                     </g>
                   </svg> Contact Us
-                </a>
               </Link>
             </li>
           </ul>
@@ -102,10 +97,8 @@ const links = menuItems({
         <div className="cx-header__wrapper">
           <nav className="navbar navbar-expand-lg navbar-default cx-nav cx-header__mobile">
             <div className="cx-inner-wrapper">
-              <Link href="/">
-                <a className="cx-nav__logo">
+              <Link href="/" passHref className="cx-nav__logo">
                   {title}
-                </a>
               </Link>
               <div className="cx-nav__mobile-buttons">
                 <button
@@ -136,9 +129,7 @@ const links = menuItems({
               <form className="modal-dialog cx-search-mobile" role="search" action="/">
                 <div className="modal-content cx-search-mobile__content">
                   <div className="modal-header cx-search-mobile__header">
-                    <Link href="/">
-                      <a className="cx-nav__logo">
-                      </a>
+                    <Link href="/" className="cx-nav__logo" passHref>
                     </Link>
                     <h5 className="modal-title visually-hidden" id="searchModalLabel">Site search</h5>
                     <button className="cx-search-mobile__close" type="button" data-bs-dismiss="modal" aria-label="Close search">
@@ -172,16 +163,13 @@ const links = menuItems({
                   <a className="nav-link cx-nav__link cx-nav__link--primary" href="https://onlinebanking.connexuscu.org/Mobile/Authentication">Log in</a>
                 </li>
                 <li className="nav-item cx-nav__item">
-                  <Link href="/pay-my-loan/">
-                    <a className="nav-link cx-nav__link cx-nav__link--primary" >Pay my loan</a>
-                  </Link>
+                  <Link href="/pay-my-loan/" passHref className="nav-link cx-nav__link cx-nav__link--primary" >Pay my loan</Link>
                 </li>
                 <div className="accordion accordion-flush" id="cxNavAccordion">
                   <div className="accordion accordion-flush" id="cxNavAccordion">
                     <MenuNavigation device="Mobile" menuItems={links} />
                     <li className="nav-item cx-nav__item cx-nav__item--no-border cx-nav__item--space-above">
-                      <Link href="/about/branch-and-atm-locations/">
-                        <a className="nav-link cx-nav__link cx-nav__link--secondary">
+                      <Link href="/about/branch-and-atm-locations/" passHref className="nav-link cx-nav__link cx-nav__link--secondary">
                           <svg aria-hidden="true" focusable="false" className="cx-icon" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
                             <g id="Iconly/Bold/Location" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                               <g id="Location" transform="translate(3.500000, 2.000000)" fill="#5B5C5C" fillRule="nonzero">
@@ -189,12 +177,10 @@ const links = menuItems({
                               </g>
                             </g>
                           </svg> Find ATMs &amp; Locations
-                        </a>
                       </Link>
                     </li>
                     <li className="nav-item cx-nav__item cx-nav__item--no-border">
-                      <Link href="/services/contact-us/">
-                        <a className="nav-link cx-nav__link cx-nav__link--secondary">
+                      <Link href="/services/contact-us/" passHref className="nav-link cx-nav__link cx-nav__link--secondary">
                           <svg aria-hidden="true" focusable="false" className="cx-icon" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
                             <g id="Iconly/Bold/Message" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                               <g id="Message" transform="translate(2.000400, 3.000000)" fill="#5B5C5C" fillRule="nonzero">
@@ -202,7 +188,6 @@ const links = menuItems({
                               </g>
                             </g>
                           </svg> Contact Us
-                        </a>
                       </Link>
                     </li>
 
@@ -218,8 +203,7 @@ const links = menuItems({
               <MenuNavigation device="Desktop" menuItems={links} />
               <div>
 
-                <Link href="/pay-my-loan/">
-                  <a className="cx-button cx-button--compact cx-button--text" type="button">Pay my loan</a>
+                <Link href="/pay-my-loan/" passHref className="cx-button cx-button--compact cx-button--text" type="button">Pay my loan
                 </Link>
                 <a href="https://onlinebanking.connexuscu.org/Authentication" className="cx-button cx-button--compact">Log in</a>
               </div>

@@ -10,9 +10,7 @@ export default function parseHtml(html) {
 
             if(isInternalLink) {
                 return (
-                    <Link href={attribs.href}>
-                        <a {...attributesToProps(attribs)}>{domToReact(children, options)}</a>
-                    </Link>
+                    <Link href={attribs.href.replace(process.env.NEXT_PUBLIC_WORDPRESS_URL, '')} {...attributesToProps(attribs)}>{domToReact(children, options)}</Link>
                 );
             }
             /*if(script && attribs.src === null) {

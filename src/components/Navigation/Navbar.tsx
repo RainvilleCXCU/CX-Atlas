@@ -50,8 +50,7 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                                     {title?.childItems()?.nodes?.map((navLink, index) => {
                                                         return (
                                                             <li key={`${navLink.id}-${navLink.databaseId}`}>
-                                                                <Link href={navLink.uri || ''}>
-                                                                    <a className='dropdown-item cx-nav__dropdown-item'>{navLink.label}</a>
+                                                                <Link href={navLink.uri || ''} passHref className='dropdown-item cx-nav__dropdown-item'>{navLink.label}
                                                                 </Link>
                                                             </li>
                                                         );
@@ -75,8 +74,7 @@ function MobileHeaderNavigation(props: HeaderNavigationProps) {
         <ul className="navbar-nav me-auto mb-2 mb-lg-0 cx-nav__navbar">
             {props.menuItems?.map((link, index) => (
                 <li key={`${link.label}$-mobile-menu${index}`}>
-                    <Link href={link.path ?? ''}>
-                        <a href={link.uri}>{link.label}</a>
+                    <Link href={link.path ?? ''}>{link.label}
                     </Link>
                 </li>
             ))}

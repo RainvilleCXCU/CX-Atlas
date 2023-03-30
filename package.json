@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@gqty/cli": "^3.4.0-alpha-e8dd298d.0",
+    "@types/node": "18.15.10",
     "@types/react": "^18.0.30",
     "dotenv-flow": "3.2.0",
     "eslint": "^8.36.0",
