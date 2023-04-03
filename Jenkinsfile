@@ -4,37 +4,6 @@
 
 import com.connexuscu.CICD
 
-def backupSite(site) {    
-    try {                            
-        sh "git clone git@mkt-csrp01.connexuscu.org:ds/web/wpengineapis.git"
-        dir('wpengineapis') {
-            try {
-                sh "npm i ."
-                sh "node bin/wpengine.js requestBackup --name ${site} --description 'Pre ${env.JOB_NAME} - ${env.TAG_NAME || env.BUILD_NUMBER} Code Deploy' --emails 'matthewr@connexuscu.org' --creds 54f4df68-6314-4ea8-bcb0-a999acd0d7d1:FDW+g3lDsdDU7IwGN2a/aw=="
-                deleteDir();
-            } catch(Exception e) {
-                emailext (
-                subject: "Code Deploy FAIL - Job: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Brand: ${TRGT}",
-                body: """<p>Code Deploy FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-                            <p>Error: ${e}</p>
-                            <p>Check console output at "<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
-                recipientProviders: [[$class: 'DevelopersRecipientProvider'],[$class: 'RequesterRecipientProvider']]
-                )
-                deleteDir();
-            }
-        }
-    } catch(Exception e) {
-        emailext (
-        subject: "Code Deploy FAIL - Job: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Brand: ${TRGT}",
-        body: """<p>Code Deploy FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-                    <p>Error: ${e}</p>
-                    <p>Check console output at "<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
-        recipientProviders: [[$class: 'DevelopersRecipientProvider'],[$class: 'RequesterRecipientProvider']]
-        )
-        deleteDir();
-    }
-}
-
 def gitHubDeploy(BRANCH) {
     sh "git add ."
     sh "ls"
@@ -137,6 +106,19 @@ pipeline {
                         //backupSite("cxcudev");
                         try {
                             sh "git clone git@github.com:RainvilleCXCU/CX-Atlas.git"
+                            dir('CX-Atlas') {
+                                try {
+                                    sh "git checkout develop"
+                                } catch(Exception e) {
+                                    emailext (
+                                    subject: "Code Deploy FAIL - Job: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Brand: ${TRGT}",
+                                    body: """<p>Code Deploy FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                                                <p>Error: ${e}</p>
+                                                <p>Check console output at "<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
+                                    recipientProviders: [[$class: 'DevelopersRecipientProvider'],[$class: 'RequesterRecipientProvider']]
+                                    )
+                                }
+                            }
                             sh "rsync -r --exclude '${WORKSPACE}/CX-Atlas/*' ${WORKSPACE}/* ${WORKSPACE}/CX-Atlas"
                             dir('CX-Atlas') {
                                 try {
@@ -167,10 +149,22 @@ pipeline {
                         echo "staging deploy!"
                         try {
                             sh "git clone git@github.com:RainvilleCXCU/CX-Atlas.git"
-                            sh "rsync -r --exclude '${WORKSPACE}/CX-Atlas/*' ${WORKSPACE}/* ${WORKSPACE}/CX-Atlas"
                             dir('CX-Atlas') {
                                 try {
                                     sh "git checkout staging"
+                                } catch(Exception e) {
+                                    emailext (
+                                    subject: "Code Deploy FAIL - Job: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Brand: ${TRGT}",
+                                    body: """<p>Code Deploy FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+                                                <p>Error: ${e}</p>
+                                                <p>Check console output at "<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
+                                    recipientProviders: [[$class: 'DevelopersRecipientProvider'],[$class: 'RequesterRecipientProvider']]
+                                    )
+                                }
+                            }
+                            sh "rsync -r --exclude '${WORKSPACE}/CX-Atlas/*' ${WORKSPACE}/* ${WORKSPACE}/CX-Atlas"
+                            dir('CX-Atlas') {
+                                try {
                                     gitHubDeploy("staging")
                                 } catch(Exception e) {
                                     emailext (
@@ -195,13 +189,11 @@ pipeline {
 
                     if (["ops"].contains(TRGT) == true) {
                         echo "prod deploy!"
-                        backupSite("cxcu");
                         try {
                             sh "git clone git@github.com:RainvilleCXCU/CX-Atlas.git"
                             sh "rsync -r --exclude '${WORKSPACE}/CX-Atlas/*' ${WORKSPACE}/* ${WORKSPACE}/CX-Atlas"
                             dir('CX-Atlas') {
                                 try {
-                                    sh "git checkout master"
                                     gitHubDeploy("master")
                                 } catch(Exception e) {
                                     emailext (
