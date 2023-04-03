@@ -32,8 +32,9 @@ function Posts({
             {heading}
           </Heading>
         )}
-        {intro && <p className={styles.intro}>{intro}</p>}
+        {posts && posts?.length > 0 && intro && <p className={styles.intro}>{intro}</p>}
         <div className="posts">
+          
           {posts.map((post) => (
             <div
               className={styles.single}

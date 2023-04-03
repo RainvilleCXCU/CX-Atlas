@@ -35,11 +35,11 @@ def backupSite(site) {
     }
 }
 
-def gitHubDeploy() {
+def gitHubDeploy(BRANCH) {
     sh "git add ."
     sh "ls"
     sh "git commit -m '${env.BUILD_NUMBER} Updates'"
-    sh "git push -v origin master"
+    sh "git push -v origin ${BRANCH}"
     sh "git status"
 }
 
@@ -140,7 +140,8 @@ pipeline {
                             sh "rsync -r --exclude '${WORKSPACE}/CX-Atlas/*' ${WORKSPACE}/* ${WORKSPACE}/CX-Atlas"
                             dir('CX-Atlas') {
                                 try {
-                                    gitHubDeploy()
+                                    sh "git checkout develop"
+                                    gitHubDeploy("develop")
                                 } catch(Exception e) {
                                     emailext (
                                     subject: "Code Deploy FAIL - Job: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Brand: ${TRGT}",
@@ -163,14 +164,14 @@ pipeline {
                     }
                     
                     if (["test"].contains(TRGT) == true) {
-                        /*echo "staging deploy!"
-                        backupSite("cxcustage");
+                        echo "staging deploy!"
                         try {
-                            sh "git clone git@git.wpengine.com:production/cxcustage.git"
-                            sh "rsync -r --exclude 'cxcustage' ${WORKSPACE}/* ${WORKSPACE}/cxcustage"
-                            dir('cxcustage') {
+                            sh "git clone git@github.com:RainvilleCXCU/CX-Atlas.git"
+                            sh "rsync -r --exclude '${WORKSPACE}/CX-Atlas/*' ${WORKSPACE}/* ${WORKSPACE}/CX-Atlas"
+                            dir('CX-Atlas') {
                                 try {
-                                    wpEngineDeploy()
+                                    sh "git checkout staging"
+                                    gitHubDeploy("staging")
                                 } catch(Exception e) {
                                     emailext (
                                     subject: "Code Deploy FAIL - Job: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Brand: ${TRGT}",
@@ -189,18 +190,19 @@ pipeline {
                                         <p>Check console output at "<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
                             recipientProviders: [[$class: 'DevelopersRecipientProvider'],[$class: 'RequesterRecipientProvider']]
                             )
-                        }*/
+                        }
                     }
 
                     if (["ops"].contains(TRGT) == true) {
-                        /*echo "prod deploy!"
+                        echo "prod deploy!"
                         backupSite("cxcu");
                         try {
-                            sh "git clone git@git.wpengine.com:production/cxcu.git"
-                            sh "rsync -r --exclude 'cxcu' ${WORKSPACE}/* ${WORKSPACE}/cxcu"
-                            dir('cxcu') {
+                            sh "git clone git@github.com:RainvilleCXCU/CX-Atlas.git"
+                            sh "rsync -r --exclude '${WORKSPACE}/CX-Atlas/*' ${WORKSPACE}/* ${WORKSPACE}/CX-Atlas"
+                            dir('CX-Atlas') {
                                 try {
-                                    wpEngineDeploy()
+                                    sh "git checkout master"
+                                    gitHubDeploy("master")
                                 } catch(Exception e) {
                                     emailext (
                                     subject: "Code Deploy FAIL - Job: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Brand: ${TRGT}",
@@ -219,7 +221,7 @@ pipeline {
                                         <p>Check console output at "<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
                             recipientProviders: [[$class: 'DevelopersRecipientProvider'],[$class: 'RequesterRecipientProvider']]
                             )
-                        }*/
+                        }
                     }
                     if (["dev", "test", "ops"].contains(TRGT) == true) {
                         emailext (

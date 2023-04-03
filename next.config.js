@@ -27,6 +27,10 @@ module.exports = withFaust({
                 destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp-admin/:path*`,
             },
             {
+                source: '/wp-json/:path*',
+                destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp-json/:path*`,
+            },
+            {
                 source: '/wp-content/:path*',
                 destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp-content/:path*`,
             },
