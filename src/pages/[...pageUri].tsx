@@ -48,9 +48,9 @@ export function PageComponent({ page }: PageProps) {
         </main>
       </div>
       <Footer copyrightHolder={generalSettings.title} />
-      {enqueuedScripts.map((sheet) => {
+      {/*enqueuedScripts.map((sheet) => {
         return addJSAsset(sheet.node);
-      })}
+      })*/}
     </>
   );
 }

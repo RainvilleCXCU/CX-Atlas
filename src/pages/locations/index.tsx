@@ -13,7 +13,6 @@ export default function Page() {
   const { useQuery } = client;
   const { usePage } = client;
   const generalSettings = useQuery().generalSettings;
-  const wpslSettings = useQuery().locationsSettings;
 
   const [data, setData] = useState(null)
   const [isLoading, setLoading] = useState(false);
