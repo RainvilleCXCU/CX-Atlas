@@ -15,11 +15,11 @@ export default function parseHtml(html) {
                 );
             }
 
-            if (isFAQItem) {
+            /*if (isFAQItem) {
                 return (
                     <FAQ id={attribs['data-post_id']} />
                 )
-            }
+            }*/
         },
     }
     return parse(html, options);
