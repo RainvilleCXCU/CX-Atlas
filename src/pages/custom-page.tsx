@@ -1,6 +1,6 @@
 import { getNextStaticProps } from '@faustjs/next';
 import { client } from 'client';
-import { Footer, Header, Hero } from 'components';
+import { Footer, Header } from 'components';
 import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
 
@@ -19,7 +19,6 @@ export default function Page() {
         <title>Custom Page - {generalSettings.title}</title>
       </Head>
 
-      <Hero title="Custom Page" />
 
       <main className="content content-single">
         <div className="wrap">
