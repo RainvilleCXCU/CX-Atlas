@@ -1,17 +1,13 @@
 import { getNextStaticProps } from '@faustjs/next';
 import { client } from 'client';
-import { Footer, Header, Hero } from 'components';
+import { Footer, Header } from 'components';
 import { GetStaticPropsContext } from 'next';
-import { useRouter } from 'next/router';
-import parseHtml from "../../lib/parser";
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import LocationListing from 'components/Locations/listing';
-import Styleguide from 'components/Styles/styleguide';
 
 export default function Page() {
   const { useQuery } = client;
-  const { usePage } = client;
   const generalSettings = useQuery().generalSettings;
 
   const [data, setData] = useState(null)
@@ -38,7 +34,6 @@ export default function Page() {
 
       <Head>
         <title>Custom Page - {generalSettings.title}</title>
-        <Styleguide />
       </Head>
 
       <main className="content content-single">

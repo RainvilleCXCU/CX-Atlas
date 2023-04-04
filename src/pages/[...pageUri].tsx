@@ -1,14 +1,11 @@
 import { getNextStaticProps, is404 } from '@faustjs/next';
-import { Footer, Header, Hero } from 'components';
-import Script from 'next/script'
+import { Footer, Header } from 'components';
 import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
 import { client, Page as PageType } from 'client';
 import parseHtml from "../lib/parser";
 import { addCSSAsset, addJSAsset } from "../lib/enqueuedFiles";
 import { useState, useEffect } from 'react';
-import "../lib/loader";
-import Styleguide from 'components/Styles/styleguide';
 export interface PageProps {
   page: PageType | PageType['preview']['node'] | null | undefined;
 }
@@ -16,10 +13,8 @@ export interface PageProps {
 export function PageComponent({ page }: PageProps) {
   const { useQuery } = client;
   const generalSettings = useQuery().generalSettings;
-  const regScripts = useQuery().registeredScripts().edges;
 
   const enqueuedStylesheets = page.enqueuedStylesheets().edges;
-  const enqueuedScripts = page.enqueuedScripts().edges;   
 
 
   return (

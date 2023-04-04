@@ -1,6 +1,6 @@
 import { getNextStaticProps, is404 } from '@faustjs/next';
 import { client, Post } from 'client';
-import { Footer, Header, Hero } from 'components';
+import { Footer, Header } from 'components';
 import { addCSSAsset, addJSAsset } from "../../../lib/enqueuedFiles";
 import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
@@ -12,10 +12,8 @@ export interface PostProps {
 export function PostComponent({ post }: PostProps) {
   const { useQuery } = client;
   const generalSettings = useQuery().generalSettings;
-  const regScripts = useQuery().registeredScripts().edges;
 
   const enqueuedStylesheets = post.enqueuedStylesheets().edges;
-  const enqueuedScripts = post.enqueuedScripts().edges;   
 
   return (
     <>
@@ -32,11 +30,6 @@ export function PostComponent({ post }: PostProps) {
           return addCSSAsset(sheet.node);
         })}
       </Head>
-
-      <Hero
-        title={post?.title()}
-        bgImage={post?.featuredImage?.node?.sourceUrl()}
-      />
 
       <main className="content content-single">
         <div className="wrap">
