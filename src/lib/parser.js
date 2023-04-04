@@ -1,7 +1,6 @@
-import FAQ from "components/FAQs/faq";
+//import FAQ from "components/FAQs/faq";
 import parse, { domToReact, attributesToProps } from "html-react-parser";
 import Link from "next/link";
-import Script from "next/script";
 
 export default function parseHtml(html) {
     const options = {
