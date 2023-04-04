@@ -1,15 +1,11 @@
-import { getNextStaticProps } from '@faustjs/next';
 import { client, Page as PageType, PageIdType } from 'client';
 import { Footer, Header, Pagination, Posts } from 'components';
-import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import styles from 'scss/pages/posts.module.scss';
-import Styleguide from 'components/Styles/styleguide';
 import { addCSSAsset, addJSAsset } from "../lib/enqueuedFiles";
-import { loadGetInitialProps } from 'next/dist/shared/lib/utils';
 import Heading, { HeadingProps } from '../components/Heading';
 
 const POSTS_PER_PAGE = 6;

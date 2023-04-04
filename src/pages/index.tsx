@@ -1,13 +1,11 @@
 import { getNextStaticProps, is404 } from '@faustjs/next';
-import { Footer, Header, Hero } from 'components';
+import { Footer, Header } from 'components';
 import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
-import Styleguide from 'components/Styles/styleguide';
 import { client, Page as PageType, PageIdType } from 'client';
 import React from 'react';
 import { useState, useEffect } from 'react'
 import parseHtml from "../lib/parser";
-import Script from 'next/script';
 import {addCSSAsset, addJSAsset} from "../lib/enqueuedFiles";
 
 
@@ -20,21 +18,9 @@ export function PageComponent({ page }: PageProps) {
   const generalSettings = useQuery().generalSettings;
 
   const enqueuedStylesheets = page.enqueuedStylesheets().edges;
-  const enqueuedScripts = page.enqueuedScripts().edges;
   
   const [data, setData] = useState(null)
   const [isLoading, setLoading] = useState(false)
-/*
-  useEffect(() => {
-    setLoading(true)
-    fetch('/api/profile-data')
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data)
-        setLoading(false)
-      })
-  }, [])
-  */
 
   return (
     <>

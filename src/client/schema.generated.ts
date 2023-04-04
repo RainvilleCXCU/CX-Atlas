@@ -461,7 +461,7 @@ export enum ContentTypeEnum {
   /** The Type of Content object */
   SERVICE = "SERVICE",
   /** The Type of Content object */
-  UFAQ = "UFAQ",
+  WPSL_STORES = "WPSL_STORES",
 }
 
 /** The Type of Identifier used to fetch a single Content Type node. To be used along with the "id" field. Default is "ID". */
@@ -516,6 +516,12 @@ export interface ContentTypeToContentNodeConnectionWhereArgs {
 export enum ContentTypesOfCategoryEnum {
   /** The Type of Content object */
   POST = "POST",
+}
+
+/** Allowed Content Types of the LocationCategory taxonomy. */
+export enum ContentTypesOfLocationCategoryEnum {
+  /** The Type of Content object */
+  WPSL_STORES = "WPSL_STORES",
 }
 
 /** Allowed Content Types of the PostFormat taxonomy. */
@@ -618,22 +624,40 @@ export interface CreateContactInput {
   value?: InputMaybe<Scalars["String"]>;
 }
 
-/** Input for the createFaq mutation */
-export interface CreateFaqInput {
+/** Input for the createLocationCategory mutation */
+export interface CreateLocationCategoryInput {
+  /** The slug that the wpsl_store_category will be an alias of */
+  aliasOf?: InputMaybe<Scalars["String"]>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars["String"]>;
+  /** The description of the wpsl_store_category object */
+  description?: InputMaybe<Scalars["String"]>;
+  /** The name of the wpsl_store_category object to mutate */
+  name: Scalars["String"];
+  /** The ID of the wpsl_store_category that should be set as the parent */
+  parentId?: InputMaybe<Scalars["ID"]>;
+  /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
+  slug?: InputMaybe<Scalars["String"]>;
+}
+
+/** Input for the createLocation mutation */
+export interface CreateLocationInput {
   /** The userId to assign as the author of the object */
   authorId?: InputMaybe<Scalars["ID"]>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: InputMaybe<Scalars["String"]>;
-  /** The comment status for the object */
-  commentStatus?: InputMaybe<Scalars["String"]>;
   /** The content of the object */
   content?: InputMaybe<Scalars["String"]>;
   /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
   date?: InputMaybe<Scalars["String"]>;
   /** The excerpt of the object */
   excerpt?: InputMaybe<Scalars["String"]>;
+  /** Set connections between the location and locationCategories */
+  locationCategories?: InputMaybe<LocationLocationCategoriesInput>;
   /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
   menuOrder?: InputMaybe<Scalars["Int"]>;
+  /** The ID of the parent object */
+  parentId?: InputMaybe<Scalars["ID"]>;
   /** The password used to protect the content of the object */
   password?: InputMaybe<Scalars["String"]>;
   /** The slug of the object */
@@ -987,13 +1011,21 @@ export interface DeleteContactInput {
   id: Scalars["ID"];
 }
 
-/** Input for the deleteFaq mutation */
-export interface DeleteFaqInput {
+/** Input for the deleteLocationCategory mutation */
+export interface DeleteLocationCategoryInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars["String"]>;
+  /** The ID of the locationCategory to delete */
+  id: Scalars["ID"];
+}
+
+/** Input for the deleteLocation mutation */
+export interface DeleteLocationInput {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: InputMaybe<Scalars["String"]>;
   /** Whether the object should be force deleted instead of being moved to the trash */
   forceDelete?: InputMaybe<Scalars["Boolean"]>;
-  /** The ID of the faq to delete */
+  /** The ID of the location to delete */
   id: Scalars["ID"];
 }
 
@@ -1091,80 +1123,6 @@ export interface DeleteUserInput {
   reassignId?: InputMaybe<Scalars["ID"]>;
 }
 
-/** The Type of Identifier used to fetch a single resource. Default is ID. */
-export enum FaqIdType {
-  /** Identify a resource by the Database ID. */
-  DATABASE_ID = "DATABASE_ID",
-  /** Identify a resource by the (hashed) Global ID. */
-  ID = "ID",
-  /** Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier. */
-  SLUG = "SLUG",
-  /** Identify a resource by the URI. */
-  URI = "URI",
-}
-
-/** Arguments for filtering the FaqToCommentConnection connection */
-export interface FaqToCommentConnectionWhereArgs {
-  /** Comment author email address. */
-  authorEmail?: InputMaybe<Scalars["String"]>;
-  /** Array of author IDs to include comments for. */
-  authorIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** Array of author IDs to exclude comments for. */
-  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** Comment author URL. */
-  authorUrl?: InputMaybe<Scalars["String"]>;
-  /** Array of comment IDs to include. */
-  commentIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** Array of IDs of users whose unapproved comments will be returned by the query regardless of status. */
-  commentNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** Include comments of a given type. */
-  commentType?: InputMaybe<Scalars["String"]>;
-  /** Include comments from a given array of comment types. */
-  commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
-  /** Exclude comments from a given array of comment types. */
-  commentTypeNotIn?: InputMaybe<Scalars["String"]>;
-  /** Content object author ID to limit results by. */
-  contentAuthor?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** Array of author IDs to retrieve comments for. */
-  contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** Array of author IDs *not* to retrieve comments for. */
-  contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** Limit results to those affiliated with a given content object ID. */
-  contentId?: InputMaybe<Scalars["ID"]>;
-  /** Array of content object IDs to include affiliated comments for. */
-  contentIdIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** Array of content object IDs to exclude affiliated comments for. */
-  contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** Content object name (i.e. slug ) to retrieve affiliated comments for. */
-  contentName?: InputMaybe<Scalars["String"]>;
-  /** Content Object parent ID to retrieve affiliated comments for. */
-  contentParent?: InputMaybe<Scalars["Int"]>;
-  /** Array of content object statuses to retrieve affiliated comments for. Pass 'any' to match any value. */
-  contentStatus?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
-  /** Content object type or array of types to retrieve affiliated comments for. Pass 'any' to match any value. */
-  contentType?: InputMaybe<Array<InputMaybe<ContentTypeEnum>>>;
-  /** Array of IDs or email addresses of users whose unapproved comments will be returned by the query regardless of $status. Default empty */
-  includeUnapproved?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** Karma score to retrieve matching comments for. */
-  karma?: InputMaybe<Scalars["Int"]>;
-  /** The cardinality of the order of the connection */
-  order?: InputMaybe<OrderEnum>;
-  /** Field to order the comments by. */
-  orderby?: InputMaybe<CommentsConnectionOrderbyEnum>;
-  /** Parent ID of comment to retrieve children of. */
-  parent?: InputMaybe<Scalars["Int"]>;
-  /** Array of parent IDs of comments to retrieve children for. */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** Array of parent IDs of comments *not* to retrieve children for. */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** Search term(s) to retrieve matching comments for. */
-  search?: InputMaybe<Scalars["String"]>;
-  /** Comment status to limit results by. */
-  status?: InputMaybe<Scalars["String"]>;
-  /** Include comments for a specific user ID. */
-  userId?: InputMaybe<Scalars["ID"]>;
-}
-
 /** Input for the generateAuthorizationCode mutation */
 export interface GenerateAuthorizationCodeInput {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -1258,6 +1216,324 @@ export interface HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs
 }
 
 /** The Type of Identifier used to fetch a single resource. Default is ID. */
+export enum LocationCategoryIdType {
+  /** The Database ID for the node */
+  DATABASE_ID = "DATABASE_ID",
+  /** The hashed Global ID */
+  ID = "ID",
+  /** The name of the node */
+  NAME = "NAME",
+  /** Url friendly name of the node */
+  SLUG = "SLUG",
+  /** The URI for the node */
+  URI = "URI",
+}
+
+/** Arguments for filtering the LocationCategoryToContentNodeConnection connection */
+export interface LocationCategoryToContentNodeConnectionWhereArgs {
+  /** The Types of content to filter */
+  contentTypes?: InputMaybe<
+    Array<InputMaybe<ContentTypesOfLocationCategoryEnum>>
+  >;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars["Boolean"]>;
+  /** Specific database ID of the object */
+  id?: InputMaybe<Scalars["Int"]>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars["String"]>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars["ID"]>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars["String"]>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+}
+
+/** Arguments for filtering the LocationCategoryToLocationCategoryConnection connection */
+export interface LocationCategoryToLocationCategoryConnectionWhereArgs {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars["String"]>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars["Int"]>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars["Boolean"]>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars["String"]>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars["Boolean"]>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars["Boolean"]>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars["String"]>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars["Boolean"]>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars["Int"]>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars["Boolean"]>;
+}
+
+/** Arguments for filtering the LocationCategoryToLocationConnection connection */
+export interface LocationCategoryToLocationConnectionWhereArgs {
+  /** The user that's connected as the author of the object. Use the userId for the author object. */
+  author?: InputMaybe<Scalars["Int"]>;
+  /** Find objects connected to author(s) in the array of author's userIds */
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Find objects connected to the author by the author's nicename */
+  authorName?: InputMaybe<Scalars["String"]>;
+  /** Find objects NOT connected to author(s) in the array of author's userIds */
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars["Boolean"]>;
+  /** Specific database ID of the object */
+  id?: InputMaybe<Scalars["Int"]>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars["String"]>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars["ID"]>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars["String"]>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+}
+
+/** The Type of Identifier used to fetch a single resource. Default is ID. */
+export enum LocationIdType {
+  /** Identify a resource by the Database ID. */
+  DATABASE_ID = "DATABASE_ID",
+  /** Identify a resource by the (hashed) Global ID. */
+  ID = "ID",
+  /** Identify a resource by the URI. */
+  URI = "URI",
+}
+
+/** Set relationships between the location to locationCategories */
+export interface LocationLocationCategoriesInput {
+  /** If true, this will append the locationCategory to existing related locationCategories. If false, this will replace existing relationships. Default true. */
+  append?: InputMaybe<Scalars["Boolean"]>;
+  /** The input list of items to set. */
+  nodes?: InputMaybe<Array<InputMaybe<LocationLocationCategoriesNodeInput>>>;
+}
+
+/** List of locationCategories to connect the location to. If an ID is set, it will be used to create the connection. If not, it will look for a slug. If neither are valid existing terms, and the site is configured to allow terms to be created during post mutations, a term will be created using the Name if it exists in the input, then fallback to the slug if it exists. */
+export interface LocationLocationCategoriesNodeInput {
+  /** The description of the locationCategory. This field is used to set a description of the locationCategory if a new one is created during the mutation. */
+  description?: InputMaybe<Scalars["String"]>;
+  /** The ID of the locationCategory. If present, this will be used to connect to the location. If no existing locationCategory exists with this ID, no connection will be made. */
+  id?: InputMaybe<Scalars["ID"]>;
+  /** The name of the locationCategory. This field is used to create a new term, if term creation is enabled in nested mutations, and if one does not already exist with the provided slug or ID or if a slug or ID is not provided. If no name is included and a term is created, the creation will fallback to the slug field. */
+  name?: InputMaybe<Scalars["String"]>;
+  /** The slug of the locationCategory. If no ID is present, this field will be used to make a connection. If no existing term exists with this slug, this field will be used as a fallback to the Name field when creating a new term to connect to, if term creation is enabled as a nested mutation. */
+  slug?: InputMaybe<Scalars["String"]>;
+}
+
+/** Arguments for filtering the LocationToLocationCategoryConnection connection */
+export interface LocationToLocationCategoryConnectionWhereArgs {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars["String"]>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars["Int"]>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars["Boolean"]>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars["String"]>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars["Boolean"]>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars["Boolean"]>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars["String"]>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars["Boolean"]>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars["Int"]>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars["Boolean"]>;
+}
+
+/** Arguments for filtering the LocationToRevisionConnection connection */
+export interface LocationToRevisionConnectionWhereArgs {
+  /** The user that's connected as the author of the object. Use the userId for the author object. */
+  author?: InputMaybe<Scalars["Int"]>;
+  /** Find objects connected to author(s) in the array of author's userIds */
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Find objects connected to the author by the author's nicename */
+  authorName?: InputMaybe<Scalars["String"]>;
+  /** Find objects NOT connected to author(s) in the array of author's userIds */
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars["Boolean"]>;
+  /** Specific database ID of the object */
+  id?: InputMaybe<Scalars["Int"]>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars["String"]>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars["ID"]>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars["String"]>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+}
+
+/** Arguments for filtering the LocationToTermNodeConnection connection */
+export interface LocationToTermNodeConnectionWhereArgs {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars["String"]>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars["Int"]>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars["Boolean"]>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars["String"]>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars["Boolean"]>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars["Boolean"]>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars["String"]>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars["Boolean"]>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars["Int"]>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** The Taxonomy to filter terms by */
+  taxonomies?: InputMaybe<Array<InputMaybe<TaxonomyEnum>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars["Boolean"]>;
+}
+
+/** The Type of Identifier used to fetch a single resource. Default is ID. */
 export enum MediaItemIdType {
   /** Identify a resource by the Database ID. */
   DATABASE_ID = "DATABASE_ID",
@@ -1289,6 +1565,8 @@ export enum MediaItemSizeEnum {
   MEDIUM = "MEDIUM",
   /** MediaItem with the medium_large size */
   MEDIUM_LARGE = "MEDIUM_LARGE",
+  /** MediaItem with the mobile-hero size */
+  MOBILE_HERO = "MOBILE_HERO",
   /** MediaItem with the thumbnail size */
   THUMBNAIL = "THUMBNAIL",
   /** MediaItem with the 1536x1536 size */
@@ -2925,8 +3203,54 @@ export interface RootQueryToContentRevisionUnionConnectionWhereArgs {
   title?: InputMaybe<Scalars["String"]>;
 }
 
-/** Arguments for filtering the RootQueryToFaqConnection connection */
-export interface RootQueryToFaqConnectionWhereArgs {
+/** Arguments for filtering the RootQueryToLocationCategoryConnection connection */
+export interface RootQueryToLocationCategoryConnectionWhereArgs {
+  /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
+  cacheDomain?: InputMaybe<Scalars["String"]>;
+  /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
+  childOf?: InputMaybe<Scalars["Int"]>;
+  /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
+  childless?: InputMaybe<Scalars["Boolean"]>;
+  /** Retrieve terms where the description is LIKE the input value. Default empty. */
+  descriptionLike?: InputMaybe<Scalars["String"]>;
+  /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
+  exclude?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
+  hideEmpty?: InputMaybe<Scalars["Boolean"]>;
+  /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
+  hierarchical?: InputMaybe<Scalars["Boolean"]>;
+  /** Array of term ids to include. Default empty array. */
+  include?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of names to return term(s) for. Default empty. */
+  name?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Retrieve terms where the name is LIKE the input value. Default empty. */
+  nameLike?: InputMaybe<Scalars["String"]>;
+  /** Array of object IDs. Results will be limited to terms associated with these objects. */
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Direction the connection should be ordered in */
+  order?: InputMaybe<OrderEnum>;
+  /** Field(s) to order terms by. Defaults to 'name'. */
+  orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
+  /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
+  padCounts?: InputMaybe<Scalars["Boolean"]>;
+  /** Parent term ID to retrieve direct-child terms of. Default empty. */
+  parent?: InputMaybe<Scalars["Int"]>;
+  /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Array of slugs to return term(s) for. Default empty. */
+  slug?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Array of term taxonomy IDs, to match when querying terms. */
+  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Whether to prime meta caches for matched terms. Default true. */
+  updateTermMetaCache?: InputMaybe<Scalars["Boolean"]>;
+}
+
+/** Arguments for filtering the RootQueryToLocationConnection connection */
+export interface RootQueryToLocationConnectionWhereArgs {
   /** The user that's connected as the author of the object. Use the userId for the author object. */
   author?: InputMaybe<Scalars["Int"]>;
   /** Find objects connected to author(s) in the array of author's userIds */
@@ -3665,6 +3989,8 @@ export interface TagToPostConnectionWhereArgs {
 export enum TaxonomyEnum {
   /** Taxonomy enum category */
   CATEGORY = "CATEGORY",
+  /** Taxonomy enum wpsl_store_category */
+  LOCATIONCATEGORY = "LOCATIONCATEGORY",
   /** Taxonomy enum post_format */
   POSTFORMAT = "POSTFORMAT",
   /** Taxonomy enum productname */
@@ -3803,24 +4129,44 @@ export interface UpdateContactInput {
   value?: InputMaybe<Scalars["String"]>;
 }
 
-/** Input for the updateFaq mutation */
-export interface UpdateFaqInput {
+/** Input for the UpdateLocationCategory mutation */
+export interface UpdateLocationCategoryInput {
+  /** The slug that the wpsl_store_category will be an alias of */
+  aliasOf?: InputMaybe<Scalars["String"]>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars["String"]>;
+  /** The description of the wpsl_store_category object */
+  description?: InputMaybe<Scalars["String"]>;
+  /** The ID of the locationCategory object to update */
+  id: Scalars["ID"];
+  /** The name of the wpsl_store_category object to mutate */
+  name?: InputMaybe<Scalars["String"]>;
+  /** The ID of the wpsl_store_category that should be set as the parent */
+  parentId?: InputMaybe<Scalars["ID"]>;
+  /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
+  slug?: InputMaybe<Scalars["String"]>;
+}
+
+/** Input for the updateLocation mutation */
+export interface UpdateLocationInput {
   /** The userId to assign as the author of the object */
   authorId?: InputMaybe<Scalars["ID"]>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: InputMaybe<Scalars["String"]>;
-  /** The comment status for the object */
-  commentStatus?: InputMaybe<Scalars["String"]>;
   /** The content of the object */
   content?: InputMaybe<Scalars["String"]>;
   /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
   date?: InputMaybe<Scalars["String"]>;
   /** The excerpt of the object */
   excerpt?: InputMaybe<Scalars["String"]>;
-  /** The ID of the faq object */
+  /** The ID of the location object */
   id: Scalars["ID"];
+  /** Set connections between the location and locationCategories */
+  locationCategories?: InputMaybe<LocationLocationCategoriesInput>;
   /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
   menuOrder?: InputMaybe<Scalars["Int"]>;
+  /** The ID of the parent object */
+  parentId?: InputMaybe<Scalars["ID"]>;
   /** The password used to protect the content of the object */
   password?: InputMaybe<Scalars["String"]>;
   /** The slug of the object */
@@ -4356,8 +4702,8 @@ export interface UserToContentRevisionUnionConnectionWhereArgs {
   title?: InputMaybe<Scalars["String"]>;
 }
 
-/** Arguments for filtering the UserToFaqConnection connection */
-export interface UserToFaqConnectionWhereArgs {
+/** Arguments for filtering the UserToLocationConnection connection */
+export interface UserToLocationConnectionWhereArgs {
   /** The user that's connected as the author of the object. Use the userId for the author object. */
   author?: InputMaybe<Scalars["Int"]>;
   /** Find objects connected to author(s) in the array of author's userIds */
@@ -4752,13 +5098,15 @@ export const scalarsEnumsHash: import("gqty").ScalarsEnumsHash = {
   ContentTypeEnum: true,
   ContentTypeIdTypeEnum: true,
   ContentTypesOfCategoryEnum: true,
+  ContentTypesOfLocationCategoryEnum: true,
   ContentTypesOfPostFormatEnum: true,
   ContentTypesOfProductNameEnum: true,
   ContentTypesOfTagEnum: true,
-  FaqIdType: true,
   Float: true,
   ID: true,
   Int: true,
+  LocationCategoryIdType: true,
+  LocationIdType: true,
   MediaItemIdType: true,
   MediaItemSizeEnum: true,
   MediaItemStatusEnum: true,
@@ -5559,23 +5907,37 @@ export const generatedSchema = {
     clientMutationId: { __type: "String" },
     contact: { __type: "Contact" },
   },
-  CreateFaqInput: {
+  CreateLocationCategoryInput: {
+    aliasOf: { __type: "String" },
+    clientMutationId: { __type: "String" },
+    description: { __type: "String" },
+    name: { __type: "String!" },
+    parentId: { __type: "ID" },
+    slug: { __type: "String" },
+  },
+  CreateLocationCategoryPayload: {
+    __typename: { __type: "String!" },
+    clientMutationId: { __type: "String" },
+    locationCategory: { __type: "LocationCategory" },
+  },
+  CreateLocationInput: {
     authorId: { __type: "ID" },
     clientMutationId: { __type: "String" },
-    commentStatus: { __type: "String" },
     content: { __type: "String" },
     date: { __type: "String" },
     excerpt: { __type: "String" },
+    locationCategories: { __type: "LocationLocationCategoriesInput" },
     menuOrder: { __type: "Int" },
+    parentId: { __type: "ID" },
     password: { __type: "String" },
     slug: { __type: "String" },
     status: { __type: "PostStatusEnum" },
     title: { __type: "String" },
   },
-  CreateFaqPayload: {
+  CreateLocationPayload: {
     __typename: { __type: "String!" },
     clientMutationId: { __type: "String" },
-    faq: { __type: "Faq" },
+    location: { __type: "Location" },
   },
   CreateMediaItemInput: {
     altText: { __type: "String" },
@@ -5842,16 +6204,26 @@ export const generatedSchema = {
     contact: { __type: "Contact" },
     deletedId: { __type: "ID" },
   },
-  DeleteFaqInput: {
+  DeleteLocationCategoryInput: {
+    clientMutationId: { __type: "String" },
+    id: { __type: "ID!" },
+  },
+  DeleteLocationCategoryPayload: {
+    __typename: { __type: "String!" },
+    clientMutationId: { __type: "String" },
+    deletedId: { __type: "ID" },
+    locationCategory: { __type: "LocationCategory" },
+  },
+  DeleteLocationInput: {
     clientMutationId: { __type: "String" },
     forceDelete: { __type: "Boolean" },
     id: { __type: "ID!" },
   },
-  DeleteFaqPayload: {
+  DeleteLocationPayload: {
     __typename: { __type: "String!" },
     clientMutationId: { __type: "String" },
     deletedId: { __type: "ID" },
-    faq: { __type: "Faq" },
+    location: { __type: "Location" },
   },
   DeleteMediaItemInput: {
     clientMutationId: { __type: "String" },
@@ -5996,119 +6368,6 @@ export const generatedSchema = {
     src: { __type: "String" },
     version: { __type: "String" },
   },
-  Faq: {
-    __typename: { __type: "String!" },
-    answer: { __type: "String" },
-    author: { __type: "NodeWithAuthorToUserConnectionEdge" },
-    authorDatabaseId: { __type: "Int" },
-    authorId: { __type: "ID" },
-    commentCount: { __type: "Int" },
-    commentStatus: { __type: "String" },
-    comments: {
-      __type: "FaqToCommentConnection",
-      __args: {
-        after: "String",
-        before: "String",
-        first: "Int",
-        last: "Int",
-        where: "FaqToCommentConnectionWhereArgs",
-      },
-    },
-    conditionalTags: { __type: "ConditionalTags" },
-    content: {
-      __type: "String",
-      __args: { format: "PostObjectFieldFormatEnum" },
-    },
-    contentType: { __type: "ContentNodeToContentTypeConnectionEdge" },
-    contentTypeName: { __type: "String!" },
-    databaseId: { __type: "Int!" },
-    date: { __type: "String" },
-    dateGmt: { __type: "String" },
-    desiredSlug: { __type: "String" },
-    editingLockedBy: { __type: "ContentNodeToEditLockConnectionEdge" },
-    enclosure: { __type: "String" },
-    enqueuedScripts: {
-      __type: "ContentNodeToEnqueuedScriptConnection",
-      __args: { after: "String", before: "String", first: "Int", last: "Int" },
-    },
-    enqueuedStylesheets: {
-      __type: "ContentNodeToEnqueuedStylesheetConnection",
-      __args: { after: "String", before: "String", first: "Int", last: "Int" },
-    },
-    excerpt: {
-      __type: "String",
-      __args: { format: "PostObjectFieldFormatEnum" },
-    },
-    faqId: { __type: "Int!" },
-    guid: { __type: "String" },
-    id: { __type: "ID!" },
-    isContentNode: { __type: "Boolean!" },
-    isPreview: { __type: "Boolean" },
-    isRestricted: { __type: "Boolean" },
-    isTermNode: { __type: "Boolean!" },
-    lastEditedBy: { __type: "ContentNodeToEditLastConnectionEdge" },
-    link: { __type: "String" },
-    modified: { __type: "String" },
-    modifiedGmt: { __type: "String" },
-    preview: { __type: "FaqToPreviewConnectionEdge" },
-    previewRevisionDatabaseId: { __type: "Int" },
-    previewRevisionId: { __type: "ID" },
-    slug: { __type: "String" },
-    status: { __type: "String" },
-    template: { __type: "ContentTemplate" },
-    templates: { __type: "[String]" },
-    title: {
-      __type: "String",
-      __args: { format: "PostObjectFieldFormatEnum" },
-    },
-    uri: { __type: "String" },
-  },
-  FaqToCommentConnection: {
-    __typename: { __type: "String!" },
-    edges: { __type: "[FaqToCommentConnectionEdge]" },
-    nodes: { __type: "[Comment]" },
-    pageInfo: { __type: "WPPageInfo" },
-  },
-  FaqToCommentConnectionEdge: {
-    __typename: { __type: "String!" },
-    cursor: { __type: "String" },
-    node: { __type: "Comment" },
-  },
-  FaqToCommentConnectionWhereArgs: {
-    authorEmail: { __type: "String" },
-    authorIn: { __type: "[ID]" },
-    authorNotIn: { __type: "[ID]" },
-    authorUrl: { __type: "String" },
-    commentIn: { __type: "[ID]" },
-    commentNotIn: { __type: "[ID]" },
-    commentType: { __type: "String" },
-    commentTypeIn: { __type: "[String]" },
-    commentTypeNotIn: { __type: "String" },
-    contentAuthor: { __type: "[ID]" },
-    contentAuthorIn: { __type: "[ID]" },
-    contentAuthorNotIn: { __type: "[ID]" },
-    contentId: { __type: "ID" },
-    contentIdIn: { __type: "[ID]" },
-    contentIdNotIn: { __type: "[ID]" },
-    contentName: { __type: "String" },
-    contentParent: { __type: "Int" },
-    contentStatus: { __type: "[PostStatusEnum]" },
-    contentType: { __type: "[ContentTypeEnum]" },
-    includeUnapproved: { __type: "[ID]" },
-    karma: { __type: "Int" },
-    order: { __type: "OrderEnum" },
-    orderby: { __type: "CommentsConnectionOrderbyEnum" },
-    parent: { __type: "Int" },
-    parentIn: { __type: "[ID]" },
-    parentNotIn: { __type: "[ID]" },
-    search: { __type: "String" },
-    status: { __type: "String" },
-    userId: { __type: "ID" },
-  },
-  FaqToPreviewConnectionEdge: {
-    __typename: { __type: "String!" },
-    node: { __type: "Faq" },
-  },
   GeneralSettings: {
     __typename: { __type: "String!" },
     dateFormat: { __type: "String" },
@@ -6246,6 +6505,427 @@ export const generatedSchema = {
     parentDatabaseId: { __type: "Int" },
     parentId: { __type: "ID" },
     $on: { __type: "$HierarchicalTermNode!" },
+  },
+  Location: {
+    __typename: { __type: "String!" },
+    ancestors: {
+      __type: "HierarchicalContentNodeToContentNodeAncestorsConnection",
+      __args: {
+        after: "String",
+        before: "String",
+        first: "Int",
+        last: "Int",
+        where:
+          "HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgs",
+      },
+    },
+    author: { __type: "NodeWithAuthorToUserConnectionEdge" },
+    authorDatabaseId: { __type: "Int" },
+    authorId: { __type: "ID" },
+    children: {
+      __type: "HierarchicalContentNodeToContentNodeChildrenConnection",
+      __args: {
+        after: "String",
+        before: "String",
+        first: "Int",
+        last: "Int",
+        where:
+          "HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs",
+      },
+    },
+    conditionalTags: { __type: "ConditionalTags" },
+    content: {
+      __type: "String",
+      __args: { format: "PostObjectFieldFormatEnum" },
+    },
+    contentType: { __type: "ContentNodeToContentTypeConnectionEdge" },
+    contentTypeName: { __type: "String!" },
+    databaseId: { __type: "Int!" },
+    date: { __type: "String" },
+    dateGmt: { __type: "String" },
+    desiredSlug: { __type: "String" },
+    editingLockedBy: { __type: "ContentNodeToEditLockConnectionEdge" },
+    enclosure: { __type: "String" },
+    enqueuedScripts: {
+      __type: "ContentNodeToEnqueuedScriptConnection",
+      __args: { after: "String", before: "String", first: "Int", last: "Int" },
+    },
+    enqueuedStylesheets: {
+      __type: "ContentNodeToEnqueuedStylesheetConnection",
+      __args: { after: "String", before: "String", first: "Int", last: "Int" },
+    },
+    excerpt: {
+      __type: "String",
+      __args: { format: "PostObjectFieldFormatEnum" },
+    },
+    featuredImage: { __type: "NodeWithFeaturedImageToMediaItemConnectionEdge" },
+    featuredImageDatabaseId: { __type: "Int" },
+    featuredImageId: { __type: "ID" },
+    guid: { __type: "String" },
+    id: { __type: "ID!" },
+    isContentNode: { __type: "Boolean!" },
+    isPreview: { __type: "Boolean" },
+    isRestricted: { __type: "Boolean" },
+    isRevision: { __type: "Boolean" },
+    isTermNode: { __type: "Boolean!" },
+    lastEditedBy: { __type: "ContentNodeToEditLastConnectionEdge" },
+    link: { __type: "String" },
+    locationCategories: {
+      __type: "LocationToLocationCategoryConnection",
+      __args: {
+        after: "String",
+        before: "String",
+        first: "Int",
+        last: "Int",
+        where: "LocationToLocationCategoryConnectionWhereArgs",
+      },
+    },
+    locationId: { __type: "Int!" },
+    modified: { __type: "String" },
+    modifiedGmt: { __type: "String" },
+    parent: {
+      __type: "HierarchicalContentNodeToParentContentNodeConnectionEdge",
+    },
+    parentDatabaseId: { __type: "Int" },
+    parentId: { __type: "ID" },
+    preview: { __type: "LocationToPreviewConnectionEdge" },
+    previewRevisionDatabaseId: { __type: "Int" },
+    previewRevisionId: { __type: "ID" },
+    revisionOf: { __type: "NodeWithRevisionsToContentNodeConnectionEdge" },
+    revisions: {
+      __type: "LocationToRevisionConnection",
+      __args: {
+        after: "String",
+        before: "String",
+        first: "Int",
+        last: "Int",
+        where: "LocationToRevisionConnectionWhereArgs",
+      },
+    },
+    slug: { __type: "String" },
+    status: { __type: "String" },
+    template: { __type: "ContentTemplate" },
+    templates: { __type: "[String]" },
+    terms: {
+      __type: "LocationToTermNodeConnection",
+      __args: {
+        after: "String",
+        before: "String",
+        first: "Int",
+        last: "Int",
+        where: "LocationToTermNodeConnectionWhereArgs",
+      },
+    },
+    title: {
+      __type: "String",
+      __args: { format: "PostObjectFieldFormatEnum" },
+    },
+    uri: { __type: "String" },
+  },
+  LocationCategory: {
+    __typename: { __type: "String!" },
+    ancestors: {
+      __type: "LocationCategoryToAncestorsLocationCategoryConnection",
+      __args: { after: "String", before: "String", first: "Int", last: "Int" },
+    },
+    children: {
+      __type: "LocationCategoryToLocationCategoryConnection",
+      __args: {
+        after: "String",
+        before: "String",
+        first: "Int",
+        last: "Int",
+        where: "LocationCategoryToLocationCategoryConnectionWhereArgs",
+      },
+    },
+    conditionalTags: { __type: "ConditionalTags" },
+    contentNodes: {
+      __type: "LocationCategoryToContentNodeConnection",
+      __args: {
+        after: "String",
+        before: "String",
+        first: "Int",
+        last: "Int",
+        where: "LocationCategoryToContentNodeConnectionWhereArgs",
+      },
+    },
+    count: { __type: "Int" },
+    databaseId: { __type: "Int!" },
+    description: { __type: "String" },
+    enqueuedScripts: {
+      __type: "TermNodeToEnqueuedScriptConnection",
+      __args: { after: "String", before: "String", first: "Int", last: "Int" },
+    },
+    enqueuedStylesheets: {
+      __type: "TermNodeToEnqueuedStylesheetConnection",
+      __args: { after: "String", before: "String", first: "Int", last: "Int" },
+    },
+    id: { __type: "ID!" },
+    isContentNode: { __type: "Boolean!" },
+    isRestricted: { __type: "Boolean" },
+    isTermNode: { __type: "Boolean!" },
+    link: { __type: "String" },
+    locationCategoryId: { __type: "Int" },
+    locations: {
+      __type: "LocationCategoryToLocationConnection",
+      __args: {
+        after: "String",
+        before: "String",
+        first: "Int",
+        last: "Int",
+        where: "LocationCategoryToLocationConnectionWhereArgs",
+      },
+    },
+    name: { __type: "String" },
+    parent: {
+      __type: "LocationCategoryToParentLocationCategoryConnectionEdge",
+    },
+    parentDatabaseId: { __type: "Int" },
+    parentId: { __type: "ID" },
+    slug: { __type: "String" },
+    taxonomy: { __type: "LocationCategoryToTaxonomyConnectionEdge" },
+    taxonomyName: { __type: "String" },
+    templates: { __type: "[String]" },
+    termGroupId: { __type: "Int" },
+    termTaxonomyId: { __type: "Int" },
+    uri: { __type: "String" },
+  },
+  LocationCategoryToAncestorsLocationCategoryConnection: {
+    __typename: { __type: "String!" },
+    edges: {
+      __type: "[LocationCategoryToAncestorsLocationCategoryConnectionEdge]",
+    },
+    nodes: { __type: "[LocationCategory]" },
+    pageInfo: { __type: "WPPageInfo" },
+  },
+  LocationCategoryToAncestorsLocationCategoryConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "LocationCategory" },
+  },
+  LocationCategoryToContentNodeConnection: {
+    __typename: { __type: "String!" },
+    edges: { __type: "[LocationCategoryToContentNodeConnectionEdge]" },
+    nodes: { __type: "[ContentNode]" },
+    pageInfo: { __type: "WPPageInfo" },
+  },
+  LocationCategoryToContentNodeConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "ContentNode" },
+  },
+  LocationCategoryToContentNodeConnectionWhereArgs: {
+    contentTypes: { __type: "[ContentTypesOfLocationCategoryEnum]" },
+    dateQuery: { __type: "DateQueryInput" },
+    hasPassword: { __type: "Boolean" },
+    id: { __type: "Int" },
+    in: { __type: "[ID]" },
+    mimeType: { __type: "MimeTypeEnum" },
+    name: { __type: "String" },
+    nameIn: { __type: "[String]" },
+    notIn: { __type: "[ID]" },
+    orderby: { __type: "[PostObjectsConnectionOrderbyInput]" },
+    parent: { __type: "ID" },
+    parentIn: { __type: "[ID]" },
+    parentNotIn: { __type: "[ID]" },
+    password: { __type: "String" },
+    search: { __type: "String" },
+    stati: { __type: "[PostStatusEnum]" },
+    status: { __type: "PostStatusEnum" },
+    title: { __type: "String" },
+  },
+  LocationCategoryToLocationCategoryConnection: {
+    __typename: { __type: "String!" },
+    edges: { __type: "[LocationCategoryToLocationCategoryConnectionEdge]" },
+    nodes: { __type: "[LocationCategory]" },
+    pageInfo: { __type: "WPPageInfo" },
+  },
+  LocationCategoryToLocationCategoryConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "LocationCategory" },
+  },
+  LocationCategoryToLocationCategoryConnectionWhereArgs: {
+    cacheDomain: { __type: "String" },
+    childOf: { __type: "Int" },
+    childless: { __type: "Boolean" },
+    descriptionLike: { __type: "String" },
+    exclude: { __type: "[ID]" },
+    excludeTree: { __type: "[ID]" },
+    hideEmpty: { __type: "Boolean" },
+    hierarchical: { __type: "Boolean" },
+    include: { __type: "[ID]" },
+    name: { __type: "[String]" },
+    nameLike: { __type: "String" },
+    objectIds: { __type: "[ID]" },
+    order: { __type: "OrderEnum" },
+    orderby: { __type: "TermObjectsConnectionOrderbyEnum" },
+    padCounts: { __type: "Boolean" },
+    parent: { __type: "Int" },
+    search: { __type: "String" },
+    slug: { __type: "[String]" },
+    termTaxonomId: { __type: "[ID]" },
+    termTaxonomyId: { __type: "[ID]" },
+    updateTermMetaCache: { __type: "Boolean" },
+  },
+  LocationCategoryToLocationConnection: {
+    __typename: { __type: "String!" },
+    edges: { __type: "[LocationCategoryToLocationConnectionEdge]" },
+    nodes: { __type: "[Location]" },
+    pageInfo: { __type: "WPPageInfo" },
+  },
+  LocationCategoryToLocationConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "Location" },
+  },
+  LocationCategoryToLocationConnectionWhereArgs: {
+    author: { __type: "Int" },
+    authorIn: { __type: "[ID]" },
+    authorName: { __type: "String" },
+    authorNotIn: { __type: "[ID]" },
+    dateQuery: { __type: "DateQueryInput" },
+    hasPassword: { __type: "Boolean" },
+    id: { __type: "Int" },
+    in: { __type: "[ID]" },
+    mimeType: { __type: "MimeTypeEnum" },
+    name: { __type: "String" },
+    nameIn: { __type: "[String]" },
+    notIn: { __type: "[ID]" },
+    orderby: { __type: "[PostObjectsConnectionOrderbyInput]" },
+    parent: { __type: "ID" },
+    parentIn: { __type: "[ID]" },
+    parentNotIn: { __type: "[ID]" },
+    password: { __type: "String" },
+    search: { __type: "String" },
+    stati: { __type: "[PostStatusEnum]" },
+    status: { __type: "PostStatusEnum" },
+    title: { __type: "String" },
+  },
+  LocationCategoryToParentLocationCategoryConnectionEdge: {
+    __typename: { __type: "String!" },
+    node: { __type: "LocationCategory" },
+  },
+  LocationCategoryToTaxonomyConnectionEdge: {
+    __typename: { __type: "String!" },
+    node: { __type: "Taxonomy" },
+  },
+  LocationLocationCategoriesInput: {
+    append: { __type: "Boolean" },
+    nodes: { __type: "[LocationLocationCategoriesNodeInput]" },
+  },
+  LocationLocationCategoriesNodeInput: {
+    description: { __type: "String" },
+    id: { __type: "ID" },
+    name: { __type: "String" },
+    slug: { __type: "String" },
+  },
+  LocationToLocationCategoryConnection: {
+    __typename: { __type: "String!" },
+    edges: { __type: "[LocationToLocationCategoryConnectionEdge]" },
+    nodes: { __type: "[LocationCategory]" },
+    pageInfo: { __type: "WPPageInfo" },
+  },
+  LocationToLocationCategoryConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "LocationCategory" },
+  },
+  LocationToLocationCategoryConnectionWhereArgs: {
+    cacheDomain: { __type: "String" },
+    childOf: { __type: "Int" },
+    childless: { __type: "Boolean" },
+    descriptionLike: { __type: "String" },
+    exclude: { __type: "[ID]" },
+    excludeTree: { __type: "[ID]" },
+    hideEmpty: { __type: "Boolean" },
+    hierarchical: { __type: "Boolean" },
+    include: { __type: "[ID]" },
+    name: { __type: "[String]" },
+    nameLike: { __type: "String" },
+    objectIds: { __type: "[ID]" },
+    order: { __type: "OrderEnum" },
+    orderby: { __type: "TermObjectsConnectionOrderbyEnum" },
+    padCounts: { __type: "Boolean" },
+    parent: { __type: "Int" },
+    search: { __type: "String" },
+    slug: { __type: "[String]" },
+    termTaxonomId: { __type: "[ID]" },
+    termTaxonomyId: { __type: "[ID]" },
+    updateTermMetaCache: { __type: "Boolean" },
+  },
+  LocationToPreviewConnectionEdge: {
+    __typename: { __type: "String!" },
+    node: { __type: "Location" },
+  },
+  LocationToRevisionConnection: {
+    __typename: { __type: "String!" },
+    edges: { __type: "[LocationToRevisionConnectionEdge]" },
+    nodes: { __type: "[Location]" },
+    pageInfo: { __type: "WPPageInfo" },
+  },
+  LocationToRevisionConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "Location" },
+  },
+  LocationToRevisionConnectionWhereArgs: {
+    author: { __type: "Int" },
+    authorIn: { __type: "[ID]" },
+    authorName: { __type: "String" },
+    authorNotIn: { __type: "[ID]" },
+    dateQuery: { __type: "DateQueryInput" },
+    hasPassword: { __type: "Boolean" },
+    id: { __type: "Int" },
+    in: { __type: "[ID]" },
+    mimeType: { __type: "MimeTypeEnum" },
+    name: { __type: "String" },
+    nameIn: { __type: "[String]" },
+    notIn: { __type: "[ID]" },
+    orderby: { __type: "[PostObjectsConnectionOrderbyInput]" },
+    parent: { __type: "ID" },
+    parentIn: { __type: "[ID]" },
+    parentNotIn: { __type: "[ID]" },
+    password: { __type: "String" },
+    search: { __type: "String" },
+    stati: { __type: "[PostStatusEnum]" },
+    status: { __type: "PostStatusEnum" },
+    title: { __type: "String" },
+  },
+  LocationToTermNodeConnection: {
+    __typename: { __type: "String!" },
+    edges: { __type: "[LocationToTermNodeConnectionEdge]" },
+    nodes: { __type: "[TermNode]" },
+    pageInfo: { __type: "WPPageInfo" },
+  },
+  LocationToTermNodeConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "TermNode" },
+  },
+  LocationToTermNodeConnectionWhereArgs: {
+    cacheDomain: { __type: "String" },
+    childOf: { __type: "Int" },
+    childless: { __type: "Boolean" },
+    descriptionLike: { __type: "String" },
+    exclude: { __type: "[ID]" },
+    excludeTree: { __type: "[ID]" },
+    hideEmpty: { __type: "Boolean" },
+    hierarchical: { __type: "Boolean" },
+    include: { __type: "[ID]" },
+    name: { __type: "[String]" },
+    nameLike: { __type: "String" },
+    objectIds: { __type: "[ID]" },
+    order: { __type: "OrderEnum" },
+    orderby: { __type: "TermObjectsConnectionOrderbyEnum" },
+    padCounts: { __type: "Boolean" },
+    parent: { __type: "Int" },
+    search: { __type: "String" },
+    slug: { __type: "[String]" },
+    taxonomies: { __type: "[TaxonomyEnum]" },
+    termTaxonomId: { __type: "[ID]" },
+    termTaxonomyId: { __type: "[ID]" },
+    updateTermMetaCache: { __type: "Boolean" },
   },
   MediaDetails: {
     __typename: { __type: "String!" },
@@ -8028,18 +8708,52 @@ export const generatedSchema = {
     cursor: { __type: "String" },
     node: { __type: "EnqueuedStylesheet" },
   },
-  RootQueryToFaqConnection: {
+  RootQueryToLocationCategoryConnection: {
     __typename: { __type: "String!" },
-    edges: { __type: "[RootQueryToFaqConnectionEdge]" },
-    nodes: { __type: "[Faq]" },
+    edges: { __type: "[RootQueryToLocationCategoryConnectionEdge]" },
+    nodes: { __type: "[LocationCategory]" },
     pageInfo: { __type: "WPPageInfo" },
   },
-  RootQueryToFaqConnectionEdge: {
+  RootQueryToLocationCategoryConnectionEdge: {
     __typename: { __type: "String!" },
     cursor: { __type: "String" },
-    node: { __type: "Faq" },
+    node: { __type: "LocationCategory" },
   },
-  RootQueryToFaqConnectionWhereArgs: {
+  RootQueryToLocationCategoryConnectionWhereArgs: {
+    cacheDomain: { __type: "String" },
+    childOf: { __type: "Int" },
+    childless: { __type: "Boolean" },
+    descriptionLike: { __type: "String" },
+    exclude: { __type: "[ID]" },
+    excludeTree: { __type: "[ID]" },
+    hideEmpty: { __type: "Boolean" },
+    hierarchical: { __type: "Boolean" },
+    include: { __type: "[ID]" },
+    name: { __type: "[String]" },
+    nameLike: { __type: "String" },
+    objectIds: { __type: "[ID]" },
+    order: { __type: "OrderEnum" },
+    orderby: { __type: "TermObjectsConnectionOrderbyEnum" },
+    padCounts: { __type: "Boolean" },
+    parent: { __type: "Int" },
+    search: { __type: "String" },
+    slug: { __type: "[String]" },
+    termTaxonomId: { __type: "[ID]" },
+    termTaxonomyId: { __type: "[ID]" },
+    updateTermMetaCache: { __type: "Boolean" },
+  },
+  RootQueryToLocationConnection: {
+    __typename: { __type: "String!" },
+    edges: { __type: "[RootQueryToLocationConnectionEdge]" },
+    nodes: { __type: "[Location]" },
+    pageInfo: { __type: "WPPageInfo" },
+  },
+  RootQueryToLocationConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "Location" },
+  },
+  RootQueryToLocationConnectionWhereArgs: {
     author: { __type: "Int" },
     authorIn: { __type: "[ID]" },
     authorName: { __type: "String" },
@@ -8788,6 +9502,10 @@ export const generatedSchema = {
     __typename: { __type: "String!" },
     templateName: { __type: "String" },
   },
+  Template_SlimHeader: {
+    __typename: { __type: "String!" },
+    templateName: { __type: "String" },
+  },
   TermNode: {
     __typename: { __type: "String!" },
     conditionalTags: { __type: "ConditionalTags" },
@@ -8930,24 +9648,39 @@ export const generatedSchema = {
     clientMutationId: { __type: "String" },
     contact: { __type: "Contact" },
   },
-  UpdateFaqInput: {
+  UpdateLocationCategoryInput: {
+    aliasOf: { __type: "String" },
+    clientMutationId: { __type: "String" },
+    description: { __type: "String" },
+    id: { __type: "ID!" },
+    name: { __type: "String" },
+    parentId: { __type: "ID" },
+    slug: { __type: "String" },
+  },
+  UpdateLocationCategoryPayload: {
+    __typename: { __type: "String!" },
+    clientMutationId: { __type: "String" },
+    locationCategory: { __type: "LocationCategory" },
+  },
+  UpdateLocationInput: {
     authorId: { __type: "ID" },
     clientMutationId: { __type: "String" },
-    commentStatus: { __type: "String" },
     content: { __type: "String" },
     date: { __type: "String" },
     excerpt: { __type: "String" },
     id: { __type: "ID!" },
+    locationCategories: { __type: "LocationLocationCategoriesInput" },
     menuOrder: { __type: "Int" },
+    parentId: { __type: "ID" },
     password: { __type: "String" },
     slug: { __type: "String" },
     status: { __type: "PostStatusEnum" },
     title: { __type: "String" },
   },
-  UpdateFaqPayload: {
+  UpdateLocationPayload: {
     __typename: { __type: "String!" },
     clientMutationId: { __type: "String" },
-    faq: { __type: "Faq" },
+    location: { __type: "Location" },
   },
   UpdateMediaItemInput: {
     altText: { __type: "String" },
@@ -9241,16 +9974,6 @@ export const generatedSchema = {
       __args: { after: "String", before: "String", first: "Int", last: "Int" },
     },
     extraCapabilities: { __type: "[String]" },
-    faqs: {
-      __type: "UserToFaqConnection",
-      __args: {
-        after: "String",
-        before: "String",
-        first: "Int",
-        last: "Int",
-        where: "UserToFaqConnectionWhereArgs",
-      },
-    },
     firstName: { __type: "String" },
     id: { __type: "ID!" },
     isContentNode: { __type: "Boolean!" },
@@ -9258,6 +9981,16 @@ export const generatedSchema = {
     isTermNode: { __type: "Boolean!" },
     lastName: { __type: "String" },
     locale: { __type: "String" },
+    locations: {
+      __type: "UserToLocationConnection",
+      __args: {
+        after: "String",
+        before: "String",
+        first: "Int",
+        last: "Int",
+        where: "UserToLocationConnectionWhereArgs",
+      },
+    },
     mediaItems: {
       __type: "UserToMediaItemConnection",
       __args: {
@@ -9480,18 +10213,18 @@ export const generatedSchema = {
     cursor: { __type: "String" },
     node: { __type: "EnqueuedStylesheet" },
   },
-  UserToFaqConnection: {
+  UserToLocationConnection: {
     __typename: { __type: "String!" },
-    edges: { __type: "[UserToFaqConnectionEdge]" },
-    nodes: { __type: "[Faq]" },
+    edges: { __type: "[UserToLocationConnectionEdge]" },
+    nodes: { __type: "[Location]" },
     pageInfo: { __type: "WPPageInfo" },
   },
-  UserToFaqConnectionEdge: {
+  UserToLocationConnectionEdge: {
     __typename: { __type: "String!" },
     cursor: { __type: "String" },
-    node: { __type: "Faq" },
+    node: { __type: "Location" },
   },
-  UserToFaqConnectionWhereArgs: {
+  UserToLocationConnectionWhereArgs: {
     author: { __type: "Int" },
     authorIn: { __type: "[ID]" },
     authorName: { __type: "String" },
@@ -9774,9 +10507,13 @@ export const generatedSchema = {
       __type: "CreateContactPayload",
       __args: { input: "CreateContactInput!" },
     },
-    createFaq: {
-      __type: "CreateFaqPayload",
-      __args: { input: "CreateFaqInput!" },
+    createLocation: {
+      __type: "CreateLocationPayload",
+      __args: { input: "CreateLocationInput!" },
+    },
+    createLocationCategory: {
+      __type: "CreateLocationCategoryPayload",
+      __args: { input: "CreateLocationCategoryInput!" },
     },
     createMediaItem: {
       __type: "CreateMediaItemPayload",
@@ -9834,9 +10571,13 @@ export const generatedSchema = {
       __type: "DeleteContactPayload",
       __args: { input: "DeleteContactInput!" },
     },
-    deleteFaq: {
-      __type: "DeleteFaqPayload",
-      __args: { input: "DeleteFaqInput!" },
+    deleteLocation: {
+      __type: "DeleteLocationPayload",
+      __args: { input: "DeleteLocationInput!" },
+    },
+    deleteLocationCategory: {
+      __type: "DeleteLocationCategoryPayload",
+      __args: { input: "DeleteLocationCategoryInput!" },
     },
     deleteMediaItem: {
       __type: "DeleteMediaItemPayload",
@@ -9915,9 +10656,13 @@ export const generatedSchema = {
       __type: "UpdateContactPayload",
       __args: { input: "UpdateContactInput!" },
     },
-    updateFaq: {
-      __type: "UpdateFaqPayload",
-      __args: { input: "UpdateFaqInput!" },
+    updateLocation: {
+      __type: "UpdateLocationPayload",
+      __args: { input: "UpdateLocationInput!" },
+    },
+    updateLocationCategory: {
+      __type: "UpdateLocationCategoryPayload",
+      __args: { input: "UpdateLocationCategoryInput!" },
     },
     updateMediaItem: {
       __type: "UpdateMediaItemPayload",
@@ -10062,27 +10807,41 @@ export const generatedSchema = {
       __args: { after: "String", before: "String", first: "Int", last: "Int" },
     },
     discussionSettings: { __type: "DiscussionSettings" },
-    faq: {
-      __type: "Faq",
-      __args: { asPreview: "Boolean", id: "ID!", idType: "FaqIdType" },
+    generalSettings: { __type: "GeneralSettings" },
+    genesisBlocksGlobalSettingsSettings: {
+      __type: "GenesisBlocksGlobalSettingsSettings",
     },
-    faqBy: {
-      __type: "Faq",
-      __args: { faqId: "Int", id: "ID", slug: "String", uri: "String" },
+    location: {
+      __type: "Location",
+      __args: { asPreview: "Boolean", id: "ID!", idType: "LocationIdType" },
     },
-    faqs: {
-      __type: "RootQueryToFaqConnection",
+    locationBy: {
+      __type: "Location",
+      __args: { id: "ID", locationId: "Int", uri: "String" },
+    },
+    locationCategories: {
+      __type: "RootQueryToLocationCategoryConnection",
       __args: {
         after: "String",
         before: "String",
         first: "Int",
         last: "Int",
-        where: "RootQueryToFaqConnectionWhereArgs",
+        where: "RootQueryToLocationCategoryConnectionWhereArgs",
       },
     },
-    generalSettings: { __type: "GeneralSettings" },
-    genesisBlocksGlobalSettingsSettings: {
-      __type: "GenesisBlocksGlobalSettingsSettings",
+    locationCategory: {
+      __type: "LocationCategory",
+      __args: { id: "ID!", idType: "LocationCategoryIdType" },
+    },
+    locations: {
+      __type: "RootQueryToLocationConnection",
+      __args: {
+        after: "String",
+        before: "String",
+        first: "Int",
+        last: "Int",
+        where: "RootQueryToLocationConnectionWhereArgs",
+      },
     },
     mediaItem: {
       __type: "MediaItem",
@@ -10352,7 +11111,7 @@ export const generatedSchema = {
     ContentNode: [
       "CXAlert",
       "Contact",
-      "Faq",
+      "Location",
       "MediaItem",
       "Page",
       "Post",
@@ -10365,7 +11124,8 @@ export const generatedSchema = {
       "Category",
       "Comment",
       "Contact",
-      "Faq",
+      "Location",
+      "LocationCategory",
       "MediaItem",
       "Menu",
       "MenuItem",
@@ -10382,7 +11142,8 @@ export const generatedSchema = {
     MenuItemLinkable: [
       "CXAlert",
       "Category",
-      "Faq",
+      "Location",
+      "LocationCategory",
       "Page",
       "Post",
       "ProductName",
@@ -10397,7 +11158,8 @@ export const generatedSchema = {
       "ContentType",
       "EnqueuedScript",
       "EnqueuedStylesheet",
-      "Faq",
+      "Location",
+      "LocationCategory",
       "MediaItem",
       "Menu",
       "MenuItem",
@@ -10416,11 +11178,11 @@ export const generatedSchema = {
       "UserRole",
     ],
     NodeWithPageAttributes: ["CXAlert", "Page"],
-    NodeWithRevisions: ["CXAlert", "Page", "Post"],
+    NodeWithRevisions: ["CXAlert", "Location", "Page", "Post"],
     NodeWithTemplate: [
       "CXAlert",
       "Contact",
-      "Faq",
+      "Location",
       "MediaItem",
       "Page",
       "Post",
@@ -10431,7 +11193,7 @@ export const generatedSchema = {
     NodeWithTitle: [
       "CXAlert",
       "Contact",
-      "Faq",
+      "Location",
       "MediaItem",
       "Page",
       "Post",
@@ -10444,7 +11206,8 @@ export const generatedSchema = {
       "Category",
       "Contact",
       "ContentType",
-      "Faq",
+      "Location",
+      "LocationCategory",
       "MediaItem",
       "Page",
       "Post",
@@ -10456,12 +11219,18 @@ export const generatedSchema = {
       "Tag",
       "User",
     ],
-    HierarchicalTermNode: ["Category"],
-    TermNode: ["Category", "PostFormat", "ProductName", "Tag"],
+    HierarchicalTermNode: ["Category", "LocationCategory"],
+    TermNode: [
+      "Category",
+      "LocationCategory",
+      "PostFormat",
+      "ProductName",
+      "Tag",
+    ],
     Commenter: ["CommentAuthor", "User"],
     NodeWithAuthor: [
       "Contact",
-      "Faq",
+      "Location",
       "MediaItem",
       "Page",
       "Post",
@@ -10469,27 +11238,29 @@ export const generatedSchema = {
       "Rate",
       "Service",
     ],
-    ContentRevisionUnion: ["CXAlert", "Page", "Post"],
+    ContentRevisionUnion: ["CXAlert", "Location", "Page", "Post"],
     ContentTemplate: [
       "DefaultTemplate",
       "Template_ApplyNow",
       "Template_FullWidth",
+      "Template_SlimHeader",
     ],
     EnqueuedAsset: ["EnqueuedScript", "EnqueuedStylesheet"],
-    NodeWithComments: ["Faq", "MediaItem", "Page", "Post"],
-    NodeWithContentEditor: ["Faq", "Page", "Post"],
-    NodeWithExcerpt: ["Faq", "Page", "Post"],
-    HierarchicalContentNode: ["MediaItem", "Page"],
+    HierarchicalContentNode: ["Location", "MediaItem", "Page"],
+    NodeWithContentEditor: ["Location", "Page", "Post"],
+    NodeWithExcerpt: ["Location", "Page", "Post"],
+    NodeWithFeaturedImage: ["Location", "Page", "Post"],
+    NodeWithComments: ["MediaItem", "Page", "Post"],
     MenuItemObjectUnion: [
       "CXAlert",
       "Category",
-      "Faq",
+      "Location",
+      "LocationCategory",
       "Page",
       "Post",
       "ProductName",
       "Tag",
     ],
-    NodeWithFeaturedImage: ["Page", "Post"],
     NodeWithTrackbacks: ["Post"],
   },
 } as const;
@@ -11773,7 +12544,7 @@ export interface ContentNode {
   __typename?:
     | "CXAlert"
     | "Contact"
-    | "Faq"
+    | "Location"
     | "MediaItem"
     | "Page"
     | "Post"
@@ -12035,7 +12806,7 @@ export interface ContentNodeToEnqueuedStylesheetConnectionEdge {
  * A union of Content Node Types that support revisions
  */
 export interface ContentRevisionUnion {
-  __typename?: "CXAlert" | "Page" | "Post";
+  __typename?: "CXAlert" | "Location" | "Page" | "Post";
   $on: $ContentRevisionUnion;
 }
 
@@ -12043,7 +12814,11 @@ export interface ContentRevisionUnion {
  * The template assigned to a node of content
  */
 export interface ContentTemplate {
-  __typename?: "DefaultTemplate" | "Template_ApplyNow" | "Template_FullWidth";
+  __typename?:
+    | "DefaultTemplate"
+    | "Template_ApplyNow"
+    | "Template_FullWidth"
+    | "Template_SlimHeader";
   /**
    * The name of the template
    */
@@ -12362,10 +13137,25 @@ export interface CreateContactPayload {
 }
 
 /**
- * The payload for the createFaq mutation
+ * The payload for the createLocationCategory mutation
  */
-export interface CreateFaqPayload {
-  __typename?: "CreateFaqPayload";
+export interface CreateLocationCategoryPayload {
+  __typename?: "CreateLocationCategoryPayload";
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The created wpsl_store_category
+   */
+  locationCategory?: Maybe<LocationCategory>;
+}
+
+/**
+ * The payload for the createLocation mutation
+ */
+export interface CreateLocationPayload {
+  __typename?: "CreateLocationPayload";
   /**
    * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
    */
@@ -12373,7 +13163,7 @@ export interface CreateFaqPayload {
   /**
    * The Post object mutation type.
    */
-  faq?: Maybe<Faq>;
+  location?: Maybe<Location>;
 }
 
 /**
@@ -12535,7 +13325,8 @@ export interface DatabaseIdentifier {
     | "Category"
     | "Comment"
     | "Contact"
-    | "Faq"
+    | "Location"
+    | "LocationCategory"
     | "MediaItem"
     | "Menu"
     | "MenuItem"
@@ -12643,10 +13434,29 @@ export interface DeleteContactPayload {
 }
 
 /**
- * The payload for the deleteFaq mutation
+ * The payload for the deleteLocationCategory mutation
  */
-export interface DeleteFaqPayload {
-  __typename?: "DeleteFaqPayload";
+export interface DeleteLocationCategoryPayload {
+  __typename?: "DeleteLocationCategoryPayload";
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The ID of the deleted object
+   */
+  deletedId?: Maybe<ScalarsEnums["ID"]>;
+  /**
+   * The deteted term object
+   */
+  locationCategory?: Maybe<LocationCategory>;
+}
+
+/**
+ * The payload for the deleteLocation mutation
+ */
+export interface DeleteLocationPayload {
+  __typename?: "DeleteLocationPayload";
   /**
    * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
    */
@@ -12658,7 +13468,7 @@ export interface DeleteFaqPayload {
   /**
    * The object before it was deleted
    */
-  faq?: Maybe<Faq>;
+  location?: Maybe<Location>;
 }
 
 /**
@@ -12973,286 +13783,6 @@ export interface EnqueuedStylesheet {
 }
 
 /**
- * The faq type
- */
-export interface Faq {
-  __typename?: "Faq";
-  /**
-   * The cost of the food item
-   */
-  answer?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * Connection between the NodeWithAuthor type and the User type
-   */
-  author?: Maybe<NodeWithAuthorToUserConnectionEdge>;
-  /**
-   * The database identifier of the author of the node
-   */
-  authorDatabaseId?: Maybe<ScalarsEnums["Int"]>;
-  /**
-   * The globally unique identifier of the author of the node
-   */
-  authorId?: Maybe<ScalarsEnums["ID"]>;
-  /**
-   * The number of comments. Even though WPGraphQL denotes this field as an integer, in WordPress this field should be saved as a numeric string for compatibility.
-   */
-  commentCount?: Maybe<ScalarsEnums["Int"]>;
-  /**
-   * Whether the comments are open or closed for this particular post.
-   */
-  commentStatus?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * Connection between the Faq type and the Comment type
-   */
-  comments: (args?: {
-    /**
-     * Cursor used along with the "first" argument to reference where in the dataset to get data
-     */
-    after?: Maybe<Scalars["String"]>;
-    /**
-     * Cursor used along with the "last" argument to reference where in the dataset to get data
-     */
-    before?: Maybe<Scalars["String"]>;
-    /**
-     * The number of items to return after the referenced "after" cursor
-     */
-    first?: Maybe<Scalars["Int"]>;
-    /**
-     * The number of items to return before the referenced "before" cursor
-     */
-    last?: Maybe<Scalars["Int"]>;
-    /**
-     * Arguments for filtering the connection
-     */
-    where?: Maybe<FaqToCommentConnectionWhereArgs>;
-  }) => Maybe<FaqToCommentConnection>;
-  /**
-   * @deprecated Deprecated in favor of using Next.js pages
-   */
-  conditionalTags?: Maybe<ConditionalTags>;
-  /**
-   * The content of the post.
-   */
-  content: (args?: {
-    /**
-     * Format of the field output
-     */
-    format?: Maybe<PostObjectFieldFormatEnum>;
-  }) => Maybe<ScalarsEnums["String"]>;
-  /**
-   * Connection between the ContentNode type and the ContentType type
-   */
-  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
-  /**
-   * The name of the Content Type the node belongs to
-   */
-  contentTypeName: ScalarsEnums["String"];
-  /**
-   * The unique resource identifier path
-   */
-  databaseId: ScalarsEnums["Int"];
-  /**
-   * Post publishing date.
-   */
-  date?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The publishing date set in GMT.
-   */
-  dateGmt?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The desired slug of the post
-   */
-  desiredSlug?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds
-   */
-  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
-  /**
-   * The RSS enclosure for the object
-   */
-  enclosure?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * Connection between the ContentNode type and the EnqueuedScript type
-   */
-  enqueuedScripts: (args?: {
-    /**
-     * Cursor used along with the "first" argument to reference where in the dataset to get data
-     */
-    after?: Maybe<Scalars["String"]>;
-    /**
-     * Cursor used along with the "last" argument to reference where in the dataset to get data
-     */
-    before?: Maybe<Scalars["String"]>;
-    /**
-     * The number of items to return after the referenced "after" cursor
-     */
-    first?: Maybe<Scalars["Int"]>;
-    /**
-     * The number of items to return before the referenced "before" cursor
-     */
-    last?: Maybe<Scalars["Int"]>;
-  }) => Maybe<ContentNodeToEnqueuedScriptConnection>;
-  /**
-   * Connection between the ContentNode type and the EnqueuedStylesheet type
-   */
-  enqueuedStylesheets: (args?: {
-    /**
-     * Cursor used along with the "first" argument to reference where in the dataset to get data
-     */
-    after?: Maybe<Scalars["String"]>;
-    /**
-     * Cursor used along with the "last" argument to reference where in the dataset to get data
-     */
-    before?: Maybe<Scalars["String"]>;
-    /**
-     * The number of items to return after the referenced "after" cursor
-     */
-    first?: Maybe<Scalars["Int"]>;
-    /**
-     * The number of items to return before the referenced "before" cursor
-     */
-    last?: Maybe<Scalars["Int"]>;
-  }) => Maybe<ContentNodeToEnqueuedStylesheetConnection>;
-  /**
-   * The excerpt of the post.
-   */
-  excerpt: (args?: {
-    /**
-     * Format of the field output
-     */
-    format?: Maybe<PostObjectFieldFormatEnum>;
-  }) => Maybe<ScalarsEnums["String"]>;
-  /**
-   * The id field matches the WP_Post-&gt;ID field.
-   * @deprecated Deprecated in favor of the databaseId field
-   */
-  faqId: ScalarsEnums["Int"];
-  /**
-   * The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table.
-   */
-  guid?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The globally unique identifier of the ufaq object.
-   */
-  id: ScalarsEnums["ID"];
-  /**
-   * Whether the node is a Content Node
-   */
-  isContentNode: ScalarsEnums["Boolean"];
-  /**
-   * Whether the object is a node in the preview state
-   */
-  isPreview?: Maybe<ScalarsEnums["Boolean"]>;
-  /**
-   * Whether the object is restricted from the current viewer
-   */
-  isRestricted?: Maybe<ScalarsEnums["Boolean"]>;
-  /**
-   * Whether the node is a Term
-   */
-  isTermNode: ScalarsEnums["Boolean"];
-  /**
-   * The user that most recently edited the node
-   */
-  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
-  /**
-   * The permalink of the post
-   */
-  link?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time.
-   */
-  modified?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT.
-   */
-  modifiedGmt?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * Connection between the Faq type and the faq type
-   */
-  preview?: Maybe<FaqToPreviewConnectionEdge>;
-  /**
-   * The database id of the preview node
-   */
-  previewRevisionDatabaseId?: Maybe<ScalarsEnums["Int"]>;
-  /**
-   * Whether the object is a node in the preview state
-   */
-  previewRevisionId?: Maybe<ScalarsEnums["ID"]>;
-  /**
-   * The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
-   */
-  slug?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The current status of the object
-   */
-  status?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The template assigned to the node
-   */
-  template?: Maybe<ContentTemplate>;
-  templates?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
-  /**
-   * The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made.
-   */
-  title: (args?: {
-    /**
-     * Format of the field output
-     */
-    format?: Maybe<PostObjectFieldFormatEnum>;
-  }) => Maybe<ScalarsEnums["String"]>;
-  /**
-   * The unique resource identifier path
-   */
-  uri?: Maybe<ScalarsEnums["String"]>;
-}
-
-/**
- * Connection between the Faq type and the Comment type
- */
-export interface FaqToCommentConnection {
-  __typename?: "FaqToCommentConnection";
-  /**
-   * Edges for the FaqToCommentConnection connection
-   */
-  edges?: Maybe<Array<Maybe<FaqToCommentConnectionEdge>>>;
-  /**
-   * The nodes of the connection, without the edges
-   */
-  nodes?: Maybe<Array<Maybe<Comment>>>;
-  /**
-   * Information about pagination in a connection.
-   */
-  pageInfo?: Maybe<WPPageInfo>;
-}
-
-/**
- * An edge in a connection
- */
-export interface FaqToCommentConnectionEdge {
-  __typename?: "FaqToCommentConnectionEdge";
-  /**
-   * A cursor for use in pagination
-   */
-  cursor?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The item at the end of the edge
-   */
-  node?: Maybe<Comment>;
-}
-
-/**
- * Connection between the Faq type and the faq type
- */
-export interface FaqToPreviewConnectionEdge {
-  __typename?: "FaqToPreviewConnectionEdge";
-  /**
-   * The node of the connection, without the edges
-   */
-  node?: Maybe<Faq>;
-}
-
-/**
  * The general setting type
  */
 export interface GeneralSettings {
@@ -13341,7 +13871,7 @@ export interface GenesisBlocksGlobalSettingsSettings {
  * Content node with hierarchical (parent/child) relationships
  */
 export interface HierarchicalContentNode {
-  __typename?: "MediaItem" | "Page";
+  __typename?: "Location" | "MediaItem" | "Page";
   /**
    * Returns ancestors of the node. Default ordered as lowest (closest to the child) to highest (closest to the root).
    */
@@ -13494,7 +14024,7 @@ export interface HierarchicalContentNodeToParentContentNodeConnectionEdge {
  * Term node with hierarchical (parent/child) relationships
  */
 export interface HierarchicalTermNode {
-  __typename?: "Category";
+  __typename?: "Category" | "LocationCategory";
   /**
    * Database id of the parent node
    */
@@ -13504,6 +14034,861 @@ export interface HierarchicalTermNode {
    */
   parentId?: Maybe<ScalarsEnums["ID"]>;
   $on: $HierarchicalTermNode;
+}
+
+/**
+ * The location type
+ */
+export interface Location {
+  __typename?: "Location";
+  /**
+   * Returns ancestors of the node. Default ordered as lowest (closest to the child) to highest (closest to the root).
+   */
+  ancestors: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgs>;
+  }) => Maybe<HierarchicalContentNodeToContentNodeAncestorsConnection>;
+  /**
+   * Connection between the NodeWithAuthor type and the User type
+   */
+  author?: Maybe<NodeWithAuthorToUserConnectionEdge>;
+  /**
+   * The database identifier of the author of the node
+   */
+  authorDatabaseId?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * The globally unique identifier of the author of the node
+   */
+  authorId?: Maybe<ScalarsEnums["ID"]>;
+  /**
+   * Connection between the HierarchicalContentNode type and the ContentNode type
+   */
+  children: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs>;
+  }) => Maybe<HierarchicalContentNodeToContentNodeChildrenConnection>;
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
+  conditionalTags?: Maybe<ConditionalTags>;
+  /**
+   * The content of the post.
+   */
+  content: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums["String"]>;
+  /**
+   * Connection between the ContentNode type and the ContentType type
+   */
+  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
+  /**
+   * The name of the Content Type the node belongs to
+   */
+  contentTypeName: ScalarsEnums["String"];
+  /**
+   * The unique resource identifier path
+   */
+  databaseId: ScalarsEnums["Int"];
+  /**
+   * Post publishing date.
+   */
+  date?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The publishing date set in GMT.
+   */
+  dateGmt?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The desired slug of the post
+   */
+  desiredSlug?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds
+   */
+  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
+  /**
+   * The RSS enclosure for the object
+   */
+  enclosure?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Connection between the ContentNode type and the EnqueuedScript type
+   */
+  enqueuedScripts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+  }) => Maybe<ContentNodeToEnqueuedScriptConnection>;
+  /**
+   * Connection between the ContentNode type and the EnqueuedStylesheet type
+   */
+  enqueuedStylesheets: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+  }) => Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  /**
+   * The excerpt of the post.
+   */
+  excerpt: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums["String"]>;
+  /**
+   * Connection between the NodeWithFeaturedImage type and the MediaItem type
+   */
+  featuredImage?: Maybe<NodeWithFeaturedImageToMediaItemConnectionEdge>;
+  /**
+   * The database identifier for the featured image node assigned to the content node
+   */
+  featuredImageDatabaseId?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Globally unique ID of the featured image assigned to the node
+   */
+  featuredImageId?: Maybe<ScalarsEnums["ID"]>;
+  /**
+   * The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table.
+   */
+  guid?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The globally unique identifier of the wpsl_stores object.
+   */
+  id: ScalarsEnums["ID"];
+  /**
+   * Whether the node is a Content Node
+   */
+  isContentNode: ScalarsEnums["Boolean"];
+  /**
+   * Whether the object is a node in the preview state
+   */
+  isPreview?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * Whether the object is restricted from the current viewer
+   */
+  isRestricted?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * True if the node is a revision of another node
+   */
+  isRevision?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * Whether the node is a Term
+   */
+  isTermNode: ScalarsEnums["Boolean"];
+  /**
+   * The user that most recently edited the node
+   */
+  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
+  /**
+   * The permalink of the post
+   */
+  link?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Connection between the Location type and the locationCategory type
+   */
+  locationCategories: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<LocationToLocationCategoryConnectionWhereArgs>;
+  }) => Maybe<LocationToLocationCategoryConnection>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of the databaseId field
+   */
+  locationId: ScalarsEnums["Int"];
+  /**
+   * The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time.
+   */
+  modified?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT.
+   */
+  modifiedGmt?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The parent of the node. The parent object can be of various types
+   */
+  parent?: Maybe<HierarchicalContentNodeToParentContentNodeConnectionEdge>;
+  /**
+   * Database id of the parent node
+   */
+  parentDatabaseId?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * The globally unique identifier of the parent node.
+   */
+  parentId?: Maybe<ScalarsEnums["ID"]>;
+  /**
+   * Connection between the Location type and the location type
+   */
+  preview?: Maybe<LocationToPreviewConnectionEdge>;
+  /**
+   * The database id of the preview node
+   */
+  previewRevisionDatabaseId?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Whether the object is a node in the preview state
+   */
+  previewRevisionId?: Maybe<ScalarsEnums["ID"]>;
+  /**
+   * If the current node is a revision, this field exposes the node this is a revision of. Returns null if the node is not a revision of another node.
+   */
+  revisionOf?: Maybe<NodeWithRevisionsToContentNodeConnectionEdge>;
+  /**
+   * Connection between the Location type and the location type
+   */
+  revisions: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<LocationToRevisionConnectionWhereArgs>;
+  }) => Maybe<LocationToRevisionConnection>;
+  /**
+   * The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
+   */
+  slug?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The current status of the object
+   */
+  status?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The template assigned to the node
+   */
+  template?: Maybe<ContentTemplate>;
+  templates?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * Connection between the Location type and the TermNode type
+   */
+  terms: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<LocationToTermNodeConnectionWhereArgs>;
+  }) => Maybe<LocationToTermNodeConnection>;
+  /**
+   * The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made.
+   */
+  title: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums["String"]>;
+  /**
+   * The unique resource identifier path
+   */
+  uri?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * The locationCategory type
+ */
+export interface LocationCategory {
+  __typename?: "LocationCategory";
+  /**
+   * The ancestors of the node. Default ordered as lowest (closest to the child) to highest (closest to the root).
+   */
+  ancestors: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+  }) => Maybe<LocationCategoryToAncestorsLocationCategoryConnection>;
+  /**
+   * Connection between the locationCategory type and its children locationCategories.
+   */
+  children: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<LocationCategoryToLocationCategoryConnectionWhereArgs>;
+  }) => Maybe<LocationCategoryToLocationCategoryConnection>;
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
+  conditionalTags?: Maybe<ConditionalTags>;
+  /**
+   * Connection between the LocationCategory type and the ContentNode type
+   */
+  contentNodes: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<LocationCategoryToContentNodeConnectionWhereArgs>;
+  }) => Maybe<LocationCategoryToContentNodeConnection>;
+  /**
+   * The number of objects connected to the object
+   */
+  count?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * The unique resource identifier path
+   */
+  databaseId: ScalarsEnums["Int"];
+  /**
+   * The description of the object
+   */
+  description?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Connection between the TermNode type and the EnqueuedScript type
+   */
+  enqueuedScripts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+  }) => Maybe<TermNodeToEnqueuedScriptConnection>;
+  /**
+   * Connection between the TermNode type and the EnqueuedStylesheet type
+   */
+  enqueuedStylesheets: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+  }) => Maybe<TermNodeToEnqueuedStylesheetConnection>;
+  /**
+   * The unique resource identifier path
+   */
+  id: ScalarsEnums["ID"];
+  /**
+   * Whether the node is a Content Node
+   */
+  isContentNode: ScalarsEnums["Boolean"];
+  /**
+   * Whether the object is restricted from the current viewer
+   */
+  isRestricted?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * Whether the node is a Term
+   */
+  isTermNode: ScalarsEnums["Boolean"];
+  /**
+   * The link to the term
+   */
+  link?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of databaseId
+   */
+  locationCategoryId?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Connection between the LocationCategory type and the location type
+   */
+  locations: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<LocationCategoryToLocationConnectionWhereArgs>;
+  }) => Maybe<LocationCategoryToLocationConnection>;
+  /**
+   * The human friendly name of the object.
+   */
+  name?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Connection between the locationCategory type and its parent locationCategory.
+   */
+  parent?: Maybe<LocationCategoryToParentLocationCategoryConnectionEdge>;
+  /**
+   * Database id of the parent node
+   */
+  parentDatabaseId?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * The globally unique identifier of the parent node.
+   */
+  parentId?: Maybe<ScalarsEnums["ID"]>;
+  /**
+   * An alphanumeric identifier for the object unique to its type.
+   */
+  slug?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Connection between the LocationCategory type and the Taxonomy type
+   */
+  taxonomy?: Maybe<LocationCategoryToTaxonomyConnectionEdge>;
+  /**
+   * The name of the taxonomy that the object is associated with
+   */
+  taxonomyName?: Maybe<ScalarsEnums["String"]>;
+  templates?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The ID of the term group that this term object belongs to
+   */
+  termGroupId?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * The taxonomy ID that the object is associated with
+   */
+  termTaxonomyId?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * The unique resource identifier path
+   */
+  uri?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Connection between the LocationCategory type and the locationCategory type
+ */
+export interface LocationCategoryToAncestorsLocationCategoryConnection {
+  __typename?: "LocationCategoryToAncestorsLocationCategoryConnection";
+  /**
+   * Edges for the LocationCategoryToAncestorsLocationCategoryConnection connection
+   */
+  edges?: Maybe<
+    Array<Maybe<LocationCategoryToAncestorsLocationCategoryConnectionEdge>>
+  >;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<LocationCategory>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface LocationCategoryToAncestorsLocationCategoryConnectionEdge {
+  __typename?: "LocationCategoryToAncestorsLocationCategoryConnectionEdge";
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<LocationCategory>;
+}
+
+/**
+ * Connection between the LocationCategory type and the ContentNode type
+ */
+export interface LocationCategoryToContentNodeConnection {
+  __typename?: "LocationCategoryToContentNodeConnection";
+  /**
+   * Edges for the LocationCategoryToContentNodeConnection connection
+   */
+  edges?: Maybe<Array<Maybe<LocationCategoryToContentNodeConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<ContentNode>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface LocationCategoryToContentNodeConnectionEdge {
+  __typename?: "LocationCategoryToContentNodeConnectionEdge";
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<ContentNode>;
+}
+
+/**
+ * Connection between the LocationCategory type and the locationCategory type
+ */
+export interface LocationCategoryToLocationCategoryConnection {
+  __typename?: "LocationCategoryToLocationCategoryConnection";
+  /**
+   * Edges for the LocationCategoryToLocationCategoryConnection connection
+   */
+  edges?: Maybe<Array<Maybe<LocationCategoryToLocationCategoryConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<LocationCategory>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface LocationCategoryToLocationCategoryConnectionEdge {
+  __typename?: "LocationCategoryToLocationCategoryConnectionEdge";
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<LocationCategory>;
+}
+
+/**
+ * Connection between the LocationCategory type and the location type
+ */
+export interface LocationCategoryToLocationConnection {
+  __typename?: "LocationCategoryToLocationConnection";
+  /**
+   * Edges for the LocationCategoryToLocationConnection connection
+   */
+  edges?: Maybe<Array<Maybe<LocationCategoryToLocationConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Location>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface LocationCategoryToLocationConnectionEdge {
+  __typename?: "LocationCategoryToLocationConnectionEdge";
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Location>;
+}
+
+/**
+ * Connection between the LocationCategory type and the locationCategory type
+ */
+export interface LocationCategoryToParentLocationCategoryConnectionEdge {
+  __typename?: "LocationCategoryToParentLocationCategoryConnectionEdge";
+  /**
+   * The node of the connection, without the edges
+   */
+  node?: Maybe<LocationCategory>;
+}
+
+/**
+ * Connection between the LocationCategory type and the Taxonomy type
+ */
+export interface LocationCategoryToTaxonomyConnectionEdge {
+  __typename?: "LocationCategoryToTaxonomyConnectionEdge";
+  /**
+   * The node of the connection, without the edges
+   */
+  node?: Maybe<Taxonomy>;
+}
+
+/**
+ * Connection between the Location type and the locationCategory type
+ */
+export interface LocationToLocationCategoryConnection {
+  __typename?: "LocationToLocationCategoryConnection";
+  /**
+   * Edges for the LocationToLocationCategoryConnection connection
+   */
+  edges?: Maybe<Array<Maybe<LocationToLocationCategoryConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<LocationCategory>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface LocationToLocationCategoryConnectionEdge {
+  __typename?: "LocationToLocationCategoryConnectionEdge";
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<LocationCategory>;
+}
+
+/**
+ * Connection between the Location type and the location type
+ */
+export interface LocationToPreviewConnectionEdge {
+  __typename?: "LocationToPreviewConnectionEdge";
+  /**
+   * The node of the connection, without the edges
+   */
+  node?: Maybe<Location>;
+}
+
+/**
+ * Connection between the Location type and the location type
+ */
+export interface LocationToRevisionConnection {
+  __typename?: "LocationToRevisionConnection";
+  /**
+   * Edges for the LocationToRevisionConnection connection
+   */
+  edges?: Maybe<Array<Maybe<LocationToRevisionConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Location>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface LocationToRevisionConnectionEdge {
+  __typename?: "LocationToRevisionConnectionEdge";
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Location>;
+}
+
+/**
+ * Connection between the Location type and the TermNode type
+ */
+export interface LocationToTermNodeConnection {
+  __typename?: "LocationToTermNodeConnection";
+  /**
+   * Edges for the LocationToTermNodeConnection connection
+   */
+  edges?: Maybe<Array<Maybe<LocationToTermNodeConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<TermNode>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface LocationToTermNodeConnectionEdge {
+  __typename?: "LocationToTermNodeConnectionEdge";
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<TermNode>;
 }
 
 /**
@@ -14197,7 +15582,8 @@ export interface MenuItemLinkable {
   __typename?:
     | "CXAlert"
     | "Category"
-    | "Faq"
+    | "Location"
+    | "LocationCategory"
     | "Page"
     | "Post"
     | "ProductName"
@@ -14224,7 +15610,8 @@ export interface MenuItemObjectUnion {
   __typename?:
     | "CXAlert"
     | "Category"
-    | "Faq"
+    | "Location"
+    | "LocationCategory"
     | "Page"
     | "Post"
     | "ProductName"
@@ -14335,7 +15722,8 @@ export interface Node {
     | "ContentType"
     | "EnqueuedScript"
     | "EnqueuedStylesheet"
-    | "Faq"
+    | "Location"
+    | "LocationCategory"
     | "MediaItem"
     | "Menu"
     | "MenuItem"
@@ -14365,7 +15753,7 @@ export interface Node {
 export interface NodeWithAuthor {
   __typename?:
     | "Contact"
-    | "Faq"
+    | "Location"
     | "MediaItem"
     | "Page"
     | "Post"
@@ -14406,7 +15794,7 @@ export interface NodeWithAuthorToUserConnectionEdge {
  * A node that can have comments associated with it
  */
 export interface NodeWithComments {
-  __typename?: "Faq" | "MediaItem" | "Page" | "Post";
+  __typename?: "MediaItem" | "Page" | "Post";
   /**
    * The number of comments. Even though WPGraphQL denotes this field as an integer, in WordPress this field should be saved as a numeric string for compatibility.
    */
@@ -14426,7 +15814,7 @@ export interface NodeWithComments {
  * A node that supports the content editor
  */
 export interface NodeWithContentEditor {
-  __typename?: "Faq" | "Page" | "Post";
+  __typename?: "Location" | "Page" | "Post";
   /**
    * The content of the post.
    */
@@ -14447,7 +15835,7 @@ export interface NodeWithContentEditor {
  * A node that can have an excerpt
  */
 export interface NodeWithExcerpt {
-  __typename?: "Faq" | "Page" | "Post";
+  __typename?: "Location" | "Page" | "Post";
   /**
    * The excerpt of the post.
    */
@@ -14468,7 +15856,7 @@ export interface NodeWithExcerpt {
  * A node that can have a featured image set
  */
 export interface NodeWithFeaturedImage {
-  __typename?: "Page" | "Post";
+  __typename?: "Location" | "Page" | "Post";
   /**
    * Connection between the NodeWithFeaturedImage type and the MediaItem type
    */
@@ -14519,7 +15907,7 @@ export interface NodeWithPageAttributes {
  * A node that can have revisions
  */
 export interface NodeWithRevisions {
-  __typename?: "CXAlert" | "Page" | "Post";
+  __typename?: "CXAlert" | "Location" | "Page" | "Post";
   /**
    * The globally unique ID for the object
    */
@@ -14553,7 +15941,7 @@ export interface NodeWithTemplate {
   __typename?:
     | "CXAlert"
     | "Contact"
-    | "Faq"
+    | "Location"
     | "MediaItem"
     | "Page"
     | "Post"
@@ -14578,7 +15966,7 @@ export interface NodeWithTitle {
   __typename?:
     | "CXAlert"
     | "Contact"
-    | "Faq"
+    | "Location"
     | "MediaItem"
     | "Page"
     | "Post"
@@ -17318,18 +18706,18 @@ export interface RootQueryToEnqueuedStylesheetConnectionEdge {
 }
 
 /**
- * Connection between the RootQuery type and the faq type
+ * Connection between the RootQuery type and the locationCategory type
  */
-export interface RootQueryToFaqConnection {
-  __typename?: "RootQueryToFaqConnection";
+export interface RootQueryToLocationCategoryConnection {
+  __typename?: "RootQueryToLocationCategoryConnection";
   /**
-   * Edges for the RootQueryToFaqConnection connection
+   * Edges for the RootQueryToLocationCategoryConnection connection
    */
-  edges?: Maybe<Array<Maybe<RootQueryToFaqConnectionEdge>>>;
+  edges?: Maybe<Array<Maybe<RootQueryToLocationCategoryConnectionEdge>>>;
   /**
    * The nodes of the connection, without the edges
    */
-  nodes?: Maybe<Array<Maybe<Faq>>>;
+  nodes?: Maybe<Array<Maybe<LocationCategory>>>;
   /**
    * Information about pagination in a connection.
    */
@@ -17339,8 +18727,8 @@ export interface RootQueryToFaqConnection {
 /**
  * An edge in a connection
  */
-export interface RootQueryToFaqConnectionEdge {
-  __typename?: "RootQueryToFaqConnectionEdge";
+export interface RootQueryToLocationCategoryConnectionEdge {
+  __typename?: "RootQueryToLocationCategoryConnectionEdge";
   /**
    * A cursor for use in pagination
    */
@@ -17348,7 +18736,41 @@ export interface RootQueryToFaqConnectionEdge {
   /**
    * The item at the end of the edge
    */
-  node?: Maybe<Faq>;
+  node?: Maybe<LocationCategory>;
+}
+
+/**
+ * Connection between the RootQuery type and the location type
+ */
+export interface RootQueryToLocationConnection {
+  __typename?: "RootQueryToLocationConnection";
+  /**
+   * Edges for the RootQueryToLocationConnection connection
+   */
+  edges?: Maybe<Array<Maybe<RootQueryToLocationConnectionEdge>>>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes?: Maybe<Array<Maybe<Location>>>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo?: Maybe<WPPageInfo>;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface RootQueryToLocationConnectionEdge {
+  __typename?: "RootQueryToLocationConnectionEdge";
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The item at the end of the edge
+   */
+  node?: Maybe<Location>;
 }
 
 /**
@@ -18644,10 +20066,26 @@ export interface Template_FullWidth {
 }
 
 /**
+ * The template assigned to the node
+ */
+export interface Template_SlimHeader {
+  __typename?: "Template_SlimHeader";
+  /**
+   * The name of the template
+   */
+  templateName?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
  * Terms are nodes within a Taxonomy, used to group and relate other nodes.
  */
 export interface TermNode {
-  __typename?: "Category" | "PostFormat" | "ProductName" | "Tag";
+  __typename?:
+    | "Category"
+    | "LocationCategory"
+    | "PostFormat"
+    | "ProductName"
+    | "Tag";
   /**
    * @deprecated Deprecated in favor of using Next.js pages
    */
@@ -18882,7 +20320,8 @@ export interface UniformResourceIdentifiable {
     | "Category"
     | "Contact"
     | "ContentType"
-    | "Faq"
+    | "Location"
+    | "LocationCategory"
     | "MediaItem"
     | "Page"
     | "Post"
@@ -18982,10 +20421,25 @@ export interface UpdateContactPayload {
 }
 
 /**
- * The payload for the updateFaq mutation
+ * The payload for the UpdateLocationCategory mutation
  */
-export interface UpdateFaqPayload {
-  __typename?: "UpdateFaqPayload";
+export interface UpdateLocationCategoryPayload {
+  __typename?: "UpdateLocationCategoryPayload";
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The created wpsl_store_category
+   */
+  locationCategory?: Maybe<LocationCategory>;
+}
+
+/**
+ * The payload for the updateLocation mutation
+ */
+export interface UpdateLocationPayload {
+  __typename?: "UpdateLocationPayload";
   /**
    * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
    */
@@ -18993,7 +20447,7 @@ export interface UpdateFaqPayload {
   /**
    * The Post object mutation type.
    */
-  faq?: Maybe<Faq>;
+  location?: Maybe<Location>;
 }
 
 /**
@@ -19329,31 +20783,6 @@ export interface User {
    */
   extraCapabilities?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
   /**
-   * Connection between the User type and the faq type
-   */
-  faqs: (args?: {
-    /**
-     * Cursor used along with the "first" argument to reference where in the dataset to get data
-     */
-    after?: Maybe<Scalars["String"]>;
-    /**
-     * Cursor used along with the "last" argument to reference where in the dataset to get data
-     */
-    before?: Maybe<Scalars["String"]>;
-    /**
-     * The number of items to return after the referenced "after" cursor
-     */
-    first?: Maybe<Scalars["Int"]>;
-    /**
-     * The number of items to return before the referenced "before" cursor
-     */
-    last?: Maybe<Scalars["Int"]>;
-    /**
-     * Arguments for filtering the connection
-     */
-    where?: Maybe<UserToFaqConnectionWhereArgs>;
-  }) => Maybe<UserToFaqConnection>;
-  /**
    * First name of the user. This is equivalent to the WP_User-&gt;user_first_name property.
    */
   firstName?: Maybe<ScalarsEnums["String"]>;
@@ -19381,6 +20810,31 @@ export interface User {
    * The preferred language locale set for the user. Value derived from get_user_locale().
    */
   locale?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Connection between the User type and the location type
+   */
+  locations: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<UserToLocationConnectionWhereArgs>;
+  }) => Maybe<UserToLocationConnection>;
   /**
    * Connection between the User type and the mediaItem type
    */
@@ -19815,18 +21269,18 @@ export interface UserToEnqueuedStylesheetConnectionEdge {
 }
 
 /**
- * Connection between the User type and the faq type
+ * Connection between the User type and the location type
  */
-export interface UserToFaqConnection {
-  __typename?: "UserToFaqConnection";
+export interface UserToLocationConnection {
+  __typename?: "UserToLocationConnection";
   /**
-   * Edges for the UserToFaqConnection connection
+   * Edges for the UserToLocationConnection connection
    */
-  edges?: Maybe<Array<Maybe<UserToFaqConnectionEdge>>>;
+  edges?: Maybe<Array<Maybe<UserToLocationConnectionEdge>>>;
   /**
    * The nodes of the connection, without the edges
    */
-  nodes?: Maybe<Array<Maybe<Faq>>>;
+  nodes?: Maybe<Array<Maybe<Location>>>;
   /**
    * Information about pagination in a connection.
    */
@@ -19836,8 +21290,8 @@ export interface UserToFaqConnection {
 /**
  * An edge in a connection
  */
-export interface UserToFaqConnectionEdge {
-  __typename?: "UserToFaqConnectionEdge";
+export interface UserToLocationConnectionEdge {
+  __typename?: "UserToLocationConnectionEdge";
   /**
    * A cursor for use in pagination
    */
@@ -19845,7 +21299,7 @@ export interface UserToFaqConnectionEdge {
   /**
    * The item at the end of the edge
    */
-  node?: Maybe<Faq>;
+  node?: Maybe<Location>;
 }
 
 /**
@@ -20142,7 +21596,12 @@ export interface Mutation {
   createContact: (args: {
     input: CreateContactInput;
   }) => Maybe<CreateContactPayload>;
-  createFaq: (args: { input: CreateFaqInput }) => Maybe<CreateFaqPayload>;
+  createLocation: (args: {
+    input: CreateLocationInput;
+  }) => Maybe<CreateLocationPayload>;
+  createLocationCategory: (args: {
+    input: CreateLocationCategoryInput;
+  }) => Maybe<CreateLocationCategoryPayload>;
   createMediaItem: (args: {
     input: CreateMediaItemInput;
   }) => Maybe<CreateMediaItemPayload>;
@@ -20175,7 +21634,12 @@ export interface Mutation {
   deleteContact: (args: {
     input: DeleteContactInput;
   }) => Maybe<DeleteContactPayload>;
-  deleteFaq: (args: { input: DeleteFaqInput }) => Maybe<DeleteFaqPayload>;
+  deleteLocation: (args: {
+    input: DeleteLocationInput;
+  }) => Maybe<DeleteLocationPayload>;
+  deleteLocationCategory: (args: {
+    input: DeleteLocationCategoryInput;
+  }) => Maybe<DeleteLocationCategoryPayload>;
   deleteMediaItem: (args: {
     input: DeleteMediaItemInput;
   }) => Maybe<DeleteMediaItemPayload>;
@@ -20226,7 +21690,12 @@ export interface Mutation {
   updateContact: (args: {
     input: UpdateContactInput;
   }) => Maybe<UpdateContactPayload>;
-  updateFaq: (args: { input: UpdateFaqInput }) => Maybe<UpdateFaqPayload>;
+  updateLocation: (args: {
+    input: UpdateLocationInput;
+  }) => Maybe<UpdateLocationPayload>;
+  updateLocationCategory: (args: {
+    input: UpdateLocationCategoryInput;
+  }) => Maybe<UpdateLocationCategoryPayload>;
   updateMediaItem: (args: {
     input: UpdateMediaItemInput;
   }) => Maybe<UpdateMediaItemPayload>;
@@ -20338,26 +21807,36 @@ export interface Query {
     last?: Maybe<Scalars["Int"]>;
   }) => Maybe<RootQueryToContentTypeConnection>;
   discussionSettings?: Maybe<DiscussionSettings>;
-  faq: (args: {
+  generalSettings?: Maybe<GeneralSettings>;
+  genesisBlocksGlobalSettingsSettings?: Maybe<GenesisBlocksGlobalSettingsSettings>;
+  location: (args: {
     asPreview?: Maybe<Scalars["Boolean"]>;
     id: Scalars["ID"];
-    idType?: Maybe<FaqIdType>;
-  }) => Maybe<Faq>;
-  faqBy: (args?: {
-    faqId?: Maybe<Scalars["Int"]>;
+    idType?: Maybe<LocationIdType>;
+  }) => Maybe<Location>;
+  locationBy: (args?: {
     id?: Maybe<Scalars["ID"]>;
-    slug?: Maybe<Scalars["String"]>;
+    locationId?: Maybe<Scalars["Int"]>;
     uri?: Maybe<Scalars["String"]>;
-  }) => Maybe<Faq>;
-  faqs: (args?: {
+  }) => Maybe<Location>;
+  locationCategories: (args?: {
     after?: Maybe<Scalars["String"]>;
     before?: Maybe<Scalars["String"]>;
     first?: Maybe<Scalars["Int"]>;
     last?: Maybe<Scalars["Int"]>;
-    where?: Maybe<RootQueryToFaqConnectionWhereArgs>;
-  }) => Maybe<RootQueryToFaqConnection>;
-  generalSettings?: Maybe<GeneralSettings>;
-  genesisBlocksGlobalSettingsSettings?: Maybe<GenesisBlocksGlobalSettingsSettings>;
+    where?: Maybe<RootQueryToLocationCategoryConnectionWhereArgs>;
+  }) => Maybe<RootQueryToLocationCategoryConnection>;
+  locationCategory: (args: {
+    id: Scalars["ID"];
+    idType?: Maybe<LocationCategoryIdType>;
+  }) => Maybe<LocationCategory>;
+  locations: (args?: {
+    after?: Maybe<Scalars["String"]>;
+    before?: Maybe<Scalars["String"]>;
+    first?: Maybe<Scalars["Int"]>;
+    last?: Maybe<Scalars["Int"]>;
+    where?: Maybe<RootQueryToLocationConnectionWhereArgs>;
+  }) => Maybe<RootQueryToLocationConnection>;
   mediaItem: (args: {
     asPreview?: Maybe<Scalars["Boolean"]>;
     id: Scalars["ID"];
@@ -20648,7 +22127,8 @@ export interface SchemaObjectTypes {
   CreateCategoryPayload: CreateCategoryPayload;
   CreateCommentPayload: CreateCommentPayload;
   CreateContactPayload: CreateContactPayload;
-  CreateFaqPayload: CreateFaqPayload;
+  CreateLocationCategoryPayload: CreateLocationCategoryPayload;
+  CreateLocationPayload: CreateLocationPayload;
   CreateMediaItemPayload: CreateMediaItemPayload;
   CreatePagePayload: CreatePagePayload;
   CreatePostFormatPayload: CreatePostFormatPayload;
@@ -20664,7 +22144,8 @@ export interface SchemaObjectTypes {
   DeleteCategoryPayload: DeleteCategoryPayload;
   DeleteCommentPayload: DeleteCommentPayload;
   DeleteContactPayload: DeleteContactPayload;
-  DeleteFaqPayload: DeleteFaqPayload;
+  DeleteLocationCategoryPayload: DeleteLocationCategoryPayload;
+  DeleteLocationPayload: DeleteLocationPayload;
   DeleteMediaItemPayload: DeleteMediaItemPayload;
   DeletePagePayload: DeletePagePayload;
   DeletePostFormatPayload: DeletePostFormatPayload;
@@ -20678,10 +22159,6 @@ export interface SchemaObjectTypes {
   DiscussionSettings: DiscussionSettings;
   EnqueuedScript: EnqueuedScript;
   EnqueuedStylesheet: EnqueuedStylesheet;
-  Faq: Faq;
-  FaqToCommentConnection: FaqToCommentConnection;
-  FaqToCommentConnectionEdge: FaqToCommentConnectionEdge;
-  FaqToPreviewConnectionEdge: FaqToPreviewConnectionEdge;
   GeneralSettings: GeneralSettings;
   GenerateAuthorizationCodePayload: GenerateAuthorizationCodePayload;
   GenesisBlocksGlobalSettingsSettings: GenesisBlocksGlobalSettingsSettings;
@@ -20690,6 +22167,25 @@ export interface SchemaObjectTypes {
   HierarchicalContentNodeToContentNodeChildrenConnection: HierarchicalContentNodeToContentNodeChildrenConnection;
   HierarchicalContentNodeToContentNodeChildrenConnectionEdge: HierarchicalContentNodeToContentNodeChildrenConnectionEdge;
   HierarchicalContentNodeToParentContentNodeConnectionEdge: HierarchicalContentNodeToParentContentNodeConnectionEdge;
+  Location: Location;
+  LocationCategory: LocationCategory;
+  LocationCategoryToAncestorsLocationCategoryConnection: LocationCategoryToAncestorsLocationCategoryConnection;
+  LocationCategoryToAncestorsLocationCategoryConnectionEdge: LocationCategoryToAncestorsLocationCategoryConnectionEdge;
+  LocationCategoryToContentNodeConnection: LocationCategoryToContentNodeConnection;
+  LocationCategoryToContentNodeConnectionEdge: LocationCategoryToContentNodeConnectionEdge;
+  LocationCategoryToLocationCategoryConnection: LocationCategoryToLocationCategoryConnection;
+  LocationCategoryToLocationCategoryConnectionEdge: LocationCategoryToLocationCategoryConnectionEdge;
+  LocationCategoryToLocationConnection: LocationCategoryToLocationConnection;
+  LocationCategoryToLocationConnectionEdge: LocationCategoryToLocationConnectionEdge;
+  LocationCategoryToParentLocationCategoryConnectionEdge: LocationCategoryToParentLocationCategoryConnectionEdge;
+  LocationCategoryToTaxonomyConnectionEdge: LocationCategoryToTaxonomyConnectionEdge;
+  LocationToLocationCategoryConnection: LocationToLocationCategoryConnection;
+  LocationToLocationCategoryConnectionEdge: LocationToLocationCategoryConnectionEdge;
+  LocationToPreviewConnectionEdge: LocationToPreviewConnectionEdge;
+  LocationToRevisionConnection: LocationToRevisionConnection;
+  LocationToRevisionConnectionEdge: LocationToRevisionConnectionEdge;
+  LocationToTermNodeConnection: LocationToTermNodeConnection;
+  LocationToTermNodeConnectionEdge: LocationToTermNodeConnectionEdge;
   MediaDetails: MediaDetails;
   MediaItem: MediaItem;
   MediaItemMeta: MediaItemMeta;
@@ -20777,8 +22273,10 @@ export interface SchemaObjectTypes {
   RootQueryToEnqueuedScriptConnectionEdge: RootQueryToEnqueuedScriptConnectionEdge;
   RootQueryToEnqueuedStylesheetConnection: RootQueryToEnqueuedStylesheetConnection;
   RootQueryToEnqueuedStylesheetConnectionEdge: RootQueryToEnqueuedStylesheetConnectionEdge;
-  RootQueryToFaqConnection: RootQueryToFaqConnection;
-  RootQueryToFaqConnectionEdge: RootQueryToFaqConnectionEdge;
+  RootQueryToLocationCategoryConnection: RootQueryToLocationCategoryConnection;
+  RootQueryToLocationCategoryConnectionEdge: RootQueryToLocationCategoryConnectionEdge;
+  RootQueryToLocationConnection: RootQueryToLocationConnection;
+  RootQueryToLocationConnectionEdge: RootQueryToLocationConnectionEdge;
   RootQueryToMediaItemConnection: RootQueryToMediaItemConnection;
   RootQueryToMediaItemConnectionEdge: RootQueryToMediaItemConnectionEdge;
   RootQueryToMenuConnection: RootQueryToMenuConnection;
@@ -20829,6 +22327,7 @@ export interface SchemaObjectTypes {
   TaxonomyToContentTypeConnectionEdge: TaxonomyToContentTypeConnectionEdge;
   Template_ApplyNow: Template_ApplyNow;
   Template_FullWidth: Template_FullWidth;
+  Template_SlimHeader: Template_SlimHeader;
   TermNodeToEnqueuedScriptConnection: TermNodeToEnqueuedScriptConnection;
   TermNodeToEnqueuedScriptConnectionEdge: TermNodeToEnqueuedScriptConnectionEdge;
   TermNodeToEnqueuedStylesheetConnection: TermNodeToEnqueuedStylesheetConnection;
@@ -20838,7 +22337,8 @@ export interface SchemaObjectTypes {
   UpdateCategoryPayload: UpdateCategoryPayload;
   UpdateCommentPayload: UpdateCommentPayload;
   UpdateContactPayload: UpdateContactPayload;
-  UpdateFaqPayload: UpdateFaqPayload;
+  UpdateLocationCategoryPayload: UpdateLocationCategoryPayload;
+  UpdateLocationPayload: UpdateLocationPayload;
   UpdateMediaItemPayload: UpdateMediaItemPayload;
   UpdatePagePayload: UpdatePagePayload;
   UpdatePostFormatPayload: UpdatePostFormatPayload;
@@ -20862,8 +22362,8 @@ export interface SchemaObjectTypes {
   UserToEnqueuedScriptConnectionEdge: UserToEnqueuedScriptConnectionEdge;
   UserToEnqueuedStylesheetConnection: UserToEnqueuedStylesheetConnection;
   UserToEnqueuedStylesheetConnectionEdge: UserToEnqueuedStylesheetConnectionEdge;
-  UserToFaqConnection: UserToFaqConnection;
-  UserToFaqConnectionEdge: UserToFaqConnectionEdge;
+  UserToLocationConnection: UserToLocationConnection;
+  UserToLocationConnectionEdge: UserToLocationConnectionEdge;
   UserToMediaItemConnection: UserToMediaItemConnection;
   UserToMediaItemConnectionEdge: UserToMediaItemConnectionEdge;
   UserToPageConnection: UserToPageConnection;
@@ -20925,7 +22425,8 @@ export type SchemaObjectTypesNames =
   | "CreateCategoryPayload"
   | "CreateCommentPayload"
   | "CreateContactPayload"
-  | "CreateFaqPayload"
+  | "CreateLocationCategoryPayload"
+  | "CreateLocationPayload"
   | "CreateMediaItemPayload"
   | "CreatePagePayload"
   | "CreatePostFormatPayload"
@@ -20941,7 +22442,8 @@ export type SchemaObjectTypesNames =
   | "DeleteCategoryPayload"
   | "DeleteCommentPayload"
   | "DeleteContactPayload"
-  | "DeleteFaqPayload"
+  | "DeleteLocationCategoryPayload"
+  | "DeleteLocationPayload"
   | "DeleteMediaItemPayload"
   | "DeletePagePayload"
   | "DeletePostFormatPayload"
@@ -20955,10 +22457,6 @@ export type SchemaObjectTypesNames =
   | "DiscussionSettings"
   | "EnqueuedScript"
   | "EnqueuedStylesheet"
-  | "Faq"
-  | "FaqToCommentConnection"
-  | "FaqToCommentConnectionEdge"
-  | "FaqToPreviewConnectionEdge"
   | "GeneralSettings"
   | "GenerateAuthorizationCodePayload"
   | "GenesisBlocksGlobalSettingsSettings"
@@ -20967,6 +22465,25 @@ export type SchemaObjectTypesNames =
   | "HierarchicalContentNodeToContentNodeChildrenConnection"
   | "HierarchicalContentNodeToContentNodeChildrenConnectionEdge"
   | "HierarchicalContentNodeToParentContentNodeConnectionEdge"
+  | "Location"
+  | "LocationCategory"
+  | "LocationCategoryToAncestorsLocationCategoryConnection"
+  | "LocationCategoryToAncestorsLocationCategoryConnectionEdge"
+  | "LocationCategoryToContentNodeConnection"
+  | "LocationCategoryToContentNodeConnectionEdge"
+  | "LocationCategoryToLocationCategoryConnection"
+  | "LocationCategoryToLocationCategoryConnectionEdge"
+  | "LocationCategoryToLocationConnection"
+  | "LocationCategoryToLocationConnectionEdge"
+  | "LocationCategoryToParentLocationCategoryConnectionEdge"
+  | "LocationCategoryToTaxonomyConnectionEdge"
+  | "LocationToLocationCategoryConnection"
+  | "LocationToLocationCategoryConnectionEdge"
+  | "LocationToPreviewConnectionEdge"
+  | "LocationToRevisionConnection"
+  | "LocationToRevisionConnectionEdge"
+  | "LocationToTermNodeConnection"
+  | "LocationToTermNodeConnectionEdge"
   | "MediaDetails"
   | "MediaItem"
   | "MediaItemMeta"
@@ -21054,8 +22571,10 @@ export type SchemaObjectTypesNames =
   | "RootQueryToEnqueuedScriptConnectionEdge"
   | "RootQueryToEnqueuedStylesheetConnection"
   | "RootQueryToEnqueuedStylesheetConnectionEdge"
-  | "RootQueryToFaqConnection"
-  | "RootQueryToFaqConnectionEdge"
+  | "RootQueryToLocationCategoryConnection"
+  | "RootQueryToLocationCategoryConnectionEdge"
+  | "RootQueryToLocationConnection"
+  | "RootQueryToLocationConnectionEdge"
   | "RootQueryToMediaItemConnection"
   | "RootQueryToMediaItemConnectionEdge"
   | "RootQueryToMenuConnection"
@@ -21106,6 +22625,7 @@ export type SchemaObjectTypesNames =
   | "TaxonomyToContentTypeConnectionEdge"
   | "Template_ApplyNow"
   | "Template_FullWidth"
+  | "Template_SlimHeader"
   | "TermNodeToEnqueuedScriptConnection"
   | "TermNodeToEnqueuedScriptConnectionEdge"
   | "TermNodeToEnqueuedStylesheetConnection"
@@ -21115,7 +22635,8 @@ export type SchemaObjectTypesNames =
   | "UpdateCategoryPayload"
   | "UpdateCommentPayload"
   | "UpdateContactPayload"
-  | "UpdateFaqPayload"
+  | "UpdateLocationCategoryPayload"
+  | "UpdateLocationPayload"
   | "UpdateMediaItemPayload"
   | "UpdatePagePayload"
   | "UpdatePostFormatPayload"
@@ -21139,8 +22660,8 @@ export type SchemaObjectTypesNames =
   | "UserToEnqueuedScriptConnectionEdge"
   | "UserToEnqueuedStylesheetConnection"
   | "UserToEnqueuedStylesheetConnectionEdge"
-  | "UserToFaqConnection"
-  | "UserToFaqConnectionEdge"
+  | "UserToLocationConnection"
+  | "UserToLocationConnectionEdge"
   | "UserToMediaItemConnection"
   | "UserToMediaItemConnectionEdge"
   | "UserToPageConnection"
@@ -21166,7 +22687,7 @@ export interface $Commenter {
 export interface $ContentNode {
   CXAlert?: CXAlert;
   Contact?: Contact;
-  Faq?: Faq;
+  Location?: Location;
   MediaItem?: MediaItem;
   Page?: Page;
   Post?: Post;
@@ -21177,6 +22698,7 @@ export interface $ContentNode {
 
 export interface $ContentRevisionUnion {
   CXAlert?: CXAlert;
+  Location?: Location;
   Page?: Page;
   Post?: Post;
 }
@@ -21185,6 +22707,7 @@ export interface $ContentTemplate {
   DefaultTemplate?: DefaultTemplate;
   Template_ApplyNow?: Template_ApplyNow;
   Template_FullWidth?: Template_FullWidth;
+  Template_SlimHeader?: Template_SlimHeader;
 }
 
 export interface $DatabaseIdentifier {
@@ -21192,7 +22715,8 @@ export interface $DatabaseIdentifier {
   Category?: Category;
   Comment?: Comment;
   Contact?: Contact;
-  Faq?: Faq;
+  Location?: Location;
+  LocationCategory?: LocationCategory;
   MediaItem?: MediaItem;
   Menu?: Menu;
   MenuItem?: MenuItem;
@@ -21213,18 +22737,21 @@ export interface $EnqueuedAsset {
 }
 
 export interface $HierarchicalContentNode {
+  Location?: Location;
   MediaItem?: MediaItem;
   Page?: Page;
 }
 
 export interface $HierarchicalTermNode {
   Category?: Category;
+  LocationCategory?: LocationCategory;
 }
 
 export interface $MenuItemLinkable {
   CXAlert?: CXAlert;
   Category?: Category;
-  Faq?: Faq;
+  Location?: Location;
+  LocationCategory?: LocationCategory;
   Page?: Page;
   Post?: Post;
   ProductName?: ProductName;
@@ -21234,7 +22761,8 @@ export interface $MenuItemLinkable {
 export interface $MenuItemObjectUnion {
   CXAlert?: CXAlert;
   Category?: Category;
-  Faq?: Faq;
+  Location?: Location;
+  LocationCategory?: LocationCategory;
   Page?: Page;
   Post?: Post;
   ProductName?: ProductName;
@@ -21250,7 +22778,8 @@ export interface $Node {
   ContentType?: ContentType;
   EnqueuedScript?: EnqueuedScript;
   EnqueuedStylesheet?: EnqueuedStylesheet;
-  Faq?: Faq;
+  Location?: Location;
+  LocationCategory?: LocationCategory;
   MediaItem?: MediaItem;
   Menu?: Menu;
   MenuItem?: MenuItem;
@@ -21271,7 +22800,7 @@ export interface $Node {
 
 export interface $NodeWithAuthor {
   Contact?: Contact;
-  Faq?: Faq;
+  Location?: Location;
   MediaItem?: MediaItem;
   Page?: Page;
   Post?: Post;
@@ -21281,25 +22810,25 @@ export interface $NodeWithAuthor {
 }
 
 export interface $NodeWithComments {
-  Faq?: Faq;
   MediaItem?: MediaItem;
   Page?: Page;
   Post?: Post;
 }
 
 export interface $NodeWithContentEditor {
-  Faq?: Faq;
+  Location?: Location;
   Page?: Page;
   Post?: Post;
 }
 
 export interface $NodeWithExcerpt {
-  Faq?: Faq;
+  Location?: Location;
   Page?: Page;
   Post?: Post;
 }
 
 export interface $NodeWithFeaturedImage {
+  Location?: Location;
   Page?: Page;
   Post?: Post;
 }
@@ -21311,6 +22840,7 @@ export interface $NodeWithPageAttributes {
 
 export interface $NodeWithRevisions {
   CXAlert?: CXAlert;
+  Location?: Location;
   Page?: Page;
   Post?: Post;
 }
@@ -21318,7 +22848,7 @@ export interface $NodeWithRevisions {
 export interface $NodeWithTemplate {
   CXAlert?: CXAlert;
   Contact?: Contact;
-  Faq?: Faq;
+  Location?: Location;
   MediaItem?: MediaItem;
   Page?: Page;
   Post?: Post;
@@ -21330,7 +22860,7 @@ export interface $NodeWithTemplate {
 export interface $NodeWithTitle {
   CXAlert?: CXAlert;
   Contact?: Contact;
-  Faq?: Faq;
+  Location?: Location;
   MediaItem?: MediaItem;
   Page?: Page;
   Post?: Post;
@@ -21345,6 +22875,7 @@ export interface $NodeWithTrackbacks {
 
 export interface $TermNode {
   Category?: Category;
+  LocationCategory?: LocationCategory;
   PostFormat?: PostFormat;
   ProductName?: ProductName;
   Tag?: Tag;
@@ -21355,7 +22886,8 @@ export interface $UniformResourceIdentifiable {
   Category?: Category;
   Contact?: Contact;
   ContentType?: ContentType;
-  Faq?: Faq;
+  Location?: Location;
+  LocationCategory?: LocationCategory;
   MediaItem?: MediaItem;
   Page?: Page;
   Post?: Post;
@@ -21389,10 +22921,14 @@ export interface ScalarsEnums extends MakeNullable<Scalars> {
   ContentTypeEnum: ContentTypeEnum | undefined;
   ContentTypeIdTypeEnum: ContentTypeIdTypeEnum | undefined;
   ContentTypesOfCategoryEnum: ContentTypesOfCategoryEnum | undefined;
+  ContentTypesOfLocationCategoryEnum:
+    | ContentTypesOfLocationCategoryEnum
+    | undefined;
   ContentTypesOfPostFormatEnum: ContentTypesOfPostFormatEnum | undefined;
   ContentTypesOfProductNameEnum: ContentTypesOfProductNameEnum | undefined;
   ContentTypesOfTagEnum: ContentTypesOfTagEnum | undefined;
-  FaqIdType: FaqIdType | undefined;
+  LocationCategoryIdType: LocationCategoryIdType | undefined;
+  LocationIdType: LocationIdType | undefined;
   MediaItemIdType: MediaItemIdType | undefined;
   MediaItemSizeEnum: MediaItemSizeEnum | undefined;
   MediaItemStatusEnum: MediaItemStatusEnum | undefined;
