@@ -7,6 +7,7 @@ import React from 'react';
 import { useState, useEffect } from 'react'
 import parseHtml from "../lib/parser";
 import {addCSSAsset, addJSAsset} from "../lib/enqueuedFiles";
+import GTM from 'components/ThirdParty/gtm';
 
 
 export interface PageProps {
@@ -39,6 +40,7 @@ export function PageComponent({ page }: PageProps) {
           return addCSSAsset(sheet.node);
         })}
       </Head>
+      <GTM />
       <div id="page" className='container site'>
         <main className="content content-single">
             <article className='entry-content'>

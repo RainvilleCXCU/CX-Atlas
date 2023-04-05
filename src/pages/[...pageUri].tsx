@@ -6,6 +6,8 @@ import { client, Page as PageType } from 'client';
 import parseHtml from "../lib/parser";
 import { addCSSAsset, addJSAsset } from "../lib/enqueuedFiles";
 import { useState, useEffect } from 'react';
+import Script from 'next/script';
+import GTM from 'components/ThirdParty/gtm';
 export interface PageProps {
   page: PageType | PageType['preview']['node'] | null | undefined;
 }
@@ -24,11 +26,12 @@ export function PageComponent({ page }: PageProps) {
         <title>
           {page?.title()} - {generalSettings.title}
         </title>
-        {enqueuedStylesheets.map((sheet) => {
-          return addCSSAsset(sheet.node);
-        })}
       </Head>
 
+      <GTM />
+      {enqueuedStylesheets.map((sheet) => {
+          return addCSSAsset(sheet.node);
+        })}
       <Header
         title={generalSettings.title}
         description={generalSettings.description}

@@ -5,6 +5,7 @@ import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import LocationListing from 'components/Locations/listing';
+import GTM from 'components/ThirdParty/gtm';
 
 export default function Page() {
   const { useQuery } = client;
@@ -35,6 +36,7 @@ export default function Page() {
       <Head>
         <title>Custom Page - {generalSettings.title}</title>
       </Head>
+      <GTM />
 
       <main className="content content-single">
         <div className="wrap">
