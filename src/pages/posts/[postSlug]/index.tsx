@@ -4,6 +4,7 @@ import { Footer, Header } from 'components';
 import { addCSSAsset, addJSAsset } from "../../../lib/enqueuedFiles";
 import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
+import GTM from 'components/ThirdParty/gtm';
 
 export interface PostProps {
   post: Post | Post['preview']['node'] | null | undefined;
@@ -30,6 +31,7 @@ export function PostComponent({ post }: PostProps) {
           return addCSSAsset(sheet.node);
         })}
       </Head>
+      <GTM />
 
       <main className="content content-single">
         <div className="wrap">

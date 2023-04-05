@@ -1,6 +1,7 @@
 import React from 'react';
 import { client } from 'client';
 import { Header, Footer } from '../components';
+import GTM from 'components/ThirdParty/gtm';
 
 export default function Page(): JSX.Element {
   const { useQuery } = client;
@@ -8,6 +9,7 @@ export default function Page(): JSX.Element {
 
   return (
     <>
+      <GTM />
       <Header
         title={generalSettings?.title}
         description={generalSettings?.description}

@@ -4448,6 +4448,7 @@ export interface UpdateSettingsInput {
   readingSettingsPostsPerPage?: InputMaybe<Scalars["Int"]>;
   /** What to show on the front page */
   readingSettingsShowOnFront?: InputMaybe<Scalars["String"]>;
+  thirdPartySettingsThirdPartySettings?: InputMaybe<Scalars["String"]>;
   /** Default post category. */
   writingSettingsDefaultCategory?: InputMaybe<Scalars["Int"]>;
   /** Default post format. */
@@ -9325,6 +9326,7 @@ export const generatedSchema = {
     readingSettingsPageOnFront: { __type: "Int" },
     readingSettingsPostsPerPage: { __type: "Int" },
     readingSettingsShowOnFront: { __type: "String" },
+    thirdPartySettingsThirdPartySettings: { __type: "String" },
     writingSettingsDefaultCategory: { __type: "Int" },
     writingSettingsDefaultPostFormat: { __type: "String" },
     writingSettingsUseSmilies: { __type: "Boolean" },
@@ -9569,6 +9571,16 @@ export const generatedSchema = {
     tags: { __type: "[String]" },
     themeUri: { __type: "String" },
     version: { __type: "String" },
+  },
+  ThirdPartySettings: {
+    __typename: { __type: "String!" },
+    gtmEnabled: { __type: "String" },
+    gtmId: { __type: "String" },
+    hotjarEnabled: { __type: "String" },
+    hotjarId: { __type: "String" },
+    qualtricsEnabled: { __type: "String" },
+    qualtricsId: { __type: "String" },
+    thirdPartySettings: { __type: "String" },
   },
   UniformResourceIdentifiable: {
     __typename: { __type: "String!" },
@@ -9872,6 +9884,7 @@ export const generatedSchema = {
     readingSettingsPageOnFront: { __type: "Int" },
     readingSettingsPostsPerPage: { __type: "Int" },
     readingSettingsShowOnFront: { __type: "String" },
+    thirdPartySettingsThirdPartySettings: { __type: "String" },
     writingSettingsDefaultCategory: { __type: "Int" },
     writingSettingsDefaultPostFormat: { __type: "String" },
     writingSettingsUseSmilies: { __type: "Boolean" },
@@ -9889,6 +9902,7 @@ export const generatedSchema = {
       __type: "GenesisBlocksGlobalSettingsSettings",
     },
     readingSettings: { __type: "ReadingSettings" },
+    thirdPartySettings: { __type: "ThirdPartySettings" },
     writingSettings: { __type: "WritingSettings" },
   },
   UpdateTagInput: {
@@ -11084,6 +11098,7 @@ export const generatedSchema = {
       __type: "RootQueryToThemeConnection",
       __args: { after: "String", before: "String", first: "Int", last: "Int" },
     },
+    thirdPartySettings: { __type: "ThirdPartySettings" },
     user: {
       __type: "User",
       __args: { id: "ID!", idType: "UserNodeIdTypeEnum" },
@@ -19644,6 +19659,10 @@ export interface Settings {
    */
   readingSettingsShowOnFront?: Maybe<ScalarsEnums["String"]>;
   /**
+   * Settings of the the string Settings Group
+   */
+  thirdPartySettingsThirdPartySettings?: Maybe<ScalarsEnums["String"]>;
+  /**
    * Settings of the the integer Settings Group
    */
   writingSettingsDefaultCategory?: Maybe<ScalarsEnums["Int"]>;
@@ -20312,6 +20331,41 @@ export interface Theme {
 }
 
 /**
+ * The thirdParty setting type
+ */
+export interface ThirdPartySettings {
+  __typename?: "ThirdPartySettings";
+  /**
+   * The number of votes
+   */
+  gtmEnabled?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The number of votes
+   */
+  gtmId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The number of votes
+   */
+  hotjarEnabled?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The number of votes
+   */
+  hotjarId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The number of votes
+   */
+  qualtricsEnabled?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The number of votes
+   */
+  qualtricsId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The string Settings Group
+   */
+  thirdPartySettings?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
  * Any node that has a URI
  */
 export interface UniformResourceIdentifiable {
@@ -20603,6 +20657,10 @@ export interface UpdateSettingsPayload {
    * Update the ReadingSettings setting.
    */
   readingSettings?: Maybe<ReadingSettings>;
+  /**
+   * Update the ThirdPartySettings setting.
+   */
+  thirdPartySettings?: Maybe<ThirdPartySettings>;
   /**
    * Update the WritingSettings setting.
    */
@@ -22057,6 +22115,7 @@ export interface Query {
     first?: Maybe<Scalars["Int"]>;
     last?: Maybe<Scalars["Int"]>;
   }) => Maybe<RootQueryToThemeConnection>;
+  thirdPartySettings?: Maybe<ThirdPartySettings>;
   user: (args: {
     id: Scalars["ID"];
     idType?: Maybe<UserNodeIdTypeEnum>;
@@ -22333,6 +22392,7 @@ export interface SchemaObjectTypes {
   TermNodeToEnqueuedStylesheetConnection: TermNodeToEnqueuedStylesheetConnection;
   TermNodeToEnqueuedStylesheetConnectionEdge: TermNodeToEnqueuedStylesheetConnectionEdge;
   Theme: Theme;
+  ThirdPartySettings: ThirdPartySettings;
   UpdateCXAlertPayload: UpdateCXAlertPayload;
   UpdateCategoryPayload: UpdateCategoryPayload;
   UpdateCommentPayload: UpdateCommentPayload;
@@ -22631,6 +22691,7 @@ export type SchemaObjectTypesNames =
   | "TermNodeToEnqueuedStylesheetConnection"
   | "TermNodeToEnqueuedStylesheetConnectionEdge"
   | "Theme"
+  | "ThirdPartySettings"
   | "UpdateCXAlertPayload"
   | "UpdateCategoryPayload"
   | "UpdateCommentPayload"

@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import styles from 'scss/pages/posts.module.scss';
 import { addCSSAsset, addJSAsset } from "../lib/enqueuedFiles";
 import Heading, { HeadingProps } from '../components/Heading';
+import GTM from 'components/ThirdParty/gtm';
 
 const POSTS_PER_PAGE = 6;
 
@@ -60,7 +61,7 @@ export default function Page() {
           {generalSettings.title} - {generalSettings.description}
         </title>
       </Head>
-
+      <GTM />
       {enqueuedStylesheets.map((sheet) => {
         return addCSSAsset(sheet.node);
       })}
