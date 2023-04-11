@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function parseHtml(html) {
     const options = {
         replace: ({ name, attribs, children }) => {
-            const isInternalLink = name === "a";
+            const isInternalLink = name === "a" && attribs.href !== null;
             const isFAQItem = attribs && attribs.class && attribs.class.includes("ewd-ufaq-faq-div");
 
             if (isInternalLink) {
