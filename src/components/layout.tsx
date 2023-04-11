@@ -1,7 +1,7 @@
 // components/layout.js
 
 import Footer from './Footer'
-import Header from './Header';
+import Header from './Header/Header';
 import Head from 'next/head';
 import GTM from './ThirdParty/gtm';
 import { client } from 'client';
@@ -15,21 +15,20 @@ export default function Layout({ page, children = <></> }) {
     const enqueuedStylesheets = page.enqueuedStylesheets().edges;
     return (
         <>
-            <Header
-                title={generalSettings.title}
-                description={generalSettings.description}
-                logo={generalSettings.logo}
-            />
-
             <Head>
                 <title>
                     {page?.title()} - {generalSettings.title}
                 </title>
             </Head>
+            <GTM />
             {enqueuedStylesheets.map((sheet) => {
                 return addCSSAsset(sheet.node);
             })}
-            <GTM />
+            <Header
+                title={generalSettings.title}
+                description={generalSettings.description}
+                logo={generalSettings.logo}
+            />  
             <div id="page" className='container site'>
                 <main className="content content-single">
                     <article className='entry-content'>
