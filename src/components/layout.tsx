@@ -1,6 +1,6 @@
 // components/layout.js
 
-import Footer from './Footer'
+import Footer from './Footer/Footer'
 import Header from './Header/Header';
 import Head from 'next/head';
 import GTM from './ThirdParty/gtm';
