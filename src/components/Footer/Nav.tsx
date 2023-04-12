@@ -85,7 +85,7 @@ function MobileMenu(props: FooterMenuProps) {
                                                                     <li key={`link-${title.label}-${index}`}>
                                                                         <Link href={title.uri || ''} className="accordion-item cx-nav__accordion-item-link"
                                                                         onClick={() => {
-                                                                            toggleSelected(link.label?.replace(' ', '_'));
+                                                                            setNavsSelected([]);
                                                                         }}>
                                                                             {title.label}
                                                                         </Link>
