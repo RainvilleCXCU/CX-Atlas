@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import type { Post } from 'client';
-import styles from 'scss/components/Posts.module.scss';
 import Heading, { HeadingProps } from './Heading';
 
 interface Props {
@@ -25,28 +24,26 @@ function Posts({
 }: Props): JSX.Element {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <section className={styles['posts-block']} {...(id && { id })}>
+    <section {...(id && { id })}>
       <div className="wrap">
         {heading && (
-          <Heading level={headingLevel} className={styles.heading}>
+          <Heading level={headingLevel}>
             {heading}
           </Heading>
         )}
-        {posts && posts?.length > 0 && intro && <p className={styles.intro}>{intro}</p>}
+        {posts && posts?.length > 0 && intro && <p>{intro}</p>}
         <div className="posts">
           
           {posts.map((post) => (
             <div
-              className={styles.single}
               key={post.id ?? ''}
               id={`post-${post.id}`}>
               <div>
-                <Heading level={postTitleLevel} className={styles.title}>
+                <Heading level={postTitleLevel}>
                   <Link href={`/posts/${post.slug}`}>{post.title()}
                   </Link>
                 </Heading>
                 <div
-                  className={styles.excerpt}
                   // eslint-disable-next-line react/no-danger
                   dangerouslySetInnerHTML={{ __html: post.excerpt() ?? '' }}
                 />
