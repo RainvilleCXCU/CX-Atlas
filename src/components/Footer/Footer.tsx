@@ -1,6 +1,5 @@
-import Logo from 'components/Logo';
 import React from 'react';
-import styles from 'scss/components/Footer.module.scss';
+import Logo from 'components/Logo';
 import FooterMenu from './Nav';
 import Icons from './Icons';
 import UtilityNav from './UtilityNav';
