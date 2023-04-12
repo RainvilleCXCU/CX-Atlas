@@ -50,7 +50,11 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                                     {title?.childItems()?.nodes?.map((navLink, index) => {
                                                         return (
                                                             <li key={`${navLink.id}-${navLink.databaseId}`}>
-                                                                <Link href={navLink.uri || ''} passHref className='dropdown-item cx-nav__dropdown-item'>{navLink.label}
+                                                                <Link href={navLink.uri || ''} passHref className='dropdown-item cx-nav__dropdown-item'
+                                                                    onClick={() => {
+                                                                        setIsNavExpanded(!isNavExpanded);
+                                                                        setNavSelected('');
+                                                                    }}>{navLink.label}
                                                                 </Link>
                                                             </li>
                                                         );
