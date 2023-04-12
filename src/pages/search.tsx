@@ -4,7 +4,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
-import styles from 'scss/pages/posts.module.scss';
 import { addCSSAsset, addJSAsset } from "../lib/enqueuedFiles";
 import Heading, { HeadingProps } from '../components/Heading';
 import GTM from 'components/ThirdParty/gtm';
@@ -71,16 +70,14 @@ export default function Page() {
 
         {results.map((post) => (
             <div
-              className={styles.single}
               key={post.id ?? ''}
               id={`post-${post.id}`}>
               <div>
-                <Heading level={'h1'} className={styles.title}>
+                <Heading level={'h1'}>
                   <Link href={post.link}>{post.title.rendered}
                   </Link>
                 </Heading>
                 <div
-                  className={styles.excerpt}
                   // eslint-disable-next-line react/no-danger
                   dangerouslySetInnerHTML={{ __html: post.excerpt.rendered ?? '' }}
                 />

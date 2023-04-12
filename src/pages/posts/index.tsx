@@ -6,7 +6,6 @@ import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React from 'react';
-import styles from 'scss/pages/posts.module.scss';
 
 const POSTS_PER_PAGE = 6;
 
@@ -47,7 +46,6 @@ export default function Page() {
           heading="Blog Posts"
           headingLevel="h2"
           postTitleLevel="h3"
-          id={styles.post_list}
         />
         <Pagination pageInfo={posts.pageInfo} basePath="/posts" />
       </main>
