@@ -1,4 +1,5 @@
 import { client } from 'client';
+import Link from 'next/link';
 
 export default function UtilityNav({ children = <></> }) {
     const { useQuery } = client;
@@ -7,7 +8,7 @@ export default function UtilityNav({ children = <></> }) {
         <div className="cx-footer__utils">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 cx-nav__navbar">
                 <li className="nav-item cx-nav__item cx-nav__item--no-border">
-                    <a className="cx-nav__link cx-nav__link--secondary" href="tel:+1-800-845-5025">
+                    <Link className="cx-nav__link cx-nav__link--secondary" href="tel:+1-800-845-5025">
                         <svg aria-hidden="true" focusable="false" className="cx-icon" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
                             <title>Iconly/Bold/Call</title>
                             <g id="Iconly/Bold/Call" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -16,10 +17,10 @@ export default function UtilityNav({ children = <></> }) {
                                 </g>
                             </g>
                         </svg> 800.845.5025
-                    </a>
+                    </Link>
                 </li>
                 <li className="nav-item cx-nav__item cx-nav__item--no-border">
-                    <a className="cx-nav__link cx-nav__link--secondary" href="/about/branch-and-atm-locations/">
+                    <Link className="cx-nav__link cx-nav__link--secondary" href="/about/branch-and-atm-locations/">
                         <svg aria-hidden="true" focusable="false" className="cx-icon" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
                             <g id="Iconly/Bold/Location" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                 <g id="Location" transform="translate(3.500000, 2.000000)" fill="#000000" fill-rule="nonzero">
@@ -27,10 +28,10 @@ export default function UtilityNav({ children = <></> }) {
                                 </g>
                             </g>
                         </svg> Locations &amp; ATMs
-                    </a>
+                    </Link>
                 </li>
                 <li className="nav-item cx-nav__item cx-nav__item--no-border">
-                    <a className="cx-nav__link cx-nav__link--secondary" href="/about/contact-us/">
+                    <Link className="cx-nav__link cx-nav__link--secondary" href="/about/contact-us/">
                         <svg aria-hidden="true" focusable="false" className="cx-icon" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
                             <title>Iconly/Bold/Message</title>
                             <g id="Iconly/Bold/Message" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -39,7 +40,7 @@ export default function UtilityNav({ children = <></> }) {
                                 </g>
                             </g>
                         </svg> Contact Us
-                    </a>
+                    </Link>
                 </li>
             </ul>
         </div>
