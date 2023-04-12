@@ -90,15 +90,6 @@ export default function Page() {
               </div>
             </div>
         ))}
-      
-      {/*  <Posts
-          posts={results}
-          heading="Search Results"
-          headingLevel="h2"
-          postTitleLevel="h3"
-          id={styles.post_list}
-        />
-      <Pagination pageInfo={results.pageInfo} basePath="/posts" />*/}
       </main>
 
       <Footer copyrightHolder={generalSettings.title} />

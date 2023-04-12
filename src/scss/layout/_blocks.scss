@@ -1,0 +1,71 @@
+/*--------------------------------------------------------------
+Block Alignments
+--------------------------------------------------------------*/
+.wp-block-gallery {
+	margin-left: 0;
+	margin-bottom: 1.2em;
+}
+
+.wp-block-image figcaption {
+	font-size: 15px;
+	margin-top: 1em;
+}
+
+ul.blocks-gallery-grid,
+ul.wp-block-social-links,
+.entry-content .wp-block-gallery {
+	padding-left: 0;
+}
+
+.alignfull,
+.alignwide {
+	margin-bottom: 2em;
+	width: 100%;
+}
+
+@media (max-width: 600px) {
+	.alignfull.wp-block-gallery,
+	.alignwide.wp-block-gallery {
+		margin-left: -8px;
+		margin-right: -8px;
+		width: inherit;
+	}
+}
+
+.alignfull img,
+.alignwide img {
+	display: block;
+}
+
+.alignwide {
+	max-width: none;
+}
+
+@media (min-width: 1000px) {
+	.alignwide {
+		width: 75vw;
+		margin-left: calc(50% - 75vw / 2);
+	}
+}
+
+.entry-content > .alignfull {
+	width: 100vw;
+	margin-left: calc(50% - 50vw);
+	max-width: none;
+}
+
+.wp-block-columns {
+	margin-bottom: 1.2em;
+}
+
+
+#page .aligncenter {
+    margin: 4rem auto;
+}
+
+.wp-block-columns {
+	gap: 2rem;
+}
+a:focus {
+	outline: auto;
+}

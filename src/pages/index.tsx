@@ -2,7 +2,7 @@ import { getNextStaticProps, is404 } from '@faustjs/next';
 import { GetStaticPropsContext } from 'next';
 import { client, Page as PageType, PageIdType } from 'client';
 import React from 'react';
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import Layout from 'components/layout';
 
 export interface PageProps {

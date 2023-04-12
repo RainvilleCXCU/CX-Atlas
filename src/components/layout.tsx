@@ -21,9 +21,6 @@ export default function Layout({ page, children = <></> }) {
                 </title>
             </Head>
             <GTM />
-            {enqueuedStylesheets.map((sheet) => {
-                return addCSSAsset(sheet.node);
-            })}
             <Header
                 title={generalSettings.title}
                 description={generalSettings.description}

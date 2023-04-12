@@ -22,7 +22,7 @@ function DesktopMenu(props: FooterMenuProps) {
                                 </h2>
                                 {link.childItems()?.nodes?.map((title, index) => {
                                     return(
-                                        <ul className="cx-nav__dropdown-menu-list">
+                                        <ul className="cx-nav__dropdown-menu-list" key={`desktop-menu${title.label}-${index}`}>
                                         {title.childItems()?.nodes?.map((title, index) => {
                                             return(
                                                 <li key={`link-${title.label}-${index}`}>
