@@ -5,7 +5,7 @@
 import com.connexuscu.CICD
 
 def gitHubDeploy(BRANCH) {
-    sh "git add ."
+    sh "git add --all ."
     sh "ls"
     sh "git commit -m '${env.BUILD_NUMBER} Updates'"
     sh "git push -v origin ${BRANCH}"
