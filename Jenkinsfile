@@ -119,7 +119,8 @@ pipeline {
                                     )
                                 }
                             }
-                            sh "rsync -r -delete --exclude '${WORKSPACE}/CX-Atlas/*' ${WORKSPACE}/* ${WORKSPACE}/CX-Atlas"
+                            sh "rm -rf ${WORKSPACE}/CX-Atlas/*"
+                            sh "rsync -r --exclude '${WORKSPACE}/CX-Atlas/*' ${WORKSPACE}/* ${WORKSPACE}/CX-Atlas"
                             dir('CX-Atlas') {
                                 try {
                                     sh "git checkout develop"
@@ -162,7 +163,8 @@ pipeline {
                                     )
                                 }
                             }
-                            sh "rsync -r --delete --exclude '${WORKSPACE}/CX-Atlas/*' ${WORKSPACE}/* ${WORKSPACE}/CX-Atlas"
+                            sh "rm -rf ${WORKSPACE}/CX-Atlas/*"
+                            sh "rsync -r --exclude '${WORKSPACE}/CX-Atlas/*' ${WORKSPACE}/* ${WORKSPACE}/CX-Atlas"
                             dir('CX-Atlas') {
                                 try {
                                     gitHubDeploy("staging")
@@ -191,7 +193,8 @@ pipeline {
                         echo "prod deploy!"
                         try {
                             sh "git clone git@github.com:RainvilleCXCU/CX-Atlas.git"
-                            sh "rsync -r --delete --exclude '${WORKSPACE}/CX-Atlas/*' ${WORKSPACE}/* ${WORKSPACE}/CX-Atlas"
+                            sh "rm -rf ${WORKSPACE}/CX-Atlas/*"
+                            sh "rsync -r --exclude '${WORKSPACE}/CX-Atlas/*' ${WORKSPACE}/* ${WORKSPACE}/CX-Atlas"
                             dir('CX-Atlas') {
                                 try {
                                     gitHubDeploy("master")
