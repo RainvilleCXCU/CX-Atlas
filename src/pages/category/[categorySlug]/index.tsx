@@ -37,10 +37,6 @@ export default function Page() {
           <h2>Category: {category?.name}</h2>
           <Posts posts={posts.nodes} />
 
-          <Pagination
-            pageInfo={posts.pageInfo}
-            basePath={`/category/${categorySlug}`}
-          />
         </div>
       </main>
 
