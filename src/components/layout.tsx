@@ -34,7 +34,7 @@ export default function Layout({ page, children = <></> }) {
                 </main>
             </div>
 
-            <Footer copyrightHolder={generalSettings.title} />
+            <Footer copyrightHolder={generalSettings.footerText} />
         </>
     )
 }

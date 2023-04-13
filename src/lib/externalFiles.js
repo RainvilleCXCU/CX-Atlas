@@ -5,24 +5,12 @@ export const files = {
             src: `https://cloud.typography.com/6914618/${process.env.CLOUD_FONT || '7711232'}/css/fonts.css`,
         },
         {
-            id: 'genesis-blocks',
-            src: '/wp-content/plugins/genesis-page-builder/lib/genesis-blocks/dist/style-blocks.build.css'
-        },
-        {
-            id: 'genesis-blocks-front-end',
-            src: '/wp-content/plugins/genesis-page-builder/build/frontend.styles.build.css'
+            id: 'genesis-blocks-style',
+            src: '/wp-content/plugins/genesis-page-builder/vendor/genesis/blocks/dist/style-blocks.build.css'
         },
         {
             id: 'block-style',
             src: '/wp-includes/css/dist/block-library/style.min.css',
-        },
-        {
-            id: 'block-theme',
-            src: '/wp-includes/css/dist/block-library/theme.min.css',
-        },
-        {
-            id: 'classic-theme',
-            src: '/wp-includes/css/classic-themes.min.css',
         },
         {
             id: 'parent-theme',

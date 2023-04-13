@@ -50,7 +50,7 @@ function Footer({ copyrightHolder = '' }: Props): JSX.Element {
       </section>
       <section className="cx-footer__copyright">
         <div className="cx-footer__wrapper">
-          &copy; {year}
+          &copy; {year} {copyrightHolder}
         </div>
       </section>
     </footer>

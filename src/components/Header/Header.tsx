@@ -5,7 +5,8 @@ import MenuNavigation from '../Navigation/Navbar';
 import UtilityNav from './UtilityNav';
 import UtilityNavLinks from './UtilityNavLinks';
 import SearchBar from './SearchBar';
-
+import Logo from 'components/Logo';
+import { useRouter } from 'next/router';
 interface Props {
   title?: string;
   description?: string;
@@ -18,7 +19,7 @@ function Header({
   logo
 }: Props): JSX.Element {
 
-
+  const { asPath, pathname } = useRouter();
   const { menuItems } = client.useQuery()
   const links = menuItems({
     first: 255,
@@ -29,8 +30,7 @@ function Header({
     <header className="cx-header">
       <section className="cx-header__util-nav cx-header__desktop">
         <div className="cx-header__wrapper">
-          <Link href="/" passHref><img src={logo} alt={title} />
-          </Link>
+          <Logo isH1={asPath === '/'}/>
           <UtilityNav />
         </div>
       </section>
