@@ -4641,6 +4641,7 @@ export interface UpdateSettingsInput {
   discussionSettingsDefaultCommentStatus?: InputMaybe<Scalars["String"]>;
   /** Allow link notifications from other blogs (pingbacks and trackbacks) on new articles. */
   discussionSettingsDefaultPingStatus?: InputMaybe<Scalars["String"]>;
+  footerSettingsFooterSettings?: InputMaybe<Scalars["String"]>;
   /** A date format for all date strings. */
   generalSettingsDateFormat?: InputMaybe<Scalars["String"]>;
   /** Site tagline. */
@@ -9461,6 +9462,13 @@ export const generatedSchema = {
     selectedFolder: { __type: "BlockAttributesObject" },
     sortBy: { __type: "String" },
     sortType: { __type: "String" },
+  },
+  FooterSettings: {
+    __typename: { __type: "String!" },
+    footerAppIcons: { __type: "String" },
+    footerSettings: { __type: "String" },
+    footerSocialIcons: { __type: "String" },
+    footerUtilities: { __type: "String" },
   },
   GeneralSettings: {
     __typename: { __type: "String!" },
@@ -14679,6 +14687,7 @@ export const generatedSchema = {
     },
     discussionSettingsDefaultCommentStatus: { __type: "String" },
     discussionSettingsDefaultPingStatus: { __type: "String" },
+    footerSettingsFooterSettings: { __type: "String" },
     generalSettingsDateFormat: { __type: "String" },
     generalSettingsDescription: { __type: "String" },
     generalSettingsEmail: { __type: "String" },
@@ -15525,6 +15534,7 @@ export const generatedSchema = {
     clientMutationId: { __type: "String" },
     discussionSettingsDefaultCommentStatus: { __type: "String" },
     discussionSettingsDefaultPingStatus: { __type: "String" },
+    footerSettingsFooterSettings: { __type: "String" },
     generalSettingsDateFormat: { __type: "String" },
     generalSettingsDescription: { __type: "String" },
     generalSettingsEmail: { __type: "String" },
@@ -15557,6 +15567,7 @@ export const generatedSchema = {
     },
     clientMutationId: { __type: "String" },
     discussionSettings: { __type: "DiscussionSettings" },
+    footerSettings: { __type: "FooterSettings" },
     generalSettings: { __type: "GeneralSettings" },
     genesisBlocksGlobalSettingsSettings: {
       __type: "GenesisBlocksGlobalSettingsSettings",
@@ -16708,6 +16719,7 @@ export const generatedSchema = {
       __args: { after: "String", before: "String", first: "Int", last: "Int" },
     },
     discussionSettings: { __type: "DiscussionSettings" },
+    footerSettings: { __type: "FooterSettings" },
     generalSettings: { __type: "GeneralSettings" },
     genesisBlocksGlobalSettingsSettings: {
       __type: "GenesisBlocksGlobalSettingsSettings",
@@ -31333,6 +31345,29 @@ export interface FilebirdBlockFilebirdGalleryAttributes {
 }
 
 /**
+ * The footer setting type
+ */
+export interface FooterSettings {
+  __typename?: "FooterSettings";
+  /**
+   * Genesis Footer App
+   */
+  footerAppIcons?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The string Settings Group
+   */
+  footerSettings?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Genesis Footer Social
+   */
+  footerSocialIcons?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Genesis Footer Utilities
+   */
+  footerUtilities?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
  * The general setting type
  */
 export interface GeneralSettings {
@@ -44967,6 +45002,10 @@ export interface Settings {
   /**
    * Settings of the the string Settings Group
    */
+  footerSettingsFooterSettings?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Settings of the the string Settings Group
+   */
   generalSettingsDateFormat?: Maybe<ScalarsEnums["String"]>;
   /**
    * Settings of the the string Settings Group
@@ -46910,6 +46949,10 @@ export interface UpdateSettingsPayload {
    * Update the DiscussionSettings setting.
    */
   discussionSettings?: Maybe<DiscussionSettings>;
+  /**
+   * Update the FooterSettings setting.
+   */
+  footerSettings?: Maybe<FooterSettings>;
   /**
    * Update the GeneralSettings setting.
    */
@@ -48914,6 +48957,7 @@ export interface Query {
     last?: Maybe<Scalars["Int"]>;
   }) => Maybe<RootQueryToContentTypeConnection>;
   discussionSettings?: Maybe<DiscussionSettings>;
+  footerSettings?: Maybe<FooterSettings>;
   generalSettings?: Maybe<GeneralSettings>;
   genesisBlocksGlobalSettingsSettings?: Maybe<GenesisBlocksGlobalSettingsSettings>;
   linklibrary: (args: {
@@ -49475,6 +49519,7 @@ export interface SchemaObjectTypes {
   EnqueuedStylesheet: EnqueuedStylesheet;
   FilebirdBlockFilebirdGallery: FilebirdBlockFilebirdGallery;
   FilebirdBlockFilebirdGalleryAttributes: FilebirdBlockFilebirdGalleryAttributes;
+  FooterSettings: FooterSettings;
   GeneralSettings: GeneralSettings;
   GenerateAuthorizationCodePayload: GenerateAuthorizationCodePayload;
   GenesisBlocksGbNewsletter: GenesisBlocksGbNewsletter;
@@ -50179,6 +50224,7 @@ export type SchemaObjectTypesNames =
   | "EnqueuedStylesheet"
   | "FilebirdBlockFilebirdGallery"
   | "FilebirdBlockFilebirdGalleryAttributes"
+  | "FooterSettings"
   | "GeneralSettings"
   | "GenerateAuthorizationCodePayload"
   | "GenesisBlocksGbNewsletter"
