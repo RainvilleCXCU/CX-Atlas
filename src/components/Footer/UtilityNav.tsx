@@ -8,7 +8,9 @@ export default function UtilityNav({ children = <></> }) {
     const {footerUtilities} = useQuery().footerSettings;
     return (
         <div className="cx-footer__utils">
-            {parseHtml(footerUtilities ?? '' )}
+            <div className="navbar-nav cx-nav__navbar">
+                {parseHtml(footerUtilities ?? '' )}
+            </div>
         </div>
     )
 };
