@@ -69,7 +69,7 @@ function MobileUtilityNavLinks(props: UtilityNavLinksProps) {
                     </svg> Open an Account
                 </Link>
             </li>
-            <li className="nav-item cx-nav__item cx-nav__item--no-border cx-nav__item--space-above">
+            <li className="nav-item cx-nav__item cx-nav__item--no-border">
                 <Link href="/about/branch-and-atm-locations/" passHref className="nav-link cx-nav__link cx-nav__link--secondary">
                     <svg aria-hidden="true" focusable="false" className="cx-icon" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
                         <g id="Iconly/Bold/Location" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">

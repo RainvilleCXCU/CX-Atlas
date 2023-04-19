@@ -1,11 +1,13 @@
 import Link from 'next/link';
 import { MenuItem } from 'client';
 import { client, MenuLocationEnum } from 'client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface HeaderNavigationProps {
     device: string;
     menuItems: Array<MenuItem>;
+    menuOpen: boolean;
+    setNavOpen;
 }
 
 function DesktopHeaderNavigation(props: HeaderNavigationProps) {
@@ -74,30 +76,84 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
 }
 
 function MobileHeaderNavigation(props: HeaderNavigationProps) {
+
+    const [navsSelected, setNavsSelected] = useState([]);
+    const toggleSelected = (menuItem) => {
+        if (navsSelected.includes(menuItem)) {
+            setNavsSelected(navsSelected.filter(item => item !== menuItem));
+        } else {
+            setNavsSelected([
+                ...navsSelected,
+                menuItem
+            ]);
+        }
+    }
     return (
-        <ul className="navbar-nav me-auto mb-2 mb-lg-0 cx-nav__navbar">
-            {props.menuItems?.map((link, index) => (
-                <li key={`${link.label}$-mobile-menu${index}`}>
-                    <Link href={link.path ?? ''}>{link.label}
-                    </Link>
-                </li>
-            ))}
-        </ul>
+        <div className="accordion accordion-flush" id="cxNavAccordion">
+            {props.menuItems?.map((link, index) => {
+                if (link.parentDatabaseId !== 0) {
+                    return;
+                } else {
+                    return (
+                        <li className='accordion-item cx-nav__item cx-accordion__item'>
+                            <h2 className="accordion-header cx-accordion__header" id={`cx-acc-heading${link.label}`}>
+                                <button className="accordion-button collapsed cx-accordion__button" type="button" data-bs-toggle="collapse" data-bs-target={`#cx-acc-collapse${link.label}`} aria-expanded="false" aria-controls={`cx-acc-collapse${link.label}`}
+                                    onClick={() => {
+                                        toggleSelected(link.label?.replace(' ', '_'));
+                                    }} >
+                                    {link.label}
+                                </button>
+                            </h2>
+                            {link?.childItems()?.nodes?.map((title, index) => {
+                                return (
+                                    <div id={`cx-acc-collapse${link.label}`} className={`accordion-collapse collapse${navsSelected.includes(link.label?.replace(' ', '_')) ? ' show' : ''}`} aria-labelledby={`cx-acc-heading${link.label}`}>
+                                        <ul className="accordion-body cx-nav__accordion-body">
+                                            <li className='cx-nav__accordion-section'>
+                                                {
+                                                    title.label != '[column]' &&
+                                                    <h3>{title.label}</h3>
+                                                }
+
+                                                <ul className='cx-nav__accordion-list'>
+                                                    {title?.childItems()?.nodes?.map((navLink, index) => {
+                                                        return (
+                                                            <li id={`menu-item-${navLink.databaseId}`} key={`${navLink.id}-${navLink.databaseId}`}>
+                                                                <Link href={navLink.uri || ''} passHref className='accordion-item cx-nav__accordion-item-link'
+                                                                onClick={() => {
+                                                                    props.setNavOpen(false);
+                                                                }}>{navLink.label}
+                                                                </Link>
+                                                            </li>
+                                                        )
+                                                    })}
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                )
+                            })}
+                        </li>
+                    );
+                }
+            })}
+        </div >
     );
 }
 
 export interface MenuNavigationProps {
     device: string;
     menuItems: Array<MenuItem>;
+    menuOpen: boolean;
+    setNavOpen;
 }
 
-export default function MenuNavigation({ device, menuItems }: MenuNavigationProps) {
+export default function MenuNavigation({ device, menuItems, menuOpen, setNavOpen }: MenuNavigationProps) {
     if (device === 'Mobile') {
         return (
-            <MobileHeaderNavigation device={device} menuItems={menuItems} />
+            <MobileHeaderNavigation device={device} menuItems={menuItems} menuOpen={menuOpen} setNavOpen={setNavOpen} />
         );
     }
     return (
-        <DesktopHeaderNavigation device={device} menuItems={menuItems} />
+        <DesktopHeaderNavigation device={device} menuItems={menuItems} menuOpen={menuOpen} setNavOpen={setNavOpen} />
     );
 }

@@ -5,6 +5,7 @@ import { client } from 'client';
 import { useRouter } from 'next/router'
 import type { AppProps } from 'next/app';
 import { pageview } from '../lib/gtm';
+import 'scss/main.scss';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
 
