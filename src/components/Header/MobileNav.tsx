@@ -32,11 +32,14 @@ export default function MobileNav({ links, menuOpen = false, navOpen, setNavOpen
                     <a className="nav-link cx-nav__link cx-nav__link--primary" href="https://onlinebanking.connexuscu.org/Mobile/Authentication">Log in</a>
                 </li>
                 <li className="nav-item cx-nav__item">
-                    <Link href="/pay-my-loan/" passHref className="nav-link cx-nav__link cx-nav__link--primary" >Pay my loan</Link>
+                    <Link href="/pay-my-loan/" passHref className="nav-link cx-nav__link cx-nav__link--primary"
+                    onClick={() => {
+                        setNavOpen(false);
+                    }}>Pay my loan</Link>
                 </li>
                 <div className="accordion accordion-flush" id="cxNavAccordion">
                     <MenuNavigation device="Mobile" menuItems={links} menuOpen={menuOpen} setNavOpen={setNavOpen} />
-                    <UtilityNavLinks device="mobile" />
+                    <UtilityNavLinks device="mobile" setNavOpen={setNavOpen} />
                 </div>
             </ul>
         </div>

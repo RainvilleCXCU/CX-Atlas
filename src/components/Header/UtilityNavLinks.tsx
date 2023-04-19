@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 interface UtilityNavLinksProps {
     device?: string;
+    setNavOpen
 }
 function DesktopUtilityNavLinks(props: UtilityNavLinksProps) {
     return (
@@ -58,7 +59,10 @@ function MobileUtilityNavLinks(props: UtilityNavLinksProps) {
     return (
         <>
             <li className="nav-item cx-nav__item cx-nav__item--no-border cx-nav__item--space-above">
-                <Link href="/open-an-account/" passHref className="nav-link cx-nav__link cx-nav__link--secondary" data-ga-target="open_an_account_header">
+                <Link href="/open-an-account/" passHref className="nav-link cx-nav__link cx-nav__link--secondary" data-ga-target="open_an_account_header"
+                onClick={() => {
+                    props.setNavOpen(false);
+                }}>
                     <svg
                         aria-hidden="true" focusable="false" className="cx-icon" width="20px"
                         height="20px" viewBox="0 0 11 11" fill="none"
@@ -70,7 +74,10 @@ function MobileUtilityNavLinks(props: UtilityNavLinksProps) {
                 </Link>
             </li>
             <li className="nav-item cx-nav__item cx-nav__item--no-border">
-                <Link href="/about/branch-and-atm-locations/" passHref className="nav-link cx-nav__link cx-nav__link--secondary">
+                <Link href="/about/branch-and-atm-locations/" passHref className="nav-link cx-nav__link cx-nav__link--secondary"
+                onClick={() => {
+                    props.setNavOpen(false);
+                }}>
                     <svg aria-hidden="true" focusable="false" className="cx-icon" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
                         <g id="Iconly/Bold/Location" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                             <g id="Location" transform="translate(3.500000, 2.000000)" fill="#5B5C5C" fillRule="nonzero">
@@ -81,7 +88,10 @@ function MobileUtilityNavLinks(props: UtilityNavLinksProps) {
                 </Link>
             </li>
             <li className="nav-item cx-nav__item cx-nav__item--no-border">
-                <Link href="/services/contact-us/" passHref className="nav-link cx-nav__link cx-nav__link--secondary">
+                <Link href="/services/contact-us/" passHref className="nav-link cx-nav__link cx-nav__link--secondary"
+                onClick={() => {
+                    props.setNavOpen(false);
+                }}>
                     <svg aria-hidden="true" focusable="false" className="cx-icon" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg">
                         <g id="Iconly/Bold/Message" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                             <g id="Message" transform="translate(2.000400, 3.000000)" fill="#5B5C5C" fillRule="nonzero">
@@ -96,14 +106,14 @@ function MobileUtilityNavLinks(props: UtilityNavLinksProps) {
 };
 
 
-export default function UtilityNavLinks({ device, children = <></> }) {
+export default function UtilityNavLinks({ device, setNavOpen, children = <></> }) {
     if (device.toLowerCase() === 'mobile') {
       return (
-        <MobileUtilityNavLinks />
+        <MobileUtilityNavLinks setNavOpen={setNavOpen} />
       );
     }
     return (
-      <DesktopUtilityNavLinks />
+      <DesktopUtilityNavLinks setNavOpen={setNavOpen} />
     );
   };
   
