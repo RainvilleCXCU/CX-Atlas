@@ -11,9 +11,9 @@ export default function MobileNav({ links, menuOpen = false, navOpen, setNavOpen
     //const [navOpen, setNavOpen] = useState(false);
     useEffect(() => {
         if(navOpen) {
-            document.querySelector('html').style.overflow = 'hidden';
+            document.querySelector('html').classList.add('nav-open');
         } else {
-            document.querySelector('html').style.overflow = 'hidden scroll';
+            document.querySelector('html').classList.remove('nav-open');
         }
     },[navOpen])
 

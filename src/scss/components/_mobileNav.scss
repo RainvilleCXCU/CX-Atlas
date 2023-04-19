@@ -1,16 +1,26 @@
 @media (max-width: 991px) {
+    html {
+        &.nav-open {
+            overflow: hidden;
+            .container.site {
+                margin-top: 66px;
+            }
+        }
+    }
     .cx-nav__collapse {
         &.offcanvas {
             visibility: visible;
-            top: 67px;
+            top: 66px;
             position: absolute;
+            height: 100vh;
         }
     }
     .cx-header {
         &.nav-open {
-            position: fixed;
+            position: relative;
             min-height: 100vh;
             overflow: hidden scroll;
+            background: transparent;
         }
         .cx-header__mobile {
             .cx-nav__navbar {
