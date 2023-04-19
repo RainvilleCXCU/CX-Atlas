@@ -1,17 +1,21 @@
-.cx-nav__collapse {
-    &.offcanvas {
-        visibility: visible;
-        top: 84px;
-        position: absolute;
+@media (max-width: 991px) {
+    .cx-nav__collapse {
+        &.offcanvas {
+            visibility: visible;
+            top: 84px;
+            position: absolute;
+        }
     }
-}
-.cx-header {
-    &.nav-open {
-        position: fixed;
-        min-height: 100vh;
-        overflow: hidden scroll;
-    }
-    .cx-nav__navbar {
-        background-color: #FFF;
+    .cx-header {
+        &.nav-open {
+            position: fixed;
+            min-height: 100vh;
+            overflow: hidden scroll;
+        }
+        .cx-header__mobile {
+            .cx-nav__navbar {
+                background-color: #FFF;
+            }
+        }
     }
 }
