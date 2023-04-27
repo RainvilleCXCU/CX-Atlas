@@ -30,6 +30,11 @@ export default function Layout({ page, children = <></> }) {
                 <main className="content content-single">
                     <article className='entry-content'>
                         {parseHtml(page?.content() ?? '')}
+                            <details open={true ?? false}>
+
+                        <summary>test</summary>
+                            <div></div>
+                            </details>
                     </article>
                 </main>
             </div>

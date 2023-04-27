@@ -61,6 +61,7 @@ function DesktopSearchBar(props: SearchBarProps) {
 
 function MobileSearchBar(props: SearchBarProps) {
 	const [isSearchExpanded, setIsSearchExpanded] = useState(false);
+	const [searchTerm, setSearchTerm] = useState('');
 	const {navOpen, setNavOpen} = props;
 
 	useEffect(() => {
@@ -70,6 +71,7 @@ function MobileSearchBar(props: SearchBarProps) {
 			document.querySelector('html').classList.remove('nav-open');
 		}
 	}, [isSearchExpanded])
+
 	return (
 		<>
 			<MobileHeader isSearchExpanded={isSearchExpanded} setIsSearchExpanded={setIsSearchExpanded} navOpen={navOpen} setNavOpen={setNavOpen} />
@@ -78,9 +80,12 @@ function MobileSearchBar(props: SearchBarProps) {
 					<div className="modal-content cx-search-mobile__content">
 						<div className={`modal-body cx-search-mobile__body${isSearchExpanded ? ' cx-search-mobile__body--show' : ''}`}>
 							<div className="cx-search-mobile__input">
-								<input type="search" aria-label="Search" placeholder="Search the site..." id="cxMobileSearch" name="s" />
+								<input type="search" aria-label="Search" value={searchTerm} placeholder="Search the site..." id="cxMobileSearch" name="s" onChange={(e) => setSearchTerm(e.target.value)} />
 							</div>
-							<button type="button" className="cx-search-mobile__clear">
+							<button type="button" className={`cx-search-mobile__clear${ searchTerm !== '' ? ' show' : ''}`}
+								onClick={() => {
+									setSearchTerm('');
+								}}>
 								clear<span className="visually-hidden"> current search</span>
 							</button>
 							<button type="submit" className="cx-search-mobile__submit">
