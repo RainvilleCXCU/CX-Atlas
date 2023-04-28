@@ -39,7 +39,12 @@ export default function MobileNav({ links, menuOpen = false, navOpen, setNavOpen
                 </li>
                 <div className="accordion accordion-flush" id="cxNavAccordion">
                     <MenuNavigation device="Mobile" menuItems={links} menuOpen={menuOpen} setNavOpen={setNavOpen} />
-                    <UtilityNavLinks device="mobile" setNavOpen={setNavOpen} />
+                    <span className="cx-nav__items"
+                    onClick={() => {
+                        setNavOpen(false);
+                    }}>
+                    <UtilityNavLinks />
+                    </span>
                 </div>
             </ul>
         </div>

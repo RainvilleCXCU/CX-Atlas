@@ -12,7 +12,9 @@ export default function UtilityNav({ children = <></> }) {
                 <li>
                     <SearchBar device="desktop" navOpen setNavOpen />
                 </li>
-                <UtilityNavLinks device="desktop" setNavOpen />
+                <li>
+                    <UtilityNavLinks />
+                </li>
             </ul>
         </>
     )

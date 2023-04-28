@@ -464,6 +464,8 @@ export enum ContentTypeEnum {
   /** The Type of Content object */
   CX_ALERT = "CX_ALERT",
   /** The Type of Content object */
+  GRAPHQL_DOCUMENT = "GRAPHQL_DOCUMENT",
+  /** The Type of Content object */
   LINK_LIBRARY_LINKS = "LINK_LIBRARY_LINKS",
   /** The Type of Content object */
   PAGE = "PAGE",
@@ -639,6 +641,34 @@ export interface CreateContactInput {
   title?: InputMaybe<Scalars["String"]>;
   type?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   value?: InputMaybe<Scalars["String"]>;
+}
+
+/** Input for the createGraphqlDocument mutation. */
+export interface CreateGraphqlDocumentInput {
+  /** Alias names for saved GraphQL query documents */
+  alias?: InputMaybe<Array<Scalars["String"]>>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars["String"]>;
+  /** The content of the object */
+  content?: InputMaybe<Scalars["String"]>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars["String"]>;
+  /** Description for the saved GraphQL document */
+  description?: InputMaybe<Scalars["String"]>;
+  /** Allow, deny or default access grant for specific query */
+  grant?: InputMaybe<Scalars["String"]>;
+  /** HTTP Cache-Control max-age directive for a saved GraphQL document */
+  maxAgeHeader?: InputMaybe<Scalars["Int"]>;
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars["Int"]>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars["String"]>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars["String"]>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars["String"]>;
 }
 
 /** Input for the createLinklibrary mutation. */
@@ -1056,6 +1086,18 @@ export interface DeleteContactInput {
   ignoreEditLock?: InputMaybe<Scalars["Boolean"]>;
 }
 
+/** Input for the deleteGraphqlDocument mutation. */
+export interface DeleteGraphqlDocumentInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars["String"]>;
+  /** Whether the object should be force deleted instead of being moved to the trash */
+  forceDelete?: InputMaybe<Scalars["Boolean"]>;
+  /** The ID of the graphqlDocument to delete */
+  id: Scalars["ID"];
+  /** Override the edit lock when another user is editing the post */
+  ignoreEditLock?: InputMaybe<Scalars["Boolean"]>;
+}
+
 /** Input for the deleteLinklibrary mutation. */
 export interface DeleteLinklibraryInput {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -1202,6 +1244,18 @@ export interface GenerateAuthorizationCodeInput {
   password?: InputMaybe<Scalars["String"]>;
   /** Username for WordPress user */
   username?: InputMaybe<Scalars["String"]>;
+}
+
+/** The Type of Identifier used to fetch a single resource. Default is ID. */
+export enum GraphqlDocumentIdType {
+  /** Identify a resource by the Database ID. */
+  DATABASE_ID = "DATABASE_ID",
+  /** Identify a resource by the (hashed) Global ID. */
+  ID = "ID",
+  /** Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier. */
+  SLUG = "SLUG",
+  /** Identify a resource by the URI. */
+  URI = "URI",
 }
 
 /** Arguments for filtering the HierarchicalContentNodeToContentNodeAncestorsConnection connection */
@@ -3304,6 +3358,44 @@ export interface RootQueryToContentNodeConnectionWhereArgs {
   title?: InputMaybe<Scalars["String"]>;
 }
 
+/** Arguments for filtering the RootQueryToGraphqlDocumentConnection connection */
+export interface RootQueryToGraphqlDocumentConnectionWhereArgs {
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars["Boolean"]>;
+  /** Specific database ID of the object */
+  id?: InputMaybe<Scalars["Int"]>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars["String"]>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars["ID"]>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars["String"]>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+}
+
 /** Arguments for filtering the RootQueryToLinklibraryConnection connection */
 export interface RootQueryToLinklibraryConnectionWhereArgs {
   /** Filter the connection based on dates */
@@ -4314,6 +4406,38 @@ export interface UpdateContactInput {
   value?: InputMaybe<Scalars["String"]>;
 }
 
+/** Input for the updateGraphqlDocument mutation. */
+export interface UpdateGraphqlDocumentInput {
+  /** Alias names for saved GraphQL query documents */
+  alias?: InputMaybe<Array<Scalars["String"]>>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars["String"]>;
+  /** The content of the object */
+  content?: InputMaybe<Scalars["String"]>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars["String"]>;
+  /** Description for the saved GraphQL document */
+  description?: InputMaybe<Scalars["String"]>;
+  /** Allow, deny or default access grant for specific query */
+  grant?: InputMaybe<Scalars["String"]>;
+  /** The ID of the graphqlDocument object */
+  id: Scalars["ID"];
+  /** Override the edit lock when another user is editing the post */
+  ignoreEditLock?: InputMaybe<Scalars["Boolean"]>;
+  /** HTTP Cache-Control max-age directive for a saved GraphQL document */
+  maxAgeHeader?: InputMaybe<Scalars["Int"]>;
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars["Int"]>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars["String"]>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars["String"]>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+}
+
 /** Input for the updateLinklibrary mutation. */
 export interface UpdateLinklibraryInput {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -4666,6 +4790,7 @@ export interface UpdateSettingsInput {
   genesisBlocksGlobalSettingsSettingsGenesisProSubscriptionKey?: InputMaybe<
     Scalars["String"]
   >;
+  headerSettingsHeaderSettings?: InputMaybe<Scalars["String"]>;
   /** The ID of the page that should display the latest posts */
   readingSettingsPageForPosts?: InputMaybe<Scalars["Int"]>;
   /** The ID of the page that should be displayed on the front page */
@@ -5332,6 +5457,7 @@ export const scalarsEnumsHash: import("gqty").ScalarsEnumsHash = {
   ContentTypesOfProductNameEnum: true,
   ContentTypesOfTagEnum: true,
   Float: true,
+  GraphqlDocumentIdType: true,
   ID: true,
   Int: true,
   LinklibraryIdType: true,
@@ -8875,6 +9001,25 @@ export const generatedSchema = {
     clientMutationId: { __type: "String" },
     contact: { __type: "Contact" },
   },
+  CreateGraphqlDocumentInput: {
+    alias: { __type: "[String!]" },
+    clientMutationId: { __type: "String" },
+    content: { __type: "String" },
+    date: { __type: "String" },
+    description: { __type: "String" },
+    grant: { __type: "String" },
+    maxAgeHeader: { __type: "Int" },
+    menuOrder: { __type: "Int" },
+    password: { __type: "String" },
+    slug: { __type: "String" },
+    status: { __type: "PostStatusEnum" },
+    title: { __type: "String" },
+  },
+  CreateGraphqlDocumentPayload: {
+    __typename: { __type: "String!" },
+    clientMutationId: { __type: "String" },
+    graphqlDocument: { __type: "GraphqlDocument" },
+  },
   CreateLinklibraryInput: {
     clientMutationId: { __type: "String" },
     commentStatus: { __type: "String" },
@@ -9190,6 +9335,18 @@ export const generatedSchema = {
     clientMutationId: { __type: "String" },
     contact: { __type: "Contact" },
     deletedId: { __type: "ID" },
+  },
+  DeleteGraphqlDocumentInput: {
+    clientMutationId: { __type: "String" },
+    forceDelete: { __type: "Boolean" },
+    id: { __type: "ID!" },
+    ignoreEditLock: { __type: "Boolean" },
+  },
+  DeleteGraphqlDocumentPayload: {
+    __typename: { __type: "String!" },
+    clientMutationId: { __type: "String" },
+    deletedId: { __type: "ID" },
+    graphqlDocument: { __type: "GraphqlDocument" },
   },
   DeleteLinklibraryInput: {
     clientMutationId: { __type: "String" },
@@ -9988,6 +10145,50 @@ export const generatedSchema = {
     rightLabel: { __type: "String" },
     toggleAnimate: { __type: "Boolean" },
   },
+  GenesisCustomBlocksCxContentLink: {
+    __typename: { __type: "String!" },
+    apiVersion: { __type: "Int" },
+    attributes: { __type: "GenesisCustomBlocksCxContentLinkAttributes" },
+    blockEditorCategoryName: { __type: "String" },
+    clientId: { __type: "String" },
+    cssClassNames: { __type: "[String]" },
+    innerBlocks: { __type: "[EditorBlock]" },
+    isDynamic: { __type: "Boolean!" },
+    name: { __type: "String" },
+    parentClientId: { __type: "String" },
+    renderedHtml: { __type: "String" },
+  },
+  GenesisCustomBlocksCxContentLinkAttributes: {
+    __typename: { __type: "String!" },
+    blockVisibility: { __type: "BlockAttributesObject" },
+    className: { __type: "String" },
+    linkContent: { __type: "String" },
+    linkUrl: { __type: "String" },
+    lock: { __type: "BlockAttributesObject" },
+  },
+  GenesisCustomBlocksCxLink: {
+    __typename: { __type: "String!" },
+    apiVersion: { __type: "Int" },
+    attributes: { __type: "GenesisCustomBlocksCxLinkAttributes" },
+    blockEditorCategoryName: { __type: "String" },
+    clientId: { __type: "String" },
+    cssClassNames: { __type: "[String]" },
+    innerBlocks: { __type: "[EditorBlock]" },
+    isDynamic: { __type: "Boolean!" },
+    name: { __type: "String" },
+    parentClientId: { __type: "String" },
+    renderedHtml: { __type: "String" },
+  },
+  GenesisCustomBlocksCxLinkAttributes: {
+    __typename: { __type: "String!" },
+    blockVisibility: { __type: "BlockAttributesObject" },
+    className: { __type: "String" },
+    classes: { __type: "String" },
+    icon: { __type: "String" },
+    linkText: { __type: "String" },
+    linkUrl: { __type: "String" },
+    lock: { __type: "BlockAttributesObject" },
+  },
   GenesisCustomBlocksDatatrac: {
     __typename: { __type: "String!" },
     apiVersion: { __type: "Int" },
@@ -10598,6 +10799,88 @@ export const generatedSchema = {
     sectionTitleTag: { __type: "String" },
     url: { __type: "String" },
     width: { __type: "String" },
+  },
+  GraphqlDocument: {
+    __typename: { __type: "String!" },
+    alias: { __type: "[String!]" },
+    conditionalTags: { __type: "ConditionalTags" },
+    content: {
+      __type: "String",
+      __args: { format: "PostObjectFieldFormatEnum" },
+    },
+    contentType: { __type: "ContentNodeToContentTypeConnectionEdge" },
+    contentTypeName: { __type: "String!" },
+    databaseId: { __type: "Int!" },
+    date: { __type: "String" },
+    dateGmt: { __type: "String" },
+    description: { __type: "String" },
+    desiredSlug: { __type: "String" },
+    editingLockedBy: { __type: "ContentNodeToEditLockConnectionEdge" },
+    enclosure: { __type: "String" },
+    enqueuedScripts: {
+      __type: "ContentNodeToEnqueuedScriptConnection",
+      __args: { after: "String", before: "String", first: "Int", last: "Int" },
+    },
+    enqueuedStylesheets: {
+      __type: "ContentNodeToEnqueuedStylesheetConnection",
+      __args: { after: "String", before: "String", first: "Int", last: "Int" },
+    },
+    grant: { __type: "String" },
+    graphqlDocumentId: { __type: "Int!" },
+    guid: { __type: "String" },
+    id: { __type: "ID!" },
+    isContentNode: { __type: "Boolean!" },
+    isPreview: { __type: "Boolean" },
+    isRestricted: { __type: "Boolean" },
+    isTermNode: { __type: "Boolean!" },
+    lastEditedBy: { __type: "ContentNodeToEditLastConnectionEdge" },
+    link: { __type: "String" },
+    maxAgeHeader: { __type: "Int" },
+    modified: { __type: "String" },
+    modifiedGmt: { __type: "String" },
+    preview: { __type: "GraphqlDocumentToPreviewConnectionEdge" },
+    previewRevisionDatabaseId: { __type: "Int" },
+    previewRevisionId: { __type: "ID" },
+    slug: { __type: "String" },
+    status: { __type: "String" },
+    template: { __type: "ContentTemplate" },
+    templates: { __type: "[String]" },
+    title: {
+      __type: "String",
+      __args: { format: "PostObjectFieldFormatEnum" },
+    },
+    uri: { __type: "String" },
+  },
+  GraphqlDocumentConnection: {
+    __typename: { __type: "String!" },
+    edges: { __type: "[GraphqlDocumentConnectionEdge!]!" },
+    nodes: { __type: "[GraphqlDocument!]!" },
+    pageInfo: { __type: "GraphqlDocumentConnectionPageInfo!" },
+    $on: { __type: "$GraphqlDocumentConnection!" },
+  },
+  GraphqlDocumentConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "GraphqlDocument!" },
+    $on: { __type: "$GraphqlDocumentConnectionEdge!" },
+  },
+  GraphqlDocumentConnectionPageInfo: {
+    __typename: { __type: "String!" },
+    endCursor: { __type: "String" },
+    hasNextPage: { __type: "Boolean!" },
+    hasPreviousPage: { __type: "Boolean!" },
+    startCursor: { __type: "String" },
+    $on: { __type: "$GraphqlDocumentConnectionPageInfo!" },
+  },
+  GraphqlDocumentToPreviewConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "GraphqlDocument!" },
+  },
+  HeaderSettings: {
+    __typename: { __type: "String!" },
+    headerSettings: { __type: "String" },
+    headerUtilities: { __type: "String" },
   },
   HierarchicalContentNode: {
     __typename: { __type: "String!" },
@@ -13830,6 +14113,43 @@ export const generatedSchema = {
     hasPreviousPage: { __type: "Boolean!" },
     startCursor: { __type: "String" },
   },
+  RootQueryToGraphqlDocumentConnection: {
+    __typename: { __type: "String!" },
+    edges: { __type: "[RootQueryToGraphqlDocumentConnectionEdge!]!" },
+    nodes: { __type: "[GraphqlDocument!]!" },
+    pageInfo: { __type: "RootQueryToGraphqlDocumentConnectionPageInfo!" },
+  },
+  RootQueryToGraphqlDocumentConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "GraphqlDocument!" },
+  },
+  RootQueryToGraphqlDocumentConnectionPageInfo: {
+    __typename: { __type: "String!" },
+    endCursor: { __type: "String" },
+    hasNextPage: { __type: "Boolean!" },
+    hasPreviousPage: { __type: "Boolean!" },
+    startCursor: { __type: "String" },
+  },
+  RootQueryToGraphqlDocumentConnectionWhereArgs: {
+    dateQuery: { __type: "DateQueryInput" },
+    hasPassword: { __type: "Boolean" },
+    id: { __type: "Int" },
+    in: { __type: "[ID]" },
+    mimeType: { __type: "MimeTypeEnum" },
+    name: { __type: "String" },
+    nameIn: { __type: "[String]" },
+    notIn: { __type: "[ID]" },
+    orderby: { __type: "[PostObjectsConnectionOrderbyInput]" },
+    parent: { __type: "ID" },
+    parentIn: { __type: "[ID]" },
+    parentNotIn: { __type: "[ID]" },
+    password: { __type: "String" },
+    search: { __type: "String" },
+    stati: { __type: "[PostStatusEnum]" },
+    status: { __type: "PostStatusEnum" },
+    title: { __type: "String" },
+  },
   RootQueryToLinklibraryConnection: {
     __typename: { __type: "String!" },
     edges: { __type: "[RootQueryToLinklibraryConnectionEdge!]!" },
@@ -14703,6 +15023,7 @@ export const generatedSchema = {
     genesisBlocksGlobalSettingsSettingsGenesisProSubscriptionKey: {
       __type: "String",
     },
+    headerSettingsHeaderSettings: { __type: "String" },
     readingSettingsPageForPosts: { __type: "Int" },
     readingSettingsPageOnFront: { __type: "Int" },
     readingSettingsPostsPerPage: { __type: "Int" },
@@ -15304,6 +15625,27 @@ export const generatedSchema = {
     clientMutationId: { __type: "String" },
     contact: { __type: "Contact" },
   },
+  UpdateGraphqlDocumentInput: {
+    alias: { __type: "[String!]" },
+    clientMutationId: { __type: "String" },
+    content: { __type: "String" },
+    date: { __type: "String" },
+    description: { __type: "String" },
+    grant: { __type: "String" },
+    id: { __type: "ID!" },
+    ignoreEditLock: { __type: "Boolean" },
+    maxAgeHeader: { __type: "Int" },
+    menuOrder: { __type: "Int" },
+    password: { __type: "String" },
+    slug: { __type: "String" },
+    status: { __type: "PostStatusEnum" },
+    title: { __type: "String" },
+  },
+  UpdateGraphqlDocumentPayload: {
+    __typename: { __type: "String!" },
+    clientMutationId: { __type: "String" },
+    graphqlDocument: { __type: "GraphqlDocument" },
+  },
   UpdateLinklibraryInput: {
     clientMutationId: { __type: "String" },
     commentStatus: { __type: "String" },
@@ -15550,6 +15892,7 @@ export const generatedSchema = {
     genesisBlocksGlobalSettingsSettingsGenesisProSubscriptionKey: {
       __type: "String",
     },
+    headerSettingsHeaderSettings: { __type: "String" },
     readingSettingsPageForPosts: { __type: "Int" },
     readingSettingsPageOnFront: { __type: "Int" },
     readingSettingsPostsPerPage: { __type: "Int" },
@@ -15572,6 +15915,7 @@ export const generatedSchema = {
     genesisBlocksGlobalSettingsSettings: {
       __type: "GenesisBlocksGlobalSettingsSettings",
     },
+    headerSettings: { __type: "HeaderSettings" },
     readingSettings: { __type: "ReadingSettings" },
     thirdPartySettings: { __type: "ThirdPartySettings" },
     writingSettings: { __type: "WritingSettings" },
@@ -16397,6 +16741,10 @@ export const generatedSchema = {
       __type: "CreateContactPayload",
       __args: { input: "CreateContactInput!" },
     },
+    createGraphqlDocument: {
+      __type: "CreateGraphqlDocumentPayload",
+      __args: { input: "CreateGraphqlDocumentInput!" },
+    },
     createLinklibrary: {
       __type: "CreateLinklibraryPayload",
       __args: { input: "CreateLinklibraryInput!" },
@@ -16464,6 +16812,10 @@ export const generatedSchema = {
     deleteContact: {
       __type: "DeleteContactPayload",
       __args: { input: "DeleteContactInput!" },
+    },
+    deleteGraphqlDocument: {
+      __type: "DeleteGraphqlDocumentPayload",
+      __args: { input: "DeleteGraphqlDocumentInput!" },
     },
     deleteLinklibrary: {
       __type: "DeleteLinklibraryPayload",
@@ -16553,6 +16905,10 @@ export const generatedSchema = {
     updateContact: {
       __type: "UpdateContactPayload",
       __args: { input: "UpdateContactInput!" },
+    },
+    updateGraphqlDocument: {
+      __type: "UpdateGraphqlDocumentPayload",
+      __args: { input: "UpdateGraphqlDocumentInput!" },
     },
     updateLinklibrary: {
       __type: "UpdateLinklibraryPayload",
@@ -16724,6 +17080,34 @@ export const generatedSchema = {
     genesisBlocksGlobalSettingsSettings: {
       __type: "GenesisBlocksGlobalSettingsSettings",
     },
+    graphqlDocument: {
+      __type: "GraphqlDocument",
+      __args: {
+        asPreview: "Boolean",
+        id: "ID!",
+        idType: "GraphqlDocumentIdType",
+      },
+    },
+    graphqlDocumentBy: {
+      __type: "GraphqlDocument",
+      __args: {
+        graphqlDocumentId: "Int",
+        id: "ID",
+        slug: "String",
+        uri: "String",
+      },
+    },
+    graphqlDocuments: {
+      __type: "RootQueryToGraphqlDocumentConnection",
+      __args: {
+        after: "String",
+        before: "String",
+        first: "Int",
+        last: "Int",
+        where: "RootQueryToGraphqlDocumentConnectionWhereArgs",
+      },
+    },
+    headerSettings: { __type: "HeaderSettings" },
     linklibrary: {
       __type: "Linklibrary",
       __args: { asPreview: "Boolean", id: "ID!", idType: "LinklibraryIdType" },
@@ -17033,6 +17417,7 @@ export const generatedSchema = {
     ContentNode: [
       "CXAlert",
       "Contact",
+      "GraphqlDocument",
       "Linklibrary",
       "Location",
       "MediaItem",
@@ -17048,6 +17433,7 @@ export const generatedSchema = {
       "Comment",
       "CommentAuthor",
       "Contact",
+      "GraphqlDocument",
       "Linklibrary",
       "Location",
       "LocationCategory",
@@ -17083,6 +17469,7 @@ export const generatedSchema = {
       "ContentType",
       "EnqueuedScript",
       "EnqueuedStylesheet",
+      "GraphqlDocument",
       "Linklibrary",
       "Location",
       "LocationCategory",
@@ -17108,6 +17495,7 @@ export const generatedSchema = {
     NodeWithTemplate: [
       "CXAlert",
       "Contact",
+      "GraphqlDocument",
       "Linklibrary",
       "Location",
       "MediaItem",
@@ -17120,6 +17508,7 @@ export const generatedSchema = {
     NodeWithTitle: [
       "CXAlert",
       "Contact",
+      "GraphqlDocument",
       "Linklibrary",
       "Location",
       "MediaItem",
@@ -17144,6 +17533,7 @@ export const generatedSchema = {
       "Category",
       "Contact",
       "ContentType",
+      "GraphqlDocument",
       "Linklibrary",
       "Location",
       "LocationCategory",
@@ -17184,6 +17574,7 @@ export const generatedSchema = {
       "ContentNodeToEnqueuedStylesheetConnectionEdge",
       "ContentTypeToContentNodeConnectionEdge",
       "ContentTypeToTaxonomyConnectionEdge",
+      "GraphqlDocumentToPreviewConnectionEdge",
       "HierarchicalContentNodeToContentNodeAncestorsConnectionEdge",
       "HierarchicalContentNodeToContentNodeChildrenConnectionEdge",
       "HierarchicalContentNodeToParentContentNodeConnectionEdge",
@@ -17237,6 +17628,7 @@ export const generatedSchema = {
       "RootQueryToContentTypeConnectionEdge",
       "RootQueryToEnqueuedScriptConnectionEdge",
       "RootQueryToEnqueuedStylesheetConnectionEdge",
+      "RootQueryToGraphqlDocumentConnectionEdge",
       "RootQueryToLinklibraryConnectionEdge",
       "RootQueryToLocationCategoryConnectionEdge",
       "RootQueryToLocationConnectionEdge",
@@ -17290,6 +17682,7 @@ export const generatedSchema = {
       "ContentNodeToContentTypeConnectionEdge",
       "ContentNodeToEditLastConnectionEdge",
       "ContentNodeToEditLockConnectionEdge",
+      "GraphqlDocumentToPreviewConnectionEdge",
       "HierarchicalContentNodeToParentContentNodeConnectionEdge",
       "LinklibraryToPreviewConnectionEdge",
       "LocationCategoryToParentLocationCategoryConnectionEdge",
@@ -17361,6 +17754,7 @@ export const generatedSchema = {
       "RootQueryToContentTypeConnection",
       "RootQueryToEnqueuedScriptConnection",
       "RootQueryToEnqueuedStylesheetConnection",
+      "RootQueryToGraphqlDocumentConnection",
       "RootQueryToLinklibraryConnection",
       "RootQueryToLocationCategoryConnection",
       "RootQueryToLocationConnection",
@@ -17453,6 +17847,7 @@ export const generatedSchema = {
       "RootQueryToContentTypeConnectionPageInfo",
       "RootQueryToEnqueuedScriptConnectionPageInfo",
       "RootQueryToEnqueuedStylesheetConnectionPageInfo",
+      "RootQueryToGraphqlDocumentConnectionPageInfo",
       "RootQueryToLinklibraryConnectionPageInfo",
       "RootQueryToLocationCategoryConnectionPageInfo",
       "RootQueryToLocationConnectionPageInfo",
@@ -17541,6 +17936,7 @@ export const generatedSchema = {
       "RootQueryToContentTypeConnectionPageInfo",
       "RootQueryToEnqueuedScriptConnectionPageInfo",
       "RootQueryToEnqueuedStylesheetConnectionPageInfo",
+      "RootQueryToGraphqlDocumentConnectionPageInfo",
       "RootQueryToLinklibraryConnectionPageInfo",
       "RootQueryToLocationCategoryConnectionPageInfo",
       "RootQueryToLocationConnectionPageInfo",
@@ -17906,6 +18302,8 @@ export const generatedSchema = {
       "GenesisCustomBlocksCardTestimonial",
       "GenesisCustomBlocksComparison",
       "GenesisCustomBlocksContentToggle",
+      "GenesisCustomBlocksCxContentLink",
+      "GenesisCustomBlocksCxLink",
       "GenesisCustomBlocksDatatrac",
       "GenesisCustomBlocksDisclosures",
       "GenesisCustomBlocksFaqs",
@@ -17957,9 +18355,19 @@ export const generatedSchema = {
       "Template_SlimHeader",
     ],
     EnqueuedAsset: ["EnqueuedScript", "EnqueuedStylesheet"],
+    NodeWithContentEditor: [
+      "GraphqlDocument",
+      "Linklibrary",
+      "Location",
+      "Page",
+      "Post",
+    ],
+    GraphqlDocumentConnectionEdge: [
+      "GraphqlDocumentToPreviewConnectionEdge",
+      "RootQueryToGraphqlDocumentConnectionEdge",
+    ],
     HierarchicalContentNode: ["Linklibrary", "Location", "MediaItem", "Page"],
     NodeWithComments: ["Linklibrary", "MediaItem", "Page", "Post"],
-    NodeWithContentEditor: ["Linklibrary", "Location", "Page", "Post"],
     LinklibraryConnectionEdge: [
       "LinklibraryToPreviewConnectionEdge",
       "RootQueryToLinklibraryConnectionEdge",
@@ -18160,6 +18568,10 @@ export const generatedSchema = {
     ContentTypeConnectionPageInfo: [
       "RootQueryToContentTypeConnectionPageInfo",
       "TaxonomyToContentTypeConnectionPageInfo",
+    ],
+    GraphqlDocumentConnection: ["RootQueryToGraphqlDocumentConnection"],
+    GraphqlDocumentConnectionPageInfo: [
+      "RootQueryToGraphqlDocumentConnectionPageInfo",
     ],
     LinklibraryConnection: ["RootQueryToLinklibraryConnection"],
     LinklibraryConnectionPageInfo: ["RootQueryToLinklibraryConnectionPageInfo"],
@@ -19741,6 +20153,7 @@ export interface Connection {
     | "RootQueryToContentTypeConnection"
     | "RootQueryToEnqueuedScriptConnection"
     | "RootQueryToEnqueuedStylesheetConnection"
+    | "RootQueryToGraphqlDocumentConnection"
     | "RootQueryToLinklibraryConnection"
     | "RootQueryToLocationCategoryConnection"
     | "RootQueryToLocationConnection"
@@ -20066,6 +20479,7 @@ export interface ContentNode {
   __typename?:
     | "CXAlert"
     | "Contact"
+    | "GraphqlDocument"
     | "Linklibrary"
     | "Location"
     | "MediaItem"
@@ -30083,6 +30497,21 @@ export interface CreateContactPayload {
 }
 
 /**
+ * The payload for the createGraphqlDocument mutation.
+ */
+export interface CreateGraphqlDocumentPayload {
+  __typename?: "CreateGraphqlDocumentPayload";
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The Post object mutation type.
+   */
+  graphqlDocument?: Maybe<GraphqlDocument>;
+}
+
+/**
  * The payload for the createLinklibrary mutation.
  */
 export interface CreateLinklibraryPayload {
@@ -30287,6 +30716,7 @@ export interface DatabaseIdentifier {
     | "Comment"
     | "CommentAuthor"
     | "Contact"
+    | "GraphqlDocument"
     | "Linklibrary"
     | "Location"
     | "LocationCategory"
@@ -30394,6 +30824,25 @@ export interface DeleteContactPayload {
    * The ID of the deleted object
    */
   deletedId?: Maybe<ScalarsEnums["ID"]>;
+}
+
+/**
+ * The payload for the deleteGraphqlDocument mutation.
+ */
+export interface DeleteGraphqlDocumentPayload {
+  __typename?: "DeleteGraphqlDocumentPayload";
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The ID of the deleted object
+   */
+  deletedId?: Maybe<ScalarsEnums["ID"]>;
+  /**
+   * The object before it was deleted
+   */
+  graphqlDocument?: Maybe<GraphqlDocument>;
 }
 
 /**
@@ -30683,6 +31132,7 @@ export interface Edge {
     | "ContentNodeToEnqueuedStylesheetConnectionEdge"
     | "ContentTypeToContentNodeConnectionEdge"
     | "ContentTypeToTaxonomyConnectionEdge"
+    | "GraphqlDocumentToPreviewConnectionEdge"
     | "HierarchicalContentNodeToContentNodeAncestorsConnectionEdge"
     | "HierarchicalContentNodeToContentNodeChildrenConnectionEdge"
     | "HierarchicalContentNodeToParentContentNodeConnectionEdge"
@@ -30736,6 +31186,7 @@ export interface Edge {
     | "RootQueryToContentTypeConnectionEdge"
     | "RootQueryToEnqueuedScriptConnectionEdge"
     | "RootQueryToEnqueuedStylesheetConnectionEdge"
+    | "RootQueryToGraphqlDocumentConnectionEdge"
     | "RootQueryToLinklibraryConnectionEdge"
     | "RootQueryToLocationCategoryConnectionEdge"
     | "RootQueryToLocationConnectionEdge"
@@ -30906,6 +31357,8 @@ export interface EditorBlock {
     | "GenesisCustomBlocksCardTestimonial"
     | "GenesisCustomBlocksComparison"
     | "GenesisCustomBlocksContentToggle"
+    | "GenesisCustomBlocksCxContentLink"
+    | "GenesisCustomBlocksCxLink"
     | "GenesisCustomBlocksDatatrac"
     | "GenesisCustomBlocksDisclosures"
     | "GenesisCustomBlocksFaqs"
@@ -33203,6 +33656,162 @@ export interface GenesisCustomBlocksContentToggleAttributes {
 /**
  * A block used for editing the site
  */
+export interface GenesisCustomBlocksCxContentLink {
+  __typename?: "GenesisCustomBlocksCxContentLink";
+  /**
+   * The API version of the Gutenberg Block
+   */
+  apiVersion?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Attributes of the %s Block Type
+   */
+  attributes?: Maybe<GenesisCustomBlocksCxContentLinkAttributes>;
+  /**
+   * The name of the category the Block belongs to
+   */
+  blockEditorCategoryName?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The id of the Block
+   */
+  clientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * CSS Classnames to apply to the block
+   */
+  cssClassNames?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The inner blocks of the Block
+   */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /**
+   * Whether the block is Dynamic (server rendered)
+   */
+  isDynamic: ScalarsEnums["Boolean"];
+  /**
+   * The name of the block
+   */
+  name?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The parent id of the Block
+   */
+  parentClientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The rendered HTML for the block
+   */
+  renderedHtml?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Attributes of the %s Block Type
+ */
+export interface GenesisCustomBlocksCxContentLinkAttributes {
+  __typename?: "GenesisCustomBlocksCxContentLinkAttributes";
+  /**
+   * The &quot;blockVisibility&quot; field on the &quot;GenesisCustomBlocksCxContentLink&quot; block
+   */
+  blockVisibility?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;className&quot; field on the &quot;GenesisCustomBlocksCxContentLink&quot; block
+   */
+  className?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;link-content&quot; field on the &quot;GenesisCustomBlocksCxContentLink&quot; block
+   */
+  linkContent?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;link-url&quot; field on the &quot;GenesisCustomBlocksCxContentLink&quot; block
+   */
+  linkUrl?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksCxContentLink&quot; block
+   */
+  lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+}
+
+/**
+ * A block used for editing the site
+ */
+export interface GenesisCustomBlocksCxLink {
+  __typename?: "GenesisCustomBlocksCxLink";
+  /**
+   * The API version of the Gutenberg Block
+   */
+  apiVersion?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Attributes of the %s Block Type
+   */
+  attributes?: Maybe<GenesisCustomBlocksCxLinkAttributes>;
+  /**
+   * The name of the category the Block belongs to
+   */
+  blockEditorCategoryName?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The id of the Block
+   */
+  clientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * CSS Classnames to apply to the block
+   */
+  cssClassNames?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The inner blocks of the Block
+   */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /**
+   * Whether the block is Dynamic (server rendered)
+   */
+  isDynamic: ScalarsEnums["Boolean"];
+  /**
+   * The name of the block
+   */
+  name?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The parent id of the Block
+   */
+  parentClientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The rendered HTML for the block
+   */
+  renderedHtml?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Attributes of the %s Block Type
+ */
+export interface GenesisCustomBlocksCxLinkAttributes {
+  __typename?: "GenesisCustomBlocksCxLinkAttributes";
+  /**
+   * The &quot;blockVisibility&quot; field on the &quot;GenesisCustomBlocksCxLink&quot; block
+   */
+  blockVisibility?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;className&quot; field on the &quot;GenesisCustomBlocksCxLink&quot; block
+   */
+  className?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;classes&quot; field on the &quot;GenesisCustomBlocksCxLink&quot; block
+   */
+  classes?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;icon&quot; field on the &quot;GenesisCustomBlocksCxLink&quot; block
+   */
+  icon?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;link-text&quot; field on the &quot;GenesisCustomBlocksCxLink&quot; block
+   */
+  linkText?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;link-url&quot; field on the &quot;GenesisCustomBlocksCxLink&quot; block
+   */
+  linkUrl?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksCxLink&quot; block
+   */
+  lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+}
+
+/**
+ * A block used for editing the site
+ */
 export interface GenesisCustomBlocksDatatrac {
   __typename?: "GenesisCustomBlocksDatatrac";
   /**
@@ -35392,6 +36001,293 @@ export interface GenesisPageBuilderGpbPortfolioGridAttributes {
    * The &quot;width&quot; field on the &quot;GenesisPageBuilderGpbPortfolioGrid&quot; block
    */
   width?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * The graphqlDocument type
+ */
+export interface GraphqlDocument {
+  __typename?: "GraphqlDocument";
+  /**
+   * Alias names for saved GraphQL query documents
+   */
+  alias?: Maybe<Array<ScalarsEnums["String"]>>;
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
+  conditionalTags?: Maybe<ConditionalTags>;
+  /**
+   * The content of the post.
+   */
+  content: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums["String"]>;
+  /**
+   * Connection between the ContentNode type and the ContentType type
+   */
+  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
+  /**
+   * The name of the Content Type the node belongs to
+   */
+  contentTypeName: ScalarsEnums["String"];
+  /**
+   * The unique identifier stored in the database
+   */
+  databaseId: ScalarsEnums["Int"];
+  /**
+   * Post publishing date.
+   */
+  date?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The publishing date set in GMT.
+   */
+  dateGmt?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Description for the saved GraphQL document
+   */
+  description?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The desired slug of the post
+   */
+  desiredSlug?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds
+   */
+  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
+  /**
+   * The RSS enclosure for the object
+   */
+  enclosure?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Connection between the ContentNode type and the EnqueuedScript type
+   */
+  enqueuedScripts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+  }) => Maybe<ContentNodeToEnqueuedScriptConnection>;
+  /**
+   * Connection between the ContentNode type and the EnqueuedStylesheet type
+   */
+  enqueuedStylesheets: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+  }) => Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  /**
+   * Allow, deny or default access grant for specific query
+   */
+  grant?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of the databaseId field
+   */
+  graphqlDocumentId: ScalarsEnums["Int"];
+  /**
+   * The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table.
+   */
+  guid?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The globally unique identifier of the graphql_document object.
+   */
+  id: ScalarsEnums["ID"];
+  /**
+   * Whether the node is a Content Node
+   */
+  isContentNode: ScalarsEnums["Boolean"];
+  /**
+   * Whether the object is a node in the preview state
+   */
+  isPreview?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * Whether the object is restricted from the current viewer
+   */
+  isRestricted?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * Whether the node is a Term
+   */
+  isTermNode: ScalarsEnums["Boolean"];
+  /**
+   * The user that most recently edited the node
+   */
+  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
+  /**
+   * The permalink of the post
+   */
+  link?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * HTTP Cache-Control max-age directive for a saved GraphQL document
+   */
+  maxAgeHeader?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time.
+   */
+  modified?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT.
+   */
+  modifiedGmt?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Connection between the GraphqlDocument type and the graphqlDocument type
+   * @deprecated The &quot;GraphqlDocument&quot; Type is not publicly queryable and does not support previews. This field will be removed in the future.
+   */
+  preview?: Maybe<GraphqlDocumentToPreviewConnectionEdge>;
+  /**
+   * The database id of the preview node
+   */
+  previewRevisionDatabaseId?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Whether the object is a node in the preview state
+   */
+  previewRevisionId?: Maybe<ScalarsEnums["ID"]>;
+  /**
+   * The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
+   */
+  slug?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The current status of the object
+   */
+  status?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The template assigned to the node
+   */
+  template?: Maybe<ContentTemplate>;
+  templates?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made.
+   */
+  title: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums["String"]>;
+  /**
+   * The unique resource identifier path
+   */
+  uri?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Connection to graphqlDocument Nodes
+ */
+export interface GraphqlDocumentConnection {
+  __typename?: "RootQueryToGraphqlDocumentConnection";
+  /**
+   * A list of edges (relational context) between RootQuery and connected graphqlDocument Nodes
+   */
+  edges: Array<GraphqlDocumentConnectionEdge>;
+  /**
+   * A list of connected graphqlDocument Nodes
+   */
+  nodes: Array<GraphqlDocument>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo: GraphqlDocumentConnectionPageInfo;
+  $on: $GraphqlDocumentConnection;
+}
+
+/**
+ * Edge between a Node and a connected graphqlDocument
+ */
+export interface GraphqlDocumentConnectionEdge {
+  __typename?:
+    | "GraphqlDocumentToPreviewConnectionEdge"
+    | "RootQueryToGraphqlDocumentConnectionEdge";
+  /**
+   * Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The connected graphqlDocument Node
+   */
+  node: GraphqlDocument;
+  $on: $GraphqlDocumentConnectionEdge;
+}
+
+/**
+ * Page Info on the connected GraphqlDocumentConnectionEdge
+ */
+export interface GraphqlDocumentConnectionPageInfo {
+  __typename?: "RootQueryToGraphqlDocumentConnectionPageInfo";
+  /**
+   * When paginating forwards, the cursor to continue.
+   */
+  endCursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * When paginating forwards, are there more items?
+   */
+  hasNextPage: ScalarsEnums["Boolean"];
+  /**
+   * When paginating backwards, are there more items?
+   */
+  hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * When paginating backwards, the cursor to continue.
+   */
+  startCursor?: Maybe<ScalarsEnums["String"]>;
+  $on: $GraphqlDocumentConnectionPageInfo;
+}
+
+/**
+ * Connection between the GraphqlDocument type and the graphqlDocument type
+ */
+export interface GraphqlDocumentToPreviewConnectionEdge {
+  __typename?: "GraphqlDocumentToPreviewConnectionEdge";
+  /**
+   * Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The node of the connection, without the edges
+   * @deprecated The &quot;GraphqlDocument&quot; Type is not publicly queryable and does not support previews. This field will be removed in the future.
+   */
+  node: GraphqlDocument;
+}
+
+/**
+ * The header setting type
+ */
+export interface HeaderSettings {
+  __typename?: "HeaderSettings";
+  /**
+   * The string Settings Group
+   */
+  headerSettings?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Genesis Header Utilities
+   */
+  headerUtilities?: Maybe<ScalarsEnums["String"]>;
 }
 
 /**
@@ -39168,6 +40064,7 @@ export interface Node {
     | "ContentType"
     | "EnqueuedScript"
     | "EnqueuedStylesheet"
+    | "GraphqlDocument"
     | "Linklibrary"
     | "Location"
     | "LocationCategory"
@@ -39265,7 +40162,7 @@ export interface NodeWithComments {
  * A node that supports the content editor
  */
 export interface NodeWithContentEditor {
-  __typename?: "Linklibrary" | "Location" | "Page" | "Post";
+  __typename?: "GraphqlDocument" | "Linklibrary" | "Location" | "Page" | "Post";
   /**
    * The content of the post.
    */
@@ -39414,6 +40311,7 @@ export interface NodeWithTemplate {
   __typename?:
     | "CXAlert"
     | "Contact"
+    | "GraphqlDocument"
     | "Linklibrary"
     | "Location"
     | "MediaItem"
@@ -39440,6 +40338,7 @@ export interface NodeWithTitle {
   __typename?:
     | "CXAlert"
     | "Contact"
+    | "GraphqlDocument"
     | "Linklibrary"
     | "Location"
     | "MediaItem"
@@ -39503,6 +40402,7 @@ export interface OneToOneConnection {
     | "ContentNodeToContentTypeConnectionEdge"
     | "ContentNodeToEditLastConnectionEdge"
     | "ContentNodeToEditLockConnectionEdge"
+    | "GraphqlDocumentToPreviewConnectionEdge"
     | "HierarchicalContentNodeToParentContentNodeConnectionEdge"
     | "LinklibraryToPreviewConnectionEdge"
     | "LocationCategoryToParentLocationCategoryConnectionEdge"
@@ -40014,6 +40914,7 @@ export interface PageInfo {
     | "RootQueryToContentTypeConnectionPageInfo"
     | "RootQueryToEnqueuedScriptConnectionPageInfo"
     | "RootQueryToEnqueuedStylesheetConnectionPageInfo"
+    | "RootQueryToGraphqlDocumentConnectionPageInfo"
     | "RootQueryToLinklibraryConnectionPageInfo"
     | "RootQueryToLocationCategoryConnectionPageInfo"
     | "RootQueryToLocationConnectionPageInfo"
@@ -43399,6 +44300,63 @@ export interface RootQueryToEnqueuedStylesheetConnectionPageInfo {
 }
 
 /**
+ * Connection between the RootQuery type and the graphqlDocument type
+ */
+export interface RootQueryToGraphqlDocumentConnection {
+  __typename?: "RootQueryToGraphqlDocumentConnection";
+  /**
+   * Edges for the RootQueryToGraphqlDocumentConnection connection
+   */
+  edges: Array<RootQueryToGraphqlDocumentConnectionEdge>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes: Array<GraphqlDocument>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo: RootQueryToGraphqlDocumentConnectionPageInfo;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface RootQueryToGraphqlDocumentConnectionEdge {
+  __typename?: "RootQueryToGraphqlDocumentConnectionEdge";
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The item at the end of the edge
+   */
+  node: GraphqlDocument;
+}
+
+/**
+ * Page Info on the &quot;RootQueryToGraphqlDocumentConnection&quot;
+ */
+export interface RootQueryToGraphqlDocumentConnectionPageInfo {
+  __typename?: "RootQueryToGraphqlDocumentConnectionPageInfo";
+  /**
+   * When paginating forwards, the cursor to continue.
+   */
+  endCursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * When paginating forwards, are there more items?
+   */
+  hasNextPage: ScalarsEnums["Boolean"];
+  /**
+   * When paginating backwards, are there more items?
+   */
+  hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * When paginating backwards, the cursor to continue.
+   */
+  startCursor?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
  * Connection between the RootQuery type and the linklibrary type
  */
 export interface RootQueryToLinklibraryConnection {
@@ -45052,6 +46010,10 @@ export interface Settings {
     ScalarsEnums["String"]
   >;
   /**
+   * Settings of the the string Settings Group
+   */
+  headerSettingsHeaderSettings?: Maybe<ScalarsEnums["String"]>;
+  /**
    * Settings of the the integer Settings Group
    */
   readingSettingsPageForPosts?: Maybe<ScalarsEnums["Int"]>;
@@ -46619,6 +47581,7 @@ export interface UniformResourceIdentifiable {
     | "Category"
     | "Contact"
     | "ContentType"
+    | "GraphqlDocument"
     | "Linklibrary"
     | "Location"
     | "LocationCategory"
@@ -46761,6 +47724,21 @@ export interface UpdateContactPayload {
    * The Post object mutation type.
    */
   contact?: Maybe<Contact>;
+}
+
+/**
+ * The payload for the updateGraphqlDocument mutation.
+ */
+export interface UpdateGraphqlDocumentPayload {
+  __typename?: "UpdateGraphqlDocumentPayload";
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The Post object mutation type.
+   */
+  graphqlDocument?: Maybe<GraphqlDocument>;
 }
 
 /**
@@ -46961,6 +47939,10 @@ export interface UpdateSettingsPayload {
    * Update the GenesisBlocksGlobalSettingsSettings setting.
    */
   genesisBlocksGlobalSettingsSettings?: Maybe<GenesisBlocksGlobalSettingsSettings>;
+  /**
+   * Update the HeaderSettings setting.
+   */
+  headerSettings?: Maybe<HeaderSettings>;
   /**
    * Update the ReadingSettings setting.
    */
@@ -48389,6 +49371,7 @@ export interface WPPageInfo {
     | "RootQueryToContentTypeConnectionPageInfo"
     | "RootQueryToEnqueuedScriptConnectionPageInfo"
     | "RootQueryToEnqueuedStylesheetConnectionPageInfo"
+    | "RootQueryToGraphqlDocumentConnectionPageInfo"
     | "RootQueryToLinklibraryConnectionPageInfo"
     | "RootQueryToLocationCategoryConnectionPageInfo"
     | "RootQueryToLocationConnectionPageInfo"
@@ -48730,6 +49713,9 @@ export interface Mutation {
   createContact: (args: {
     input: CreateContactInput;
   }) => Maybe<CreateContactPayload>;
+  createGraphqlDocument: (args: {
+    input: CreateGraphqlDocumentInput;
+  }) => Maybe<CreateGraphqlDocumentPayload>;
   createLinklibrary: (args: {
     input: CreateLinklibraryInput;
   }) => Maybe<CreateLinklibraryPayload>;
@@ -48771,6 +49757,9 @@ export interface Mutation {
   deleteContact: (args: {
     input: DeleteContactInput;
   }) => Maybe<DeleteContactPayload>;
+  deleteGraphqlDocument: (args: {
+    input: DeleteGraphqlDocumentInput;
+  }) => Maybe<DeleteGraphqlDocumentPayload>;
   deleteLinklibrary: (args: {
     input: DeleteLinklibraryInput;
   }) => Maybe<DeleteLinklibraryPayload>;
@@ -48830,6 +49819,9 @@ export interface Mutation {
   updateContact: (args: {
     input: UpdateContactInput;
   }) => Maybe<UpdateContactPayload>;
+  updateGraphqlDocument: (args: {
+    input: UpdateGraphqlDocumentInput;
+  }) => Maybe<UpdateGraphqlDocumentPayload>;
   updateLinklibrary: (args: {
     input: UpdateLinklibraryInput;
   }) => Maybe<UpdateLinklibraryPayload>;
@@ -48960,6 +49952,25 @@ export interface Query {
   footerSettings?: Maybe<FooterSettings>;
   generalSettings?: Maybe<GeneralSettings>;
   genesisBlocksGlobalSettingsSettings?: Maybe<GenesisBlocksGlobalSettingsSettings>;
+  graphqlDocument: (args: {
+    asPreview?: Maybe<Scalars["Boolean"]>;
+    id: Scalars["ID"];
+    idType?: Maybe<GraphqlDocumentIdType>;
+  }) => Maybe<GraphqlDocument>;
+  graphqlDocumentBy: (args?: {
+    graphqlDocumentId?: Maybe<Scalars["Int"]>;
+    id?: Maybe<Scalars["ID"]>;
+    slug?: Maybe<Scalars["String"]>;
+    uri?: Maybe<Scalars["String"]>;
+  }) => Maybe<GraphqlDocument>;
+  graphqlDocuments: (args?: {
+    after?: Maybe<Scalars["String"]>;
+    before?: Maybe<Scalars["String"]>;
+    first?: Maybe<Scalars["Int"]>;
+    last?: Maybe<Scalars["Int"]>;
+    where?: Maybe<RootQueryToGraphqlDocumentConnectionWhereArgs>;
+  }) => Maybe<RootQueryToGraphqlDocumentConnection>;
+  headerSettings?: Maybe<HeaderSettings>;
   linklibrary: (args: {
     asPreview?: Maybe<Scalars["Boolean"]>;
     id: Scalars["ID"];
@@ -49483,6 +50494,7 @@ export interface SchemaObjectTypes {
   CreateCategoryPayload: CreateCategoryPayload;
   CreateCommentPayload: CreateCommentPayload;
   CreateContactPayload: CreateContactPayload;
+  CreateGraphqlDocumentPayload: CreateGraphqlDocumentPayload;
   CreateLinklibraryPayload: CreateLinklibraryPayload;
   CreateLocationCategoryPayload: CreateLocationCategoryPayload;
   CreateLocationPayload: CreateLocationPayload;
@@ -49501,6 +50513,7 @@ export interface SchemaObjectTypes {
   DeleteCategoryPayload: DeleteCategoryPayload;
   DeleteCommentPayload: DeleteCommentPayload;
   DeleteContactPayload: DeleteContactPayload;
+  DeleteGraphqlDocumentPayload: DeleteGraphqlDocumentPayload;
   DeleteLinklibraryPayload: DeleteLinklibraryPayload;
   DeleteLocationCategoryPayload: DeleteLocationCategoryPayload;
   DeleteLocationPayload: DeleteLocationPayload;
@@ -49563,6 +50576,10 @@ export interface SchemaObjectTypes {
   GenesisCustomBlocksComparisonAttributes: GenesisCustomBlocksComparisonAttributes;
   GenesisCustomBlocksContentToggle: GenesisCustomBlocksContentToggle;
   GenesisCustomBlocksContentToggleAttributes: GenesisCustomBlocksContentToggleAttributes;
+  GenesisCustomBlocksCxContentLink: GenesisCustomBlocksCxContentLink;
+  GenesisCustomBlocksCxContentLinkAttributes: GenesisCustomBlocksCxContentLinkAttributes;
+  GenesisCustomBlocksCxLink: GenesisCustomBlocksCxLink;
+  GenesisCustomBlocksCxLinkAttributes: GenesisCustomBlocksCxLinkAttributes;
   GenesisCustomBlocksDatatrac: GenesisCustomBlocksDatatrac;
   GenesisCustomBlocksDatatracAttributes: GenesisCustomBlocksDatatracAttributes;
   GenesisCustomBlocksDisclosures: GenesisCustomBlocksDisclosures;
@@ -49613,6 +50630,9 @@ export interface SchemaObjectTypes {
   GenesisCustomBlocksVimeoAttributes: GenesisCustomBlocksVimeoAttributes;
   GenesisPageBuilderGpbPortfolioGrid: GenesisPageBuilderGpbPortfolioGrid;
   GenesisPageBuilderGpbPortfolioGridAttributes: GenesisPageBuilderGpbPortfolioGridAttributes;
+  GraphqlDocument: GraphqlDocument;
+  GraphqlDocumentToPreviewConnectionEdge: GraphqlDocumentToPreviewConnectionEdge;
+  HeaderSettings: HeaderSettings;
   HierarchicalContentNodeToContentNodeAncestorsConnection: HierarchicalContentNodeToContentNodeAncestorsConnection;
   HierarchicalContentNodeToContentNodeAncestorsConnectionEdge: HierarchicalContentNodeToContentNodeAncestorsConnectionEdge;
   HierarchicalContentNodeToContentNodeAncestorsConnectionPageInfo: HierarchicalContentNodeToContentNodeAncestorsConnectionPageInfo;
@@ -49777,6 +50797,9 @@ export interface SchemaObjectTypes {
   RootQueryToEnqueuedStylesheetConnection: RootQueryToEnqueuedStylesheetConnection;
   RootQueryToEnqueuedStylesheetConnectionEdge: RootQueryToEnqueuedStylesheetConnectionEdge;
   RootQueryToEnqueuedStylesheetConnectionPageInfo: RootQueryToEnqueuedStylesheetConnectionPageInfo;
+  RootQueryToGraphqlDocumentConnection: RootQueryToGraphqlDocumentConnection;
+  RootQueryToGraphqlDocumentConnectionEdge: RootQueryToGraphqlDocumentConnectionEdge;
+  RootQueryToGraphqlDocumentConnectionPageInfo: RootQueryToGraphqlDocumentConnectionPageInfo;
   RootQueryToLinklibraryConnection: RootQueryToLinklibraryConnection;
   RootQueryToLinklibraryConnectionEdge: RootQueryToLinklibraryConnectionEdge;
   RootQueryToLinklibraryConnectionPageInfo: RootQueryToLinklibraryConnectionPageInfo;
@@ -49887,6 +50910,7 @@ export interface SchemaObjectTypes {
   UpdateCategoryPayload: UpdateCategoryPayload;
   UpdateCommentPayload: UpdateCommentPayload;
   UpdateContactPayload: UpdateContactPayload;
+  UpdateGraphqlDocumentPayload: UpdateGraphqlDocumentPayload;
   UpdateLinklibraryPayload: UpdateLinklibraryPayload;
   UpdateLocationCategoryPayload: UpdateLocationCategoryPayload;
   UpdateLocationPayload: UpdateLocationPayload;
@@ -50188,6 +51212,7 @@ export type SchemaObjectTypesNames =
   | "CreateCategoryPayload"
   | "CreateCommentPayload"
   | "CreateContactPayload"
+  | "CreateGraphqlDocumentPayload"
   | "CreateLinklibraryPayload"
   | "CreateLocationCategoryPayload"
   | "CreateLocationPayload"
@@ -50206,6 +51231,7 @@ export type SchemaObjectTypesNames =
   | "DeleteCategoryPayload"
   | "DeleteCommentPayload"
   | "DeleteContactPayload"
+  | "DeleteGraphqlDocumentPayload"
   | "DeleteLinklibraryPayload"
   | "DeleteLocationCategoryPayload"
   | "DeleteLocationPayload"
@@ -50268,6 +51294,10 @@ export type SchemaObjectTypesNames =
   | "GenesisCustomBlocksComparisonAttributes"
   | "GenesisCustomBlocksContentToggle"
   | "GenesisCustomBlocksContentToggleAttributes"
+  | "GenesisCustomBlocksCxContentLink"
+  | "GenesisCustomBlocksCxContentLinkAttributes"
+  | "GenesisCustomBlocksCxLink"
+  | "GenesisCustomBlocksCxLinkAttributes"
   | "GenesisCustomBlocksDatatrac"
   | "GenesisCustomBlocksDatatracAttributes"
   | "GenesisCustomBlocksDisclosures"
@@ -50318,6 +51348,9 @@ export type SchemaObjectTypesNames =
   | "GenesisCustomBlocksVimeoAttributes"
   | "GenesisPageBuilderGpbPortfolioGrid"
   | "GenesisPageBuilderGpbPortfolioGridAttributes"
+  | "GraphqlDocument"
+  | "GraphqlDocumentToPreviewConnectionEdge"
+  | "HeaderSettings"
   | "HierarchicalContentNodeToContentNodeAncestorsConnection"
   | "HierarchicalContentNodeToContentNodeAncestorsConnectionEdge"
   | "HierarchicalContentNodeToContentNodeAncestorsConnectionPageInfo"
@@ -50482,6 +51515,9 @@ export type SchemaObjectTypesNames =
   | "RootQueryToEnqueuedStylesheetConnection"
   | "RootQueryToEnqueuedStylesheetConnectionEdge"
   | "RootQueryToEnqueuedStylesheetConnectionPageInfo"
+  | "RootQueryToGraphqlDocumentConnection"
+  | "RootQueryToGraphqlDocumentConnectionEdge"
+  | "RootQueryToGraphqlDocumentConnectionPageInfo"
   | "RootQueryToLinklibraryConnection"
   | "RootQueryToLinklibraryConnectionEdge"
   | "RootQueryToLinklibraryConnectionPageInfo"
@@ -50592,6 +51628,7 @@ export type SchemaObjectTypesNames =
   | "UpdateCategoryPayload"
   | "UpdateCommentPayload"
   | "UpdateContactPayload"
+  | "UpdateGraphqlDocumentPayload"
   | "UpdateLinklibraryPayload"
   | "UpdateLocationCategoryPayload"
   | "UpdateLocationPayload"
@@ -50781,6 +51818,7 @@ export interface $Connection {
   RootQueryToContentTypeConnection?: RootQueryToContentTypeConnection;
   RootQueryToEnqueuedScriptConnection?: RootQueryToEnqueuedScriptConnection;
   RootQueryToEnqueuedStylesheetConnection?: RootQueryToEnqueuedStylesheetConnection;
+  RootQueryToGraphqlDocumentConnection?: RootQueryToGraphqlDocumentConnection;
   RootQueryToLinklibraryConnection?: RootQueryToLinklibraryConnection;
   RootQueryToLocationCategoryConnection?: RootQueryToLocationCategoryConnection;
   RootQueryToLocationConnection?: RootQueryToLocationConnection;
@@ -50841,6 +51879,7 @@ export interface $ContactConnectionPageInfo {
 export interface $ContentNode {
   CXAlert?: CXAlert;
   Contact?: Contact;
+  GraphqlDocument?: GraphqlDocument;
   Linklibrary?: Linklibrary;
   Location?: Location;
   MediaItem?: MediaItem;
@@ -50925,6 +51964,7 @@ export interface $DatabaseIdentifier {
   Comment?: Comment;
   CommentAuthor?: CommentAuthor;
   Contact?: Contact;
+  GraphqlDocument?: GraphqlDocument;
   Linklibrary?: Linklibrary;
   Location?: Location;
   LocationCategory?: LocationCategory;
@@ -50963,6 +52003,7 @@ export interface $Edge {
   ContentNodeToEnqueuedStylesheetConnectionEdge?: ContentNodeToEnqueuedStylesheetConnectionEdge;
   ContentTypeToContentNodeConnectionEdge?: ContentTypeToContentNodeConnectionEdge;
   ContentTypeToTaxonomyConnectionEdge?: ContentTypeToTaxonomyConnectionEdge;
+  GraphqlDocumentToPreviewConnectionEdge?: GraphqlDocumentToPreviewConnectionEdge;
   HierarchicalContentNodeToContentNodeAncestorsConnectionEdge?: HierarchicalContentNodeToContentNodeAncestorsConnectionEdge;
   HierarchicalContentNodeToContentNodeChildrenConnectionEdge?: HierarchicalContentNodeToContentNodeChildrenConnectionEdge;
   HierarchicalContentNodeToParentContentNodeConnectionEdge?: HierarchicalContentNodeToParentContentNodeConnectionEdge;
@@ -51016,6 +52057,7 @@ export interface $Edge {
   RootQueryToContentTypeConnectionEdge?: RootQueryToContentTypeConnectionEdge;
   RootQueryToEnqueuedScriptConnectionEdge?: RootQueryToEnqueuedScriptConnectionEdge;
   RootQueryToEnqueuedStylesheetConnectionEdge?: RootQueryToEnqueuedStylesheetConnectionEdge;
+  RootQueryToGraphqlDocumentConnectionEdge?: RootQueryToGraphqlDocumentConnectionEdge;
   RootQueryToLinklibraryConnectionEdge?: RootQueryToLinklibraryConnectionEdge;
   RootQueryToLocationCategoryConnectionEdge?: RootQueryToLocationCategoryConnectionEdge;
   RootQueryToLocationConnectionEdge?: RootQueryToLocationConnectionEdge;
@@ -51173,6 +52215,8 @@ export interface $EditorBlock {
   GenesisCustomBlocksCardTestimonial?: GenesisCustomBlocksCardTestimonial;
   GenesisCustomBlocksComparison?: GenesisCustomBlocksComparison;
   GenesisCustomBlocksContentToggle?: GenesisCustomBlocksContentToggle;
+  GenesisCustomBlocksCxContentLink?: GenesisCustomBlocksCxContentLink;
+  GenesisCustomBlocksCxLink?: GenesisCustomBlocksCxLink;
   GenesisCustomBlocksDatatrac?: GenesisCustomBlocksDatatrac;
   GenesisCustomBlocksDisclosures?: GenesisCustomBlocksDisclosures;
   GenesisCustomBlocksFaqs?: GenesisCustomBlocksFaqs;
@@ -51263,6 +52307,19 @@ export interface $EnqueuedStylesheetConnectionPageInfo {
   RootQueryToEnqueuedStylesheetConnectionPageInfo?: RootQueryToEnqueuedStylesheetConnectionPageInfo;
   TermNodeToEnqueuedStylesheetConnectionPageInfo?: TermNodeToEnqueuedStylesheetConnectionPageInfo;
   UserToEnqueuedStylesheetConnectionPageInfo?: UserToEnqueuedStylesheetConnectionPageInfo;
+}
+
+export interface $GraphqlDocumentConnection {
+  RootQueryToGraphqlDocumentConnection?: RootQueryToGraphqlDocumentConnection;
+}
+
+export interface $GraphqlDocumentConnectionEdge {
+  GraphqlDocumentToPreviewConnectionEdge?: GraphqlDocumentToPreviewConnectionEdge;
+  RootQueryToGraphqlDocumentConnectionEdge?: RootQueryToGraphqlDocumentConnectionEdge;
+}
+
+export interface $GraphqlDocumentConnectionPageInfo {
+  RootQueryToGraphqlDocumentConnectionPageInfo?: RootQueryToGraphqlDocumentConnectionPageInfo;
 }
 
 export interface $HierarchicalContentNode {
@@ -51425,6 +52482,7 @@ export interface $Node {
   ContentType?: ContentType;
   EnqueuedScript?: EnqueuedScript;
   EnqueuedStylesheet?: EnqueuedStylesheet;
+  GraphqlDocument?: GraphqlDocument;
   Linklibrary?: Linklibrary;
   Location?: Location;
   LocationCategory?: LocationCategory;
@@ -51465,6 +52523,7 @@ export interface $NodeWithComments {
 }
 
 export interface $NodeWithContentEditor {
+  GraphqlDocument?: GraphqlDocument;
   Linklibrary?: Linklibrary;
   Location?: Location;
   Page?: Page;
@@ -51504,6 +52563,7 @@ export interface $NodeWithRevisions {
 export interface $NodeWithTemplate {
   CXAlert?: CXAlert;
   Contact?: Contact;
+  GraphqlDocument?: GraphqlDocument;
   Linklibrary?: Linklibrary;
   Location?: Location;
   MediaItem?: MediaItem;
@@ -51517,6 +52577,7 @@ export interface $NodeWithTemplate {
 export interface $NodeWithTitle {
   CXAlert?: CXAlert;
   Contact?: Contact;
+  GraphqlDocument?: GraphqlDocument;
   Linklibrary?: Linklibrary;
   Location?: Location;
   MediaItem?: MediaItem;
@@ -51542,6 +52603,7 @@ export interface $OneToOneConnection {
   ContentNodeToContentTypeConnectionEdge?: ContentNodeToContentTypeConnectionEdge;
   ContentNodeToEditLastConnectionEdge?: ContentNodeToEditLastConnectionEdge;
   ContentNodeToEditLockConnectionEdge?: ContentNodeToEditLockConnectionEdge;
+  GraphqlDocumentToPreviewConnectionEdge?: GraphqlDocumentToPreviewConnectionEdge;
   HierarchicalContentNodeToParentContentNodeConnectionEdge?: HierarchicalContentNodeToParentContentNodeConnectionEdge;
   LinklibraryToPreviewConnectionEdge?: LinklibraryToPreviewConnectionEdge;
   LocationCategoryToParentLocationCategoryConnectionEdge?: LocationCategoryToParentLocationCategoryConnectionEdge;
@@ -51629,6 +52691,7 @@ export interface $PageInfo {
   RootQueryToContentTypeConnectionPageInfo?: RootQueryToContentTypeConnectionPageInfo;
   RootQueryToEnqueuedScriptConnectionPageInfo?: RootQueryToEnqueuedScriptConnectionPageInfo;
   RootQueryToEnqueuedStylesheetConnectionPageInfo?: RootQueryToEnqueuedStylesheetConnectionPageInfo;
+  RootQueryToGraphqlDocumentConnectionPageInfo?: RootQueryToGraphqlDocumentConnectionPageInfo;
   RootQueryToLinklibraryConnectionPageInfo?: RootQueryToLinklibraryConnectionPageInfo;
   RootQueryToLocationCategoryConnectionPageInfo?: RootQueryToLocationCategoryConnectionPageInfo;
   RootQueryToLocationConnectionPageInfo?: RootQueryToLocationConnectionPageInfo;
@@ -51889,6 +52952,7 @@ export interface $UniformResourceIdentifiable {
   Category?: Category;
   Contact?: Contact;
   ContentType?: ContentType;
+  GraphqlDocument?: GraphqlDocument;
   Linklibrary?: Linklibrary;
   Location?: Location;
   LocationCategory?: LocationCategory;
@@ -51982,6 +53046,7 @@ export interface $WPPageInfo {
   RootQueryToContentTypeConnectionPageInfo?: RootQueryToContentTypeConnectionPageInfo;
   RootQueryToEnqueuedScriptConnectionPageInfo?: RootQueryToEnqueuedScriptConnectionPageInfo;
   RootQueryToEnqueuedStylesheetConnectionPageInfo?: RootQueryToEnqueuedStylesheetConnectionPageInfo;
+  RootQueryToGraphqlDocumentConnectionPageInfo?: RootQueryToGraphqlDocumentConnectionPageInfo;
   RootQueryToLinklibraryConnectionPageInfo?: RootQueryToLinklibraryConnectionPageInfo;
   RootQueryToLocationCategoryConnectionPageInfo?: RootQueryToLocationCategoryConnectionPageInfo;
   RootQueryToLocationConnectionPageInfo?: RootQueryToLocationConnectionPageInfo;
@@ -52051,6 +53116,7 @@ export interface ScalarsEnums extends MakeNullable<Scalars> {
   ContentTypesOfPostFormatEnum: ContentTypesOfPostFormatEnum | undefined;
   ContentTypesOfProductNameEnum: ContentTypesOfProductNameEnum | undefined;
   ContentTypesOfTagEnum: ContentTypesOfTagEnum | undefined;
+  GraphqlDocumentIdType: GraphqlDocumentIdType | undefined;
   LinklibraryIdType: LinklibraryIdType | undefined;
   LocationCategoryIdType: LocationCategoryIdType | undefined;
   LocationIdType: LocationIdType | undefined;
