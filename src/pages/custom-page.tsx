@@ -4,6 +4,7 @@ import { Footer, Header } from "components";
 import { GetStaticPropsContext } from "next";
 import Head from "next/head";
 import Accordion from "components/Accordion/Accordion";
+import FAQ from "components/FAQs/faq";
 
 export default function Page() {
 	const { useQuery } = client;
@@ -38,6 +39,7 @@ export default function Page() {
 					</p>
 					<Accordion title={title} content={content} isOpen={false} />
 					<Accordion title={title} content={content} isOpen={false} />
+					<FAQ id={"6"} title={title} content={content} isOpen={false} />
 				</div>
 			</main>
 

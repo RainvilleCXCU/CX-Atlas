@@ -1,23 +1,24 @@
-import React from 'react';
+import React from "react";
 //import { client, FaqIdType } from 'client';
+import Accordion from "components/Accordion/Accordion";
 
 export interface Props {
-  id: string;
+	id: string;
+	title: string;
+	content: string;
+	isOpen: boolean;
 }
 
-function FAQ({
-  id,
-}: Props): JSX.Element {
-  /*const { useQuery } = client;
+function FAQ({ id, title, content, isOpen }: Props): JSX.Element {
+	/*const { useQuery } = client;
   const faqItem = useQuery().faqBy({
     faqId: parseInt(id)
   });*/
-  return (
-    <div id={id}>
-      <div>Question: </div>
-      <div dangerouslySetInnerHTML={{__html: ''}}></div>
-  </div>
-  );
+	return (
+		<div id={id}>
+			<Accordion title={title} content={content} isOpen={isOpen} />
+		</div>
+	);
 }
 
 export default FAQ;
