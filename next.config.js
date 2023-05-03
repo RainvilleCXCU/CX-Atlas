@@ -37,6 +37,10 @@ module.exports = withFaust({
             {
                 source: '/about/branch-and-atm-locations/',
                 destination: '/locations/',
+            },
+            {
+                source: '/blog/:path*',
+                destination: '/posts/:path*',
             }
         ]
     },

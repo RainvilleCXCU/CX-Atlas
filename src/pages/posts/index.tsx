@@ -40,7 +40,7 @@ export default function Page() {
       </Head>
       <GTM />
 
-      <main className="content content-index">
+      <main className="content content-index blog">
         <Posts
           posts={posts.nodes}
           heading="Blog Posts"

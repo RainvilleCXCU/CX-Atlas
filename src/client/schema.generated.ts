@@ -4800,6 +4800,7 @@ export interface UpdateSettingsInput {
   /** What to show on the front page */
   readingSettingsShowOnFront?: InputMaybe<Scalars["String"]>;
   thirdPartySettingsThirdPartySettings?: InputMaybe<Scalars["String"]>;
+  widgetSettingsWidgetSettings?: InputMaybe<Scalars["String"]>;
   /** Default post category. */
   writingSettingsDefaultCategory?: InputMaybe<Scalars["Int"]>;
   /** Default post format. */
@@ -10189,6 +10190,26 @@ export const generatedSchema = {
     linkUrl: { __type: "String" },
     lock: { __type: "BlockAttributesObject" },
   },
+  GenesisCustomBlocksCxSvg: {
+    __typename: { __type: "String!" },
+    apiVersion: { __type: "Int" },
+    attributes: { __type: "GenesisCustomBlocksCxSvgAttributes" },
+    blockEditorCategoryName: { __type: "String" },
+    clientId: { __type: "String" },
+    cssClassNames: { __type: "[String]" },
+    innerBlocks: { __type: "[EditorBlock]" },
+    isDynamic: { __type: "Boolean!" },
+    name: { __type: "String" },
+    parentClientId: { __type: "String" },
+    renderedHtml: { __type: "String" },
+  },
+  GenesisCustomBlocksCxSvgAttributes: {
+    __typename: { __type: "String!" },
+    blockVisibility: { __type: "BlockAttributesObject" },
+    className: { __type: "String" },
+    lock: { __type: "BlockAttributesObject" },
+    svg: { __type: "Int" },
+  },
   GenesisCustomBlocksDatatrac: {
     __typename: { __type: "String!" },
     apiVersion: { __type: "Int" },
@@ -10686,6 +10707,26 @@ export const generatedSchema = {
     id: { __type: "String" },
     lock: { __type: "BlockAttributesObject" },
     variant: { __type: "String" },
+  },
+  GenesisCustomBlocksTaglessText: {
+    __typename: { __type: "String!" },
+    apiVersion: { __type: "Int" },
+    attributes: { __type: "GenesisCustomBlocksTaglessTextAttributes" },
+    blockEditorCategoryName: { __type: "String" },
+    clientId: { __type: "String" },
+    cssClassNames: { __type: "[String]" },
+    innerBlocks: { __type: "[EditorBlock]" },
+    isDynamic: { __type: "Boolean!" },
+    name: { __type: "String" },
+    parentClientId: { __type: "String" },
+    renderedHtml: { __type: "String" },
+  },
+  GenesisCustomBlocksTaglessTextAttributes: {
+    __typename: { __type: "String!" },
+    blockVisibility: { __type: "BlockAttributesObject" },
+    className: { __type: "String" },
+    lock: { __type: "BlockAttributesObject" },
+    text: { __type: "String" },
   },
   GenesisCustomBlocksUsp: {
     __typename: { __type: "String!" },
@@ -13321,6 +13362,12 @@ export const generatedSchema = {
     viewItem: { __type: "String" },
     viewItems: { __type: "String" },
   },
+  Posts: {
+    __typename: { __type: "String!" },
+    id: { __type: "String" },
+    title: { __type: "String" },
+    url: { __type: "String" },
+  },
   Previewable: {
     __typename: { __type: "String!" },
     isPreview: { __type: "Boolean" },
@@ -15029,6 +15076,7 @@ export const generatedSchema = {
     readingSettingsPostsPerPage: { __type: "Int" },
     readingSettingsShowOnFront: { __type: "String" },
     thirdPartySettingsThirdPartySettings: { __type: "String" },
+    widgetSettingsWidgetSettings: { __type: "String" },
     writingSettingsDefaultCategory: { __type: "Int" },
     writingSettingsDefaultPostFormat: { __type: "String" },
     writingSettingsUseSmilies: { __type: "Boolean" },
@@ -15898,6 +15946,7 @@ export const generatedSchema = {
     readingSettingsPostsPerPage: { __type: "Int" },
     readingSettingsShowOnFront: { __type: "String" },
     thirdPartySettingsThirdPartySettings: { __type: "String" },
+    widgetSettingsWidgetSettings: { __type: "String" },
     writingSettingsDefaultCategory: { __type: "Int" },
     writingSettingsDefaultPostFormat: { __type: "String" },
     writingSettingsUseSmilies: { __type: "Boolean" },
@@ -15918,6 +15967,7 @@ export const generatedSchema = {
     headerSettings: { __type: "HeaderSettings" },
     readingSettings: { __type: "ReadingSettings" },
     thirdPartySettings: { __type: "ThirdPartySettings" },
+    widgetSettings: { __type: "WidgetSettings" },
     writingSettings: { __type: "WritingSettings" },
   },
   UpdateTagInput: {
@@ -16647,6 +16697,11 @@ export const generatedSchema = {
     startCursor: { __type: "String" },
     $on: { __type: "$WPPageInfo!" },
   },
+  WidgetSettings: {
+    __typename: { __type: "String!" },
+    blogSidebar: { __type: "String" },
+    widgetSettings: { __type: "String" },
+  },
   WritingSettings: {
     __typename: { __type: "String!" },
     defaultCategory: { __type: "Int" },
@@ -17319,6 +17374,7 @@ export const generatedSchema = {
       __type: "RootQueryToEnqueuedStylesheetConnection",
       __args: { after: "String", before: "String", first: "Int", last: "Int" },
     },
+    relatedPosts: { __type: "[Posts]", __args: { postId: "String" } },
     revisions: {
       __type: "RootQueryToRevisionsConnection",
       __args: {
@@ -17410,6 +17466,7 @@ export const generatedSchema = {
       },
     },
     viewer: { __type: "User" },
+    widgetSettings: { __type: "WidgetSettings" },
     writingSettings: { __type: "WritingSettings" },
   },
   subscription: {},
@@ -18304,6 +18361,7 @@ export const generatedSchema = {
       "GenesisCustomBlocksContentToggle",
       "GenesisCustomBlocksCxContentLink",
       "GenesisCustomBlocksCxLink",
+      "GenesisCustomBlocksCxSvg",
       "GenesisCustomBlocksDatatrac",
       "GenesisCustomBlocksDisclosures",
       "GenesisCustomBlocksFaqs",
@@ -18325,6 +18383,7 @@ export const generatedSchema = {
       "GenesisCustomBlocksStatement",
       "GenesisCustomBlocksTabbed",
       "GenesisCustomBlocksTable",
+      "GenesisCustomBlocksTaglessText",
       "GenesisCustomBlocksUsp",
       "GenesisCustomBlocksUtterances",
       "GenesisCustomBlocksVimeo",
@@ -31359,6 +31418,7 @@ export interface EditorBlock {
     | "GenesisCustomBlocksContentToggle"
     | "GenesisCustomBlocksCxContentLink"
     | "GenesisCustomBlocksCxLink"
+    | "GenesisCustomBlocksCxSvg"
     | "GenesisCustomBlocksDatatrac"
     | "GenesisCustomBlocksDisclosures"
     | "GenesisCustomBlocksFaqs"
@@ -31380,6 +31440,7 @@ export interface EditorBlock {
     | "GenesisCustomBlocksStatement"
     | "GenesisCustomBlocksTabbed"
     | "GenesisCustomBlocksTable"
+    | "GenesisCustomBlocksTaglessText"
     | "GenesisCustomBlocksUsp"
     | "GenesisCustomBlocksUtterances"
     | "GenesisCustomBlocksVimeo"
@@ -33812,6 +33873,76 @@ export interface GenesisCustomBlocksCxLinkAttributes {
 /**
  * A block used for editing the site
  */
+export interface GenesisCustomBlocksCxSvg {
+  __typename?: "GenesisCustomBlocksCxSvg";
+  /**
+   * The API version of the Gutenberg Block
+   */
+  apiVersion?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Attributes of the %s Block Type
+   */
+  attributes?: Maybe<GenesisCustomBlocksCxSvgAttributes>;
+  /**
+   * The name of the category the Block belongs to
+   */
+  blockEditorCategoryName?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The id of the Block
+   */
+  clientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * CSS Classnames to apply to the block
+   */
+  cssClassNames?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The inner blocks of the Block
+   */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /**
+   * Whether the block is Dynamic (server rendered)
+   */
+  isDynamic: ScalarsEnums["Boolean"];
+  /**
+   * The name of the block
+   */
+  name?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The parent id of the Block
+   */
+  parentClientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The rendered HTML for the block
+   */
+  renderedHtml?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Attributes of the %s Block Type
+ */
+export interface GenesisCustomBlocksCxSvgAttributes {
+  __typename?: "GenesisCustomBlocksCxSvgAttributes";
+  /**
+   * The &quot;blockVisibility&quot; field on the &quot;GenesisCustomBlocksCxSvg&quot; block
+   */
+  blockVisibility?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;className&quot; field on the &quot;GenesisCustomBlocksCxSvg&quot; block
+   */
+  className?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksCxSvg&quot; block
+   */
+  lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;svg&quot; field on the &quot;GenesisCustomBlocksCxSvg&quot; block
+   */
+  svg?: Maybe<ScalarsEnums["Int"]>;
+}
+
+/**
+ * A block used for editing the site
+ */
 export interface GenesisCustomBlocksDatatrac {
   __typename?: "GenesisCustomBlocksDatatrac";
   /**
@@ -35589,6 +35720,76 @@ export interface GenesisCustomBlocksTableAttributes {
    * The &quot;variant&quot; field on the &quot;GenesisCustomBlocksTable&quot; block
    */
   variant?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * A block used for editing the site
+ */
+export interface GenesisCustomBlocksTaglessText {
+  __typename?: "GenesisCustomBlocksTaglessText";
+  /**
+   * The API version of the Gutenberg Block
+   */
+  apiVersion?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Attributes of the %s Block Type
+   */
+  attributes?: Maybe<GenesisCustomBlocksTaglessTextAttributes>;
+  /**
+   * The name of the category the Block belongs to
+   */
+  blockEditorCategoryName?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The id of the Block
+   */
+  clientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * CSS Classnames to apply to the block
+   */
+  cssClassNames?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The inner blocks of the Block
+   */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /**
+   * Whether the block is Dynamic (server rendered)
+   */
+  isDynamic: ScalarsEnums["Boolean"];
+  /**
+   * The name of the block
+   */
+  name?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The parent id of the Block
+   */
+  parentClientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The rendered HTML for the block
+   */
+  renderedHtml?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Attributes of the %s Block Type
+ */
+export interface GenesisCustomBlocksTaglessTextAttributes {
+  __typename?: "GenesisCustomBlocksTaglessTextAttributes";
+  /**
+   * The &quot;blockVisibility&quot; field on the &quot;GenesisCustomBlocksTaglessText&quot; block
+   */
+  blockVisibility?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;className&quot; field on the &quot;GenesisCustomBlocksTaglessText&quot; block
+   */
+  className?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksTaglessText&quot; block
+   */
+  lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;text&quot; field on the &quot;GenesisCustomBlocksTaglessText&quot; block
+   */
+  text?: Maybe<ScalarsEnums["String"]>;
 }
 
 /**
@@ -42509,6 +42710,16 @@ export interface PostTypeLabelDetails {
 }
 
 /**
+ * Keys and their values, both cast as strings
+ */
+export interface Posts {
+  __typename?: "Posts";
+  id?: Maybe<ScalarsEnums["String"]>;
+  title?: Maybe<ScalarsEnums["String"]>;
+  url?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
  * Nodes that can be seen in a preview (unpublished) state.
  */
 export interface Previewable {
@@ -46034,6 +46245,10 @@ export interface Settings {
    */
   thirdPartySettingsThirdPartySettings?: Maybe<ScalarsEnums["String"]>;
   /**
+   * Settings of the the string Settings Group
+   */
+  widgetSettingsWidgetSettings?: Maybe<ScalarsEnums["String"]>;
+  /**
    * Settings of the the integer Settings Group
    */
   writingSettingsDefaultCategory?: Maybe<ScalarsEnums["Int"]>;
@@ -47952,6 +48167,10 @@ export interface UpdateSettingsPayload {
    */
   thirdPartySettings?: Maybe<ThirdPartySettings>;
   /**
+   * Update the WidgetSettings setting.
+   */
+  widgetSettings?: Maybe<WidgetSettings>;
+  /**
    * Update the WritingSettings setting.
    */
   writingSettings?: Maybe<WritingSettings>;
@@ -49431,6 +49650,21 @@ export interface WPPageInfo {
 }
 
 /**
+ * The widget setting type
+ */
+export interface WidgetSettings {
+  __typename?: "WidgetSettings";
+  /**
+   * Genesis Blog Sidebar
+   */
+  blogSidebar?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The string Settings Group
+   */
+  widgetSettings?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
  * The writing setting type
  */
 export interface WritingSettings {
@@ -50167,6 +50401,9 @@ export interface Query {
     first?: Maybe<Scalars["Int"]>;
     last?: Maybe<Scalars["Int"]>;
   }) => Maybe<RootQueryToEnqueuedStylesheetConnection>;
+  relatedPosts: (args?: {
+    postId?: Maybe<Scalars["String"]>;
+  }) => Maybe<Array<Maybe<Posts>>>;
   revisions: (args?: {
     after?: Maybe<Scalars["String"]>;
     before?: Maybe<Scalars["String"]>;
@@ -50249,6 +50486,7 @@ export interface Query {
     where?: Maybe<RootQueryToUserConnectionWhereArgs>;
   }) => Maybe<RootQueryToUserConnection>;
   viewer?: Maybe<User>;
+  widgetSettings?: Maybe<WidgetSettings>;
   writingSettings?: Maybe<WritingSettings>;
 }
 
@@ -50580,6 +50818,8 @@ export interface SchemaObjectTypes {
   GenesisCustomBlocksCxContentLinkAttributes: GenesisCustomBlocksCxContentLinkAttributes;
   GenesisCustomBlocksCxLink: GenesisCustomBlocksCxLink;
   GenesisCustomBlocksCxLinkAttributes: GenesisCustomBlocksCxLinkAttributes;
+  GenesisCustomBlocksCxSvg: GenesisCustomBlocksCxSvg;
+  GenesisCustomBlocksCxSvgAttributes: GenesisCustomBlocksCxSvgAttributes;
   GenesisCustomBlocksDatatrac: GenesisCustomBlocksDatatrac;
   GenesisCustomBlocksDatatracAttributes: GenesisCustomBlocksDatatracAttributes;
   GenesisCustomBlocksDisclosures: GenesisCustomBlocksDisclosures;
@@ -50622,6 +50862,8 @@ export interface SchemaObjectTypes {
   GenesisCustomBlocksTabbedAttributes: GenesisCustomBlocksTabbedAttributes;
   GenesisCustomBlocksTable: GenesisCustomBlocksTable;
   GenesisCustomBlocksTableAttributes: GenesisCustomBlocksTableAttributes;
+  GenesisCustomBlocksTaglessText: GenesisCustomBlocksTaglessText;
+  GenesisCustomBlocksTaglessTextAttributes: GenesisCustomBlocksTaglessTextAttributes;
   GenesisCustomBlocksUsp: GenesisCustomBlocksUsp;
   GenesisCustomBlocksUspAttributes: GenesisCustomBlocksUspAttributes;
   GenesisCustomBlocksUtterances: GenesisCustomBlocksUtterances;
@@ -50744,6 +50986,7 @@ export interface SchemaObjectTypes {
   PostToTermNodeConnectionEdge: PostToTermNodeConnectionEdge;
   PostToTermNodeConnectionPageInfo: PostToTermNodeConnectionPageInfo;
   PostTypeLabelDetails: PostTypeLabelDetails;
+  Posts: Posts;
   Product: Product;
   ProductName: ProductName;
   ProductNameToContentNodeConnection: ProductNameToContentNodeConnection;
@@ -50966,6 +51209,7 @@ export interface SchemaObjectTypes {
   UserToUserRoleConnection: UserToUserRoleConnection;
   UserToUserRoleConnectionEdge: UserToUserRoleConnectionEdge;
   UserToUserRoleConnectionPageInfo: UserToUserRoleConnectionPageInfo;
+  WidgetSettings: WidgetSettings;
   WritingSettings: WritingSettings;
   YoastFaqBlock: YoastFaqBlock;
   YoastFaqBlockAttributes: YoastFaqBlockAttributes;
@@ -51298,6 +51542,8 @@ export type SchemaObjectTypesNames =
   | "GenesisCustomBlocksCxContentLinkAttributes"
   | "GenesisCustomBlocksCxLink"
   | "GenesisCustomBlocksCxLinkAttributes"
+  | "GenesisCustomBlocksCxSvg"
+  | "GenesisCustomBlocksCxSvgAttributes"
   | "GenesisCustomBlocksDatatrac"
   | "GenesisCustomBlocksDatatracAttributes"
   | "GenesisCustomBlocksDisclosures"
@@ -51340,6 +51586,8 @@ export type SchemaObjectTypesNames =
   | "GenesisCustomBlocksTabbedAttributes"
   | "GenesisCustomBlocksTable"
   | "GenesisCustomBlocksTableAttributes"
+  | "GenesisCustomBlocksTaglessText"
+  | "GenesisCustomBlocksTaglessTextAttributes"
   | "GenesisCustomBlocksUsp"
   | "GenesisCustomBlocksUspAttributes"
   | "GenesisCustomBlocksUtterances"
@@ -51462,6 +51710,7 @@ export type SchemaObjectTypesNames =
   | "PostToTermNodeConnectionEdge"
   | "PostToTermNodeConnectionPageInfo"
   | "PostTypeLabelDetails"
+  | "Posts"
   | "Product"
   | "ProductName"
   | "ProductNameToContentNodeConnection"
@@ -51684,6 +51933,7 @@ export type SchemaObjectTypesNames =
   | "UserToUserRoleConnection"
   | "UserToUserRoleConnectionEdge"
   | "UserToUserRoleConnectionPageInfo"
+  | "WidgetSettings"
   | "WritingSettings"
   | "YoastFaqBlock"
   | "YoastFaqBlockAttributes"
@@ -52217,6 +52467,7 @@ export interface $EditorBlock {
   GenesisCustomBlocksContentToggle?: GenesisCustomBlocksContentToggle;
   GenesisCustomBlocksCxContentLink?: GenesisCustomBlocksCxContentLink;
   GenesisCustomBlocksCxLink?: GenesisCustomBlocksCxLink;
+  GenesisCustomBlocksCxSvg?: GenesisCustomBlocksCxSvg;
   GenesisCustomBlocksDatatrac?: GenesisCustomBlocksDatatrac;
   GenesisCustomBlocksDisclosures?: GenesisCustomBlocksDisclosures;
   GenesisCustomBlocksFaqs?: GenesisCustomBlocksFaqs;
@@ -52238,6 +52489,7 @@ export interface $EditorBlock {
   GenesisCustomBlocksStatement?: GenesisCustomBlocksStatement;
   GenesisCustomBlocksTabbed?: GenesisCustomBlocksTabbed;
   GenesisCustomBlocksTable?: GenesisCustomBlocksTable;
+  GenesisCustomBlocksTaglessText?: GenesisCustomBlocksTaglessText;
   GenesisCustomBlocksUsp?: GenesisCustomBlocksUsp;
   GenesisCustomBlocksUtterances?: GenesisCustomBlocksUtterances;
   GenesisCustomBlocksVimeo?: GenesisCustomBlocksVimeo;

@@ -5,6 +5,11 @@ import { addCSSAsset, addJSAsset } from "../../../lib/enqueuedFiles";
 import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
 import GTM from 'components/ThirdParty/gtm';
+import RelatedPosts from 'components/Posts/relatedPosts';
+import Categories from 'components/Posts/categories';
+import Image from 'next/image';
+import parseHtml from 'lib/parser';
+import Link from 'next/link';
 
 export interface PostProps {
   post: Post | Post['preview']['node'] | null | undefined;
@@ -15,6 +20,7 @@ export function PostComponent({ post }: PostProps) {
   const generalSettings = useQuery().generalSettings;
 
   const enqueuedStylesheets = post.enqueuedStylesheets().edges;
+  const blogSidebar = useQuery().widgetSettings.blogSidebar;
 
   return (
     <>
@@ -33,12 +39,44 @@ export function PostComponent({ post }: PostProps) {
       </Head>
       <GTM />
 
-      <main className="content content-single">
-        <div className="wrap">
-          <div dangerouslySetInnerHTML={{ __html: post?.content() ?? '' }} />
-        </div>
-      </main>
+      <div id="page" className="container site">
+        <main className="content single-post">
+          <article className="post">
 
+            <aside className="sidebar">
+              { blogSidebar && 
+                parseHtml(blogSidebar)
+              }
+              {post.databaseId &&
+                <RelatedPosts id={post.databaseId.toString()} />
+              }
+              <Categories />
+            </aside>
+            <div className='post-content'>
+              <header className='entry-header'>
+                <div className='featured-image'>
+                  <Image src={post.featuredImage?.node.sourceUrl()?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={post.featuredImage.node.mediaDetails.width} height={post.featuredImage.node.mediaDetails.height} />
+                </div>
+                <h1>{post.title()}</h1>
+
+                {post.categories &&
+                  <div className='categories'>
+                    {post.categories().nodes.map((category) => (
+                      <>
+                        {category.uri &&
+                          <Link href={category.uri}>{category.name}</Link>
+                        }
+                      </>
+                    ))}
+                  </div>}
+              </header>
+              <div className='entry-content'>
+                {parseHtml(post?.content() ?? "")}
+              </div>
+            </div>
+          </article>
+        </main>
+      </div>
       <Footer copyrightHolder={generalSettings.title} />
     </>
   );

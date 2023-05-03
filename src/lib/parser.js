@@ -3,14 +3,17 @@ import parse, { domToReact, attributesToProps } from "html-react-parser";
 import Link from "next/link";
 
 export default function parseHtml(html) {
+    const internalLinkRegEx = /(cxcu|connexus|local)/gi;
+    const domainRegEx = /(http)/gi;
     const options = {
         replace: ({ name, attribs, children }) => {
-            const isInternalLink = name === "a" && attribs.href !== null;
+            const isInternalLink = (name == "a" && (internalLinkRegEx.test(attribs.href) || !domainRegEx.test(attribs.href)));
             const isFAQItem = attribs && attribs.class && attribs.class.includes("ewd-ufaq-faq-div");
-
             if (isInternalLink) {
+                const href = attribs.href;
+                delete attribs.href;
                 return (
-                    <Link href={attribs.href.replace(process.env.NEXT_PUBLIC_WORDPRESS_URL, '')} {...attributesToProps(attribs)}>{domToReact(children, options)}</Link>
+                    <Link href={href.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} {...attributesToProps(attribs)}>{domToReact(children, options)}</Link>
                 );
             }
 
