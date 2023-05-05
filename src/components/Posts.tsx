@@ -12,6 +12,7 @@ interface Props {
   intro?: string;
   id?: string;
   heading?: string;
+  category?: string;
   headingLevel?: HeadingProps['level'];
   postTitleLevel?: HeadingProps['level'];
   readMoreText?: string;
@@ -22,44 +23,61 @@ function Posts({
   intro,
   heading,
   id,
+  category,
   headingLevel = 'h1',
   postTitleLevel = 'h2',
   readMoreText = 'Read more',
 }: Props): JSX.Element {
   const { useQuery } = client;
-  const {blogSidebar} = useQuery().widgetSettings;
+  const { blogSidebar } = useQuery().widgetSettings;
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <section {...(id && { id })}>
       <div className="wrap archives">
-          <aside className="sidebar">
-            { blogSidebar && 
-              parseHtml(blogSidebar)
-            }
-            <Categories />
-          </aside>
+        <aside className="sidebar">
+          {blogSidebar &&
+            parseHtml(blogSidebar)
+          }
+          <Categories />
+        </aside>
         {posts && posts?.length > 0 && intro && <p>{intro}</p>}
         <div id="post-wrap" className="posts archive-content">
+          {category &&
+
+            <h2 className="no-margin"><span className="screen-reader-text">Category: </span><span>{category}</span></h2>
+          }
           {posts.map((post) => (
             <div
-              key={post.id ?? ''}
+              key={post.id}
               id={`post-${post.id}`}
               className="post"
-              >
-                
-              <div>
-                {post.featuredImage &&
+            >
 
-				          <div className="featured-image">
-                    <Link href={`/blog/${post.slug}`}>
-                      <Image src={post.featuredImage?.node.sourceUrl()?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={post.featuredImage.node.mediaDetails.width} height={post.featuredImage.node.mediaDetails.height} />
+              <div>
+                <header className='entry-header'>
+                  {post.featuredImage &&
+
+                    <div className="featured-image">
+                      <Link href={`/blog/${post.slug}`}>
+                        <Image src={post.featuredImage?.node.sourceUrl()?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={post.featuredImage.node.mediaDetails.width} height={post.featuredImage.node.mediaDetails.height} />
+                      </Link>
+                    </div>
+                  }
+                  <Heading level={postTitleLevel}>
+                    <Link href={`/blog/${post.slug}`}>{post.title()}
                     </Link>
-                  </div>
-                }
-                <Heading level={postTitleLevel}>
-                  <Link href={`/blog/${post.slug}`}>{post.title()}
-                  </Link>
-                </Heading>
+                  </Heading>
+                  {post.categories &&
+                    <div className='categories'>
+                      {post.categories().nodes.map((category, index) => (
+                        <span  key={`category-${index}-${category.name}`}>
+                          {category.uri &&
+                            <><Link href={category.uri}>{category.name}</Link>{index < post.categories().nodes.length-1 ? ', ' : ''}</>
+                          }
+                        </span>
+                      ))}
+                    </div>}
+                </header>
                 <div
                   // eslint-disable-next-line react/no-danger
                   dangerouslySetInnerHTML={{ __html: post.excerpt() ?? '' }}

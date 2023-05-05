@@ -4,6 +4,8 @@ import { Header, Footer, Posts, Pagination } from 'components';
 import { GetStaticPropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { client } from 'client';
+import GTM from 'components/ThirdParty/gtm';
+import parseHtml from 'lib/parser';
 
 const POSTS_PER_PAGE = 6;
 
@@ -12,6 +14,7 @@ export default function Page() {
   const { query = {} } = useRouter();
   const { categorySlug, paginationTerm, categoryCursor } = query;
   const generalSettings = useQuery().generalSettings;
+  const { blogtop } = useQuery().widgetSettings;
   const category = useCategory();
   const isBefore = paginationTerm === 'before';
   const posts = usePosts({
@@ -31,13 +34,15 @@ export default function Page() {
       <Head>
         <title>Posts - {generalSettings?.title}</title>
       </Head>
+      <GTM />
 
-      <main className="content content-single">
-        <div className="wrap">
-          <h2>Category: {category?.name}</h2>
-          <Posts posts={posts.nodes} />
-
-        </div>
+      <main className="content content-single blog">
+          {blogtop &&
+            <div className="alignfull">
+              {parseHtml(blogtop)}
+            </div>
+          }
+          <Posts posts={posts.nodes} category={category?.name} />
       </main>
 
       <Footer copyrightHolder={generalSettings.title} />

@@ -95,7 +95,7 @@ function MobileHeaderNavigation(props: HeaderNavigationProps) {
                     return;
                 } else {
                     return (
-                        <li className='accordion-item cx-nav__item cx-accordion__item'>
+                        <li className='accordion-item cx-nav__item cx-accordion__item' key={`navItem-${index}`}>
                             <h2 className="accordion-header cx-accordion__header" id={`cx-acc-heading${link.label}`}>
                                 <button className="accordion-button collapsed cx-accordion__button" type="button" data-bs-toggle="collapse" data-bs-target={`#cx-acc-collapse${link.label}`} aria-expanded="false" aria-controls={`cx-acc-collapse${link.label}`}
                                     onClick={() => {
@@ -106,7 +106,7 @@ function MobileHeaderNavigation(props: HeaderNavigationProps) {
                             </h2>
                             {link?.childItems()?.nodes?.map((title, index) => {
                                 return (
-                                    <div id={`cx-acc-collapse${link.label}`} className={`accordion-collapse collapse${navsSelected.includes(link.label?.replace(' ', '_')) ? ' show' : ''}`} aria-labelledby={`cx-acc-heading${link.label}`}>
+                                    <div id={`cx-acc-collapse${link.label}`} key={`collapse-${index}-${title.label}`} className={`accordion-collapse collapse${navsSelected.includes(link.label?.replace(' ', '_')) ? ' show' : ''}`} aria-labelledby={`cx-acc-heading${link.label}`}>
                                         <ul className="accordion-body cx-nav__accordion-body">
                                             <li className='cx-nav__accordion-section'>
                                                 {

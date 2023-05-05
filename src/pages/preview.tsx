@@ -1,5 +1,5 @@
 import { PageComponent } from './[...pageUri]';
-import { PostComponent } from './posts/[postSlug]';
+import { PostComponent } from './blog/[postSlug]';
 import { client } from 'client';
 
 export default function Preview() {

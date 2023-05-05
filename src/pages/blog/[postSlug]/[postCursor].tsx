@@ -8,7 +8,7 @@ export default Page;
 export async function getStaticProps(context: GetStaticPropsContext) {
   const { postSlug } = context.params;
 
-  if (!(postSlug === 'after' || postSlug === 'before')) {
+  if (!(postSlug === 'page')) {
     return {
       notFound: true,
     };

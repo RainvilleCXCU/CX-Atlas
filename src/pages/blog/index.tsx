@@ -2,6 +2,7 @@ import { getNextStaticProps } from '@faustjs/next';
 import { client, OrderEnum, PostObjectsConnectionOrderbyEnum } from 'client';
 import { Footer, Header, Pagination, Posts } from 'components';
 import GTM from 'components/ThirdParty/gtm';
+import parseHtml from 'lib/parser';
 import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -12,20 +13,23 @@ const POSTS_PER_PAGE = 6;
 export default function Page() {
   const { query = {} } = useRouter();
   const { postSlug, postCursor } = query;
+  const currentPage = postCursor ? parseInt(postCursor.toString()) : 1;
   const { usePosts, useQuery } = client;
   const generalSettings = useQuery().generalSettings;
-  const isBefore = postSlug === 'before';
+  const {blogtop} = useQuery().widgetSettings;
+  console.log(`Current Page: ${currentPage}`)
   const posts = usePosts({
-    after: !isBefore ? (postCursor as string) : undefined,
-    before: isBefore ? (postCursor as string) : undefined,
-    first: !isBefore ? POSTS_PER_PAGE : undefined,
-    last: isBefore ? POSTS_PER_PAGE : undefined,
+    where: {
+      offsetPagination: {
+        offset: ((currentPage-1)*POSTS_PER_PAGE),
+        size: POSTS_PER_PAGE
+      }
+    }
   });
-
   if (useQuery().$state.isLoading) {
     return null;
   }
-
+  
   return (
     <>
       <Header
@@ -41,12 +45,18 @@ export default function Page() {
       <GTM />
 
       <main className="content content-index blog">
+          {blogtop &&
+            <div className="alignfull">
+              {parseHtml(blogtop)}
+            </div>
+          }
         <Posts
           posts={posts.nodes}
           heading="Blog Posts"
           headingLevel="h2"
           postTitleLevel="h3"
         />
+        <Pagination currentPage={currentPage} pageInfo={posts.pageInfo} basePath='/blog' perPage={POSTS_PER_PAGE} />
       </main>
 
       <Footer copyrightHolder={generalSettings.title} />

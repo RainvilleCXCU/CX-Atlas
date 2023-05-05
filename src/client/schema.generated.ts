@@ -2082,6 +2082,14 @@ export enum MimeTypeEnum {
   VIDEO_X_MS_WMX = "VIDEO_X_MS_WMX",
 }
 
+/** Offset pagination input type */
+export interface OffsetPagination {
+  /** Number of post to show per page. Passed to posts_per_page of WP_Query. */
+  offset?: InputMaybe<Scalars["Int"]>;
+  /** Number of post to show per page. Passed to posts_per_page of WP_Query. */
+  size?: InputMaybe<Scalars["Int"]>;
+}
+
 /** The cardinality of the connection order */
 export enum OrderEnum {
   /** Sort the query result set in an ascending order */
@@ -3144,6 +3152,8 @@ export interface RootQueryToCXAlertConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Paginate CXAlerts with offsets */
+  offsetPagination?: InputMaybe<OffsetPagination>;
   /** What paramater to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
@@ -3298,6 +3308,8 @@ export interface RootQueryToContactConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Paginate Contacts with offsets */
+  offsetPagination?: InputMaybe<OffsetPagination>;
   /** What paramater to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
@@ -3338,6 +3350,8 @@ export interface RootQueryToContentNodeConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Paginate content nodes with offsets */
+  offsetPagination?: InputMaybe<OffsetPagination>;
   /** What paramater to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
@@ -3376,6 +3390,8 @@ export interface RootQueryToGraphqlDocumentConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Paginate GraphqlDocuments with offsets */
+  offsetPagination?: InputMaybe<OffsetPagination>;
   /** What paramater to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
@@ -3414,6 +3430,8 @@ export interface RootQueryToLinklibraryConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Paginate Linklibrarys with offsets */
+  offsetPagination?: InputMaybe<OffsetPagination>;
   /** What paramater to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
@@ -3506,6 +3524,8 @@ export interface RootQueryToLocationConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Paginate Locations with offsets */
+  offsetPagination?: InputMaybe<OffsetPagination>;
   /** What paramater to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
@@ -3552,6 +3572,8 @@ export interface RootQueryToMediaItemConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Paginate MediaItems with offsets */
+  offsetPagination?: InputMaybe<OffsetPagination>;
   /** What paramater to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
@@ -3620,6 +3642,8 @@ export interface RootQueryToPageConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Paginate Pages with offsets */
+  offsetPagination?: InputMaybe<OffsetPagination>;
   /** What paramater to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
@@ -3684,6 +3708,8 @@ export interface RootQueryToPostConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Paginate Posts with offsets */
+  offsetPagination?: InputMaybe<OffsetPagination>;
   /** What paramater to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
@@ -3788,6 +3814,8 @@ export interface RootQueryToProductConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Paginate Products with offsets */
+  offsetPagination?: InputMaybe<OffsetPagination>;
   /** What paramater to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
@@ -3880,6 +3908,8 @@ export interface RootQueryToRateConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Paginate Rates with offsets */
+  offsetPagination?: InputMaybe<OffsetPagination>;
   /** What paramater to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
@@ -3966,6 +3996,8 @@ export interface RootQueryToServiceConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Paginate Services with offsets */
+  offsetPagination?: InputMaybe<OffsetPagination>;
   /** What paramater to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
@@ -4100,6 +4132,8 @@ export interface RootQueryToUserConnectionWhereArgs {
   nicenameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** An array of nicenames to exclude. Users matching one of these nicenames will not be included in results. */
   nicenameNotIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Paginate users with offsets */
+  offsetPagination?: InputMaybe<OffsetPagination>;
   /** What paramater to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<UsersConnectionOrderbyInput>>>;
   /** An array of role names that users must match to be included in results. Note that this is an inclusive list: users must match *each* role. */
@@ -5589,6 +5623,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$CXAlertConnectionPageInfo!" },
   },
@@ -5613,6 +5648,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   CXAlertToRevisionConnectionWhereArgs: {
@@ -5718,6 +5754,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$CategoryConnectionPageInfo!" },
   },
@@ -5737,6 +5774,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   CategoryToCategoryConnection: {
@@ -5755,6 +5793,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   CategoryToCategoryConnectionWhereArgs: {
@@ -5796,6 +5835,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   CategoryToContentNodeConnectionWhereArgs: {
@@ -5839,6 +5879,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   CategoryToPostConnectionWhereArgs: {
@@ -5951,6 +5992,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$CommentConnectionPageInfo!" },
   },
@@ -5970,6 +6012,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   CommentToCommentConnectionWhereArgs: {
@@ -6166,6 +6209,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$ContactConnectionPageInfo!" },
   },
@@ -6230,6 +6274,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$ContentNodeConnectionPageInfo!" },
   },
@@ -6265,6 +6310,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   ContentNodeToEnqueuedStylesheetConnection: {
@@ -6283,6 +6329,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   ContentTemplate: {
@@ -6357,6 +6404,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$ContentTypeConnectionPageInfo!" },
   },
@@ -6376,6 +6424,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   ContentTypeToContentNodeConnectionWhereArgs: {
@@ -6414,6 +6463,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   CoreArchives: {
@@ -9558,6 +9608,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$EnqueuedScriptConnectionPageInfo!" },
   },
@@ -9589,6 +9640,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$EnqueuedStylesheetConnectionPageInfo!" },
   },
@@ -10910,6 +10962,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$GraphqlDocumentConnectionPageInfo!" },
   },
@@ -11009,6 +11062,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgs: {
@@ -11051,6 +11105,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs: {
@@ -11339,6 +11394,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$LinklibraryConnectionPageInfo!" },
   },
@@ -11358,6 +11414,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   LinklibraryToCommentConnectionWhereArgs: {
@@ -11599,6 +11656,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$LocationCategoryConnectionPageInfo!" },
   },
@@ -11622,6 +11680,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   LocationCategoryToContentNodeConnection: {
@@ -11640,6 +11699,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   LocationCategoryToContentNodeConnectionWhereArgs: {
@@ -11680,6 +11740,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   LocationCategoryToLocationCategoryConnectionWhereArgs: {
@@ -11721,6 +11782,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   LocationCategoryToLocationConnectionWhereArgs: {
@@ -11774,6 +11836,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$LocationConnectionPageInfo!" },
   },
@@ -11803,6 +11866,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   LocationToLocationCategoryConnectionWhereArgs: {
@@ -11849,6 +11913,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   LocationToRevisionConnectionWhereArgs: {
@@ -11890,6 +11955,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   LocationToTermNodeConnectionWhereArgs: {
@@ -12049,6 +12115,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$MediaItemConnectionPageInfo!" },
   },
@@ -12083,6 +12150,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   MediaItemToCommentConnectionWhereArgs: {
@@ -12165,6 +12233,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$MenuConnectionPageInfo!" },
   },
@@ -12219,6 +12288,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$MenuItemConnectionPageInfo!" },
   },
@@ -12264,6 +12334,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   MenuItemToMenuItemConnectionWhereArgs: {
@@ -12293,6 +12364,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   MenuToMenuItemConnectionWhereArgs: {
@@ -12443,6 +12515,13 @@ export const generatedSchema = {
     toPing: { __type: "[String]" },
     $on: { __type: "$NodeWithTrackbacks!" },
   },
+  OffsetPagination: { offset: { __type: "Int" }, size: { __type: "Int" } },
+  OffsetPaginationPageInfo: {
+    __typename: { __type: "String!" },
+    hasMore: { __type: "Boolean" },
+    hasPrevious: { __type: "Boolean" },
+    total: { __type: "Int" },
+  },
   OneToOneConnection: {
     __typename: { __type: "String!" },
     cursor: { __type: "String" },
@@ -12580,6 +12659,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$PageConnectionPageInfo!" },
   },
@@ -12607,6 +12687,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   PageToCommentConnectionWhereArgs: {
@@ -12661,6 +12742,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   PageToRevisionConnectionWhereArgs: {
@@ -12716,6 +12798,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$PluginConnectionPageInfo!" },
   },
@@ -12873,6 +12956,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$PostConnectionPageInfo!" },
   },
@@ -12943,6 +13027,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$PostFormatConnectionPageInfo!" },
   },
@@ -12962,6 +13047,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   PostFormatToContentNodeConnectionWhereArgs: {
@@ -13000,6 +13086,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   PostFormatToPostConnectionWhereArgs: {
@@ -13080,6 +13167,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   PostToCategoryConnectionWhereArgs: {
@@ -13121,6 +13209,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   PostToCommentConnectionWhereArgs: {
@@ -13170,6 +13259,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   PostToPostFormatConnectionWhereArgs: {
@@ -13216,6 +13306,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   PostToRevisionConnectionWhereArgs: {
@@ -13267,6 +13358,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   PostToTagConnectionWhereArgs: {
@@ -13308,6 +13400,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   PostToTermNodeConnectionWhereArgs: {
@@ -13454,6 +13547,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$ProductConnectionPageInfo!" },
   },
@@ -13524,6 +13618,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$ProductNameConnectionPageInfo!" },
   },
@@ -13543,6 +13638,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   ProductNameToContentNodeConnectionWhereArgs: {
@@ -13581,6 +13677,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   ProductNameToRateConnectionWhereArgs: {
@@ -13632,6 +13729,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   Rate: {
@@ -13729,6 +13827,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$RateConnectionPageInfo!" },
   },
@@ -13763,6 +13862,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RateToProductNameConnection: {
@@ -13781,6 +13881,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RateToProductNameConnectionWhereArgs: {
@@ -13822,6 +13923,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RateToTermNodeConnectionWhereArgs: {
@@ -13916,6 +14018,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToCXAlertConnectionWhereArgs: {
@@ -13927,6 +14030,7 @@ export const generatedSchema = {
     name: { __type: "String" },
     nameIn: { __type: "[String]" },
     notIn: { __type: "[ID]" },
+    offsetPagination: { __type: "OffsetPagination" },
     orderby: { __type: "[PostObjectsConnectionOrderbyInput]" },
     parent: { __type: "ID" },
     parentIn: { __type: "[ID]" },
@@ -13953,6 +14057,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToCategoryConnectionWhereArgs: {
@@ -13994,6 +14099,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToCommentConnectionWhereArgs: {
@@ -14043,6 +14149,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToContactConnectionWhereArgs: {
@@ -14058,6 +14165,7 @@ export const generatedSchema = {
     name: { __type: "String" },
     nameIn: { __type: "[String]" },
     notIn: { __type: "[ID]" },
+    offsetPagination: { __type: "OffsetPagination" },
     orderby: { __type: "[PostObjectsConnectionOrderbyInput]" },
     parent: { __type: "ID" },
     parentIn: { __type: "[ID]" },
@@ -14084,6 +14192,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToContentNodeConnectionWhereArgs: {
@@ -14096,6 +14205,7 @@ export const generatedSchema = {
     name: { __type: "String" },
     nameIn: { __type: "[String]" },
     notIn: { __type: "[ID]" },
+    offsetPagination: { __type: "OffsetPagination" },
     orderby: { __type: "[PostObjectsConnectionOrderbyInput]" },
     parent: { __type: "ID" },
     parentIn: { __type: "[ID]" },
@@ -14122,6 +14232,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToEnqueuedScriptConnection: {
@@ -14140,6 +14251,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToEnqueuedStylesheetConnection: {
@@ -14158,6 +14270,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToGraphqlDocumentConnection: {
@@ -14176,6 +14289,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToGraphqlDocumentConnectionWhereArgs: {
@@ -14187,6 +14301,7 @@ export const generatedSchema = {
     name: { __type: "String" },
     nameIn: { __type: "[String]" },
     notIn: { __type: "[ID]" },
+    offsetPagination: { __type: "OffsetPagination" },
     orderby: { __type: "[PostObjectsConnectionOrderbyInput]" },
     parent: { __type: "ID" },
     parentIn: { __type: "[ID]" },
@@ -14213,6 +14328,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToLinklibraryConnectionWhereArgs: {
@@ -14224,6 +14340,7 @@ export const generatedSchema = {
     name: { __type: "String" },
     nameIn: { __type: "[String]" },
     notIn: { __type: "[ID]" },
+    offsetPagination: { __type: "OffsetPagination" },
     orderby: { __type: "[PostObjectsConnectionOrderbyInput]" },
     parent: { __type: "ID" },
     parentIn: { __type: "[ID]" },
@@ -14250,6 +14367,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToLocationCategoryConnectionWhereArgs: {
@@ -14291,6 +14409,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToLocationConnectionWhereArgs: {
@@ -14306,6 +14425,7 @@ export const generatedSchema = {
     name: { __type: "String" },
     nameIn: { __type: "[String]" },
     notIn: { __type: "[ID]" },
+    offsetPagination: { __type: "OffsetPagination" },
     orderby: { __type: "[PostObjectsConnectionOrderbyInput]" },
     parent: { __type: "ID" },
     parentIn: { __type: "[ID]" },
@@ -14332,6 +14452,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToMediaItemConnectionWhereArgs: {
@@ -14347,6 +14468,7 @@ export const generatedSchema = {
     name: { __type: "String" },
     nameIn: { __type: "[String]" },
     notIn: { __type: "[ID]" },
+    offsetPagination: { __type: "OffsetPagination" },
     orderby: { __type: "[PostObjectsConnectionOrderbyInput]" },
     parent: { __type: "ID" },
     parentIn: { __type: "[ID]" },
@@ -14373,6 +14495,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToMenuConnectionWhereArgs: {
@@ -14396,6 +14519,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToMenuItemConnectionWhereArgs: {
@@ -14420,6 +14544,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToPageConnectionWhereArgs: {
@@ -14435,6 +14560,7 @@ export const generatedSchema = {
     name: { __type: "String" },
     nameIn: { __type: "[String]" },
     notIn: { __type: "[ID]" },
+    offsetPagination: { __type: "OffsetPagination" },
     orderby: { __type: "[PostObjectsConnectionOrderbyInput]" },
     parent: { __type: "ID" },
     parentIn: { __type: "[ID]" },
@@ -14461,6 +14587,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToPluginConnectionWhereArgs: {
@@ -14484,6 +14611,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToPostConnectionWhereArgs: {
@@ -14503,6 +14631,7 @@ export const generatedSchema = {
     name: { __type: "String" },
     nameIn: { __type: "[String]" },
     notIn: { __type: "[ID]" },
+    offsetPagination: { __type: "OffsetPagination" },
     orderby: { __type: "[PostObjectsConnectionOrderbyInput]" },
     parent: { __type: "ID" },
     parentIn: { __type: "[ID]" },
@@ -14535,6 +14664,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToPostFormatConnectionWhereArgs: {
@@ -14576,6 +14706,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToProductConnectionWhereArgs: {
@@ -14591,6 +14722,7 @@ export const generatedSchema = {
     name: { __type: "String" },
     nameIn: { __type: "[String]" },
     notIn: { __type: "[ID]" },
+    offsetPagination: { __type: "OffsetPagination" },
     orderby: { __type: "[PostObjectsConnectionOrderbyInput]" },
     parent: { __type: "ID" },
     parentIn: { __type: "[ID]" },
@@ -14617,6 +14749,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToProductNameConnectionWhereArgs: {
@@ -14658,6 +14791,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToRateConnectionWhereArgs: {
@@ -14673,6 +14807,7 @@ export const generatedSchema = {
     name: { __type: "String" },
     nameIn: { __type: "[String]" },
     notIn: { __type: "[ID]" },
+    offsetPagination: { __type: "OffsetPagination" },
     orderby: { __type: "[PostObjectsConnectionOrderbyInput]" },
     parent: { __type: "ID" },
     parentIn: { __type: "[ID]" },
@@ -14699,6 +14834,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToRevisionsConnectionWhereArgs: {
@@ -14737,6 +14873,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToServiceConnectionWhereArgs: {
@@ -14752,6 +14889,7 @@ export const generatedSchema = {
     name: { __type: "String" },
     nameIn: { __type: "[String]" },
     notIn: { __type: "[ID]" },
+    offsetPagination: { __type: "OffsetPagination" },
     orderby: { __type: "[PostObjectsConnectionOrderbyInput]" },
     parent: { __type: "ID" },
     parentIn: { __type: "[ID]" },
@@ -14778,6 +14916,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToTagConnectionWhereArgs: {
@@ -14819,6 +14958,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToTermNodeConnection: {
@@ -14837,6 +14977,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToTermNodeConnectionWhereArgs: {
@@ -14879,6 +15020,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToUserConnection: {
@@ -14897,6 +15039,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToUserConnectionWhereArgs: {
@@ -14909,6 +15052,7 @@ export const generatedSchema = {
     nicename: { __type: "String" },
     nicenameIn: { __type: "[String]" },
     nicenameNotIn: { __type: "[String]" },
+    offsetPagination: { __type: "OffsetPagination" },
     orderby: { __type: "[UsersConnectionOrderbyInput]" },
     role: { __type: "UserRoleEnum" },
     roleIn: { __type: "[UserRoleEnum]" },
@@ -14932,6 +15076,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   SafeSvgSvgIcon: {
@@ -15039,6 +15184,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$ServiceConnectionPageInfo!" },
   },
@@ -15169,6 +15315,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$TagConnectionPageInfo!" },
   },
@@ -15188,6 +15335,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   TagToContentNodeConnectionWhereArgs: {
@@ -15226,6 +15374,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   TagToPostConnectionWhereArgs: {
@@ -15310,6 +15459,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$TaxonomyConnectionPageInfo!" },
   },
@@ -15329,6 +15479,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   Template_ApplyNow: {
@@ -15389,6 +15540,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$TermNodeConnectionPageInfo!" },
   },
@@ -15408,6 +15560,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   TermNodeToEnqueuedStylesheetConnection: {
@@ -15426,6 +15579,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   Theme: {
@@ -15460,6 +15614,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$ThemeConnectionPageInfo!" },
   },
@@ -16174,6 +16329,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$UserConnectionPageInfo!" },
   },
@@ -16203,6 +16359,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$UserRoleConnectionPageInfo!" },
   },
@@ -16222,6 +16379,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   UserToCommentConnectionWhereArgs: {
@@ -16271,6 +16429,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   UserToContactConnectionWhereArgs: {
@@ -16312,6 +16471,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   UserToEnqueuedStylesheetConnection: {
@@ -16330,6 +16490,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   UserToLocationConnection: {
@@ -16348,6 +16509,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   UserToLocationConnectionWhereArgs: {
@@ -16389,6 +16551,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   UserToMediaItemConnectionWhereArgs: {
@@ -16430,6 +16593,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   UserToPageConnectionWhereArgs: {
@@ -16471,6 +16635,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   UserToPostConnectionWhereArgs: {
@@ -16522,6 +16687,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   UserToProductConnectionWhereArgs: {
@@ -16563,6 +16729,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   UserToRateConnectionWhereArgs: {
@@ -16604,6 +16771,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   UserToRevisionsConnectionWhereArgs: {
@@ -16642,6 +16810,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   UserToServiceConnectionWhereArgs: {
@@ -16683,6 +16852,7 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
   },
   UsersConnectionOrderbyInput: {
@@ -16694,12 +16864,14 @@ export const generatedSchema = {
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$WPPageInfo!" },
   },
   WidgetSettings: {
     __typename: { __type: "String!" },
     blogSidebar: { __type: "String" },
+    blogtop: { __type: "String" },
     widgetSettings: { __type: "String" },
   },
   WritingSettings: {
@@ -19006,6 +19178,10 @@ export interface CXAlertConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -19078,6 +19254,10 @@ export interface CXAlertToRevisionConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -19378,6 +19558,10 @@ export interface CategoryConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -19436,6 +19620,10 @@ export interface CategoryToAncestorsCategoryConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -19493,6 +19681,10 @@ export interface CategoryToCategoryConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -19549,6 +19741,10 @@ export interface CategoryToContentNodeConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -19621,6 +19817,10 @@ export interface CategoryToPostConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -19883,6 +20083,10 @@ export interface CommentConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -19940,6 +20144,10 @@ export interface CommentToCommentConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -20510,6 +20718,10 @@ export interface ContactConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -20783,6 +20995,10 @@ export interface ContentNodeConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -20890,6 +21106,10 @@ export interface ContentNodeToEnqueuedScriptConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -20946,6 +21166,10 @@ export interface ContentNodeToEnqueuedStylesheetConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -21207,6 +21431,10 @@ export interface ContentTypeConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -21265,6 +21493,10 @@ export interface ContentTypeToContentNodeConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -21321,6 +21553,10 @@ export interface ContentTypeToTaxonomyConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -31639,6 +31875,10 @@ export interface EnqueuedScriptConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -31745,6 +31985,10 @@ export interface EnqueuedStylesheetConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -36454,6 +36698,10 @@ export interface GraphqlDocumentConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -36756,6 +37004,10 @@ export interface HierarchicalContentNodeToContentNodeAncestorsConnectionPageInfo
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -36812,6 +37064,10 @@ export interface HierarchicalContentNodeToContentNodeChildrenConnectionPageInfo 
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -37737,6 +37993,10 @@ export interface LinklibraryConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -37794,6 +38054,10 @@ export interface LinklibraryToCommentConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -38471,6 +38735,10 @@ export interface LocationCategoryConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -38529,6 +38797,10 @@ export interface LocationCategoryToAncestorsLocationCategoryConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -38585,6 +38857,10 @@ export interface LocationCategoryToContentNodeConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -38643,6 +38919,10 @@ export interface LocationCategoryToLocationCategoryConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -38699,6 +38979,10 @@ export interface LocationCategoryToLocationConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -38802,6 +39086,10 @@ export interface LocationConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -38859,6 +39147,10 @@ export interface LocationToLocationCategoryConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -38932,6 +39224,10 @@ export interface LocationToRevisionConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -38988,6 +39284,10 @@ export interface LocationToTermNodeConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -39434,6 +39734,10 @@ export interface MediaItemConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -39546,6 +39850,10 @@ export interface MediaItemToCommentConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -39705,6 +40013,10 @@ export interface MenuConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -39889,6 +40201,10 @@ export interface MenuItemConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -40035,6 +40351,10 @@ export interface MenuItemToMenuItemConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -40106,6 +40426,10 @@ export interface MenuToMenuItemConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -40589,6 +40913,25 @@ export interface NodeWithTrackbacks {
 }
 
 /**
+ * Get information about the offset pagination state
+ */
+export interface OffsetPaginationPageInfo {
+  __typename?: "OffsetPaginationPageInfo";
+  /**
+   * True if there is one or more nodes available in this connection. Eg. you can increase the offset at least by one.
+   */
+  hasMore?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * True when offset can be decresed eg. offset is 0&lt;
+   */
+  hasPrevious?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * Total amount of nodes in this connection
+   */
+  total?: Maybe<ScalarsEnums["Int"]>;
+}
+
+/**
  * A singular connection from one Node to another, with support for relational data on the &quot;edge&quot; of the connection.
  */
 export interface OneToOneConnection {
@@ -41057,6 +41400,10 @@ export interface PageConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -41226,6 +41573,10 @@ export interface PageToCommentConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -41297,6 +41648,10 @@ export interface PageToRevisionConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -41399,6 +41754,10 @@ export interface PluginConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -41877,6 +42236,10 @@ export interface PostConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -42110,6 +42473,10 @@ export interface PostFormatConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -42168,6 +42535,10 @@ export interface PostFormatToContentNodeConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -42224,6 +42595,10 @@ export interface PostFormatToPostConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -42297,6 +42672,10 @@ export interface PostToCategoryConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -42354,6 +42733,10 @@ export interface PostToCommentConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -42410,6 +42793,10 @@ export interface PostToPostFormatConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -42483,6 +42870,10 @@ export interface PostToRevisionConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -42540,6 +42931,10 @@ export interface PostToTagConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -42596,6 +42991,10 @@ export interface PostToTermNodeConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -43023,6 +43422,10 @@ export interface ProductConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -43258,6 +43661,10 @@ export interface ProductNameConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -43316,6 +43723,10 @@ export interface ProductNameToContentNodeConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -43372,6 +43783,10 @@ export interface ProductNameToRateConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -43459,6 +43874,10 @@ export interface ProductToRateConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -43790,6 +44209,10 @@ export interface RateConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -43863,6 +44286,10 @@ export interface RateToProductConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -43920,6 +44347,10 @@ export interface RateToProductNameConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -43976,6 +44407,10 @@ export interface RateToTermNodeConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -44106,6 +44541,10 @@ export interface RootQueryToCXAlertConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -44162,6 +44601,10 @@ export interface RootQueryToCategoryConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -44220,6 +44663,10 @@ export interface RootQueryToCommentConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -44276,6 +44723,10 @@ export interface RootQueryToContactConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -44334,6 +44785,10 @@ export interface RootQueryToContentNodeConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -44390,6 +44845,10 @@ export interface RootQueryToContentTypeConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -44448,6 +44907,10 @@ export interface RootQueryToEnqueuedScriptConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -44504,6 +44967,10 @@ export interface RootQueryToEnqueuedStylesheetConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -44562,6 +45029,10 @@ export interface RootQueryToGraphqlDocumentConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -44618,6 +45089,10 @@ export interface RootQueryToLinklibraryConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -44676,6 +45151,10 @@ export interface RootQueryToLocationCategoryConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -44732,6 +45211,10 @@ export interface RootQueryToLocationConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -44790,6 +45273,10 @@ export interface RootQueryToMediaItemConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -44846,6 +45333,10 @@ export interface RootQueryToMenuConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -44904,6 +45395,10 @@ export interface RootQueryToMenuItemConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -44960,6 +45455,10 @@ export interface RootQueryToPageConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -45018,6 +45517,10 @@ export interface RootQueryToPluginConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -45074,6 +45577,10 @@ export interface RootQueryToPostConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -45132,6 +45639,10 @@ export interface RootQueryToPostFormatConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -45188,6 +45699,10 @@ export interface RootQueryToProductConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -45246,6 +45761,10 @@ export interface RootQueryToProductNameConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -45302,6 +45821,10 @@ export interface RootQueryToRateConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -45360,6 +45883,10 @@ export interface RootQueryToRevisionsConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -45416,6 +45943,10 @@ export interface RootQueryToServiceConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -45474,6 +46005,10 @@ export interface RootQueryToTagConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -45530,6 +46065,10 @@ export interface RootQueryToTaxonomyConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -45588,6 +46127,10 @@ export interface RootQueryToTermNodeConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -45644,6 +46187,10 @@ export interface RootQueryToThemeConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -45702,6 +46249,10 @@ export interface RootQueryToUserConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -45758,6 +46309,10 @@ export interface RootQueryToUserRoleConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -46127,6 +46682,10 @@ export interface ServiceConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -46561,6 +47120,10 @@ export interface TagConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -46619,6 +47182,10 @@ export interface TagToContentNodeConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -46675,6 +47242,10 @@ export interface TagToPostConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -46865,6 +47436,10 @@ export interface TaxonomyConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -46922,6 +47497,10 @@ export interface TaxonomyToContentTypeConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -47143,6 +47722,10 @@ export interface TermNodeConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -47201,6 +47784,10 @@ export interface TermNodeToEnqueuedScriptConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -47257,6 +47844,10 @@ export interface TermNodeToEnqueuedStylesheetConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -47367,6 +47958,10 @@ export interface ThemeConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -48700,6 +49295,10 @@ export interface UserConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -48791,6 +49390,10 @@ export interface UserRoleConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -48849,6 +49452,10 @@ export interface UserToCommentConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -48905,6 +49512,10 @@ export interface UserToContactConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -48963,6 +49574,10 @@ export interface UserToEnqueuedScriptConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -49019,6 +49634,10 @@ export interface UserToEnqueuedStylesheetConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -49077,6 +49696,10 @@ export interface UserToLocationConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -49133,6 +49756,10 @@ export interface UserToMediaItemConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -49191,6 +49818,10 @@ export interface UserToPageConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -49247,6 +49878,10 @@ export interface UserToPostConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -49305,6 +49940,10 @@ export interface UserToProductConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -49361,6 +50000,10 @@ export interface UserToRateConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -49419,6 +50062,10 @@ export interface UserToRevisionsConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -49476,6 +50123,10 @@ export interface UserToServiceConnectionPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -49532,6 +50183,10 @@ export interface UserToUserRoleConnectionPageInfo {
    * When paginating backwards, are there more items?
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -49643,6 +50298,10 @@ export interface WPPageInfo {
    */
   hasPreviousPage: ScalarsEnums["Boolean"];
   /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -49658,6 +50317,10 @@ export interface WidgetSettings {
    * Genesis Blog Sidebar
    */
   blogSidebar?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Genesis Blog Top
+   */
+  blogtop?: Maybe<ScalarsEnums["String"]>;
   /**
    * The string Settings Group
    */
@@ -50948,6 +51611,7 @@ export interface SchemaObjectTypes {
   NodeWithAuthorToUserConnectionEdge: NodeWithAuthorToUserConnectionEdge;
   NodeWithFeaturedImageToMediaItemConnectionEdge: NodeWithFeaturedImageToMediaItemConnectionEdge;
   NodeWithRevisionsToContentNodeConnectionEdge: NodeWithRevisionsToContentNodeConnectionEdge;
+  OffsetPaginationPageInfo: OffsetPaginationPageInfo;
   Page: Page;
   PageToCommentConnection: PageToCommentConnection;
   PageToCommentConnectionEdge: PageToCommentConnectionEdge;
@@ -51672,6 +52336,7 @@ export type SchemaObjectTypesNames =
   | "NodeWithAuthorToUserConnectionEdge"
   | "NodeWithFeaturedImageToMediaItemConnectionEdge"
   | "NodeWithRevisionsToContentNodeConnectionEdge"
+  | "OffsetPaginationPageInfo"
   | "Page"
   | "PageToCommentConnection"
   | "PageToCommentConnectionEdge"

@@ -44,7 +44,7 @@ export function PostComponent({ post }: PostProps) {
           <article className="post">
 
             <aside className="sidebar">
-              { blogSidebar && 
+              {blogSidebar &&
                 parseHtml(blogSidebar)
               }
               {post.databaseId &&
@@ -61,10 +61,10 @@ export function PostComponent({ post }: PostProps) {
 
                 {post.categories &&
                   <div className='categories'>
-                    {post.categories().nodes.map((category) => (
+                    {post.categories().nodes.map((category, index) => (
                       <>
                         {category.uri &&
-                          <Link href={category.uri}>{category.name}</Link>
+                          <><Link href={category.uri}>{category.name}</Link>{index < post.categories().nodes.length - 1 ? ', ' : ''}</>
                         }
                       </>
                     ))}

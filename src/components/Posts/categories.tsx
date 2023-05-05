@@ -13,14 +13,14 @@ const Categories: React.FC<CategoriesProps> = ({ title = 'Categories' }) => {
         <>
             <h4>{ title }</h4>
             <ul className='categories'>
-            {categories.map((category) => (
-                <>
+            {categories.map((category, index) => (
+                <span key={`category-${index}-${category.name}`}>
                 { category.uri && category.count > 0 &&
                     <li className='cat-item'>
                     <Link href={category.uri}>{category.name}</Link>
                     </li>
                 }
-                </>
+                </span>
             ))}
             </ul>
         </>
