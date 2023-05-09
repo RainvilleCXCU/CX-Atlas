@@ -7,8 +7,8 @@ interface NextPageNavigationProps {
 
 function NextPageNavigation(props: NextPageNavigationProps) {
   return (
-    <Link href={props.href} aria-label={'Next page.'} className='next page-numbers'>
-      Next Page
+    <Link href={props.href} aria-label={'Next page.'} className='page-next page-numbers'>
+      Next &gt;
     </Link>
   );
 }
@@ -19,7 +19,8 @@ interface PreviousPageNavigationProps {
 
 function PreviousPageNavigation(props: PreviousPageNavigationProps) {
   return (
-    <Link href={props.href} aria-label={'Previous page.'} className='prev page-numbers'>Previous Page
+    <Link href={props.href} aria-label={'Previous page.'} className='page-prev page-numbers'>
+      &lt; Prev
     </Link>
   );
 }
@@ -29,20 +30,25 @@ export interface PaginationProps {
   perPage: number;
   currentPage: number;
   basePath: string;
+  buffer?: number;
 }
 
-export default function Pagination({ pageInfo, currentPage = 1, basePath, perPage = 5 }: PaginationProps) {
+export default function Pagination({ pageInfo, currentPage = 1, basePath, perPage = 5, buffer = 2 }: PaginationProps) {
   const previousPageUrl = currentPage - 1 > 1 ? `${basePath}/page/${currentPage - 1}` : basePath;
   const nextPageUrl = `${basePath}/page/${currentPage + 1}`;
-  const pages = pageInfo.offsetPagination.total/perPage;
-  const startPage = currentPage - 2 < 1 ? 1 : currentPage - 2;
+  const pages = Math.ceil(pageInfo.offsetPagination.total/perPage);
+  console.log(`Pages: ${pages}`)
 
-  console.log(`Pages: ${pages} - total: ${pageInfo.offsetPagination.total} - perPage: ${perPage}`)
+  const endPage = currentPage + buffer > pages ? pages: currentPage + buffer;
+  const startPage = currentPage - buffer < 1 ? 1 : currentPage - buffer;
+
+
+
   const getNumberLinks = () => {
     let links = [];
-    for(let p = startPage; p < pages; p++) {
+    for(let p = startPage; p <= endPage; p++) {
         if(p === currentPage) {
-          links.push(<span className='pages-numbers current' key={`pagination-${p}`}>{p}</span>)
+          links.push(<span className='page-numbers current' key={`pagination-${p}`}>{p}</span>)
         } else {
           links.push(<Link href={p > 1 ? `${basePath}/page/${p}` : basePath} className='page-numbers' key={`pagination-${p}`}>{p}</Link>);
         }

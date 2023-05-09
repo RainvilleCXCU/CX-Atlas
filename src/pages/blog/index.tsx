@@ -17,7 +17,6 @@ export default function Page() {
   const { usePosts, useQuery } = client;
   const generalSettings = useQuery().generalSettings;
   const {blogtop} = useQuery().widgetSettings;
-  console.log(`Current Page: ${currentPage}`)
   const posts = usePosts({
     where: {
       offsetPagination: {
@@ -50,13 +49,16 @@ export default function Page() {
               {parseHtml(blogtop)}
             </div>
           }
+          results
         <Posts
           posts={posts.nodes}
           heading="Blog Posts"
           headingLevel="h2"
           postTitleLevel="h3"
+          postInfo={posts.pageInfo}
+          currentPage={currentPage}
+          postsPerPage={POSTS_PER_PAGE}
         />
-        <Pagination currentPage={currentPage} pageInfo={posts.pageInfo} basePath='/blog' perPage={POSTS_PER_PAGE} />
       </main>
 
       <Footer copyrightHolder={generalSettings.title} />

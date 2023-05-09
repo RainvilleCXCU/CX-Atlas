@@ -10602,6 +10602,25 @@ export const generatedSchema = {
     perkImage: { __type: "Int" },
     stacked: { __type: "String" },
   },
+  GenesisCustomBlocksPostContent: {
+    __typename: { __type: "String!" },
+    apiVersion: { __type: "Int" },
+    attributes: { __type: "GenesisCustomBlocksPostContentAttributes" },
+    blockEditorCategoryName: { __type: "String" },
+    clientId: { __type: "String" },
+    cssClassNames: { __type: "[String]" },
+    innerBlocks: { __type: "[EditorBlock]" },
+    isDynamic: { __type: "Boolean!" },
+    name: { __type: "String" },
+    parentClientId: { __type: "String" },
+    renderedHtml: { __type: "String" },
+  },
+  GenesisCustomBlocksPostContentAttributes: {
+    __typename: { __type: "String!" },
+    blockVisibility: { __type: "BlockAttributesObject" },
+    className: { __type: "String" },
+    lock: { __type: "BlockAttributesObject" },
+  },
   GenesisCustomBlocksProductBenefits: {
     __typename: { __type: "String!" },
     apiVersion: { __type: "Int" },
@@ -10975,6 +10994,7 @@ export const generatedSchema = {
     __typename: { __type: "String!" },
     headerSettings: { __type: "String" },
     headerUtilities: { __type: "String" },
+    headerUtilitiesMobile: { __type: "String" },
   },
   HierarchicalContentNode: {
     __typename: { __type: "String!" },
@@ -13457,6 +13477,7 @@ export const generatedSchema = {
   },
   Posts: {
     __typename: { __type: "String!" },
+    excerpt: { __type: "String" },
     id: { __type: "String" },
     title: { __type: "String" },
     url: { __type: "String" },
@@ -15106,6 +15127,11 @@ export const generatedSchema = {
     lock: { __type: "BlockAttributesObject" },
     svgURL: { __type: "String" },
     type: { __type: "String" },
+  },
+  Search: {
+    __typename: { __type: "String!" },
+    results: { __type: "[Posts]" },
+    total: { __type: "String" },
   },
   SendPasswordResetEmailInput: {
     clientMutationId: { __type: "String" },
@@ -17557,6 +17583,10 @@ export const generatedSchema = {
         where: "RootQueryToRevisionsConnectionWhereArgs",
       },
     },
+    searchwp: {
+      __type: "Search",
+      __args: { offset: "String", postsPerPage: "String", terms: "String" },
+    },
     service: {
       __type: "Service",
       __args: { asPreview: "Boolean", id: "ID!", idType: "ServiceIdType" },
@@ -18548,6 +18578,7 @@ export const generatedSchema = {
       "GenesisCustomBlocksListContentSection",
       "GenesisCustomBlocksPageTitle",
       "GenesisCustomBlocksPerk",
+      "GenesisCustomBlocksPostContent",
       "GenesisCustomBlocksProductBenefits",
       "GenesisCustomBlocksQualtrics",
       "GenesisCustomBlocksQuicklink",
@@ -31669,6 +31700,7 @@ export interface EditorBlock {
     | "GenesisCustomBlocksListContentSection"
     | "GenesisCustomBlocksPageTitle"
     | "GenesisCustomBlocksPerk"
+    | "GenesisCustomBlocksPostContent"
     | "GenesisCustomBlocksProductBenefits"
     | "GenesisCustomBlocksQualtrics"
     | "GenesisCustomBlocksQuicklink"
@@ -35407,6 +35439,72 @@ export interface GenesisCustomBlocksPerkAttributes {
 /**
  * A block used for editing the site
  */
+export interface GenesisCustomBlocksPostContent {
+  __typename?: "GenesisCustomBlocksPostContent";
+  /**
+   * The API version of the Gutenberg Block
+   */
+  apiVersion?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Attributes of the %s Block Type
+   */
+  attributes?: Maybe<GenesisCustomBlocksPostContentAttributes>;
+  /**
+   * The name of the category the Block belongs to
+   */
+  blockEditorCategoryName?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The id of the Block
+   */
+  clientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * CSS Classnames to apply to the block
+   */
+  cssClassNames?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The inner blocks of the Block
+   */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /**
+   * Whether the block is Dynamic (server rendered)
+   */
+  isDynamic: ScalarsEnums["Boolean"];
+  /**
+   * The name of the block
+   */
+  name?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The parent id of the Block
+   */
+  parentClientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The rendered HTML for the block
+   */
+  renderedHtml?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Attributes of the %s Block Type
+ */
+export interface GenesisCustomBlocksPostContentAttributes {
+  __typename?: "GenesisCustomBlocksPostContentAttributes";
+  /**
+   * The &quot;blockVisibility&quot; field on the &quot;GenesisCustomBlocksPostContent&quot; block
+   */
+  blockVisibility?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;className&quot; field on the &quot;GenesisCustomBlocksPostContent&quot; block
+   */
+  className?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksPostContent&quot; block
+   */
+  lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+}
+
+/**
+ * A block used for editing the site
+ */
 export interface GenesisCustomBlocksProductBenefits {
   __typename?: "GenesisCustomBlocksProductBenefits";
   /**
@@ -36737,6 +36835,10 @@ export interface HeaderSettings {
    * Genesis Header Utilities
    */
   headerUtilities?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Genesis Header Mobile Utilities
+   */
+  headerUtilitiesMobile?: Maybe<ScalarsEnums["String"]>;
 }
 
 /**
@@ -43113,6 +43215,7 @@ export interface PostTypeLabelDetails {
  */
 export interface Posts {
   __typename?: "Posts";
+  excerpt?: Maybe<ScalarsEnums["String"]>;
   id?: Maybe<ScalarsEnums["String"]>;
   title?: Maybe<ScalarsEnums["String"]>;
   url?: Maybe<ScalarsEnums["String"]>;
@@ -46419,6 +46522,21 @@ export interface SafeSvgSvgIconAttributes {
    * The &quot;type&quot; field on the &quot;SafeSvgSvgIcon&quot; block
    */
   type?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Man&#039;s best friend
+ */
+export interface Search {
+  __typename?: "Search";
+  /**
+   * The Breed of the dog
+   */
+  results?: Maybe<Array<Maybe<Posts>>>;
+  /**
+   * The name of the dog
+   */
+  total?: Maybe<ScalarsEnums["String"]>;
 }
 
 /**
@@ -51074,6 +51192,11 @@ export interface Query {
     last?: Maybe<Scalars["Int"]>;
     where?: Maybe<RootQueryToRevisionsConnectionWhereArgs>;
   }) => Maybe<RootQueryToRevisionsConnection>;
+  searchwp: (args?: {
+    offset?: Maybe<Scalars["String"]>;
+    postsPerPage?: Maybe<Scalars["String"]>;
+    terms?: Maybe<Scalars["String"]>;
+  }) => Maybe<Search>;
   service: (args: {
     asPreview?: Maybe<Scalars["Boolean"]>;
     id: Scalars["ID"];
@@ -51511,6 +51634,8 @@ export interface SchemaObjectTypes {
   GenesisCustomBlocksPageTitleAttributes: GenesisCustomBlocksPageTitleAttributes;
   GenesisCustomBlocksPerk: GenesisCustomBlocksPerk;
   GenesisCustomBlocksPerkAttributes: GenesisCustomBlocksPerkAttributes;
+  GenesisCustomBlocksPostContent: GenesisCustomBlocksPostContent;
+  GenesisCustomBlocksPostContentAttributes: GenesisCustomBlocksPostContentAttributes;
   GenesisCustomBlocksProductBenefits: GenesisCustomBlocksProductBenefits;
   GenesisCustomBlocksProductBenefitsAttributes: GenesisCustomBlocksProductBenefitsAttributes;
   GenesisCustomBlocksQualtrics: GenesisCustomBlocksQualtrics;
@@ -51772,6 +51897,7 @@ export interface SchemaObjectTypes {
   RootQueryToUserRoleConnectionPageInfo: RootQueryToUserRoleConnectionPageInfo;
   SafeSvgSvgIcon: SafeSvgSvgIcon;
   SafeSvgSvgIconAttributes: SafeSvgSvgIconAttributes;
+  Search: Search;
   SendPasswordResetEmailPayload: SendPasswordResetEmailPayload;
   Service: Service;
   ServiceToPreviewConnectionEdge: ServiceToPreviewConnectionEdge;
@@ -52236,6 +52362,8 @@ export type SchemaObjectTypesNames =
   | "GenesisCustomBlocksPageTitleAttributes"
   | "GenesisCustomBlocksPerk"
   | "GenesisCustomBlocksPerkAttributes"
+  | "GenesisCustomBlocksPostContent"
+  | "GenesisCustomBlocksPostContentAttributes"
   | "GenesisCustomBlocksProductBenefits"
   | "GenesisCustomBlocksProductBenefitsAttributes"
   | "GenesisCustomBlocksQualtrics"
@@ -52497,6 +52625,7 @@ export type SchemaObjectTypesNames =
   | "RootQueryToUserRoleConnectionPageInfo"
   | "SafeSvgSvgIcon"
   | "SafeSvgSvgIconAttributes"
+  | "Search"
   | "SendPasswordResetEmailPayload"
   | "Service"
   | "ServiceToPreviewConnectionEdge"
@@ -53147,6 +53276,7 @@ export interface $EditorBlock {
   GenesisCustomBlocksListContentSection?: GenesisCustomBlocksListContentSection;
   GenesisCustomBlocksPageTitle?: GenesisCustomBlocksPageTitle;
   GenesisCustomBlocksPerk?: GenesisCustomBlocksPerk;
+  GenesisCustomBlocksPostContent?: GenesisCustomBlocksPostContent;
   GenesisCustomBlocksProductBenefits?: GenesisCustomBlocksProductBenefits;
   GenesisCustomBlocksQualtrics?: GenesisCustomBlocksQualtrics;
   GenesisCustomBlocksQuicklink?: GenesisCustomBlocksQuicklink;

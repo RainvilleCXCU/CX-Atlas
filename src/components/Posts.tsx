@@ -6,6 +6,7 @@ import Image from 'next/image';
 import parseHtml from 'lib/parser';
 import RelatedPosts from './Posts/relatedPosts';
 import Categories from './Posts/categories';
+import Pagination from './Pagination';
 
 interface Props {
   posts: Post[] | undefined;
@@ -15,7 +16,10 @@ interface Props {
   category?: string;
   headingLevel?: HeadingProps['level'];
   postTitleLevel?: HeadingProps['level'];
+  postsPerPage?: number;
+  postInfo?: Object;
   readMoreText?: string;
+  currentPage?: number;
 }
 
 function Posts({
@@ -27,6 +31,9 @@ function Posts({
   headingLevel = 'h1',
   postTitleLevel = 'h2',
   readMoreText = 'Read more',
+  postsPerPage = 6,
+  currentPage = 1,
+  postInfo
 }: Props): JSX.Element {
   const { useQuery } = client;
   const { blogSidebar } = useQuery().widgetSettings;
@@ -85,7 +92,10 @@ function Posts({
               </div>
             </div>
           ))}
+
+          <Pagination currentPage={currentPage} pageInfo={postInfo} basePath='/blog' perPage={postsPerPage} />
           {posts && posts?.length < 1 && <p>No posts found.</p>}
+                          
         </div>
       </div>
     </section>

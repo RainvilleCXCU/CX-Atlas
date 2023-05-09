@@ -1,6 +1,7 @@
 import Logo from 'components/Logo';
 import { useEffect, useRef, useState } from 'react';
 import MobileHeader from './MobileHeader';
+import { useRouter } from 'next/router';
 
 interface SearchBarProps {
 	device?: string,
@@ -12,6 +13,7 @@ function DesktopSearchBar(props: SearchBarProps) {
 	const [isSearchExpanded, setIsSearchExpanded] = useState(false);
 	const [searchSelected, setSearchSelected] = useState('');
 	const searchRef = useRef(null);
+	const router = useRouter();
 
 	useEffect(() => {
 		if (isSearchExpanded) {
@@ -19,8 +21,14 @@ function DesktopSearchBar(props: SearchBarProps) {
 		}
 	}, [isSearchExpanded])
 
+	const submitSearch = (e) => {
+		e.preventDefault();
+		router.push(`/search/?s=${searchRef.current.value}`);
+		setIsSearchExpanded(false);
+	} 
+
 	return (
-		<form className={`cx-search${isSearchExpanded ? ' cx-active' : ''}`} role="search" action="/">
+		<form className={`cx-search${isSearchExpanded ? ' cx-active' : ''}`} role="search" action="/" onSubmit={submitSearch}>
 
 			<button type="button" className="cx-search-open"
 				onClick={() => {
@@ -63,6 +71,7 @@ function MobileSearchBar(props: SearchBarProps) {
 	const [isSearchExpanded, setIsSearchExpanded] = useState(false);
 	const [searchTerm, setSearchTerm] = useState('');
 	const {navOpen, setNavOpen} = props;
+	const router = useRouter();
 
 	useEffect(() => {
 		if (isSearchExpanded) {
@@ -72,11 +81,17 @@ function MobileSearchBar(props: SearchBarProps) {
 		}
 	}, [isSearchExpanded])
 
+	const submitSearch = (e) => {
+		e.preventDefault();
+		router.push(`/search/?s=${searchTerm}`);
+		setIsSearchExpanded(false);
+	} 
+
 	return (
 		<>
 			<MobileHeader isSearchExpanded={isSearchExpanded} setIsSearchExpanded={setIsSearchExpanded} navOpen={navOpen} setNavOpen={setNavOpen} />
 			<div className={`modal cx-modal${isSearchExpanded ? ' show' : ''}`} id="searchModal" aria-labelledby="searchModalLabel" aria-hidden="true">
-				<form className="modal-dialog cx-search-mobile" role="search" action="/">
+				<form className="modal-dialog cx-search-mobile" role="search" action="/" onSubmit={submitSearch}>
 					<div className="modal-content cx-search-mobile__content">
 						<div className={`modal-body cx-search-mobile__body${isSearchExpanded ? ' cx-search-mobile__body--show' : ''}`}>
 							<div className="cx-search-mobile__input">
