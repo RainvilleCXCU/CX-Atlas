@@ -20,7 +20,7 @@ export interface PageProps {
 
 export default function Page() {
   const { query = {} } = useRouter();
-  const { searchSlug, searchTerm, searchCursor } = query;
+  const { searchSlug, searchTerm ='', searchCursor } = query;
   const currentPage = searchCursor ? parseInt(searchCursor.toString()) : 1;
 
   const { usePosts, useQuery } = client;
@@ -29,9 +29,9 @@ export default function Page() {
   const [isLoading, setLoading] = useState(false);
 
   const { results, total } = useQuery().searchwp({
-    terms: searchTerm.toString(),
-    offset: currentPage.toString(),
-    postsPerPage: POSTS_PER_PAGE.toString()
+    terms: searchSlug?.toString(),
+    offset: currentPage?.toString(),
+    postsPerPage: POSTS_PER_PAGE?.toString()
   });
 
   return (
