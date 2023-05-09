@@ -22,7 +22,7 @@ export const files = {
         },
         {
             id: 'styleguide',
-            src: `/wp-content/themes/CXCU/assets/${process.env.styleguideVersion || '0.6.28'}/cxcuatlas.css`
+            src: `/wp-content/themes/CXCU/assets/${process.env.styleguideVersion || '0.6.29'}/cxcuatlas.css`
         }
     ]
 }

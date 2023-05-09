@@ -6,6 +6,7 @@ export default function parseHtml(html) {
     const internalLinkRegEx = /(cxcu|connexus|local)/gi;
     const domainRegEx = /(http)/gi;
     const options = {
+        trim: true,
         replace: ({ name, attribs, children }) => {
             const isInternalLink = (name == "a" && (internalLinkRegEx.test(attribs.href) || !domainRegEx.test(attribs.href)));
             const isFAQItem = attribs && attribs.class && attribs.class.includes("ewd-ufaq-faq-div");

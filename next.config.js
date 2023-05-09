@@ -15,6 +15,10 @@ module.exports = withFaust({
                 destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/mdr/:path*`,
             },
             {
+                source: '/graphql/:path*',
+                destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/graphql/:path*`,
+            },
+            {
                 source: '/wp-includes/:path*',
                 destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp-includes/:path*`,
             },
