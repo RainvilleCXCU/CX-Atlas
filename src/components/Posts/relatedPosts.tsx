@@ -13,7 +13,6 @@ const RelatedPosts: React.FC<RelatedPostsProps> = ({ id, title = "Related Posts"
     const relatedPosts = useQuery().relatedPosts({postId:id});
 	return (
         <div className={`searchwp-related${className ? ` ${className}` : ''}`}>
-            {JSON.stringify(relatedPosts)}
             <h4>{title}</h4>
             <ul>
             {relatedPosts.map((post) => (

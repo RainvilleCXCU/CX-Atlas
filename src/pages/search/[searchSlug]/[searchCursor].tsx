@@ -1,14 +1,14 @@
 import { getNextStaticProps } from '@faustjs/next';
 import { GetStaticPropsContext } from 'next';
-import Page from '../..';
+import Page from '..';
 import { client } from 'client';
 
 export default Page;
 
 export async function getStaticProps(context: GetStaticPropsContext) {
-  const { searchTerm } = context.params;
-
-  if (!(searchTerm === 'page')) {
+  const { searchSlug } = context.params;
+  
+  if (!(searchSlug === 'page')) {
     return {
       notFound: true,
     };

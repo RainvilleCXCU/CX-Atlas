@@ -20,57 +20,55 @@ export interface PageProps {
 
 export default function Page() {
   const { query = {} } = useRouter();
-  const { searchSlug = '', searchTerm, searchCursor } = query;
+  const { searchCursor, s = '' } = query;
   const currentPage = searchCursor ? parseInt(searchCursor.toString()) : 1;
 
   const { usePosts, useQuery } = client;
   const generalSettings = useQuery().generalSettings;
 
+  const search = s ? s : '';
+
   const [isLoading, setLoading] = useState(false);
 
   const { results, total } = useQuery().searchwp({
-    terms: searchSlug?.toString(),
+    terms: search?.toString(),
     offset: currentPage?.toString(),
     postsPerPage: POSTS_PER_PAGE?.toString()
   });
 
   return (
     <>
+      <Head>
+        <title>
+          {`You searched for ${s} - ${generalSettings.title}`}
+        </title>
+      </Head>
       <Header
         title={generalSettings.title}
         description={generalSettings.description}
       />
 
-      <Head>
-        <title>
-          {generalSettings.title} - {generalSettings.description}
-        </title>
-      </Head>
       <GTM />
 
       <main className="content content-index">
         <div id="post-wrap" className='cx-search__wrapper'>
           <div className='cx-search__results'>
             {results && results.map((post) => (
-              <>
-                {post.title && post.excerpt && post.url &&
-                  <div
-                    key={post.id ?? ''}
-                    id={`post-${post.id}`}>
-                    <div>
-                      <Heading level={'h2'} className='cx-h3'>
-                        <Link href={post.url}>{parseHtml(post.title)}
-                        </Link>
-                      </Heading>
-                      <div>
-                        {parseHtml(post.excerpt)}
-                      </div>
-                    </div>
+              <div
+                key={post.id ?? ''}
+                id={`post-${post.id}`}>
+                <div>
+                  <Heading level={'h2'} className='cx-h3'>
+                    <Link href={post.url ?? ""}>{post.title ?? ""}
+                    </Link>
+                  </Heading>
+                  <div>
+                    {parseHtml(post.excerpt ?? "")}
                   </div>
-                }
-              </>
+                </div>
+              </div>
             ))}
-            {/* <Pagination currentPage={currentPage} pageInfo={page.pageInfo} basePath='/search' perPage={POSTS_PER_PAGE} /> */}
+            <Pagination currentPage={currentPage} totalResults={parseInt(total)} basePath={`/search`} perPage={POSTS_PER_PAGE} querys={`?s=${search}`} />
           </div>
 
           <aside className="cx-search__sidebar sidebar">

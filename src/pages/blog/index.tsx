@@ -49,7 +49,6 @@ export default function Page() {
               {parseHtml(blogtop)}
             </div>
           }
-          results
         <Posts
           posts={posts.nodes}
           heading="Blog Posts"

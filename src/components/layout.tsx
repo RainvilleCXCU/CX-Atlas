@@ -15,7 +15,7 @@ export default function Layout({ page, children = <></> }) {
 		<>
 			<Head>
 				<title>
-					{page?.title()} - {generalSettings.title}
+					{`${page?.title()} - ${generalSettings.title}`}
 				</title>
 			</Head>
 			<GTM />
