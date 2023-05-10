@@ -52,21 +52,23 @@ export default function Page() {
         <div id="post-wrap" className='cx-search__wrapper'>
           <div className='cx-search__results'>
             {results && results.map((post) => (
-              <div
-                key={post.id ?? ''}
-                id={`post-${post.id}`}>
-                <div>
-                  <Heading level={'h2'} className='cx-h3'>
-                    <Link href={post.url}>{parseHtml(post.title)}
-                    </Link>
-                  </Heading>
-                  {post.excerpt &&
+              <>
+                {post.title && post.excerpt && post.url &&
+                  <div
+                    key={post.id ?? ''}
+                    id={`post-${post.id}`}>
                     <div>
-                      {parseHtml(post.excerpt)}
+                      <Heading level={'h2'} className='cx-h3'>
+                        <Link href={post.url}>{parseHtml(post.title)}
+                        </Link>
+                      </Heading>
+                      <div>
+                        {parseHtml(post.excerpt)}
+                      </div>
                     </div>
-                  }
-                </div>
-              </div>
+                  </div>
+                }
+              </>
             ))}
             {/* <Pagination currentPage={currentPage} pageInfo={page.pageInfo} basePath='/search' perPage={POSTS_PER_PAGE} /> */}
           </div>
