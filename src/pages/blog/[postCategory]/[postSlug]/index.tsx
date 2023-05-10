@@ -1,7 +1,7 @@
 import { getNextStaticProps, is404 } from '@faustjs/next';
 import { client, Post } from 'client';
 import { Footer, Header } from 'components';
-import { addCSSAsset, addJSAsset } from "../../../lib/enqueuedFiles";
+import { addCSSAsset, addJSAsset } from "../../../../lib/enqueuedFiles";
 import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
 import GTM from 'components/ThirdParty/gtm';
@@ -10,6 +10,7 @@ import Categories from 'components/Posts/categories';
 import Image from 'next/image';
 import parseHtml from 'lib/parser';
 import Link from 'next/link';
+import { Fragment } from 'react';
 
 export interface PostProps {
   post: Post | Post['preview']['node'] | null | undefined;
@@ -58,15 +59,14 @@ export function PostComponent({ post }: PostProps) {
                   <Image src={post.featuredImage?.node.sourceUrl()?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={post.featuredImage.node.mediaDetails.width} height={post.featuredImage.node.mediaDetails.height} />
                 </div>
                 <h1>{post.title()}</h1>
-
                 {post.categories &&
                   <div className='categories'>
                     {post.categories().nodes.map((category, index) => (
-                      <>
+                      <Fragment key={category.name}>
                         {category.uri &&
                           <><Link href={category.uri}>{category.name}</Link>{index < post.categories().nodes.length - 1 ? ', ' : ''}</>
                         }
-                      </>
+                      </Fragment>
                     ))}
                   </div>}
               </header>
