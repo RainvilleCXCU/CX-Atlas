@@ -20,7 +20,7 @@ export interface PageProps {
 
 export default function Page() {
   const { query = {} } = useRouter();
-  const { searchSlug, searchTerm ='', searchCursor } = query;
+  const { searchSlug = '', searchTerm, searchCursor } = query;
   const currentPage = searchCursor ? parseInt(searchCursor.toString()) : 1;
 
   const { usePosts, useQuery } = client;
@@ -60,9 +60,11 @@ export default function Page() {
                     <Link href={post.url}>{parseHtml(post.title)}
                     </Link>
                   </Heading>
-                  <div>
-                    {parseHtml(post.excerpt)}
-                  </div>
+                  {post.excerpt &&
+                    <div>
+                      {parseHtml(post.excerpt)}
+                    </div>
+                  }
                 </div>
               </div>
             ))}
