@@ -48,8 +48,12 @@ export default function Page() {
         }
         <Posts
           posts={posts.nodes}
-          postInfo={posts.pageInfo}
-          category={category?.name} />
+          postInfo={posts.pageInfo}          
+          category={categorySlug.toString()}
+          categoryName={category.name}
+          currentPage={currentPage}
+          postsPerPage={POSTS_PER_PAGE}
+          />
       </main>
 
       <Footer copyrightHolder={generalSettings.title} />

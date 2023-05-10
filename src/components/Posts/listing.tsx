@@ -15,6 +15,7 @@ interface Props {
   id?: string;
   heading?: string;
   category?: string;
+  categoryName?: string;
   headingLevel?: HeadingProps['level'];
   postTitleLevel?: HeadingProps['level'];
   postsPerPage?: number;
@@ -29,6 +30,7 @@ function Posts({
   heading,
   id,
   category,
+  categoryName,
   headingLevel = 'h1',
   postTitleLevel = 'h2',
   readMoreText = 'Read more',
@@ -50,16 +52,16 @@ function Posts({
         </aside>
         {posts && posts?.length > 0 && intro && <p>{intro}</p>}
         <div id="post-wrap" className="posts archive-content">
-          {category &&
+          {categoryName &&
 
-            <h2 className="no-margin"><span className="screen-reader-text">Category: </span><span>{category}</span></h2>
+            <h2 className="no-margin"><span className="screen-reader-text">Category: </span><span>{categoryName}</span></h2>
           }
           {posts.map((post) => (
               <PostListing
                 post={post}
               />
           ))}
-          <Pagination currentPage={currentPage} totalResults={postInfo.offsetPagination?.total} basePath='/blog' perPage={postsPerPage} />
+          <Pagination currentPage={currentPage} totalResults={postInfo.offsetPagination?.total} basePath={`/blog${category ? `/category/${category}` : ''}`} perPage={postsPerPage} />
           {posts && posts?.length < 1 && <p>No posts found.</p>}
                           
         </div>
