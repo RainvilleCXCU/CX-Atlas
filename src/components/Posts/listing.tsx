@@ -59,7 +59,6 @@ function Posts({
                 post={post}
               />
           ))}
-
           <Pagination currentPage={currentPage} totalResults={postInfo.offsetPagination?.total} basePath='/blog' perPage={postsPerPage} />
           {posts && posts?.length < 1 && <p>No posts found.</p>}
                           

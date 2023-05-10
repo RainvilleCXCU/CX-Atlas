@@ -7,7 +7,7 @@ export default Page;
 
 export async function getStaticProps(context: GetStaticPropsContext) {
   const { paginationTerm } = context.params;
-  if (!(paginationTerm === 'after' || paginationTerm === 'before')) {
+  if (!(paginationTerm === 'page')) {
     return {
       notFound: true,
     };

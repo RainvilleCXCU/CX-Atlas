@@ -13,15 +13,19 @@ export default function Page() {
   const { useQuery, usePosts, useCategory } = client;
   const { query = {} } = useRouter();
   const { categorySlug, paginationTerm, categoryCursor } = query;
+  const currentPage = categoryCursor ? parseInt(categoryCursor.toString()) : 1;
   const generalSettings = useQuery().generalSettings;
   const { blogtop } = useQuery().widgetSettings;
   const category = useCategory();
-  const isBefore = paginationTerm === 'before';
+
   const posts = usePosts({
-    after: !isBefore ? (categoryCursor as string) : undefined,
-    before: isBefore ? (categoryCursor as string) : undefined,
-    first: !isBefore ? POSTS_PER_PAGE : undefined,
-    last: isBefore ? POSTS_PER_PAGE : undefined,
+    where: {
+      categoryName: categorySlug.toString(),
+      offsetPagination: {
+        offset: ((currentPage - 1) * POSTS_PER_PAGE),
+        size: POSTS_PER_PAGE
+      }
+    }
   });
 
   return (
@@ -37,12 +41,15 @@ export default function Page() {
       <GTM />
 
       <main className="content content-single blog">
-          {blogtop &&
-            <div className="alignfull">
-              {parseHtml(blogtop)}
-            </div>
-          }
-          <Posts posts={posts.nodes} category={category?.name} />
+        {blogtop &&
+          <div className="alignfull">
+            {parseHtml(blogtop)}
+          </div>
+        }
+        <Posts
+          posts={posts.nodes}
+          postInfo={posts.pageInfo}
+          category={category?.name} />
       </main>
 
       <Footer copyrightHolder={generalSettings.title} />
