@@ -58,6 +58,7 @@ function Posts({
           }
           {posts.map((post) => (
               <PostListing
+                key={`listing-${post.id}`}
                 post={post}
               />
           ))}

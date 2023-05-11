@@ -6,7 +6,7 @@ import RenderResult from "next/dist/server/render-result";
 import Image from "next/image";
 import Link from "next/link";
 import { format } from "path";
-import React from "react";
+import React, { Fragment } from "react";
 
 interface PostListingProps {
     post: Post;
@@ -18,13 +18,11 @@ interface PostListingProps {
 const PostListing: React.FC<PostListingProps> = ({ post, className, postTitleLevel = 'h2' }) => {
     return (
         <div
-            key={post.id}
             id={`post-${post.id}`}
             className={`post${className ? ` ${className}` : ''}`}
         >
             <header className='entry-header'>
                 {post.featuredImage &&
-
                     <div className="featured-image">
                         <Link href={`${post.uri}`}>
                             <Image src={post.featuredImage.node?.sourceUrl()?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={post.featuredImage.node.mediaDetails.width} height={post.featuredImage.node?.mediaDetails.height} />
@@ -38,11 +36,11 @@ const PostListing: React.FC<PostListingProps> = ({ post, className, postTitleLev
                 {post.categories &&
                     <div className='categories'>
                         {post.categories().nodes?.map((category, index) => (
-                            <span key={`category-${index}-${category.name}`}>
+                            <Fragment key={`categories-${post.id}-${index}-${category.name}`}>
                                 {category.uri &&
                                     <><Link href={category.uri}>{category.name}</Link>{index < post.categories().nodes.length - 1 ? ', ' : ''}</>
                                 }
-                            </span>
+                            </Fragment>
                         ))}
                     </div>
                 }

@@ -8,7 +8,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-const POSTS_PER_PAGE = 6;
+const POSTS_PER_PAGE = 5;
 
 export default function Page() {
   const { query = {} } = useRouter();
@@ -38,7 +38,7 @@ export default function Page() {
 
       <Head>
         <title>
-          {generalSettings.title} - {generalSettings.description}
+          {`${generalSettings.title} - ${generalSettings.description}`}
         </title>
       </Head>
       <GTM />

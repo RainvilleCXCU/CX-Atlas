@@ -32,7 +32,7 @@ export function PostComponent({ post }: PostProps) {
 
       <Head>
         <title>
-          {post?.title()} - {generalSettings.title}
+          {`${post?.title()} - ${generalSettings.title}`}
         </title>
         {enqueuedStylesheets.map((sheet) => {
           return addCSSAsset(sheet.node);

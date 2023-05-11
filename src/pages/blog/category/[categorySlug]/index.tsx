@@ -7,7 +7,7 @@ import { client } from 'client';
 import GTM from 'components/ThirdParty/gtm';
 import parseHtml from 'lib/parser';
 
-const POSTS_PER_PAGE = 6;
+const POSTS_PER_PAGE = 5;
 
 export default function Page() {
   const { useQuery, usePosts, useCategory } = client;
@@ -30,14 +30,14 @@ export default function Page() {
 
   return (
     <>
+
+      <Head>
+        <title>{`Posts - ${generalSettings?.title}`}</title>
+      </Head>
       <Header
         title={generalSettings.title}
         description={generalSettings.description}
       />
-
-      <Head>
-        <title>Posts - {generalSettings?.title}</title>
-      </Head>
       <GTM />
 
       <main className="content content-single blog">

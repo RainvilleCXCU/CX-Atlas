@@ -1,6 +1,6 @@
 import { client } from "client";
 import Link from "next/link";
-import React from "react";
+import React, { Fragment } from "react";
 
 interface CategoriesProps {
 	title?: string;
@@ -14,13 +14,13 @@ const Categories: React.FC<CategoriesProps> = ({ title = 'Categories' }) => {
             <h4>{ title }</h4>
             <ul className='categories'>
             {categories.map((category, index) => (
-                <span key={`category-${index}-${category.name}`}>
+                <Fragment key={`category-${index}-${category.name}`}>
                 { category.uri && category.count > 0 &&
                     <li className='cat-item'>
                     <Link href={category.uri}>{category.name}</Link>
                     </li>
                 }
-                </span>
+                </Fragment>
             ))}
             </ul>
         </>
