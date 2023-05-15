@@ -50,7 +50,7 @@ export default function Page() {
 
       <GTM />
 
-      <main className="content content-index">
+      <main id="main" className="content content-index">
         <div id="post-wrap" className='cx-search__wrapper'>
           <div className='cx-search__results'>
             {results && results.map((post) => (

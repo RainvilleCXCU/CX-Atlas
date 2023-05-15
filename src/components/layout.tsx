@@ -25,7 +25,7 @@ export default function Layout({ page, children = <></> }) {
 				logo={generalSettings.logo}
 			/>
 			<div id="page" className="container site">
-				<main className="content content-single">
+				<main id="main" className="content content-single">
 					<article className="entry-content">
 						{parseHtml(page?.content() ?? "")}
 					</article>

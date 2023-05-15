@@ -40,7 +40,7 @@ export default function Page() {
       />
       <GTM />
 
-      <main className="content content-single blog">
+      <main id="main" className="content content-single blog">
         {blogtop &&
           <div className="alignfull">
             {parseHtml(blogtop)}

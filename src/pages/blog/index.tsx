@@ -43,7 +43,7 @@ export default function Page() {
       </Head>
       <GTM />
 
-      <main className="content content-index blog">
+      <main id="main" className="content content-index blog">
           {blogtop &&
             <div className="alignfull">
               {parseHtml(blogtop)}
