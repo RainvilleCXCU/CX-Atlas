@@ -50,7 +50,7 @@ function Header({
 
               <MenuNavigation device="Desktop" menuItems={links} menuOpen={false} setNavOpen={setNavOpen} />
               <div>
-                <Link href="/pay-my-loan/" passHref className="cx-button cx-button--compact cx-button--text" type="button">Pay my loan
+                <Link href="/pay-my-loan/" passHref className="cx-button cx-button--compact cx-button--text cx-button--outlined" type="button">Pay my loan
                 </Link>
                 <a href="https://onlinebanking.connexuscu.org/Authentication" className="cx-button cx-button--compact">Log in</a>
               </div>
