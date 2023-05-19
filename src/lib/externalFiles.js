@@ -9,14 +9,6 @@ export const files = {
             src: '/wp-content/plugins/genesis-page-builder/vendor/genesis/blocks/dist/style-blocks.build.css'
         },
         {
-            id: 'block-style',
-            src: '/wp-includes/css/dist/block-library/style.min.css',
-        },
-        {
-            id: 'parent-theme',
-            src: '/wp-content/themes/genesis-block-theme/style.css',
-        },
-        {
             id: 'child-theme',
             src: '/wp-content/themes/CXCU/style.css',
         },

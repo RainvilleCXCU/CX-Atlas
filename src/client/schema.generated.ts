@@ -16896,6 +16896,9 @@ export const generatedSchema = {
   },
   WidgetSettings: {
     __typename: { __type: "String!" },
+    applyNow: { __type: "String" },
+    applyNowMinor: { __type: "String" },
+    applyStart: { __type: "String" },
     blogSidebar: { __type: "String" },
     blogtop: { __type: "String" },
     widgetSettings: { __type: "String" },
@@ -50431,6 +50434,18 @@ export interface WPPageInfo {
  */
 export interface WidgetSettings {
   __typename?: "WidgetSettings";
+  /**
+   * Apply Now Content
+   */
+  applyNow?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Apply Now Minor Content
+   */
+  applyNowMinor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Apply Start Content
+   */
+  applyStart?: Maybe<ScalarsEnums["String"]>;
   /**
    * Genesis Blog Sidebar
    */

@@ -1,8 +1,16 @@
 // CSS for use on every page. Added with normalize.css in pages/_app.tsx.
+@use 'sass:math';
 
 @import "variables";
+@import '~@wordpress/base-styles/colors';
+@import '~@wordpress/base-styles/variables';
+@import '~@wordpress/base-styles/mixins';
+@import '~@wordpress/base-styles/breakpoints';
+@import '~@wordpress/base-styles/animations';
+@import '~@wordpress/base-styles/z-index';
+@import '~@wordpress/block-library/src/style.scss';
+
 @import "./utilities/visibility";
-@import "./layout/blocks";
 @import "./components/modal";
 @import "./components/mobileNav";
 @import "./components/mobileSearch";
