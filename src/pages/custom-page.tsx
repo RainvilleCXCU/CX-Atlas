@@ -5,6 +5,7 @@ import { GetStaticPropsContext } from "next";
 import Head from "next/head";
 import Accordion from "components/Accordion/Accordion";
 import FAQ from "components/FAQs/faq";
+import LocationDetails from "components/Locations/location-details";
 
 export default function Page() {
 	const { useQuery } = client;
@@ -40,6 +41,8 @@ export default function Page() {
 					<Accordion title={title} content={content} isOpen={false} />
 					<Accordion title={title} content={content} isOpen={false} />
 					<FAQ id={"6"} title={title} content={content} isOpen={false} />
+
+					<LocationDetails id={"Here's a string of the ID baby"}/>
 				</div>
 			</main>
 

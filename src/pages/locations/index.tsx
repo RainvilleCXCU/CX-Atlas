@@ -5,6 +5,7 @@ import { GetStaticPropsContext } from "next";
 import Head from "next/head";
 import { useState, useEffect } from "react";
 import LocationListings from "components/Locations/listings";
+import LocationDetails from "components/Locations/location-details";
 import GTM from "components/ThirdParty/gtm";
 
 export default function Page() {
@@ -37,13 +38,15 @@ export default function Page() {
 			/>
 
 			<Head>
-				<title>Custom Page - {generalSettings.title}</title>
+				<title>Locations - {generalSettings.title}</title>
 			</Head>
 			<GTM />
 
 			<main className="content content-single">
 				<div className="wrap">
-					<div id="wpsl-wrap" className="wpsl-store-below">
+					<div id="wpsl-wrap" className="wpsl-wrap wpsl-store-below wpsl-default-filters">
+						<div className="wpsl-search wpsl-clearfix wpsl-checkboxes-enabled wpsl-geolocation-run"></div>
+						<div id="wpsl-gmap" className="wpsl-gmap-canvas" style={{ position: "relative", overflow: "hidden" }}></div>
 						<div id="wpsl-result-list">
 							<div id="wpsl-stores">
 								<div className="cx-location-listing__title wpsl-location--section">
@@ -56,6 +59,7 @@ export default function Page() {
 								<LocationListings data={data} />
 							</div>
 						</div>
+						<LocationDetails data={data} />
 					</div>
 				</div>
 			</main>
