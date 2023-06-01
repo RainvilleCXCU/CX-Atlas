@@ -5,7 +5,7 @@ import { GetStaticPropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { client } from 'client';
 import GTM from 'components/ThirdParty/gtm';
-import parseHtml from 'lib/parser';
+import { parseHtml } from 'lib/parser';
 
 const POSTS_PER_PAGE = 5;
 

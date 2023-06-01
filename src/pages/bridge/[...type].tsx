@@ -8,7 +8,7 @@ import GTM from 'components/ThirdParty/gtm';
 import { GetServerSidePropsContext, GetStaticPropsContext } from 'next';
 import { getNextServerSideProps, getNextStaticProps, is404 } from '@faustjs/next';
 // import { getProductByName } from 'lib/data/products';
-import parseHtml from 'lib/parser';
+import { parseHtml, parseShortcode } from 'lib/parser';
 import apolloClient from 'apolloClient';
 import { gql } from '@apollo/client';
 
@@ -19,7 +19,15 @@ export interface PageProps {
 export default function Page({ product, type, minor }) {
     const { usePosts, useQuery } = client;
     const { generalSettings, widgetSettings } = useQuery();
-    const widget = ((type && type == 'start') ? widgetSettings?.applyStart : minor == 'no' ? widgetSettings?.applyNow : widgetSettings?.applyNowMinor) || ''
+
+    useEffect(() => {
+        document.body.id = 'cx-bridge';
+    });
+    
+    const productInfo = {account: product.title};
+    let widget = ((type && type == 'start') ? widgetSettings?.applyStart(productInfo) : minor == 'no' ? widgetSettings?.applyNow(productInfo) : widgetSettings?.applyNowMinor(productInfo)) || ''
+
+    widget = widget.replace(/account=none/gi, `account=${product.title.replace(' ', '-').toLowerCase()}`);
 
     return (
         <>
@@ -84,10 +92,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     });
     const product = data.products.edges[0]?.node;
 
-    console.log(`Products: ${data.products.edges.length}`);
-    console.log(`Req: ${req.url}`)
-
-
     if (data.products.edges.length == 0) {
         return getNextServerSideProps(context, {
             Page,
@@ -98,7 +102,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             }
         });
     } else if (product.minorMemberApplyNowURL == '' && type == 'start') {
-        console.log('Minor accounts not available');
+        // console.log('Minor accounts not available');
         return getNextServerSideProps(context, {
             Page,
             client,
@@ -108,25 +112,25 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             }
         });
     } else if (!minor && product.minorMemberApplyNowURL != '' && type != 'start') {
-        console.log('Start Over');
-        // return getNextServerSideProps(context, {
-        //     Page,
-        //     client,
-        //     redirect: {
-        //         destination: `/apply-start/?account=${query.account}`,
-        //         permanent: false,
-        //     }
-        // });
+        // console.log('Start Over');
+        return getNextServerSideProps(context, {
+            Page,
+            client,
+            redirect: {
+                destination: `/apply-start/?account=${query.account}`,
+                permanent: false,
+            }
+        });
     } else if (minor && minor == 'yes' && product.minorMemberApplyNowURL == '' && type == 'now') {
-        console.log('Change Minor to now, not available');
-        // return getNextServerSideProps(context, {
-        //     Page,
-        //     client,
-        //     redirect: {
-        //         destination: `/apply-now/?account=${query.account}&minor=no`,
-        //         permanent: false,
-        //     }
-        // });
+        // console.log('Change Minor to now, not available');
+        return getNextServerSideProps(context, {
+            Page,
+            client,
+            redirect: {
+                destination: `/apply-now/?account=${query.account}&minor=no`,
+                permanent: false,
+            }
+        });
     } else {
     }
     return getNextServerSideProps(context, {

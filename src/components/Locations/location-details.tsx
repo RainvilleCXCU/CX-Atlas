@@ -2,16 +2,38 @@ import React from "react";
 import { useEffect } from "react";
 
 export interface Props {
-	data: any;
+  id?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  phone?: string;
+  zip?: string;
+  lat?: string;
+  lng?: string;
+  distance?: string;
+  store?: string;
+  lobby_hours_html?: string;
+  drive_thru_hours_html?: string;
+  services?: string;
 }
 
-function LocationDetails({ data }: Props): JSX.Element {
+function LocationDetails({
+  id,
+  address,
+  city,
+  state,
+  zip,
+  phone,
+  lat,
+  lng,
+  distance,
+  store,
+  lobby_hours_html,
+  drive_thru_hours_html,
+  services }: Props): JSX.Element {
 
-  const branch = data?.[16] //This is just to hold some dynamic data for a single branch in the array from 'data'
-  console.log(branch)
+  return (
 
-	return (
-    
     <div id="wpsl-branch-details" className="">
       <div id="wpsl-store">
         <div className="cx-location-details__title cx-h4">
@@ -25,12 +47,12 @@ function LocationDetails({ data }: Props): JSX.Element {
           <div className="cx-branch-content__header wpsl-location--section">
             <div className="cx-location-listing__item--address">
               <span className="wpsl-name">
-                <strong>{branch?.store}</strong>
+                <strong>{store}</strong>
               </span>
-              <br/>
-              <span className="wpsl-street">{branch?.address}</span>
-              <br/>
-              <span>{branch?.city}, {branch?.state} {branch?.zip}</span>
+              <br />
+              <span className="wpsl-street">{address}</span>
+              <br />
+              <span>{city}, {state} {zip}</span>
             </div>
             <div className="cx-location-listing__item--icon">
               <img
@@ -81,12 +103,12 @@ function LocationDetails({ data }: Props): JSX.Element {
 
                   <span className="wpsl-hours hide-days">
                     <div className="wpsl-hours-heading">Lobby</div>
-                    <div dangerouslySetInnerHTML={{ __html: branch?.lobby_hours_html }} />
+                    <div dangerouslySetInnerHTML={{ __html: lobby_hours_html }} />
                   </span>
 
                   <span className="wpsl-hours hide-days">
                     <div className="wpsl-hours-heading">Drive-Thru</div>
-                    <div dangerouslySetInnerHTML={{ __html: branch?.drive_thru_hours_html }} />
+                    <div dangerouslySetInnerHTML={{ __html: drive_thru_hours_html }} />
                   </span>
                 </div>
               </div>
@@ -148,7 +170,7 @@ function LocationDetails({ data }: Props): JSX.Element {
               </summary>
               <div className="gb-accordion-text">
                 <span className="wpsl-services">
-                  {branch?.services ? <div dangerouslySetInnerHTML={{ __html: branch?.services }} /> : "Unavailable" }
+                  {services ? <div dangerouslySetInnerHTML={{ __html: services }} /> : "Unavailable"}
                 </span>
               </div>
             </details>
@@ -157,7 +179,7 @@ function LocationDetails({ data }: Props): JSX.Element {
           <div className="cx-location-content__footer u-is-hidden">
             <div className="cx-location-content__footer--btn">
               <a
-                href={`tel:${branch?.phone}`}
+                href={`tel:${phone}`}
                 className="cx-button cx-button--compact cx-button--icon cx-button--icon-call"
               >
                 Call
@@ -165,7 +187,7 @@ function LocationDetails({ data }: Props): JSX.Element {
             </div>
             <div className="cx-location-content__footer--btn">
               <a
-                href={`https://maps.google.com/maps?saddr=&amp;daddr=${branch?.address},${branch?.city} ${branch?.state} ${branch?.zip}`}
+                href={`https://maps.google.com/maps?saddr=&amp;daddr=${address},${city} ${state} ${zip}`}
                 target="_blank"
                 className="cx-button cx-button--compact cx-button--outlined cx-button--icon cx-button--icon-directions-brand"
               >
@@ -177,7 +199,7 @@ function LocationDetails({ data }: Props): JSX.Element {
         <div className="cx-location-content__footer">
           <div className="cx-location-content__footer--btn">
             <a
-              href={`tel:${branch?.phone}`}
+              href={`tel:${phone}`}
               className="cx-button cx-button--compact cx-button--icon cx-button--icon-call"
             >
               Call
@@ -185,7 +207,7 @@ function LocationDetails({ data }: Props): JSX.Element {
           </div>
           <div className="cx-location-content__footer--btn">
             <a
-              href={`https://maps.google.com/maps?saddr=&daddr=${branch?.address},${branch?.city} ${branch?.state} ${branch?.zip}`}
+              href={`https://maps.google.com/maps?saddr=&daddr=${address},${city} ${state} ${zip}`}
               target="_blank"
               className="cx-button cx-button--compact cx-button--outlined cx-button--icon cx-button--icon-directions-brand"
             >

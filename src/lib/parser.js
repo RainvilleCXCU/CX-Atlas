@@ -1,10 +1,12 @@
 //import FAQ from "components/FAQs/faq";
 import parse, { domToReact, attributesToProps } from "html-react-parser";
+import { client } from 'client';
 import Link from "next/link";
 
-export default function parseHtml(html) {
+export const parseHtml = (html) => {
     const domainRegEx = new RegExp(/(http)/, 'i');
     const internalLinkRegEx = new RegExp(/(cxcu|(www\.connexus)|local)/, 'i');
+    //html = parseShortcode(html);
     const options = {
         trim: true,
         replace: ({ name, attribs, children }) => {
@@ -28,3 +30,12 @@ export default function parseHtml(html) {
     }
     return parse(html, options);
 };
+
+export const parseShortcode = (html) => {
+    const shortcodeRegEx = new RegExp(/\[(.*)\]/, 'ig');
+    return html.replace(shortcodeRegEx, match => {
+        client.useQuery().shortcode({
+            shortcode: match.replace(']')
+        })
+    })
+}

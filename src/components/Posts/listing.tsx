@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Post, client } from 'client';
 import Heading, { HeadingProps } from '../Heading';
 import Image from 'next/image';
-import parseHtml from 'lib/parser';
+import { parseHtml } from 'lib/parser';
 import RelatedPosts from './relatedPosts';
 import Categories from './categories';
 import Pagination from '../Pagination';

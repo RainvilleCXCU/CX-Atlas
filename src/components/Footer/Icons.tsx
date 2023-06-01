@@ -1,5 +1,5 @@
 import { client } from 'client';
-import parseHtml from 'lib/parser';
+import { parseHtml } from 'lib/parser';
 
 export default function Icons({ children = <></> }) {
     const { useQuery } = client;

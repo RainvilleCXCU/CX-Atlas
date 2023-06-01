@@ -8,7 +8,7 @@ import { addCSSAsset, addJSAsset } from "../../lib/enqueuedFiles";
 import Heading, { HeadingProps } from '../../components/Heading';
 import GTM from 'components/ThirdParty/gtm';
 import Categories from 'components/Posts/categories';
-import parseHtml from 'lib/parser';
+import { parseHtml } from 'lib/parser';
 import { GetStaticPropsContext } from 'next';
 import { getNextStaticProps } from '@faustjs/next';
 

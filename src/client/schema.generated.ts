@@ -861,6 +861,8 @@ export interface CreateProductInput {
   bookNowURL?: InputMaybe<Scalars["String"]>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: InputMaybe<Scalars["String"]>;
+  dataSource?: InputMaybe<Scalars["String"]>;
+  datatracID?: InputMaybe<Scalars["String"]>;
   /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
   date?: InputMaybe<Scalars["String"]>;
   displayName: Scalars["String"];
@@ -908,6 +910,7 @@ export interface CreateRateInput {
   /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
   date?: InputMaybe<Scalars["String"]>;
   displayName: Scalars["String"];
+  externalName?: InputMaybe<Scalars["String"]>;
   /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
   menuOrder?: InputMaybe<Scalars["Int"]>;
   minimumBalance?: InputMaybe<Scalars["Float"]>;
@@ -4684,6 +4687,8 @@ export interface UpdateProductInput {
   bookNowURL?: InputMaybe<Scalars["String"]>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: InputMaybe<Scalars["String"]>;
+  dataSource?: InputMaybe<Scalars["String"]>;
+  datatracID?: InputMaybe<Scalars["String"]>;
   /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
   date?: InputMaybe<Scalars["String"]>;
   displayName?: InputMaybe<Scalars["String"]>;
@@ -4737,6 +4742,7 @@ export interface UpdateRateInput {
   /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
   date?: InputMaybe<Scalars["String"]>;
   displayName?: InputMaybe<Scalars["String"]>;
+  externalName?: InputMaybe<Scalars["String"]>;
   /** The ID of the rate object */
   id: Scalars["ID"];
   /** Override the edit lock when another user is editing the post */
@@ -9202,6 +9208,8 @@ export const generatedSchema = {
     authorId: { __type: "ID" },
     bookNowURL: { __type: "String" },
     clientMutationId: { __type: "String" },
+    dataSource: { __type: "String" },
+    datatracID: { __type: "String" },
     date: { __type: "String" },
     displayName: { __type: "String!" },
     loanBasedAmount: { __type: "String" },
@@ -9241,6 +9249,7 @@ export const generatedSchema = {
     clientMutationId: { __type: "String" },
     date: { __type: "String" },
     displayName: { __type: "String!" },
+    externalName: { __type: "String" },
     menuOrder: { __type: "Int" },
     minimumBalance: { __type: "Float" },
     name: { __type: "String!" },
@@ -13499,7 +13508,9 @@ export const generatedSchema = {
     conditionalTags: { __type: "ConditionalTags" },
     contentType: { __type: "ContentNodeToContentTypeConnectionEdge" },
     contentTypeName: { __type: "String!" },
+    dataSource: { __type: "String" },
     databaseId: { __type: "Int!" },
+    datatracID: { __type: "String" },
     date: { __type: "String" },
     dateGmt: { __type: "String" },
     desiredSlug: { __type: "String" },
@@ -13777,6 +13788,7 @@ export const generatedSchema = {
       __type: "ContentNodeToEnqueuedStylesheetConnection",
       __args: { after: "String", before: "String", first: "Int", last: "Int" },
     },
+    externalName: { __type: "String" },
     guid: { __type: "String" },
     id: { __type: "ID!" },
     isContentNode: { __type: "Boolean!" },
@@ -15253,6 +15265,10 @@ export const generatedSchema = {
     writingSettingsDefaultPostFormat: { __type: "String" },
     writingSettingsUseSmilies: { __type: "Boolean" },
   },
+  Shortcode: {
+    __typename: { __type: "String!" },
+    content: { __type: "String" },
+  },
   TablepressTable: {
     __typename: { __type: "String!" },
     apiVersion: { __type: "Int" },
@@ -16017,6 +16033,8 @@ export const generatedSchema = {
     authorId: { __type: "ID" },
     bookNowURL: { __type: "String" },
     clientMutationId: { __type: "String" },
+    dataSource: { __type: "String" },
+    datatracID: { __type: "String" },
     date: { __type: "String" },
     displayName: { __type: "String" },
     id: { __type: "ID!" },
@@ -16059,6 +16077,7 @@ export const generatedSchema = {
     clientMutationId: { __type: "String" },
     date: { __type: "String" },
     displayName: { __type: "String" },
+    externalName: { __type: "String" },
     id: { __type: "ID!" },
     ignoreEditLock: { __type: "Boolean" },
     menuOrder: { __type: "Int" },
@@ -16896,9 +16915,9 @@ export const generatedSchema = {
   },
   WidgetSettings: {
     __typename: { __type: "String!" },
-    applyNow: { __type: "String" },
-    applyNowMinor: { __type: "String" },
-    applyStart: { __type: "String" },
+    applyNow: { __type: "String", __args: { account: "String" } },
+    applyNowMinor: { __type: "String", __args: { account: "String" } },
+    applyStart: { __type: "String", __args: { account: "String" } },
     blogSidebar: { __type: "String" },
     blogtop: { __type: "String" },
     widgetSettings: { __type: "String" },
@@ -17608,6 +17627,7 @@ export const generatedSchema = {
         where: "RootQueryToServiceConnectionWhereArgs",
       },
     },
+    shortcode: { __type: "Shortcode", __args: { shortcode: "String" } },
     tag: { __type: "Tag", __args: { id: "ID!", idType: "TagIdType" } },
     tags: {
       __type: "RootQueryToTagConnection",
@@ -43283,10 +43303,12 @@ export interface Product {
    * The name of the Content Type the node belongs to
    */
   contentTypeName: ScalarsEnums["String"];
+  dataSource?: Maybe<ScalarsEnums["String"]>;
   /**
    * The unique identifier stored in the database
    */
   databaseId: ScalarsEnums["Int"];
+  datatracID?: Maybe<ScalarsEnums["String"]>;
   /**
    * Post publishing date.
    */
@@ -44087,6 +44109,7 @@ export interface Rate {
      */
     last?: Maybe<Scalars["Int"]>;
   }) => Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  externalName?: Maybe<ScalarsEnums["String"]>;
   /**
    * The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table.
    */
@@ -46528,16 +46551,16 @@ export interface SafeSvgSvgIconAttributes {
 }
 
 /**
- * Man&#039;s best friend
+ * Search Data
  */
 export interface Search {
   __typename?: "Search";
   /**
-   * The Breed of the dog
+   * List of Posts
    */
   results?: Maybe<Array<Maybe<Posts>>>;
   /**
-   * The name of the dog
+   * Total Results
    */
   total?: Maybe<ScalarsEnums["String"]>;
 }
@@ -46940,6 +46963,17 @@ export interface Settings {
    * Settings of the the boolean Settings Group
    */
   writingSettingsUseSmilies?: Maybe<ScalarsEnums["Boolean"]>;
+}
+
+/**
+ * Shortcodes
+ */
+export interface Shortcode {
+  __typename?: "Shortcode";
+  /**
+   * Shortcode Content
+   */
+  content?: Maybe<ScalarsEnums["String"]>;
 }
 
 /**
@@ -50437,15 +50471,30 @@ export interface WidgetSettings {
   /**
    * Apply Now Content
    */
-  applyNow?: Maybe<ScalarsEnums["String"]>;
+  applyNow: (args?: {
+    /**
+     * Description for how the argument will impact the field resolver
+     */
+    account?: Maybe<Scalars["String"]>;
+  }) => Maybe<ScalarsEnums["String"]>;
   /**
    * Apply Now Minor Content
    */
-  applyNowMinor?: Maybe<ScalarsEnums["String"]>;
+  applyNowMinor: (args?: {
+    /**
+     * Description for how the argument will impact the field resolver
+     */
+    account?: Maybe<Scalars["String"]>;
+  }) => Maybe<ScalarsEnums["String"]>;
   /**
    * Apply Start Content
    */
-  applyStart?: Maybe<ScalarsEnums["String"]>;
+  applyStart: (args?: {
+    /**
+     * Description for how the argument will impact the field resolver
+     */
+    account?: Maybe<Scalars["String"]>;
+  }) => Maybe<ScalarsEnums["String"]>;
   /**
    * Genesis Blog Sidebar
    */
@@ -51230,6 +51279,9 @@ export interface Query {
     last?: Maybe<Scalars["Int"]>;
     where?: Maybe<RootQueryToServiceConnectionWhereArgs>;
   }) => Maybe<RootQueryToServiceConnection>;
+  shortcode: (args?: {
+    shortcode?: Maybe<Scalars["String"]>;
+  }) => Maybe<Shortcode>;
   tag: (args: { id: Scalars["ID"]; idType?: Maybe<TagIdType> }) => Maybe<Tag>;
   tags: (args?: {
     after?: Maybe<Scalars["String"]>;
@@ -51917,6 +51969,7 @@ export interface SchemaObjectTypes {
   Service: Service;
   ServiceToPreviewConnectionEdge: ServiceToPreviewConnectionEdge;
   Settings: Settings;
+  Shortcode: Shortcode;
   Subscription: Subscription;
   TablepressTable: TablepressTable;
   TablepressTableAttributes: TablepressTableAttributes;
@@ -52645,6 +52698,7 @@ export type SchemaObjectTypesNames =
   | "Service"
   | "ServiceToPreviewConnectionEdge"
   | "Settings"
+  | "Shortcode"
   | "Subscription"
   | "TablepressTable"
   | "TablepressTableAttributes"

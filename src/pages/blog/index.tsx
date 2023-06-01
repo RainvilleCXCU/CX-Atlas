@@ -2,7 +2,7 @@ import { getNextStaticProps } from '@faustjs/next';
 import { client, OrderEnum, PostObjectsConnectionOrderbyEnum } from 'client';
 import { Footer, Header, Pagination, Posts } from 'components';
 import GTM from 'components/ThirdParty/gtm';
-import parseHtml from 'lib/parser';
+import { parseHtml } from 'lib/parser';
 import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';

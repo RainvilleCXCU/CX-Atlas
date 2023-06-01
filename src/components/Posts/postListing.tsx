@@ -1,7 +1,7 @@
 import { MediaItem, Post, client } from "client";
 import Heading from "components/Heading";
 import { HeadingProps } from "components/Heading";
-import parseHtml from "lib/parser";
+import { parseHtml } from "lib/parser";
 import RenderResult from "next/dist/server/render-result";
 import Image from "next/image";
 import Link from "next/link";

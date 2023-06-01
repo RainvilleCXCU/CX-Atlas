@@ -5,7 +5,7 @@ import Header from "./Header/Header";
 import Head from "next/head";
 import GTM from "./ThirdParty/gtm";
 import { client } from "client";
-import parseHtml from "lib/parser";
+import { parseHtml } from "lib/parser";
 
 export default function Layout({ page, children = <></> }) {
 	const { useQuery } = client;

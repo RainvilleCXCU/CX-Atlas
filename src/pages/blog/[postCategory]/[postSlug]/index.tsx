@@ -8,7 +8,7 @@ import GTM from 'components/ThirdParty/gtm';
 import RelatedPosts from 'components/Posts/relatedPosts';
 import Categories from 'components/Posts/categories';
 import Image from 'next/image';
-import parseHtml from 'lib/parser';
+import { parseHtml } from 'lib/parser';
 import Link from 'next/link';
 import { Fragment } from 'react';
 
