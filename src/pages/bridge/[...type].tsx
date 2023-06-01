@@ -20,11 +20,7 @@ export default function Page({ product, type, minor }) {
     const { usePosts, useQuery } = client;
     const { generalSettings, widgetSettings } = useQuery();
 
-    useEffect(() => {
-        document.body.id = 'cx-bridge';
-    });
-    
-    const productInfo = {account: product.title};
+    const productInfo = { account: product.title };
     let widget = ((type && type == 'start') ? widgetSettings?.applyStart(productInfo) : minor == 'no' ? widgetSettings?.applyNow(productInfo) : widgetSettings?.applyNowMinor(productInfo)) || ''
 
     widget = widget.replace(/account=none/gi, `account=${product.title.replace(' ', '-').toLowerCase()}`);
@@ -36,24 +32,26 @@ export default function Page({ product, type, minor }) {
                     {`Apply ${type} : ${product.displayName} - ${generalSettings.title}`}
                 </title>
             </Head>
-            <Header
-                title={generalSettings.title}
-                description={generalSettings.description}
-                showButtons={false}
-                showNavigation={false}
-                showSearch={false}
-                showUtilityNav={false}
-            />
+            <span id='cx-bridge'>
+                <Header
+                    title={generalSettings.title}
+                    description={generalSettings.description}
+                    showButtons={false}
+                    showNavigation={false}
+                    showSearch={false}
+                    showUtilityNav={false}
+                />
 
-            <GTM />
+                <GTM />
 
-            <div id="page" className="container site">
-                <main id="main" className="content content-single">
-                    <article className="entry-content">
-                        {parseHtml(widget)}
-                    </article>
-                </main>
-            </div>
+                <div id="page" className="container site">
+                    <main id="main" className="content content-single">
+                        <article className="entry-content">
+                            {parseHtml(widget)}
+                        </article>
+                    </main>
+                </div>
+            </span>
 
             {/* <Footer copyrightHolder={generalSettings.title} /> */}
         </>
