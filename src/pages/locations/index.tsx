@@ -59,7 +59,7 @@ export default function Page() {
 								<LocationListings data={data} />
 							</div>
 						</div>
-						<LocationDetails data={data} />
+						<LocationDetails />
 					</div>
 				</div>
 			</main>
