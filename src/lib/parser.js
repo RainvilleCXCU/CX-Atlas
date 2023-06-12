@@ -12,6 +12,8 @@ export const parseHtml = (html) => {
         replace: ({ name, attribs, children }) => {
             const isInternalLink = (name === "a" && (internalLinkRegEx.test(attribs.href) || domainRegEx.test(attribs.href) === false ));
             const isFAQItem = attribs && attribs.class && attribs.class.includes("ewd-ufaq-faq-div");
+            const isResponsiveTable = (name === 'table' && attribs && attribs.class && attribs.class.includes("tablepress-responsive"))
+            
 
             if (isInternalLink) {
                 const href = attribs.href;
@@ -19,6 +21,12 @@ export const parseHtml = (html) => {
                 return (
                     <Link href={href.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} {...attributesToProps(attribs)}>{domToReact(children, options)}</Link>
                 );
+            }
+
+            if (isResponsiveTable) {
+                return (
+                    <div className="cx-table--responsive"><table {...attributesToProps(attribs)}>{domToReact(children, options)}</table></div>
+                )
             }
 
             /*if (isFAQItem) {
