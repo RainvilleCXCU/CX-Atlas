@@ -42,7 +42,7 @@ function Alert({ page }: AlertProps): JSX.Element {
 
     return (
         <>
-            {alerts && alerts.map((post, index) => (
+            {alerts && alerts.length > 0 && alerts.map((post, index) => (
                 <div id="alert-banner" key={`${post.name}-${index}`} className={`cx-alert${!alertsOpen.includes(post.id) ? ' hidden' : ''}`}>
                     <button className="cx-alert__close" onClick={closeAlert} data-alert-name={post.id}>&times;</button>
                     <p className="cx-alert__message">{post.message}
