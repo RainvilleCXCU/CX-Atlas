@@ -6,6 +6,7 @@ import Head from "next/head";
 import GTM from "./ThirdParty/gtm";
 import { client } from "client";
 import { parseHtml } from "lib/parser";
+import Alert from "./Alerts/Alert";
 
 export default function Layout({ page, children = <></> }) {
 	const { useQuery } = client;
@@ -19,6 +20,7 @@ export default function Layout({ page, children = <></> }) {
 				</title>
 			</Head>
 			<GTM />
+			<Alert page={page} />
 			<Header
 				title={generalSettings.title}
 				description={generalSettings.description}

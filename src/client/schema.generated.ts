@@ -5676,6 +5676,18 @@ export const generatedSchema = {
     status: { __type: "PostStatusEnum" },
     title: { __type: "String" },
   },
+  CXAlerts: {
+    __typename: { __type: "String!" },
+    active: { __type: "Boolean" },
+    cta_button_text: { __type: "String" },
+    cta_button_url: { __type: "String" },
+    display_pages: { __type: "[String]" },
+    end_date: { __type: "String" },
+    id: { __type: "String" },
+    message: { __type: "String" },
+    name: { __type: "String" },
+    start_date: { __type: "String" },
+  },
   Category: {
     __typename: { __type: "String!" },
     ancestors: {
@@ -17478,6 +17490,7 @@ export const generatedSchema = {
       __type: "Page",
       __args: { asPreview: "Boolean", id: "ID!", idType: "PageIdType" },
     },
+    pageAlerts: { __type: "[CXAlerts]", __args: { postId: "Float" } },
     pageBy: {
       __type: "Page",
       __args: { id: "ID", pageId: "Int", uri: "String" },
@@ -19316,6 +19329,22 @@ export interface CXAlertToRevisionConnectionPageInfo {
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Keys and their values, both cast as strings
+ */
+export interface CXAlerts {
+  __typename?: "CXAlerts";
+  active?: Maybe<ScalarsEnums["Boolean"]>;
+  cta_button_text?: Maybe<ScalarsEnums["String"]>;
+  cta_button_url?: Maybe<ScalarsEnums["String"]>;
+  display_pages?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  end_date?: Maybe<ScalarsEnums["String"]>;
+  id?: Maybe<ScalarsEnums["String"]>;
+  message?: Maybe<ScalarsEnums["String"]>;
+  name?: Maybe<ScalarsEnums["String"]>;
+  start_date?: Maybe<ScalarsEnums["String"]>;
 }
 
 /**
@@ -51137,6 +51166,9 @@ export interface Query {
     id: Scalars["ID"];
     idType?: Maybe<PageIdType>;
   }) => Maybe<Page>;
+  pageAlerts: (args?: {
+    postId?: Maybe<Scalars["Float"]>;
+  }) => Maybe<Array<Maybe<CXAlerts>>>;
   pageBy: (args?: {
     id?: Maybe<Scalars["ID"]>;
     pageId?: Maybe<Scalars["Int"]>;
@@ -51355,6 +51387,7 @@ export interface SchemaObjectTypes {
   CXAlertToRevisionConnection: CXAlertToRevisionConnection;
   CXAlertToRevisionConnectionEdge: CXAlertToRevisionConnectionEdge;
   CXAlertToRevisionConnectionPageInfo: CXAlertToRevisionConnectionPageInfo;
+  CXAlerts: CXAlerts;
   Category: Category;
   CategoryToAncestorsCategoryConnection: CategoryToAncestorsCategoryConnection;
   CategoryToAncestorsCategoryConnectionEdge: CategoryToAncestorsCategoryConnectionEdge;
@@ -52084,6 +52117,7 @@ export type SchemaObjectTypesNames =
   | "CXAlertToRevisionConnection"
   | "CXAlertToRevisionConnectionEdge"
   | "CXAlertToRevisionConnectionPageInfo"
+  | "CXAlerts"
   | "Category"
   | "CategoryToAncestorsCategoryConnection"
   | "CategoryToAncestorsCategoryConnectionEdge"
