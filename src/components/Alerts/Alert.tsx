@@ -8,23 +8,22 @@ export interface AlertProps {
 
 function Alert({ page }: AlertProps): JSX.Element {
     const { useQuery } = client;
-    const alerts = useQuery().pageAlerts({ postId: page.databaseId }) || [];
+    const alerts = useQuery().pageAlerts({ postId: page.databaseId });
 
     const [alertsOpen, setAlertsOpen] = useState([]);
     const [cookies, setCookie, removeCookie] = useCookies(['alertClosed'])
-
+    
 	useEffect(() => {
         console.log(alertsOpen);
-        setAlertsOpen([
-            ...alertsOpen,
-            ...alerts.map(a => {
-                console.log(cookies.alertClosed + ' - ' + a.id)
-                if(cookies.alertClosed && cookies.alertClosed.includes(a.id)){
-                    return false;
-                }
-                return a.id
-            })
-        ])
+        if(alerts.length > 0) {
+            setAlertsOpen([
+                ...alerts.map(a => {
+                    if(cookies.alertClosed && !cookies.alertClosed.includes(a.id)){
+                        return a;
+                    }
+                })
+            ])
+        }
 	}, [alerts]);
 
 	const closeAlert = (e) => {
@@ -35,15 +34,15 @@ function Alert({ page }: AlertProps): JSX.Element {
         setAlertsOpen([
             ...alertsOpen.map(alert => alert !== e.target.dataset.alertName)
         ])
-        setCookie('alertClosed', alertsOpen, {
+        setCookie('alertClosed', alertsOpen.map(a => a.id), {
             expires
         })
 	} 
 
     return (
         <>
-            {alerts && alerts.length > 0 && alerts.map((post, index) => (
-                <div id="alert-banner" key={`${post.name}-${index}`} className={`cx-alert${!alertsOpen.includes(post.id) ? ' hidden' : ''}`}>
+            {/* {alertsOpen && alertsOpen.length > 0 && alertsOpen.map((post, index) => (
+                <div id="alert-banner" key={`${post.name}-${index}`} className={`cx-alert${!alertsOpen.map(a => a.id).includes(post.id) ? ' hidden' : ''}`}>
                     <button className="cx-alert__close" onClick={closeAlert} data-alert-name={post.id}>&times;</button>
                     <p className="cx-alert__message">{post.message}
                         {post.cta_button_text &&
@@ -51,7 +50,7 @@ function Alert({ page }: AlertProps): JSX.Element {
                         }
                     </p>
                 </div>
-            ))}
+            ))} */}
         </>
     );
 }
