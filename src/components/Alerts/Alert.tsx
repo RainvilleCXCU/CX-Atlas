@@ -20,7 +20,7 @@ function Alert({ id }: AlertProps): JSX.Element {
     const [alertsClosed, setAlertsClosed] = useState([]);
     const [loaded, setLoaded] = useState(false);
     const [cookies, setCookie, removeCookie] = useCookies(['alertClosed']);
-    
+
     const showAlert = id => {
         return loaded && !alertsClosed?.includes(id?.toString());
     }
@@ -42,7 +42,7 @@ function Alert({ id }: AlertProps): JSX.Element {
             ]);
         }
         setLoaded(true);
-    }, [cookies.alertClosed])
+    }, [cookies])
 
     return (
         <>
