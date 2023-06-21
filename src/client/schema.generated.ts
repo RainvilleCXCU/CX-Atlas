@@ -5557,16 +5557,21 @@ export const generatedSchema = {
   },
   CXAlert: {
     __typename: { __type: "String!" },
+    active: { __type: "String" },
     cXAlertId: { __type: "Int!" },
     conditionalTags: { __type: "ConditionalTags" },
     contentType: { __type: "ContentNodeToContentTypeConnectionEdge" },
     contentTypeName: { __type: "String!" },
+    ctaButtonText: { __type: "String" },
+    ctaButtonUrl: { __type: "String" },
     databaseId: { __type: "Int!" },
     date: { __type: "String" },
     dateGmt: { __type: "String" },
     desiredSlug: { __type: "String" },
+    displayPages: { __type: "[String]" },
     editingLockedBy: { __type: "ContentNodeToEditLockConnectionEdge" },
     enclosure: { __type: "String" },
+    endDate: { __type: "String" },
     enqueuedScripts: {
       __type: "ContentNodeToEnqueuedScriptConnection",
       __args: { after: "String", before: "String", first: "Int", last: "Int" },
@@ -5585,8 +5590,10 @@ export const generatedSchema = {
     lastEditedBy: { __type: "ContentNodeToEditLastConnectionEdge" },
     link: { __type: "String" },
     menuOrder: { __type: "Int" },
+    message: { __type: "String" },
     modified: { __type: "String" },
     modifiedGmt: { __type: "String" },
+    name: { __type: "String" },
     preview: { __type: "CXAlertToPreviewConnectionEdge" },
     previewRevisionDatabaseId: { __type: "Int" },
     previewRevisionId: { __type: "ID" },
@@ -5602,6 +5609,7 @@ export const generatedSchema = {
       },
     },
     slug: { __type: "String" },
+    startDate: { __type: "String" },
     status: { __type: "String" },
     template: { __type: "ContentTemplate" },
     templates: { __type: "[String]" },
@@ -18987,6 +18995,10 @@ export interface Avatar {
 export interface CXAlert {
   __typename?: "CXAlert";
   /**
+   * Meta for the key active as a string
+   */
+  active?: Maybe<ScalarsEnums["String"]>;
+  /**
    * The id field matches the WP_Post-&gt;ID field.
    * @deprecated Deprecated in favor of the databaseId field
    */
@@ -19004,6 +19016,14 @@ export interface CXAlert {
    */
   contentTypeName: ScalarsEnums["String"];
   /**
+   * Meta for the key cta_button_text as a string
+   */
+  ctaButtonText?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Meta for the key cta_button_url as a string
+   */
+  ctaButtonUrl?: Maybe<ScalarsEnums["String"]>;
+  /**
    * The unique identifier stored in the database
    */
   databaseId: ScalarsEnums["Int"];
@@ -19020,6 +19040,10 @@ export interface CXAlert {
    */
   desiredSlug?: Maybe<ScalarsEnums["String"]>;
   /**
+   * Meta for the key display_pages as a string
+   */
+  displayPages?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
    * If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds
    */
   editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
@@ -19027,6 +19051,10 @@ export interface CXAlert {
    * The RSS enclosure for the object
    */
   enclosure?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Meta for the key end_date as a string
+   */
+  endDate?: Maybe<ScalarsEnums["String"]>;
   /**
    * Connection between the ContentNode type and the EnqueuedScript type
    */
@@ -19110,6 +19138,10 @@ export interface CXAlert {
    */
   menuOrder?: Maybe<ScalarsEnums["Int"]>;
   /**
+   * Meta for the key message as a string
+   */
+  message?: Maybe<ScalarsEnums["String"]>;
+  /**
    * The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time.
    */
   modified?: Maybe<ScalarsEnums["String"]>;
@@ -19117,6 +19149,10 @@ export interface CXAlert {
    * The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT.
    */
   modifiedGmt?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Meta for the key name as a string
+   */
+  name?: Maybe<ScalarsEnums["String"]>;
   /**
    * Connection between the CXAlert type and the CXAlert type
    */
@@ -19162,6 +19198,10 @@ export interface CXAlert {
    * The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
    */
   slug?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Meta for the key start_date as a string
+   */
+  startDate?: Maybe<ScalarsEnums["String"]>;
   /**
    * The current status of the object
    */

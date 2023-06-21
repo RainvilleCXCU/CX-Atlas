@@ -1,56 +1,65 @@
 import React, { useEffect, useState } from "react";
 import { client, Page as PageType } from 'client';
 import { useCookies } from "react-cookie";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { gql, useQuery } from "@apollo/client";
+import apolloClient from "apolloClient";
+import { getNextServerSideProps } from "@faustjs/next";
+import { pageview } from "lib/gtm";
+import { useRouter } from "next/router";
 
 export interface AlertProps {
-    page: PageType | PageType['preview']['node'] | null | undefined;
+    id
 }
 
-function Alert({ page }: AlertProps): JSX.Element {
+function Alert({ id }: AlertProps): JSX.Element {
+
     const { useQuery } = client;
-    const alerts = useQuery().pageAlerts({ postId: page.databaseId });
+    const alerts = useQuery().cXAlerts().edges.map(a => a.node);
 
-    const [alertsOpen, setAlertsOpen] = useState([]);
-    const [cookies, setCookie, removeCookie] = useCookies(['alertClosed'])
+    const [alertsClosed, setAlertsClosed] = useState([]);
+    const [loaded, setLoaded] = useState(false);
+    const [cookies, setCookie, removeCookie] = useCookies(['alertClosed']);
     
-	useEffect(() => {
-        console.log(alertsOpen);
-        if(alerts.length > 0) {
-            setAlertsOpen([
-                ...alerts.map(a => {
-                    if(cookies.alertClosed && !cookies.alertClosed.includes(a.id)){
-                        return a;
-                    }
-                })
-            ])
-        }
-	}, [alerts]);
+    const showAlert = id => {
+        return loaded && !alertsClosed?.includes(id?.toString());
+    }
 
-	const closeAlert = (e) => {
-		e.preventDefault();
+    const closeAlert = (e) => {
+        e.preventDefault();
         let expires = new Date();
         expires.setTime(expires.getTime() + (30 * 24 * 60 * 60 * 1000));
-
-        setAlertsOpen([
-            ...alertsOpen.map(alert => alert !== e.target.dataset.alertName)
-        ])
-        setCookie('alertClosed', alertsOpen.map(a => a.id), {
+        setCookie('alertClosed', e.target.dataset.alertName, {
             expires
-        })
-	} 
+        });
+    }
+
+    useEffect(() => {
+        if(cookies.alertClosed) {
+            setAlertsClosed([
+                ...alertsClosed,
+                cookies.alertClosed
+            ]);
+        }
+        setLoaded(true);
+    }, [cookies.alertClosed])
 
     return (
         <>
-            {/* {alertsOpen && alertsOpen.length > 0 && alertsOpen.map((post, index) => (
-                <div id="alert-banner" key={`${post.name}-${index}`} className={`cx-alert${!alertsOpen.map(a => a.id).includes(post.id) ? ' hidden' : ''}`}>
-                    <button className="cx-alert__close" onClick={closeAlert} data-alert-name={post.id}>&times;</button>
-                    <p className="cx-alert__message">{post.message}
-                        {post.cta_button_text &&
-                        <a href={post.cta_button_url} className="cx-alert__cta">{post.cta_button_text}</a>
-                        }
-                    </p>
-                </div>
-            ))} */}
+            {(alerts && alerts.length > 0) && alerts.map((post, index) => (
+                <React.Fragment key={`${post?.name}-${index}`}>
+                    {post && post.displayPages.includes(id?.toString()) &&
+                        <div id="alert-banner" className={`cx-alert${showAlert(post.databaseId) ? ' show': ' hidden'}`}>
+                            <button className="cx-alert__close" onClick={closeAlert} data-alert-name={post.databaseId}>&times;</button>
+                            <p className="cx-alert__message">{post.message}
+                                {post.ctaButtonText &&
+                                    <a href={post.ctaButtonUrl} className="cx-alert__cta">{post.ctaButtonText}</a>
+                                }
+                            </p>
+                        </div>
+                    }
+                </ React.Fragment>
+            ))}
         </>
     );
 }

@@ -4,17 +4,11 @@ import { client, Page as PageType, PageIdType } from 'client';
 import React from 'react';
 import { useState, useEffect } from 'react';
 import Layout from 'components/layout';
+import apolloClient from 'apolloClient';
+import { gql, useQuery } from '@apollo/client';
 
 export interface PageProps {
   page: PageType | PageType['preview']['node'] | null | undefined;
-}
-
-export function PageComponent({ page }: PageProps) {
-  return (
-    <>
-      <Layout page={page} />
-    </>
-  );
 }
 
 export default function Page() {
@@ -23,8 +17,12 @@ export default function Page() {
     id: '/',
     idType: PageIdType.URI
   });
-
-  return <PageComponent page={page} />;
+  
+  return (
+    <>
+      <Layout page={page} />
+    </>
+  );
 }
 
 export async function getStaticProps(context: GetStaticPropsContext) {

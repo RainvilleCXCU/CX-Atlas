@@ -20,7 +20,7 @@ export default function Layout({ page, children = <></> }) {
 				</title>
 			</Head>
 			<GTM />
-			<Alert page={page} />
+			<Alert id={page.databaseId} />
 			<Header
 				title={generalSettings.title}
 				description={generalSettings.description}
