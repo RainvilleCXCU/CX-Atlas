@@ -17,12 +17,14 @@ function Alert({ id }: AlertProps): JSX.Element {
     const { useQuery } = client;
     const alerts = useQuery().cXAlerts().edges.map(a => a.node);
 
-    const [alertsClosed, setAlertsClosed] = useState(null);
+    const [alertsClosed, setAlertsClosed] = useState([]);
     const [loaded, setLoaded] = useState(false);
     const [cookies, setCookie, removeCookie] = useCookies(['alertClosed']);
 
     const showAlert = id => {
-        return loaded && alertsClosed && !alertsClosed?.includes(id?.toString());
+        console.log('Show Alert');
+        console.log(alertsClosed);
+        return loaded && !alertsClosed?.includes(id?.toString());
     }
 
     const closeAlert = (e) => {
@@ -37,12 +39,14 @@ function Alert({ id }: AlertProps): JSX.Element {
     useEffect(() => {
         if(cookies.alertClosed) {
             setAlertsClosed([
-                ...alertsClosed || [],
+                ...alertsClosed,
                 cookies.alertClosed
             ]);
         }
+        console.log('Cookies');
+        console.log(cookies.alertClosed);
         setLoaded(true);
-    }, [cookies])
+    }, [cookies.alertClosed])
 
     return (
         <>
