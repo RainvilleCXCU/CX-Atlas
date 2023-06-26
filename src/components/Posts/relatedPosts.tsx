@@ -6,7 +6,6 @@ interface RelatedPostsProps {
 	id: string;
     title?: string;
     className?: string;
-    relatedPosts: Array<Post>
 }
 
 const RelatedPosts: React.FC<RelatedPostsProps> = ({ id, title = "Related Posts", className }) => {

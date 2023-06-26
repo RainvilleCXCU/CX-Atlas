@@ -49,7 +49,7 @@ export function PostComponent({ post }: PostProps) {
                 parseHtml(blogSidebar)
               }
               {post.databaseId &&
-                <RelatedPosts id={post.databaseId.toString()} />
+                <RelatedPosts id={post.databaseId?.toString()} />
               }
               <Categories />
             </aside>
