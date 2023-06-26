@@ -26,8 +26,8 @@ function Alert({ id }: AlertProps): JSX.Element {
         console.log(alertsClosed);
         console.log(`Loaded: ${JSON.stringify(loaded)}`);
         console.log(id?.toString());
-        console.log(loaded && alertsClosed.indexOf(id?.toString()) < 0);
-        return loaded && alertsClosed.indexOf(id?.toString()) < 0;
+        console.log(loaded && id !== undefined && alertsClosed.indexOf(id?.toString()) < 0);
+        return loaded && id !== undefined && alertsClosed.indexOf(id?.toString()) < 0;
     }
 
     const closeAlert = (e) => {
