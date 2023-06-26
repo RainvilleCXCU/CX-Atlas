@@ -24,6 +24,7 @@ function Alert({ id }: AlertProps): JSX.Element {
     const showAlert = id => {
         console.log('Show Alert');
         console.log(alertsClosed);
+        console.log(`Loaded: ${JSON.stringify(loaded)}`);
         return loaded && !alertsClosed?.includes(id?.toString());
     }
 
@@ -45,7 +46,7 @@ function Alert({ id }: AlertProps): JSX.Element {
         }
         console.log('Cookies');
         console.log(cookies.alertClosed);
-        setLoaded(true);
+        setLoaded(cookies.alertClosed !== undefined);
     }, [cookies.alertClosed])
 
     return (
