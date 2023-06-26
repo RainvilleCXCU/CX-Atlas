@@ -20,9 +20,9 @@ function SearchListing({ id, title, content, url = '', featuredImage, categories
         <article id={`post-${id}`} className="post" aria-label={title}>
             <div className="post-content">
 
-                {featuredImage &&
+                {featuredImage && featuredImage.node?.sourceUrl() &&
                     <div className="cx-search__thumbnail">
-                        <Image src={featuredImage.node?.sourceUrl()?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={featuredImage.node.mediaDetails.width} height={featuredImage.node?.mediaDetails.height} />
+                        <Image src={featuredImage.node?.sourceUrl()?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={featuredImage.node.mediaDetails.width || '100'} height={featuredImage.node?.mediaDetails.height || '100'} />
                     </div>
                 }
                 <div className="cx-search__content">
@@ -32,7 +32,9 @@ function SearchListing({ id, title, content, url = '', featuredImage, categories
                         {categories &&
                             <div className="categories">
                                 {categories.map((a, i) => (
-                                    <><Link href={a.uri || ''}>{a.name}</Link>{i != categories.length - 1 ? ', ' : ""}</>
+                                    <React.Fragment key={`post-category-${a.name?.replace(' ', '_')}`}>
+                                        <Link href={a.uri || ''}>{a.name}</Link>{i != categories.length - 1 ? ', ' : ""}
+                                    </React.Fragment>
                                 ))}
                             </div>
                         }

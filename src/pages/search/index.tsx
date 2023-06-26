@@ -12,6 +12,7 @@ import { parseHtml } from 'lib/parser';
 import { GetStaticPropsContext } from 'next';
 import { getNextStaticProps } from '@faustjs/next';
 import SearchListing from 'components/Search/Listing';
+import SearchBar from 'components/Search/SearchBar';
 
 const POSTS_PER_PAGE = 6;
 
@@ -51,20 +52,19 @@ export default function Page() {
 
       <GTM />
 
-      <main id="main" className="content content-index">
+      <main id="main" className="content content-index container">
         <div id="post-wrap" className='cx-search__wrapper search'>
           <div className='cx-search__results'>
+            <SearchBar />
             {results && results.map((post) => (
-              <>
               <SearchListing
-                key={post.id ?? ''}
+                key={`post-listing=${post.id}` ?? ''}
                 id={`post-${post.id}`}
                 title={post.title()}
                 url={post.uri}
                 content={post.excerpt()}
                 categories={post.categories()?.nodes}
                 featuredImage={post.featuredImage} />
-                </>
             ))}
 
             <Pagination currentPage={currentPage} totalResults={parseInt(total)} basePath={`/search`} perPage={POSTS_PER_PAGE} querys={`?s=${search}`} />

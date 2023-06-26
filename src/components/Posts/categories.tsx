@@ -1,4 +1,5 @@
 import { client } from "client";
+import Heading from "components/Heading";
 import Link from "next/link";
 import React, { Fragment } from "react";
 
@@ -11,7 +12,7 @@ const Categories: React.FC<CategoriesProps> = ({ title = 'Categories' }) => {
     const categories = useQuery().categories().nodes;
 	return (
         <>
-            <h4>{ title }</h4>
+            <Heading level="h3">{ title }</Heading>
             <ul className='categories'>
             {categories.map((category, index) => (
                 <Fragment key={`category-${index}-${category.name}`}>
