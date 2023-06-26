@@ -13504,13 +13504,6 @@ export const generatedSchema = {
     viewItem: { __type: "String" },
     viewItems: { __type: "String" },
   },
-  Posts: {
-    __typename: { __type: "String!" },
-    excerpt: { __type: "String" },
-    id: { __type: "String" },
-    title: { __type: "String" },
-    url: { __type: "String" },
-  },
   Previewable: {
     __typename: { __type: "String!" },
     isPreview: { __type: "Boolean" },
@@ -15162,7 +15155,7 @@ export const generatedSchema = {
   },
   Search: {
     __typename: { __type: "String!" },
-    results: { __type: "[Posts]" },
+    results: { __type: "[Post]" },
     total: { __type: "String" },
   },
   SendPasswordResetEmailInput: {
@@ -17615,7 +17608,7 @@ export const generatedSchema = {
       __type: "RootQueryToEnqueuedStylesheetConnection",
       __args: { after: "String", before: "String", first: "Int", last: "Int" },
     },
-    relatedPosts: { __type: "[Posts]", __args: { postId: "String" } },
+    relatedPosts: { __type: "[Post]", __args: { postId: "String" } },
     revisions: {
       __type: "RootQueryToRevisionsConnection",
       __args: {
@@ -43303,17 +43296,6 @@ export interface PostTypeLabelDetails {
 }
 
 /**
- * Keys and their values, both cast as strings
- */
-export interface Posts {
-  __typename?: "Posts";
-  excerpt?: Maybe<ScalarsEnums["String"]>;
-  id?: Maybe<ScalarsEnums["String"]>;
-  title?: Maybe<ScalarsEnums["String"]>;
-  url?: Maybe<ScalarsEnums["String"]>;
-}
-
-/**
  * Nodes that can be seen in a preview (unpublished) state.
  */
 export interface Previewable {
@@ -46627,7 +46609,7 @@ export interface Search {
   /**
    * List of Posts
    */
-  results?: Maybe<Array<Maybe<Posts>>>;
+  results?: Maybe<Array<Maybe<Post>>>;
   /**
    * Total Results
    */
@@ -51320,7 +51302,7 @@ export interface Query {
   }) => Maybe<RootQueryToEnqueuedStylesheetConnection>;
   relatedPosts: (args?: {
     postId?: Maybe<Scalars["String"]>;
-  }) => Maybe<Array<Maybe<Posts>>>;
+  }) => Maybe<Array<Maybe<Post>>>;
   revisions: (args?: {
     after?: Maybe<Scalars["String"]>;
     before?: Maybe<Scalars["String"]>;
@@ -51915,7 +51897,6 @@ export interface SchemaObjectTypes {
   PostToTermNodeConnectionEdge: PostToTermNodeConnectionEdge;
   PostToTermNodeConnectionPageInfo: PostToTermNodeConnectionPageInfo;
   PostTypeLabelDetails: PostTypeLabelDetails;
-  Posts: Posts;
   Product: Product;
   ProductName: ProductName;
   ProductNameToContentNodeConnection: ProductNameToContentNodeConnection;
@@ -52645,7 +52626,6 @@ export type SchemaObjectTypesNames =
   | "PostToTermNodeConnectionEdge"
   | "PostToTermNodeConnectionPageInfo"
   | "PostTypeLabelDetails"
-  | "Posts"
   | "Product"
   | "ProductName"
   | "ProductNameToContentNodeConnection"
