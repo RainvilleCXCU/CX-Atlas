@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { client, Page as PageType } from 'client';
 import { useCookies } from "react-cookie";
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
-import { gql, useQuery } from "@apollo/client";
-import apolloClient from "apolloClient";
-import { getNextServerSideProps } from "@faustjs/next";
-import { pageview } from "lib/gtm";
-import { useRouter } from "next/router";
 
 export interface AlertProps {
     id
@@ -22,11 +16,6 @@ function Alert({ id }: AlertProps): JSX.Element {
     const [cookies, setCookie, removeCookie] = useCookies(['alertClosed']);
 
     const showAlert = id => {
-        console.log('Show Alert');
-        console.log(alertsClosed);
-        console.log(`Loaded: ${JSON.stringify(loaded)}`);
-        console.log(id?.toString());
-        console.log(loaded && id !== undefined && alertsClosed.indexOf(id?.toString()) < 0);
         return loaded && id !== undefined && alertsClosed.indexOf(id?.toString()) < 0;
     }
 
@@ -46,8 +35,6 @@ function Alert({ id }: AlertProps): JSX.Element {
                 cookies.alertClosed
             ]);
         }
-        console.log('Cookies');
-        console.log(cookies.alertClosed);
         setLoaded(true);
     }, [cookies.alertClosed])
 
