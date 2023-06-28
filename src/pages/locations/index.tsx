@@ -63,7 +63,7 @@ export default function Page({locationSettings}) {
 					</Container>
 					<div id="wpsl-wrap" className="wpsl-wrap wpsl-store-below wpsl-default-filters">
 						<div className="wpsl-search wpsl-clearfix wpsl-checkboxes-enabled wpsl-geolocation-run"></div>
-						<Wrapper apiKey={"AIzaSyBkwlFDeIrWrP3N6CVboRjeT1v9iUPPnb0"}>
+						<Wrapper apiKey={locationSettings.apiBrowserKey}>
 							<Map lat={45} lng={-89} locationSettings={locationSettings} />
 						</Wrapper>
 						{/* <div id="wpsl-gmap" className="wpsl-gmap-canvas" style={{ position: "relative", overflow: "hidden" }}></div> */}
