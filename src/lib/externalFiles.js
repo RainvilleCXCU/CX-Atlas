@@ -27,7 +27,7 @@ export const files = {
         },
         {
             id: 'styleguide',
-            src: `/wp-content/themes/CXCU/assets/${process.env.styleguideVersion || '0.6.34'}/cxcuatlas.css`
+            src: `/wp-content/themes/CXCU/assets/${process.env.styleguideVersion || '0.6.35'}/cxcuatlas.css`
         }
     ]
 }

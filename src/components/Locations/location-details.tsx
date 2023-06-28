@@ -15,6 +15,7 @@ export interface Props {
   lobby_hours_html?: string;
   drive_thru_hours_html?: string;
   services?: string;
+  showDetails?: boolean
 }
 
 function LocationDetails({
@@ -27,6 +28,7 @@ function LocationDetails({
   lat,
   lng,
   distance,
+  showDetails = false,
   store,
   lobby_hours_html,
   drive_thru_hours_html,
@@ -34,7 +36,7 @@ function LocationDetails({
 
   return (
 
-    <div id="wpsl-branch-details" className="">
+    <div id="wpsl-branch-details" className={`${showDetails ? '' : 'cx-hidden'}`}>
       <div id="wpsl-store">
         <div className="cx-location-details__title cx-h4">
           <button

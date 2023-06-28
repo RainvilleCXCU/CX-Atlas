@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { MenuItem } from 'client';
 import { client, MenuLocationEnum } from 'client';
 import React, { useEffect, useState } from 'react';
+import Heading from 'components/Heading';
 
 interface HeaderNavigationProps {
     device: string;
@@ -13,6 +14,7 @@ interface HeaderNavigationProps {
 function DesktopHeaderNavigation(props: HeaderNavigationProps) {
     const [isNavExpanded, setIsNavExpanded] = useState(false);
     const [navSelected, setNavSelected] = useState('');
+    const resourcesRegEx = new RegExp(/resources/, 'i');
     return (
         <ul className="navbar-nav me-auto mb-2 mb-lg-0 cx-nav__navbar">
             {props.menuItems?.map((link, index) => {
@@ -41,28 +43,64 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                     setNavSelected('');
                                 }}>
                                 <div className="cx-nav__dropdown-menu-container">
+                                    <div className='cx-nav__dropdown-menu-container__menu-items'>
+                                        {link?.childItems()?.nodes?.map((title, index) => {
+                                            return (
+                                                <>
+                                                { !resourcesRegEx.test(title.uri) &&
+                                                    <li className="cx-nav__dropdown-menu-section" key={`${title.id}-${title.databaseId}`}>
+                                                        {
+                                                            title.label != '[column]' &&
+                                                            <Heading level='h2' className='cx-h5 no-margin--top'>{title.label}</Heading>
+                                                        }
+                                                        <ul className="cx-nav__dropdown-menu-list" key={`list-${title.id}-${title.databaseId}`}>
+                                                            {title?.childItems()?.nodes?.map((navLink, index) => {
+                                                                return (
+                                                                    <li key={`${navLink.id}-${navLink.databaseId}`}>
+                                                                        <Link href={navLink.uri || ''} passHref prefetch={false} className='dropdown-item cx-nav__dropdown-item'
+                                                                            onClick={() => {
+                                                                                setIsNavExpanded(!isNavExpanded);
+                                                                                setNavSelected('');
+                                                                            }}>{navLink.label}
+                                                                        </Link>
+                                                                    </li>
+                                                                );
+                                                            })}
+                                                        </ul>
+                                                    </li>
+                                                }
+                                                </>
+                                            );
+                                        })}
+                                    </div>
                                     {link?.childItems()?.nodes?.map((title, index) => {
                                         return (
-                                            <li className="cx-nav__dropdown-menu-section" key={`${title.id}-${title.databaseId}`}>
-                                                {
-                                                    title.label != '[column]' &&
-                                                    <h2>{title.label}</h2>
-                                                }
-                                                <ul className="cx-nav__dropdown-menu-list" key={`list-${title.id}-${title.databaseId}`}>
-                                                    {title?.childItems()?.nodes?.map((navLink, index) => {
-                                                        return (
-                                                            <li key={`${navLink.id}-${navLink.databaseId}`}>
-                                                                <Link href={navLink.uri || ''} passHref prefetch={false} className='dropdown-item cx-nav__dropdown-item'
-                                                                    onClick={() => {
-                                                                        setIsNavExpanded(!isNavExpanded);
-                                                                        setNavSelected('');
-                                                                    }}>{navLink.label}
-                                                                </Link>
-                                                            </li>
-                                                        );
-                                                    })}
-                                                </ul>
-                                            </li>
+                                            <>
+                                            { resourcesRegEx.test(title.uri) &&
+                                                <div className='cx-nav__resources'>
+                                                    <li className="cx-nav__dropdown-menu-section" key={`${title.id}-${title.databaseId}`}>
+                                                        {
+                                                            title.label != '[column]' &&
+                                                            <Heading level='h2' className='cx-h5 no-margin--top'>{title.label}</Heading>
+                                                        }
+                                                        <ul className="cx-nav__dropdown-menu-list" key={`list-${title.id}-${title.databaseId}`}>
+                                                            {title?.childItems()?.nodes?.map((navLink, index) => {
+                                                                return (
+                                                                    <li key={`${navLink.id}-${navLink.databaseId}`}>
+                                                                        <Link href={navLink.uri || ''} passHref prefetch={false} className='dropdown-item cx-nav__dropdown-item'
+                                                                            onClick={() => {
+                                                                                setIsNavExpanded(!isNavExpanded);
+                                                                                setNavSelected('');
+                                                                            }}>{navLink.label}
+                                                                        </Link>
+                                                                    </li>
+                                                                );
+                                                            })}
+                                                        </ul>
+                                                    </li>
+                                                </div>
+                                            }
+                                            </>
                                         );
                                     })}
                                 </div>

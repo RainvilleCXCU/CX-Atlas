@@ -1,5 +1,6 @@
 import React from "react";
 import { Store } from "../context/store";
+import { client } from "client";
 var { useState } = React;
 const Index = (props) => { 
     const [state, setState] = useState({
