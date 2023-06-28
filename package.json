@@ -17,8 +17,6 @@
     "@apollo/client": "^3.7.14",
     "@faustjs/core": "^0.15.10",
     "@faustjs/next": "^0.15.10",
-    "@googlemaps/js-api-loader": "^1.16.2",
-    "@googlemaps/react-wrapper": "^1.1.35",
     "@wordpress/base-styles": "^4.24.0",
     "@wordpress/block-library": "^8.9.0",
     "next": "^13.3.4",
@@ -29,6 +27,8 @@
     "underscore": "^1.13.6"
   },
   "devDependencies": {
+    "@googlemaps/js-api-loader": "^1.16.2",
+    "@googlemaps/react-wrapper": "^1.1.35",
     "@gqty/cli": "^3.4.0-alpha-e8dd298d.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
