@@ -11,7 +11,7 @@ import Alert from "./Alerts/Alert";
 export default function Layout({ page, children = <></> }) {
 	const { useQuery } = client;
 	const generalSettings = useQuery().generalSettings;
-	const seo = page.seo;
+	const seo = page?.seo;
 
 	return (
 		<>
