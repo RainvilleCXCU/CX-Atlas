@@ -17,22 +17,22 @@ export default function Layout({ page, children = <></> }) {
 		<>
 			<SEO
 				title={page?.title()}
-				metaDesc={seo.metaDesc}
-				canonicalURL={seo.canonical ? seo.canonical : page?.link} //I'm unsure about this. Changing the canonical URL in Yoast doesn't seem to do anything...
-				ogLocale={seo.locale} // Not sure where this is in the page object
-				ogType={seo.opengraphType}
-				ogTitle={seo.title}
-				ogDescription={seo.opengraphDescription}
-				ogURL={seo.opengraphUrl}
-				ogSite_Name={seo.opengraphSiteName}
-				modified_time={seo.opengraphModifiedTime}
-				ogImage={seo.opengraphImage?.mediaItemUrl}
-				ogImageWidth={seo.opengraphImage?.mediaDetails.width}
-				ogImageHeight={seo.opengraphImage?.mediaDetails.height}
-				ogImageType={seo.opengraphImage?.mimeType}
+				metaDesc={seo?.metaDesc}
+				canonicalURL={seo?.canonical ? seo?.canonical : page?.link} //I'm unsure about this. Changing the canonical URL in Yoast doesn't seem to do anything...
+				ogLocale={seo?.locale} // Not sure where this is in the page object
+				ogType={seo?.opengraphType}
+				ogTitle={seo?.title}
+				ogDescription={seo?.opengraphDescription}
+				ogURL={seo?.opengraphUrl}
+				ogSite_Name={seo?.opengraphSiteName}
+				modified_time={seo?.opengraphModifiedTime}
+				ogImage={seo?.opengraphImage?.mediaItemUrl}
+				ogImageWidth={seo?.opengraphImage?.mediaDetails.width}
+				ogImageHeight={seo?.opengraphImage?.mediaDetails.height}
+				ogImageType={seo?.opengraphImage?.mimeType}
 				twitter_card={"summary_large_image"} // Not sure where this is in the page object
 				twitter_label1={"Est. reading time"} // Not sure where this is in the page object
-				twitter_data1={seo.readingTime + " minutes"}
+				twitter_data1={seo?.readingTime + " minutes"}
 			/>
 			<GTM />
 			<Alert id={page.databaseId} />
