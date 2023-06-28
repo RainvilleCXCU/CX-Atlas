@@ -111,8 +111,6 @@ export async function getStaticProps(context: GetStaticPropsContext) {
           }
       `,
     });
-	console.log('Get Static');
-	console.log(JSON.stringify(data));
 	return getNextStaticProps(context, {
 		Page,
 		client,
