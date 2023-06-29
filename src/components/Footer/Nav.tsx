@@ -22,7 +22,7 @@ function DesktopMenu(props: FooterMenuProps) {
                                 </h2>
                                 {link.childItems()?.nodes?.map((title, index) => {
                                     return(
-                                        <ul className="cx-nav__dropdown-menu-list">
+                                        <ul className="cx-nav__dropdown-menu-list" key={`desktop-menu${title.label}-${index}`}>
                                         {title.childItems()?.nodes?.map((title, index) => {
                                             return(
                                                 <li key={`link-${title.label}-${index}`}>
@@ -77,7 +77,7 @@ function MobileMenu(props: FooterMenuProps) {
                                     <div id={`cx-acc-collapse${link.label?.replace(' ', '_')}`} className={`accordion-collapse collapse${navsSelected.includes(link.label?.replace(' ', '_')) ? ' show' : ''}`} aria-labelledby={`cx-acc-heading${link.label?.replace(' ', '_')}`}>
                                         {link.childItems()?.nodes?.map((title, index) => {
                                             return(
-                                                <ul className="accordion-body cx-nav__accordion-body">
+                                                <ul className="accordion-body cx-nav__accordion-body" key={`accordion-body-${index}`}>
                                                     <li className="cx-nav__accordion-section-no-heading">
                                                         <ul className="cx-nav__accordion-list">
                                                             {title.childItems()?.nodes?.map((title, index) => {
@@ -85,7 +85,7 @@ function MobileMenu(props: FooterMenuProps) {
                                                                     <li key={`link-${title.label}-${index}`}>
                                                                         <Link href={title.uri || ''} className="accordion-item cx-nav__accordion-item-link"
                                                                         onClick={() => {
-                                                                            toggleSelected(link.label?.replace(' ', '_'));
+                                                                            setNavsSelected([]);
                                                                         }}>
                                                                             {title.label}
                                                                         </Link>

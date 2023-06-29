@@ -10,9 +10,11 @@ export default function UtilityNav({ children = <></> }) {
         <>
             <ul className="cx-header__util-nav-list">
                 <li>
-                    <SearchBar device="desktop" />
+                    <SearchBar device="desktop" navOpen setNavOpen />
                 </li>
-                <UtilityNavLinks device="desktop" />
+                <li>
+                    <UtilityNavLinks />
+                </li>
             </ul>
         </>
     )

@@ -2,6 +2,9 @@ import React from 'react';
 import { client } from 'client';
 import { Header, Footer } from '../components';
 import GTM from 'components/ThirdParty/gtm';
+import Head from 'next/head';
+import { GetStaticPropsContext } from 'next';
+import { getNextStaticProps } from '@faustjs/next';
 
 export default function Page(): JSX.Element {
   const { useQuery } = client;
@@ -9,6 +12,11 @@ export default function Page(): JSX.Element {
 
   return (
     <>
+      <Head>
+        <title>
+          {`Page not found - ${generalSettings.description}`}
+        </title>
+      </Head>
       <GTM />
       <Header
         title={generalSettings?.title}
@@ -29,4 +37,11 @@ export default function Page(): JSX.Element {
       <Footer copyrightHolder={generalSettings?.title} />
     </>
   );
+}
+
+export async function getStaticProps(context: GetStaticPropsContext) {
+  return getNextStaticProps(context, {
+    Page,
+    client,
+  });
 }

@@ -1,0 +1,16 @@
+.cx-table {
+    &--responsive {
+        position: relative;
+        display: block;
+        width: 100%;
+        overflow-x: scroll;
+    }
+
+    .tablepress-responsive {
+        max-width: 1350px;
+        min-width: 290px;
+        * {
+            word-break: normal;
+        }
+    }
+}

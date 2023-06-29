@@ -1,0 +1,44 @@
+@media (max-width: 991px) {
+    html {
+        &.nav-open {
+            overflow: hidden;
+        }
+    }
+    .cx-nav__collapse {
+        &.offcanvas {
+            visibility: visible;
+            top: 80px;
+            position: absolute;
+            height: 100vh;
+        }
+    }
+    .cx-header {
+        &.nav-open {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden scroll;
+            background: transparent;
+        }
+        .cx-header__mobile {
+            .cx-inner-wrapper {
+                z-index: 100001;
+                background: #fbfaf8;
+                min-height: 80px;
+            }
+            .cx-nav__navbar {
+                background-color: #FFF;
+            }
+        }
+        .cx-search-mobile {
+            top: 80px;
+        }
+    }
+    #searchModal {
+        // Update when tranistioned over
+        background: -webkit-linear-gradient(top, transparent 80px, rgba(0, 0, 0, 0.5) 80px) rgba(0,0,0,0) !important;
+        pointer-events: none;
+    }
+    .cx-search-mobile__body {
+        transform: translateY(-80px);
+    }
+}

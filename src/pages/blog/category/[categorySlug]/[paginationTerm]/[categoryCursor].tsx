@@ -1,0 +1,27 @@
+import { GetStaticPropsContext } from 'next';
+import Page from 'pages/blog/category/[categorySlug]';
+import { getNextStaticProps } from '@faustjs/next';
+import { client } from 'client';
+
+export default Page;
+
+export async function getStaticProps(context: GetStaticPropsContext) {
+  const { paginationTerm } = context.params;
+  if (!(paginationTerm === 'page')) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return getNextStaticProps(context, {
+    Page,
+    client,
+  });
+}
+
+export function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}

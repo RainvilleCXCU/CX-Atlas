@@ -1,0 +1,7 @@
+
+#alert-banner {
+    display: none;
+    &.show {
+        display: flex;
+    }
+}

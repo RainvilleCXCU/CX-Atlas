@@ -1,12 +1,12 @@
 import 'faust.config';
 import { FaustProvider } from '@faustjs/next';
-//import 'normalize.css/normalize.css';
 import React, { useEffect } from 'react';
-//import 'scss/main.scss';
+import Provider from '../provider/store';
 import { client } from 'client';
 import { useRouter } from 'next/router'
 import type { AppProps } from 'next/app';
 import { pageview } from '../lib/gtm';
+import 'scss/main.scss';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
 
@@ -20,7 +20,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <FaustProvider client={client} pageProps={pageProps}>
-        <Component {...pageProps} />
+        <Provider>
+          <Component {...pageProps} />
+        </Provider>
       </FaustProvider>
     </>
   );

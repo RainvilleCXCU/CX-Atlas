@@ -5,7 +5,7 @@
 import com.connexuscu.CICD
 
 def gitHubDeploy(BRANCH) {
-    sh "git add ."
+    sh "git add --all ."
     sh "ls"
     sh "git commit -m '${env.BUILD_NUMBER} Updates'"
     sh "git push -v origin ${BRANCH}"
@@ -119,6 +119,7 @@ pipeline {
                                     )
                                 }
                             }
+                            sh "rm -rf ${WORKSPACE}/CX-Atlas/*"
                             sh "rsync -r --exclude '${WORKSPACE}/CX-Atlas/*' ${WORKSPACE}/* ${WORKSPACE}/CX-Atlas"
                             dir('CX-Atlas') {
                                 try {
@@ -162,6 +163,7 @@ pipeline {
                                     )
                                 }
                             }
+                            sh "rm -rf ${WORKSPACE}/CX-Atlas/*"
                             sh "rsync -r --exclude '${WORKSPACE}/CX-Atlas/*' ${WORKSPACE}/* ${WORKSPACE}/CX-Atlas"
                             dir('CX-Atlas') {
                                 try {
@@ -191,6 +193,7 @@ pipeline {
                         echo "prod deploy!"
                         try {
                             sh "git clone git@github.com:RainvilleCXCU/CX-Atlas.git"
+                            sh "rm -rf ${WORKSPACE}/CX-Atlas/*"
                             sh "rsync -r --exclude '${WORKSPACE}/CX-Atlas/*' ${WORKSPACE}/* ${WORKSPACE}/CX-Atlas"
                             dir('CX-Atlas') {
                                 try {

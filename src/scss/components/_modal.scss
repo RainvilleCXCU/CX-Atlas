@@ -1,0 +1,9 @@
+.modal.cx-modal {
+    display: block;
+    visibility: hidden;
+    transition: visibility 0s ease .35s;
+    &.show {
+        transition: none;
+        visibility: visible;
+    }
+}
