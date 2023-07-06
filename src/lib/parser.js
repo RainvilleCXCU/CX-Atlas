@@ -2,6 +2,7 @@
 import parse, { domToReact, attributesToProps } from "html-react-parser";
 import { client } from 'client';
 import Link from "next/link";
+import FAQ from "components/FAQs/faq";
 
 export const parseHtml = (html) => {
     const domainRegEx = new RegExp(/(http)/, 'i');
@@ -21,6 +22,12 @@ export const parseHtml = (html) => {
                 return (
                     <Link href={href.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} {...attributesToProps(attribs)}>{domToReact(children, options)}</Link>
                 );
+            }
+
+            if(isFAQItem) {
+                return (
+                    <FAQ id={attribs['data-post_id']} />
+                )
             }
 
             if (isResponsiveTable) {

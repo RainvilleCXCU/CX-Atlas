@@ -4153,6 +4153,12 @@ export interface RootQueryToUserConnectionWhereArgs {
   >;
 }
 
+/** Types of cards */
+export enum SEOCardType {
+  summary = "summary",
+  summary_large_image = "summary_large_image",
+}
+
 /** Input for the sendPasswordResetEmail mutation. */
 export interface SendPasswordResetEmailInput {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -5525,6 +5531,7 @@ export const scalarsEnumsHash: import("gqty").ScalarsEnumsHash = {
   ProductNameIdType: true,
   RateIdType: true,
   RelationEnum: true,
+  SEOCardType: true,
   ServiceIdType: true,
   String: true,
   TagIdType: true,
@@ -5609,6 +5616,7 @@ export const generatedSchema = {
         where: "CXAlertToRevisionConnectionWhereArgs",
       },
     },
+    seo: { __type: "PostTypeSEO" },
     slug: { __type: "String" },
     startDate: { __type: "String" },
     status: { __type: "String" },
@@ -5639,6 +5647,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$CXAlertConnectionPageInfo!" },
   },
@@ -5664,6 +5673,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   CXAlertToRevisionConnectionWhereArgs: {
@@ -5755,6 +5765,7 @@ export const generatedSchema = {
         where: "CategoryToPostConnectionWhereArgs",
       },
     },
+    seo: { __type: "TaxonomySEO" },
     slug: { __type: "String" },
     taxonomy: { __type: "CategoryToTaxonomyConnectionEdge" },
     taxonomyName: { __type: "String" },
@@ -5782,6 +5793,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$CategoryConnectionPageInfo!" },
   },
@@ -5802,6 +5814,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   CategoryToCategoryConnection: {
@@ -5821,6 +5834,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   CategoryToCategoryConnectionWhereArgs: {
@@ -5863,6 +5877,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   CategoryToContentNodeConnectionWhereArgs: {
@@ -5907,6 +5922,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   CategoryToPostConnectionWhereArgs: {
@@ -6020,6 +6036,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$CommentConnectionPageInfo!" },
   },
@@ -6040,6 +6057,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   CommentToCommentConnectionWhereArgs: {
@@ -6206,6 +6224,7 @@ export const generatedSchema = {
     preview: { __type: "ContactToPreviewConnectionEdge" },
     previewRevisionDatabaseId: { __type: "Int" },
     previewRevisionId: { __type: "ID" },
+    seo: { __type: "PostTypeSEO" },
     slug: { __type: "String" },
     status: { __type: "String" },
     template: { __type: "ContentTemplate" },
@@ -6237,6 +6256,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$ContactConnectionPageInfo!" },
   },
@@ -6276,6 +6296,7 @@ export const generatedSchema = {
     modifiedGmt: { __type: "String" },
     previewRevisionDatabaseId: { __type: "Int" },
     previewRevisionId: { __type: "ID" },
+    seo: { __type: "PostTypeSEO" },
     slug: { __type: "String" },
     status: { __type: "String" },
     template: { __type: "ContentTemplate" },
@@ -6302,6 +6323,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$ContentNodeConnectionPageInfo!" },
   },
@@ -6338,6 +6360,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   ContentNodeToEnqueuedStylesheetConnection: {
@@ -6357,6 +6380,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   ContentTemplate: {
@@ -6432,6 +6456,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$ContentTypeConnectionPageInfo!" },
   },
@@ -6452,6 +6477,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   ContentTypeToContentNodeConnectionWhereArgs: {
@@ -6491,6 +6517,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   CoreArchives: {
@@ -9639,6 +9666,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$EnqueuedScriptConnectionPageInfo!" },
   },
@@ -9671,8 +9699,15 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$EnqueuedStylesheetConnectionPageInfo!" },
+  },
+  FAQs: {
+    __typename: { __type: "String!" },
+    content: { __type: "String" },
+    id: { __type: "String" },
+    title: { __type: "String" },
   },
   FilebirdBlockFilebirdGallery: {
     __typename: { __type: "String!" },
@@ -10983,6 +11018,7 @@ export const generatedSchema = {
     preview: { __type: "GraphqlDocumentToPreviewConnectionEdge" },
     previewRevisionDatabaseId: { __type: "Int" },
     previewRevisionId: { __type: "ID" },
+    seo: { __type: "PostTypeSEO" },
     slug: { __type: "String" },
     status: { __type: "String" },
     template: { __type: "ContentTemplate" },
@@ -11012,6 +11048,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$GraphqlDocumentConnectionPageInfo!" },
   },
@@ -11084,6 +11121,7 @@ export const generatedSchema = {
     parentId: { __type: "ID" },
     previewRevisionDatabaseId: { __type: "Int" },
     previewRevisionId: { __type: "ID" },
+    seo: { __type: "PostTypeSEO" },
     slug: { __type: "String" },
     status: { __type: "String" },
     template: { __type: "ContentTemplate" },
@@ -11113,6 +11151,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgs: {
@@ -11156,6 +11195,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs: {
@@ -11416,6 +11456,7 @@ export const generatedSchema = {
     preview: { __type: "LinklibraryToPreviewConnectionEdge" },
     previewRevisionDatabaseId: { __type: "Int" },
     previewRevisionId: { __type: "ID" },
+    seo: { __type: "PostTypeSEO" },
     slug: { __type: "String" },
     status: { __type: "String" },
     template: { __type: "ContentTemplate" },
@@ -11445,6 +11486,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$LinklibraryConnectionPageInfo!" },
   },
@@ -11465,6 +11507,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   LinklibraryToCommentConnectionWhereArgs: {
@@ -11600,6 +11643,7 @@ export const generatedSchema = {
         where: "LocationToRevisionConnectionWhereArgs",
       },
     },
+    seo: { __type: "PostTypeSEO" },
     slug: { __type: "String" },
     status: { __type: "String" },
     template: { __type: "ContentTemplate" },
@@ -11680,6 +11724,7 @@ export const generatedSchema = {
     },
     parentDatabaseId: { __type: "Int" },
     parentId: { __type: "ID" },
+    seo: { __type: "TaxonomySEO" },
     slug: { __type: "String" },
     taxonomy: { __type: "LocationCategoryToTaxonomyConnectionEdge" },
     taxonomyName: { __type: "String" },
@@ -11707,6 +11752,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$LocationCategoryConnectionPageInfo!" },
   },
@@ -11731,6 +11777,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   LocationCategoryToContentNodeConnection: {
@@ -11750,6 +11797,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   LocationCategoryToContentNodeConnectionWhereArgs: {
@@ -11791,6 +11839,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   LocationCategoryToLocationCategoryConnectionWhereArgs: {
@@ -11833,6 +11882,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   LocationCategoryToLocationConnectionWhereArgs: {
@@ -11887,6 +11937,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$LocationConnectionPageInfo!" },
   },
@@ -12005,6 +12056,7 @@ export const generatedSchema = {
   LocationToLocationCategoryConnectionEdge: {
     __typename: { __type: "String!" },
     cursor: { __type: "String" },
+    isPrimary: { __type: "Boolean" },
     node: { __type: "LocationCategory!" },
   },
   LocationToLocationCategoryConnectionPageInfo: {
@@ -12013,6 +12065,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   LocationToLocationCategoryConnectionWhereArgs: {
@@ -12060,6 +12113,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   LocationToRevisionConnectionWhereArgs: {
@@ -12102,6 +12156,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   LocationToTermNodeConnectionWhereArgs: {
@@ -12230,6 +12285,7 @@ export const generatedSchema = {
     parentId: { __type: "ID" },
     previewRevisionDatabaseId: { __type: "Int" },
     previewRevisionId: { __type: "ID" },
+    seo: { __type: "PostTypeSEO" },
     sizes: { __type: "String", __args: { size: "MediaItemSizeEnum" } },
     slug: { __type: "String" },
     sourceUrl: { __type: "String", __args: { size: "MediaItemSizeEnum" } },
@@ -12262,6 +12318,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$MediaItemConnectionPageInfo!" },
   },
@@ -12297,6 +12354,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   MediaItemToCommentConnectionWhereArgs: {
@@ -12380,6 +12438,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$MenuConnectionPageInfo!" },
   },
@@ -12435,6 +12494,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$MenuItemConnectionPageInfo!" },
   },
@@ -12481,6 +12541,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   MenuItemToMenuItemConnectionWhereArgs: {
@@ -12511,6 +12572,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   MenuToMenuItemConnectionWhereArgs: {
@@ -12647,6 +12709,7 @@ export const generatedSchema = {
   NodeWithTitle: {
     __typename: { __type: "String!" },
     id: { __type: "ID!" },
+    seo: { __type: "PostTypeSEO" },
     title: {
       __type: "String",
       __args: { format: "PostObjectFieldFormatEnum" },
@@ -12777,6 +12840,7 @@ export const generatedSchema = {
         where: "PageToRevisionConnectionWhereArgs",
       },
     },
+    seo: { __type: "PostTypeSEO" },
     slug: { __type: "String" },
     status: { __type: "String" },
     template: { __type: "ContentTemplate" },
@@ -12806,6 +12870,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$PageConnectionPageInfo!" },
   },
@@ -12834,6 +12899,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   PageToCommentConnectionWhereArgs: {
@@ -12889,6 +12955,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   PageToRevisionConnectionWhereArgs: {
@@ -12945,6 +13012,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$PluginConnectionPageInfo!" },
   },
@@ -13043,6 +13111,7 @@ export const generatedSchema = {
         where: "PostToRevisionConnectionWhereArgs",
       },
     },
+    seo: { __type: "PostTypeSEO" },
     slug: { __type: "String" },
     status: { __type: "String" },
     tags: {
@@ -13103,6 +13172,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$PostConnectionPageInfo!" },
   },
@@ -13147,6 +13217,7 @@ export const generatedSchema = {
         where: "PostFormatToPostConnectionWhereArgs",
       },
     },
+    seo: { __type: "TaxonomySEO" },
     slug: { __type: "String" },
     taxonomy: { __type: "PostFormatToTaxonomyConnectionEdge" },
     taxonomyName: { __type: "String" },
@@ -13174,6 +13245,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$PostFormatConnectionPageInfo!" },
   },
@@ -13194,6 +13266,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   PostFormatToContentNodeConnectionWhereArgs: {
@@ -13233,6 +13306,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   PostFormatToPostConnectionWhereArgs: {
@@ -13306,6 +13380,7 @@ export const generatedSchema = {
   PostToCategoryConnectionEdge: {
     __typename: { __type: "String!" },
     cursor: { __type: "String" },
+    isPrimary: { __type: "Boolean" },
     node: { __type: "Category!" },
   },
   PostToCategoryConnectionPageInfo: {
@@ -13314,6 +13389,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   PostToCategoryConnectionWhereArgs: {
@@ -13356,6 +13432,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   PostToCommentConnectionWhereArgs: {
@@ -13398,6 +13475,7 @@ export const generatedSchema = {
   PostToPostFormatConnectionEdge: {
     __typename: { __type: "String!" },
     cursor: { __type: "String" },
+    isPrimary: { __type: "Boolean" },
     node: { __type: "PostFormat!" },
   },
   PostToPostFormatConnectionPageInfo: {
@@ -13406,6 +13484,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   PostToPostFormatConnectionWhereArgs: {
@@ -13453,6 +13532,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   PostToRevisionConnectionWhereArgs: {
@@ -13497,6 +13577,7 @@ export const generatedSchema = {
   PostToTagConnectionEdge: {
     __typename: { __type: "String!" },
     cursor: { __type: "String" },
+    isPrimary: { __type: "Boolean" },
     node: { __type: "Tag!" },
   },
   PostToTagConnectionPageInfo: {
@@ -13505,6 +13586,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   PostToTagConnectionWhereArgs: {
@@ -13547,6 +13629,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   PostToTermNodeConnectionWhereArgs: {
@@ -13600,6 +13683,34 @@ export const generatedSchema = {
     useFeaturedImage: { __type: "String" },
     viewItem: { __type: "String" },
     viewItems: { __type: "String" },
+  },
+  PostTypeSEO: {
+    __typename: { __type: "String!" },
+    breadcrumbs: { __type: "[SEOPostTypeBreadcrumbs]" },
+    canonical: { __type: "String" },
+    cornerstone: { __type: "Boolean" },
+    focuskw: { __type: "String" },
+    fullHead: { __type: "String" },
+    metaDesc: { __type: "String" },
+    metaKeywords: { __type: "String" },
+    metaRobotsNofollow: { __type: "String" },
+    metaRobotsNoindex: { __type: "String" },
+    opengraphAuthor: { __type: "String" },
+    opengraphDescription: { __type: "String" },
+    opengraphImage: { __type: "MediaItem" },
+    opengraphModifiedTime: { __type: "String" },
+    opengraphPublishedTime: { __type: "String" },
+    opengraphPublisher: { __type: "String" },
+    opengraphSiteName: { __type: "String" },
+    opengraphTitle: { __type: "String" },
+    opengraphType: { __type: "String" },
+    opengraphUrl: { __type: "String" },
+    readingTime: { __type: "Float" },
+    schema: { __type: "SEOPostTypeSchema" },
+    title: { __type: "String" },
+    twitterDescription: { __type: "String" },
+    twitterImage: { __type: "MediaItem" },
+    twitterTitle: { __type: "String" },
   },
   Previewable: {
     __typename: { __type: "String!" },
@@ -13661,6 +13772,7 @@ export const generatedSchema = {
       __type: "ProductToRateConnection",
       __args: { after: "String", before: "String", first: "Int", last: "Int" },
     },
+    seo: { __type: "PostTypeSEO" },
     slug: { __type: "String" },
     status: { __type: "String" },
     template: { __type: "ContentTemplate" },
@@ -13690,6 +13802,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$ProductConnectionPageInfo!" },
   },
@@ -13734,6 +13847,7 @@ export const generatedSchema = {
         where: "ProductNameToRateConnectionWhereArgs",
       },
     },
+    seo: { __type: "TaxonomySEO" },
     slug: { __type: "String" },
     taxonomy: { __type: "ProductNameToTaxonomyConnectionEdge" },
     taxonomyName: { __type: "String" },
@@ -13761,6 +13875,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$ProductNameConnectionPageInfo!" },
   },
@@ -13781,6 +13896,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   ProductNameToContentNodeConnectionWhereArgs: {
@@ -13820,6 +13936,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   ProductNameToRateConnectionWhereArgs: {
@@ -13872,6 +13989,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   Rate: {
@@ -13931,6 +14049,7 @@ export const generatedSchema = {
     },
     rate: { __type: "Float" },
     rateId: { __type: "Int!" },
+    seo: { __type: "PostTypeSEO" },
     slug: { __type: "String" },
     status: { __type: "String" },
     template: { __type: "ContentTemplate" },
@@ -13971,6 +14090,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$RateConnectionPageInfo!" },
   },
@@ -14006,6 +14126,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RateToProductNameConnection: {
@@ -14017,6 +14138,7 @@ export const generatedSchema = {
   RateToProductNameConnectionEdge: {
     __typename: { __type: "String!" },
     cursor: { __type: "String" },
+    isPrimary: { __type: "Boolean" },
     node: { __type: "ProductName!" },
   },
   RateToProductNameConnectionPageInfo: {
@@ -14025,6 +14147,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RateToProductNameConnectionWhereArgs: {
@@ -14067,6 +14190,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RateToTermNodeConnectionWhereArgs: {
@@ -14162,6 +14286,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToCXAlertConnectionWhereArgs: {
@@ -14201,6 +14326,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToCategoryConnectionWhereArgs: {
@@ -14243,6 +14369,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToCommentConnectionWhereArgs: {
@@ -14293,6 +14420,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToContactConnectionWhereArgs: {
@@ -14336,6 +14464,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToContentNodeConnectionWhereArgs: {
@@ -14376,6 +14505,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToEnqueuedScriptConnection: {
@@ -14395,6 +14525,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToEnqueuedStylesheetConnection: {
@@ -14414,6 +14545,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToGraphqlDocumentConnection: {
@@ -14433,6 +14565,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToGraphqlDocumentConnectionWhereArgs: {
@@ -14472,6 +14605,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToLinklibraryConnectionWhereArgs: {
@@ -14511,6 +14645,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToLocationCategoryConnectionWhereArgs: {
@@ -14553,6 +14688,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToLocationConnectionWhereArgs: {
@@ -14596,6 +14732,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToMediaItemConnectionWhereArgs: {
@@ -14639,6 +14776,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToMenuConnectionWhereArgs: {
@@ -14663,6 +14801,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToMenuItemConnectionWhereArgs: {
@@ -14688,6 +14827,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToPageConnectionWhereArgs: {
@@ -14731,6 +14871,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToPluginConnectionWhereArgs: {
@@ -14755,6 +14896,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToPostConnectionWhereArgs: {
@@ -14808,6 +14950,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToPostFormatConnectionWhereArgs: {
@@ -14850,6 +14993,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToProductConnectionWhereArgs: {
@@ -14893,6 +15037,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToProductNameConnectionWhereArgs: {
@@ -14935,6 +15080,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToRateConnectionWhereArgs: {
@@ -14978,6 +15124,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToRevisionsConnectionWhereArgs: {
@@ -15017,6 +15164,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToServiceConnectionWhereArgs: {
@@ -15060,6 +15208,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToTagConnectionWhereArgs: {
@@ -15102,6 +15251,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToTermNodeConnection: {
@@ -15121,6 +15271,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToTermNodeConnectionWhereArgs: {
@@ -15164,6 +15315,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToUserConnection: {
@@ -15183,6 +15335,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   RootQueryToUserConnectionWhereArgs: {
@@ -15220,7 +15373,246 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
+  },
+  SEOBreadcrumbs: {
+    __typename: { __type: "String!" },
+    archivePrefix: { __type: "String" },
+    boldLast: { __type: "Boolean" },
+    enabled: { __type: "Boolean" },
+    homeText: { __type: "String" },
+    notFoundText: { __type: "String" },
+    prefix: { __type: "String" },
+    searchPrefix: { __type: "String" },
+    separator: { __type: "String" },
+    showBlogPage: { __type: "Boolean" },
+  },
+  SEOConfig: {
+    __typename: { __type: "String!" },
+    breadcrumbs: { __type: "SEOBreadcrumbs" },
+    contentTypes: { __type: "SEOContentTypes" },
+    meta: { __type: "SEOGlobalMeta" },
+    openGraph: { __type: "SEOOpenGraph" },
+    redirects: { __type: "[SEORedirect]" },
+    schema: { __type: "SEOSchema" },
+    social: { __type: "SEOSocial" },
+    webmaster: { __type: "SEOWebmaster" },
+  },
+  SEOContentType: {
+    __typename: { __type: "String!" },
+    archive: { __type: "SEOContentTypeArchive" },
+    metaDesc: { __type: "String" },
+    metaRobotsNoindex: { __type: "Boolean" },
+    schema: { __type: "SEOPageInfoSchema" },
+    schemaType: { __type: "String" },
+    title: { __type: "String" },
+  },
+  SEOContentTypeArchive: {
+    __typename: { __type: "String!" },
+    archiveLink: { __type: "String" },
+    breadcrumbTitle: { __type: "String" },
+    fullHead: { __type: "String" },
+    hasArchive: { __type: "Boolean" },
+    metaDesc: { __type: "String" },
+    metaRobotsFollow: { __type: "String" },
+    metaRobotsIndex: { __type: "String" },
+    metaRobotsNofollow: { __type: "Boolean" },
+    metaRobotsNoindex: { __type: "Boolean" },
+    title: { __type: "String" },
+  },
+  SEOContentTypes: {
+    __typename: { __type: "String!" },
+    cXAlert: { __type: "SEOContentType" },
+    contact: { __type: "SEOContentType" },
+    graphqlDocument: { __type: "SEOContentType" },
+    linklibrary: { __type: "SEOContentType" },
+    location: { __type: "SEOContentType" },
+    mediaItem: { __type: "SEOContentType" },
+    page: { __type: "SEOContentType" },
+    post: { __type: "SEOContentType" },
+    product: { __type: "SEOContentType" },
+    rate: { __type: "SEOContentType" },
+    service: { __type: "SEOContentType" },
+  },
+  SEOGlobalMeta: {
+    __typename: { __type: "String!" },
+    author: { __type: "SEOGlobalMetaAuthor" },
+    config: { __type: "SEOGlobalMetaConfig" },
+    date: { __type: "SEOGlobalMetaDate" },
+    homepage: { __type: "SEOGlobalMetaHome" },
+    notFound: { __type: "SEOGlobalMeta404" },
+  },
+  SEOGlobalMeta404: {
+    __typename: { __type: "String!" },
+    breadcrumb: { __type: "String" },
+    title: { __type: "String" },
+  },
+  SEOGlobalMetaAuthor: {
+    __typename: { __type: "String!" },
+    description: { __type: "String" },
+    title: { __type: "String" },
+  },
+  SEOGlobalMetaConfig: {
+    __typename: { __type: "String!" },
+    separator: { __type: "String" },
+  },
+  SEOGlobalMetaDate: {
+    __typename: { __type: "String!" },
+    description: { __type: "String" },
+    title: { __type: "String" },
+  },
+  SEOGlobalMetaHome: {
+    __typename: { __type: "String!" },
+    description: { __type: "String" },
+    title: { __type: "String" },
+  },
+  SEOOpenGraph: {
+    __typename: { __type: "String!" },
+    defaultImage: { __type: "MediaItem" },
+    frontPage: { __type: "SEOOpenGraphFrontPage" },
+  },
+  SEOOpenGraphFrontPage: {
+    __typename: { __type: "String!" },
+    description: { __type: "String" },
+    image: { __type: "MediaItem" },
+    title: { __type: "String" },
+  },
+  SEOPageInfoSchema: {
+    __typename: { __type: "String!" },
+    raw: { __type: "String" },
+  },
+  SEOPostTypeBreadcrumbs: {
+    __typename: { __type: "String!" },
+    text: { __type: "String" },
+    url: { __type: "String" },
+  },
+  SEOPostTypePageInfo: {
+    __typename: { __type: "String!" },
+    schema: { __type: "SEOPageInfoSchema" },
+  },
+  SEOPostTypeSchema: {
+    __typename: { __type: "String!" },
+    articleType: { __type: "[String]" },
+    pageType: { __type: "[String]" },
+    raw: { __type: "String" },
+  },
+  SEORedirect: {
+    __typename: { __type: "String!" },
+    format: { __type: "String" },
+    origin: { __type: "String" },
+    target: { __type: "String" },
+    type: { __type: "Int" },
+  },
+  SEOSchema: {
+    __typename: { __type: "String!" },
+    companyLogo: { __type: "MediaItem" },
+    companyName: { __type: "String" },
+    companyOrPerson: { __type: "String" },
+    homeUrl: { __type: "String" },
+    inLanguage: { __type: "String" },
+    logo: { __type: "MediaItem" },
+    personLogo: { __type: "MediaItem" },
+    personName: { __type: "String" },
+    siteName: { __type: "String" },
+    siteUrl: { __type: "String" },
+    wordpressSiteName: { __type: "String" },
+  },
+  SEOSocial: {
+    __typename: { __type: "String!" },
+    facebook: { __type: "SEOSocialFacebook" },
+    instagram: { __type: "SEOSocialInstagram" },
+    linkedIn: { __type: "SEOSocialLinkedIn" },
+    mySpace: { __type: "SEOSocialMySpace" },
+    otherSocials: { __type: "[String]" },
+    pinterest: { __type: "SEOSocialPinterest" },
+    twitter: { __type: "SEOSocialTwitter" },
+    wikipedia: { __type: "SEOSocialWikipedia" },
+    youTube: { __type: "SEOSocialYoutube" },
+  },
+  SEOSocialFacebook: {
+    __typename: { __type: "String!" },
+    defaultImage: { __type: "MediaItem" },
+    url: { __type: "String" },
+  },
+  SEOSocialInstagram: {
+    __typename: { __type: "String!" },
+    url: { __type: "String" },
+  },
+  SEOSocialLinkedIn: {
+    __typename: { __type: "String!" },
+    url: { __type: "String" },
+  },
+  SEOSocialMySpace: {
+    __typename: { __type: "String!" },
+    url: { __type: "String" },
+  },
+  SEOSocialPinterest: {
+    __typename: { __type: "String!" },
+    metaTag: { __type: "String" },
+    url: { __type: "String" },
+  },
+  SEOSocialTwitter: {
+    __typename: { __type: "String!" },
+    cardType: { __type: "SEOCardType" },
+    username: { __type: "String" },
+  },
+  SEOSocialWikipedia: {
+    __typename: { __type: "String!" },
+    url: { __type: "String" },
+  },
+  SEOSocialYoutube: {
+    __typename: { __type: "String!" },
+    url: { __type: "String" },
+  },
+  SEOTaxonomySchema: {
+    __typename: { __type: "String!" },
+    raw: { __type: "String" },
+  },
+  SEOUser: {
+    __typename: { __type: "String!" },
+    breadcrumbTitle: { __type: "String" },
+    canonical: { __type: "String" },
+    fullHead: { __type: "String" },
+    language: { __type: "String" },
+    metaDesc: { __type: "String" },
+    metaRobotsNofollow: { __type: "String" },
+    metaRobotsNoindex: { __type: "String" },
+    opengraphDescription: { __type: "String" },
+    opengraphImage: { __type: "MediaItem" },
+    opengraphTitle: { __type: "String" },
+    region: { __type: "String" },
+    schema: { __type: "SEOUserSchema" },
+    social: { __type: "SEOUserSocial" },
+    title: { __type: "String" },
+    twitterDescription: { __type: "String" },
+    twitterImage: { __type: "MediaItem" },
+    twitterTitle: { __type: "String" },
+  },
+  SEOUserSchema: {
+    __typename: { __type: "String!" },
+    articleType: { __type: "[String]" },
+    pageType: { __type: "[String]" },
+    raw: { __type: "String" },
+  },
+  SEOUserSocial: {
+    __typename: { __type: "String!" },
+    facebook: { __type: "String" },
+    instagram: { __type: "String" },
+    linkedIn: { __type: "String" },
+    mySpace: { __type: "String" },
+    pinterest: { __type: "String" },
+    soundCloud: { __type: "String" },
+    twitter: { __type: "String" },
+    wikipedia: { __type: "String" },
+    youTube: { __type: "String" },
+  },
+  SEOWebmaster: {
+    __typename: { __type: "String!" },
+    baiduVerify: { __type: "String" },
+    googleVerify: { __type: "String" },
+    msVerify: { __type: "String" },
+    yandexVerify: { __type: "String" },
   },
   SafeSvgSvgIcon: {
     __typename: { __type: "String!" },
@@ -15303,6 +15695,7 @@ export const generatedSchema = {
     preview: { __type: "ServiceToPreviewConnectionEdge" },
     previewRevisionDatabaseId: { __type: "Int" },
     previewRevisionId: { __type: "ID" },
+    seo: { __type: "PostTypeSEO" },
     serviceId: { __type: "Int!" },
     slug: { __type: "String" },
     status: { __type: "String" },
@@ -15333,6 +15726,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$ServiceConnectionPageInfo!" },
   },
@@ -15441,6 +15835,7 @@ export const generatedSchema = {
         where: "TagToPostConnectionWhereArgs",
       },
     },
+    seo: { __type: "TaxonomySEO" },
     slug: { __type: "String" },
     tagId: { __type: "Int" },
     taxonomy: { __type: "TagToTaxonomyConnectionEdge" },
@@ -15469,6 +15864,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$TagConnectionPageInfo!" },
   },
@@ -15489,6 +15885,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   TagToContentNodeConnectionWhereArgs: {
@@ -15528,6 +15925,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   TagToPostConnectionWhereArgs: {
@@ -15613,8 +16011,36 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$TaxonomyConnectionPageInfo!" },
+  },
+  TaxonomySEO: {
+    __typename: { __type: "String!" },
+    breadcrumbs: { __type: "[SEOPostTypeBreadcrumbs]" },
+    canonical: { __type: "String" },
+    cornerstone: { __type: "Boolean" },
+    focuskw: { __type: "String" },
+    fullHead: { __type: "String" },
+    metaDesc: { __type: "String" },
+    metaKeywords: { __type: "String" },
+    metaRobotsNofollow: { __type: "String" },
+    metaRobotsNoindex: { __type: "String" },
+    opengraphAuthor: { __type: "String" },
+    opengraphDescription: { __type: "String" },
+    opengraphImage: { __type: "MediaItem" },
+    opengraphModifiedTime: { __type: "String" },
+    opengraphPublishedTime: { __type: "String" },
+    opengraphPublisher: { __type: "String" },
+    opengraphSiteName: { __type: "String" },
+    opengraphTitle: { __type: "String" },
+    opengraphType: { __type: "String" },
+    opengraphUrl: { __type: "String" },
+    schema: { __type: "SEOTaxonomySchema" },
+    title: { __type: "String" },
+    twitterDescription: { __type: "String" },
+    twitterImage: { __type: "MediaItem" },
+    twitterTitle: { __type: "String" },
   },
   TaxonomyToContentTypeConnection: {
     __typename: { __type: "String!" },
@@ -15633,6 +16059,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   Template_ApplyNow: {
@@ -15694,6 +16121,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$TermNodeConnectionPageInfo!" },
   },
@@ -15714,6 +16142,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   TermNodeToEnqueuedStylesheetConnection: {
@@ -15733,6 +16162,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   Theme: {
@@ -15768,6 +16198,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$ThemeConnectionPageInfo!" },
   },
@@ -16451,6 +16882,7 @@ export const generatedSchema = {
       __type: "UserToUserRoleConnection",
       __args: { after: "String", before: "String", first: "Int", last: "Int" },
     },
+    seo: { __type: "SEOUser" },
     services: {
       __type: "UserToServiceConnection",
       __args: {
@@ -16488,6 +16920,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$UserConnectionPageInfo!" },
   },
@@ -16518,6 +16951,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$UserRoleConnectionPageInfo!" },
   },
@@ -16538,6 +16972,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   UserToCommentConnectionWhereArgs: {
@@ -16588,6 +17023,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   UserToContactConnectionWhereArgs: {
@@ -16630,6 +17066,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   UserToEnqueuedStylesheetConnection: {
@@ -16649,6 +17086,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   UserToLocationConnection: {
@@ -16668,6 +17106,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   UserToLocationConnectionWhereArgs: {
@@ -16710,6 +17149,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   UserToMediaItemConnectionWhereArgs: {
@@ -16752,6 +17192,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   UserToPageConnectionWhereArgs: {
@@ -16794,6 +17235,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   UserToPostConnectionWhereArgs: {
@@ -16846,6 +17288,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   UserToProductConnectionWhereArgs: {
@@ -16888,6 +17331,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   UserToRateConnectionWhereArgs: {
@@ -16930,6 +17374,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   UserToRevisionsConnectionWhereArgs: {
@@ -16969,6 +17414,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   UserToServiceConnectionWhereArgs: {
@@ -17011,6 +17457,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
   },
   UsersConnectionOrderbyInput: {
@@ -17023,6 +17470,7 @@ export const generatedSchema = {
     hasNextPage: { __type: "Boolean!" },
     hasPreviousPage: { __type: "Boolean!" },
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$WPPageInfo!" },
   },
@@ -17463,6 +17911,7 @@ export const generatedSchema = {
       __args: { after: "String", before: "String", first: "Int", last: "Int" },
     },
     discussionSettings: { __type: "DiscussionSettings" },
+    faq: { __type: "FAQs", __args: { faqId: "Float" } },
     footerSettings: { __type: "FooterSettings" },
     generalSettings: { __type: "GeneralSettings" },
     genesisBlocksGlobalSettingsSettings: {
@@ -17724,6 +18173,7 @@ export const generatedSchema = {
       __type: "Search",
       __args: { offset: "String", postsPerPage: "String", terms: "String" },
     },
+    seo: { __type: "SEOConfig" },
     service: {
       __type: "Service",
       __args: { asPreview: "Boolean", id: "ID!", idType: "ServiceIdType" },
@@ -19289,6 +19739,10 @@ export interface CXAlert {
     where?: Maybe<CXAlertToRevisionConnectionWhereArgs>;
   }) => Maybe<CXAlertToRevisionConnection>;
   /**
+   * The Yoast SEO data of the ContentNode
+   */
+  seo?: Maybe<PostTypeSEO>;
+  /**
    * The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
    */
   slug?: Maybe<ScalarsEnums["String"]>;
@@ -19383,6 +19837,10 @@ export interface CXAlertConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -19459,6 +19917,10 @@ export interface CXAlertToRevisionConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -19682,6 +20144,10 @@ export interface Category {
     where?: Maybe<CategoryToPostConnectionWhereArgs>;
   }) => Maybe<CategoryToPostConnection>;
   /**
+   * The Yoast SEO data of the Categories taxonomy.
+   */
+  seo?: Maybe<TaxonomySEO>;
+  /**
    * An alphanumeric identifier for the object unique to its type.
    */
   slug?: Maybe<ScalarsEnums["String"]>;
@@ -19779,6 +20245,10 @@ export interface CategoryConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -19841,6 +20311,10 @@ export interface CategoryToAncestorsCategoryConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -19902,6 +20376,10 @@ export interface CategoryToCategoryConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -19962,6 +20440,10 @@ export interface CategoryToContentNodeConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -20038,6 +20520,10 @@ export interface CategoryToPostConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -20304,6 +20790,10 @@ export interface CommentConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -20365,6 +20855,10 @@ export interface CommentToCommentConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -20847,6 +21341,10 @@ export interface Contact {
    */
   previewRevisionId?: Maybe<ScalarsEnums["ID"]>;
   /**
+   * The Yoast SEO data of the ContentNode
+   */
+  seo?: Maybe<PostTypeSEO>;
+  /**
    * The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
    */
   slug?: Maybe<ScalarsEnums["String"]>;
@@ -20938,6 +21436,10 @@ export interface ContactConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -21103,6 +21605,10 @@ export interface ContentNode {
    */
   previewRevisionId?: Maybe<ScalarsEnums["ID"]>;
   /**
+   * The Yoast SEO data of the ContentNode
+   */
+  seo?: Maybe<PostTypeSEO>;
+  /**
    * The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
    */
   slug?: Maybe<ScalarsEnums["String"]>;
@@ -21216,6 +21722,10 @@ export interface ContentNodeConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -21327,6 +21837,10 @@ export interface ContentNodeToEnqueuedScriptConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -21387,6 +21901,10 @@ export interface ContentNodeToEnqueuedStylesheetConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -21652,6 +22170,10 @@ export interface ContentTypeConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -21714,6 +22236,10 @@ export interface ContentTypeToContentNodeConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -21774,6 +22300,10 @@ export interface ContentTypeToTaxonomyConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -32097,6 +32627,10 @@ export interface EnqueuedScriptConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -32208,10 +32742,24 @@ export interface EnqueuedStylesheetConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
   $on: $EnqueuedStylesheetConnectionPageInfo;
+}
+
+/**
+ * Keys and their values, both cast as strings
+ */
+export interface FAQs {
+  __typename?: "FAQs";
+  content?: Maybe<ScalarsEnums["String"]>;
+  id?: Maybe<ScalarsEnums["String"]>;
+  title?: Maybe<ScalarsEnums["String"]>;
 }
 
 /**
@@ -36899,6 +37447,10 @@ export interface GraphqlDocument {
    */
   previewRevisionId?: Maybe<ScalarsEnums["ID"]>;
   /**
+   * The Yoast SEO data of the ContentNode
+   */
+  seo?: Maybe<PostTypeSEO>;
+  /**
    * The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
    */
   slug?: Maybe<ScalarsEnums["String"]>;
@@ -36985,6 +37537,10 @@ export interface GraphqlDocumentConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -37221,6 +37777,10 @@ export interface HierarchicalContentNode {
    */
   previewRevisionId?: Maybe<ScalarsEnums["ID"]>;
   /**
+   * The Yoast SEO data of the ContentNode
+   */
+  seo?: Maybe<PostTypeSEO>;
+  /**
    * The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
    */
   slug?: Maybe<ScalarsEnums["String"]>;
@@ -37296,6 +37856,10 @@ export interface HierarchicalContentNodeToContentNodeAncestorsConnectionPageInfo
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -37356,6 +37920,10 @@ export interface HierarchicalContentNodeToContentNodeChildrenConnectionPageInfo 
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -38198,6 +38766,10 @@ export interface Linklibrary {
    */
   previewRevisionId?: Maybe<ScalarsEnums["ID"]>;
   /**
+   * The Yoast SEO data of the ContentNode
+   */
+  seo?: Maybe<PostTypeSEO>;
+  /**
    * The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
    */
   slug?: Maybe<ScalarsEnums["String"]>;
@@ -38285,6 +38857,10 @@ export interface LinklibraryConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -38346,6 +38922,10 @@ export interface LinklibraryToCommentConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -38677,6 +39257,10 @@ export interface Location {
     where?: Maybe<LocationToRevisionConnectionWhereArgs>;
   }) => Maybe<LocationToRevisionConnection>;
   /**
+   * The Yoast SEO data of the ContentNode
+   */
+  seo?: Maybe<PostTypeSEO>;
+  /**
    * The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
    */
   slug?: Maybe<ScalarsEnums["String"]>;
@@ -38930,6 +39514,10 @@ export interface LocationCategory {
    */
   parentId?: Maybe<ScalarsEnums["ID"]>;
   /**
+   * The Yoast SEO data of the Location Categories taxonomy.
+   */
+  seo?: Maybe<TaxonomySEO>;
+  /**
    * An alphanumeric identifier for the object unique to its type.
    */
   slug?: Maybe<ScalarsEnums["String"]>;
@@ -39027,6 +39615,10 @@ export interface LocationCategoryConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -39089,6 +39681,10 @@ export interface LocationCategoryToAncestorsLocationCategoryConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -39149,6 +39745,10 @@ export interface LocationCategoryToContentNodeConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -39211,6 +39811,10 @@ export interface LocationCategoryToLocationCategoryConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -39271,6 +39875,10 @@ export interface LocationCategoryToLocationConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -39377,6 +39985,10 @@ export interface LocationConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -39792,6 +40404,10 @@ export interface LocationToLocationCategoryConnectionEdge {
    */
   cursor?: Maybe<ScalarsEnums["String"]>;
   /**
+   * The Yoast SEO Primary wpsl_store_category
+   */
+  isPrimary?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
    * The item at the end of the edge
    */
   node: LocationCategory;
@@ -39818,6 +40434,10 @@ export interface LocationToLocationCategoryConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -39895,6 +40515,10 @@ export interface LocationToRevisionConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -39955,6 +40579,10 @@ export interface LocationToTermNodeConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -40288,6 +40916,10 @@ export interface MediaItem {
    */
   previewRevisionId?: Maybe<ScalarsEnums["ID"]>;
   /**
+   * The Yoast SEO data of the ContentNode
+   */
+  seo?: Maybe<PostTypeSEO>;
+  /**
    * The sizes attribute value for an image.
    */
   sizes: (args?: {
@@ -40405,6 +41037,10 @@ export interface MediaItemConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -40521,6 +41157,10 @@ export interface MediaItemToCommentConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -40684,6 +41324,10 @@ export interface MenuConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -40872,6 +41516,10 @@ export interface MenuItemConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -41022,6 +41670,10 @@ export interface MenuItemToMenuItemConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -41097,6 +41749,10 @@ export interface MenuToMenuItemConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -41544,6 +42200,10 @@ export interface NodeWithTitle {
    */
   id: ScalarsEnums["ID"];
   /**
+   * The Yoast SEO data of the ContentNode
+   */
+  seo?: Maybe<PostTypeSEO>;
+  /**
    * The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made.
    */
   title: (args?: {
@@ -41976,6 +42636,10 @@ export interface Page {
     where?: Maybe<PageToRevisionConnectionWhereArgs>;
   }) => Maybe<PageToRevisionConnection>;
   /**
+   * The Yoast SEO data of the ContentNode
+   */
+  seo?: Maybe<PostTypeSEO>;
+  /**
    * The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
    */
   slug?: Maybe<ScalarsEnums["String"]>;
@@ -42070,6 +42734,10 @@ export interface PageConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -42244,6 +42912,10 @@ export interface PageToCommentConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -42319,6 +42991,10 @@ export interface PageToRevisionConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -42425,6 +43101,10 @@ export interface PluginConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -42749,6 +43429,10 @@ export interface Post {
     where?: Maybe<PostToRevisionConnectionWhereArgs>;
   }) => Maybe<PostToRevisionConnection>;
   /**
+   * The Yoast SEO data of the ContentNode
+   */
+  seo?: Maybe<PostTypeSEO>;
+  /**
    * The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
    */
   slug?: Maybe<ScalarsEnums["String"]>;
@@ -42907,6 +43591,10 @@ export interface PostConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -43056,6 +43744,10 @@ export interface PostFormat {
     where?: Maybe<PostFormatToPostConnectionWhereArgs>;
   }) => Maybe<PostFormatToPostConnection>;
   /**
+   * The Yoast SEO data of the Formats taxonomy.
+   */
+  seo?: Maybe<TaxonomySEO>;
+  /**
    * An alphanumeric identifier for the object unique to its type.
    */
   slug?: Maybe<ScalarsEnums["String"]>;
@@ -43144,6 +43836,10 @@ export interface PostFormatConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -43206,6 +43902,10 @@ export interface PostFormatToContentNodeConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -43267,6 +43967,10 @@ export interface PostFormatToPostConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -43316,6 +44020,10 @@ export interface PostToCategoryConnectionEdge {
    */
   cursor?: Maybe<ScalarsEnums["String"]>;
   /**
+   * The Yoast SEO Primary category
+   */
+  isPrimary?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
    * The item at the end of the edge
    */
   node: Category;
@@ -43342,6 +44050,10 @@ export interface PostToCategoryConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -43404,6 +44116,10 @@ export interface PostToCommentConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -43438,6 +44154,10 @@ export interface PostToPostFormatConnectionEdge {
    */
   cursor?: Maybe<ScalarsEnums["String"]>;
   /**
+   * The Yoast SEO Primary post_format
+   */
+  isPrimary?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
    * The item at the end of the edge
    */
   node: PostFormat;
@@ -43464,6 +44184,10 @@ export interface PostToPostFormatConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -43541,6 +44265,10 @@ export interface PostToRevisionConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -43575,6 +44303,10 @@ export interface PostToTagConnectionEdge {
    */
   cursor?: Maybe<ScalarsEnums["String"]>;
   /**
+   * The Yoast SEO Primary post_tag
+   */
+  isPrimary?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
    * The item at the end of the edge
    */
   node: Tag;
@@ -43601,6 +44333,10 @@ export interface PostToTagConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -43662,6 +44398,10 @@ export interface PostToTermNodeConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -43773,6 +44513,35 @@ export interface PostTypeLabelDetails {
    * Label for viewing post type archives.
    */
   viewItems?: Maybe<ScalarsEnums["String"]>;
+}
+
+export interface PostTypeSEO {
+  __typename?: "PostTypeSEO";
+  breadcrumbs?: Maybe<Array<Maybe<SEOPostTypeBreadcrumbs>>>;
+  canonical?: Maybe<ScalarsEnums["String"]>;
+  cornerstone?: Maybe<ScalarsEnums["Boolean"]>;
+  focuskw?: Maybe<ScalarsEnums["String"]>;
+  fullHead?: Maybe<ScalarsEnums["String"]>;
+  metaDesc?: Maybe<ScalarsEnums["String"]>;
+  metaKeywords?: Maybe<ScalarsEnums["String"]>;
+  metaRobotsNofollow?: Maybe<ScalarsEnums["String"]>;
+  metaRobotsNoindex?: Maybe<ScalarsEnums["String"]>;
+  opengraphAuthor?: Maybe<ScalarsEnums["String"]>;
+  opengraphDescription?: Maybe<ScalarsEnums["String"]>;
+  opengraphImage?: Maybe<MediaItem>;
+  opengraphModifiedTime?: Maybe<ScalarsEnums["String"]>;
+  opengraphPublishedTime?: Maybe<ScalarsEnums["String"]>;
+  opengraphPublisher?: Maybe<ScalarsEnums["String"]>;
+  opengraphSiteName?: Maybe<ScalarsEnums["String"]>;
+  opengraphTitle?: Maybe<ScalarsEnums["String"]>;
+  opengraphType?: Maybe<ScalarsEnums["String"]>;
+  opengraphUrl?: Maybe<ScalarsEnums["String"]>;
+  readingTime?: Maybe<ScalarsEnums["Float"]>;
+  schema?: Maybe<SEOPostTypeSchema>;
+  title?: Maybe<ScalarsEnums["String"]>;
+  twitterDescription?: Maybe<ScalarsEnums["String"]>;
+  twitterImage?: Maybe<MediaItem>;
+  twitterTitle?: Maybe<ScalarsEnums["String"]>;
 }
 
 /**
@@ -43990,6 +44759,10 @@ export interface Product {
     last?: Maybe<Scalars["Int"]>;
   }) => Maybe<ProductToRateConnection>;
   /**
+   * The Yoast SEO data of the ContentNode
+   */
+  seo?: Maybe<PostTypeSEO>;
+  /**
    * The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
    */
   slug?: Maybe<ScalarsEnums["String"]>;
@@ -44084,6 +44857,10 @@ export interface ProductConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -44234,6 +45011,10 @@ export interface ProductName {
     where?: Maybe<ProductNameToRateConnectionWhereArgs>;
   }) => Maybe<ProductNameToRateConnection>;
   /**
+   * The Yoast SEO data of the Product Names taxonomy.
+   */
+  seo?: Maybe<TaxonomySEO>;
+  /**
    * An alphanumeric identifier for the object unique to its type.
    */
   slug?: Maybe<ScalarsEnums["String"]>;
@@ -44324,6 +45105,10 @@ export interface ProductNameConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -44386,6 +45171,10 @@ export interface ProductNameToContentNodeConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -44446,6 +45235,10 @@ export interface ProductNameToRateConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -44537,6 +45330,10 @@ export interface ProductToRateConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -44749,6 +45546,10 @@ export interface Rate {
    */
   rateId: ScalarsEnums["Int"];
   /**
+   * The Yoast SEO data of the ContentNode
+   */
+  seo?: Maybe<PostTypeSEO>;
+  /**
    * The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
    */
   slug?: Maybe<ScalarsEnums["String"]>;
@@ -44873,6 +45674,10 @@ export interface RateConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -44950,6 +45755,10 @@ export interface RateToProductConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -44984,6 +45793,10 @@ export interface RateToProductNameConnectionEdge {
    */
   cursor?: Maybe<ScalarsEnums["String"]>;
   /**
+   * The Yoast SEO Primary productname
+   */
+  isPrimary?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
    * The item at the end of the edge
    */
   node: ProductName;
@@ -45010,6 +45823,10 @@ export interface RateToProductNameConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -45071,6 +45888,10 @@ export interface RateToTermNodeConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -45205,6 +46026,10 @@ export interface RootQueryToCXAlertConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -45265,6 +46090,10 @@ export interface RootQueryToCategoryConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -45327,6 +46156,10 @@ export interface RootQueryToCommentConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -45387,6 +46220,10 @@ export interface RootQueryToContactConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -45449,6 +46286,10 @@ export interface RootQueryToContentNodeConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -45509,6 +46350,10 @@ export interface RootQueryToContentTypeConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -45571,6 +46416,10 @@ export interface RootQueryToEnqueuedScriptConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -45631,6 +46480,10 @@ export interface RootQueryToEnqueuedStylesheetConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -45693,6 +46546,10 @@ export interface RootQueryToGraphqlDocumentConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -45753,6 +46610,10 @@ export interface RootQueryToLinklibraryConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -45815,6 +46676,10 @@ export interface RootQueryToLocationCategoryConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -45875,6 +46740,10 @@ export interface RootQueryToLocationConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -45937,6 +46806,10 @@ export interface RootQueryToMediaItemConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -45997,6 +46870,10 @@ export interface RootQueryToMenuConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -46059,6 +46936,10 @@ export interface RootQueryToMenuItemConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -46119,6 +47000,10 @@ export interface RootQueryToPageConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -46181,6 +47066,10 @@ export interface RootQueryToPluginConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -46241,6 +47130,10 @@ export interface RootQueryToPostConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -46303,6 +47196,10 @@ export interface RootQueryToPostFormatConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -46363,6 +47260,10 @@ export interface RootQueryToProductConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -46425,6 +47326,10 @@ export interface RootQueryToProductNameConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -46485,6 +47390,10 @@ export interface RootQueryToRateConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -46547,6 +47456,10 @@ export interface RootQueryToRevisionsConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -46607,6 +47520,10 @@ export interface RootQueryToServiceConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -46669,6 +47586,10 @@ export interface RootQueryToTagConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -46729,6 +47650,10 @@ export interface RootQueryToTaxonomyConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -46791,6 +47716,10 @@ export interface RootQueryToTermNodeConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -46851,6 +47780,10 @@ export interface RootQueryToThemeConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -46913,6 +47846,10 @@ export interface RootQueryToUserConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -46974,9 +47911,350 @@ export interface RootQueryToUserRoleConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * The Yoast SEO breadcrumb config
+ */
+export interface SEOBreadcrumbs {
+  __typename?: "SEOBreadcrumbs";
+  archivePrefix?: Maybe<ScalarsEnums["String"]>;
+  boldLast?: Maybe<ScalarsEnums["Boolean"]>;
+  enabled?: Maybe<ScalarsEnums["Boolean"]>;
+  homeText?: Maybe<ScalarsEnums["String"]>;
+  notFoundText?: Maybe<ScalarsEnums["String"]>;
+  prefix?: Maybe<ScalarsEnums["String"]>;
+  searchPrefix?: Maybe<ScalarsEnums["String"]>;
+  separator?: Maybe<ScalarsEnums["String"]>;
+  showBlogPage?: Maybe<ScalarsEnums["Boolean"]>;
+}
+
+/**
+ * The Yoast SEO site level configuration data
+ */
+export interface SEOConfig {
+  __typename?: "SEOConfig";
+  breadcrumbs?: Maybe<SEOBreadcrumbs>;
+  contentTypes?: Maybe<SEOContentTypes>;
+  meta?: Maybe<SEOGlobalMeta>;
+  openGraph?: Maybe<SEOOpenGraph>;
+  redirects?: Maybe<Array<Maybe<SEORedirect>>>;
+  schema?: Maybe<SEOSchema>;
+  social?: Maybe<SEOSocial>;
+  webmaster?: Maybe<SEOWebmaster>;
+}
+
+/**
+ * The Yoast SEO search appearance content types fields
+ */
+export interface SEOContentType {
+  __typename?: "SEOContentType";
+  archive?: Maybe<SEOContentTypeArchive>;
+  metaDesc?: Maybe<ScalarsEnums["String"]>;
+  metaRobotsNoindex?: Maybe<ScalarsEnums["Boolean"]>;
+  schema?: Maybe<SEOPageInfoSchema>;
+  schemaType?: Maybe<ScalarsEnums["String"]>;
+  title?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * The Yoast SEO search appearance content types fields
+ */
+export interface SEOContentTypeArchive {
+  __typename?: "SEOContentTypeArchive";
+  archiveLink?: Maybe<ScalarsEnums["String"]>;
+  breadcrumbTitle?: Maybe<ScalarsEnums["String"]>;
+  fullHead?: Maybe<ScalarsEnums["String"]>;
+  hasArchive?: Maybe<ScalarsEnums["Boolean"]>;
+  metaDesc?: Maybe<ScalarsEnums["String"]>;
+  metaRobotsFollow?: Maybe<ScalarsEnums["String"]>;
+  metaRobotsIndex?: Maybe<ScalarsEnums["String"]>;
+  metaRobotsNofollow?: Maybe<ScalarsEnums["Boolean"]>;
+  metaRobotsNoindex?: Maybe<ScalarsEnums["Boolean"]>;
+  title?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * The Yoast SEO search appearance content types
+ */
+export interface SEOContentTypes {
+  __typename?: "SEOContentTypes";
+  cXAlert?: Maybe<SEOContentType>;
+  contact?: Maybe<SEOContentType>;
+  graphqlDocument?: Maybe<SEOContentType>;
+  linklibrary?: Maybe<SEOContentType>;
+  location?: Maybe<SEOContentType>;
+  mediaItem?: Maybe<SEOContentType>;
+  page?: Maybe<SEOContentType>;
+  post?: Maybe<SEOContentType>;
+  product?: Maybe<SEOContentType>;
+  rate?: Maybe<SEOContentType>;
+  service?: Maybe<SEOContentType>;
+}
+
+/**
+ * The Yoast SEO meta data
+ */
+export interface SEOGlobalMeta {
+  __typename?: "SEOGlobalMeta";
+  author?: Maybe<SEOGlobalMetaAuthor>;
+  config?: Maybe<SEOGlobalMetaConfig>;
+  date?: Maybe<SEOGlobalMetaDate>;
+  homepage?: Maybe<SEOGlobalMetaHome>;
+  notFound?: Maybe<SEOGlobalMeta404>;
+}
+
+/**
+ * The Yoast SEO meta 404 data
+ */
+export interface SEOGlobalMeta404 {
+  __typename?: "SEOGlobalMeta404";
+  breadcrumb?: Maybe<ScalarsEnums["String"]>;
+  title?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * The Yoast SEO Author data
+ */
+export interface SEOGlobalMetaAuthor {
+  __typename?: "SEOGlobalMetaAuthor";
+  description?: Maybe<ScalarsEnums["String"]>;
+  title?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * The Yoast SEO meta config data
+ */
+export interface SEOGlobalMetaConfig {
+  __typename?: "SEOGlobalMetaConfig";
+  separator?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * The Yoast SEO Date data
+ */
+export interface SEOGlobalMetaDate {
+  __typename?: "SEOGlobalMetaDate";
+  description?: Maybe<ScalarsEnums["String"]>;
+  title?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * The Yoast SEO homepage data
+ */
+export interface SEOGlobalMetaHome {
+  __typename?: "SEOGlobalMetaHome";
+  description?: Maybe<ScalarsEnums["String"]>;
+  title?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * The Open Graph data
+ */
+export interface SEOOpenGraph {
+  __typename?: "SEOOpenGraph";
+  defaultImage?: Maybe<MediaItem>;
+  frontPage?: Maybe<SEOOpenGraphFrontPage>;
+}
+
+/**
+ * The Open Graph Front page data
+ */
+export interface SEOOpenGraphFrontPage {
+  __typename?: "SEOOpenGraphFrontPage";
+  description?: Maybe<ScalarsEnums["String"]>;
+  image?: Maybe<MediaItem>;
+  title?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * The Schema for post type
+ */
+export interface SEOPageInfoSchema {
+  __typename?: "SEOPageInfoSchema";
+  raw?: Maybe<ScalarsEnums["String"]>;
+}
+
+export interface SEOPostTypeBreadcrumbs {
+  __typename?: "SEOPostTypeBreadcrumbs";
+  text?: Maybe<ScalarsEnums["String"]>;
+  url?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * The page info SEO details
+ */
+export interface SEOPostTypePageInfo {
+  __typename?: "SEOPostTypePageInfo";
+  schema?: Maybe<SEOPageInfoSchema>;
+}
+
+/**
+ * The Schema types
+ */
+export interface SEOPostTypeSchema {
+  __typename?: "SEOPostTypeSchema";
+  articleType?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  pageType?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  raw?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * The Yoast redirect data  (Yoast Premium only)
+ */
+export interface SEORedirect {
+  __typename?: "SEORedirect";
+  format?: Maybe<ScalarsEnums["String"]>;
+  origin?: Maybe<ScalarsEnums["String"]>;
+  target?: Maybe<ScalarsEnums["String"]>;
+  type?: Maybe<ScalarsEnums["Int"]>;
+}
+
+/**
+ * The Yoast SEO schema data
+ */
+export interface SEOSchema {
+  __typename?: "SEOSchema";
+  companyLogo?: Maybe<MediaItem>;
+  companyName?: Maybe<ScalarsEnums["String"]>;
+  companyOrPerson?: Maybe<ScalarsEnums["String"]>;
+  homeUrl?: Maybe<ScalarsEnums["String"]>;
+  inLanguage?: Maybe<ScalarsEnums["String"]>;
+  logo?: Maybe<MediaItem>;
+  personLogo?: Maybe<MediaItem>;
+  personName?: Maybe<ScalarsEnums["String"]>;
+  siteName?: Maybe<ScalarsEnums["String"]>;
+  siteUrl?: Maybe<ScalarsEnums["String"]>;
+  wordpressSiteName?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * The Yoast SEO Social media links
+ */
+export interface SEOSocial {
+  __typename?: "SEOSocial";
+  facebook?: Maybe<SEOSocialFacebook>;
+  instagram?: Maybe<SEOSocialInstagram>;
+  linkedIn?: Maybe<SEOSocialLinkedIn>;
+  mySpace?: Maybe<SEOSocialMySpace>;
+  otherSocials?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  pinterest?: Maybe<SEOSocialPinterest>;
+  twitter?: Maybe<SEOSocialTwitter>;
+  wikipedia?: Maybe<SEOSocialWikipedia>;
+  youTube?: Maybe<SEOSocialYoutube>;
+}
+
+export interface SEOSocialFacebook {
+  __typename?: "SEOSocialFacebook";
+  defaultImage?: Maybe<MediaItem>;
+  url?: Maybe<ScalarsEnums["String"]>;
+}
+
+export interface SEOSocialInstagram {
+  __typename?: "SEOSocialInstagram";
+  url?: Maybe<ScalarsEnums["String"]>;
+}
+
+export interface SEOSocialLinkedIn {
+  __typename?: "SEOSocialLinkedIn";
+  url?: Maybe<ScalarsEnums["String"]>;
+}
+
+export interface SEOSocialMySpace {
+  __typename?: "SEOSocialMySpace";
+  url?: Maybe<ScalarsEnums["String"]>;
+}
+
+export interface SEOSocialPinterest {
+  __typename?: "SEOSocialPinterest";
+  metaTag?: Maybe<ScalarsEnums["String"]>;
+  url?: Maybe<ScalarsEnums["String"]>;
+}
+
+export interface SEOSocialTwitter {
+  __typename?: "SEOSocialTwitter";
+  cardType?: Maybe<ScalarsEnums["SEOCardType"]>;
+  username?: Maybe<ScalarsEnums["String"]>;
+}
+
+export interface SEOSocialWikipedia {
+  __typename?: "SEOSocialWikipedia";
+  url?: Maybe<ScalarsEnums["String"]>;
+}
+
+export interface SEOSocialYoutube {
+  __typename?: "SEOSocialYoutube";
+  url?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * The Schema types for Taxonomy
+ */
+export interface SEOTaxonomySchema {
+  __typename?: "SEOTaxonomySchema";
+  raw?: Maybe<ScalarsEnums["String"]>;
+}
+
+export interface SEOUser {
+  __typename?: "SEOUser";
+  breadcrumbTitle?: Maybe<ScalarsEnums["String"]>;
+  canonical?: Maybe<ScalarsEnums["String"]>;
+  fullHead?: Maybe<ScalarsEnums["String"]>;
+  language?: Maybe<ScalarsEnums["String"]>;
+  metaDesc?: Maybe<ScalarsEnums["String"]>;
+  metaRobotsNofollow?: Maybe<ScalarsEnums["String"]>;
+  metaRobotsNoindex?: Maybe<ScalarsEnums["String"]>;
+  opengraphDescription?: Maybe<ScalarsEnums["String"]>;
+  opengraphImage?: Maybe<MediaItem>;
+  opengraphTitle?: Maybe<ScalarsEnums["String"]>;
+  region?: Maybe<ScalarsEnums["String"]>;
+  schema?: Maybe<SEOUserSchema>;
+  social?: Maybe<SEOUserSocial>;
+  title?: Maybe<ScalarsEnums["String"]>;
+  twitterDescription?: Maybe<ScalarsEnums["String"]>;
+  twitterImage?: Maybe<MediaItem>;
+  twitterTitle?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * The Schema types for User
+ */
+export interface SEOUserSchema {
+  __typename?: "SEOUserSchema";
+  articleType?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  pageType?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  raw?: Maybe<ScalarsEnums["String"]>;
+}
+
+export interface SEOUserSocial {
+  __typename?: "SEOUserSocial";
+  facebook?: Maybe<ScalarsEnums["String"]>;
+  instagram?: Maybe<ScalarsEnums["String"]>;
+  linkedIn?: Maybe<ScalarsEnums["String"]>;
+  mySpace?: Maybe<ScalarsEnums["String"]>;
+  pinterest?: Maybe<ScalarsEnums["String"]>;
+  soundCloud?: Maybe<ScalarsEnums["String"]>;
+  twitter?: Maybe<ScalarsEnums["String"]>;
+  wikipedia?: Maybe<ScalarsEnums["String"]>;
+  youTube?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * The Yoast SEO  webmaster fields
+ */
+export interface SEOWebmaster {
+  __typename?: "SEOWebmaster";
+  baiduVerify?: Maybe<ScalarsEnums["String"]>;
+  googleVerify?: Maybe<ScalarsEnums["String"]>;
+  msVerify?: Maybe<ScalarsEnums["String"]>;
+  yandexVerify?: Maybe<ScalarsEnums["String"]>;
 }
 
 /**
@@ -47267,6 +48545,10 @@ export interface Service {
    */
   previewRevisionId?: Maybe<ScalarsEnums["ID"]>;
   /**
+   * The Yoast SEO data of the ContentNode
+   */
+  seo?: Maybe<PostTypeSEO>;
+  /**
    * The id field matches the WP_Post-&gt;ID field.
    * @deprecated Deprecated in favor of the databaseId field
    */
@@ -47361,6 +48643,10 @@ export interface ServiceConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -47723,6 +49009,10 @@ export interface Tag {
     where?: Maybe<TagToPostConnectionWhereArgs>;
   }) => Maybe<TagToPostConnection>;
   /**
+   * The Yoast SEO data of the Tags taxonomy.
+   */
+  seo?: Maybe<TaxonomySEO>;
+  /**
    * An alphanumeric identifier for the object unique to its type.
    */
   slug?: Maybe<ScalarsEnums["String"]>;
@@ -47814,6 +49104,10 @@ export interface TagConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -47876,6 +49170,10 @@ export interface TagToContentNodeConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -47936,6 +49234,10 @@ export interface TagToPostConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -48130,10 +49432,42 @@ export interface TaxonomyConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
   $on: $TaxonomyConnectionPageInfo;
+}
+
+export interface TaxonomySEO {
+  __typename?: "TaxonomySEO";
+  breadcrumbs?: Maybe<Array<Maybe<SEOPostTypeBreadcrumbs>>>;
+  canonical?: Maybe<ScalarsEnums["String"]>;
+  cornerstone?: Maybe<ScalarsEnums["Boolean"]>;
+  focuskw?: Maybe<ScalarsEnums["String"]>;
+  fullHead?: Maybe<ScalarsEnums["String"]>;
+  metaDesc?: Maybe<ScalarsEnums["String"]>;
+  metaKeywords?: Maybe<ScalarsEnums["String"]>;
+  metaRobotsNofollow?: Maybe<ScalarsEnums["String"]>;
+  metaRobotsNoindex?: Maybe<ScalarsEnums["String"]>;
+  opengraphAuthor?: Maybe<ScalarsEnums["String"]>;
+  opengraphDescription?: Maybe<ScalarsEnums["String"]>;
+  opengraphImage?: Maybe<MediaItem>;
+  opengraphModifiedTime?: Maybe<ScalarsEnums["String"]>;
+  opengraphPublishedTime?: Maybe<ScalarsEnums["String"]>;
+  opengraphPublisher?: Maybe<ScalarsEnums["String"]>;
+  opengraphSiteName?: Maybe<ScalarsEnums["String"]>;
+  opengraphTitle?: Maybe<ScalarsEnums["String"]>;
+  opengraphType?: Maybe<ScalarsEnums["String"]>;
+  opengraphUrl?: Maybe<ScalarsEnums["String"]>;
+  schema?: Maybe<SEOTaxonomySchema>;
+  title?: Maybe<ScalarsEnums["String"]>;
+  twitterDescription?: Maybe<ScalarsEnums["String"]>;
+  twitterImage?: Maybe<MediaItem>;
+  twitterTitle?: Maybe<ScalarsEnums["String"]>;
 }
 
 /**
@@ -48191,6 +49525,10 @@ export interface TaxonomyToContentTypeConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -48416,6 +49754,10 @@ export interface TermNodeConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -48478,6 +49820,10 @@ export interface TermNodeToEnqueuedScriptConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -48538,6 +49884,10 @@ export interface TermNodeToEnqueuedStylesheetConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -48652,6 +50002,10 @@ export interface ThemeConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -49879,6 +51233,10 @@ export interface User {
     last?: Maybe<Scalars["Int"]>;
   }) => Maybe<UserToUserRoleConnection>;
   /**
+   * The Yoast SEO data of a user
+   */
+  seo?: Maybe<SEOUser>;
+  /**
    * Connection between the User type and the service type
    */
   services: (args?: {
@@ -49993,6 +51351,10 @@ export interface UserConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -50088,6 +51450,10 @@ export interface UserRoleConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -50150,6 +51516,10 @@ export interface UserToCommentConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -50210,6 +51580,10 @@ export interface UserToContactConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -50272,6 +51646,10 @@ export interface UserToEnqueuedScriptConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -50332,6 +51710,10 @@ export interface UserToEnqueuedStylesheetConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -50394,6 +51776,10 @@ export interface UserToLocationConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -50454,6 +51840,10 @@ export interface UserToMediaItemConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -50516,6 +51906,10 @@ export interface UserToPageConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -50576,6 +51970,10 @@ export interface UserToPostConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -50638,6 +52036,10 @@ export interface UserToProductConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -50698,6 +52100,10 @@ export interface UserToRateConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -50760,6 +52166,10 @@ export interface UserToRevisionsConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -50821,6 +52231,10 @@ export interface UserToServiceConnectionPageInfo {
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
    * When paginating backwards, the cursor to continue.
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
@@ -50881,6 +52295,10 @@ export interface UserToUserRoleConnectionPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -50995,6 +52413,10 @@ export interface WPPageInfo {
    * Get information about the offset pagination state in the current connection
    */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
   /**
    * When paginating backwards, the cursor to continue.
    */
@@ -51567,6 +52989,7 @@ export interface Query {
     last?: Maybe<Scalars["Int"]>;
   }) => Maybe<RootQueryToContentTypeConnection>;
   discussionSettings?: Maybe<DiscussionSettings>;
+  faq: (args?: { faqId?: Maybe<Scalars["Float"]> }) => Maybe<FAQs>;
   footerSettings?: Maybe<FooterSettings>;
   generalSettings?: Maybe<GeneralSettings>;
   genesisBlocksGlobalSettingsSettings?: Maybe<GenesisBlocksGlobalSettingsSettings>;
@@ -51804,6 +53227,7 @@ export interface Query {
     postsPerPage?: Maybe<Scalars["String"]>;
     terms?: Maybe<Scalars["String"]>;
   }) => Maybe<Search>;
+  seo?: Maybe<SEOConfig>;
   service: (args: {
     asPreview?: Maybe<Scalars["Boolean"]>;
     id: Scalars["ID"];
@@ -52165,6 +53589,7 @@ export interface SchemaObjectTypes {
   DiscussionSettings: DiscussionSettings;
   EnqueuedScript: EnqueuedScript;
   EnqueuedStylesheet: EnqueuedStylesheet;
+  FAQs: FAQs;
   FilebirdBlockFilebirdGallery: FilebirdBlockFilebirdGallery;
   FilebirdBlockFilebirdGalleryAttributes: FilebirdBlockFilebirdGalleryAttributes;
   FooterSettings: FooterSettings;
@@ -52387,6 +53812,7 @@ export interface SchemaObjectTypes {
   PostToTermNodeConnectionEdge: PostToTermNodeConnectionEdge;
   PostToTermNodeConnectionPageInfo: PostToTermNodeConnectionPageInfo;
   PostTypeLabelDetails: PostTypeLabelDetails;
+  PostTypeSEO: PostTypeSEO;
   Product: Product;
   ProductName: ProductName;
   ProductNameToContentNodeConnection: ProductNameToContentNodeConnection;
@@ -52506,6 +53932,39 @@ export interface SchemaObjectTypes {
   RootQueryToUserRoleConnection: RootQueryToUserRoleConnection;
   RootQueryToUserRoleConnectionEdge: RootQueryToUserRoleConnectionEdge;
   RootQueryToUserRoleConnectionPageInfo: RootQueryToUserRoleConnectionPageInfo;
+  SEOBreadcrumbs: SEOBreadcrumbs;
+  SEOConfig: SEOConfig;
+  SEOContentType: SEOContentType;
+  SEOContentTypeArchive: SEOContentTypeArchive;
+  SEOContentTypes: SEOContentTypes;
+  SEOGlobalMeta: SEOGlobalMeta;
+  SEOGlobalMeta404: SEOGlobalMeta404;
+  SEOGlobalMetaAuthor: SEOGlobalMetaAuthor;
+  SEOGlobalMetaConfig: SEOGlobalMetaConfig;
+  SEOGlobalMetaDate: SEOGlobalMetaDate;
+  SEOGlobalMetaHome: SEOGlobalMetaHome;
+  SEOOpenGraph: SEOOpenGraph;
+  SEOOpenGraphFrontPage: SEOOpenGraphFrontPage;
+  SEOPageInfoSchema: SEOPageInfoSchema;
+  SEOPostTypeBreadcrumbs: SEOPostTypeBreadcrumbs;
+  SEOPostTypePageInfo: SEOPostTypePageInfo;
+  SEOPostTypeSchema: SEOPostTypeSchema;
+  SEORedirect: SEORedirect;
+  SEOSchema: SEOSchema;
+  SEOSocial: SEOSocial;
+  SEOSocialFacebook: SEOSocialFacebook;
+  SEOSocialInstagram: SEOSocialInstagram;
+  SEOSocialLinkedIn: SEOSocialLinkedIn;
+  SEOSocialMySpace: SEOSocialMySpace;
+  SEOSocialPinterest: SEOSocialPinterest;
+  SEOSocialTwitter: SEOSocialTwitter;
+  SEOSocialWikipedia: SEOSocialWikipedia;
+  SEOSocialYoutube: SEOSocialYoutube;
+  SEOTaxonomySchema: SEOTaxonomySchema;
+  SEOUser: SEOUser;
+  SEOUserSchema: SEOUserSchema;
+  SEOUserSocial: SEOUserSocial;
+  SEOWebmaster: SEOWebmaster;
   SafeSvgSvgIcon: SafeSvgSvgIcon;
   SafeSvgSvgIconAttributes: SafeSvgSvgIconAttributes;
   Search: Search;
@@ -52526,6 +53985,7 @@ export interface SchemaObjectTypes {
   TagToPostConnectionPageInfo: TagToPostConnectionPageInfo;
   TagToTaxonomyConnectionEdge: TagToTaxonomyConnectionEdge;
   Taxonomy: Taxonomy;
+  TaxonomySEO: TaxonomySEO;
   TaxonomyToContentTypeConnection: TaxonomyToContentTypeConnection;
   TaxonomyToContentTypeConnectionEdge: TaxonomyToContentTypeConnectionEdge;
   TaxonomyToContentTypeConnectionPageInfo: TaxonomyToContentTypeConnectionPageInfo;
@@ -52895,6 +54355,7 @@ export type SchemaObjectTypesNames =
   | "DiscussionSettings"
   | "EnqueuedScript"
   | "EnqueuedStylesheet"
+  | "FAQs"
   | "FilebirdBlockFilebirdGallery"
   | "FilebirdBlockFilebirdGalleryAttributes"
   | "FooterSettings"
@@ -53117,6 +54578,7 @@ export type SchemaObjectTypesNames =
   | "PostToTermNodeConnectionEdge"
   | "PostToTermNodeConnectionPageInfo"
   | "PostTypeLabelDetails"
+  | "PostTypeSEO"
   | "Product"
   | "ProductName"
   | "ProductNameToContentNodeConnection"
@@ -53236,6 +54698,39 @@ export type SchemaObjectTypesNames =
   | "RootQueryToUserRoleConnection"
   | "RootQueryToUserRoleConnectionEdge"
   | "RootQueryToUserRoleConnectionPageInfo"
+  | "SEOBreadcrumbs"
+  | "SEOConfig"
+  | "SEOContentType"
+  | "SEOContentTypeArchive"
+  | "SEOContentTypes"
+  | "SEOGlobalMeta"
+  | "SEOGlobalMeta404"
+  | "SEOGlobalMetaAuthor"
+  | "SEOGlobalMetaConfig"
+  | "SEOGlobalMetaDate"
+  | "SEOGlobalMetaHome"
+  | "SEOOpenGraph"
+  | "SEOOpenGraphFrontPage"
+  | "SEOPageInfoSchema"
+  | "SEOPostTypeBreadcrumbs"
+  | "SEOPostTypePageInfo"
+  | "SEOPostTypeSchema"
+  | "SEORedirect"
+  | "SEOSchema"
+  | "SEOSocial"
+  | "SEOSocialFacebook"
+  | "SEOSocialInstagram"
+  | "SEOSocialLinkedIn"
+  | "SEOSocialMySpace"
+  | "SEOSocialPinterest"
+  | "SEOSocialTwitter"
+  | "SEOSocialWikipedia"
+  | "SEOSocialYoutube"
+  | "SEOTaxonomySchema"
+  | "SEOUser"
+  | "SEOUserSchema"
+  | "SEOUserSocial"
+  | "SEOWebmaster"
   | "SafeSvgSvgIcon"
   | "SafeSvgSvgIconAttributes"
   | "Search"
@@ -53256,6 +54751,7 @@ export type SchemaObjectTypesNames =
   | "TagToPostConnectionPageInfo"
   | "TagToTaxonomyConnectionEdge"
   | "Taxonomy"
+  | "TaxonomySEO"
   | "TaxonomyToContentTypeConnection"
   | "TaxonomyToContentTypeConnectionEdge"
   | "TaxonomyToContentTypeConnectionPageInfo"
@@ -54805,6 +56301,7 @@ export interface ScalarsEnums extends MakeNullable<Scalars> {
   ProductNameIdType: ProductNameIdType | undefined;
   RateIdType: RateIdType | undefined;
   RelationEnum: RelationEnum | undefined;
+  SEOCardType: SEOCardType | undefined;
   ServiceIdType: ServiceIdType | undefined;
   TagIdType: TagIdType | undefined;
   TaxonomyEnum: TaxonomyEnum | undefined;
