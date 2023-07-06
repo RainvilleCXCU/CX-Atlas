@@ -40,7 +40,7 @@ export default function Page() {
 					</p>
 					<Accordion title={title} content={content} isOpen={false} />
 					<Accordion title={title} content={content} isOpen={false} />
-					<FAQ id={"6"} title={title} content={content} isOpen={false} />
+					<FAQ id={"385"} title={title} content={content} isOpen={false} />
 
 					<LocationDetails />
 				</div>
