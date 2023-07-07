@@ -3,6 +3,7 @@ import parse, { domToReact, attributesToProps } from "html-react-parser";
 import { client } from 'client';
 import Link from "next/link";
 import FAQ from "components/FAQs/faq";
+import Datatrac from "components/Blocks/Datatrac";
 
 export const parseHtml = (html) => {
     const domainRegEx = new RegExp(/(http)/, 'i');
@@ -14,6 +15,7 @@ export const parseHtml = (html) => {
             const isInternalLink = (name === "a" && (internalLinkRegEx.test(attribs.href) || domainRegEx.test(attribs.href) === false ));
             const isFAQItem = attribs && attribs.class && attribs.class.includes("ewd-ufaq-faq-div");
             const isResponsiveTable = (name === 'table' && attribs && attribs.class && attribs.class.includes("tablepress-responsive"))
+            const isDatatrac = attribs && attribs.class && attribs.class.includes("datatrac-wrapper");
             
 
             if (isInternalLink) {
@@ -27,6 +29,12 @@ export const parseHtml = (html) => {
             if(isFAQItem) {
                 return (
                     <FAQ id={attribs['data-post_id']} />
+                )
+            }
+
+            if(isDatatrac) {
+                return (
+                    <Datatrac datatracID={attribs['data-datatrac-product']} productName={attribs['data-datatrac-productname']} compareType={attribs['data-datatrac-value']} />
                 )
             }
 
