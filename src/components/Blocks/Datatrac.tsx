@@ -23,7 +23,7 @@ function Datatrac({
 
     useEffect(() => {
         setLoading(true)
-        if (datatracId && datatracID) {
+        if (datatracEnabled && datatracId && datatracID) {
             fetch(`https://api.datatrac.net/api/Thresholds.json?MarketID=${marketId}&ProductClass=${datatracID}&ApiKey=${datatracId}`)
                 .then((res) => res.json())
                 .then((data) => {
@@ -31,7 +31,7 @@ function Datatrac({
                     setLoading(false)
                 })
         }
-    }, [datatracID]);
+    }, [datatracID, datatracId]);
 
     const compareSymbol = () => {
         let sign = '';
