@@ -6,6 +6,9 @@ import { useRouter } from 'next/router';
 import { client } from 'client';
 import GTM from 'components/ThirdParty/gtm';
 import { parseHtml } from 'lib/parser';
+import HotJar from 'components/ThirdParty/hotjar';
+import Qualtrics from 'components/ThirdParty/qualtrics';
+import Spectrum from 'components/ThirdParty/spectrum';
 
 const POSTS_PER_PAGE = 5;
 
@@ -39,6 +42,7 @@ export default function Page() {
         description={generalSettings.description}
       />
       <GTM />
+      <HotJar />
 
       <main id="main" className="content content-single blog">
         {blogtop &&
@@ -57,6 +61,8 @@ export default function Page() {
       </main>
 
       <Footer copyrightHolder={generalSettings.title} />
+			<Qualtrics />
+			<Spectrum />
     </>
   );
 }

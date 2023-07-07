@@ -11,6 +11,9 @@ import { getNextServerSideProps, getNextStaticProps, is404 } from '@faustjs/next
 import { parseHtml, parseShortcode } from 'lib/parser';
 import apolloClient from 'apolloClient';
 import { gql } from '@apollo/client';
+import HotJar from 'components/ThirdParty/hotjar';
+import Qualtrics from 'components/ThirdParty/qualtrics';
+import Spectrum from 'components/ThirdParty/spectrum';
 
 export interface PageProps {
     page: PageType | PageType['preview']['node'] | null | undefined;
@@ -32,6 +35,8 @@ export default function Page({ product, type, minor }) {
                     {`Apply ${type} : ${product.displayName} - ${generalSettings.title}`}
                 </title>
             </Head>
+            <GTM />
+            <HotJar />
             <span id='cx-bridge'>
                 <Header
                     title={generalSettings.title}
@@ -42,7 +47,6 @@ export default function Page({ product, type, minor }) {
                     showUtilityNav={false}
                 />
 
-                <GTM />
 
                 <div id="page" className="container site">
                     <main id="main" className="content content-single">
@@ -54,6 +58,8 @@ export default function Page({ product, type, minor }) {
             </span>
 
             {/* <Footer copyrightHolder={generalSettings.title} /> */}
+			<Qualtrics />
+			<Spectrum />
         </>
     );
 }

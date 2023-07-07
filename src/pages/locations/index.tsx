@@ -16,6 +16,9 @@ import PageTitle from "components/Blocks/PageTitle";
 import Container from "components/Blocks/Container";
 import Columns from "components/Blocks/Columns";
 import Column from "components/Blocks/Column";
+import HotJar from "components/ThirdParty/hotjar";
+import Qualtrics from "components/ThirdParty/qualtrics";
+import Spectrum from "components/ThirdParty/spectrum";
 
 export default function Page({locationSettings}) {
 	const { useQuery } = client;
@@ -51,6 +54,7 @@ export default function Page({locationSettings}) {
 				<title>Locations - {generalSettings.title}</title>
 			</Head>
 			<GTM />
+			<HotJar />
 
 			<main className="content content-single">
 				<div className="wrap">
@@ -96,6 +100,8 @@ export default function Page({locationSettings}) {
 			</main>
 
 			<Footer copyrightHolder={generalSettings.title} />
+			<Qualtrics />
+			<Spectrum />
 		</>
 	);
 }

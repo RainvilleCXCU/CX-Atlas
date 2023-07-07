@@ -16204,12 +16204,16 @@ export const generatedSchema = {
   },
   ThirdPartySettings: {
     __typename: { __type: "String!" },
+    datatracEnabled: { __type: "String" },
+    datatracId: { __type: "String" },
     gtmEnabled: { __type: "String" },
     gtmId: { __type: "String" },
     hotjarEnabled: { __type: "String" },
     hotjarId: { __type: "String" },
     qualtricsEnabled: { __type: "String" },
     qualtricsId: { __type: "String" },
+    spectrumEnabled: { __type: "String" },
+    spectrumId: { __type: "String" },
     thirdPartySettings: { __type: "String" },
   },
   UltimateFaqsEwdUfaqDisplayFaqBlock: {
@@ -50021,6 +50025,14 @@ export interface ThirdPartySettings {
   /**
    * The number of votes
    */
+  datatracEnabled?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The number of votes
+   */
+  datatracId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The number of votes
+   */
   gtmEnabled?: Maybe<ScalarsEnums["String"]>;
   /**
    * The number of votes
@@ -50042,6 +50054,14 @@ export interface ThirdPartySettings {
    * The number of votes
    */
   qualtricsId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The number of votes
+   */
+  spectrumEnabled?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The number of votes
+   */
+  spectrumId?: Maybe<ScalarsEnums["String"]>;
   /**
    * The string Settings Group
    */

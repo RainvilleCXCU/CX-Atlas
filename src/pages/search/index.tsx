@@ -13,6 +13,9 @@ import { GetStaticPropsContext } from 'next';
 import { getNextStaticProps } from '@faustjs/next';
 import SearchListing from 'components/Search/Listing';
 import SearchBar from 'components/Search/SearchBar';
+import HotJar from 'components/ThirdParty/hotjar';
+import Qualtrics from 'components/ThirdParty/qualtrics';
+import Spectrum from 'components/ThirdParty/spectrum';
 
 const POSTS_PER_PAGE = 6;
 
@@ -51,6 +54,7 @@ export default function Page() {
       />
 
       <GTM />
+      <HotJar />
 
       <main id="main" className="content content-index container">
         <div id="post-wrap" className='cx-search__wrapper search'>
@@ -77,6 +81,8 @@ export default function Page() {
       </main>
 
       <Footer copyrightHolder={generalSettings.title} />
+			<Qualtrics />
+			<Spectrum />
     </>
   );
 }
