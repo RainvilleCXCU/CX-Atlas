@@ -23,7 +23,7 @@ function Datatrac({
 
     useEffect(() => {
         setLoading(true)
-        if (datatracId) {
+        if (datatracId && datatracID) {
             fetch(`https://api.datatrac.net/api/Thresholds.json?MarketID=${marketId}&ProductClass=${datatracID}&ApiKey=${datatracId}`)
                 .then((res) => res.json())
                 .then((data) => {
@@ -50,7 +50,7 @@ function Datatrac({
 
     return (
         <>
-        { datatracEnabled && datatracId && 
+        { datatracEnabled && datatracId && datatracID &&
             <div className="datatrac-wrapper db-hide" data-datatrac-product={datatracID} data-datatrac-value={compareType}>
                 <Heading level='h2'>Earn {data?.[compareType]}{compareSymbol()} More By Choosing Connexus<sup className="comparison-superscript">*</sup></Heading>
 
