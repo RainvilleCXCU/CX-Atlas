@@ -31,7 +31,7 @@ function Datatrac({
                     setLoading(false)
                 })
         }
-    }, [datatracId]);
+    }, [datatracID]);
 
     const compareSymbol = () => {
         let sign = '';
