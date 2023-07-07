@@ -3,6 +3,9 @@ export const pageview = (url) => {
     event: 'pageview',
     page: url,
   });
-  QSI?.API?.load();
-  QSI?.API?.run();
+  if(QSI) {
+    QSI.API.unload();
+    QSI.API.load();
+    QSI.API.run();
+  }
 }
