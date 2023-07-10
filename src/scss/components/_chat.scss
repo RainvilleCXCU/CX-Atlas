@@ -1,0 +1,104 @@
+/*
+    Styles will apply when device(view port) width is >768px
+*/
+@media (min-device-width : 768px) {
+    .desktop_bubble_chat {
+        height: 410px;
+        max-height: 410px;
+        width: 312px;
+        position: fixed;
+        bottom: 1em;
+        right: 1em;
+        border: none;
+        outline: none;
+        box-sizing: border-box;
+        z-index: 999;
+        overflow: hidden;
+        padding: 0;
+    }
+}
+
+/*
+    Styles will apply when device(view port) width is <=768px
+*/
+@media (max-device-width: 768px) {
+    .desktop_bubble_chat {
+        height: 100%;
+        max-height: 100%;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        border: none;
+        outline: none;
+        box-sizing: border-box;
+        z-index: 999;
+        overflow: hidden;
+        padding: 0;
+    }
+}
+
+/*
+    Styles will apply when available width on window resize is >768px
+*/
+@media (min-width : 768px) {
+    .desktop_bubble_chat {
+        height: 410px;
+        max-height: 410px;
+        width: 312px;
+        position: fixed;
+        bottom: 1em;
+        right: 1em;
+        border: none;
+        outline: none;
+        box-sizing: border-box;
+        z-index: 999;
+        overflow: hidden;
+        padding: 0;
+    }
+}
+
+/*
+    Styles will apply when available width on window resize is <=768px
+*/
+@media (max-width: 768px) {
+    .desktop_bubble_chat {
+        height: 100%;
+        max-height: 100%;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        border: none;
+        outline: none;
+        box-sizing: border-box;
+        z-index: 999;
+        overflow: hidden;
+        padding: 0;
+    }
+}
+
+/*
+    Styles will apply when isMobile function returns true
+*/
+.mobile_bubble_chat {
+    height: 100%;
+    max-height: 100%;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    z-index: 999;
+    overflow: hidden;
+    padding: 0;
+}
+
+/*
+    Style will apply when chat is minimized
+*/
+.minimized_chat {
+    height: 56px;
+}

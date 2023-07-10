@@ -20,7 +20,10 @@ export const files = {
             id: 'parent-theme',
             src: '/wp-content/themes/genesis-block-theme/style.css',
         },
-
+        {
+            id: 'cisco-chat',
+            src: '/wp-content/themes/CXCU/vendors/cisco-chat/scripts.css',
+        },
         {
             id: 'child-theme',
             src: '/wp-content/themes/CXCU/style.css',
@@ -28,6 +31,12 @@ export const files = {
         {
             id: 'styleguide',
             src: `/wp-content/themes/CXCU/assets/${process.env.styleguideVersion || '0.6.35'}/cxcuatlas.css`
+        }
+    ],
+    js: [
+        {
+            id: 'cisco-chat',
+            src: '/wp-content/themes/CXCU/vendors/cisco-chat/scripts.js',
         }
     ]
 }
