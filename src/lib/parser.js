@@ -5,6 +5,7 @@ import Link from "next/link";
 import FAQ from "components/FAQs/faq";
 import Datatrac from "components/Blocks/Datatrac";
 import Chat from "components/Chat/cisco";
+import DatatracValue from "components/Datatrac/Value";
 // import { ciscoBubbleChat } from "./cisco-chat";
 
 export const parseHtml = (html) => {
@@ -17,15 +18,14 @@ export const parseHtml = (html) => {
             const isInternalLink = (name === "a" && (internalLinkRegEx.test(attribs.href) || domainRegEx.test(attribs.href) === false ) && !attribs.onClick);
             const isFAQItem = attribs && attribs.class && attribs.class.includes("ewd-ufaq-faq-div");
             const isResponsiveTable = (name === 'table' && attribs && attribs.class && attribs.class.includes("tablepress-responsive"))
-            const isDatatrac = attribs && attribs.class && attribs.class.includes("datatrac-wrapper");
+            const isDatatrac = attribs && attribs.class && attribs.class.includes("datatrac-wrapper") && !attribs.class.includes('datatrac-wrapper__disclosure');
             const isCiscoBubbleChat = name === 'a' && attribs && attribs.class?.includes('cx-icon__chat_bubble');
-            
 
-            
             if(isCiscoBubbleChat) {
-                return <Chat className={attribs.class}>{domToReact(children, options)}</Chat>
+                return (
+                    <Chat className={attribs.class}>{domToReact(children, options)}</Chat>
+                )
             }
-            
 
             else if (isInternalLink) {
                 const href = attribs.href;
@@ -46,6 +46,13 @@ export const parseHtml = (html) => {
                     <Datatrac datatracID={attribs['data-datatrac-product']} productName={attribs['data-datatrac-productname']} compareType={attribs['data-datatrac-value']} />
                 )
             }
+
+            else if(attribs && attribs['data-datatrac-product'] && attribs['data-datatrac-value'] && !attribs.class?.includes('datatrac-wrapper')) {
+                console.log('DATATRAC')
+                return ( 
+                    <DatatracValue productName={attribs['data-datatrac-product']} value={attribs['data-datatrac-value']} />
+                ) 
+            }           
 
             else if (isResponsiveTable) {
                 return (
