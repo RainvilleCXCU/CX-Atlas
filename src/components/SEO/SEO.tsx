@@ -10,7 +10,9 @@ interface SEOProps {
 	ogTitle: string;
 	ogDescription: string;
 	ogURL: string;
+	breadcrumbs: any;
 	ogSite_Name: string;
+	published_time: string;
 	modified_time: string;
 	ogImage: string;
 	ogImageWidth: string;
@@ -31,9 +33,11 @@ const SEO: React.FC<SEOProps> = ({
 	ogTitle = "Connexus Credit Union",
 	ogDescription = "Connexus Credit Union helps members reach their financial goals with higher yields, lower rates, and innovative online services.",
 	ogURL = "https://www.connexuscu.org/",
+	breadcrumbs = [],
 	ogSite_Name = "Connexus Credit Union",
+	published_time = "",
 	modified_time = "",
-	ogImage = "http://localhost:10026/wp-content/uploads/2022/02/LogoConnexus.svg",
+	ogImage = "https://www.connexuscu.org/wp-content/uploads/CCULogo.svg",
 	ogImageWidth = "801",
 	ogImageHeight = "486",
 	ogImageType = "Image",
@@ -43,6 +47,17 @@ const SEO: React.FC<SEOProps> = ({
 }) => {
 	const { useQuery } = client;
 	const generalSettings = useQuery().generalSettings;
+	const { logo } = useQuery().generalSettings;
+
+	//logic for the URL breadcrumbs in the Yoast <script> tag
+	let i;
+	let itemListElementArray = [];
+	for (i = 0; i < breadcrumbs.length; i++) {
+		let object = `{"@type": "ListItem","position": ${i + 1},"name": "${
+			breadcrumbs[i].text
+		}","item": "${breadcrumbs[i].url}"}`;
+		itemListElementArray.push(object);
+	}
 
 	return (
 		<Head>
@@ -123,10 +138,9 @@ const SEO: React.FC<SEOProps> = ({
 				content={twitter_data1}
 				className="yoast-seo-meta-tag"
 			></meta>
-			<script
-				type="application/ld+json"
-				className="yoast-schema-graph"
-			>{`{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://www.connexuscu.org/loans/recreational/","url":"https://www.connexuscu.org/loans/recreational/","name":"Recreational Loans - Connexus Credit Union","isPartOf":{"@id":"https://www.connexuscu.org/#website"},"primaryImageOfPage":{"@id":"https://www.connexuscu.org/loans/recreational/#primaryimage"},"image":{"@id":"https://www.connexuscu.org/loans/recreational/#primaryimage"},"thumbnailUrl":"https://www.connexuscu.org/wp-content/uploads/2018_AL001_322_CUNAMutual_680x680.webp","datePublished":"2023-03-27T12:30:15+00:00","dateModified":"2023-06-01T16:14:22+00:00","description":"Apply for a Recreational Loan. Loan rates and terms for boats, campers, RVs, ATVs, UTVs, personal watercraft, and snowmobiles.","breadcrumb":{"@id":"https://www.connexuscu.org/loans/recreational/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://www.connexuscu.org/loans/recreational/"]}]},{"@type":"ImageObject","inLanguage":"en-US","@id":"https://www.connexuscu.org/loans/recreational/#primaryimage","url":"https://www.connexuscu.org/wp-content/uploads/2018_AL001_322_CUNAMutual_680x680.webp","contentUrl":"https://www.connexuscu.org/wp-content/uploads/2018_AL001_322_CUNAMutual_680x680.webp","width":680,"height":680},{"@type":"BreadcrumbList","@id":"https://www.connexuscu.org/loans/recreational/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.connexuscu.org/"},{"@type":"ListItem","position":2,"name":"Loans","item":"https://www.connexuscu.org/loans/"},{"@type":"ListItem","position":3,"name":"Recreational Loans"}]},{"@type":"WebSite","@id":"https://www.connexuscu.org/#website","url":"https://www.connexuscu.org/","name":"Connexus Credit Union","description":"High Yields, Low Rates, Online Services","publisher":{"@id":"https://www.connexuscu.org/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.connexuscu.org/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"Organization","@id":"https://www.connexuscu.org/#organization","name":"Connexus Credit Union","url":"https://www.connexuscu.org/","logo":{"@type":"ImageObject","inLanguage":"en-US","@id":"https://www.connexuscu.org/#/schema/logo/image/","url":"https://www.connexuscu.org/wp-content/uploads/2022/02/LogoConnexus.svg","contentUrl":"https://www.connexuscu.org/wp-content/uploads/2022/02/LogoConnexus.svg","width":145,"height":54,"caption":"Connexus Credit Union"},"image":{"@id":"https://www.connexuscu.org/#/schema/logo/image/"}}]}`}</script>
+			<script type="application/ld+json" className="yoast-schema-graph">
+				{`{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"${canonicalURL}","url":"${canonicalURL}","name":"${title} - ${generalSettings.title}","isPartOf":{"@id":"https://www.connexuscu.org/#website"},"primaryImageOfPage":{"@id":"${canonicalURL}#primaryimage"},"image":{"@id":"${canonicalURL}#primaryimage"},"thumbnailUrl":"${ogImage}","datePublished":"${published_time}","dateModified":"${modified_time}","description":"${metaDesc}","breadcrumb":{"@id":"${canonicalURL}#breadcrumb"},"inLanguage":"${ogLocale}","potentialAction":[{"@type":"ReadAction","target":["${canonicalURL}"]}]},{"@type":"ImageObject","inLanguage":"${ogLocale}","@id":"${canonicalURL}#primaryimage","url":"${ogImage}","contentUrl":"${ogImage}","width":${ogImageWidth},"height":${ogImageHeight}},{"@type":"BreadcrumbList","@id":"${ogURL}#breadcrumb","itemListElement":[${itemListElementArray}]},{"@type":"WebSite","@id":"https://www.connexuscu.org/#website","url":"https://www.connexuscu.org/","name":"Connexus Credit Union","description":"High Yields, Low Rates, Online Services","publisher":{"@id":"https://www.connexuscu.org/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.connexuscu.org/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"${ogLocale}"},{"@type":"Organization","@id":"https://www.connexuscu.org/#organization","name":"Connexus Credit Union","url":"https://www.connexuscu.org/","logo":{"@type":"ImageObject","inLanguage":"${ogLocale}","@id":"https://www.connexuscu.org/#/schema/logo/image/","url":"${logo}","contentUrl":"${logo}","width":145,"height":54,"caption":"Connexus Credit Union"},"image":{"@id":"https://www.connexuscu.org/#/schema/logo/image/"}}]}`}
+			</script>
 		</Head>
 	);
 };
