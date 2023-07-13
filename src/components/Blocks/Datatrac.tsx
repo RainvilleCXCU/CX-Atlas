@@ -34,8 +34,9 @@ function Datatrac({
                     setState({
                         ...state,
                         datatrac: {
-                            productName,
-                            ...data[0]
+                            [datatracID]:{
+                                ...data[0]
+                            }
                         }
                     })
                 })

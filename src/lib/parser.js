@@ -6,6 +6,7 @@ import FAQ from "components/FAQs/faq";
 import Datatrac from "components/Blocks/Datatrac";
 import Chat from "components/Chat/cisco";
 import DatatracValue from "components/Datatrac/Value";
+import DatatracFootnote from "components/Datatrac/Footnote";
 // import { ciscoBubbleChat } from "./cisco-chat";
 
 export const parseHtml = (html) => {
@@ -47,8 +48,13 @@ export const parseHtml = (html) => {
                 )
             }
 
+            else if(attribs && attribs.class?.includes('datatrac-wrapper__disclosure')) {
+                return ( 
+                    <DatatracFootnote productName={attribs['data-datatrac-product']} />
+                ) 
+            }        
+
             else if(attribs && attribs['data-datatrac-product'] && attribs['data-datatrac-value'] && !attribs.class?.includes('datatrac-wrapper')) {
-                console.log('DATATRAC')
                 return ( 
                     <DatatracValue productName={attribs['data-datatrac-product']} value={attribs['data-datatrac-value']} />
                 ) 
