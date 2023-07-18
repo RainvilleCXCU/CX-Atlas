@@ -7,6 +7,8 @@ import Datatrac from "components/Blocks/Datatrac";
 import Chat from "components/Chat/cisco";
 import DatatracValue from "components/Datatrac/Value";
 import DatatracFootnote from "components/Datatrac/Footnote";
+import LinkLibraryCatLink from "components/LinkLibrary/NavItem";
+import LinkLibrary from "components/LinkLibrary/LinkLibrary";
 // import { ciscoBubbleChat } from "./cisco-chat";
 
 export const parseHtml = (html) => {
@@ -21,10 +23,19 @@ export const parseHtml = (html) => {
             const isResponsiveTable = (name === 'table' && attribs && attribs.class && attribs.class.includes("tablepress-responsive"))
             const isDatatrac = attribs && attribs.class && attribs.class.includes("datatrac-wrapper") && !attribs.class.includes('datatrac-wrapper__disclosure');
             const isCiscoBubbleChat = name === 'a' && attribs && attribs.class?.includes('cx-icon__chat_bubble');
+            // const isLinkLibraryCatLink = name === 'a' && attribs && attribs.class?.includes('cx-link-lib-cats__link');
+            const isLinkLibrary = attribs && attribs['data-link-library-cats'];
 
             if(isCiscoBubbleChat) {
                 return (
                     <Chat className={attribs.class}>{domToReact(children, options)}</Chat>
+                )
+            }
+
+            else if(isLinkLibrary) {
+                const cats = JSON.parse(attribs?.['data-link-library-cats']);
+                return (
+                    <LinkLibrary cat_ids={cats} {...attributesToProps(attribs)}>{domToReact(children, options)}</LinkLibrary>
                 )
             }
 

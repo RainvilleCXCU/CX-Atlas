@@ -6,6 +6,7 @@ import Head from "next/head";
 import Accordion from "components/Accordion/Accordion";
 import FAQ from "components/FAQs/faq";
 import LocationDetails from "components/Locations/location-details";
+import LinkLibraryNav from "components/LinkLibrary/NavItem";
 
 export default function Page() {
 	const { useQuery } = client;
@@ -43,6 +44,7 @@ export default function Page() {
 					<FAQ id={"385"} title={title} content={content} isOpen={false} />
 
 					<LocationDetails />
+
 				</div>
 			</main>
 

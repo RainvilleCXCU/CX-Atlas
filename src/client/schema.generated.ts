@@ -476,6 +476,8 @@ export enum ContentTypeEnum {
   /** The Type of Content object */
   RATE = "RATE",
   /** The Type of Content object */
+  SEARCHWIDGET = "SEARCHWIDGET",
+  /** The Type of Content object */
   SERVICE = "SERVICE",
   /** The Type of Content object */
   WPSL_STORES = "WPSL_STORES",
@@ -930,6 +932,31 @@ export interface CreateRateInput {
   title?: InputMaybe<Scalars["String"]>;
 }
 
+/** Input for the createSearchWidget mutation. */
+export interface CreateSearchWidgetInput {
+  active?: InputMaybe<Scalars["Boolean"]>;
+  /** The userId to assign as the author of the object */
+  authorId?: InputMaybe<Scalars["ID"]>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars["String"]>;
+  content?: InputMaybe<Scalars["String"]>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars["String"]>;
+  heading?: InputMaybe<Scalars["String"]>;
+  matches?: InputMaybe<Scalars["String"]>;
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars["Int"]>;
+  name: Scalars["String"];
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars["String"]>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars["String"]>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+}
+
 /** Input for the createService mutation. */
 export interface CreateServiceInput {
   /** The userId to assign as the author of the object */
@@ -1202,6 +1229,18 @@ export interface DeleteRateInput {
   /** Whether the object should be force deleted instead of being moved to the trash */
   forceDelete?: InputMaybe<Scalars["Boolean"]>;
   /** The ID of the rate to delete */
+  id: Scalars["ID"];
+  /** Override the edit lock when another user is editing the post */
+  ignoreEditLock?: InputMaybe<Scalars["Boolean"]>;
+}
+
+/** Input for the deleteSearchWidget mutation. */
+export interface DeleteSearchWidgetInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars["String"]>;
+  /** Whether the object should be force deleted instead of being moved to the trash */
+  forceDelete?: InputMaybe<Scalars["Boolean"]>;
+  /** The ID of the searchWidget to delete */
   id: Scalars["ID"];
   /** Override the edit lock when another user is editing the post */
   ignoreEditLock?: InputMaybe<Scalars["Boolean"]>;
@@ -3973,6 +4012,54 @@ export interface RootQueryToRevisionsConnectionWhereArgs {
   title?: InputMaybe<Scalars["String"]>;
 }
 
+/** Arguments for filtering the RootQueryToSearchWidgetConnection connection */
+export interface RootQueryToSearchWidgetConnectionWhereArgs {
+  /** The user that's connected as the author of the object. Use the userId for the author object. */
+  author?: InputMaybe<Scalars["Int"]>;
+  /** Find objects connected to author(s) in the array of author's userIds */
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Find objects connected to the author by the author's nicename */
+  authorName?: InputMaybe<Scalars["String"]>;
+  /** Find objects NOT connected to author(s) in the array of author's userIds */
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars["Boolean"]>;
+  /** Specific database ID of the object */
+  id?: InputMaybe<Scalars["Int"]>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars["String"]>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Paginate SearchWidgets with offsets */
+  offsetPagination?: InputMaybe<OffsetPagination>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars["ID"]>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars["String"]>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+}
+
 /** Arguments for filtering the RootQueryToServiceConnection connection */
 export interface RootQueryToServiceConnectionWhereArgs {
   /** The user that's connected as the author of the object. Use the userId for the author object. */
@@ -4157,6 +4244,18 @@ export interface RootQueryToUserConnectionWhereArgs {
 export enum SEOCardType {
   summary = "summary",
   summary_large_image = "summary_large_image",
+}
+
+/** The Type of Identifier used to fetch a single resource. Default is ID. */
+export enum SearchWidgetIdType {
+  /** Identify a resource by the Database ID. */
+  DATABASE_ID = "DATABASE_ID",
+  /** Identify a resource by the (hashed) Global ID. */
+  ID = "ID",
+  /** Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier. */
+  SLUG = "SLUG",
+  /** Identify a resource by the URI. */
+  URI = "URI",
 }
 
 /** Input for the sendPasswordResetEmail mutation. */
@@ -4768,6 +4867,35 @@ export interface UpdateRateInput {
   /** The status of the object */
   status?: InputMaybe<PostStatusEnum>;
   term?: InputMaybe<Scalars["String"]>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+}
+
+/** Input for the updateSearchWidget mutation. */
+export interface UpdateSearchWidgetInput {
+  active?: InputMaybe<Scalars["Boolean"]>;
+  /** The userId to assign as the author of the object */
+  authorId?: InputMaybe<Scalars["ID"]>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars["String"]>;
+  content?: InputMaybe<Scalars["String"]>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars["String"]>;
+  heading?: InputMaybe<Scalars["String"]>;
+  /** The ID of the searchWidget object */
+  id: Scalars["ID"];
+  /** Override the edit lock when another user is editing the post */
+  ignoreEditLock?: InputMaybe<Scalars["Boolean"]>;
+  matches?: InputMaybe<Scalars["String"]>;
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars["Int"]>;
+  name?: InputMaybe<Scalars["String"]>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars["String"]>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars["String"]>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
   /** The title of the object */
   title?: InputMaybe<Scalars["String"]>;
 }
@@ -5398,6 +5526,52 @@ export interface UserToRevisionsConnectionWhereArgs {
   title?: InputMaybe<Scalars["String"]>;
 }
 
+/** Arguments for filtering the UserToSearchWidgetConnection connection */
+export interface UserToSearchWidgetConnectionWhereArgs {
+  /** The user that's connected as the author of the object. Use the userId for the author object. */
+  author?: InputMaybe<Scalars["Int"]>;
+  /** Find objects connected to author(s) in the array of author's userIds */
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Find objects connected to the author by the author's nicename */
+  authorName?: InputMaybe<Scalars["String"]>;
+  /** Find objects NOT connected to author(s) in the array of author's userIds */
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars["Boolean"]>;
+  /** Specific database ID of the object */
+  id?: InputMaybe<Scalars["Int"]>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars["String"]>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars["ID"]>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars["String"]>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+}
+
 /** Arguments for filtering the UserToServiceConnection connection */
 export interface UserToServiceConnectionWhereArgs {
   /** The user that's connected as the author of the object. Use the userId for the author object. */
@@ -5532,6 +5706,7 @@ export const scalarsEnumsHash: import("gqty").ScalarsEnumsHash = {
   RateIdType: true,
   RelationEnum: true,
   SEOCardType: true,
+  SearchWidgetIdType: true,
   ServiceIdType: true,
   String: true,
   TagIdType: true,
@@ -9315,6 +9490,26 @@ export const generatedSchema = {
     clientMutationId: { __type: "String" },
     rate: { __type: "Rate" },
   },
+  CreateSearchWidgetInput: {
+    active: { __type: "Boolean" },
+    authorId: { __type: "ID" },
+    clientMutationId: { __type: "String" },
+    content: { __type: "String" },
+    date: { __type: "String" },
+    heading: { __type: "String" },
+    matches: { __type: "String" },
+    menuOrder: { __type: "Int" },
+    name: { __type: "String!" },
+    password: { __type: "String" },
+    slug: { __type: "String" },
+    status: { __type: "PostStatusEnum" },
+    title: { __type: "String" },
+  },
+  CreateSearchWidgetPayload: {
+    __typename: { __type: "String!" },
+    clientMutationId: { __type: "String" },
+    searchWidget: { __type: "SearchWidget" },
+  },
   CreateServiceInput: {
     authorId: { __type: "ID" },
     clientMutationId: { __type: "String" },
@@ -9568,6 +9763,18 @@ export const generatedSchema = {
     clientMutationId: { __type: "String" },
     deletedId: { __type: "ID" },
     rate: { __type: "Rate" },
+  },
+  DeleteSearchWidgetInput: {
+    clientMutationId: { __type: "String" },
+    forceDelete: { __type: "Boolean" },
+    id: { __type: "ID!" },
+    ignoreEditLock: { __type: "Boolean" },
+  },
+  DeleteSearchWidgetPayload: {
+    __typename: { __type: "String!" },
+    clientMutationId: { __type: "String" },
+    deletedId: { __type: "ID" },
+    searchWidget: { __type: "SearchWidget" },
   },
   DeleteServiceInput: {
     clientMutationId: { __type: "String" },
@@ -10236,6 +10443,7 @@ export const generatedSchema = {
     blockVisibility: { __type: "BlockAttributesObject" },
     chooseProduct: { __type: "String" },
     className: { __type: "String" },
+    compareType: { __type: "String" },
     lock: { __type: "BlockAttributesObject" },
   },
   GenesisCustomBlocksContentToggle: {
@@ -10590,6 +10798,26 @@ export const generatedSchema = {
     image: { __type: "Int" },
     lock: { __type: "BlockAttributesObject" },
     title: { __type: "String" },
+  },
+  GenesisCustomBlocksLinkLibrary: {
+    __typename: { __type: "String!" },
+    apiVersion: { __type: "Int" },
+    attributes: { __type: "GenesisCustomBlocksLinkLibraryAttributes" },
+    blockEditorCategoryName: { __type: "String" },
+    clientId: { __type: "String" },
+    cssClassNames: { __type: "[String]" },
+    innerBlocks: { __type: "[EditorBlock]" },
+    isDynamic: { __type: "Boolean!" },
+    name: { __type: "String" },
+    parentClientId: { __type: "String" },
+    renderedHtml: { __type: "String" },
+  },
+  GenesisCustomBlocksLinkLibraryAttributes: {
+    __typename: { __type: "String!" },
+    blockVisibility: { __type: "BlockAttributesObject" },
+    categories: { __type: "BlockAttributesObject" },
+    className: { __type: "String" },
+    lock: { __type: "BlockAttributesObject" },
   },
   GenesisCustomBlocksListContentSection: {
     __typename: { __type: "String!" },
@@ -11327,6 +11555,13 @@ export const generatedSchema = {
     className: { __type: "String" },
     lock: { __type: "BlockAttributesObject" },
     settings: { __type: "String" },
+  },
+  LinkLibraryLink: {
+    __typename: { __type: "String!" },
+    date: { __type: "String" },
+    id: { __type: "String" },
+    title: { __type: "String" },
+    url: { __type: "String" },
   },
   LinkLibraryLinkBlock: {
     __typename: { __type: "String!" },
@@ -15147,6 +15382,50 @@ export const generatedSchema = {
     status: { __type: "PostStatusEnum" },
     title: { __type: "String" },
   },
+  RootQueryToSearchWidgetConnection: {
+    __typename: { __type: "String!" },
+    edges: { __type: "[RootQueryToSearchWidgetConnectionEdge!]!" },
+    nodes: { __type: "[SearchWidget!]!" },
+    pageInfo: { __type: "RootQueryToSearchWidgetConnectionPageInfo!" },
+  },
+  RootQueryToSearchWidgetConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "SearchWidget!" },
+  },
+  RootQueryToSearchWidgetConnectionPageInfo: {
+    __typename: { __type: "String!" },
+    endCursor: { __type: "String" },
+    hasNextPage: { __type: "Boolean!" },
+    hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
+    startCursor: { __type: "String" },
+  },
+  RootQueryToSearchWidgetConnectionWhereArgs: {
+    author: { __type: "Int" },
+    authorIn: { __type: "[ID]" },
+    authorName: { __type: "String" },
+    authorNotIn: { __type: "[ID]" },
+    dateQuery: { __type: "DateQueryInput" },
+    hasPassword: { __type: "Boolean" },
+    id: { __type: "Int" },
+    in: { __type: "[ID]" },
+    mimeType: { __type: "MimeTypeEnum" },
+    name: { __type: "String" },
+    nameIn: { __type: "[String]" },
+    notIn: { __type: "[ID]" },
+    offsetPagination: { __type: "OffsetPagination" },
+    orderby: { __type: "[PostObjectsConnectionOrderbyInput]" },
+    parent: { __type: "ID" },
+    parentIn: { __type: "[ID]" },
+    parentNotIn: { __type: "[ID]" },
+    password: { __type: "String" },
+    search: { __type: "String" },
+    stati: { __type: "[PostStatusEnum]" },
+    status: { __type: "PostStatusEnum" },
+    title: { __type: "String" },
+  },
   RootQueryToServiceConnection: {
     __typename: { __type: "String!" },
     edges: { __type: "[RootQueryToServiceConnectionEdge!]!" },
@@ -15433,6 +15712,7 @@ export const generatedSchema = {
     post: { __type: "SEOContentType" },
     product: { __type: "SEOContentType" },
     rate: { __type: "SEOContentType" },
+    searchWidget: { __type: "SEOContentType" },
     service: { __type: "SEOContentType" },
   },
   SEOGlobalMeta: {
@@ -15646,6 +15926,86 @@ export const generatedSchema = {
     __typename: { __type: "String!" },
     results: { __type: "[Post]" },
     total: { __type: "String" },
+  },
+  SearchWidget: {
+    __typename: { __type: "String!" },
+    active: { __type: "Boolean" },
+    author: { __type: "NodeWithAuthorToUserConnectionEdge" },
+    authorDatabaseId: { __type: "Int" },
+    authorId: { __type: "ID" },
+    conditionalTags: { __type: "ConditionalTags" },
+    content: { __type: "String" },
+    contentType: { __type: "ContentNodeToContentTypeConnectionEdge" },
+    contentTypeName: { __type: "String!" },
+    databaseId: { __type: "Int!" },
+    date: { __type: "String" },
+    dateGmt: { __type: "String" },
+    desiredSlug: { __type: "String" },
+    editingLockedBy: { __type: "ContentNodeToEditLockConnectionEdge" },
+    enclosure: { __type: "String" },
+    enqueuedScripts: {
+      __type: "ContentNodeToEnqueuedScriptConnection",
+      __args: { after: "String", before: "String", first: "Int", last: "Int" },
+    },
+    enqueuedStylesheets: {
+      __type: "ContentNodeToEnqueuedStylesheetConnection",
+      __args: { after: "String", before: "String", first: "Int", last: "Int" },
+    },
+    guid: { __type: "String" },
+    heading: { __type: "String" },
+    id: { __type: "ID!" },
+    isContentNode: { __type: "Boolean!" },
+    isPreview: { __type: "Boolean" },
+    isRestricted: { __type: "Boolean" },
+    isTermNode: { __type: "Boolean!" },
+    lastEditedBy: { __type: "ContentNodeToEditLastConnectionEdge" },
+    link: { __type: "String" },
+    matches: { __type: "String" },
+    modified: { __type: "String" },
+    modifiedGmt: { __type: "String" },
+    name: { __type: "String" },
+    preview: { __type: "SearchWidgetToPreviewConnectionEdge" },
+    previewRevisionDatabaseId: { __type: "Int" },
+    previewRevisionId: { __type: "ID" },
+    searchWidgetId: { __type: "Int!" },
+    seo: { __type: "PostTypeSEO" },
+    slug: { __type: "String" },
+    status: { __type: "String" },
+    template: { __type: "ContentTemplate" },
+    templates: { __type: "[String]" },
+    title: {
+      __type: "String",
+      __args: { format: "PostObjectFieldFormatEnum" },
+    },
+    uri: { __type: "String" },
+  },
+  SearchWidgetConnection: {
+    __typename: { __type: "String!" },
+    edges: { __type: "[SearchWidgetConnectionEdge!]!" },
+    nodes: { __type: "[SearchWidget!]!" },
+    pageInfo: { __type: "SearchWidgetConnectionPageInfo!" },
+    $on: { __type: "$SearchWidgetConnection!" },
+  },
+  SearchWidgetConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "SearchWidget!" },
+    $on: { __type: "$SearchWidgetConnectionEdge!" },
+  },
+  SearchWidgetConnectionPageInfo: {
+    __typename: { __type: "String!" },
+    endCursor: { __type: "String" },
+    hasNextPage: { __type: "Boolean!" },
+    hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
+    startCursor: { __type: "String" },
+    $on: { __type: "$SearchWidgetConnectionPageInfo!" },
+  },
+  SearchWidgetToPreviewConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "SearchWidget!" },
   },
   SendPasswordResetEmailInput: {
     clientMutationId: { __type: "String" },
@@ -16643,6 +17003,28 @@ export const generatedSchema = {
     clientMutationId: { __type: "String" },
     rate: { __type: "Rate" },
   },
+  UpdateSearchWidgetInput: {
+    active: { __type: "Boolean" },
+    authorId: { __type: "ID" },
+    clientMutationId: { __type: "String" },
+    content: { __type: "String" },
+    date: { __type: "String" },
+    heading: { __type: "String" },
+    id: { __type: "ID!" },
+    ignoreEditLock: { __type: "Boolean" },
+    matches: { __type: "String" },
+    menuOrder: { __type: "Int" },
+    name: { __type: "String" },
+    password: { __type: "String" },
+    slug: { __type: "String" },
+    status: { __type: "PostStatusEnum" },
+    title: { __type: "String" },
+  },
+  UpdateSearchWidgetPayload: {
+    __typename: { __type: "String!" },
+    clientMutationId: { __type: "String" },
+    searchWidget: { __type: "SearchWidget" },
+  },
   UpdateServiceInput: {
     authorId: { __type: "ID" },
     clientMutationId: { __type: "String" },
@@ -16885,6 +17267,16 @@ export const generatedSchema = {
     roles: {
       __type: "UserToUserRoleConnection",
       __args: { after: "String", before: "String", first: "Int", last: "Int" },
+    },
+    searchWidgets: {
+      __type: "UserToSearchWidgetConnection",
+      __args: {
+        after: "String",
+        before: "String",
+        first: "Int",
+        last: "Int",
+        where: "UserToSearchWidgetConnectionWhereArgs",
+      },
     },
     seo: { __type: "SEOUser" },
     services: {
@@ -17401,6 +17793,49 @@ export const generatedSchema = {
     status: { __type: "PostStatusEnum" },
     title: { __type: "String" },
   },
+  UserToSearchWidgetConnection: {
+    __typename: { __type: "String!" },
+    edges: { __type: "[UserToSearchWidgetConnectionEdge!]!" },
+    nodes: { __type: "[SearchWidget!]!" },
+    pageInfo: { __type: "UserToSearchWidgetConnectionPageInfo!" },
+  },
+  UserToSearchWidgetConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "SearchWidget!" },
+  },
+  UserToSearchWidgetConnectionPageInfo: {
+    __typename: { __type: "String!" },
+    endCursor: { __type: "String" },
+    hasNextPage: { __type: "Boolean!" },
+    hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
+    startCursor: { __type: "String" },
+  },
+  UserToSearchWidgetConnectionWhereArgs: {
+    author: { __type: "Int" },
+    authorIn: { __type: "[ID]" },
+    authorName: { __type: "String" },
+    authorNotIn: { __type: "[ID]" },
+    dateQuery: { __type: "DateQueryInput" },
+    hasPassword: { __type: "Boolean" },
+    id: { __type: "Int" },
+    in: { __type: "[ID]" },
+    mimeType: { __type: "MimeTypeEnum" },
+    name: { __type: "String" },
+    nameIn: { __type: "[String]" },
+    notIn: { __type: "[ID]" },
+    orderby: { __type: "[PostObjectsConnectionOrderbyInput]" },
+    parent: { __type: "ID" },
+    parentIn: { __type: "[ID]" },
+    parentNotIn: { __type: "[ID]" },
+    password: { __type: "String" },
+    search: { __type: "String" },
+    stati: { __type: "[PostStatusEnum]" },
+    status: { __type: "PostStatusEnum" },
+    title: { __type: "String" },
+  },
   UserToServiceConnection: {
     __typename: { __type: "String!" },
     edges: { __type: "[UserToServiceConnectionEdge!]!" },
@@ -17625,6 +18060,10 @@ export const generatedSchema = {
       __type: "CreateRatePayload",
       __args: { input: "CreateRateInput!" },
     },
+    createSearchWidget: {
+      __type: "CreateSearchWidgetPayload",
+      __args: { input: "CreateSearchWidgetInput!" },
+    },
     createService: {
       __type: "CreateServicePayload",
       __args: { input: "CreateServiceInput!" },
@@ -17696,6 +18135,10 @@ export const generatedSchema = {
     deleteRate: {
       __type: "DeleteRatePayload",
       __args: { input: "DeleteRateInput!" },
+    },
+    deleteSearchWidget: {
+      __type: "DeleteSearchWidgetPayload",
+      __args: { input: "DeleteSearchWidgetInput!" },
     },
     deleteService: {
       __type: "DeleteServicePayload",
@@ -17789,6 +18232,10 @@ export const generatedSchema = {
     updateRate: {
       __type: "UpdateRatePayload",
       __args: { input: "UpdateRateInput!" },
+    },
+    updateSearchWidget: {
+      __type: "UpdateSearchWidgetPayload",
+      __args: { input: "UpdateSearchWidgetInput!" },
     },
     updateService: {
       __type: "UpdateServicePayload",
@@ -17949,6 +18396,10 @@ export const generatedSchema = {
       },
     },
     headerSettings: { __type: "HeaderSettings" },
+    linkLibraryByCatId: {
+      __type: "[LinkLibraryLink]",
+      __args: { catId: "Float" },
+    },
     linklibrary: {
       __type: "Linklibrary",
       __args: { asPreview: "Boolean", id: "ID!", idType: "LinklibraryIdType" },
@@ -18173,6 +18624,29 @@ export const generatedSchema = {
         where: "RootQueryToRevisionsConnectionWhereArgs",
       },
     },
+    searchWidget: {
+      __type: "SearchWidget",
+      __args: { asPreview: "Boolean", id: "ID!", idType: "SearchWidgetIdType" },
+    },
+    searchWidgetBy: {
+      __type: "SearchWidget",
+      __args: {
+        id: "ID",
+        searchWidgetId: "Int",
+        slug: "String",
+        uri: "String",
+      },
+    },
+    searchWidgets: {
+      __type: "RootQueryToSearchWidgetConnection",
+      __args: {
+        after: "String",
+        before: "String",
+        first: "Int",
+        last: "Int",
+        where: "RootQueryToSearchWidgetConnectionWhereArgs",
+      },
+    },
     searchwp: {
       __type: "Search",
       __args: { offset: "String", postsPerPage: "String", terms: "String" },
@@ -18276,6 +18750,7 @@ export const generatedSchema = {
       "Post",
       "Product",
       "Rate",
+      "SearchWidget",
       "Service",
     ],
     DatabaseIdentifier: [
@@ -18297,6 +18772,7 @@ export const generatedSchema = {
       "Product",
       "ProductName",
       "Rate",
+      "SearchWidget",
       "Service",
       "Tag",
       "User",
@@ -18334,6 +18810,7 @@ export const generatedSchema = {
       "Product",
       "ProductName",
       "Rate",
+      "SearchWidget",
       "Service",
       "Tag",
       "Taxonomy",
@@ -18354,6 +18831,7 @@ export const generatedSchema = {
       "Post",
       "Product",
       "Rate",
+      "SearchWidget",
       "Service",
     ],
     NodeWithTitle: [
@@ -18367,6 +18845,7 @@ export const generatedSchema = {
       "Post",
       "Product",
       "Rate",
+      "SearchWidget",
       "Service",
     ],
     Previewable: [
@@ -18377,6 +18856,7 @@ export const generatedSchema = {
       "Post",
       "Product",
       "Rate",
+      "SearchWidget",
       "Service",
     ],
     UniformResourceIdentifiable: [
@@ -18395,6 +18875,7 @@ export const generatedSchema = {
       "Product",
       "ProductName",
       "Rate",
+      "SearchWidget",
       "Service",
       "Tag",
       "User",
@@ -18494,6 +18975,7 @@ export const generatedSchema = {
       "RootQueryToProductNameConnectionEdge",
       "RootQueryToRateConnectionEdge",
       "RootQueryToRevisionsConnectionEdge",
+      "RootQueryToSearchWidgetConnectionEdge",
       "RootQueryToServiceConnectionEdge",
       "RootQueryToTagConnectionEdge",
       "RootQueryToTaxonomyConnectionEdge",
@@ -18501,6 +18983,7 @@ export const generatedSchema = {
       "RootQueryToThemeConnectionEdge",
       "RootQueryToUserConnectionEdge",
       "RootQueryToUserRoleConnectionEdge",
+      "SearchWidgetToPreviewConnectionEdge",
       "ServiceToPreviewConnectionEdge",
       "TagToContentNodeConnectionEdge",
       "TagToPostConnectionEdge",
@@ -18519,6 +19002,7 @@ export const generatedSchema = {
       "UserToProductConnectionEdge",
       "UserToRateConnectionEdge",
       "UserToRevisionsConnectionEdge",
+      "UserToSearchWidgetConnectionEdge",
       "UserToServiceConnectionEdge",
       "UserToUserRoleConnectionEdge",
     ],
@@ -18550,6 +19034,7 @@ export const generatedSchema = {
       "ProductNameToTaxonomyConnectionEdge",
       "ProductToPreviewConnectionEdge",
       "RateToPreviewConnectionEdge",
+      "SearchWidgetToPreviewConnectionEdge",
       "ServiceToPreviewConnectionEdge",
       "TagToTaxonomyConnectionEdge",
     ],
@@ -18620,6 +19105,7 @@ export const generatedSchema = {
       "RootQueryToProductNameConnection",
       "RootQueryToRateConnection",
       "RootQueryToRevisionsConnection",
+      "RootQueryToSearchWidgetConnection",
       "RootQueryToServiceConnection",
       "RootQueryToTagConnection",
       "RootQueryToTaxonomyConnection",
@@ -18643,6 +19129,7 @@ export const generatedSchema = {
       "UserToProductConnection",
       "UserToRateConnection",
       "UserToRevisionsConnection",
+      "UserToSearchWidgetConnection",
       "UserToServiceConnection",
       "UserToUserRoleConnection",
     ],
@@ -18713,6 +19200,7 @@ export const generatedSchema = {
       "RootQueryToProductNameConnectionPageInfo",
       "RootQueryToRateConnectionPageInfo",
       "RootQueryToRevisionsConnectionPageInfo",
+      "RootQueryToSearchWidgetConnectionPageInfo",
       "RootQueryToServiceConnectionPageInfo",
       "RootQueryToTagConnectionPageInfo",
       "RootQueryToTaxonomyConnectionPageInfo",
@@ -18736,6 +19224,7 @@ export const generatedSchema = {
       "UserToProductConnectionPageInfo",
       "UserToRateConnectionPageInfo",
       "UserToRevisionsConnectionPageInfo",
+      "UserToSearchWidgetConnectionPageInfo",
       "UserToServiceConnectionPageInfo",
       "UserToUserRoleConnectionPageInfo",
     ],
@@ -18802,6 +19291,7 @@ export const generatedSchema = {
       "RootQueryToProductNameConnectionPageInfo",
       "RootQueryToRateConnectionPageInfo",
       "RootQueryToRevisionsConnectionPageInfo",
+      "RootQueryToSearchWidgetConnectionPageInfo",
       "RootQueryToServiceConnectionPageInfo",
       "RootQueryToTagConnectionPageInfo",
       "RootQueryToTaxonomyConnectionPageInfo",
@@ -18825,6 +19315,7 @@ export const generatedSchema = {
       "UserToProductConnectionPageInfo",
       "UserToRateConnectionPageInfo",
       "UserToRevisionsConnectionPageInfo",
+      "UserToSearchWidgetConnectionPageInfo",
       "UserToServiceConnectionPageInfo",
       "UserToUserRoleConnectionPageInfo",
     ],
@@ -18977,6 +19468,7 @@ export const generatedSchema = {
       "Post",
       "Product",
       "Rate",
+      "SearchWidget",
       "Service",
     ],
     ContactConnectionEdge: [
@@ -19167,6 +19659,7 @@ export const generatedSchema = {
       "GenesisCustomBlocksIcons",
       "GenesisCustomBlocksInstructions",
       "GenesisCustomBlocksLede",
+      "GenesisCustomBlocksLinkLibrary",
       "GenesisCustomBlocksListContentSection",
       "GenesisCustomBlocksPageTitle",
       "GenesisCustomBlocksPerk",
@@ -19442,6 +19935,19 @@ export const generatedSchema = {
     PluginConnection: ["RootQueryToPluginConnection"],
     PluginConnectionEdge: ["RootQueryToPluginConnectionEdge"],
     PluginConnectionPageInfo: ["RootQueryToPluginConnectionPageInfo"],
+    SearchWidgetConnection: [
+      "RootQueryToSearchWidgetConnection",
+      "UserToSearchWidgetConnection",
+    ],
+    SearchWidgetConnectionEdge: [
+      "RootQueryToSearchWidgetConnectionEdge",
+      "SearchWidgetToPreviewConnectionEdge",
+      "UserToSearchWidgetConnectionEdge",
+    ],
+    SearchWidgetConnectionPageInfo: [
+      "RootQueryToSearchWidgetConnectionPageInfo",
+      "UserToSearchWidgetConnectionPageInfo",
+    ],
     ServiceConnection: [
       "RootQueryToServiceConnection",
       "UserToServiceConnection",
@@ -21150,6 +21656,7 @@ export interface Connection {
     | "RootQueryToProductNameConnection"
     | "RootQueryToRateConnection"
     | "RootQueryToRevisionsConnection"
+    | "RootQueryToSearchWidgetConnection"
     | "RootQueryToServiceConnection"
     | "RootQueryToTagConnection"
     | "RootQueryToTaxonomyConnection"
@@ -21173,6 +21680,7 @@ export interface Connection {
     | "UserToProductConnection"
     | "UserToRateConnection"
     | "UserToRevisionsConnection"
+    | "UserToSearchWidgetConnection"
     | "UserToServiceConnection"
     | "UserToUserRoleConnection";
   /**
@@ -21481,6 +21989,7 @@ export interface ContentNode {
     | "Post"
     | "Product"
     | "Rate"
+    | "SearchWidget"
     | "Service";
   /**
    * @deprecated Deprecated in favor of using Next.js pages
@@ -31708,6 +32217,21 @@ export interface CreateRatePayload {
 }
 
 /**
+ * The payload for the createSearchWidget mutation.
+ */
+export interface CreateSearchWidgetPayload {
+  __typename?: "CreateSearchWidgetPayload";
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The Post object mutation type.
+   */
+  searchWidget?: Maybe<SearchWidget>;
+}
+
+/**
  * The payload for the createService mutation.
  */
 export interface CreateServicePayload {
@@ -31775,6 +32299,7 @@ export interface DatabaseIdentifier {
     | "Product"
     | "ProductName"
     | "Rate"
+    | "SearchWidget"
     | "Service"
     | "Tag"
     | "User";
@@ -32082,6 +32607,25 @@ export interface DeleteRatePayload {
 }
 
 /**
+ * The payload for the deleteSearchWidget mutation.
+ */
+export interface DeleteSearchWidgetPayload {
+  __typename?: "DeleteSearchWidgetPayload";
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The ID of the deleted object
+   */
+  deletedId?: Maybe<ScalarsEnums["ID"]>;
+  /**
+   * The object before it was deleted
+   */
+  searchWidget?: Maybe<SearchWidget>;
+}
+
+/**
  * The payload for the deleteService mutation.
  */
 export interface DeleteServicePayload {
@@ -32247,6 +32791,7 @@ export interface Edge {
     | "RootQueryToProductNameConnectionEdge"
     | "RootQueryToRateConnectionEdge"
     | "RootQueryToRevisionsConnectionEdge"
+    | "RootQueryToSearchWidgetConnectionEdge"
     | "RootQueryToServiceConnectionEdge"
     | "RootQueryToTagConnectionEdge"
     | "RootQueryToTaxonomyConnectionEdge"
@@ -32254,6 +32799,7 @@ export interface Edge {
     | "RootQueryToThemeConnectionEdge"
     | "RootQueryToUserConnectionEdge"
     | "RootQueryToUserRoleConnectionEdge"
+    | "SearchWidgetToPreviewConnectionEdge"
     | "ServiceToPreviewConnectionEdge"
     | "TagToContentNodeConnectionEdge"
     | "TagToPostConnectionEdge"
@@ -32272,6 +32818,7 @@ export interface Edge {
     | "UserToProductConnectionEdge"
     | "UserToRateConnectionEdge"
     | "UserToRevisionsConnectionEdge"
+    | "UserToSearchWidgetConnectionEdge"
     | "UserToServiceConnectionEdge"
     | "UserToUserRoleConnectionEdge";
   /**
@@ -32417,6 +32964,7 @@ export interface EditorBlock {
     | "GenesisCustomBlocksIcons"
     | "GenesisCustomBlocksInstructions"
     | "GenesisCustomBlocksLede"
+    | "GenesisCustomBlocksLinkLibrary"
     | "GenesisCustomBlocksListContentSection"
     | "GenesisCustomBlocksPageTitle"
     | "GenesisCustomBlocksPerk"
@@ -34633,6 +35181,10 @@ export interface GenesisCustomBlocksComparisonAttributes {
    */
   className?: Maybe<ScalarsEnums["String"]>;
   /**
+   * The &quot;compare-type&quot; field on the &quot;GenesisCustomBlocksComparison&quot; block
+   */
+  compareType?: Maybe<ScalarsEnums["String"]>;
+  /**
    * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksComparison&quot; block
    */
   lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
@@ -35898,6 +36450,76 @@ export interface GenesisCustomBlocksLedeAttributes {
    * The &quot;title&quot; field on the &quot;GenesisCustomBlocksLede&quot; block
    */
   title?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * A block used for editing the site
+ */
+export interface GenesisCustomBlocksLinkLibrary {
+  __typename?: "GenesisCustomBlocksLinkLibrary";
+  /**
+   * The API version of the Gutenberg Block
+   */
+  apiVersion?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Attributes of the %s Block Type
+   */
+  attributes?: Maybe<GenesisCustomBlocksLinkLibraryAttributes>;
+  /**
+   * The name of the category the Block belongs to
+   */
+  blockEditorCategoryName?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The id of the Block
+   */
+  clientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * CSS Classnames to apply to the block
+   */
+  cssClassNames?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The inner blocks of the Block
+   */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /**
+   * Whether the block is Dynamic (server rendered)
+   */
+  isDynamic: ScalarsEnums["Boolean"];
+  /**
+   * The name of the block
+   */
+  name?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The parent id of the Block
+   */
+  parentClientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The rendered HTML for the block
+   */
+  renderedHtml?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Attributes of the %s Block Type
+ */
+export interface GenesisCustomBlocksLinkLibraryAttributes {
+  __typename?: "GenesisCustomBlocksLinkLibraryAttributes";
+  /**
+   * The &quot;blockVisibility&quot; field on the &quot;GenesisCustomBlocksLinkLibrary&quot; block
+   */
+  blockVisibility?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;categories&quot; field on the &quot;GenesisCustomBlocksLinkLibrary&quot; block
+   */
+  categories?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;className&quot; field on the &quot;GenesisCustomBlocksLinkLibrary&quot; block
+   */
+  className?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksLinkLibrary&quot; block
+   */
+  lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
 }
 
 /**
@@ -38334,6 +38956,17 @@ export interface LinkLibraryCountBlockAttributes {
    * The &quot;settings&quot; field on the &quot;LinkLibraryCountBlock&quot; block
    */
   settings?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Keys and their values, both cast as strings
+ */
+export interface LinkLibraryLink {
+  __typename?: "LinkLibraryLink";
+  date?: Maybe<ScalarsEnums["String"]>;
+  id?: Maybe<ScalarsEnums["String"]>;
+  title?: Maybe<ScalarsEnums["String"]>;
+  url?: Maybe<ScalarsEnums["String"]>;
 }
 
 /**
@@ -41930,6 +42563,7 @@ export interface Node {
     | "Product"
     | "ProductName"
     | "Rate"
+    | "SearchWidget"
     | "Service"
     | "Tag"
     | "Taxonomy"
@@ -41955,6 +42589,7 @@ export interface NodeWithAuthor {
     | "Post"
     | "Product"
     | "Rate"
+    | "SearchWidget"
     | "Service";
   /**
    * Connection between the NodeWithAuthor type and the User type
@@ -42171,6 +42806,7 @@ export interface NodeWithTemplate {
     | "Post"
     | "Product"
     | "Rate"
+    | "SearchWidget"
     | "Service";
   /**
    * The globally unique ID for the object
@@ -42198,6 +42834,7 @@ export interface NodeWithTitle {
     | "Post"
     | "Product"
     | "Rate"
+    | "SearchWidget"
     | "Service";
   /**
    * The globally unique ID for the object
@@ -42294,6 +42931,7 @@ export interface OneToOneConnection {
     | "ProductNameToTaxonomyConnectionEdge"
     | "ProductToPreviewConnectionEdge"
     | "RateToPreviewConnectionEdge"
+    | "SearchWidgetToPreviewConnectionEdge"
     | "ServiceToPreviewConnectionEdge"
     | "TagToTaxonomyConnectionEdge";
   /**
@@ -42816,6 +43454,7 @@ export interface PageInfo {
     | "RootQueryToProductNameConnectionPageInfo"
     | "RootQueryToRateConnectionPageInfo"
     | "RootQueryToRevisionsConnectionPageInfo"
+    | "RootQueryToSearchWidgetConnectionPageInfo"
     | "RootQueryToServiceConnectionPageInfo"
     | "RootQueryToTagConnectionPageInfo"
     | "RootQueryToTaxonomyConnectionPageInfo"
@@ -42839,6 +43478,7 @@ export interface PageInfo {
     | "UserToProductConnectionPageInfo"
     | "UserToRateConnectionPageInfo"
     | "UserToRevisionsConnectionPageInfo"
+    | "UserToSearchWidgetConnectionPageInfo"
     | "UserToServiceConnectionPageInfo"
     | "UserToUserRoleConnectionPageInfo";
   /**
@@ -44560,6 +45200,7 @@ export interface Previewable {
     | "Post"
     | "Product"
     | "Rate"
+    | "SearchWidget"
     | "Service";
   /**
    * Whether the object is a node in the preview state
@@ -47470,6 +48111,71 @@ export interface RootQueryToRevisionsConnectionPageInfo {
 }
 
 /**
+ * Connection between the RootQuery type and the searchWidget type
+ */
+export interface RootQueryToSearchWidgetConnection {
+  __typename?: "RootQueryToSearchWidgetConnection";
+  /**
+   * Edges for the RootQueryToSearchWidgetConnection connection
+   */
+  edges: Array<RootQueryToSearchWidgetConnectionEdge>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes: Array<SearchWidget>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo: RootQueryToSearchWidgetConnectionPageInfo;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface RootQueryToSearchWidgetConnectionEdge {
+  __typename?: "RootQueryToSearchWidgetConnectionEdge";
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The item at the end of the edge
+   */
+  node: SearchWidget;
+}
+
+/**
+ * Page Info on the &quot;RootQueryToSearchWidgetConnection&quot;
+ */
+export interface RootQueryToSearchWidgetConnectionPageInfo {
+  __typename?: "RootQueryToSearchWidgetConnectionPageInfo";
+  /**
+   * When paginating forwards, the cursor to continue.
+   */
+  endCursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * When paginating forwards, are there more items?
+   */
+  hasNextPage: ScalarsEnums["Boolean"];
+  /**
+   * When paginating backwards, are there more items?
+   */
+  hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
+   * When paginating backwards, the cursor to continue.
+   */
+  startCursor?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
  * Connection between the RootQuery type and the service type
  */
 export interface RootQueryToServiceConnection {
@@ -48000,6 +48706,7 @@ export interface SEOContentTypes {
   post?: Maybe<SEOContentType>;
   product?: Maybe<SEOContentType>;
   rate?: Maybe<SEOContentType>;
+  searchWidget?: Maybe<SEOContentType>;
   service?: Maybe<SEOContentType>;
 }
 
@@ -48376,6 +49083,285 @@ export interface Search {
    * Total Results
    */
   total?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * The searchWidget type
+ */
+export interface SearchWidget {
+  __typename?: "SearchWidget";
+  active?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * Connection between the NodeWithAuthor type and the User type
+   */
+  author?: Maybe<NodeWithAuthorToUserConnectionEdge>;
+  /**
+   * The database identifier of the author of the node
+   */
+  authorDatabaseId?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * The globally unique identifier of the author of the node
+   */
+  authorId?: Maybe<ScalarsEnums["ID"]>;
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
+  conditionalTags?: Maybe<ConditionalTags>;
+  content?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Connection between the ContentNode type and the ContentType type
+   */
+  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
+  /**
+   * The name of the Content Type the node belongs to
+   */
+  contentTypeName: ScalarsEnums["String"];
+  /**
+   * The unique identifier stored in the database
+   */
+  databaseId: ScalarsEnums["Int"];
+  /**
+   * Post publishing date.
+   */
+  date?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The publishing date set in GMT.
+   */
+  dateGmt?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The desired slug of the post
+   */
+  desiredSlug?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds
+   */
+  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
+  /**
+   * The RSS enclosure for the object
+   */
+  enclosure?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Connection between the ContentNode type and the EnqueuedScript type
+   */
+  enqueuedScripts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+  }) => Maybe<ContentNodeToEnqueuedScriptConnection>;
+  /**
+   * Connection between the ContentNode type and the EnqueuedStylesheet type
+   */
+  enqueuedStylesheets: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+  }) => Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  /**
+   * The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table.
+   */
+  guid?: Maybe<ScalarsEnums["String"]>;
+  heading?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The globally unique identifier of the searchwidget object.
+   */
+  id: ScalarsEnums["ID"];
+  /**
+   * Whether the node is a Content Node
+   */
+  isContentNode: ScalarsEnums["Boolean"];
+  /**
+   * Whether the object is a node in the preview state
+   */
+  isPreview?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * Whether the object is restricted from the current viewer
+   */
+  isRestricted?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * Whether the node is a Term
+   */
+  isTermNode: ScalarsEnums["Boolean"];
+  /**
+   * The user that most recently edited the node
+   */
+  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
+  /**
+   * The permalink of the post
+   */
+  link?: Maybe<ScalarsEnums["String"]>;
+  matches?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time.
+   */
+  modified?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT.
+   */
+  modifiedGmt?: Maybe<ScalarsEnums["String"]>;
+  name?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Connection between the SearchWidget type and the searchWidget type
+   */
+  preview?: Maybe<SearchWidgetToPreviewConnectionEdge>;
+  /**
+   * The database id of the preview node
+   */
+  previewRevisionDatabaseId?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Whether the object is a node in the preview state
+   */
+  previewRevisionId?: Maybe<ScalarsEnums["ID"]>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of the databaseId field
+   */
+  searchWidgetId: ScalarsEnums["Int"];
+  /**
+   * The Yoast SEO data of the ContentNode
+   */
+  seo?: Maybe<PostTypeSEO>;
+  /**
+   * The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
+   */
+  slug?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The current status of the object
+   */
+  status?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The template assigned to the node
+   */
+  template?: Maybe<ContentTemplate>;
+  templates?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made.
+   */
+  title: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums["String"]>;
+  /**
+   * The unique resource identifier path
+   */
+  uri?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Connection to searchWidget Nodes
+ */
+export interface SearchWidgetConnection {
+  __typename?:
+    | "RootQueryToSearchWidgetConnection"
+    | "UserToSearchWidgetConnection";
+  /**
+   * A list of edges (relational context) between RootQuery and connected searchWidget Nodes
+   */
+  edges: Array<SearchWidgetConnectionEdge>;
+  /**
+   * A list of connected searchWidget Nodes
+   */
+  nodes: Array<SearchWidget>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo: SearchWidgetConnectionPageInfo;
+  $on: $SearchWidgetConnection;
+}
+
+/**
+ * Edge between a Node and a connected searchWidget
+ */
+export interface SearchWidgetConnectionEdge {
+  __typename?:
+    | "RootQueryToSearchWidgetConnectionEdge"
+    | "SearchWidgetToPreviewConnectionEdge"
+    | "UserToSearchWidgetConnectionEdge";
+  /**
+   * Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The connected searchWidget Node
+   */
+  node: SearchWidget;
+  $on: $SearchWidgetConnectionEdge;
+}
+
+/**
+ * Page Info on the connected SearchWidgetConnectionEdge
+ */
+export interface SearchWidgetConnectionPageInfo {
+  __typename?:
+    | "RootQueryToSearchWidgetConnectionPageInfo"
+    | "UserToSearchWidgetConnectionPageInfo";
+  /**
+   * When paginating forwards, the cursor to continue.
+   */
+  endCursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * When paginating forwards, are there more items?
+   */
+  hasNextPage: ScalarsEnums["Boolean"];
+  /**
+   * When paginating backwards, are there more items?
+   */
+  hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
+   * When paginating backwards, the cursor to continue.
+   */
+  startCursor?: Maybe<ScalarsEnums["String"]>;
+  $on: $SearchWidgetConnectionPageInfo;
+}
+
+/**
+ * Connection between the SearchWidget type and the searchWidget type
+ */
+export interface SearchWidgetToPreviewConnectionEdge {
+  __typename?: "SearchWidgetToPreviewConnectionEdge";
+  /**
+   * Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The node of the connection, without the edges
+   */
+  node: SearchWidget;
 }
 
 /**
@@ -50466,6 +51452,7 @@ export interface UniformResourceIdentifiable {
     | "Product"
     | "ProductName"
     | "Rate"
+    | "SearchWidget"
     | "Service"
     | "Tag"
     | "User";
@@ -50763,6 +51750,21 @@ export interface UpdateRatePayload {
    * The Post object mutation type.
    */
   rate?: Maybe<Rate>;
+}
+
+/**
+ * The payload for the updateSearchWidget mutation.
+ */
+export interface UpdateSearchWidgetPayload {
+  __typename?: "UpdateSearchWidgetPayload";
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The Post object mutation type.
+   */
+  searchWidget?: Maybe<SearchWidget>;
 }
 
 /**
@@ -51252,6 +52254,31 @@ export interface User {
      */
     last?: Maybe<Scalars["Int"]>;
   }) => Maybe<UserToUserRoleConnection>;
+  /**
+   * Connection between the User type and the searchWidget type
+   */
+  searchWidgets: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<UserToSearchWidgetConnectionWhereArgs>;
+  }) => Maybe<UserToSearchWidgetConnection>;
   /**
    * The Yoast SEO data of a user
    */
@@ -52196,6 +53223,71 @@ export interface UserToRevisionsConnectionPageInfo {
 }
 
 /**
+ * Connection between the User type and the searchWidget type
+ */
+export interface UserToSearchWidgetConnection {
+  __typename?: "UserToSearchWidgetConnection";
+  /**
+   * Edges for the UserToSearchWidgetConnection connection
+   */
+  edges: Array<UserToSearchWidgetConnectionEdge>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes: Array<SearchWidget>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo: UserToSearchWidgetConnectionPageInfo;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface UserToSearchWidgetConnectionEdge {
+  __typename?: "UserToSearchWidgetConnectionEdge";
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The item at the end of the edge
+   */
+  node: SearchWidget;
+}
+
+/**
+ * Page Info on the &quot;UserToSearchWidgetConnection&quot;
+ */
+export interface UserToSearchWidgetConnectionPageInfo {
+  __typename?: "UserToSearchWidgetConnectionPageInfo";
+  /**
+   * When paginating forwards, the cursor to continue.
+   */
+  endCursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * When paginating forwards, are there more items?
+   */
+  hasNextPage: ScalarsEnums["Boolean"];
+  /**
+   * When paginating backwards, are there more items?
+   */
+  hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
+   * When paginating backwards, the cursor to continue.
+   */
+  startCursor?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
  * Connection between the User type and the service type
  */
 export interface UserToServiceConnection {
@@ -52392,6 +53484,7 @@ export interface WPPageInfo {
     | "RootQueryToProductNameConnectionPageInfo"
     | "RootQueryToRateConnectionPageInfo"
     | "RootQueryToRevisionsConnectionPageInfo"
+    | "RootQueryToSearchWidgetConnectionPageInfo"
     | "RootQueryToServiceConnectionPageInfo"
     | "RootQueryToTagConnectionPageInfo"
     | "RootQueryToTaxonomyConnectionPageInfo"
@@ -52415,6 +53508,7 @@ export interface WPPageInfo {
     | "UserToProductConnectionPageInfo"
     | "UserToRateConnectionPageInfo"
     | "UserToRevisionsConnectionPageInfo"
+    | "UserToSearchWidgetConnectionPageInfo"
     | "UserToServiceConnectionPageInfo"
     | "UserToUserRoleConnectionPageInfo";
   /**
@@ -52800,6 +53894,9 @@ export interface Mutation {
     input: CreateProductNameInput;
   }) => Maybe<CreateProductNamePayload>;
   createRate: (args: { input: CreateRateInput }) => Maybe<CreateRatePayload>;
+  createSearchWidget: (args: {
+    input: CreateSearchWidgetInput;
+  }) => Maybe<CreateSearchWidgetPayload>;
   createService: (args: {
     input: CreateServiceInput;
   }) => Maybe<CreateServicePayload>;
@@ -52844,6 +53941,9 @@ export interface Mutation {
     input: DeleteProductNameInput;
   }) => Maybe<DeleteProductNamePayload>;
   deleteRate: (args: { input: DeleteRateInput }) => Maybe<DeleteRatePayload>;
+  deleteSearchWidget: (args: {
+    input: DeleteSearchWidgetInput;
+  }) => Maybe<DeleteSearchWidgetPayload>;
   deleteService: (args: {
     input: DeleteServiceInput;
   }) => Maybe<DeleteServicePayload>;
@@ -52906,6 +54006,9 @@ export interface Mutation {
     input: UpdateProductNameInput;
   }) => Maybe<UpdateProductNamePayload>;
   updateRate: (args: { input: UpdateRateInput }) => Maybe<UpdateRatePayload>;
+  updateSearchWidget: (args: {
+    input: UpdateSearchWidgetInput;
+  }) => Maybe<UpdateSearchWidgetPayload>;
   updateService: (args: {
     input: UpdateServiceInput;
   }) => Maybe<UpdateServicePayload>;
@@ -53032,6 +54135,9 @@ export interface Query {
     where?: Maybe<RootQueryToGraphqlDocumentConnectionWhereArgs>;
   }) => Maybe<RootQueryToGraphqlDocumentConnection>;
   headerSettings?: Maybe<HeaderSettings>;
+  linkLibraryByCatId: (args?: {
+    catId?: Maybe<Scalars["Float"]>;
+  }) => Maybe<Array<Maybe<LinkLibraryLink>>>;
   linklibrary: (args: {
     asPreview?: Maybe<Scalars["Boolean"]>;
     id: Scalars["ID"];
@@ -53242,6 +54348,24 @@ export interface Query {
     last?: Maybe<Scalars["Int"]>;
     where?: Maybe<RootQueryToRevisionsConnectionWhereArgs>;
   }) => Maybe<RootQueryToRevisionsConnection>;
+  searchWidget: (args: {
+    asPreview?: Maybe<Scalars["Boolean"]>;
+    id: Scalars["ID"];
+    idType?: Maybe<SearchWidgetIdType>;
+  }) => Maybe<SearchWidget>;
+  searchWidgetBy: (args?: {
+    id?: Maybe<Scalars["ID"]>;
+    searchWidgetId?: Maybe<Scalars["Int"]>;
+    slug?: Maybe<Scalars["String"]>;
+    uri?: Maybe<Scalars["String"]>;
+  }) => Maybe<SearchWidget>;
+  searchWidgets: (args?: {
+    after?: Maybe<Scalars["String"]>;
+    before?: Maybe<Scalars["String"]>;
+    first?: Maybe<Scalars["Int"]>;
+    last?: Maybe<Scalars["Int"]>;
+    where?: Maybe<RootQueryToSearchWidgetConnectionWhereArgs>;
+  }) => Maybe<RootQueryToSearchWidgetConnection>;
   searchwp: (args?: {
     offset?: Maybe<Scalars["String"]>;
     postsPerPage?: Maybe<Scalars["String"]>;
@@ -53584,6 +54708,7 @@ export interface SchemaObjectTypes {
   CreateProductNamePayload: CreateProductNamePayload;
   CreateProductPayload: CreateProductPayload;
   CreateRatePayload: CreateRatePayload;
+  CreateSearchWidgetPayload: CreateSearchWidgetPayload;
   CreateServicePayload: CreateServicePayload;
   CreateTagPayload: CreateTagPayload;
   CreateUserPayload: CreateUserPayload;
@@ -53603,6 +54728,7 @@ export interface SchemaObjectTypes {
   DeleteProductNamePayload: DeleteProductNamePayload;
   DeleteProductPayload: DeleteProductPayload;
   DeleteRatePayload: DeleteRatePayload;
+  DeleteSearchWidgetPayload: DeleteSearchWidgetPayload;
   DeleteServicePayload: DeleteServicePayload;
   DeleteTagPayload: DeleteTagPayload;
   DeleteUserPayload: DeleteUserPayload;
@@ -53684,6 +54810,8 @@ export interface SchemaObjectTypes {
   GenesisCustomBlocksInstructionsAttributes: GenesisCustomBlocksInstructionsAttributes;
   GenesisCustomBlocksLede: GenesisCustomBlocksLede;
   GenesisCustomBlocksLedeAttributes: GenesisCustomBlocksLedeAttributes;
+  GenesisCustomBlocksLinkLibrary: GenesisCustomBlocksLinkLibrary;
+  GenesisCustomBlocksLinkLibraryAttributes: GenesisCustomBlocksLinkLibraryAttributes;
   GenesisCustomBlocksListContentSection: GenesisCustomBlocksListContentSection;
   GenesisCustomBlocksListContentSectionAttributes: GenesisCustomBlocksListContentSectionAttributes;
   GenesisCustomBlocksPageTitle: GenesisCustomBlocksPageTitle;
@@ -53732,6 +54860,7 @@ export interface SchemaObjectTypes {
   LinkLibraryCatsBlockAttributes: LinkLibraryCatsBlockAttributes;
   LinkLibraryCountBlock: LinkLibraryCountBlock;
   LinkLibraryCountBlockAttributes: LinkLibraryCountBlockAttributes;
+  LinkLibraryLink: LinkLibraryLink;
   LinkLibraryLinkBlock: LinkLibraryLinkBlock;
   LinkLibraryLinkBlockAttributes: LinkLibraryLinkBlockAttributes;
   LinkLibrarySearchBlock: LinkLibrarySearchBlock;
@@ -53931,6 +55060,9 @@ export interface SchemaObjectTypes {
   RootQueryToRevisionsConnection: RootQueryToRevisionsConnection;
   RootQueryToRevisionsConnectionEdge: RootQueryToRevisionsConnectionEdge;
   RootQueryToRevisionsConnectionPageInfo: RootQueryToRevisionsConnectionPageInfo;
+  RootQueryToSearchWidgetConnection: RootQueryToSearchWidgetConnection;
+  RootQueryToSearchWidgetConnectionEdge: RootQueryToSearchWidgetConnectionEdge;
+  RootQueryToSearchWidgetConnectionPageInfo: RootQueryToSearchWidgetConnectionPageInfo;
   RootQueryToServiceConnection: RootQueryToServiceConnection;
   RootQueryToServiceConnectionEdge: RootQueryToServiceConnectionEdge;
   RootQueryToServiceConnectionPageInfo: RootQueryToServiceConnectionPageInfo;
@@ -53988,6 +55120,8 @@ export interface SchemaObjectTypes {
   SafeSvgSvgIcon: SafeSvgSvgIcon;
   SafeSvgSvgIconAttributes: SafeSvgSvgIconAttributes;
   Search: Search;
+  SearchWidget: SearchWidget;
+  SearchWidgetToPreviewConnectionEdge: SearchWidgetToPreviewConnectionEdge;
   SendPasswordResetEmailPayload: SendPasswordResetEmailPayload;
   Service: Service;
   ServiceToPreviewConnectionEdge: ServiceToPreviewConnectionEdge;
@@ -54046,6 +55180,7 @@ export interface SchemaObjectTypes {
   UpdateProductNamePayload: UpdateProductNamePayload;
   UpdateProductPayload: UpdateProductPayload;
   UpdateRatePayload: UpdateRatePayload;
+  UpdateSearchWidgetPayload: UpdateSearchWidgetPayload;
   UpdateServicePayload: UpdateServicePayload;
   UpdateSettingsPayload: UpdateSettingsPayload;
   UpdateTagPayload: UpdateTagPayload;
@@ -54085,6 +55220,9 @@ export interface SchemaObjectTypes {
   UserToRevisionsConnection: UserToRevisionsConnection;
   UserToRevisionsConnectionEdge: UserToRevisionsConnectionEdge;
   UserToRevisionsConnectionPageInfo: UserToRevisionsConnectionPageInfo;
+  UserToSearchWidgetConnection: UserToSearchWidgetConnection;
+  UserToSearchWidgetConnectionEdge: UserToSearchWidgetConnectionEdge;
+  UserToSearchWidgetConnectionPageInfo: UserToSearchWidgetConnectionPageInfo;
   UserToServiceConnection: UserToServiceConnection;
   UserToServiceConnectionEdge: UserToServiceConnectionEdge;
   UserToServiceConnectionPageInfo: UserToServiceConnectionPageInfo;
@@ -54350,6 +55488,7 @@ export type SchemaObjectTypesNames =
   | "CreateProductNamePayload"
   | "CreateProductPayload"
   | "CreateRatePayload"
+  | "CreateSearchWidgetPayload"
   | "CreateServicePayload"
   | "CreateTagPayload"
   | "CreateUserPayload"
@@ -54369,6 +55508,7 @@ export type SchemaObjectTypesNames =
   | "DeleteProductNamePayload"
   | "DeleteProductPayload"
   | "DeleteRatePayload"
+  | "DeleteSearchWidgetPayload"
   | "DeleteServicePayload"
   | "DeleteTagPayload"
   | "DeleteUserPayload"
@@ -54450,6 +55590,8 @@ export type SchemaObjectTypesNames =
   | "GenesisCustomBlocksInstructionsAttributes"
   | "GenesisCustomBlocksLede"
   | "GenesisCustomBlocksLedeAttributes"
+  | "GenesisCustomBlocksLinkLibrary"
+  | "GenesisCustomBlocksLinkLibraryAttributes"
   | "GenesisCustomBlocksListContentSection"
   | "GenesisCustomBlocksListContentSectionAttributes"
   | "GenesisCustomBlocksPageTitle"
@@ -54498,6 +55640,7 @@ export type SchemaObjectTypesNames =
   | "LinkLibraryCatsBlockAttributes"
   | "LinkLibraryCountBlock"
   | "LinkLibraryCountBlockAttributes"
+  | "LinkLibraryLink"
   | "LinkLibraryLinkBlock"
   | "LinkLibraryLinkBlockAttributes"
   | "LinkLibrarySearchBlock"
@@ -54697,6 +55840,9 @@ export type SchemaObjectTypesNames =
   | "RootQueryToRevisionsConnection"
   | "RootQueryToRevisionsConnectionEdge"
   | "RootQueryToRevisionsConnectionPageInfo"
+  | "RootQueryToSearchWidgetConnection"
+  | "RootQueryToSearchWidgetConnectionEdge"
+  | "RootQueryToSearchWidgetConnectionPageInfo"
   | "RootQueryToServiceConnection"
   | "RootQueryToServiceConnectionEdge"
   | "RootQueryToServiceConnectionPageInfo"
@@ -54754,6 +55900,8 @@ export type SchemaObjectTypesNames =
   | "SafeSvgSvgIcon"
   | "SafeSvgSvgIconAttributes"
   | "Search"
+  | "SearchWidget"
+  | "SearchWidgetToPreviewConnectionEdge"
   | "SendPasswordResetEmailPayload"
   | "Service"
   | "ServiceToPreviewConnectionEdge"
@@ -54812,6 +55960,7 @@ export type SchemaObjectTypesNames =
   | "UpdateProductNamePayload"
   | "UpdateProductPayload"
   | "UpdateRatePayload"
+  | "UpdateSearchWidgetPayload"
   | "UpdateServicePayload"
   | "UpdateSettingsPayload"
   | "UpdateTagPayload"
@@ -54851,6 +56000,9 @@ export type SchemaObjectTypesNames =
   | "UserToRevisionsConnection"
   | "UserToRevisionsConnectionEdge"
   | "UserToRevisionsConnectionPageInfo"
+  | "UserToSearchWidgetConnection"
+  | "UserToSearchWidgetConnectionEdge"
+  | "UserToSearchWidgetConnectionPageInfo"
   | "UserToServiceConnection"
   | "UserToServiceConnectionEdge"
   | "UserToServiceConnectionPageInfo"
@@ -55007,6 +56159,7 @@ export interface $Connection {
   RootQueryToProductNameConnection?: RootQueryToProductNameConnection;
   RootQueryToRateConnection?: RootQueryToRateConnection;
   RootQueryToRevisionsConnection?: RootQueryToRevisionsConnection;
+  RootQueryToSearchWidgetConnection?: RootQueryToSearchWidgetConnection;
   RootQueryToServiceConnection?: RootQueryToServiceConnection;
   RootQueryToTagConnection?: RootQueryToTagConnection;
   RootQueryToTaxonomyConnection?: RootQueryToTaxonomyConnection;
@@ -55030,6 +56183,7 @@ export interface $Connection {
   UserToProductConnection?: UserToProductConnection;
   UserToRateConnection?: UserToRateConnection;
   UserToRevisionsConnection?: UserToRevisionsConnection;
+  UserToSearchWidgetConnection?: UserToSearchWidgetConnection;
   UserToServiceConnection?: UserToServiceConnection;
   UserToUserRoleConnection?: UserToUserRoleConnection;
 }
@@ -55061,6 +56215,7 @@ export interface $ContentNode {
   Post?: Post;
   Product?: Product;
   Rate?: Rate;
+  SearchWidget?: SearchWidget;
   Service?: Service;
 }
 
@@ -55151,6 +56306,7 @@ export interface $DatabaseIdentifier {
   Product?: Product;
   ProductName?: ProductName;
   Rate?: Rate;
+  SearchWidget?: SearchWidget;
   Service?: Service;
   Tag?: Tag;
   User?: User;
@@ -55246,6 +56402,7 @@ export interface $Edge {
   RootQueryToProductNameConnectionEdge?: RootQueryToProductNameConnectionEdge;
   RootQueryToRateConnectionEdge?: RootQueryToRateConnectionEdge;
   RootQueryToRevisionsConnectionEdge?: RootQueryToRevisionsConnectionEdge;
+  RootQueryToSearchWidgetConnectionEdge?: RootQueryToSearchWidgetConnectionEdge;
   RootQueryToServiceConnectionEdge?: RootQueryToServiceConnectionEdge;
   RootQueryToTagConnectionEdge?: RootQueryToTagConnectionEdge;
   RootQueryToTaxonomyConnectionEdge?: RootQueryToTaxonomyConnectionEdge;
@@ -55253,6 +56410,7 @@ export interface $Edge {
   RootQueryToThemeConnectionEdge?: RootQueryToThemeConnectionEdge;
   RootQueryToUserConnectionEdge?: RootQueryToUserConnectionEdge;
   RootQueryToUserRoleConnectionEdge?: RootQueryToUserRoleConnectionEdge;
+  SearchWidgetToPreviewConnectionEdge?: SearchWidgetToPreviewConnectionEdge;
   ServiceToPreviewConnectionEdge?: ServiceToPreviewConnectionEdge;
   TagToContentNodeConnectionEdge?: TagToContentNodeConnectionEdge;
   TagToPostConnectionEdge?: TagToPostConnectionEdge;
@@ -55271,6 +56429,7 @@ export interface $Edge {
   UserToProductConnectionEdge?: UserToProductConnectionEdge;
   UserToRateConnectionEdge?: UserToRateConnectionEdge;
   UserToRevisionsConnectionEdge?: UserToRevisionsConnectionEdge;
+  UserToSearchWidgetConnectionEdge?: UserToSearchWidgetConnectionEdge;
   UserToServiceConnectionEdge?: UserToServiceConnectionEdge;
   UserToUserRoleConnectionEdge?: UserToUserRoleConnectionEdge;
 }
@@ -55403,6 +56562,7 @@ export interface $EditorBlock {
   GenesisCustomBlocksIcons?: GenesisCustomBlocksIcons;
   GenesisCustomBlocksInstructions?: GenesisCustomBlocksInstructions;
   GenesisCustomBlocksLede?: GenesisCustomBlocksLede;
+  GenesisCustomBlocksLinkLibrary?: GenesisCustomBlocksLinkLibrary;
   GenesisCustomBlocksListContentSection?: GenesisCustomBlocksListContentSection;
   GenesisCustomBlocksPageTitle?: GenesisCustomBlocksPageTitle;
   GenesisCustomBlocksPerk?: GenesisCustomBlocksPerk;
@@ -55673,6 +56833,7 @@ export interface $Node {
   Product?: Product;
   ProductName?: ProductName;
   Rate?: Rate;
+  SearchWidget?: SearchWidget;
   Service?: Service;
   Tag?: Tag;
   Taxonomy?: Taxonomy;
@@ -55689,6 +56850,7 @@ export interface $NodeWithAuthor {
   Post?: Post;
   Product?: Product;
   Rate?: Rate;
+  SearchWidget?: SearchWidget;
   Service?: Service;
 }
 
@@ -55748,6 +56910,7 @@ export interface $NodeWithTemplate {
   Post?: Post;
   Product?: Product;
   Rate?: Rate;
+  SearchWidget?: SearchWidget;
   Service?: Service;
 }
 
@@ -55762,6 +56925,7 @@ export interface $NodeWithTitle {
   Post?: Post;
   Product?: Product;
   Rate?: Rate;
+  SearchWidget?: SearchWidget;
   Service?: Service;
 }
 
@@ -55797,6 +56961,7 @@ export interface $OneToOneConnection {
   ProductNameToTaxonomyConnectionEdge?: ProductNameToTaxonomyConnectionEdge;
   ProductToPreviewConnectionEdge?: ProductToPreviewConnectionEdge;
   RateToPreviewConnectionEdge?: RateToPreviewConnectionEdge;
+  SearchWidgetToPreviewConnectionEdge?: SearchWidgetToPreviewConnectionEdge;
   ServiceToPreviewConnectionEdge?: ServiceToPreviewConnectionEdge;
   TagToTaxonomyConnectionEdge?: TagToTaxonomyConnectionEdge;
 }
@@ -55883,6 +57048,7 @@ export interface $PageInfo {
   RootQueryToProductNameConnectionPageInfo?: RootQueryToProductNameConnectionPageInfo;
   RootQueryToRateConnectionPageInfo?: RootQueryToRateConnectionPageInfo;
   RootQueryToRevisionsConnectionPageInfo?: RootQueryToRevisionsConnectionPageInfo;
+  RootQueryToSearchWidgetConnectionPageInfo?: RootQueryToSearchWidgetConnectionPageInfo;
   RootQueryToServiceConnectionPageInfo?: RootQueryToServiceConnectionPageInfo;
   RootQueryToTagConnectionPageInfo?: RootQueryToTagConnectionPageInfo;
   RootQueryToTaxonomyConnectionPageInfo?: RootQueryToTaxonomyConnectionPageInfo;
@@ -55906,6 +57072,7 @@ export interface $PageInfo {
   UserToProductConnectionPageInfo?: UserToProductConnectionPageInfo;
   UserToRateConnectionPageInfo?: UserToRateConnectionPageInfo;
   UserToRevisionsConnectionPageInfo?: UserToRevisionsConnectionPageInfo;
+  UserToSearchWidgetConnectionPageInfo?: UserToSearchWidgetConnectionPageInfo;
   UserToServiceConnectionPageInfo?: UserToServiceConnectionPageInfo;
   UserToUserRoleConnectionPageInfo?: UserToUserRoleConnectionPageInfo;
 }
@@ -55973,6 +57140,7 @@ export interface $Previewable {
   Post?: Post;
   Product?: Product;
   Rate?: Rate;
+  SearchWidget?: SearchWidget;
   Service?: Service;
 }
 
@@ -56030,6 +57198,22 @@ export interface $RateConnectionPageInfo {
   ProductToRateConnectionPageInfo?: ProductToRateConnectionPageInfo;
   RootQueryToRateConnectionPageInfo?: RootQueryToRateConnectionPageInfo;
   UserToRateConnectionPageInfo?: UserToRateConnectionPageInfo;
+}
+
+export interface $SearchWidgetConnection {
+  RootQueryToSearchWidgetConnection?: RootQueryToSearchWidgetConnection;
+  UserToSearchWidgetConnection?: UserToSearchWidgetConnection;
+}
+
+export interface $SearchWidgetConnectionEdge {
+  RootQueryToSearchWidgetConnectionEdge?: RootQueryToSearchWidgetConnectionEdge;
+  SearchWidgetToPreviewConnectionEdge?: SearchWidgetToPreviewConnectionEdge;
+  UserToSearchWidgetConnectionEdge?: UserToSearchWidgetConnectionEdge;
+}
+
+export interface $SearchWidgetConnectionPageInfo {
+  RootQueryToSearchWidgetConnectionPageInfo?: RootQueryToSearchWidgetConnectionPageInfo;
+  UserToSearchWidgetConnectionPageInfo?: UserToSearchWidgetConnectionPageInfo;
 }
 
 export interface $ServiceConnection {
@@ -56140,6 +57324,7 @@ export interface $UniformResourceIdentifiable {
   Product?: Product;
   ProductName?: ProductName;
   Rate?: Rate;
+  SearchWidget?: SearchWidget;
   Service?: Service;
   Tag?: Tag;
   User?: User;
@@ -56238,6 +57423,7 @@ export interface $WPPageInfo {
   RootQueryToProductNameConnectionPageInfo?: RootQueryToProductNameConnectionPageInfo;
   RootQueryToRateConnectionPageInfo?: RootQueryToRateConnectionPageInfo;
   RootQueryToRevisionsConnectionPageInfo?: RootQueryToRevisionsConnectionPageInfo;
+  RootQueryToSearchWidgetConnectionPageInfo?: RootQueryToSearchWidgetConnectionPageInfo;
   RootQueryToServiceConnectionPageInfo?: RootQueryToServiceConnectionPageInfo;
   RootQueryToTagConnectionPageInfo?: RootQueryToTagConnectionPageInfo;
   RootQueryToTaxonomyConnectionPageInfo?: RootQueryToTaxonomyConnectionPageInfo;
@@ -56261,6 +57447,7 @@ export interface $WPPageInfo {
   UserToProductConnectionPageInfo?: UserToProductConnectionPageInfo;
   UserToRateConnectionPageInfo?: UserToRateConnectionPageInfo;
   UserToRevisionsConnectionPageInfo?: UserToRevisionsConnectionPageInfo;
+  UserToSearchWidgetConnectionPageInfo?: UserToSearchWidgetConnectionPageInfo;
   UserToServiceConnectionPageInfo?: UserToServiceConnectionPageInfo;
   UserToUserRoleConnectionPageInfo?: UserToUserRoleConnectionPageInfo;
 }
@@ -56322,6 +57509,7 @@ export interface ScalarsEnums extends MakeNullable<Scalars> {
   RateIdType: RateIdType | undefined;
   RelationEnum: RelationEnum | undefined;
   SEOCardType: SEOCardType | undefined;
+  SearchWidgetIdType: SearchWidgetIdType | undefined;
   ServiceIdType: ServiceIdType | undefined;
   TagIdType: TagIdType | undefined;
   TaxonomyEnum: TaxonomyEnum | undefined;
