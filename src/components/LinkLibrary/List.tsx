@@ -32,7 +32,7 @@ function LinkLibraryList({ category }: Props): JSX.Element {
                 {
                     links && 
                     links.map((link, index) => (
-                        <LinkLibraryLink key={`link-lib-link-${link.id}`} date={dateFormat(link.date, category.dateFormat)} url={link.url}>{link.title}</LinkLibraryLink>
+                        <LinkLibraryLink key={`link-lib-link-${link.id}`} date={link.date && dateFormat(link?.date, category?.dateFormat)} url={link.url}>{link.title}</LinkLibraryLink>
                     ))
                 }
             </ul>
