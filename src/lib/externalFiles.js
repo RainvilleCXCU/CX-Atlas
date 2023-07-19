@@ -22,7 +22,7 @@ export const files = {
         },
         {
             id: 'cisco-chat',
-            src: '/wp-content/themes/CXCU/vendors/cisco-chat/scripts.css',
+            src: '/wp-content/themes/CXCU/vendors/cisco-chat/styles.css',
         },
         {
             id: 'child-theme',
