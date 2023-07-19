@@ -53,14 +53,20 @@ module.exports = withFaust({
                     destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp-content/:path*`,
                 },
                 {
-                    source: '/about/branch-and-atm-locations/',
-                    destination: '/locations/',
-                },
-                {
                     source: '/apply-:type/:path*',
                     destination: '/bridge/:type/',
+                },
+            ],
+            afterFiles: [
+                {
+                    source: '/about/media-center/:linkLibCatId/:linkLibCatPage*',
+                    destination: `/about/media-center/`,
+                },
+                {
+                    source: '/about/branch-and-atm-locations/:path*',
+                    destination: '/locations',
                 }
-            ]
+            ],
         }
     },
     trailingSlash: true

@@ -4,6 +4,9 @@ import Link from "next/link";
 import { Store } from "context/store";
 import LinkLibraryCatLinks from "./NavItem";
 import LinkLibraryList from "./List";
+import { useQuery } from "@apollo/client";
+import path from "path";
+import { useRouter } from "next/router";
 
 export interface Props {
     cat_ids: [{
@@ -18,6 +21,9 @@ function LinkLibrary({ cat_ids, children = <></> }: Props): JSX.Element {
     const [state, setState] = useContext(Store);
     const [activeCat, setActiveCat] = useState(null);
 
+    const router = useRouter();
+
+
     useEffect(() => {
         setActiveCat(state?.linkLibrary?.activeCat)
     }, [state?.linkLibrary?.activeCat]);
@@ -26,7 +32,7 @@ function LinkLibrary({ cat_ids, children = <></> }: Props): JSX.Element {
         setState({
             ...state,
             linkLibrary: {
-                activeCat: cat_ids[0]
+                activeCat: cat_ids.filter(cat => cat.id == router.query.linkLibCatId).length === 1 ? cat_ids.filter(cat => cat.id == router.query.linkLibCatId)[0] : cat_ids[0]
             }
         });
     }, [cat_ids]);

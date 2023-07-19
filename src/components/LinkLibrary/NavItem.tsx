@@ -3,6 +3,8 @@ import { client } from 'client';
 import Accordion from "components/Accordion/Accordion";
 import Link from "next/link";
 import { Store } from "context/store";
+import { useRouter } from "next/router";
+import { getPageUri } from "lib/routing";
 
 export interface Props {
     categories: [{
@@ -17,14 +19,11 @@ function LinkLibraryCatLinks({ categories, type = 'link' }: Props): JSX.Element 
     const { useQuery } = client;
     const [state, setState] = useContext(Store);
     const [activeCat, setActiveCat] = useState(null)
+    const router = useRouter();
 
     const showCategory = (category) => {
-        setState({
-            ...state,
-            linkLibrary: {
-                activeCat: category
-            }
-        });
+        const url = getPageUri(router.query.pageUri);
+        router.push(`${url}${category.id}`, undefined, { shallow: true });
     }
 
     useEffect(() => {
@@ -38,7 +37,7 @@ function LinkLibraryCatLinks({ categories, type = 'link' }: Props): JSX.Element 
                     {
                         categories?.map((category, index) => (
                             <li className="cx-link-lib-cats__item" key={`list-link-${category.id}`}>
-                                <a href="#" className={`cx-link cx-link--large cx-link-lib-cats__link${activeCat?.id === category?.id ? ' cx-link-lib-active' : ''}`} data-catid={category?.id}
+                                <a className={`cx-link cx-link--large cx-link-lib-cats__link${activeCat?.id === category?.id ? ' cx-link-lib-active' : ''}`} data-catid={category?.id}
                                     onClick={(e) => {
                                         e.preventDefault();
                                         showCategory(category);

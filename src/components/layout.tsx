@@ -41,7 +41,7 @@ export default function Layout({ page, children = <></> }) {
 			/>
 			<GTM />
 			<HotJar />
-			<Alert id={page.databaseId} />
+			<Alert id={page?.databaseId} />
 			<Header
 				title={generalSettings.title}
 				description={generalSettings.description}

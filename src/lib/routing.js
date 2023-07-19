@@ -9,3 +9,7 @@ export const pageview = (url) => {
     QSI.API.run();
   }
 }
+
+export const getPageUri = uri => {
+  return `/${uri.join('/')}/`
+}
