@@ -22,6 +22,12 @@ function LinkLibraryCatLinks({ categories, type = 'link' }: Props): JSX.Element 
     const router = useRouter();
 
     const showCategory = (category) => {
+        setState({
+            ...state,
+            linkLibrary: {
+                activeCat: category
+            }
+        })
         const url = getPageUri(router.query.pageUri);
         router.push(`${url}${category.id}`, undefined, { shallow: true });
     }
