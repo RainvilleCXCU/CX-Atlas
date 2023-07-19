@@ -37,13 +37,13 @@ function LinkLibrary({ cat_ids, children = <></> }: Props): JSX.Element {
         });
     }, [cat_ids]);
     return (
-        <>
+        <div className="cx-link-library">
             <nav aria-label="secondary">
                 <LinkLibraryCatLinks categories={cat_ids} type="link"></LinkLibraryCatLinks>
                 <LinkLibraryCatLinks categories={cat_ids} type="select"></LinkLibraryCatLinks>
             </nav>
             <LinkLibraryList category={activeCat}></LinkLibraryList>
-        </>
+        </div>
     );
 }
 
