@@ -59,7 +59,11 @@ module.exports = withFaust({
             ],
             afterFiles: [
                 {
-                    source: '/about/media-center/:linkLibCatId/:linkLibCatPage*',
+                    source: '/about/media-center/:linkLibCatId/page/:linkLibCatPage*',
+                    destination: `/about/media-center/`,
+                },
+                {
+                    source: '/about/media-center/:linkLibCatId*',
                     destination: `/about/media-center/`,
                 },
                 {

@@ -25,7 +25,9 @@ function LinkLibraryCatLinks({ categories, type = 'link' }: Props): JSX.Element 
         setState({
             ...state,
             linkLibrary: {
-                activeCat: category
+                ...state.linkLibrary,
+                activeCat: category,
+                activePage: 1
             }
         })
         const url = getPageUri(router.query.pageUri);

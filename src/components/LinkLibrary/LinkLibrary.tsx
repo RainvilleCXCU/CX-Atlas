@@ -29,10 +29,13 @@ function LinkLibrary({ cat_ids, children = <></> }: Props): JSX.Element {
     }, [state?.linkLibrary?.activeCat]);
 
     useEffect(() => {
+        const newLib = state.link
         setState({
             ...state,
             linkLibrary: {
-                activeCat: cat_ids.filter(cat => cat.id == router.query.linkLibCatId).length === 1 ? cat_ids.filter(cat => cat.id == router.query.linkLibCatId)[0] : cat_ids[0]
+                ...state.linkLibrary,
+                activeCat: cat_ids.filter(cat => cat.id == router.query.linkLibCatId).length === 1 ? cat_ids.filter(cat => cat.id == router.query.linkLibCatId)[0] : cat_ids[0],
+                activePage: router.query.linkLibCatPage ? router.query.linkLibCatPage : 1
             }
         });
     }, [cat_ids]);

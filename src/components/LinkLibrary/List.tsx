@@ -3,6 +3,9 @@ import { client } from 'client';
 import { Store } from "context/store";
 import LinkLibraryLink from "./LinkLibraryLink";
 import dateFormat from 'dateformat';
+import Pagination from "components/Pagination";
+import { useRouter } from "next/router";
+import { getPageUri } from "lib/routing";
 
 
 export interface Props {
@@ -15,7 +18,21 @@ export interface Props {
 
 function LinkLibraryList({ category }: Props): JSX.Element {
     const [state, setState] = useContext(Store);
-    const [activeCat, setActiveCAt] = useState(null);
+    const [activeCat, setActiveCat] = useState(null)
+    const postPerPage = 7;
+    const router = useRouter();
+
+    const url = getPageUri(router.query.pageUri);
+
+    const pageinate = (page) => {
+        setState({
+            ...state,
+            linkLibrary: {
+                ...state.linkLibrary,
+                activePage: page
+            }
+        });
+    }
 
     const links = client.useQuery().linkLibraryByCatId({
         catId: parseInt(category?.id)
@@ -33,9 +50,10 @@ function LinkLibraryList({ category }: Props): JSX.Element {
                     links && 
                     links.map((link, index) => (
                         <LinkLibraryLink key={`link-lib-link-${link.id}`} date={link.date && dateFormat(link?.date, category?.dateFormat)} url={link.url}>{link.title}</LinkLibraryLink>
-                    ))
+                    )).filter((e, i) => i >= ((state?.linkLibrary?.activePage - 1) * postPerPage) && i < ((state?.linkLibrary?.activePage - 1) * postPerPage) + postPerPage)
                 }
             </ul>
+            <Pagination currentPage={parseInt(state?.linkLibrary?.activePage)} totalResults={links.length} basePath={`${url}${category?.id}`} perPage={10} clickHandler={pageinate} />
         </div>            
     );
 }
