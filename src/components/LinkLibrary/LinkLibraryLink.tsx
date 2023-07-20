@@ -8,19 +8,23 @@ export interface Props {
     children
 }
 
-function LinkLibraryLink({ date, url = "", children = <></> }: Props): JSX.Element {
+function LinkLibraryLink({ date, url, children = <></> }: Props): JSX.Element {
 
     return (
-        <li className="cx-link-lib__item">
-            <p className="cx-link-lib__date">
-                <small>{date}</small>
-            </p>
-            <p className="cx-link-lib__link">
-                <Link href={url} id="link-12116" className="track_this_link" rel="noopener noreferrer nofollow" target="_blank">
-                    {children}
-                </Link>
-            </p>
-        </li>        
+        <>
+        { date && url &&
+            <li className="cx-link-lib__item">
+                <p className="cx-link-lib__date">
+                    <small>{date}</small>
+                </p>
+                <p className="cx-link-lib__link">
+                    <a href={url} className="track_this_link" rel="noopener noreferrer nofollow" target="_blank">
+                        {children}
+                    </a>
+                </p>
+            </li>
+        }
+        </>
     );
 }
 
