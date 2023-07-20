@@ -25,8 +25,8 @@ function LinkLibrary({ cat_ids, children = <></> }: Props): JSX.Element {
     }, [state?.linkLibrary?.activeCat]);
 
     useEffect(() => {
-        console.log(`Query ${JSON.stringify(router.query)}`);
-        return () => {
+        if(router.isReady) {
+            console.log(`Query ${JSON.stringify(router.query)}`);
             setState({
                 ...state,
                 linkLibrary: {
@@ -36,7 +36,7 @@ function LinkLibrary({ cat_ids, children = <></> }: Props): JSX.Element {
                 }
             });
         }
-    }, [router.query]);
+    }, [router.isReady]);
     return (
         <div className="cx-link-library">
             <nav aria-label="secondary">

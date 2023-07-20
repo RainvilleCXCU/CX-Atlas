@@ -36,6 +36,7 @@ function LinkLibraryCatLinks({ categories, type = 'link' }: Props): JSX.Element 
 
     useEffect(() => {
         setActiveCat(state?.linkLibrary?.activeCat)
+        return () => {}
     }, [state?.linkLibrary?.activeCat])
 
     if (type === "link") {
@@ -65,7 +66,7 @@ function LinkLibraryCatLinks({ categories, type = 'link' }: Props): JSX.Element 
                     onChange={(e) => {
                         e.preventDefault();
                         showCategory(JSON.parse(e.currentTarget.value));
-                    }}>
+                    }} value={activeCat?.id}>
                     {
                         categories?.map((category, index) => (
                             <option value={JSON.stringify(category)} key={`category-option-${category.id}`}
