@@ -37,7 +37,7 @@ function LinkLibraryList({ category }: Props): JSX.Element {
     const links = client.useQuery().linkLibraryByCatId({
         catId: parseInt(category?.id)
     })
-    
+
     return (
         <div className={`linklist LinkLibraryCat LinkLibraryCat${category?.name}`}>
             <div id={`LinkLibraryCat-${category?.name}`}>
@@ -45,16 +45,20 @@ function LinkLibraryList({ category }: Props): JSX.Element {
                     <span className="linklistcatclass">{category?.name}</span>
                 </div>
             </div>
-            <ul>
-                {
-                    links && 
-                    links.map((link, index) => (
-                        <LinkLibraryLink key={`link-lib-link-${link.id}`} date={link.date && dateFormat(link?.date, category?.dateFormat)} url={link.url}>{link.title}</LinkLibraryLink>
-                    )).filter((e, i) => i >= ((state?.linkLibrary?.activePage - 1) * postPerPage) && i < ((state?.linkLibrary?.activePage - 1) * postPerPage) + postPerPage)
-                }
-            </ul>
-            <Pagination currentPage={parseInt(state?.linkLibrary?.activePage)} totalResults={links.length} basePath={`${url}${category?.id}`} perPage={10} clickHandler={pageinate} />
-        </div>            
+            {
+                links.length > 1 &&
+                <>
+                    <ul>
+                        {
+                            links.map((link, index) => (
+                                <LinkLibraryLink key={`link-lib-link-${link.id}`} date={link.date && dateFormat(link?.date, category?.dateFormat)} url={link.url}>{link.title}</LinkLibraryLink>
+                            )).filter((e, i) => i >= ((state?.linkLibrary?.activePage - 1) * postPerPage) && i < ((state?.linkLibrary?.activePage - 1) * postPerPage) + postPerPage)
+                        }
+                    </ul>
+                    <Pagination currentPage={parseInt(state?.linkLibrary?.activePage)} totalResults={links.length} basePath={`${url}${category?.id}`} perPage={10} clickHandler={pageinate} />
+                </>
+            }
+        </div>
     );
 }
 

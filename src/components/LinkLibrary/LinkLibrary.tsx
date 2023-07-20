@@ -1,11 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { client } from 'client';
-import Link from "next/link";
 import { Store } from "context/store";
 import LinkLibraryCatLinks from "./NavItem";
 import LinkLibraryList from "./List";
-import { useQuery } from "@apollo/client";
-import path from "path";
 import { useRouter } from "next/router";
 
 export interface Props {
@@ -29,16 +25,18 @@ function LinkLibrary({ cat_ids, children = <></> }: Props): JSX.Element {
     }, [state?.linkLibrary?.activeCat]);
 
     useEffect(() => {
-        const newLib = state.link
-        setState({
-            ...state,
-            linkLibrary: {
-                ...state.linkLibrary,
-                activeCat: cat_ids.filter(cat => cat.id == router.query.linkLibCatId).length === 1 ? cat_ids.filter(cat => cat.id == router.query.linkLibCatId)[0] : cat_ids[0],
-                activePage: router.query.linkLibCatPage ? router.query.linkLibCatPage : 1
-            }
-        });
-    }, [cat_ids]);
+        console.log(`Query ${JSON.stringify(router.query)}`);
+        return () => {
+            setState({
+                ...state,
+                linkLibrary: {
+                    ...state.linkLibrary,
+                    activeCat: cat_ids.filter(cat => cat.id == router.query.linkLibCatId).length === 1 ? cat_ids.filter(cat => cat.id == router.query.linkLibCatId)[0] : cat_ids[0],
+                    activePage: router.query.linkLibCatPage ? router.query.linkLibCatPage : 1
+                }
+            });
+        }
+    }, [router.query]);
     return (
         <div className="cx-link-library">
             <nav aria-label="secondary">
