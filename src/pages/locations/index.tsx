@@ -3,7 +3,7 @@ import { client } from "client";
 import { Footer, Header } from "components";
 import { GetStaticPropsContext } from "next";
 import Head from "next/head";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
 	showDetailsContext,
 	selectedLocationContext,
@@ -23,14 +23,27 @@ import Column from "components/Blocks/Column";
 import HotJar from "components/ThirdParty/hotjar";
 import Qualtrics from "components/ThirdParty/qualtrics";
 import Spectrum from "components/ThirdParty/spectrum";
+import AddressBar from "components/Locations/searchbar";
+import { Store } from 'context/store';
+import { getGeoLocation } from "lib/location/geolocation";
 
 export default function Page({ locationSettings }) {
 	const { useQuery } = client;
+
+	const [state, setState] = useContext(Store);
+	
 	const { generalSettings } = useQuery();
 
 	const [data, setData] = useState(null);
+	const [address, setAddress] = useState('');
 	const [length, setLength] = useState(null);
 	const [isLoading, setLoading] = useState(false);
+	let userLocation = 'start';
+
+	useEffect(() => {
+		setAddress(state?.location?.search)
+	}, [state?.location?.search])
+
 	const [showDetails, setShowDetails] = useState(false);
 	const [selectedLocation, setSelectedLocation] = useState(null);
 
@@ -45,7 +58,8 @@ export default function Page({ locationSettings }) {
 				setLength(Object.keys(data).length);
 				setLoading(false);
 			});
-	}, []);
+	}, [address]);
+
 
 	return (
 		<>
@@ -60,7 +74,6 @@ export default function Page({ locationSettings }) {
 			</Head>
 			<GTM />
 			<HotJar />
-
 			<showDetailsContext.Provider value={{ showDetails, setShowDetails }}>
 				<selectedLocationContext.Provider
 					value={{ selectedLocation, setSelectedLocation }}
@@ -78,7 +91,12 @@ export default function Page({ locationSettings }) {
 								id="wpsl-wrap"
 								className="wpsl-wrap wpsl-store-below wpsl-default-filters"
 							>
-								<div className="wpsl-search wpsl-clearfix wpsl-checkboxes-enabled wpsl-geolocation-run"></div>
+								<div className="wpsl-search wpsl-clearfix wpsl-checkboxes-enabled wpsl-geolocation-run">
+
+									<Wrapper apiKey={locationSettings.apiBrowserKey}>
+										<AddressBar />
+									</Wrapper>
+								</div>
 								<Wrapper apiKey={locationSettings.apiBrowserKey}>
 									<Map lat={45} lng={-89} locationSettings={locationSettings} />
 								</Wrapper>
@@ -112,19 +130,19 @@ export default function Page({ locationSettings }) {
 export async function getStaticProps(context: GetStaticPropsContext) {
 	const { data } = await apolloClient.query({
 		query: gql`
-			${LocationSettingsFragment}
-			query LocationSettings {
-				locationSettings {
-					...LocationSettingsFragment
-				}
+		${LocationSettingsFragment}
+        query LocationSettings {
+			locationSettings {
+				...LocationSettingsFragment
 			}
-		`,
+          }
+      `,
 	});
 	return getNextStaticProps(context, {
 		Page,
 		client,
 		props: {
-			locationSettings: data.locationSettings,
-		},
+			locationSettings: data.locationSettings
+		}
 	});
 }
