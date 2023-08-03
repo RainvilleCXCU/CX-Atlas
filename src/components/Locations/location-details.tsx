@@ -33,15 +33,13 @@ function LocationDetails(): JSX.Element {
 						<form autoComplete="on">
 							<div className="wpsl-input">
 								{" "}
-								{showDetails ? (
+								{showDetails && (
 									<button
-										className="cx-modal__close cx-modal__close--back"
+										className={`cx-modal__close cx-modal__close--back${isMobile}`}
 										onClick={() => setShowDetails(false)}
 									>
 										Back
 									</button>
-								) : (
-									<label className="wpsl-icon-direction">Near Me</label>
 								)}{" "}
 								<div className="cx-location-listing__search--input">
 									<input
