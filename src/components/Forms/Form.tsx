@@ -33,7 +33,7 @@ function Form({ id }: Props): JSX.Element {
                             <div className="nf-form-content">
                                 {formData?.fields && JSON.parse(formData?.fields).map((field, index) => (
                                     <NFField
-                                        id={field.order}
+                                        id={field.id}
                                         type={field.type}
                                         name={field.custom_name_attribute}
                                         label={field.label}

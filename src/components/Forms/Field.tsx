@@ -26,23 +26,23 @@ function NFField({ id, type = 'text', name, label, label_pos = "label-above", co
     return (
         <div id={`nf-field-${id}-container`} className={`nf-field-container ${type}-container ${`label-${label_pos === 'default' || label_pos === 'label-above' ? 'above' : label_pos}`} ${container_classes}`}>
             <div className="nf-field">
-                <div className={`field-wrap ${type}-wrap`}>
+                <div id={`nf-field-${id}-wrap`} className={`field-wrap ${type}-wrap`} data-field-id={id}>
                     {type !== 'button' && type !== 'submit' &&
                         <div className="nf-field-label">
-                                <label htmlFor="nf-field-5" id="nf-label-field-5" className="">
+                                <label htmlFor={`nf-field-${id}`} id={`nf-label-field-${id}`} className="">
                                     {label} {required && <span className="ninja-forms-req-symbol">*</span> }
                                 </label>
                         </div>
                     }
                     <div className="nf-field-element">
                         {type !== 'textarea' && type !== 'button' && type !== 'html'  && type !== 'submit' &&   
-                            <input id={`nf-field${id}`} name={name || `nf-field${id}`} aria-invalid="false" aria-describedby="nf-error-3" className={`ninja-forms-field nf-element ${element_classes}`} aria-labelledby="nf-label-field-3" aria-required={required ? 'true' : 'false'} required={required}/>
+                            <input id={`nf-field${id}`} name={name || `nf-field${id}`} aria-invalid="false" aria-describedby={`nf-error-${id}`} className={`ninja-forms-field nf-element ${element_classes}`} aria-labelledby={`nf-label-field-${id}`} aria-required={required ? 'true' : 'false'} required={required}/>
                         }
                         {type === 'textarea' && 
-                            <textarea id={`nf-field${id}`} name={name || `nf-field${id}`} aria-invalid="false" aria-describedby="nf-error-3" className={`ninja-forms-field nf-element ${element_classes}`} aria-labelledby="nf-label-field-3" aria-required={required ? 'true' : 'false'} required={required}></textarea>
+                            <textarea id={`nf-field${id}`} name={name || `nf-field${id}`} aria-invalid="false" aria-describedby={`nf-error-${id}`} className={`ninja-forms-field nf-element ${element_classes}`} aria-labelledby={`nf-label-field-${id}`}  aria-required={required ? 'true' : 'false'} required={required}></textarea>
                         }
                         {type === 'button' || type === 'submit' && 
-                            <input id="nf-field-4" className={`ninja-forms-field nf-element ${element_classes}`} type="submit" value="Submit"></input>
+                            <input id={`nf-field${id}`} className={`ninja-forms-field nf-element ${element_classes}`} type="submit" value="Submit"></input>
                         }
                         {type === 'html' && 
                             parseHtml(content)
