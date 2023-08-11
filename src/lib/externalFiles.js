@@ -29,9 +29,13 @@ export const files = {
             src: '/wp-content/themes/CXCU/style.css',
         },
         {
+            id: 'ninja-forms',
+            src: `/wp-content/plugins/ninja-forms/assets/css/display-opinions-light.css`
+        },
+        {
             id: 'styleguide',
             src: `/wp-content/themes/CXCU/assets/${process.env.styleguideVersion || '0.6.35'}/cxcuatlas.css`
-        }
+        },
     ],
     js: [
         {

@@ -9,6 +9,7 @@ import DatatracValue from "components/Datatrac/Value";
 import DatatracFootnote from "components/Datatrac/Footnote";
 import LinkLibraryCatLink from "components/LinkLibrary/NavItem";
 import LinkLibrary from "components/LinkLibrary/LinkLibrary";
+import Form from "components/Forms/Form";
 // import { ciscoBubbleChat } from "./cisco-chat";
 
 export const parseHtml = (html) => {
@@ -25,11 +26,16 @@ export const parseHtml = (html) => {
             const isCiscoBubbleChat = name === 'a' && attribs && attribs.class?.includes('cx-icon__chat_bubble');
             // const isLinkLibraryCatLink = name === 'a' && attribs && attribs.class?.includes('cx-link-lib-cats__link');
             const isLinkLibrary = attribs && attribs['data-link-library-cats'];
+            const isForm = attribs?.class?.includes('nf-form-cont');
 
             if(isCiscoBubbleChat) {
                 return (
                     <Chat className={attribs.class}>{domToReact(children, options)}</Chat>
                 )
+            }
+
+            else if(isForm) {
+                return <Form id={1} />
             }
 
             else if(isLinkLibrary) {

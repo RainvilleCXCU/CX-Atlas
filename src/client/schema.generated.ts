@@ -9952,6 +9952,11 @@ export const generatedSchema = {
     footerSocialIcons: { __type: "String" },
     footerUtilities: { __type: "String" },
   },
+  Form: {
+    __typename: { __type: "String!" },
+    fields: { __type: "String" },
+    settings: { __type: "String" },
+  },
   GeneralSettings: {
     __typename: { __type: "String!" },
     dateFormat: { __type: "String" },
@@ -17922,6 +17927,43 @@ export const generatedSchema = {
     blogtop: { __type: "String" },
     widgetSettings: { __type: "String" },
   },
+  WpformsFormSelector: {
+    __typename: { __type: "String!" },
+    apiVersion: { __type: "Int" },
+    attributes: { __type: "WpformsFormSelectorAttributes" },
+    blockEditorCategoryName: { __type: "String" },
+    clientId: { __type: "String" },
+    cssClassNames: { __type: "[String]" },
+    innerBlocks: { __type: "[EditorBlock]" },
+    isDynamic: { __type: "Boolean!" },
+    name: { __type: "String" },
+    parentClientId: { __type: "String" },
+    renderedHtml: { __type: "String" },
+  },
+  WpformsFormSelectorAttributes: {
+    __typename: { __type: "String!" },
+    blockVisibility: { __type: "BlockAttributesObject" },
+    buttonBackgroundColor: { __type: "String" },
+    buttonBorderRadius: { __type: "String" },
+    buttonSize: { __type: "String" },
+    buttonTextColor: { __type: "String" },
+    className: { __type: "String" },
+    clientId: { __type: "String" },
+    copyPasteJsonValue: { __type: "String" },
+    displayDesc: { __type: "Boolean" },
+    displayTitle: { __type: "Boolean" },
+    fieldBackgroundColor: { __type: "String" },
+    fieldBorderColor: { __type: "String" },
+    fieldBorderRadius: { __type: "String" },
+    fieldSize: { __type: "String" },
+    fieldTextColor: { __type: "String" },
+    formId: { __type: "String" },
+    labelColor: { __type: "String" },
+    labelErrorColor: { __type: "String" },
+    labelSize: { __type: "String" },
+    labelSublabelColor: { __type: "String" },
+    lock: { __type: "BlockAttributesObject" },
+  },
   WritingSettings: {
     __typename: { __type: "String!" },
     defaultCategory: { __type: "Int" },
@@ -18368,6 +18410,7 @@ export const generatedSchema = {
     genesisBlocksGlobalSettingsSettings: {
       __type: "GenesisBlocksGlobalSettingsSettings",
     },
+    getForm: { __type: "Form", __args: { formId: "String" } },
     graphqlDocument: {
       __type: "GraphqlDocument",
       __args: {
@@ -19691,6 +19734,7 @@ export const generatedSchema = {
       "UltimateFaqsEwdUfaqSearchBlock",
       "UltimateFaqsEwdUfaqSubmitFaqBlock",
       "UnknownBlock",
+      "WpformsFormSelector",
       "YoastFaqBlock",
       "YoastHowToBlock",
       "YoastSeoBreadcrumbs",
@@ -32996,6 +33040,7 @@ export interface EditorBlock {
     | "UltimateFaqsEwdUfaqSearchBlock"
     | "UltimateFaqsEwdUfaqSubmitFaqBlock"
     | "UnknownBlock"
+    | "WpformsFormSelector"
     | "YoastFaqBlock"
     | "YoastHowToBlock"
     | "YoastSeoBreadcrumbs";
@@ -33441,6 +33486,15 @@ export interface FooterSettings {
    * Genesis Footer Utilities
    */
   footerUtilities?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Keys and their values, both cast as strings
+ */
+export interface Form {
+  __typename?: "Form";
+  fields?: Maybe<ScalarsEnums["String"]>;
+  settings?: Maybe<ScalarsEnums["String"]>;
 }
 
 /**
@@ -53585,6 +53639,144 @@ export interface WidgetSettings {
 }
 
 /**
+ * A block used for editing the site
+ */
+export interface WpformsFormSelector {
+  __typename?: "WpformsFormSelector";
+  /**
+   * The API version of the Gutenberg Block
+   */
+  apiVersion?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Attributes of the %s Block Type
+   */
+  attributes?: Maybe<WpformsFormSelectorAttributes>;
+  /**
+   * The name of the category the Block belongs to
+   */
+  blockEditorCategoryName?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The id of the Block
+   */
+  clientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * CSS Classnames to apply to the block
+   */
+  cssClassNames?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The inner blocks of the Block
+   */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /**
+   * Whether the block is Dynamic (server rendered)
+   */
+  isDynamic: ScalarsEnums["Boolean"];
+  /**
+   * The name of the block
+   */
+  name?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The parent id of the Block
+   */
+  parentClientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The rendered HTML for the block
+   */
+  renderedHtml?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Attributes of the %s Block Type
+ */
+export interface WpformsFormSelectorAttributes {
+  __typename?: "WpformsFormSelectorAttributes";
+  /**
+   * The &quot;blockVisibility&quot; field on the &quot;WpformsFormSelector&quot; block
+   */
+  blockVisibility?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;buttonBackgroundColor&quot; field on the &quot;WpformsFormSelector&quot; block
+   */
+  buttonBackgroundColor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;buttonBorderRadius&quot; field on the &quot;WpformsFormSelector&quot; block
+   */
+  buttonBorderRadius?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;buttonSize&quot; field on the &quot;WpformsFormSelector&quot; block
+   */
+  buttonSize?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;buttonTextColor&quot; field on the &quot;WpformsFormSelector&quot; block
+   */
+  buttonTextColor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;className&quot; field on the &quot;WpformsFormSelector&quot; block
+   */
+  className?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;clientId&quot; field on the &quot;WpformsFormSelector&quot; block
+   */
+  clientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;copyPasteJsonValue&quot; field on the &quot;WpformsFormSelector&quot; block
+   */
+  copyPasteJsonValue?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;displayDesc&quot; field on the &quot;WpformsFormSelector&quot; block
+   */
+  displayDesc?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * The &quot;displayTitle&quot; field on the &quot;WpformsFormSelector&quot; block
+   */
+  displayTitle?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * The &quot;fieldBackgroundColor&quot; field on the &quot;WpformsFormSelector&quot; block
+   */
+  fieldBackgroundColor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;fieldBorderColor&quot; field on the &quot;WpformsFormSelector&quot; block
+   */
+  fieldBorderColor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;fieldBorderRadius&quot; field on the &quot;WpformsFormSelector&quot; block
+   */
+  fieldBorderRadius?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;fieldSize&quot; field on the &quot;WpformsFormSelector&quot; block
+   */
+  fieldSize?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;fieldTextColor&quot; field on the &quot;WpformsFormSelector&quot; block
+   */
+  fieldTextColor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;formId&quot; field on the &quot;WpformsFormSelector&quot; block
+   */
+  formId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;labelColor&quot; field on the &quot;WpformsFormSelector&quot; block
+   */
+  labelColor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;labelErrorColor&quot; field on the &quot;WpformsFormSelector&quot; block
+   */
+  labelErrorColor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;labelSize&quot; field on the &quot;WpformsFormSelector&quot; block
+   */
+  labelSize?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;labelSublabelColor&quot; field on the &quot;WpformsFormSelector&quot; block
+   */
+  labelSublabelColor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;lock&quot; field on the &quot;WpformsFormSelector&quot; block
+   */
+  lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+}
+
+/**
  * The writing setting type
  */
 export interface WritingSettings {
@@ -54116,6 +54308,7 @@ export interface Query {
   footerSettings?: Maybe<FooterSettings>;
   generalSettings?: Maybe<GeneralSettings>;
   genesisBlocksGlobalSettingsSettings?: Maybe<GenesisBlocksGlobalSettingsSettings>;
+  getForm: (args?: { formId?: Maybe<Scalars["String"]> }) => Maybe<Form>;
   graphqlDocument: (args: {
     asPreview?: Maybe<Scalars["Boolean"]>;
     id: Scalars["ID"];
@@ -54739,6 +54932,7 @@ export interface SchemaObjectTypes {
   FilebirdBlockFilebirdGallery: FilebirdBlockFilebirdGallery;
   FilebirdBlockFilebirdGalleryAttributes: FilebirdBlockFilebirdGalleryAttributes;
   FooterSettings: FooterSettings;
+  Form: Form;
   GeneralSettings: GeneralSettings;
   GenerateAuthorizationCodePayload: GenerateAuthorizationCodePayload;
   GenesisBlocksGbNewsletter: GenesisBlocksGbNewsletter;
@@ -55230,6 +55424,8 @@ export interface SchemaObjectTypes {
   UserToUserRoleConnectionEdge: UserToUserRoleConnectionEdge;
   UserToUserRoleConnectionPageInfo: UserToUserRoleConnectionPageInfo;
   WidgetSettings: WidgetSettings;
+  WpformsFormSelector: WpformsFormSelector;
+  WpformsFormSelectorAttributes: WpformsFormSelectorAttributes;
   WritingSettings: WritingSettings;
   YoastFaqBlock: YoastFaqBlock;
   YoastFaqBlockAttributes: YoastFaqBlockAttributes;
@@ -55519,6 +55715,7 @@ export type SchemaObjectTypesNames =
   | "FilebirdBlockFilebirdGallery"
   | "FilebirdBlockFilebirdGalleryAttributes"
   | "FooterSettings"
+  | "Form"
   | "GeneralSettings"
   | "GenerateAuthorizationCodePayload"
   | "GenesisBlocksGbNewsletter"
@@ -56010,6 +56207,8 @@ export type SchemaObjectTypesNames =
   | "UserToUserRoleConnectionEdge"
   | "UserToUserRoleConnectionPageInfo"
   | "WidgetSettings"
+  | "WpformsFormSelector"
+  | "WpformsFormSelectorAttributes"
   | "WritingSettings"
   | "YoastFaqBlock"
   | "YoastFaqBlockAttributes"
@@ -56594,6 +56793,7 @@ export interface $EditorBlock {
   UltimateFaqsEwdUfaqSearchBlock?: UltimateFaqsEwdUfaqSearchBlock;
   UltimateFaqsEwdUfaqSubmitFaqBlock?: UltimateFaqsEwdUfaqSubmitFaqBlock;
   UnknownBlock?: UnknownBlock;
+  WpformsFormSelector?: WpformsFormSelector;
   YoastFaqBlock?: YoastFaqBlock;
   YoastHowToBlock?: YoastHowToBlock;
   YoastSeoBreadcrumbs?: YoastSeoBreadcrumbs;
