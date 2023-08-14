@@ -35,7 +35,7 @@ export const parseHtml = (html) => {
             }
 
             else if(isForm) {
-                return <Form id={1} />
+                return <Form id={parseInt(attribs?.id.split('-')[2])} />
             }
 
             else if(isLinkLibrary) {

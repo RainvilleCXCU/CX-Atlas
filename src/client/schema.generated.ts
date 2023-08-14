@@ -9954,7 +9954,10 @@ export const generatedSchema = {
   },
   Form: {
     __typename: { __type: "String!" },
+    actions: { __type: "String" },
+    ajaxNonce: { __type: "String" },
     fields: { __type: "String" },
+    objects: { __type: "String" },
     settings: { __type: "String" },
   },
   GeneralSettings: {
@@ -33493,7 +33496,10 @@ export interface FooterSettings {
  */
 export interface Form {
   __typename?: "Form";
+  actions?: Maybe<ScalarsEnums["String"]>;
+  ajaxNonce?: Maybe<ScalarsEnums["String"]>;
   fields?: Maybe<ScalarsEnums["String"]>;
+  objects?: Maybe<ScalarsEnums["String"]>;
   settings?: Maybe<ScalarsEnums["String"]>;
 }
 
