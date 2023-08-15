@@ -7,6 +7,7 @@ import { Store } from "context/store";
 export interface Props {
     id: string;
     type: string;
+    form: string;
     name: string;
     label?: string;
     content?: string;
@@ -18,46 +19,113 @@ export interface Props {
     error_message?: string;
 }
 
-function NFField({ id, type = 'text', name, label, label_pos = "label-above", container_classes, element_classes, description, content, required = false, error_message }: Props): JSX.Element {
-    const { useQuery } = client;
+function NFField({ id, form, type = 'text', name, label, label_pos = "label-above", container_classes, element_classes, description, content, required = false, error_message }: Props): JSX.Element {
+
     const fieldRef = useRef(null);
     const emailValid = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'i');
-    const formData = useQuery().getForm({
-        formId: id.toString()
-    });
     
     const [state, setState] = useContext(Store);
     const [errorMessage, setErrorMessage] = useState(null);
     const [edited, setEdited] = useState(false);
+    const [isValid, setValid] = useState(false)
 
     const validateField = () => {
         setErrorMessage(null);
+        let error = null;
         if(fieldRef.current.value === '' && required) {
-            setErrorMessage(state.formSettings.validateRequiredField);
             setEdited(true);
+            error = state.formSettings.validateRequiredField;
         } else {
-            if(!emailValid.test(fieldRef.current.value)) {
-                setErrorMessage(state.formSettings.changeEmailErrorMsg);
+            if(type === 'email' && !emailValid.test(fieldRef.current.value)) {
                 setEdited(true);
+                error = state.formSettings.changeEmailErrorMsg;
             }
         }
+
+        setErrorMessage(error);
+
+        setState({
+            ...state,
+            forms: {
+                ...state.forms,
+                [form]: {
+                    ...state.forms?.[form],
+                    fields: {
+                        ...state.forms?.[form].fields,
+                        [id]: {
+                            ...state.forms?.[form]?.fields?.[id],
+                            error
+                        }
+                    }
+                }
+            }
+        });
     }
 
-    const changeField = () => {
+    const changeField = e => {
         if(edited) {
             validateField();
         }
+        setState({
+            ...state,
+            forms: {
+                ...state.forms,
+                [form]: {
+                    ...state.forms?.[form],
+                    fields: {
+                        ...state.forms?.[form].fields,
+                        [id]: {
+                            ...state.forms?.[form]?.fields?.[id],
+                            value: e.target.value
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    const showSubmit = () => {
+        for( const field in state?.forms?.[form]?.fields) {
+            const hasError = state?.forms?.[form]?.fields[field].error !== null;
+            const missingReq = ( (!state?.forms?.[form]?.fields[field].value || state?.forms?.[form]?.fields[field].value == '') && state?.forms?.[form]?.fields[field].required)
+            if(missingReq || hasError) {
+                return false;
+            }
+        }
+        return true;
     }
 
     useEffect(() => {
-        setErrorMessage(error_message);
-    }, []);
+        if(!state.forms?.[form]?.fields?.[id]) {
+            setState(state => ({
+                ...state,
+                forms: {
+                    ...state.forms,
+                    [form]: {
+                        ...state.forms?.[form],
+                        fields: {
+                            ...state.forms?.[form].fields,
+                            [id]: {
+                                ...state.forms?.[form]?.fields?.[id],
+                                required,
+                                error: null
+                            }
+                        }
+                    }
+                }
+            }));
+        }
+    });
+
+    useEffect(() => {
+        setValid(showSubmit());
+    }, [state?.forms?.[form]?.fields]);
 
     return (
         <div id={`nf-field-${id}-container`} className={`nf-field-container ${type}-container ${`label-${label_pos === 'default' || label_pos === 'label-above' ? 'above' : label_pos}`} ${container_classes}`}>
             <div className="nf-field">
                 <div id={`nf-field-${id}-wrap`} className={`field-wrap ${type}-wrap${errorMessage && ' nf-fail nf-error'}${(edited && !errorMessage) ? ' nf-pass' : ''}`} data-field-id={id}>
-                    {type !== 'button' && type !== 'submit' &&
+                    {type !== 'button' && type !== 'submit' && required &&
                         <div className="nf-field-label">
                                 <label htmlFor={`nf-field-${id}`} id={`nf-label-field-${id}`} className="">
                                     {label} {required && <span className="ninja-forms-req-symbol">*</span> }
@@ -69,10 +137,10 @@ function NFField({ id, type = 'text', name, label, label_pos = "label-above", co
                             <input id={`nf-field${id}`} ref={fieldRef} data-field-id={id} name={name || `nf-field${id}`} aria-invalid="false" aria-describedby={`nf-error-${id}`} onChange={changeField} onBlur={validateField} className={`ninja-forms-field nf-element ${element_classes}`} aria-labelledby={`nf-label-field-${id}`} aria-required={required ? 'true' : 'false'} required={required}/>
                         }
                         {type === 'textarea' && 
-                            <textarea id={`nf-field${id}`} ref={fieldRef} data-field-id={id} name={name || `nf-field${id}`} aria-invalid="false" aria-describedby={`nf-error-${id}`} className={`ninja-forms-field nf-element ${element_classes}`} aria-labelledby={`nf-label-field-${id}`}  aria-required={required ? 'true' : 'false'} required={required}></textarea>
+                            <textarea id={`nf-field${id}`} ref={fieldRef} data-field-id={id} name={name || `nf-field${id}`} aria-invalid="false" aria-describedby={`nf-error-${id}`} onChange={changeField} onBlur={validateField} className={`ninja-forms-field nf-element ${element_classes}`} aria-labelledby={`nf-label-field-${id}`}  aria-required={required ? 'true' : 'false'} required={required}></textarea>
                         }
                         {type === 'button' || type === 'submit' && 
-                            <input id={`nf-field${id}`} ref={fieldRef} className={`ninja-forms-field nf-element ${element_classes}`} type="submit" value="Submit"></input>
+                            <input id={`nf-field${id}`} ref={fieldRef} className={`ninja-forms-field nf-element ${element_classes}`} type="submit" value="Submit" disabled={!isValid}></input>
                         }
                         {type === 'html' && 
                             parseHtml(content)
@@ -87,7 +155,7 @@ function NFField({ id, type = 'text', name, label, label_pos = "label-above", co
                 <div className="nf-input-limit"></div>
                 { errorMessage &&
                     <div id={`nf-error-${id}`} className="nf-error-wrap nf-error" role="alert">
-                        <div className="nf-error-msg nf-error-invalid-email">{errorMessage}</div>
+                        <div className="nf-error-msg nf-error-invalid-email">{parseHtml(errorMessage)}</div>
                     </div>
                 }
             </div>

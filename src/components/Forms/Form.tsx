@@ -73,8 +73,6 @@ function Form({ id }: Props): JSX.Element {
             });
     }
 
-    console.log('Form Data:');
-    console.log(formData.settings);
     return (
         <div id="nf-form-1-cont" className="nf-form-cont" aria-live="polite" aria-labelledby="nf-form-title-1" aria-describedby="nf-form-errors-1" role="form">
             <span id="nf-form-title-1" className="nf-form-title">
@@ -83,9 +81,7 @@ function Form({ id }: Props): JSX.Element {
             <div className="nf-form-wrap ninja-forms-form-wrap">
                 { response?.data?.actions?.success_message &&
                     <div className="nf-response-message">
-                        <p>
-                            <span>{response?.data?.actions?.success_message}</span>
-                        </p>
+                        {parseHtml(`<span>${response?.data?.actions?.success_message}</span>`)}
                     </div>
                 }
                 { !response?.data?.actions?.success_message &&
@@ -101,12 +97,14 @@ function Form({ id }: Props): JSX.Element {
                                     {formData?.fields && JSON.parse(formData?.fields).map((field, index) => (
                                         <NFField
                                             id={field.id}
+                                            key={`form-${id}-field-${field.id}`}
+                                            form={id}
                                             type={field.type}
                                             name={field.custom_name_attribute}
                                             label={field.label}
                                             label_pos={field.label_pos === 'default' ? formSettings.default_label_pos : field?.label_pos?.replace('label-', '')}
                                             content={field.default ? field.default : ''}
-                                            required={field.required}
+                                            required={field.required?.toString() === "1" ? true : false}
                                             container_classes={field.container_class}
                                             element_classes={field.element_class}
                                             description={field.desc_text}
