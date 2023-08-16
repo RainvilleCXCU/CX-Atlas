@@ -51,7 +51,7 @@ function NFField({ id, form, type = 'text', name, label, label_pos = "label-abov
                 [form]: {
                     ...state.forms?.[form],
                     fields: {
-                        ...state.forms?.[form].fields,
+                        ...state.forms?.[form]?.fields,
                         [id]: {
                             ...state.forms?.[form]?.fields?.[id],
                             error
@@ -104,7 +104,7 @@ function NFField({ id, form, type = 'text', name, label, label_pos = "label-abov
                     [form]: {
                         ...state.forms?.[form],
                         fields: {
-                            ...state.forms?.[form].fields,
+                            ...state.forms?.[form]?.fields,
                             [id]: {
                                 ...state.forms?.[form]?.fields?.[id],
                                 required,
