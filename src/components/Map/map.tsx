@@ -138,11 +138,12 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null, markers 
             mapTypeId: google.maps.MapTypeId[ mapType.toUpperCase() ],
             mapTypeControl: Number( typeControl ) ? true : false,
             streetViewControl: Number( streetview ) ? true : false,
+            scrollwheel: locationSettings.scrollwheel === 1 ? true : false,
             zoomControlOptions: {
                 position: google.maps.ControlPosition[ controlPosition.toUpperCase() + '_TOP' ]
             }
         };
-
+        
         /**
          * When the gestureHandling is set to cooperative and the scrollWheel
          * options is also set, then the gestureHandling value is ingored.
