@@ -49,8 +49,9 @@ export default function Page({ locationSettings }) {
 
 	useEffect(() => {
 		setLoading(true);
+		
 		fetch(
-			"/wp-admin/admin-ajax.php?action=store_search&lat=44.9810012&lng=-89.7192132&max_results=25&search_radius=25&autoload=1"
+			`/wp-admin/admin-ajax.php?action=store_search&lat=44.9810012&lng=-89.7192132&max_results=25&search_radius=25${address ? '' : '&autoload=1'}`
 		)
 			.then((res) => res.json())
 			.then((data) => {
@@ -60,6 +61,16 @@ export default function Page({ locationSettings }) {
 			});
 	}, [address]);
 
+
+	useEffect(() => {
+        setState({
+            ...state,
+            location: {
+                ...state.location,
+				settings: locationSettings
+            }
+        });
+	}, [locationSettings]);
 
 	return (
 		<>
@@ -98,7 +109,7 @@ export default function Page({ locationSettings }) {
 									</Wrapper>
 								</div>
 								<Wrapper apiKey={locationSettings.apiBrowserKey}>
-									<Map lat={45} lng={-89} locationSettings={locationSettings} />
+									<Map lat={45} lng={-89} locationSettings={locationSettings} markers={data} />
 								</Wrapper>
 								{/* <div id="wpsl-gmap" className="wpsl-gmap-canvas" style={{ position: "relative", overflow: "hidden" }}></div> */}
 								<div id="wpsl-result-list">

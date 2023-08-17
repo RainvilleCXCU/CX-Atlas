@@ -101,9 +101,7 @@ function LocationDetails(): JSX.Element {
 							<span className="wpsl-name">
 								<strong>{selectedLocation?.store}</strong>
 							</span>
-							<br />
 							<span className="wpsl-street">{selectedLocation?.address}</span>
-							<br />
 							<span>
 								{selectedLocation?.city}, {selectedLocation?.state}{" "}
 								{selectedLocation?.zip}

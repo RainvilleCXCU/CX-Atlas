@@ -29,6 +29,10 @@ export const files = {
             src: '/wp-content/themes/CXCU/style.css',
         },
         {
+            id: 'locator',
+            src: `/wp-content/plugins/wp-store-locator/css/styles.min.css`
+        },
+        {
             id: 'ninja-forms',
             src: `/wp-content/plugins/ninja-forms/assets/css/display-opinions-light.css`
         },

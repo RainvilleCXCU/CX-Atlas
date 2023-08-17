@@ -2,37 +2,34 @@ import { gql } from "@apollo/client";
 import { client } from "client";
 import Heading from "components/Heading";
 import Link from "next/link";
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
+import ReactDOMServer from 'react-dom/server';
 import { LocationSettingsFragment } from 'fragments/LocationSettings';
+import InfoBox from "./infobox";
+import { Store } from "context/store";
+import { selectedLocationContext, showDetailsContext } from "components/Locations/locationsContext";
 
 interface MapProps {
 	title?: string,
     lat: number,
     lng: number,
+    markers?,
     locationSettings
 }
 
-function Map({ title = 'Categories', lat, lng, locationSettings = null }: MapProps): JSX.Element {
-    let {
-        mapType,
-        zoomLevel,
-        urlLabel,
-        streetview,
-        startLatlng,
-        typeControl,
-        scrollwheel,
-        controlPosition,
-        markerIconProps,
-        startMarker
-    } = locationSettings;
+function Map({ title = 'Categories', lat, lng, locationSettings = null, markers }: MapProps): JSX.Element {
 
-    markerIconProps = JSON.parse(markerIconProps);
-    startLatlng = new google.maps.LatLng(startLatlng.split(',')[0], startLatlng.split(',')[1])
+	const [state, setState] = useContext(Store);
+	const { showDetails, setShowDetails } = useContext(showDetailsContext);
+	const { selectedLocation, setSelectedLocation } = useContext(selectedLocationContext);
+    const [ map, setMap ] = useState(null);
+    const [ infoWindow, setinfoWindow ] = useState(null);
+    const [ openInfoWindow, setOpenInfoWindow ] = useState(null);
+    const [ markersArray, setMarkersArray ] = useState({});
+
     
-    let geocoder, map, directionsDisplay, directionsService, autoCompleteLatLng,
-    activeWindowMarkerId, infoWindow, markerClusterer, startMarkerData, startAddress,
-    openInfoWindow = [],
-    markersArray = [],
+    let geocoder, directionsDisplay, directionsService, autoCompleteLatLng,
+    activeWindowMarkerId, markerClusterer, startMarkerData, startAddress,
     mapsArray = [],
     markerSettings = {},
     directionMarkerPosition = {},
@@ -45,6 +42,67 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null }: MapPro
         enabled: false,
         addressComponents: ''
     };
+    
+    let {
+        mapType,
+        zoomLevel,
+        urlLabel,
+        streetview,
+        startLatlng,
+        typeControl,
+        scrollwheel,
+        controlPosition,
+        markerIconProps,
+        startMarker,
+        mapsLoaded
+    } = locationSettings;
+
+    useEffect(() => {
+        mapsLoaded = setInterval( function() {
+            if ( typeof google === 'object' && typeof google.maps === 'object' && Object.keys(locationSettings).length > 0) {
+                console.log('Load Maps')
+                clearInterval( mapsLoaded );
+    
+                initMap( 'wpsl-gmap', 1);
+            }
+        }, 500 );
+    }, []);
+
+    useEffect(() => {
+        let mapMarkers = {};
+		for ( let marker in markersArray ) {
+            markersArray[marker].setMap(null);
+		}
+        markers?.forEach(marker => {
+            const latLng = new google.maps.LatLng(marker.lat, marker.lng);
+            mapMarkers[marker.id] = addMarker(latLng, marker.id, marker, false, infoWindow);
+        });
+        setMarkersArray({
+            ...mapMarkers
+        })
+    }, [markers]);
+
+    useEffect(() => {
+        fitBounds();
+    }, [markersArray]);
+
+    useEffect(() => {
+        const selectedMarker = markersArray[selectedLocation?.id];
+		selectedMarker && google.maps.event.trigger( selectedMarker, "click" );
+        map?.setCenter( selectedMarker?.position );
+        map?.setZoom( Number( locationSettings?.autoZoomLevel ) );
+        // fitBounds();
+    }, [selectedLocation]);
+
+    useEffect(() => {
+        if(!showDetails) {
+            openInfoWindow?.close();
+            fitBounds();
+        }
+    }, [showDetails]);
+
+    markerIconProps = JSON.parse(markerIconProps);
+    startLatlng = new google.maps.LatLng(startLatlng.split(',')[0], startLatlng.split(',')[1])
 
     const initMap = ( mapId, mapIndex ) => {
 		// defaultZoomLevel = Number( wpslSettings.zoomLevel ),
@@ -96,14 +154,49 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null }: MapPro
         // }
 
         // Get the correct marker path & properties.
-
-        console.log('Markers');
-        console.log(JSON.stringify(markerIconProps));
-        map = new google.maps.Map( document.getElementById( mapId ), mapOptions );
+        newInfoWindow();
+        setMap(new google.maps.Map( document.getElementById( mapId ), mapOptions ));
         // Create a new infoWindow, either with the infobox libray or use the default one.
-        infoWindow = newInfoWindow();
-        addMarker(startLatlng, 0, {}, false, infoWindow);
+        addMarker(startLatlng, 0, {}, false, infoWindow);   
     }
+	const fitBounds = () => {
+		var i, markerLen, 
+			maxZoom = Number( locationSettings.autoZoomLevel ),
+			bounds  = new google.maps.LatLngBounds();
+			
+
+		for ( let marker in markersArray ) {
+			bounds.extend ( markersArray[marker].position );
+		}
+
+		map?.fitBounds( bounds );
+	}
+
+    const setInfoWindowContent = ( marker, infoWindowContent, infoWindow, currentMap ) => {
+		
+		infoWindow.setContent( infoWindowContent );
+		infoWindow.open( currentMap, marker );
+		
+        setOpenInfoWindow(infoWindow);
+        infoWindow?.addListener( "closeclick", function() {	
+            setShowDetails(false);
+        });
+
+		/* 
+		* Store the marker id if both the marker clusters and the infobox are enabled.
+		* 
+		* With the normal info window script the info window is automatically closed 
+		* once a user zooms out, and the marker clusters are enabled, 
+		* but this doesn't happen with the infobox library. 
+		* 
+		* So we need to show/hide it manually when the user zooms out, 
+		* and for this to work we need to know which marker to target. 
+		*/
+		// if ( typeof wpslSettings.infoWindowStyle !== "undefined" && wpslSettings.infoWindowStyle == "infobox" && wpslSettings.markerClusters == 1 ) {
+			// activeWindowMarkerId = marker.storeId;
+			// infoWindow?.setVisible( true );
+		// }
+	}
 
     const newInfoWindow = () => {
         var boxClearance, boxPixelOffset, 
@@ -130,7 +223,7 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null }: MapPro
     
         //     infoWindow = new InfoBox( infoBoxOptions );	
         // } else {
-            infoWindow = new google.maps.InfoWindow();
+            setinfoWindow(new google.maps.InfoWindow());
         // }
     
         return infoWindow;
@@ -143,7 +236,7 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null }: MapPro
                 store: locationSettings.startPoint
             };
     
-            url = `/wp-content/plugins/wp-store-locator/img/markers/${startMarker}`;
+            url = `/wp-content/plugins/wp-store-locator/img/markers/${locationSettings.startMarker}`;
         } else if ( typeof infoWindowData.alternateMarkerUrl !== "undefined" && infoWindowData.alternateMarkerUrl ) {
             url = infoWindowData.alternateMarkerUrl;
         } else if ( typeof infoWindowData.categoryMarkerUrl !== "undefined" && infoWindowData.categoryMarkerUrl ) {
@@ -157,65 +250,62 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null }: MapPro
             // origin: new google.maps.Point( Number( markerIconProps.anchor.split(',')[0] ), Number( markerIconProps.anchor.split(',')[1] ) ),
             anchor: new google.maps.Point( Number( markerIconProps.anchor.split(',')[0] ), Number( markerIconProps.anchor.split(',')[1] ) )
         };
-
-        console.log('Scale');
-        console.log(markerIconProps);
-    
+        console.log(`Add to Map: ${map}`)
         const marker = new google.maps.Marker({
-            position: startLatlng,
+            position: latLng,
             map: map,
             optimized: true, //fixes markers flashing while bouncing
             title: 'Start',
             icon: mapIcon
         });	
-    
-        // Store the marker for later use.
-        markersArray.push( marker );
-        console.log('Marker Added');
-        console.log(marker);
-    }
-
-    let mapsLoaded;
-    mapsLoaded = setInterval( function() {
-        if ( typeof google === 'object' && typeof google.maps === 'object' && Object.keys(locationSettings).length > 0) {
-            console.log('Load Maps')
-            clearInterval( mapsLoaded );
-
-            initMap( 'wpsl-gmap', 1);
-        }
-    }, 500 );
-    // function getMarkerSettings() {
-    //     var markerProp,
-    //         markerProps = JSON.parse(markerIconProps),
-    //         settings	= {
-    //             url: '',
-    //             categoryMarkerUrl: '',
-    //             alternateMarkerUrl: ''
-    //         };
-    
-    //     // Use the correct marker path.
-    //     if ( typeof markerProps.url !== "undefined" ) {
-    //         settings.url = markerProps.url;
-    //     } else if ( typeof markerProps.categoryMarkerUrl !== "undefined" ) {
-    //         settings.categoryMarkerUrl = markerProps.categoryMarkerUrl;
-    //     } else if ( typeof markerProps.alternateMarkerUrl !== "undefined" ) {
-    //         settings.alternateMarkerUrl = markerProps.alternateMarkerUrl;
-    //     } else {
-    //         settings.url = urlLabel + "img/markers/";
-    //     }
-    
-    //     for ( var key in markerProps ) {
-    //         if ( markerProps.hasOwnProperty( key ) ) {
-    //             markerProp = markerProps[key].split( "," );
-    
-    //             if ( markerProp.length == 2 ) {
-    //                 settings[key] = markerProp;
-    //             }
-    //         }
-    //     }
         
-    //     return settings;
-    // }
+        google.maps.event.addListener( marker, "click",( function( currentMap ) {
+            return function() {
+                
+                // The start marker will have a store id of 0, all others won't.
+                if ( storeId != 0 ) {
+
+                    // Check if streetview is available at the clicked location.
+                    // if ( typeof wpslSettings.markerStreetView !== "undefined" && wpslSettings.markerStreetView == 1 ) {
+                    //     checkStreetViewStatus( latLng, function() {
+                    //         setInfoWindowContent( marker, createInfoWindowHtml( infoWindowData ), infoWindow, currentMap );
+                    //     });
+                    // } else {
+                    //     setInfoWindowContent( marker, createInfoWindowHtml( infoWindowData ), infoWindow, currentMap );
+                    // }
+                    const domNode = ReactDOMServer.renderToString(<InfoBox id={storeId} name={infoWindowData.store} address={infoWindowData.address} address2={infoWindowData.address2 !== '' ? infoWindowData.address2 : null} city={infoWindowData.city} state={infoWindowData.state} zip={infoWindowData.zip} phoneLabel={state?.location?.settings?.phoneLabel !== '' ? state?.location?.settings?.phoneLabel : null} phone={infoWindowData.phone !== '' ? infoWindowData.phone : null} />)
+                    setInfoWindowContent( marker, domNode, infoWindow, currentMap );
+
+                } else {
+                    setInfoWindowContent( marker, 'Start', infoWindow, currentMap );
+                }
+
+                google.maps.event.clearListeners( infoWindow, "domready" );
+                
+                google.maps.event.addListener( infoWindow, "domready", function() {
+                    // infoWindowClickActions( marker, currentMap );
+                    // checkMaxZoomLevel();
+                });
+                setShowDetails(true);
+                setSelectedLocation({
+                    store: infoWindowData.store,
+                    address: infoWindowData.address,
+                    city: infoWindowData.city,
+                    state: infoWindowData.state,
+                    zip: infoWindowData.zip,
+                    lobby_hours_html: infoWindowData.lobby_hours_html,
+                    drive_thru_hours_html: infoWindowData.drive_thru_hours_html,
+                    special_hours_html: infoWindowData.special_hours_html,
+                    services: infoWindowData.services,
+                    phone: infoWindowData.phone,
+                    special_message_type: infoWindowData.special_message_type,
+                    special_message_title: infoWindowData.special_message_title,
+                    special_message: infoWindowData.special_message,
+                });
+            };
+        }( map ) ) );
+        return marker;
+    }
 
 	return (
         <div id="wpsl-gmap" className="wpsl-wrap wpsl-store-below wpsl-default-filters"></div>

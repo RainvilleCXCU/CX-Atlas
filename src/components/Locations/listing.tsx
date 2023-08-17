@@ -51,6 +51,7 @@ function LocationListing({
 	const handleClick = (e) => {
 		setShowDetails(true);
 		setSelectedLocation({
+			id: id,
 			store: store,
 			address: address,
 			city: city,
@@ -85,7 +86,6 @@ function LocationListing({
 					</small>
 					<div className="cx-location-listing__item--address">
 						<span className="wpsl-street">{address}</span>
-						<br />
 						<span>
 							{city}, {state} {zip}
 						</span>

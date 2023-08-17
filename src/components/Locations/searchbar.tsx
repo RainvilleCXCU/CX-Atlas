@@ -39,7 +39,7 @@ const AddressBar = () => {
     };
 
     const submitSearch = e => {
-        console.log('Seraching...');
+        console.log('Searching...');
         e.preventDefault();
         setState({
             ...state,
