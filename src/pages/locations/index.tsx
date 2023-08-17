@@ -98,34 +98,40 @@ export default function Page({ locationSettings }) {
 									</Column>
 								</Columns>
 							</Container>
-							<div
-								id="wpsl-wrap"
-								className="wpsl-wrap wpsl-store-below wpsl-default-filters"
-							>
-								<div className="wpsl-search wpsl-clearfix wpsl-checkboxes-enabled wpsl-geolocation-run">
+							<Container align="full" classNames={`no-margin`}>
+								<Columns classNames={`no-margin`}>
+									<Column>
+										<div
+											id="wpsl-wrap"
+											className="wpsl-wrap wpsl-store-below wpsl-default-filters"
+										>
+											<div className="wpsl-search wpsl-clearfix wpsl-checkboxes-enabled wpsl-geolocation-run">
 
-									<Wrapper apiKey={locationSettings.apiBrowserKey}>
-										<AddressBar />
-									</Wrapper>
-								</div>
-								<Wrapper apiKey={locationSettings.apiBrowserKey}>
-									<Map lat={45} lng={-89} locationSettings={locationSettings} markers={data} />
-								</Wrapper>
-								{/* <div id="wpsl-gmap" className="wpsl-gmap-canvas" style={{ position: "relative", overflow: "hidden" }}></div> */}
-								<div id="wpsl-result-list">
-									<div id="wpsl-stores">
-										<div className="cx-location-listing__title wpsl-location--section">
-											<em>
-												<small>
-													<span id="store-count">{length}</span>&nbsp;results
-												</small>
-											</em>
+												<Wrapper apiKey={locationSettings.apiBrowserKey}>
+													<AddressBar />
+												</Wrapper>
+											</div>
+											<Wrapper apiKey={locationSettings.apiBrowserKey}>
+												<Map lat={45} lng={-89} locationSettings={locationSettings} markers={data} />
+											</Wrapper>
+											{/* <div id="wpsl-gmap" className="wpsl-gmap-canvas" style={{ position: "relative", overflow: "hidden" }}></div> */}
+											<div id="wpsl-result-list">
+												<div id="wpsl-stores">
+													<div className="cx-location-listing__title wpsl-location--section">
+														<em>
+															<small>
+																<span id="store-count">{length}</span>&nbsp;results
+															</small>
+														</em>
+													</div>
+													<LocationListings data={data} />
+												</div>
+											</div>
+											<LocationDetails />
 										</div>
-										<LocationListings data={data} />
-									</div>
-								</div>
-								<LocationDetails />
-							</div>
+									</Column>
+								</Columns>
+							</Container>
 						</div>
 					</main>
 				</selectedLocationContext.Provider>
