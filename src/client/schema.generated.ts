@@ -9974,6 +9974,7 @@ export const generatedSchema = {
     timezone: { __type: "String" },
     title: { __type: "String" },
     url: { __type: "String" },
+    wpNonce: { __type: "String" },
   },
   GenerateAuthorizationCodeInput: {
     clientMutationId: { __type: "String" },
@@ -12246,7 +12247,7 @@ export const generatedSchema = {
     mapType: { __type: "String" },
     markerClusters: { __type: "Int" },
     markerEffect: { __type: "String" },
-    markerIconProps: { __type: "String" },
+    markerIconProps: { __type: "Int" },
     markerStreetview: { __type: "Int" },
     markerZoomTo: { __type: "Int" },
     maxResults: { __type: "String" },
@@ -14466,6 +14467,17 @@ export const generatedSchema = {
     pageOnFront: { __type: "Int" },
     postsPerPage: { __type: "Int" },
     showOnFront: { __type: "String" },
+  },
+  Redirection: {
+    __typename: { __type: "String!" },
+    action_code: { __type: "String" },
+    action_data: { __type: "String" },
+    action_type: { __type: "String" },
+    match_type: { __type: "String" },
+    match_url: { __type: "String" },
+    regex: { __type: "String" },
+    status: { __type: "String" },
+    url: { __type: "String" },
   },
   RegisterUserInput: {
     aim: { __type: "String" },
@@ -18651,6 +18663,7 @@ export const generatedSchema = {
       },
     },
     readingSettings: { __type: "ReadingSettings" },
+    redirection: { __type: "[Redirection]" },
     registeredScripts: {
       __type: "RootQueryToEnqueuedScriptConnection",
       __args: { after: "String", before: "String", first: "Int", last: "Int" },
@@ -33556,6 +33569,10 @@ export interface GeneralSettings {
    * Site URL.
    */
   url?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The number of votes
+   */
+  wpNonce?: Maybe<ScalarsEnums["String"]>;
 }
 
 /**
@@ -40901,7 +40918,7 @@ export interface LocationSettings {
   /**
    * Meta for the key marker_icon_props as a string
    */
-  markerIconProps?: Maybe<ScalarsEnums["String"]>;
+  markerIconProps?: Maybe<ScalarsEnums["Int"]>;
   /**
    * Meta for the key marker_streetview as a string
    */
@@ -46624,6 +46641,45 @@ export interface ReadingSettings {
    * What to show on the front page
    */
   showOnFront?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Redirection
+ */
+export interface Redirection {
+  __typename?: "Redirection";
+  /**
+   * Shortcode Content
+   */
+  action_code?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Shortcode Content
+   */
+  action_data?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Shortcode Content
+   */
+  action_type?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Shortcode Content
+   */
+  match_type?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Shortcode Content
+   */
+  match_url?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Shortcode Content
+   */
+  regex?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Shortcode Content
+   */
+  status?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Shortcode Content
+   */
+  url?: Maybe<ScalarsEnums["String"]>;
 }
 
 /**
@@ -54525,6 +54581,7 @@ export interface Query {
     where?: Maybe<RootQueryToRateConnectionWhereArgs>;
   }) => Maybe<RootQueryToRateConnection>;
   readingSettings?: Maybe<ReadingSettings>;
+  redirection?: Maybe<Array<Maybe<Redirection>>>;
   registeredScripts: (args?: {
     after?: Maybe<Scalars["String"]>;
     before?: Maybe<Scalars["String"]>;
@@ -55188,6 +55245,7 @@ export interface SchemaObjectTypes {
   RateToTermNodeConnectionEdge: RateToTermNodeConnectionEdge;
   RateToTermNodeConnectionPageInfo: RateToTermNodeConnectionPageInfo;
   ReadingSettings: ReadingSettings;
+  Redirection: Redirection;
   RegisterUserPayload: RegisterUserPayload;
   ResetUserPasswordPayload: ResetUserPasswordPayload;
   RestoreCommentPayload: RestoreCommentPayload;
@@ -55971,6 +56029,7 @@ export type SchemaObjectTypesNames =
   | "RateToTermNodeConnectionEdge"
   | "RateToTermNodeConnectionPageInfo"
   | "ReadingSettings"
+  | "Redirection"
   | "RegisterUserPayload"
   | "ResetUserPasswordPayload"
   | "RestoreCommentPayload"

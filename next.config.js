@@ -1,10 +1,14 @@
 const { withFaust } = require('@faustjs/next');
+const { NextFetchEvent } = require('next/server');
+const { fetchWordPressRedirects } = require('./src/utils/redirects');
 
 /**
  * @type {import('next').NextConfig}
  **/
-module.exports = withFaust({
+
+let nextConfig = {
     async redirects() {
+        const wpRedirects = await fetchWordPressRedirects();
         return[
             {
                 source: '/apply:type/:path*',
@@ -14,7 +18,8 @@ module.exports = withFaust({
                     key: 'account'
                 }],
                 permanent: false
-            }
+            },
+            ...wpRedirects
         ]
     },
     async rewrites() {
@@ -74,4 +79,5 @@ module.exports = withFaust({
         }
     },
     trailingSlash: true
-});
+};
+module.exports = withFaust(nextConfig);
