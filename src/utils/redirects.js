@@ -28,6 +28,7 @@ const formatPathMatch = path => {
         .replace('\\', '')
         .replace('?', '')
         .replace('^','')
+        .replace('(i)','')
 }
 
 module.exports = {
