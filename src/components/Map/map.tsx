@@ -175,8 +175,8 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null, markers 
 
     const setInfoWindowContent = ( marker, infoWindowContent, infoWindow, currentMap ) => {
 		
-		infoWindow.setContent( infoWindowContent );
-		infoWindow.open( currentMap, marker );
+		infoWindow?.setContent( infoWindowContent );
+		infoWindow?.open( currentMap, marker );
 		
         setOpenInfoWindow(infoWindow);
         infoWindow?.addListener( "closeclick", function() {	
@@ -247,9 +247,9 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null, markers 
         }
         const mapIcon = {
             url: url,
-            scaledSize: new google.maps.Size( Number( markerIconProps.scaledSize.split(',')[0] ), Number( markerIconProps.scaledSize.split(',')[1] ) ), //retina format
+            scaledSize: new google.maps.Size( Number( markerIconProps?.scaledSize.split(',')[0] ), Number( markerIconProps?.scaledSize.split(',')[1] ) ), //retina format
             // origin: new google.maps.Point( Number( markerIconProps.anchor.split(',')[0] ), Number( markerIconProps.anchor.split(',')[1] ) ),
-            anchor: new google.maps.Point( Number( markerIconProps.anchor.split(',')[0] ), Number( markerIconProps.anchor.split(',')[1] ) )
+            anchor: new google.maps.Point( Number( markerIconProps?.anchor.split(',')[0] ), Number( markerIconProps?.anchor.split(',')[1] ) )
         };
         console.log(`Add to Map: ${map}`)
         const marker = new google.maps.Marker({

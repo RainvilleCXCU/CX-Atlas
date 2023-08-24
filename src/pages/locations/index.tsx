@@ -81,7 +81,7 @@ export default function Page({ locationSettings }) {
 			/>
 
 			<Head>
-				<title>Locations - {generalSettings.title}</title>
+				<title>{`Locations - ${generalSettings.title}`}</title>
 			</Head>
 			<GTM />
 			<HotJar />

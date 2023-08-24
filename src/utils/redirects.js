@@ -19,23 +19,28 @@ const fetchWordPressRedirects = async ({type = 'url'}) => {
     //         permanent: redirect.action_code === 301
     //     }))
     //     )
-    if(type === 'pass') {
-        console.log(data.redirection
-            .filter((redirect) => redirect.action_type === type)
-            .map((redirect) => {
-                let redirectObj =
-                {
-                    source: formatPathMatch(redirect.url),
-                    destination: redirect.action_data
-                };
-                if(type !== 'pass') {
-                    redirectObj.permanent = redirect.action_code === 301;
-                } else {
-                    redirectObj.destination = process.env.NEXT_PUBLIC_WORDPRESS_URL + redirectObj.destination;
-                }
-                return redirectObj;
-            }));
-        }
+    // if(type === 'pass') {
+        // console.log(
+        // data.redirection
+        //     .filter((redirect) => redirect.action_type === type)
+        //     .map((redirect) => {
+        //         let redirectObj =
+        //         {
+        //             source: formatPathMatch(redirect.url),
+        //             destination: redirect.action_data.replace('$1', '')
+        //         };
+        //         if(type !== 'pass') {
+        //             redirectObj.permanent = redirect.action_code === 301;
+        //         } else {
+        //             redirectObj.destination = process.env.NEXT_PUBLIC_WORDPRESS_URL + redirectObj.destination;
+        //         }
+        //         if(redirectObj.source.includes('loans/')) {
+        //             console.log(redirectObj)
+        //         }
+        //         return redirectObj;
+        //     })
+            // );
+        // }
 
     
     return data.redirection
@@ -47,7 +52,7 @@ const fetchWordPressRedirects = async ({type = 'url'}) => {
                 destination: redirect.action_data.replace('$1', '')
             };
             if(type !== 'pass') {
-                redirectObj.permanent = redirect.action_code === 301;
+                redirectObj.permanent = parseInt(redirect.action_code) === 301;
             } else {
                 redirectObj.destination = redirectObj.destination;
             }
@@ -61,7 +66,8 @@ const formatPathMatch = path => {
         .replace('*','(.*)')
         .replace('wildcard','(.*)')
         .replace(/\\/g, '')
-        .replace('$', '(.*)')
+        .replace(/\//g, '/')
+        .replace('$', '')
         .replace('?', '')
         .replace('^','')
         .replace('(i)','')

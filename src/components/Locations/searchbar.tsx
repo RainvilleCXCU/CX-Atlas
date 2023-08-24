@@ -78,7 +78,7 @@ const AddressBar = () => {
                         </button>
                     </div>
                     <div className="wpsl-search-btn-wrap">
-                        <input id="wpsl-search-btn" className="cx-button cx-button--compact cx-button--color-positive" type="submit" defaultValue="" value="" />
+                        <input id="wpsl-search-btn" className="cx-button cx-button--compact cx-button--color-positive" type="submit" value="" />
                     </div>
                 </div>
             </form>
