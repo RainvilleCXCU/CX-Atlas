@@ -1,4 +1,4 @@
-const fetchWordPressRedirects = async () => {
+const fetchWordPressRedirects = async ({type = 'url'}) => {
     const { data } = await fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_URL}/graphql`,
     {
         method: "POST",
@@ -11,13 +11,48 @@ const fetchWordPressRedirects = async () => {
     }
     ).then((res) => res.json());
 
+    // console.log(data.redirection
+    //     .filter((redirect) => redirect.action_type !== 'url')
+    //     .map((redirect) => ({
+    //         source: formatPathMatch(redirect.url),
+    //         destination: redirect.action_data,
+    //         permanent: redirect.action_code === 301
+    //     }))
+    //     )
+    if(type === 'pass') {
+        console.log(data.redirection
+            .filter((redirect) => redirect.action_type === type)
+            .map((redirect) => {
+                let redirectObj =
+                {
+                    source: formatPathMatch(redirect.url),
+                    destination: redirect.action_data
+                };
+                if(type !== 'pass') {
+                    redirectObj.permanent = redirect.action_code === 301;
+                } else {
+                    redirectObj.destination = process.env.NEXT_PUBLIC_WORDPRESS_URL + redirectObj.destination;
+                }
+                return redirectObj;
+            }));
+        }
+
+    
     return data.redirection
-        .filter((redirect) => redirect.action_type === 'url')
-        .map((redirect) => ({
-            source: formatPathMatch(redirect.url),
-            destination: redirect.action_data,
-            permanent: redirect.action_code === 301
-        }));
+        .filter((redirect) => redirect.action_type === type)
+        .map((redirect) => {
+            let redirectObj =
+             {
+                source: formatPathMatch(redirect.url),
+                destination: redirect.action_data
+            };
+            if(type !== 'pass') {
+                redirectObj.permanent = redirect.action_code === 301;
+            } else {
+                redirectObj.destination = redirectObj.destination;
+            }
+            return redirectObj;
+        });
 }
 
 const formatPathMatch = path => {
@@ -25,7 +60,8 @@ const formatPathMatch = path => {
         .replace('(.*)','wildcard')
         .replace('*','(.*)')
         .replace('wildcard','(.*)')
-        .replace('\\', '')
+        .replace(/\\/g, '')
+        .replace('$', '(.*)')
         .replace('?', '')
         .replace('^','')
         .replace('(i)','')

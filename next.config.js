@@ -8,7 +8,7 @@ const { fetchWordPressRedirects } = require('./src/utils/redirects');
 
 let nextConfig = {
     async redirects() {
-        const wpRedirects = await fetchWordPressRedirects();
+        const wpRedirects = await fetchWordPressRedirects({type: 'url'});
         return[
             {
                 source: '/apply:type/:path*',
@@ -23,8 +23,10 @@ let nextConfig = {
         ]
     },
     async rewrites() {
+        const wpRewrites = await fetchWordPressRedirects({type: 'pass'});
         return {
             beforeFiles: [
+                ...wpRewrites,
                 {
                     source: '/mdr/:path*/',
                     destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/mdr/:path*/`,
@@ -61,6 +63,10 @@ let nextConfig = {
                     source: '/apply-:type/:path*',
                     destination: '/bridge/:type/',
                 },
+                // {
+                //     source: '/pgp.txt',
+                //     destination: '/wp-content/themes/Connexus/assets/txt/ConnexusFileTransfer_PGP.txt'
+                // }
             ],
             afterFiles: [
                 {
