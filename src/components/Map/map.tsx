@@ -70,16 +70,18 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null, markers 
 
     useEffect(() => {
         let mapMarkers = {};
-		for ( let marker in markersArray ) {
-            markersArray[marker].setMap(null);
-		}
-        markers?.forEach(marker => {
-            const latLng = new google.maps.LatLng(marker.lat, marker.lng);
-            mapMarkers[marker.id] = addMarker(latLng, marker.id, marker, false, infoWindow);
-        });
-        setMarkersArray({
-            ...mapMarkers
-        })
+        if(markers?.length > 0) {
+            for ( let marker in markersArray ) {
+                markersArray[marker].setMap(null);
+            }
+            markers?.forEach(marker => {
+                const latLng = new google.maps.LatLng(marker.lat, marker.lng);
+                mapMarkers[marker.id] = addMarker(latLng, marker.id, marker, false, infoWindow);
+            });
+            setMarkersArray({
+                ...mapMarkers
+            })
+        }
     }, [markers]);
 
     useEffect(() => {

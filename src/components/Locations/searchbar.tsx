@@ -10,7 +10,8 @@ const AddressBar = () => {
     const [state, setState] = useContext(Store);
 
     const getLocation = () => {
-        getGeoLocation().then(location => {
+        getGeoLocation()
+        .then(location => {
             getLocationByLatLng({ lat: location.coords.latitude, lng: location.coords.longitude })
                 .then(data => {
                     console.log(`User Location: ${data}`);
@@ -19,11 +20,22 @@ const AddressBar = () => {
                         ...state,
                         location: {
                             ...state.location,
+                            search: data,
                             userFetched: true
                         }
                     });
                 });
 
+        })
+        .catch(err => {
+            setState({
+                ...state,
+                location: {
+                    ...state.location,
+                    userFetched: false,
+                    search: false
+                }
+            });
         })
     }
 
@@ -41,6 +53,7 @@ const AddressBar = () => {
     const submitSearch = e => {
         console.log('Searching...');
         e.preventDefault();
+        console.log(address);
         setState({
             ...state,
             location: {

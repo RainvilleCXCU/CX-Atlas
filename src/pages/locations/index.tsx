@@ -26,6 +26,7 @@ import Spectrum from "components/ThirdParty/spectrum";
 import AddressBar from "components/Locations/searchbar";
 import { Store } from 'context/store';
 import { getGeoLocation } from "lib/location/geolocation";
+import { getLatLngByLocation } from "lib/location/geocode";
 
 export default function Page({ locationSettings }) {
 	const { useQuery } = client;
@@ -41,7 +42,9 @@ export default function Page({ locationSettings }) {
 	let userLocation = 'start';
 
 	useEffect(() => {
+		console.log('Location Page');
 		setAddress(state?.location?.search)
+		console.log(address);
 	}, [state?.location?.search])
 
 	const [showDetails, setShowDetails] = useState(false);
@@ -49,9 +52,20 @@ export default function Page({ locationSettings }) {
 
 	useEffect(() => {
 		setLoading(true);
-		
+		console.log('Address:');
+		if(address) {
+			getLatLngByLocation({address}).then(response => {
+				fetchLocations({lat: response.results[0]?.geometry.location.lat(), lng: response.results[0]?.geometry.location.lng()});
+			});
+		} else {
+			fetchLocations({lat: locationSettings.startLatLng?.split[','][0], lng: locationSettings.startLatLng?.split[','][1], autoload: 1});
+		}
+	}, [address]);
+
+	const fetchLocations = ({lat, lng, autoload = 0}) => {
+
 		fetch(
-			`/wp-admin/admin-ajax.php?action=store_search&lat=44.9810012&lng=-89.7192132&max_results=25&search_radius=25${address ? '' : '&autoload=1'}`
+			`/wp-admin/admin-ajax.php?action=store_search&lat=${lat}&lng=${lng}&max_results=25&search_radius=25&autoload=${autoload}`
 		)
 			.then((res) => res.json())
 			.then((data) => {
@@ -59,7 +73,7 @@ export default function Page({ locationSettings }) {
 				setLength(Object.keys(data).length);
 				setLoading(false);
 			});
-	}, [address]);
+}
 
 
 	useEffect(() => {
@@ -124,7 +138,10 @@ export default function Page({ locationSettings }) {
 															</small>
 														</em>
 													</div>
-													<LocationListings data={data} />
+													{data &&
+														<LocationListings data={data} />
+														|| <div>There are locations in this area</div>
+													}
 												</div>
 											</div>
 											<LocationDetails />
