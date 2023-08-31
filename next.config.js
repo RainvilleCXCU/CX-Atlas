@@ -78,6 +78,10 @@ let nextConfig = {
                     destination: `/about/media-center/`,
                 },
                 {
+                    source: '/about/branch-and-atm-locations/find-location/:location*',
+                    destination: '/locations',
+                },
+                {
                     source: '/about/branch-and-atm-locations/:path*',
                     destination: '/locations',
                 }

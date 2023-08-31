@@ -1,7 +1,4 @@
 export const getLocationByLatLng = async ({ lat, lng }) => {
-  const geocoder = new google.maps.Geocoder();
-  let addressLength, responseLength, responseType, filteredData = { zip: null, locality: null }, userLocation;
-
   const params = {
     latlng: {
       lat,
@@ -9,58 +6,76 @@ export const getLocationByLatLng = async ({ lat, lng }) => {
     }
   };
 
-  return geocoder.geocode({
-    location: params.latlng
-  }).then((response) => {
-    responseLength = response.results.length;
+  return new Promise((resolve, reject) => {
+    let mapsLoaded = setInterval(function () {
+      if (typeof google === 'object' && typeof google.maps === 'object' && typeof google.maps.Geocoder === 'function') {
+        clearInterval(mapsLoaded);
+        const geocoder = new google.maps.Geocoder();
+        let addressLength, responseLength, responseType, filteredData = { zip: null, locality: null }, userLocation;
 
-    for (let i = 0; i < responseLength; i++) {
-      addressLength = response?.results[i]?.address_components.length;
+        geocoder.geocode({
+          location: params.latlng
+        }).then((response) => {
+          responseLength = response.results.length;
 
-      for (let j = 0; j < addressLength; j++) {
-        responseType = response?.results[i]?.address_components[j].types;
+          for (let i = 0; i < responseLength; i++) {
+            addressLength = response?.results[i]?.address_components.length;
 
-        if ((/^postal_code$/.test(responseType)) || (/^postal_code,postal_code_prefix$/.test(responseType))) {
-          filteredData.zip = response?.results[i]?.address_components[j]?.long_name;
-          break;
-        }
+            for (let j = 0; j < addressLength; j++) {
+              responseType = response?.results[i]?.address_components[j].types;
 
-        if (/^locality,political$/.test(responseType)) {
-          filteredData.locality = response?.results[i]?.address_components[j]?.long_name;
-        }
+              if ((/^postal_code$/.test(responseType)) || (/^postal_code,postal_code_prefix$/.test(responseType))) {
+                filteredData.zip = response?.results[i]?.address_components[j]?.long_name;
+                break;
+              }
+
+              if (/^locality,political$/.test(responseType)) {
+                filteredData.locality = response?.results[i]?.address_components[j]?.long_name;
+              }
+            }
+
+            if (typeof filteredData?.zip !== "undefined") {
+              break;
+            }
+          }
+
+          // If no zip code was found ( it's rare, but it happens ), then we use the city / town name as backup.
+          if (typeof filteredData?.zip === "undefined" && typeof filteredData?.locality !== "undefined") {
+            userLocation = filteredData?.locality;
+          } else {
+            userLocation = filteredData?.zip;
+          }
+          resolve(userLocation);
+        });
       }
-
-      if (typeof filteredData?.zip !== "undefined") {
-        break;
-      }
-    }
-
-    // If no zip code was found ( it's rare, but it happens ), then we use the city / town name as backup.
-    if (typeof filteredData?.zip === "undefined" && typeof filteredData?.locality !== "undefined") {
-      userLocation = filteredData?.locality;
-    } else {
-      userLocation = filteredData?.zip;
-    }
-    return userLocation;
+    }, 500);
   });
 }
 
 
 
-export const getLatLngByLocation = async ({ address }) => {
-  let latLng ={}; 
+export const getLatLngByLocation = ({ address }): Promise<any> => {
+  let latLng = {};
   let request = {
     address
   };
-  const geocoder = new google.maps.Geocoder();
+  return new Promise((resolve, reject) => {
+    let mapsLoaded = setInterval(function () {
+      if (typeof google === 'object' && typeof google.maps === 'object' && typeof google.maps.Geocoder === 'function') {
+        clearInterval(mapsLoaded);
+        const geocoder = new google.maps.Geocoder();
+        geocoder.geocode(request, function (response, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
 
-  return geocoder.geocode(request, function (response, status) {
-    if (status == google.maps.GeocoderStatus.OK) {
+            latLng = response[0].geometry.location;
 
-      latLng = response[0].geometry.location;
-
-    }
-    return latLng;
+          }
+          console.log('LAT LNG');
+          console.log(latLng)
+          resolve(latLng);
+        });
+      }
+    }, 500);
   });
 }
 
