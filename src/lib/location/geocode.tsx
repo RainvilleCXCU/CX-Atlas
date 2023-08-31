@@ -15,22 +15,22 @@ export const getLocationByLatLng = async ({ lat, lng }) => {
 
         geocoder.geocode({
           location: params.latlng
-        }).then((response) => {
-          responseLength = response.results.length;
+        }, (response) => {
+          responseLength = response.length;
 
           for (let i = 0; i < responseLength; i++) {
-            addressLength = response?.results[i]?.address_components.length;
+            addressLength = response[0]?.address_components.length;
 
             for (let j = 0; j < addressLength; j++) {
-              responseType = response?.results[i]?.address_components[j].types;
+              responseType = response[i]?.address_components[j].types;
 
               if ((/^postal_code$/.test(responseType)) || (/^postal_code,postal_code_prefix$/.test(responseType))) {
-                filteredData.zip = response?.results[i]?.address_components[j]?.long_name;
+                filteredData.zip = response[i]?.address_components[j]?.long_name;
                 break;
               }
 
               if (/^locality,political$/.test(responseType)) {
-                filteredData.locality = response?.results[i]?.address_components[j]?.long_name;
+                filteredData.locality = response[i]?.address_components[j]?.long_name;
               }
             }
 
@@ -45,6 +45,8 @@ export const getLocationByLatLng = async ({ lat, lng }) => {
           } else {
             userLocation = filteredData?.zip;
           }
+          console.log('User Locations!');
+          console.log(userLocation);
           resolve(userLocation);
         });
       }
