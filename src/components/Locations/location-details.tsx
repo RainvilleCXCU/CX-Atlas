@@ -1,16 +1,18 @@
 // This component renders the "location details" modal when a location listing is clicked
 import React from "react";
-import { useEffect, useState } from "react";
-import { useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import {
 	selectedLocationContext,
 	showDetailsContext,
 } from "./locationsContext";
+import { Store } from "context/store";
 
 function LocationDetails(): JSX.Element {
 	const { showDetails, setShowDetails } = useContext(showDetailsContext);
 	const { selectedLocation } = useContext(selectedLocationContext);
 	const [isMobile, setIsMobile] = useState("");
+	const [address, setAddress] = useState("");
+	const [state, setState] = useContext(Store);
 
 	const handleResize = () => {
 		setIsMobile(window.innerWidth < 992 ? "__mobile" : "");
@@ -22,6 +24,20 @@ function LocationDetails(): JSX.Element {
 		return () => window.removeEventListener("resize", handleResize);
 	}, []);
 
+	const submitSearch = (e) => {
+		console.log("Searching...");
+		e.preventDefault();
+		console.log(address);
+		setState({
+			...state,
+			location: {
+				...state.location,
+				search: address,
+			},
+		});
+		setShowDetails(false);
+	};
+
 	return (
 		<div
 			id={`wpsl-branch-details${isMobile}`}
@@ -30,11 +46,11 @@ function LocationDetails(): JSX.Element {
 			{isMobile && (
 				<div className="wpsl-search wpsl-clearfix wpsl-checkboxes-enabled wpsl-geolocation-run">
 					<div id="wpsl-search-wrap">
-						<form autoComplete="on">
+						<form autoComplete="on" onSubmit={submitSearch}>
 							<div className="wpsl-input">
 								{" "}
 								{showDetails && (
-									<button
+									<button //back arrow button
 										className={`cx-modal__close cx-modal__close--back${isMobile}`}
 										onClick={() => setShowDetails(false)}
 									>
@@ -42,18 +58,20 @@ function LocationDetails(): JSX.Element {
 									</button>
 								)}{" "}
 								<div className="cx-location-listing__search--input">
-									<input
+									<input //search input
 										id="wpsl-search-input"
 										type="text"
-										value=""
+										value={address}
+										onChange={(e) => setAddress(e.target.value)}
 										name="wpsl-search-input"
 										placeholder="City, State or ZIP"
 										aria-required="true"
 										className="p--small pac-target-input"
 										autoComplete="off"
 									/>{" "}
-									<button
+									<button //clear search button
 										type="button"
+										onClick={(e) => setAddress("")}
 										className="cx-search__close cx-search__close--locations"
 									>
 										{" "}
@@ -61,7 +79,7 @@ function LocationDetails(): JSX.Element {
 									</button>
 								</div>
 								<div className="wpsl-search-btn-wrap">
-									<input
+									<input //search button
 										id="wpsl-search-btn"
 										className="cx-button cx-button--compact cx-button--color-positive"
 										type="submit"
