@@ -3,26 +3,40 @@ import parse, { domToReact, attributesToProps } from "html-react-parser";
 import { client } from 'client';
 import Link from "next/link";
 import FAQ from "components/FAQs/faq";
-import Datatrac from "components/Blocks/Datatrac";
 import Chat from "components/Chat/cisco";
-import DatatracValue from "components/Datatrac/Value";
-import DatatracFootnote from "components/Datatrac/Footnote";
 import LinkLibraryCatLink from "components/LinkLibrary/NavItem";
 import LinkLibrary from "components/LinkLibrary/LinkLibrary";
 import Form from "components/Forms/Form";
 // import { ciscoBubbleChat } from "./cisco-chat";
+
+const findChildren = (element, att, value) => {
+    let children = [];
+    const isChild = (child, att, value) => {
+        if(child?.attribs?.[att]) {
+            children.push(child);
+        } else {
+            child.children && child.children.forEach(el => {
+                isChild(el, att, value);
+            });
+        }
+    }
+    isChild(element, att, value);
+    return children;
+}
 
 export const parseHtml = (html) => {
     const domainRegEx = new RegExp(/(http)/, 'i');
     const internalLinkRegEx = new RegExp(/(cxcu|(www\.connexus)|local)/, 'i');
     //html = parseShortcode(html);
     const options = {
-        trim: true,
-        replace: ({ name, attribs, children }) => {
+        trim: false,
+        replace: (element) => {
+            const { name, attribs, children } = element;
             const isInternalLink = (name === "a" && (internalLinkRegEx.test(attribs.href) || domainRegEx.test(attribs.href) === false ) && !attribs.onClick);
             const isFAQItem = attribs && attribs.class && attribs.class.includes("ewd-ufaq-faq-div");
             const isResponsiveTable = (name === 'table' && attribs && attribs.class && attribs.class.includes("tablepress-responsive"))
             const isDatatrac = attribs && attribs.class && attribs.class.includes("datatrac-wrapper") && !attribs.class.includes('datatrac-wrapper__disclosure');
+            const isDatatracContainer = attribs && attribs.class && attribs.class.includes("gb-block-container") && findChildren(element, 'data-datatrac-perform', '').length > 0;
             const isCiscoBubbleChat = name === 'a' && attribs && attribs.class?.includes('cx-icon__chat_bubble');
             // const isLinkLibraryCatLink = name === 'a' && attribs && attribs.class?.includes('cx-link-lib-cats__link');
             const isLinkLibrary = attribs && attribs['data-link-library-cats'];
@@ -57,30 +71,23 @@ export const parseHtml = (html) => {
                 return (
                     <FAQ id={attribs['data-post_id']} />
                 )
-            }
-
-            else if(isDatatrac) {
-                return (
-                    <Datatrac datatracID={attribs['data-datatrac-product']} productName={attribs['data-datatrac-productname']} compareType={attribs['data-datatrac-value']} />
-                )
-            }
-
-            else if(attribs && attribs.class?.includes('datatrac-wrapper__disclosure')) {
-                return ( 
-                    <DatatracFootnote productName={attribs['data-datatrac-product']} />
-                ) 
-            }        
-
-            else if(attribs && attribs['data-datatrac-product'] && attribs['data-datatrac-value'] && !attribs.class?.includes('datatrac-wrapper')) {
-                return ( 
-                    <DatatracValue productName={attribs['data-datatrac-product']} value={attribs['data-datatrac-value']} />
-                ) 
-            }           
+            }     
 
             else if (isResponsiveTable) {
                 return (
                     <div className="cx-table--responsive"><table {...attributesToProps(attribs)}>{domToReact(children, options)}</table></div>
                 )
+            }
+            else if (isDatatracContainer) {
+                const children = findChildren(element, 'data-datatrac-perform', '');
+                console.log(children);
+                let showContainer = true;
+                children.forEach(el => {
+                    if(el.attribs && el.attribs['data-datatrac-perform'] === 'false') {
+                        showContainer = false;
+                    }
+                })
+                return ( showContainer ? element : <></>);
             }
             else {
 
