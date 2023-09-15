@@ -80,7 +80,6 @@ export const parseHtml = (html) => {
             }
             else if (isDatatracContainer) {
                 const children = findChildren(element, 'data-datatrac-perform', '');
-                console.log(children);
                 let showContainer = true;
                 children.forEach(el => {
                     if(el.attribs && el.attribs['data-datatrac-perform'] === 'false') {
