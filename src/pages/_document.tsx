@@ -1,14 +1,24 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
+import { files } from '../lib/externalFiles';
+import { addCSSAsset, addJSAsset } from 'lib/enqueuedFiles';
 
 class CXDoc extends Document {
   render() {
+    
     return (
       <Html>
         <Head>
         </Head>
-        <body className="home page-template page-template-templates page-template-full-width page-template-templatesfull-width-php page page-id-75 wp-custom-logo wp-embed-responsive group-blog featured-image-wide">
+          {files.css.map((sheet) => {
+              return addCSSAsset(sheet);
+          })}
+        <body className="">
           <Main />
           <NextScript />
+          {files.js.map((sheet) => {
+            console.log(`Script: ${sheet}`);
+              return addJSAsset(sheet);
+          })}
         </body>
       </Html>
     );
