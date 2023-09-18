@@ -19,6 +19,8 @@
     "@faustjs/next": "^0.15.10",
     "@wordpress/base-styles": "^4.24.0",
     "@wordpress/block-library": "^8.9.0",
+    "dateformat": "^5.0.3",
+    "mobile-device-detect": "^0.4.3",
     "next": "^13.3.4",
     "normalize.css": "^8.0.1",
     "react": "^18.2.0",

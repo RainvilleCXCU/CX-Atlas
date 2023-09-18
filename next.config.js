@@ -1,10 +1,14 @@
 const { withFaust } = require('@faustjs/next');
+const { NextFetchEvent } = require('next/server');
+const { fetchWordPressRedirects } = require('./src/utils/redirects');
 
 /**
  * @type {import('next').NextConfig}
  **/
-module.exports = withFaust({
+
+let nextConfig = {
     async redirects() {
+        const wpRedirects = await fetchWordPressRedirects({type: 'url'});
         return[
             {
                 source: '/apply:type/:path*',
@@ -14,12 +18,15 @@ module.exports = withFaust({
                     key: 'account'
                 }],
                 permanent: false
-            }
+            },
+            ...wpRedirects
         ]
     },
     async rewrites() {
+        const wpRewrites = await fetchWordPressRedirects({type: 'pass'});
         return {
             beforeFiles: [
+                ...wpRewrites,
                 {
                     source: '/mdr/:path*/',
                     destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/mdr/:path*/`,
@@ -53,15 +60,34 @@ module.exports = withFaust({
                     destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp-content/:path*`,
                 },
                 {
-                    source: '/about/branch-and-atm-locations/',
-                    destination: '/locations/',
-                },
-                {
                     source: '/apply-:type/:path*',
                     destination: '/bridge/:type/',
+                },
+                // {
+                //     source: '/pgp.txt',
+                //     destination: '/wp-content/themes/Connexus/assets/txt/ConnexusFileTransfer_PGP.txt'
+                // }
+            ],
+            afterFiles: [
+                {
+                    source: '/about/media-center/:linkLibCatId/page/:linkLibCatPage*',
+                    destination: `/about/media-center/`,
+                },
+                {
+                    source: '/about/media-center/:linkLibCatId*',
+                    destination: `/about/media-center/`,
+                },
+                {
+                    source: '/about/branch-and-atm-locations/find-location/:location*',
+                    destination: '/locations',
+                },
+                {
+                    source: '/about/branch-and-atm-locations/:path*',
+                    destination: '/locations',
                 }
-            ]
+            ],
         }
     },
     trailingSlash: true
-});
+};
+module.exports = withFaust(nextConfig);

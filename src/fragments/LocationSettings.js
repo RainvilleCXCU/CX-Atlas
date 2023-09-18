@@ -6,12 +6,16 @@ export const LocationSettingsFragment = gql`
     mapType
     zoomLevel
     urlLabel
+    emailLabel
+    phoneLabel
     streetview
     startLatlng
     startMarker
+    storeMarker
     typeControl
     scrollwheel
     controlPosition
+    autoZoomLevel
     markerIconProps
   }
 `;

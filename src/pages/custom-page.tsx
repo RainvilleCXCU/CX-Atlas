@@ -6,6 +6,8 @@ import Head from "next/head";
 import Accordion from "components/Accordion/Accordion";
 import FAQ from "components/FAQs/faq";
 import LocationDetails from "components/Locations/location-details";
+import LinkLibraryNav from "components/LinkLibrary/NavItem";
+import Calculator from "components/Calculator/Calculator";
 
 export default function Page() {
 	const { useQuery } = client;
@@ -38,11 +40,12 @@ export default function Page() {
 						. Take a look at <code>src/pages/custom-page.tsx</code> for an
 						example.
 					</p>
-					<Accordion title={title} content={content} isOpen={false} />
-					<Accordion title={title} content={content} isOpen={false} />
-					<FAQ id={"6"} title={title} content={content} isOpen={false} />
 
-					<LocationDetails />
+					<Calculator calculatorName="CUDeposit"></Calculator>
+
+					<Accordion title={title} content={content} isOpen={false} />
+					<Accordion title={title} content={content} isOpen={false} />
+					<FAQ id={"5540"} title={title} content={content} isOpen={false} />
 				</div>
 			</main>
 

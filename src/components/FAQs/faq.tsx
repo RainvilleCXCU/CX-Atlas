@@ -1,5 +1,5 @@
 import React from "react";
-//import { client, FaqIdType } from 'client';
+import { client } from 'client';
 import Accordion from "components/Accordion/Accordion";
 
 export interface Props {
@@ -10,13 +10,13 @@ export interface Props {
 }
 
 function FAQ({ id, title, content, isOpen }: Props): JSX.Element {
-	/*const { useQuery } = client;
-  const faqItem = useQuery().faqBy({
-    faqId: parseInt(id)
-  });*/
+	const { useQuery } = client;
+	const faqItem = useQuery().faq({
+		faqId: parseInt(id)
+	});
 	return (
-		<div id={id}>
-			<Accordion title={title} content={content} isOpen={isOpen} />
+		<div id={faqItem.id} className="cx-faq_wrapper">
+			<Accordion title={faqItem.title} content={faqItem.content} isOpen={isOpen} />
 		</div>
 	);
 }

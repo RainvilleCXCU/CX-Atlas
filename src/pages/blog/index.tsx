@@ -2,6 +2,9 @@ import { getNextStaticProps } from '@faustjs/next';
 import { client, OrderEnum, PostObjectsConnectionOrderbyEnum } from 'client';
 import { Footer, Header, Pagination, Posts } from 'components';
 import GTM from 'components/ThirdParty/gtm';
+import HotJar from 'components/ThirdParty/hotjar';
+import Qualtrics from 'components/ThirdParty/qualtrics';
+import Spectrum from 'components/ThirdParty/spectrum';
 import { parseHtml } from 'lib/parser';
 import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
@@ -42,6 +45,7 @@ export default function Page() {
         </title>
       </Head>
       <GTM />
+      <HotJar />
 
       <main id="main" className="content content-index blog">
           {blogtop &&
@@ -61,6 +65,8 @@ export default function Page() {
       </main>
 
       <Footer copyrightHolder={generalSettings.title} />
+			<Qualtrics />
+			<Spectrum />
     </>
   );
 }

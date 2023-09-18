@@ -1,6 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { files } from '../lib/externalFiles';
-import { addCSSAsset } from 'lib/enqueuedFiles';
+import { addCSSAsset, addJSAsset } from 'lib/enqueuedFiles';
 
 class CXDoc extends Document {
   render() {
@@ -15,6 +15,10 @@ class CXDoc extends Document {
         <body className="">
           <Main />
           <NextScript />
+          {files.js.map((sheet) => {
+            console.log(`Script: ${sheet}`);
+              return addJSAsset(sheet);
+          })}
         </body>
       </Html>
     );

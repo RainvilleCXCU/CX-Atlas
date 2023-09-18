@@ -5,6 +5,9 @@ import GTM from 'components/ThirdParty/gtm';
 import Head from 'next/head';
 import { GetStaticPropsContext } from 'next';
 import { getNextStaticProps } from '@faustjs/next';
+import HotJar from 'components/ThirdParty/hotjar';
+import Qualtrics from 'components/ThirdParty/qualtrics';
+import Spectrum from 'components/ThirdParty/spectrum';
 
 export default function Page(): JSX.Element {
   const { useQuery } = client;
@@ -18,6 +21,7 @@ export default function Page(): JSX.Element {
         </title>
       </Head>
       <GTM />
+      <HotJar />
       <Header
         title={generalSettings?.title}
         description={generalSettings?.description}
@@ -35,6 +39,8 @@ export default function Page(): JSX.Element {
         </div>
       </main>
       <Footer copyrightHolder={generalSettings?.title} />
+			<Qualtrics />
+			<Spectrum />
     </>
   );
 }

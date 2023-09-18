@@ -20,14 +20,35 @@ export const files = {
             id: 'parent-theme',
             src: '/wp-content/themes/genesis-block-theme/style.css',
         },
-
+        {
+            id: 'cisco-chat',
+            src: '/wp-content/themes/CXCU/vendors/cisco-chat/styles.css',
+        },
         {
             id: 'child-theme',
             src: '/wp-content/themes/CXCU/style.css',
         },
         {
+            id: 'locator',
+            src: `/wp-content/plugins/wp-store-locator/css/styles.min.css`
+        },
+        {
+            id: 'ninja-forms',
+            src: `/wp-content/plugins/ninja-forms/assets/css/display-opinions-light.css`
+        },
+        {
+            id: 'ninja-forms',
+            src: `/wp-content/plugins/ninja-forms/assets/css/font-awesome.min.css`
+        },
+        {
             id: 'styleguide',
             src: `/wp-content/themes/CXCU/assets/${process.env.styleguideVersion || '0.6.35'}/cxcuatlas.css`
+        },
+    ],
+    js: [
+        {
+            id: 'cisco-chat',
+            src: '/wp-content/themes/CXCU/vendors/cisco-chat/scripts.js',
         }
     ]
 }

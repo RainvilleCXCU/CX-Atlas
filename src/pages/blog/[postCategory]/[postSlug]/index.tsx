@@ -11,6 +11,9 @@ import Image from 'next/image';
 import { parseHtml } from 'lib/parser';
 import Link from 'next/link';
 import { Fragment } from 'react';
+import HotJar from 'components/ThirdParty/hotjar';
+import Qualtrics from 'components/ThirdParty/qualtrics';
+import Spectrum from 'components/ThirdParty/spectrum';
 
 export interface PostProps {
   post: Post | Post['preview']['node'] | null | undefined;
@@ -39,6 +42,7 @@ export function PostComponent({ post }: PostProps) {
         })}
       </Head>
       <GTM />
+      <HotJar />
 
       <div id="page" className="container site">
         <main className="content single-post">
@@ -72,12 +76,16 @@ export function PostComponent({ post }: PostProps) {
               </header>
               <div className='entry-content'>
                 {parseHtml(post?.content() ?? "")}
+
+			          <div id="cx-qt-feedback" className="blog-post"></div>
               </div>
             </div>
           </article>
         </main>
       </div>
       <Footer copyrightHolder={generalSettings.title} />
+			<Qualtrics />
+			<Spectrum />
     </>
   );
 }

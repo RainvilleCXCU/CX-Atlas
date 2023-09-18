@@ -46,9 +46,9 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                     <div className='cx-nav__dropdown-menu-container__menu-items'>
                                         {link?.childItems()?.nodes?.map((title, index) => {
                                             return (
-                                                <>
+                                                <React.Fragment key={`${title.id}-${title.databaseId}`}>
                                                 { !resourcesRegEx.test(title.uri) &&
-                                                    <li className="cx-nav__dropdown-menu-section" key={`${title.id}-${title.databaseId}`}>
+                                                    <li className="cx-nav__dropdown-menu-section">
                                                         {
                                                             title.label != '[column]' &&
                                                             <Heading level='h2' className='cx-h5 no-margin--top'>{title.label}</Heading>
@@ -69,38 +69,36 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                                         </ul>
                                                     </li>
                                                 }
-                                                </>
+                                                </React.Fragment>
                                             );
                                         })}
                                     </div>
                                     {link?.childItems()?.nodes?.map((title, index) => {
                                         return (
-                                            <>
+                                            <React.Fragment key={`${title.id}-${title.databaseId}`}>
                                             { resourcesRegEx.test(title.uri) &&
                                                 <div className='cx-nav__resources'>
-                                                    <li className="cx-nav__dropdown-menu-section" key={`${title.id}-${title.databaseId}`}>
-                                                        {
-                                                            title.label != '[column]' &&
-                                                            <Heading level='h2' className='cx-h5 no-margin--top'>{title.label}</Heading>
-                                                        }
-                                                        <ul className="cx-nav__dropdown-menu-list" key={`list-${title.id}-${title.databaseId}`}>
-                                                            {title?.childItems()?.nodes?.map((navLink, index) => {
-                                                                return (
-                                                                    <li key={`${navLink.id}-${navLink.databaseId}`}>
-                                                                        <Link href={navLink.uri || ''} passHref prefetch={false} className='dropdown-item cx-nav__dropdown-item'
-                                                                            onClick={() => {
-                                                                                setIsNavExpanded(!isNavExpanded);
-                                                                                setNavSelected('');
-                                                                            }}>{navLink.label}
-                                                                        </Link>
-                                                                    </li>
-                                                                );
-                                                            })}
-                                                        </ul>
-                                                    </li>
+                                                    {
+                                                        title.label != '[column]' &&
+                                                        <Heading level='h2' className='cx-h5 no-margin--top'>{title.label}</Heading>
+                                                    }
+                                                    <ul className="cx-nav__dropdown-menu-list" key={`list-${title.id}-${title.databaseId}`}>
+                                                        {title?.childItems()?.nodes?.map((navLink, index) => {
+                                                            return (
+                                                                <li key={`item-${navLink.id}-${navLink.databaseId}`}>
+                                                                    <Link href={navLink.uri || ''} passHref prefetch={false} className='dropdown-item cx-nav__dropdown-item'
+                                                                        onClick={() => {
+                                                                            setIsNavExpanded(!isNavExpanded);
+                                                                            setNavSelected('');
+                                                                        }}>{navLink.label}
+                                                                    </Link>
+                                                                </li>
+                                                            );
+                                                        })}
+                                                    </ul>
                                                 </div>
                                             }
-                                            </>
+                                            </React.Fragment>
                                         );
                                     })}
                                 </div>
