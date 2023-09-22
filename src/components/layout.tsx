@@ -10,7 +10,6 @@ import Alert from "./Alerts/Alert";
 import HotJar from "./ThirdParty/hotjar";
 import Qualtrics from "./ThirdParty/qualtrics";
 import Spectrum from "./ThirdParty/spectrum";
-import Personyze from "./ThirdParty/personyze";
 
 export default function Layout({ page, children = <></> }) {
 	const { useQuery } = client;
@@ -41,7 +40,6 @@ export default function Layout({ page, children = <></> }) {
 				twitter_data1={seo?.readingTime + " minutes"}
 			/>
 			<GTM />
-			<Personyze />
 			<HotJar />
 			<Alert id={page?.databaseId} />
 			<Header
