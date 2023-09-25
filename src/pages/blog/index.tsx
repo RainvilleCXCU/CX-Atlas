@@ -3,6 +3,7 @@ import { client, OrderEnum, PostObjectsConnectionOrderbyEnum } from 'client';
 import { Footer, Header, Pagination, Posts } from 'components';
 import GTM from 'components/ThirdParty/gtm';
 import HotJar from 'components/ThirdParty/hotjar';
+import Personyze from 'components/ThirdParty/personyze';
 import Qualtrics from 'components/ThirdParty/qualtrics';
 import Spectrum from 'components/ThirdParty/spectrum';
 import { parseHtml } from 'lib/parser';
@@ -45,6 +46,7 @@ export default function Page() {
         </title>
       </Head>
       <GTM />
+      <Personyze />
       <HotJar />
 
       <main id="main" className="content content-index blog">

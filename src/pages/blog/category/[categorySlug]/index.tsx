@@ -9,6 +9,7 @@ import { parseHtml } from 'lib/parser';
 import HotJar from 'components/ThirdParty/hotjar';
 import Qualtrics from 'components/ThirdParty/qualtrics';
 import Spectrum from 'components/ThirdParty/spectrum';
+import Personyze from 'components/ThirdParty/personyze';
 
 const POSTS_PER_PAGE = 5;
 
@@ -42,6 +43,7 @@ export default function Page() {
         description={generalSettings.description}
       />
       <GTM />
+      <Personyze />
       <HotJar />
 
       <main id="main" className="content content-single blog">
