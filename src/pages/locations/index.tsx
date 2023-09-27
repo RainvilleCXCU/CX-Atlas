@@ -28,6 +28,7 @@ import { Store } from 'context/store';
 import { getGeoLocation } from "lib/location/geolocation";
 import { getLatLngByLocation, getLocationByLatLng } from "lib/location/geocode";
 import { useRouter } from "next/router";
+import Personyze from "components/ThirdParty/personyze";
 
 export default function Page({ locationSettings, location }) {
 	const { useQuery } = client;
@@ -134,6 +135,7 @@ export default function Page({ locationSettings, location }) {
 				<title>{`Locations - ${generalSettings.title}`}</title>
 			</Head>
 			<GTM />
+			<Personyze />
 			<HotJar />
 			<showDetailsContext.Provider value={{ showDetails, setShowDetails }}>
 				<selectedLocationContext.Provider

@@ -14,6 +14,7 @@ import { gql } from '@apollo/client';
 import HotJar from 'components/ThirdParty/hotjar';
 import Qualtrics from 'components/ThirdParty/qualtrics';
 import Spectrum from 'components/ThirdParty/spectrum';
+import Personyze from 'components/ThirdParty/personyze';
 
 export interface PageProps {
     page: PageType | PageType['preview']['node'] | null | undefined;
@@ -36,6 +37,7 @@ export default function Page({ product, type, minor }) {
                 </title>
             </Head>
             <GTM />
+            <Personyze />
             <HotJar />
             <span id='cx-bridge'>
                 <Header

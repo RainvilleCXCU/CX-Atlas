@@ -880,6 +880,7 @@ export interface CreateProductInput {
   password?: InputMaybe<Scalars["String"]>;
   productApplyURL?: InputMaybe<Scalars["String"]>;
   productPageURL?: InputMaybe<Scalars["String"]>;
+  ratesTableID?: InputMaybe<Scalars["Float"]>;
   /** The slug of the object */
   slug?: InputMaybe<Scalars["String"]>;
   /** The status of the object */
@@ -4813,6 +4814,7 @@ export interface UpdateProductInput {
   password?: InputMaybe<Scalars["String"]>;
   productApplyURL?: InputMaybe<Scalars["String"]>;
   productPageURL?: InputMaybe<Scalars["String"]>;
+  ratesTableID?: InputMaybe<Scalars["Float"]>;
   /** The slug of the object */
   slug?: InputMaybe<Scalars["String"]>;
   /** The status of the object */
@@ -9445,6 +9447,7 @@ export const generatedSchema = {
     password: { __type: "String" },
     productApplyURL: { __type: "String" },
     productPageURL: { __type: "String" },
+    ratesTableID: { __type: "Float" },
     slug: { __type: "String" },
     status: { __type: "PostStatusEnum" },
     title: { __type: "String" },
@@ -10324,6 +10327,7 @@ export const generatedSchema = {
     blockVisibility: { __type: "BlockAttributesObject" },
     className: { __type: "String" },
     image: { __type: "Int" },
+    links: { __type: "BlockAttributesObject" },
     lock: { __type: "BlockAttributesObject" },
     type: { __type: "String" },
   },
@@ -10365,9 +10369,58 @@ export const generatedSchema = {
     blockVisibility: { __type: "BlockAttributesObject" },
     className: { __type: "String" },
     graphic: { __type: "Int" },
+    headerText: { __type: "String" },
     image: { __type: "Int" },
     lock: { __type: "BlockAttributesObject" },
     title: { __type: "String" },
+    type: { __type: "String" },
+  },
+  GenesisCustomBlocksCardForms: {
+    __typename: { __type: "String!" },
+    apiVersion: { __type: "Int" },
+    attributes: { __type: "GenesisCustomBlocksCardFormsAttributes" },
+    blockEditorCategoryName: { __type: "String" },
+    clientId: { __type: "String" },
+    cssClassNames: { __type: "[String]" },
+    innerBlocks: { __type: "[EditorBlock]" },
+    isDynamic: { __type: "Boolean!" },
+    name: { __type: "String" },
+    parentClientId: { __type: "String" },
+    renderedHtml: { __type: "String" },
+  },
+  GenesisCustomBlocksCardFormsAttributes: {
+    __typename: { __type: "String!" },
+    blockVisibility: { __type: "BlockAttributesObject" },
+    className: { __type: "String" },
+    forms: { __type: "BlockAttributesObject" },
+    lock: { __type: "BlockAttributesObject" },
+    type: { __type: "String" },
+  },
+  GenesisCustomBlocksCardGeneric: {
+    __typename: { __type: "String!" },
+    apiVersion: { __type: "Int" },
+    attributes: { __type: "GenesisCustomBlocksCardGenericAttributes" },
+    blockEditorCategoryName: { __type: "String" },
+    clientId: { __type: "String" },
+    cssClassNames: { __type: "[String]" },
+    innerBlocks: { __type: "[EditorBlock]" },
+    isDynamic: { __type: "Boolean!" },
+    name: { __type: "String" },
+    parentClientId: { __type: "String" },
+    renderedHtml: { __type: "String" },
+  },
+  GenesisCustomBlocksCardGenericAttributes: {
+    __typename: { __type: "String!" },
+    blockVisibility: { __type: "BlockAttributesObject" },
+    className: { __type: "String" },
+    content: { __type: "String" },
+    contentColor: { __type: "String" },
+    contentTextColor: { __type: "String" },
+    headingColor: { __type: "String" },
+    headingTextColor: { __type: "String" },
+    hideHeading: { __type: "Boolean" },
+    icon: { __type: "String" },
+    lock: { __type: "BlockAttributesObject" },
     type: { __type: "String" },
   },
   GenesisCustomBlocksCardPromo: {
@@ -10430,6 +10483,8 @@ export const generatedSchema = {
     __typename: { __type: "String!" },
     blockVisibility: { __type: "BlockAttributesObject" },
     className: { __type: "String" },
+    fullHeight: { __type: "Boolean" },
+    hideHeading: { __type: "Boolean" },
     image: { __type: "Int" },
     lock: { __type: "BlockAttributesObject" },
     type: { __type: "String" },
@@ -10453,7 +10508,10 @@ export const generatedSchema = {
     chooseProduct: { __type: "String" },
     className: { __type: "String" },
     compareType: { __type: "String" },
+    dbhide: { __type: "String" },
+    hidebuttons: { __type: "String" },
     lock: { __type: "BlockAttributesObject" },
+    productName: { __type: "String" },
   },
   GenesisCustomBlocksContentToggle: {
     __typename: { __type: "String!" },
@@ -10523,6 +10581,26 @@ export const generatedSchema = {
     linkText: { __type: "String" },
     linkUrl: { __type: "String" },
     lock: { __type: "BlockAttributesObject" },
+  },
+  GenesisCustomBlocksCxPdfLinks: {
+    __typename: { __type: "String!" },
+    apiVersion: { __type: "Int" },
+    attributes: { __type: "GenesisCustomBlocksCxPdfLinksAttributes" },
+    blockEditorCategoryName: { __type: "String" },
+    clientId: { __type: "String" },
+    cssClassNames: { __type: "[String]" },
+    innerBlocks: { __type: "[EditorBlock]" },
+    isDynamic: { __type: "Boolean!" },
+    name: { __type: "String" },
+    parentClientId: { __type: "String" },
+    renderedHtml: { __type: "String" },
+  },
+  GenesisCustomBlocksCxPdfLinksAttributes: {
+    __typename: { __type: "String!" },
+    blockVisibility: { __type: "BlockAttributesObject" },
+    className: { __type: "String" },
+    lock: { __type: "BlockAttributesObject" },
+    pdfs: { __type: "BlockAttributesObject" },
   },
   GenesisCustomBlocksCxSvg: {
     __typename: { __type: "String!" },
@@ -10687,6 +10765,35 @@ export const generatedSchema = {
     openNewTab: { __type: "String" },
     preheading: { __type: "String" },
   },
+  GenesisCustomBlocksHeroImage: {
+    __typename: { __type: "String!" },
+    apiVersion: { __type: "Int" },
+    attributes: { __type: "GenesisCustomBlocksHeroImageAttributes" },
+    blockEditorCategoryName: { __type: "String" },
+    clientId: { __type: "String" },
+    cssClassNames: { __type: "[String]" },
+    innerBlocks: { __type: "[EditorBlock]" },
+    isDynamic: { __type: "Boolean!" },
+    name: { __type: "String" },
+    parentClientId: { __type: "String" },
+    renderedHtml: { __type: "String" },
+  },
+  GenesisCustomBlocksHeroImageAttributes: {
+    __typename: { __type: "String!" },
+    altText: { __type: "String" },
+    blockVisibility: { __type: "BlockAttributesObject" },
+    className: { __type: "String" },
+    ctaCustomLink: { __type: "String" },
+    ctaLink: { __type: "String" },
+    ctaText: { __type: "String" },
+    heading: { __type: "String" },
+    heroBody: { __type: "String" },
+    heroColor: { __type: "String" },
+    heroImage: { __type: "Int" },
+    lock: { __type: "BlockAttributesObject" },
+    openNewTab: { __type: "String" },
+    preheading: { __type: "String" },
+  },
   GenesisCustomBlocksHeroProduct: {
     __typename: { __type: "String!" },
     apiVersion: { __type: "Int" },
@@ -10714,6 +10821,8 @@ export const generatedSchema = {
     heroType: { __type: "String" },
     lock: { __type: "BlockAttributesObject" },
     openNewTab: { __type: "String" },
+    outlinedCtaLink: { __type: "String" },
+    outlinedCtaText: { __type: "String" },
     preheading: { __type: "String" },
     secondCta: { __type: "String" },
     secondaryCta1Icon: { __type: "String" },
@@ -10781,7 +10890,8 @@ export const generatedSchema = {
     __typename: { __type: "String!" },
     blockVisibility: { __type: "BlockAttributesObject" },
     className: { __type: "String" },
-    instruction: { __type: "BlockAttributesObject" },
+    hideMobileHeading: { __type: "String" },
+    instructions: { __type: "BlockAttributesObject" },
     lock: { __type: "BlockAttributesObject" },
     title: { __type: "String" },
   },
@@ -10804,7 +10914,13 @@ export const generatedSchema = {
     blockVisibility: { __type: "BlockAttributesObject" },
     className: { __type: "String" },
     copy: { __type: "String" },
+    ctaCustomLink: { __type: "String" },
+    ctaLink: { __type: "String" },
+    ctaText: { __type: "String" },
+    hideImageMobile: { __type: "String" },
     image: { __type: "Int" },
+    imageAlignment: { __type: "String" },
+    imageAlt: { __type: "String" },
     lock: { __type: "BlockAttributesObject" },
     title: { __type: "String" },
   },
@@ -10944,6 +11060,38 @@ export const generatedSchema = {
     className: { __type: "String" },
     lock: { __type: "BlockAttributesObject" },
     product: { __type: "String" },
+  },
+  GenesisCustomBlocksPromo: {
+    __typename: { __type: "String!" },
+    apiVersion: { __type: "Int" },
+    attributes: { __type: "GenesisCustomBlocksPromoAttributes" },
+    blockEditorCategoryName: { __type: "String" },
+    clientId: { __type: "String" },
+    cssClassNames: { __type: "[String]" },
+    innerBlocks: { __type: "[EditorBlock]" },
+    isDynamic: { __type: "Boolean!" },
+    name: { __type: "String" },
+    parentClientId: { __type: "String" },
+    renderedHtml: { __type: "String" },
+  },
+  GenesisCustomBlocksPromoAttributes: {
+    __typename: { __type: "String!" },
+    blockVisibility: { __type: "BlockAttributesObject" },
+    cTA1Link: { __type: "String" },
+    cTA1Text: { __type: "String" },
+    cTA2Link: { __type: "String" },
+    cTA2Text: { __type: "String" },
+    className: { __type: "String" },
+    copy: { __type: "String" },
+    graphicImage: { __type: "Boolean" },
+    heading: { __type: "String" },
+    image: { __type: "Int" },
+    imageAlt: { __type: "String" },
+    lock: { __type: "BlockAttributesObject" },
+    perks: { __type: "BlockAttributesObject" },
+    showCTA2: { __type: "Boolean" },
+    showImage: { __type: "Boolean" },
+    showPerks: { __type: "Boolean" },
   },
   GenesisCustomBlocksQualtrics: {
     __typename: { __type: "String!" },
@@ -12247,7 +12395,7 @@ export const generatedSchema = {
     mapType: { __type: "String" },
     markerClusters: { __type: "Int" },
     markerEffect: { __type: "String" },
-    markerIconProps: { __type: "Int" },
+    markerIconProps: { __type: "String" },
     markerStreetview: { __type: "Int" },
     markerZoomTo: { __type: "Int" },
     maxResults: { __type: "String" },
@@ -14016,6 +14164,7 @@ export const generatedSchema = {
       __type: "ProductToRateConnection",
       __args: { after: "String", before: "String", first: "Int", last: "Int" },
     },
+    ratesTableID: { __type: "Float" },
     seo: { __type: "PostTypeSEO" },
     slug: { __type: "String" },
     status: { __type: "String" },
@@ -16590,6 +16739,9 @@ export const generatedSchema = {
     gtmId: { __type: "String" },
     hotjarEnabled: { __type: "String" },
     hotjarId: { __type: "String" },
+    personyzeDomains: { __type: "String" },
+    personyzeEnabled: { __type: "String" },
+    personyzeId: { __type: "String" },
     qualtricsEnabled: { __type: "String" },
     qualtricsId: { __type: "String" },
     spectrumEnabled: { __type: "String" },
@@ -16975,6 +17127,7 @@ export const generatedSchema = {
     password: { __type: "String" },
     productApplyURL: { __type: "String" },
     productPageURL: { __type: "String" },
+    ratesTableID: { __type: "Float" },
     slug: { __type: "String" },
     status: { __type: "PostStatusEnum" },
     title: { __type: "String" },
@@ -17941,43 +18094,6 @@ export const generatedSchema = {
     blogSidebar: { __type: "String" },
     blogtop: { __type: "String" },
     widgetSettings: { __type: "String" },
-  },
-  WpformsFormSelector: {
-    __typename: { __type: "String!" },
-    apiVersion: { __type: "Int" },
-    attributes: { __type: "WpformsFormSelectorAttributes" },
-    blockEditorCategoryName: { __type: "String" },
-    clientId: { __type: "String" },
-    cssClassNames: { __type: "[String]" },
-    innerBlocks: { __type: "[EditorBlock]" },
-    isDynamic: { __type: "Boolean!" },
-    name: { __type: "String" },
-    parentClientId: { __type: "String" },
-    renderedHtml: { __type: "String" },
-  },
-  WpformsFormSelectorAttributes: {
-    __typename: { __type: "String!" },
-    blockVisibility: { __type: "BlockAttributesObject" },
-    buttonBackgroundColor: { __type: "String" },
-    buttonBorderRadius: { __type: "String" },
-    buttonSize: { __type: "String" },
-    buttonTextColor: { __type: "String" },
-    className: { __type: "String" },
-    clientId: { __type: "String" },
-    copyPasteJsonValue: { __type: "String" },
-    displayDesc: { __type: "Boolean" },
-    displayTitle: { __type: "Boolean" },
-    fieldBackgroundColor: { __type: "String" },
-    fieldBorderColor: { __type: "String" },
-    fieldBorderRadius: { __type: "String" },
-    fieldSize: { __type: "String" },
-    fieldTextColor: { __type: "String" },
-    formId: { __type: "String" },
-    labelColor: { __type: "String" },
-    labelErrorColor: { __type: "String" },
-    labelSize: { __type: "String" },
-    labelSublabelColor: { __type: "String" },
-    lock: { __type: "BlockAttributesObject" },
   },
   WritingSettings: {
     __typename: { __type: "String!" },
@@ -19699,6 +19815,8 @@ export const generatedSchema = {
       "GenesisCustomBlocksCardCares",
       "GenesisCustomBlocksCardContact",
       "GenesisCustomBlocksCardFact",
+      "GenesisCustomBlocksCardForms",
+      "GenesisCustomBlocksCardGeneric",
       "GenesisCustomBlocksCardPromo",
       "GenesisCustomBlocksCardRecognition",
       "GenesisCustomBlocksCardTestimonial",
@@ -19706,6 +19824,7 @@ export const generatedSchema = {
       "GenesisCustomBlocksContentToggle",
       "GenesisCustomBlocksCxContentLink",
       "GenesisCustomBlocksCxLink",
+      "GenesisCustomBlocksCxPdfLinks",
       "GenesisCustomBlocksCxSvg",
       "GenesisCustomBlocksDatatrac",
       "GenesisCustomBlocksDisclosures",
@@ -19713,6 +19832,7 @@ export const generatedSchema = {
       "GenesisCustomBlocksFigure",
       "GenesisCustomBlocksGump",
       "GenesisCustomBlocksHero",
+      "GenesisCustomBlocksHeroImage",
       "GenesisCustomBlocksHeroProduct",
       "GenesisCustomBlocksHours",
       "GenesisCustomBlocksIcons",
@@ -19724,6 +19844,7 @@ export const generatedSchema = {
       "GenesisCustomBlocksPerk",
       "GenesisCustomBlocksPostContent",
       "GenesisCustomBlocksProductBenefits",
+      "GenesisCustomBlocksPromo",
       "GenesisCustomBlocksQualtrics",
       "GenesisCustomBlocksQuicklink",
       "GenesisCustomBlocksSidekick",
@@ -19750,7 +19871,6 @@ export const generatedSchema = {
       "UltimateFaqsEwdUfaqSearchBlock",
       "UltimateFaqsEwdUfaqSubmitFaqBlock",
       "UnknownBlock",
-      "WpformsFormSelector",
       "YoastFaqBlock",
       "YoastHowToBlock",
       "YoastSeoBreadcrumbs",
@@ -33005,6 +33125,8 @@ export interface EditorBlock {
     | "GenesisCustomBlocksCardCares"
     | "GenesisCustomBlocksCardContact"
     | "GenesisCustomBlocksCardFact"
+    | "GenesisCustomBlocksCardForms"
+    | "GenesisCustomBlocksCardGeneric"
     | "GenesisCustomBlocksCardPromo"
     | "GenesisCustomBlocksCardRecognition"
     | "GenesisCustomBlocksCardTestimonial"
@@ -33012,6 +33134,7 @@ export interface EditorBlock {
     | "GenesisCustomBlocksContentToggle"
     | "GenesisCustomBlocksCxContentLink"
     | "GenesisCustomBlocksCxLink"
+    | "GenesisCustomBlocksCxPdfLinks"
     | "GenesisCustomBlocksCxSvg"
     | "GenesisCustomBlocksDatatrac"
     | "GenesisCustomBlocksDisclosures"
@@ -33019,6 +33142,7 @@ export interface EditorBlock {
     | "GenesisCustomBlocksFigure"
     | "GenesisCustomBlocksGump"
     | "GenesisCustomBlocksHero"
+    | "GenesisCustomBlocksHeroImage"
     | "GenesisCustomBlocksHeroProduct"
     | "GenesisCustomBlocksHours"
     | "GenesisCustomBlocksIcons"
@@ -33030,6 +33154,7 @@ export interface EditorBlock {
     | "GenesisCustomBlocksPerk"
     | "GenesisCustomBlocksPostContent"
     | "GenesisCustomBlocksProductBenefits"
+    | "GenesisCustomBlocksPromo"
     | "GenesisCustomBlocksQualtrics"
     | "GenesisCustomBlocksQuicklink"
     | "GenesisCustomBlocksSidekick"
@@ -33056,7 +33181,6 @@ export interface EditorBlock {
     | "UltimateFaqsEwdUfaqSearchBlock"
     | "UltimateFaqsEwdUfaqSubmitFaqBlock"
     | "UnknownBlock"
-    | "WpformsFormSelector"
     | "YoastFaqBlock"
     | "YoastHowToBlock"
     | "YoastSeoBreadcrumbs";
@@ -34806,6 +34930,10 @@ export interface GenesisCustomBlocksCardCaresAttributes {
    */
   image?: Maybe<ScalarsEnums["Int"]>;
   /**
+   * The &quot;links&quot; field on the &quot;GenesisCustomBlocksCardCares&quot; block
+   */
+  links?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
    * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksCardCares&quot; block
    */
   lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
@@ -34950,6 +35078,10 @@ export interface GenesisCustomBlocksCardFactAttributes {
    */
   graphic?: Maybe<ScalarsEnums["Int"]>;
   /**
+   * The &quot;header-text&quot; field on the &quot;GenesisCustomBlocksCardFact&quot; block
+   */
+  headerText?: Maybe<ScalarsEnums["String"]>;
+  /**
    * The &quot;image&quot; field on the &quot;GenesisCustomBlocksCardFact&quot; block
    */
   image?: Maybe<ScalarsEnums["Int"]>;
@@ -34963,6 +35095,178 @@ export interface GenesisCustomBlocksCardFactAttributes {
   title?: Maybe<ScalarsEnums["String"]>;
   /**
    * The &quot;type&quot; field on the &quot;GenesisCustomBlocksCardFact&quot; block
+   */
+  type?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * A block used for editing the site
+ */
+export interface GenesisCustomBlocksCardForms {
+  __typename?: "GenesisCustomBlocksCardForms";
+  /**
+   * The API version of the Gutenberg Block
+   */
+  apiVersion?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Attributes of the %s Block Type
+   */
+  attributes?: Maybe<GenesisCustomBlocksCardFormsAttributes>;
+  /**
+   * The name of the category the Block belongs to
+   */
+  blockEditorCategoryName?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The id of the Block
+   */
+  clientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * CSS Classnames to apply to the block
+   */
+  cssClassNames?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The inner blocks of the Block
+   */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /**
+   * Whether the block is Dynamic (server rendered)
+   */
+  isDynamic: ScalarsEnums["Boolean"];
+  /**
+   * The name of the block
+   */
+  name?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The parent id of the Block
+   */
+  parentClientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The rendered HTML for the block
+   */
+  renderedHtml?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Attributes of the %s Block Type
+ */
+export interface GenesisCustomBlocksCardFormsAttributes {
+  __typename?: "GenesisCustomBlocksCardFormsAttributes";
+  /**
+   * The &quot;blockVisibility&quot; field on the &quot;GenesisCustomBlocksCardForms&quot; block
+   */
+  blockVisibility?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;className&quot; field on the &quot;GenesisCustomBlocksCardForms&quot; block
+   */
+  className?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;forms&quot; field on the &quot;GenesisCustomBlocksCardForms&quot; block
+   */
+  forms?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksCardForms&quot; block
+   */
+  lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;type&quot; field on the &quot;GenesisCustomBlocksCardForms&quot; block
+   */
+  type?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * A block used for editing the site
+ */
+export interface GenesisCustomBlocksCardGeneric {
+  __typename?: "GenesisCustomBlocksCardGeneric";
+  /**
+   * The API version of the Gutenberg Block
+   */
+  apiVersion?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Attributes of the %s Block Type
+   */
+  attributes?: Maybe<GenesisCustomBlocksCardGenericAttributes>;
+  /**
+   * The name of the category the Block belongs to
+   */
+  blockEditorCategoryName?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The id of the Block
+   */
+  clientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * CSS Classnames to apply to the block
+   */
+  cssClassNames?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The inner blocks of the Block
+   */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /**
+   * Whether the block is Dynamic (server rendered)
+   */
+  isDynamic: ScalarsEnums["Boolean"];
+  /**
+   * The name of the block
+   */
+  name?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The parent id of the Block
+   */
+  parentClientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The rendered HTML for the block
+   */
+  renderedHtml?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Attributes of the %s Block Type
+ */
+export interface GenesisCustomBlocksCardGenericAttributes {
+  __typename?: "GenesisCustomBlocksCardGenericAttributes";
+  /**
+   * The &quot;blockVisibility&quot; field on the &quot;GenesisCustomBlocksCardGeneric&quot; block
+   */
+  blockVisibility?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;className&quot; field on the &quot;GenesisCustomBlocksCardGeneric&quot; block
+   */
+  className?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;content&quot; field on the &quot;GenesisCustomBlocksCardGeneric&quot; block
+   */
+  content?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;content-color&quot; field on the &quot;GenesisCustomBlocksCardGeneric&quot; block
+   */
+  contentColor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;content-text-color&quot; field on the &quot;GenesisCustomBlocksCardGeneric&quot; block
+   */
+  contentTextColor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;heading-color&quot; field on the &quot;GenesisCustomBlocksCardGeneric&quot; block
+   */
+  headingColor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;heading-text-color&quot; field on the &quot;GenesisCustomBlocksCardGeneric&quot; block
+   */
+  headingTextColor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;hide-heading&quot; field on the &quot;GenesisCustomBlocksCardGeneric&quot; block
+   */
+  hideHeading?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * The &quot;icon&quot; field on the &quot;GenesisCustomBlocksCardGeneric&quot; block
+   */
+  icon?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksCardGeneric&quot; block
+   */
+  lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;type&quot; field on the &quot;GenesisCustomBlocksCardGeneric&quot; block
    */
   type?: Maybe<ScalarsEnums["String"]>;
 }
@@ -35180,6 +35484,14 @@ export interface GenesisCustomBlocksCardTestimonialAttributes {
    */
   className?: Maybe<ScalarsEnums["String"]>;
   /**
+   * The &quot;full-height&quot; field on the &quot;GenesisCustomBlocksCardTestimonial&quot; block
+   */
+  fullHeight?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * The &quot;hide-heading&quot; field on the &quot;GenesisCustomBlocksCardTestimonial&quot; block
+   */
+  hideHeading?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
    * The &quot;image&quot; field on the &quot;GenesisCustomBlocksCardTestimonial&quot; block
    */
   image?: Maybe<ScalarsEnums["Int"]>;
@@ -35262,9 +35574,21 @@ export interface GenesisCustomBlocksComparisonAttributes {
    */
   compareType?: Maybe<ScalarsEnums["String"]>;
   /**
+   * The &quot;dbhide&quot; field on the &quot;GenesisCustomBlocksComparison&quot; block
+   */
+  dbhide?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;hidebuttons&quot; field on the &quot;GenesisCustomBlocksComparison&quot; block
+   */
+  hidebuttons?: Maybe<ScalarsEnums["String"]>;
+  /**
    * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksComparison&quot; block
    */
   lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;product-name&quot; field on the &quot;GenesisCustomBlocksComparison&quot; block
+   */
+  productName?: Maybe<ScalarsEnums["String"]>;
 }
 
 /**
@@ -35511,6 +35835,76 @@ export interface GenesisCustomBlocksCxLinkAttributes {
    * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksCxLink&quot; block
    */
   lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+}
+
+/**
+ * A block used for editing the site
+ */
+export interface GenesisCustomBlocksCxPdfLinks {
+  __typename?: "GenesisCustomBlocksCxPdfLinks";
+  /**
+   * The API version of the Gutenberg Block
+   */
+  apiVersion?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Attributes of the %s Block Type
+   */
+  attributes?: Maybe<GenesisCustomBlocksCxPdfLinksAttributes>;
+  /**
+   * The name of the category the Block belongs to
+   */
+  blockEditorCategoryName?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The id of the Block
+   */
+  clientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * CSS Classnames to apply to the block
+   */
+  cssClassNames?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The inner blocks of the Block
+   */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /**
+   * Whether the block is Dynamic (server rendered)
+   */
+  isDynamic: ScalarsEnums["Boolean"];
+  /**
+   * The name of the block
+   */
+  name?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The parent id of the Block
+   */
+  parentClientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The rendered HTML for the block
+   */
+  renderedHtml?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Attributes of the %s Block Type
+ */
+export interface GenesisCustomBlocksCxPdfLinksAttributes {
+  __typename?: "GenesisCustomBlocksCxPdfLinksAttributes";
+  /**
+   * The &quot;blockVisibility&quot; field on the &quot;GenesisCustomBlocksCxPdfLinks&quot; block
+   */
+  blockVisibility?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;className&quot; field on the &quot;GenesisCustomBlocksCxPdfLinks&quot; block
+   */
+  className?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksCxPdfLinks&quot; block
+   */
+  lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;pdfs&quot; field on the &quot;GenesisCustomBlocksCxPdfLinks&quot; block
+   */
+  pdfs?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
 }
 
 /**
@@ -36098,6 +36492,112 @@ export interface GenesisCustomBlocksHeroAttributes {
 /**
  * A block used for editing the site
  */
+export interface GenesisCustomBlocksHeroImage {
+  __typename?: "GenesisCustomBlocksHeroImage";
+  /**
+   * The API version of the Gutenberg Block
+   */
+  apiVersion?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Attributes of the %s Block Type
+   */
+  attributes?: Maybe<GenesisCustomBlocksHeroImageAttributes>;
+  /**
+   * The name of the category the Block belongs to
+   */
+  blockEditorCategoryName?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The id of the Block
+   */
+  clientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * CSS Classnames to apply to the block
+   */
+  cssClassNames?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The inner blocks of the Block
+   */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /**
+   * Whether the block is Dynamic (server rendered)
+   */
+  isDynamic: ScalarsEnums["Boolean"];
+  /**
+   * The name of the block
+   */
+  name?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The parent id of the Block
+   */
+  parentClientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The rendered HTML for the block
+   */
+  renderedHtml?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Attributes of the %s Block Type
+ */
+export interface GenesisCustomBlocksHeroImageAttributes {
+  __typename?: "GenesisCustomBlocksHeroImageAttributes";
+  /**
+   * The &quot;alt-text&quot; field on the &quot;GenesisCustomBlocksHeroImage&quot; block
+   */
+  altText?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;blockVisibility&quot; field on the &quot;GenesisCustomBlocksHeroImage&quot; block
+   */
+  blockVisibility?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;className&quot; field on the &quot;GenesisCustomBlocksHeroImage&quot; block
+   */
+  className?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;cta-custom-link&quot; field on the &quot;GenesisCustomBlocksHeroImage&quot; block
+   */
+  ctaCustomLink?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;cta-link&quot; field on the &quot;GenesisCustomBlocksHeroImage&quot; block
+   */
+  ctaLink?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;cta-text&quot; field on the &quot;GenesisCustomBlocksHeroImage&quot; block
+   */
+  ctaText?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;heading&quot; field on the &quot;GenesisCustomBlocksHeroImage&quot; block
+   */
+  heading?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;hero-body&quot; field on the &quot;GenesisCustomBlocksHeroImage&quot; block
+   */
+  heroBody?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;hero-color&quot; field on the &quot;GenesisCustomBlocksHeroImage&quot; block
+   */
+  heroColor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;hero-image&quot; field on the &quot;GenesisCustomBlocksHeroImage&quot; block
+   */
+  heroImage?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksHeroImage&quot; block
+   */
+  lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;open-new-tab&quot; field on the &quot;GenesisCustomBlocksHeroImage&quot; block
+   */
+  openNewTab?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;preheading&quot; field on the &quot;GenesisCustomBlocksHeroImage&quot; block
+   */
+  preheading?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * A block used for editing the site
+ */
 export interface GenesisCustomBlocksHeroProduct {
   __typename?: "GenesisCustomBlocksHeroProduct";
   /**
@@ -36195,6 +36695,14 @@ export interface GenesisCustomBlocksHeroProductAttributes {
    * The &quot;open-new-tab&quot; field on the &quot;GenesisCustomBlocksHeroProduct&quot; block
    */
   openNewTab?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;outlined-cta-link&quot; field on the &quot;GenesisCustomBlocksHeroProduct&quot; block
+   */
+  outlinedCtaLink?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;outlined-cta-text&quot; field on the &quot;GenesisCustomBlocksHeroProduct&quot; block
+   */
+  outlinedCtaText?: Maybe<ScalarsEnums["String"]>;
   /**
    * The &quot;preheading&quot; field on the &quot;GenesisCustomBlocksHeroProduct&quot; block
    */
@@ -36434,9 +36942,13 @@ export interface GenesisCustomBlocksInstructionsAttributes {
    */
   className?: Maybe<ScalarsEnums["String"]>;
   /**
-   * The &quot;instruction&quot; field on the &quot;GenesisCustomBlocksInstructions&quot; block
+   * The &quot;hideMobileHeading&quot; field on the &quot;GenesisCustomBlocksInstructions&quot; block
    */
-  instruction?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  hideMobileHeading?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;instructions&quot; field on the &quot;GenesisCustomBlocksInstructions&quot; block
+   */
+  instructions?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
   /**
    * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksInstructions&quot; block
    */
@@ -36516,9 +37028,33 @@ export interface GenesisCustomBlocksLedeAttributes {
    */
   copy?: Maybe<ScalarsEnums["String"]>;
   /**
+   * The &quot;cta-custom-link&quot; field on the &quot;GenesisCustomBlocksLede&quot; block
+   */
+  ctaCustomLink?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;cta-link&quot; field on the &quot;GenesisCustomBlocksLede&quot; block
+   */
+  ctaLink?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;cta-text&quot; field on the &quot;GenesisCustomBlocksLede&quot; block
+   */
+  ctaText?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;hide-image-mobile&quot; field on the &quot;GenesisCustomBlocksLede&quot; block
+   */
+  hideImageMobile?: Maybe<ScalarsEnums["String"]>;
+  /**
    * The &quot;image&quot; field on the &quot;GenesisCustomBlocksLede&quot; block
    */
   image?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * The &quot;image-alignment&quot; field on the &quot;GenesisCustomBlocksLede&quot; block
+   */
+  imageAlignment?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;image_alt&quot; field on the &quot;GenesisCustomBlocksLede&quot; block
+   */
+  imageAlt?: Maybe<ScalarsEnums["String"]>;
   /**
    * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksLede&quot; block
    */
@@ -37015,6 +37551,124 @@ export interface GenesisCustomBlocksProductBenefitsAttributes {
    * The &quot;product&quot; field on the &quot;GenesisCustomBlocksProductBenefits&quot; block
    */
   product?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * A block used for editing the site
+ */
+export interface GenesisCustomBlocksPromo {
+  __typename?: "GenesisCustomBlocksPromo";
+  /**
+   * The API version of the Gutenberg Block
+   */
+  apiVersion?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Attributes of the %s Block Type
+   */
+  attributes?: Maybe<GenesisCustomBlocksPromoAttributes>;
+  /**
+   * The name of the category the Block belongs to
+   */
+  blockEditorCategoryName?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The id of the Block
+   */
+  clientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * CSS Classnames to apply to the block
+   */
+  cssClassNames?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The inner blocks of the Block
+   */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /**
+   * Whether the block is Dynamic (server rendered)
+   */
+  isDynamic: ScalarsEnums["Boolean"];
+  /**
+   * The name of the block
+   */
+  name?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The parent id of the Block
+   */
+  parentClientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The rendered HTML for the block
+   */
+  renderedHtml?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Attributes of the %s Block Type
+ */
+export interface GenesisCustomBlocksPromoAttributes {
+  __typename?: "GenesisCustomBlocksPromoAttributes";
+  /**
+   * The &quot;blockVisibility&quot; field on the &quot;GenesisCustomBlocksPromo&quot; block
+   */
+  blockVisibility?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;CTA1_link&quot; field on the &quot;GenesisCustomBlocksPromo&quot; block
+   */
+  cTA1Link?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;CTA1_text&quot; field on the &quot;GenesisCustomBlocksPromo&quot; block
+   */
+  cTA1Text?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;CTA2_link&quot; field on the &quot;GenesisCustomBlocksPromo&quot; block
+   */
+  cTA2Link?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;CTA2_text&quot; field on the &quot;GenesisCustomBlocksPromo&quot; block
+   */
+  cTA2Text?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;className&quot; field on the &quot;GenesisCustomBlocksPromo&quot; block
+   */
+  className?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;copy&quot; field on the &quot;GenesisCustomBlocksPromo&quot; block
+   */
+  copy?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;graphicImage&quot; field on the &quot;GenesisCustomBlocksPromo&quot; block
+   */
+  graphicImage?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * The &quot;heading&quot; field on the &quot;GenesisCustomBlocksPromo&quot; block
+   */
+  heading?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;image&quot; field on the &quot;GenesisCustomBlocksPromo&quot; block
+   */
+  image?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * The &quot;image_alt&quot; field on the &quot;GenesisCustomBlocksPromo&quot; block
+   */
+  imageAlt?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksPromo&quot; block
+   */
+  lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;perks&quot; field on the &quot;GenesisCustomBlocksPromo&quot; block
+   */
+  perks?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;showCTA2&quot; field on the &quot;GenesisCustomBlocksPromo&quot; block
+   */
+  showCTA2?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * The &quot;showImage&quot; field on the &quot;GenesisCustomBlocksPromo&quot; block
+   */
+  showImage?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * The &quot;showPerks&quot; field on the &quot;GenesisCustomBlocksPromo&quot; block
+   */
+  showPerks?: Maybe<ScalarsEnums["Boolean"]>;
 }
 
 /**
@@ -40918,7 +41572,7 @@ export interface LocationSettings {
   /**
    * Meta for the key marker_icon_props as a string
    */
-  markerIconProps?: Maybe<ScalarsEnums["Int"]>;
+  markerIconProps?: Maybe<ScalarsEnums["String"]>;
   /**
    * Meta for the key marker_streetview as a string
    */
@@ -45480,6 +46134,7 @@ export interface Product {
      */
     last?: Maybe<Scalars["Int"]>;
   }) => Maybe<ProductToRateConnection>;
+  ratesTableID?: Maybe<ScalarsEnums["Float"]>;
   /**
    * The Yoast SEO data of the ContentNode
    */
@@ -51151,6 +51806,18 @@ export interface ThirdPartySettings {
   /**
    * The number of votes
    */
+  personyzeDomains?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The number of votes
+   */
+  personyzeEnabled?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The number of votes
+   */
+  personyzeId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The number of votes
+   */
   qualtricsEnabled?: Maybe<ScalarsEnums["String"]>;
   /**
    * The number of votes
@@ -53701,144 +54368,6 @@ export interface WidgetSettings {
 }
 
 /**
- * A block used for editing the site
- */
-export interface WpformsFormSelector {
-  __typename?: "WpformsFormSelector";
-  /**
-   * The API version of the Gutenberg Block
-   */
-  apiVersion?: Maybe<ScalarsEnums["Int"]>;
-  /**
-   * Attributes of the %s Block Type
-   */
-  attributes?: Maybe<WpformsFormSelectorAttributes>;
-  /**
-   * The name of the category the Block belongs to
-   */
-  blockEditorCategoryName?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The id of the Block
-   */
-  clientId?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * CSS Classnames to apply to the block
-   */
-  cssClassNames?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
-  /**
-   * The inner blocks of the Block
-   */
-  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
-  /**
-   * Whether the block is Dynamic (server rendered)
-   */
-  isDynamic: ScalarsEnums["Boolean"];
-  /**
-   * The name of the block
-   */
-  name?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The parent id of the Block
-   */
-  parentClientId?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The rendered HTML for the block
-   */
-  renderedHtml?: Maybe<ScalarsEnums["String"]>;
-}
-
-/**
- * Attributes of the %s Block Type
- */
-export interface WpformsFormSelectorAttributes {
-  __typename?: "WpformsFormSelectorAttributes";
-  /**
-   * The &quot;blockVisibility&quot; field on the &quot;WpformsFormSelector&quot; block
-   */
-  blockVisibility?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
-  /**
-   * The &quot;buttonBackgroundColor&quot; field on the &quot;WpformsFormSelector&quot; block
-   */
-  buttonBackgroundColor?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The &quot;buttonBorderRadius&quot; field on the &quot;WpformsFormSelector&quot; block
-   */
-  buttonBorderRadius?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The &quot;buttonSize&quot; field on the &quot;WpformsFormSelector&quot; block
-   */
-  buttonSize?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The &quot;buttonTextColor&quot; field on the &quot;WpformsFormSelector&quot; block
-   */
-  buttonTextColor?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The &quot;className&quot; field on the &quot;WpformsFormSelector&quot; block
-   */
-  className?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The &quot;clientId&quot; field on the &quot;WpformsFormSelector&quot; block
-   */
-  clientId?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The &quot;copyPasteJsonValue&quot; field on the &quot;WpformsFormSelector&quot; block
-   */
-  copyPasteJsonValue?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The &quot;displayDesc&quot; field on the &quot;WpformsFormSelector&quot; block
-   */
-  displayDesc?: Maybe<ScalarsEnums["Boolean"]>;
-  /**
-   * The &quot;displayTitle&quot; field on the &quot;WpformsFormSelector&quot; block
-   */
-  displayTitle?: Maybe<ScalarsEnums["Boolean"]>;
-  /**
-   * The &quot;fieldBackgroundColor&quot; field on the &quot;WpformsFormSelector&quot; block
-   */
-  fieldBackgroundColor?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The &quot;fieldBorderColor&quot; field on the &quot;WpformsFormSelector&quot; block
-   */
-  fieldBorderColor?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The &quot;fieldBorderRadius&quot; field on the &quot;WpformsFormSelector&quot; block
-   */
-  fieldBorderRadius?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The &quot;fieldSize&quot; field on the &quot;WpformsFormSelector&quot; block
-   */
-  fieldSize?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The &quot;fieldTextColor&quot; field on the &quot;WpformsFormSelector&quot; block
-   */
-  fieldTextColor?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The &quot;formId&quot; field on the &quot;WpformsFormSelector&quot; block
-   */
-  formId?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The &quot;labelColor&quot; field on the &quot;WpformsFormSelector&quot; block
-   */
-  labelColor?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The &quot;labelErrorColor&quot; field on the &quot;WpformsFormSelector&quot; block
-   */
-  labelErrorColor?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The &quot;labelSize&quot; field on the &quot;WpformsFormSelector&quot; block
-   */
-  labelSize?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The &quot;labelSublabelColor&quot; field on the &quot;WpformsFormSelector&quot; block
-   */
-  labelSublabelColor?: Maybe<ScalarsEnums["String"]>;
-  /**
-   * The &quot;lock&quot; field on the &quot;WpformsFormSelector&quot; block
-   */
-  lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
-}
-
-/**
  * The writing setting type
  */
 export interface WritingSettings {
@@ -55029,6 +55558,10 @@ export interface SchemaObjectTypes {
   GenesisCustomBlocksCardContactAttributes: GenesisCustomBlocksCardContactAttributes;
   GenesisCustomBlocksCardFact: GenesisCustomBlocksCardFact;
   GenesisCustomBlocksCardFactAttributes: GenesisCustomBlocksCardFactAttributes;
+  GenesisCustomBlocksCardForms: GenesisCustomBlocksCardForms;
+  GenesisCustomBlocksCardFormsAttributes: GenesisCustomBlocksCardFormsAttributes;
+  GenesisCustomBlocksCardGeneric: GenesisCustomBlocksCardGeneric;
+  GenesisCustomBlocksCardGenericAttributes: GenesisCustomBlocksCardGenericAttributes;
   GenesisCustomBlocksCardPromo: GenesisCustomBlocksCardPromo;
   GenesisCustomBlocksCardPromoAttributes: GenesisCustomBlocksCardPromoAttributes;
   GenesisCustomBlocksCardRecognition: GenesisCustomBlocksCardRecognition;
@@ -55043,6 +55576,8 @@ export interface SchemaObjectTypes {
   GenesisCustomBlocksCxContentLinkAttributes: GenesisCustomBlocksCxContentLinkAttributes;
   GenesisCustomBlocksCxLink: GenesisCustomBlocksCxLink;
   GenesisCustomBlocksCxLinkAttributes: GenesisCustomBlocksCxLinkAttributes;
+  GenesisCustomBlocksCxPdfLinks: GenesisCustomBlocksCxPdfLinks;
+  GenesisCustomBlocksCxPdfLinksAttributes: GenesisCustomBlocksCxPdfLinksAttributes;
   GenesisCustomBlocksCxSvg: GenesisCustomBlocksCxSvg;
   GenesisCustomBlocksCxSvgAttributes: GenesisCustomBlocksCxSvgAttributes;
   GenesisCustomBlocksDatatrac: GenesisCustomBlocksDatatrac;
@@ -55057,6 +55592,8 @@ export interface SchemaObjectTypes {
   GenesisCustomBlocksGumpAttributes: GenesisCustomBlocksGumpAttributes;
   GenesisCustomBlocksHero: GenesisCustomBlocksHero;
   GenesisCustomBlocksHeroAttributes: GenesisCustomBlocksHeroAttributes;
+  GenesisCustomBlocksHeroImage: GenesisCustomBlocksHeroImage;
+  GenesisCustomBlocksHeroImageAttributes: GenesisCustomBlocksHeroImageAttributes;
   GenesisCustomBlocksHeroProduct: GenesisCustomBlocksHeroProduct;
   GenesisCustomBlocksHeroProductAttributes: GenesisCustomBlocksHeroProductAttributes;
   GenesisCustomBlocksHours: GenesisCustomBlocksHours;
@@ -55079,6 +55616,8 @@ export interface SchemaObjectTypes {
   GenesisCustomBlocksPostContentAttributes: GenesisCustomBlocksPostContentAttributes;
   GenesisCustomBlocksProductBenefits: GenesisCustomBlocksProductBenefits;
   GenesisCustomBlocksProductBenefitsAttributes: GenesisCustomBlocksProductBenefitsAttributes;
+  GenesisCustomBlocksPromo: GenesisCustomBlocksPromo;
+  GenesisCustomBlocksPromoAttributes: GenesisCustomBlocksPromoAttributes;
   GenesisCustomBlocksQualtrics: GenesisCustomBlocksQualtrics;
   GenesisCustomBlocksQualtricsAttributes: GenesisCustomBlocksQualtricsAttributes;
   GenesisCustomBlocksQuicklink: GenesisCustomBlocksQuicklink;
@@ -55488,8 +56027,6 @@ export interface SchemaObjectTypes {
   UserToUserRoleConnectionEdge: UserToUserRoleConnectionEdge;
   UserToUserRoleConnectionPageInfo: UserToUserRoleConnectionPageInfo;
   WidgetSettings: WidgetSettings;
-  WpformsFormSelector: WpformsFormSelector;
-  WpformsFormSelectorAttributes: WpformsFormSelectorAttributes;
   WritingSettings: WritingSettings;
   YoastFaqBlock: YoastFaqBlock;
   YoastFaqBlockAttributes: YoastFaqBlockAttributes;
@@ -55813,6 +56350,10 @@ export type SchemaObjectTypesNames =
   | "GenesisCustomBlocksCardContactAttributes"
   | "GenesisCustomBlocksCardFact"
   | "GenesisCustomBlocksCardFactAttributes"
+  | "GenesisCustomBlocksCardForms"
+  | "GenesisCustomBlocksCardFormsAttributes"
+  | "GenesisCustomBlocksCardGeneric"
+  | "GenesisCustomBlocksCardGenericAttributes"
   | "GenesisCustomBlocksCardPromo"
   | "GenesisCustomBlocksCardPromoAttributes"
   | "GenesisCustomBlocksCardRecognition"
@@ -55827,6 +56368,8 @@ export type SchemaObjectTypesNames =
   | "GenesisCustomBlocksCxContentLinkAttributes"
   | "GenesisCustomBlocksCxLink"
   | "GenesisCustomBlocksCxLinkAttributes"
+  | "GenesisCustomBlocksCxPdfLinks"
+  | "GenesisCustomBlocksCxPdfLinksAttributes"
   | "GenesisCustomBlocksCxSvg"
   | "GenesisCustomBlocksCxSvgAttributes"
   | "GenesisCustomBlocksDatatrac"
@@ -55841,6 +56384,8 @@ export type SchemaObjectTypesNames =
   | "GenesisCustomBlocksGumpAttributes"
   | "GenesisCustomBlocksHero"
   | "GenesisCustomBlocksHeroAttributes"
+  | "GenesisCustomBlocksHeroImage"
+  | "GenesisCustomBlocksHeroImageAttributes"
   | "GenesisCustomBlocksHeroProduct"
   | "GenesisCustomBlocksHeroProductAttributes"
   | "GenesisCustomBlocksHours"
@@ -55863,6 +56408,8 @@ export type SchemaObjectTypesNames =
   | "GenesisCustomBlocksPostContentAttributes"
   | "GenesisCustomBlocksProductBenefits"
   | "GenesisCustomBlocksProductBenefitsAttributes"
+  | "GenesisCustomBlocksPromo"
+  | "GenesisCustomBlocksPromoAttributes"
   | "GenesisCustomBlocksQualtrics"
   | "GenesisCustomBlocksQualtricsAttributes"
   | "GenesisCustomBlocksQuicklink"
@@ -56272,8 +56819,6 @@ export type SchemaObjectTypesNames =
   | "UserToUserRoleConnectionEdge"
   | "UserToUserRoleConnectionPageInfo"
   | "WidgetSettings"
-  | "WpformsFormSelector"
-  | "WpformsFormSelectorAttributes"
   | "WritingSettings"
   | "YoastFaqBlock"
   | "YoastFaqBlockAttributes"
@@ -56807,6 +57352,8 @@ export interface $EditorBlock {
   GenesisCustomBlocksCardCares?: GenesisCustomBlocksCardCares;
   GenesisCustomBlocksCardContact?: GenesisCustomBlocksCardContact;
   GenesisCustomBlocksCardFact?: GenesisCustomBlocksCardFact;
+  GenesisCustomBlocksCardForms?: GenesisCustomBlocksCardForms;
+  GenesisCustomBlocksCardGeneric?: GenesisCustomBlocksCardGeneric;
   GenesisCustomBlocksCardPromo?: GenesisCustomBlocksCardPromo;
   GenesisCustomBlocksCardRecognition?: GenesisCustomBlocksCardRecognition;
   GenesisCustomBlocksCardTestimonial?: GenesisCustomBlocksCardTestimonial;
@@ -56814,6 +57361,7 @@ export interface $EditorBlock {
   GenesisCustomBlocksContentToggle?: GenesisCustomBlocksContentToggle;
   GenesisCustomBlocksCxContentLink?: GenesisCustomBlocksCxContentLink;
   GenesisCustomBlocksCxLink?: GenesisCustomBlocksCxLink;
+  GenesisCustomBlocksCxPdfLinks?: GenesisCustomBlocksCxPdfLinks;
   GenesisCustomBlocksCxSvg?: GenesisCustomBlocksCxSvg;
   GenesisCustomBlocksDatatrac?: GenesisCustomBlocksDatatrac;
   GenesisCustomBlocksDisclosures?: GenesisCustomBlocksDisclosures;
@@ -56821,6 +57369,7 @@ export interface $EditorBlock {
   GenesisCustomBlocksFigure?: GenesisCustomBlocksFigure;
   GenesisCustomBlocksGump?: GenesisCustomBlocksGump;
   GenesisCustomBlocksHero?: GenesisCustomBlocksHero;
+  GenesisCustomBlocksHeroImage?: GenesisCustomBlocksHeroImage;
   GenesisCustomBlocksHeroProduct?: GenesisCustomBlocksHeroProduct;
   GenesisCustomBlocksHours?: GenesisCustomBlocksHours;
   GenesisCustomBlocksIcons?: GenesisCustomBlocksIcons;
@@ -56832,6 +57381,7 @@ export interface $EditorBlock {
   GenesisCustomBlocksPerk?: GenesisCustomBlocksPerk;
   GenesisCustomBlocksPostContent?: GenesisCustomBlocksPostContent;
   GenesisCustomBlocksProductBenefits?: GenesisCustomBlocksProductBenefits;
+  GenesisCustomBlocksPromo?: GenesisCustomBlocksPromo;
   GenesisCustomBlocksQualtrics?: GenesisCustomBlocksQualtrics;
   GenesisCustomBlocksQuicklink?: GenesisCustomBlocksQuicklink;
   GenesisCustomBlocksSidekick?: GenesisCustomBlocksSidekick;
@@ -56858,7 +57408,6 @@ export interface $EditorBlock {
   UltimateFaqsEwdUfaqSearchBlock?: UltimateFaqsEwdUfaqSearchBlock;
   UltimateFaqsEwdUfaqSubmitFaqBlock?: UltimateFaqsEwdUfaqSubmitFaqBlock;
   UnknownBlock?: UnknownBlock;
-  WpformsFormSelector?: WpformsFormSelector;
   YoastFaqBlock?: YoastFaqBlock;
   YoastHowToBlock?: YoastHowToBlock;
   YoastSeoBreadcrumbs?: YoastSeoBreadcrumbs;

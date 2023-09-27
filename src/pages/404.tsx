@@ -8,6 +8,7 @@ import { getNextStaticProps } from '@faustjs/next';
 import HotJar from 'components/ThirdParty/hotjar';
 import Qualtrics from 'components/ThirdParty/qualtrics';
 import Spectrum from 'components/ThirdParty/spectrum';
+import Personyze from 'components/ThirdParty/personyze';
 
 export default function Page(): JSX.Element {
   const { useQuery } = client;
@@ -22,6 +23,7 @@ export default function Page(): JSX.Element {
       </Head>
       <GTM />
       <HotJar />
+      <Personyze />
       <Header
         title={generalSettings?.title}
         description={generalSettings?.description}
