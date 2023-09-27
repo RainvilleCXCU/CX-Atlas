@@ -16,6 +16,7 @@ import SearchBar from 'components/Search/SearchBar';
 import HotJar from 'components/ThirdParty/hotjar';
 import Qualtrics from 'components/ThirdParty/qualtrics';
 import Spectrum from 'components/ThirdParty/spectrum';
+import Personyze from 'components/ThirdParty/personyze';
 
 const POSTS_PER_PAGE = 6;
 
@@ -54,6 +55,7 @@ export default function Page() {
       />
 
       <GTM />
+      <Personyze />
       <HotJar />
 
       <main id="main" className="content content-index container">

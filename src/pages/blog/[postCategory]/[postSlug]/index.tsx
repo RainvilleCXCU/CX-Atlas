@@ -14,6 +14,7 @@ import { Fragment } from 'react';
 import HotJar from 'components/ThirdParty/hotjar';
 import Qualtrics from 'components/ThirdParty/qualtrics';
 import Spectrum from 'components/ThirdParty/spectrum';
+import Personyze from 'components/ThirdParty/personyze';
 
 export interface PostProps {
   post: Post | Post['preview']['node'] | null | undefined;
@@ -42,6 +43,7 @@ export function PostComponent({ post }: PostProps) {
         })}
       </Head>
       <GTM />
+      <Personyze />
       <HotJar />
 
       <div id="page" className="container site">
