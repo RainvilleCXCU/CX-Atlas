@@ -18718,6 +18718,7 @@ export const generatedSchema = {
         where: "RootQueryToPostFormatConnectionWhereArgs",
       },
     },
+    postPreview: { __type: "Page", __args: { pageId: "String" } },
     posts: {
       __type: "RootQueryToPostConnection",
       __args: {
@@ -55055,6 +55056,7 @@ export interface Query {
     last?: Maybe<Scalars["Int"]>;
     where?: Maybe<RootQueryToPostFormatConnectionWhereArgs>;
   }) => Maybe<RootQueryToPostFormatConnection>;
+  postPreview: (args?: { pageId?: Maybe<Scalars["String"]> }) => Maybe<Page>;
   posts: (args?: {
     after?: Maybe<Scalars["String"]>;
     before?: Maybe<Scalars["String"]>;
