@@ -84,6 +84,10 @@ let nextConfig = {
                 {
                     source: '/about/branch-and-atm-locations/:path*',
                     destination: '/locations',
+                },
+                {
+                    source: '/location/:location*',
+                    destination: '/locations/location',
                 }
             ],
         }

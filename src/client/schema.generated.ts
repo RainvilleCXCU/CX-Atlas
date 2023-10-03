@@ -11976,6 +11976,7 @@ export const generatedSchema = {
     date: { __type: "String" },
     dateGmt: { __type: "String" },
     desiredSlug: { __type: "String" },
+    details: { __type: "LocationDetails" },
     editingLockedBy: { __type: "ContentNodeToEditLockConnectionEdge" },
     editorBlocks: { __type: "[EditorBlock]", __args: { flat: "Boolean" } },
     enclosure: { __type: "String" },
@@ -12332,6 +12333,14 @@ export const generatedSchema = {
     seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$LocationConnectionPageInfo!" },
+  },
+  LocationDetails: {
+    __typename: { __type: "String!" },
+    address: { __type: "String" },
+    city: { __type: "String" },
+    lat: { __type: "String" },
+    lng: { __type: "String" },
+    state: { __type: "String" },
   },
   LocationLocationCategoriesInput: {
     append: { __type: "Boolean" },
@@ -18092,7 +18101,6 @@ export const generatedSchema = {
     applyNowMinor: { __type: "String", __args: { account: "String" } },
     applyStart: { __type: "String", __args: { account: "String" } },
     blogSidebar: { __type: "String" },
-    blogtop: { __type: "String" },
     widgetSettings: { __type: "String" },
   },
   WritingSettings: {
@@ -40422,6 +40430,10 @@ export interface Location {
    */
   desiredSlug?: Maybe<ScalarsEnums["String"]>;
   /**
+   * Genesis Blog Top
+   */
+  details?: Maybe<LocationDetails>;
+  /**
    * If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds
    */
   editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
@@ -41363,6 +41375,18 @@ export interface LocationConnectionPageInfo {
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
   $on: $LocationConnectionPageInfo;
+}
+
+/**
+ * Keys and their values, both cast as strings
+ */
+export interface LocationDetails {
+  __typename?: "LocationDetails";
+  address?: Maybe<ScalarsEnums["String"]>;
+  city?: Maybe<ScalarsEnums["String"]>;
+  lat?: Maybe<ScalarsEnums["String"]>;
+  lng?: Maybe<ScalarsEnums["String"]>;
+  state?: Maybe<ScalarsEnums["String"]>;
 }
 
 /**
@@ -54359,10 +54383,6 @@ export interface WidgetSettings {
    */
   blogSidebar?: Maybe<ScalarsEnums["String"]>;
   /**
-   * Genesis Blog Top
-   */
-  blogtop?: Maybe<ScalarsEnums["String"]>;
-  /**
    * The string Settings Group
    */
   widgetSettings?: Maybe<ScalarsEnums["String"]>;
@@ -55684,6 +55704,7 @@ export interface SchemaObjectTypes {
   LocationCategoryToLocationConnectionPageInfo: LocationCategoryToLocationConnectionPageInfo;
   LocationCategoryToParentLocationCategoryConnectionEdge: LocationCategoryToParentLocationCategoryConnectionEdge;
   LocationCategoryToTaxonomyConnectionEdge: LocationCategoryToTaxonomyConnectionEdge;
+  LocationDetails: LocationDetails;
   LocationSettings: LocationSettings;
   LocationToLocationCategoryConnection: LocationToLocationCategoryConnection;
   LocationToLocationCategoryConnectionEdge: LocationToLocationCategoryConnectionEdge;
@@ -56476,6 +56497,7 @@ export type SchemaObjectTypesNames =
   | "LocationCategoryToLocationConnectionPageInfo"
   | "LocationCategoryToParentLocationCategoryConnectionEdge"
   | "LocationCategoryToTaxonomyConnectionEdge"
+  | "LocationDetails"
   | "LocationSettings"
   | "LocationToLocationCategoryConnection"
   | "LocationToLocationCategoryConnectionEdge"

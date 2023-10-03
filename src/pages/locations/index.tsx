@@ -141,8 +141,10 @@ export default function Page({ locationSettings, location }) {
 				<selectedLocationContext.Provider
 					value={{ selectedLocation, setSelectedLocation }}
 				>
+
+				<div id="page" className="container site">
 					<main className="content content-single">
-						<div className="wrap">
+						<article className="entry-content">
 							<Container align="full" classNames={`no-margin`}>
 								<Columns classNames={`no-margin`}>
 									<Column>
@@ -159,7 +161,6 @@ export default function Page({ locationSettings, location }) {
 												className="wpsl-wrap wpsl-store-below wpsl-default-filters"
 											>
 												<div className="wpsl-search wpsl-clearfix wpsl-checkboxes-enabled wpsl-geolocation-run">
-
 													<AddressBar />
 												</div>
 												<Map lat={45} lng={-89} locationSettings={locationSettings} markers={data} />
@@ -185,8 +186,9 @@ export default function Page({ locationSettings, location }) {
 									</Column>
 								</Columns>
 							</Container>
-						</div>
+						</article>
 					</main>
+				</div>
 				</selectedLocationContext.Provider>
 			</showDetailsContext.Provider>
 
