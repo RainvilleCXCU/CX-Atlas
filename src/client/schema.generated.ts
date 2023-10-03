@@ -18101,6 +18101,7 @@ export const generatedSchema = {
     applyNowMinor: { __type: "String", __args: { account: "String" } },
     applyStart: { __type: "String", __args: { account: "String" } },
     blogSidebar: { __type: "String" },
+    blogtop: { __type: "String" },
     widgetSettings: { __type: "String" },
   },
   WritingSettings: {
@@ -54382,6 +54383,10 @@ export interface WidgetSettings {
    * Genesis Blog Sidebar
    */
   blogSidebar?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Genesis Blog Top
+   */
+  blogtop?: Maybe<ScalarsEnums["String"]>;
   /**
    * The string Settings Group
    */
