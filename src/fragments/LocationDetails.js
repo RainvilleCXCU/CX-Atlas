@@ -6,8 +6,21 @@ export const LocationPageFragment = gql`
         slug
         content(format: RENDERED)
         title(format: RENDERED)
+        locationId
         details {
-            lat
+            zip
+            state
+            specialMessageType
+            specialMessageTitle
+            specialMessage
+            specialHoursHTML
+            lobbyHoursHTML
+            services
             lng
+            lat
+            driveThruHoursHTML
+            contact
+            city
+            address
         }
     }`;

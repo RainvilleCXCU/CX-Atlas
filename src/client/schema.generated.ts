@@ -12338,9 +12338,18 @@ export const generatedSchema = {
     __typename: { __type: "String!" },
     address: { __type: "String" },
     city: { __type: "String" },
+    contact: { __type: "String" },
+    driveThruHoursHTML: { __type: "String" },
     lat: { __type: "String" },
     lng: { __type: "String" },
+    lobbyHoursHTML: { __type: "String" },
+    services: { __type: "String" },
+    specialHoursHTML: { __type: "String" },
+    specialMessage: { __type: "String" },
+    specialMessageTitle: { __type: "String" },
+    specialMessageType: { __type: "String" },
     state: { __type: "String" },
+    zip: { __type: "String" },
   },
   LocationLocationCategoriesInput: {
     append: { __type: "Boolean" },
@@ -18727,7 +18736,6 @@ export const generatedSchema = {
         where: "RootQueryToPostFormatConnectionWhereArgs",
       },
     },
-    postPreview: { __type: "Page", __args: { pageId: "String" } },
     posts: {
       __type: "RootQueryToPostConnection",
       __args: {
@@ -41385,9 +41393,18 @@ export interface LocationDetails {
   __typename?: "LocationDetails";
   address?: Maybe<ScalarsEnums["String"]>;
   city?: Maybe<ScalarsEnums["String"]>;
+  contact?: Maybe<ScalarsEnums["String"]>;
+  driveThruHoursHTML?: Maybe<ScalarsEnums["String"]>;
   lat?: Maybe<ScalarsEnums["String"]>;
   lng?: Maybe<ScalarsEnums["String"]>;
+  lobbyHoursHTML?: Maybe<ScalarsEnums["String"]>;
+  services?: Maybe<ScalarsEnums["String"]>;
+  specialHoursHTML?: Maybe<ScalarsEnums["String"]>;
+  specialMessage?: Maybe<ScalarsEnums["String"]>;
+  specialMessageTitle?: Maybe<ScalarsEnums["String"]>;
+  specialMessageType?: Maybe<ScalarsEnums["String"]>;
   state?: Maybe<ScalarsEnums["String"]>;
+  zip?: Maybe<ScalarsEnums["String"]>;
 }
 
 /**
@@ -55081,7 +55098,6 @@ export interface Query {
     last?: Maybe<Scalars["Int"]>;
     where?: Maybe<RootQueryToPostFormatConnectionWhereArgs>;
   }) => Maybe<RootQueryToPostFormatConnection>;
-  postPreview: (args?: { pageId?: Maybe<Scalars["String"]> }) => Maybe<Page>;
   posts: (args?: {
     after?: Maybe<Scalars["String"]>;
     before?: Maybe<Scalars["String"]>;

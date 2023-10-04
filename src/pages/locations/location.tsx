@@ -62,17 +62,44 @@ export default function Page({ locationSettings, locationDetails }) {
 								</Column>
 							</Columns>
 						</Container>
-						{ parseHtml(locationDetails.content || '') }
-
+						{parseHtml(locationDetails.content || '')}
 						<Container align="full" classNames={`no-margin`}>
 							<Columns classNames={`no-margin`}>
 								<Column>
+									{parseHtml(locationDetails.details.lobbyHoursHTML || '')}
+								</Column>
+								<Column>
+									{parseHtml(locationDetails.details.driveThruHoursHTML || '')}
+								</Column>
+								<Column>
+								</Column>
+							</Columns>
+						</Container>
+						<Container align="full" classNames={`no-margin`}>
+							<Columns classNames={`no-margin`}>
+								<Column>
+									<div className="cx-location-listing__item--address">
+										<span className="wpsl-name"><strong>{locationDetails.title}</strong></span>
+										<span className="wpsl-street">
+											{locationDetails.details.address}
+										</span>
+										<span>{locationDetails.details.city}, {locationDetails.details.state} {locationDetails.zip}</span>
+										<a className="cx-button cx-button--outlined" href={`tel:${locationDetails.details.contact}`}>Call {locationDetails.details.contact}</a>
+									</div>
+								</Column>
+								<Column>
+									<span className="wpsl-services">
+										<h3>Services</h3>
+										{parseHtml(locationDetails.details.services)}
+									</span>
+								</Column>
+								<Column>
 									<Wrapper apiKey={locationSettings.apiBrowserKey}>
-										<Map lat={locationDetails.lat} lng={locationDetails.lng} locationSettings={locationSettings}  markers={[
+										<Map lat={locationDetails.lat} lng={locationDetails.lng} locationSettings={locationSettings} markers={[
 											{
 												...locationDetails.details,
-												id: locationDetails.id
-											}]}/>
+												id: locationDetails.locationId
+											}]} />
 									</Wrapper>
 								</Column>
 							</Columns>
