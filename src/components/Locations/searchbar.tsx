@@ -21,8 +21,14 @@ const AddressBar = () => {
             .then(location => {
                 getLocationByLatLng({ lat: location.coords.latitude, lng: location.coords.longitude })
                     .then(data => {
-                        console.log(`User Location: ${data}`);
-                        router.push(`/about/branch-and-atm-locations/find-location/${formatSearch(data)}/`, undefined, { shallow: true });
+                        setState({
+                            ...state,
+                            location: {
+                                ...state.location,
+                                searchRadius: null,
+                                search: formatSearch(data)
+                            }
+                        })
                     });
 
             })
