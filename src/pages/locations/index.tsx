@@ -26,7 +26,7 @@ import Spectrum from "components/ThirdParty/spectrum";
 import AddressBar from "components/Locations/searchbar";
 import { Store } from 'context/store';
 import { getGeoLocation } from "lib/location/geolocation";
-import { getLatLngByLocation, getLocationByLatLng } from "lib/location/geocode";
+import { distance, getLatLngByLocation, getLocationByLatLng } from "lib/location/geocode";
 import { useRouter } from "next/router";
 import Personyze from "components/ThirdParty/personyze";
 
@@ -48,21 +48,36 @@ export default function Page({ locationSettings, location }) {
 	useEffect(() => {
 		setLoading(true);
 		console.log(`Search: ${state?.location?.search} - ${location}`);
+
 		if (location && location[0] && !state?.location?.search) {
-			getLatLngByLocation({ address: formatSearch(location) }).then(response => {
-				fetchLocations({ lat: response.lat(), lng: response.lng() });
+			getLatLngByLocation({ address: formatSearch(location) })
+			.then(response => {
+				const {location, bounds} = response[0].geometry;
+				fetchLocations({ lat: location.lat(), lng: location.lng() });
+				data && push(`/about/branch-and-atm-locations/find-location/${state?.location?.search}/`, undefined, { shallow: true });
+			})
+			.catch(e => {
+				console.log('NO LOCATION');
+				setData([]);
+				setLength(0);
 			});
-		}
-		else if (state?.location?.search) {
-			getLatLngByLocation({ address: state?.location?.search }).then(response => {
-				fetchLocations({ lat: response.lat(), lng: response.lng() });
+		} else if (state?.location?.search) {
+			getLatLngByLocation({ address: state?.location?.search })
+			.then(response => {
+				const {location, bounds} = response[0].geometry;
+				fetchLocations({ lat: location.lat(), lng: location.lng() });
+				data && push(`/about/branch-and-atm-locations/find-location/${state?.location?.search}/`, undefined, { shallow: true });
+			})
+			.catch(e => {
+				console.log('NO LOCATION');
+				setData([]);
+				setLength(0);
 			});
 		} else {
 			getGeoLocation()
 			.then(location => {
 				getLocationByLatLng({ lat: location.coords.latitude, lng: location.coords.longitude })
 				.then(data => {
-					console.log(`User Location: ${data}`);
 					data && push(`/about/branch-and-atm-locations/find-location/${formatSearch(data)}/`, undefined, { shallow: true });
 				});
 			})
@@ -73,26 +88,17 @@ export default function Page({ locationSettings, location }) {
 	}, [state?.location?.search]);
 
 	useEffect(() => {
-		setLoading(true);
-		setState({
-			...state,
-			location: {
-				...state.location,
-				search: formatSearch(location)
-			}
-		});
+		if( location !== state?.location?.search ) {
+			setLoading(true);
+			setState({
+				...state,
+				location: {
+					...state.location,
+					search: formatSearch(location)
+				}
+			});
+		}
 	}, [location]);
-
-	useEffect(() => {
-		setLoading(true);
-		setState({
-			...state,
-			location: {
-				...state.location,
-				search: formatSearch(query?.location)
-			}
-		});
-	}, [query?.location]);
 
 	
 
@@ -101,21 +107,45 @@ export default function Page({ locationSettings, location }) {
 			...state,
 			location: {
 				...state.location,
-				settings: locationSettings
+				settings: locationSettings,
+				searchRadius: defaultRadius()
 			}
 		});
 	}, [locationSettings]);
 
-	const fetchLocations = ({ lat, lng, autoload = 0 }) => {
 
+	const resetSearchResults = () => {
+		setShowDetails(false);
+		setLength(0);
+		setData([]);
+	}
+
+	const defaultRadius = () => {
+		const regex =  new RegExp(/\[([0-9]+)\]/, 'i');
+		console.log(locationSettings.searchRadius);
+		return locationSettings.searchRadius.match(regex)[1];
+	}
+
+	const fetchLocations = ({ lat, lng, autoload = 0, bounds = null }) => {
+		resetSearchResults();
+
+		const radius = state?.location?.searchRadius ? Math.max(state?.location?.searchRadius, defaultRadius()) : defaultRadius();
+		
 		fetch(
-			`/wp-admin/admin-ajax.php?action=store_search&lat=${lat}&lng=${lng}&max_results=25&search_radius=25&autoload=${autoload}`
+			`/wp-admin/admin-ajax.php?action=store_search&lat=${lat}&lng=${lng}&max_results=25&search_radius=${radius}&autoload=${autoload}`
 		)
 			.then((res) => res.json())
 			.then((data) => {
 				setData(data);
 				setLength(Object.keys(data).length);
 				setLoading(false);
+				setState({
+					...state,
+					location: {
+						...state.location,
+						searchRadius: defaultRadius()
+					}
+				});
 			});
 	}
 
@@ -155,7 +185,7 @@ export default function Page({ locationSettings, location }) {
 							<Container align="full" classNames={`no-margin`}>
 								<Columns classNames={`no-margin`}>
 									<Column>
-										<Wrapper apiKey={locationSettings.apiBrowserKey}>
+										<Wrapper apiKey={locationSettings.apiBrowserKey} libraries={["places"]}>
 											<div
 												id="wpsl-wrap"
 												className="wpsl-wrap wpsl-store-below wpsl-default-filters"
