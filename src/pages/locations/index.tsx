@@ -52,9 +52,14 @@ export default function Page({ locationSettings, location }) {
 		if (location && location[0] && !state?.location?.search) {
 			getLatLngByLocation({ address: formatSearch(location) })
 			.then(response => {
-				const {location, bounds} = response[0].geometry;
-				fetchLocations({ lat: location.lat(), lng: location.lng() });
-				data && push(`/about/branch-and-atm-locations/find-location/${state?.location?.search}/`, undefined, { shallow: true });
+				const {location, bounds } = response[0].geometry;
+				const {types} = response[0];
+				console.log('response');
+				console.log(response);
+				console.log(types);
+				console.log(types.includes('administrative_area_level_1'));
+				fetchLocations({ lat: location.lat(), lng: location.lng(), bounds: types.includes('administrative_area_level_1') ? bounds : null });
+				data && push(`/about/branch-and-atm-locations/find-location/${location}/`, undefined, { shallow: true });
 			})
 			.catch(e => {
 				console.log('NO LOCATION');
@@ -64,8 +69,13 @@ export default function Page({ locationSettings, location }) {
 		} else if (state?.location?.search) {
 			getLatLngByLocation({ address: state?.location?.search })
 			.then(response => {
-				const {location, bounds} = response[0].geometry;
-				fetchLocations({ lat: location.lat(), lng: location.lng() });
+				const {location, bounds } = response[0].geometry;
+				const {types} = response[0];
+				console.log('response');
+				console.log(response);
+				console.log(types);
+				console.log(types.includes('administrative_area_level_1'));
+				fetchLocations({ lat: location.lat(), lng: location.lng(), bounds: types.includes('administrative_area_level_1') ? bounds : null });
 				data && push(`/about/branch-and-atm-locations/find-location/${state?.location?.search}/`, undefined, { shallow: true });
 			})
 			.catch(e => {
@@ -129,7 +139,9 @@ export default function Page({ locationSettings, location }) {
 	const fetchLocations = ({ lat, lng, autoload = 0, bounds = null }) => {
 		resetSearchResults();
 
-		const radius = state?.location?.searchRadius ? Math.max(state?.location?.searchRadius, defaultRadius()) : defaultRadius();
+		const boundsRad = bounds ? distance(bounds.toJSON().north, bounds.toJSON().east, bounds.toJSON().south, bounds.toJSON().east) / 2 : null;
+
+		let radius = boundsRad ? boundsRad : state?.location?.searchRadius ? Math.max(state?.location?.searchRadius, defaultRadius()) : defaultRadius();
 		
 		fetch(
 			`/wp-admin/admin-ajax.php?action=store_search&lat=${lat}&lng=${lng}&max_results=25&search_radius=${radius}&autoload=${autoload}`
