@@ -29,15 +29,15 @@ import { getGeoLocation } from "lib/location/geolocation";
 import { distance, getLatLngByLocation, getLocationByLatLng } from "lib/location/geocode";
 import { useRouter } from "next/router";
 import Personyze from "components/ThirdParty/personyze";
+import { parseHtml } from "lib/parser";
 
 export default function Page({ locationSettings, location }) {
 	const { useQuery } = client;
 	const { query = {}, push } = useRouter();
 
-
 	const [state, setState] = useContext(Store);
 
-	const { generalSettings } = useQuery();
+	const { generalSettings, widgetSettings } = useQuery();
 
 	const [data, setData] = useState(null);
 	const [length, setLength] = useState(null);
@@ -229,6 +229,7 @@ export default function Page({ locationSettings, location }) {
 									</Column>
 								</Columns>
 							</Container>
+							{parseHtml(widgetSettings?.locationsSearch || '')}
 						</article>
 					</main>
 				</div>

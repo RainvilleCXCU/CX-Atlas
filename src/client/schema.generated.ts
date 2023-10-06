@@ -18930,6 +18930,7 @@ export const generatedSchema = {
     applyStart: { __type: "String", __args: { account: "String" } },
     blogSidebar: { __type: "String" },
     blogtop: { __type: "String" },
+    locationsSearch: { __type: "String" },
     widgetSettings: { __type: "String" },
   },
   WritingSettings: {
@@ -56447,6 +56448,10 @@ export interface WidgetSettings {
    * Genesis Blog Top
    */
   blogtop?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Locations Search Page Content
+   */
+  locationsSearch?: Maybe<ScalarsEnums["String"]>;
   /**
    * The string Settings Group
    */
