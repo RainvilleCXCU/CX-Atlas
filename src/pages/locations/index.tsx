@@ -195,7 +195,7 @@ export default function Page({ locationSettings, location }) {
 									</Column>
 								</Columns>
 							</Container>
-							<Container align="full" classNames={`no-margin`}>
+							<Container align="full">
 								<Columns classNames={`no-margin`}>
 									<Column>
 										<Wrapper apiKey={locationSettings.apiBrowserKey} libraries={["places"]}>
