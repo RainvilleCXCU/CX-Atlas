@@ -40,7 +40,7 @@ export const getLocationByLatLng = async ({ lat, lng }) => {
           }
 
           // If no zip code was found ( it's rare, but it happens ), then we use the city / town name as backup.
-          if (typeof filteredData?.zip === "undefined" && typeof filteredData?.locality !== "undefined") {
+          if (!filteredData?.zip && typeof filteredData?.locality !== "undefined") {
             userLocation = filteredData?.locality;
           } else {
             userLocation = filteredData?.zip;

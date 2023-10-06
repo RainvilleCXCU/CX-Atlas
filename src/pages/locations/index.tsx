@@ -88,6 +88,7 @@ export default function Page({ locationSettings, location }) {
 			.then(location => {
 				getLocationByLatLng({ lat: location.coords.latitude, lng: location.coords.longitude })
 				.then(data => {
+					fetchLocations({ lat: location.coords.latitude, lng: location.coords.longitude });
 					data && push(`/about/branch-and-atm-locations/find-location/${formatSearch(data)}/`, undefined, { shallow: true });
 				});
 			})
