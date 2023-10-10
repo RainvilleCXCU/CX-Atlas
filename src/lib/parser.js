@@ -37,7 +37,7 @@ export const parseHtml = (html) => {
             const isResponsiveTable = (name === 'table' && attribs && attribs.class && attribs.class.includes("tablepress-responsive"))
             const isDatatrac = attribs && attribs.class && attribs.class.includes("datatrac-wrapper") && !attribs.class.includes('datatrac-wrapper__disclosure');
             const isDatatracContainer = attribs && attribs.class && attribs.class.includes("gb-block-container") && findChildren(element, 'data-datatrac-perform', '').length > 0;
-            const isCiscoBubbleChat = name === 'a' && attribs && attribs.class?.includes('cx-icon__chat_bubble');
+            const isCiscoBubbleChat = name === 'a' && attribs && attribs.class?.includes('chat_bubble');
             // const isLinkLibraryCatLink = name === 'a' && attribs && attribs.class?.includes('cx-link-lib-cats__link');
             const isLinkLibrary = attribs && attribs['data-link-library-cats'];
             const isForm = attribs?.class?.includes('nf-form-cont');
