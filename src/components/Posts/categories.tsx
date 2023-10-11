@@ -16,8 +16,8 @@ const Categories: React.FC<CategoriesProps> = ({ title = 'Categories' }) => {
             <ul className='categories'>
             {categories.map((category, index) => (
                 <Fragment key={`category-${index}-${category.name}`}>
-                { category.uri && category.count > 0 &&
-                    <li className='cat-item'>
+                { category.uri !== '' && category.count > 0 &&
+                    <li className='cat-item' key={`category-${index}-${category.name}2`}>
                     <Link href={category.uri}>{category.name}</Link>
                     </li>
                 }
