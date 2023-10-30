@@ -24,9 +24,13 @@ import HotJar from "components/ThirdParty/hotjar";
 import Qualtrics from "components/ThirdParty/qualtrics";
 import Spectrum from "components/ThirdParty/spectrum";
 import AddressBar from "components/Locations/searchbar";
-import { Store } from 'context/store';
+import { Store } from "context/store";
 import { getGeoLocation } from "lib/location/geolocation";
-import { distance, getLatLngByLocation, getLocationByLatLng } from "lib/location/geocode";
+import {
+	distance,
+	getLatLngByLocation,
+	getLocationByLatLng,
+} from "lib/location/geocode";
 import { useRouter } from "next/router";
 import Personyze from "components/ThirdParty/personyze";
 import { parseHtml } from "lib/parser";
@@ -51,67 +55,103 @@ export default function Page({ locationSettings, location }) {
 
 		if (location && location[0] && !state?.location?.search) {
 			getLatLngByLocation({ address: formatSearch(location) })
-			.then(response => {
-				const {location, bounds } = response[0].geometry;
-				const {types} = response[0];
-				console.log('response');
-				console.log(response);
-				console.log(types);
-				console.log(types.includes('administrative_area_level_1'));
-				fetchLocations({ lat: location.lat(), lng: location.lng(), bounds: types.includes('administrative_area_level_1') ? bounds : null });
-				data && push(`/about/branch-and-atm-locations/find-location/${location}/`, undefined, { shallow: true });
-			})
-			.catch(e => {
-				console.log('NO LOCATION');
-				setData([]);
-				setLength(0);
-			});
+				.then((response) => {
+					const { location, bounds } = response[0].geometry;
+					const { types } = response[0];
+					console.log("response");
+					console.log(response);
+					console.log(types);
+					console.log(types.includes("administrative_area_level_1"));
+					fetchLocations({
+						lat: location.lat(),
+						lng: location.lng(),
+						bounds: types.includes("administrative_area_level_1")
+							? bounds
+							: null,
+					});
+					data &&
+						push(
+							`/about/branch-and-atm-locations/find-location/${location}/`,
+							undefined,
+							{ shallow: true }
+						);
+				})
+				.catch((e) => {
+					console.log("NO LOCATION");
+					setData([]);
+					setLength(0);
+				});
 		} else if (state?.location?.search) {
 			getLatLngByLocation({ address: state?.location?.search })
-			.then(response => {
-				const {location, bounds } = response[0].geometry;
-				const {types} = response[0];
-				console.log('response');
-				console.log(response);
-				console.log(types);
-				console.log(types.includes('administrative_area_level_1'));
-				fetchLocations({ lat: location.lat(), lng: location.lng(), bounds: types.includes('administrative_area_level_1') ? bounds : null });
-				data && push(`/about/branch-and-atm-locations/find-location/${state?.location?.search}/`, undefined, { shallow: true });
-			})
-			.catch(e => {
-				console.log('NO LOCATION');
-				setData([]);
-				setLength(0);
-			});
+				.then((response) => {
+					const { location, bounds } = response[0].geometry;
+					const { types } = response[0];
+					console.log("response");
+					console.log(response);
+					console.log(types);
+					console.log(types.includes("administrative_area_level_1"));
+					fetchLocations({
+						lat: location.lat(),
+						lng: location.lng(),
+						bounds: types.includes("administrative_area_level_1")
+							? bounds
+							: null,
+					});
+					data &&
+						push(
+							`/about/branch-and-atm-locations/find-location/${state?.location?.search}/`,
+							undefined,
+							{ shallow: true }
+						);
+				})
+				.catch((e) => {
+					console.log("NO LOCATION");
+					setData([]);
+					setLength(0);
+				});
 		} else {
 			getGeoLocation()
-			.then(location => {
-				getLocationByLatLng({ lat: location.coords.latitude, lng: location.coords.longitude })
-				.then(data => {
-					fetchLocations({ lat: location.coords.latitude, lng: location.coords.longitude });
-					data && push(`/about/branch-and-atm-locations/find-location/${formatSearch(data)}/`, undefined, { shallow: true });
+				.then((location) => {
+					getLocationByLatLng({
+						lat: location.coords.latitude,
+						lng: location.coords.longitude,
+					}).then((data) => {
+						fetchLocations({
+							lat: location.coords.latitude,
+							lng: location.coords.longitude,
+						});
+						data &&
+							push(
+								`/about/branch-and-atm-locations/find-location/${formatSearch(
+									data
+								)}/`,
+								undefined,
+								{ shallow: true }
+							);
+					});
+				})
+				.catch((err) => {
+					fetchLocations({
+						lat: locationSettings.startLatLng?.split[","][0],
+						lng: locationSettings.startLatLng?.split[","][1],
+						autoload: 1,
+					});
 				});
-			})
-			.catch(err => {
-				fetchLocations({ lat: locationSettings.startLatLng?.split[','][0], lng: locationSettings.startLatLng?.split[','][1], autoload: 1 });
-			})
 		}
 	}, [state?.location?.search]);
 
 	useEffect(() => {
-		if( location !== state?.location?.search ) {
+		if (location !== state?.location?.search) {
 			setLoading(true);
 			setState({
 				...state,
 				location: {
 					...state.location,
-					search: formatSearch(location)
-				}
+					search: formatSearch(location),
+				},
 			});
 		}
 	}, [location]);
-
-	
 
 	useEffect(() => {
 		setState({
@@ -119,31 +159,41 @@ export default function Page({ locationSettings, location }) {
 			location: {
 				...state.location,
 				settings: locationSettings,
-				searchRadius: defaultRadius()
-			}
+				searchRadius: defaultRadius(),
+			},
 		});
 	}, [locationSettings]);
-
 
 	const resetSearchResults = () => {
 		setShowDetails(false);
 		setLength(0);
 		setData([]);
-	}
+	};
 
 	const defaultRadius = () => {
-		const regex =  new RegExp(/\[([0-9]+)\]/, 'i');
+		const regex = new RegExp(/\[([0-9]+)\]/, "i");
 		console.log(locationSettings.searchRadius);
 		return locationSettings.searchRadius.match(regex)[1];
-	}
+	};
 
 	const fetchLocations = ({ lat, lng, autoload = 0, bounds = null }) => {
 		resetSearchResults();
 
-		const boundsRad = bounds ? distance(bounds.toJSON().north, bounds.toJSON().east, bounds.toJSON().south, bounds.toJSON().east) / 2 : null;
+		const boundsRad = bounds
+			? distance(
+					bounds.toJSON().north,
+					bounds.toJSON().east,
+					bounds.toJSON().south,
+					bounds.toJSON().east
+			  ) / 2
+			: null;
 
-		let radius = boundsRad ? boundsRad : state?.location?.searchRadius ? Math.max(state?.location?.searchRadius, defaultRadius()) : defaultRadius();
-		
+		let radius = boundsRad
+			? boundsRad
+			: state?.location?.searchRadius
+			? Math.max(state?.location?.searchRadius, defaultRadius())
+			: defaultRadius();
+
 		fetch(
 			`/wp-admin/admin-ajax.php?action=store_search&lat=${lat}&lng=${lng}&max_results=25&search_radius=${radius}&autoload=${autoload}`
 		)
@@ -156,15 +206,15 @@ export default function Page({ locationSettings, location }) {
 					...state,
 					location: {
 						...state.location,
-						searchRadius: defaultRadius()
-					}
+						searchRadius: defaultRadius(),
+					},
 				});
 			});
-	}
+	};
 
 	const formatSearch = (address) => {
-		return address ? address.toString().replaceAll('+', ' ') : '';
-	}
+		return address ? address.toString().replaceAll("+", " ") : "";
+	};
 
 	return (
 		<>
@@ -184,55 +234,64 @@ export default function Page({ locationSettings, location }) {
 				<selectedLocationContext.Provider
 					value={{ selectedLocation, setSelectedLocation }}
 				>
-
-				<div id="page" className="container site">
-					<main className="content content-single">
-						<article className="entry-content">
-							<Container align="full" classNames={`no-margin`}>
-								<Columns classNames={`no-margin`}>
-									<Column>
-										<PageTitle heading="Locations & ATMs" />
-									</Column>
-								</Columns>
-							</Container>
-							<Container align="full">
-								<Columns classNames={`no-margin`}>
-									<Column>
-										<Wrapper apiKey={locationSettings.apiBrowserKey} libraries={["places"]}>
-											<div
-												id="wpsl-wrap"
-												className="wpsl-wrap wpsl-store-below wpsl-default-filters"
+					<div id="page" className="container site">
+						<main className="content content-single">
+							<article className="entry-content">
+								<Container align="full" classNames={`no-margin`}>
+									<Columns classNames={`no-margin`}>
+										<Column>
+											<PageTitle heading="Locations & ATMs" />
+										</Column>
+									</Columns>
+								</Container>
+								<Container align="full">
+									<Columns classNames={`no-margin`}>
+										<Column>
+											<Wrapper
+												apiKey={locationSettings.apiBrowserKey}
+												libraries={["places"]}
 											>
-												<div className="wpsl-search wpsl-clearfix wpsl-checkboxes-enabled wpsl-geolocation-run">
-													<AddressBar />
-												</div>
-												<Map lat={45} lng={-89} locationSettings={locationSettings} markers={data} />
-												{/* <div id="wpsl-gmap" className="wpsl-gmap-canvas" style={{ position: "relative", overflow: "hidden" }}></div> */}
-												<div id="wpsl-result-list">
-													<div id="wpsl-stores">
-														<div className="cx-location-listing__title wpsl-location--section">
-															<em>
-																<small>
-																	<span id="store-count">{length}</span>&nbsp;results
-																</small>
-															</em>
-														</div>
-														{data &&
-															<LocationListings data={data} />
-															|| <div>There are locations in this area</div>
-														}
+												<div
+													id="wpsl-wrap"
+													className="wpsl-wrap wpsl-store-below wpsl-default-filters"
+												>
+													<div className="wpsl-search wpsl-clearfix wpsl-checkboxes-enabled wpsl-geolocation-run">
+														<AddressBar />
 													</div>
+													<Map
+														lat={45}
+														lng={-89}
+														locationSettings={locationSettings}
+														markers={data}
+													/>
+													{/* <div id="wpsl-gmap" className="wpsl-gmap-canvas" style={{ position: "relative", overflow: "hidden" }}></div> */}
+													<div id="wpsl-result-list">
+														<div id="wpsl-stores">
+															<div className="cx-location-listing__title wpsl-location--section">
+																<em>
+																	<small>
+																		<span id="store-count">{length}</span>
+																		&nbsp;results
+																	</small>
+																</em>
+															</div>
+															{(data && <LocationListings data={data} />) || (
+																<div className="wpsl-no-results-msg">
+																	No results found
+																</div>
+															)}
+														</div>
+													</div>
+													<LocationDetails />
 												</div>
-												<LocationDetails />
-											</div>
-										</Wrapper>
-									</Column>
-								</Columns>
-							</Container>
-							{parseHtml(widgetSettings?.locationsSearch || '')}
-						</article>
-					</main>
-				</div>
+											</Wrapper>
+										</Column>
+									</Columns>
+								</Container>
+								{parseHtml(widgetSettings?.locationsSearch || "")}
+							</article>
+						</main>
+					</div>
 				</selectedLocationContext.Provider>
 			</showDetailsContext.Provider>
 
@@ -248,13 +307,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 	const { data } = await apolloClient.query({
 		query: gql`
-		${LocationSettingsFragment}
-        query LocationSettings {
-			locationSettings {
-				...LocationSettingsFragment
+			${LocationSettingsFragment}
+			query LocationSettings {
+				locationSettings {
+					...LocationSettingsFragment
+				}
 			}
-          }
-      `,
+		`,
 	});
 	const location = query?.location;
 	return getNextServerSideProps(context, {
@@ -262,7 +321,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 		client,
 		props: {
 			locationSettings: data.locationSettings,
-			location: location ? location : null
-		}
+			location: location ? location : null,
+		},
 	});
 }
