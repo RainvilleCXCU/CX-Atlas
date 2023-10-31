@@ -63,6 +63,10 @@ let nextConfig = {
                     source: '/apply-:type/:path*',
                     destination: '/bridge/:type/',
                 },
+                {
+                    source: '/about/branch-and-atm-locations/',
+                    destination: '/locations',
+                },
                 // {
                 //     source: '/pgp.txt',
                 //     destination: '/wp-content/themes/Connexus/assets/txt/ConnexusFileTransfer_PGP.txt'
@@ -79,10 +83,6 @@ let nextConfig = {
                 },
                 {
                     source: '/about/branch-and-atm-locations/find-location/:location*',
-                    destination: '/locations',
-                },
-                {
-                    source: '/about/branch-and-atm-locations/',
                     destination: '/locations',
                 },
                 {
