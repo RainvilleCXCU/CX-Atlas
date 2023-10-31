@@ -16,7 +16,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 				});
 			});
 		});
-	}, []);
+	}, [calculatorName]);
 
 	return (
 		<div id={`dt-${calculatorName}`}>
