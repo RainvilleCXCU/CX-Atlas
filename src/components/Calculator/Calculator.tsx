@@ -10,6 +10,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 			import(`./Dinkytown/Site/KJESiteSpecific.js`).then(() => {
 				import(`./Dinkytown/Core/${calculatorName}.js`).then(() => {
 					import(`./Dinkytown/Site/${calculatorName}Params.js`).then(() => {
+						console.log(KJE);
 						KJE.init();
 					});
 				});
