@@ -82,7 +82,7 @@ let nextConfig = {
                     destination: '/locations',
                 },
                 {
-                    source: '/about/branch-and-atm-locations/:path*',
+                    source: '/about/branch-and-atm-locations/',
                     destination: '/locations',
                 },
                 {
