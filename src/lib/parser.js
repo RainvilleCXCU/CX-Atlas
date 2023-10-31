@@ -7,6 +7,7 @@ import Chat from "components/Chat/cisco";
 import LinkLibraryCatLink from "components/LinkLibrary/NavItem";
 import LinkLibrary from "components/LinkLibrary/LinkLibrary";
 import Form from "components/Forms/Form";
+import Calculator from "components/Calculator/Calculator";
 // import { ciscoBubbleChat } from "./cisco-chat";
 
 const findChildren = (element, att, value) => {
@@ -34,6 +35,7 @@ export const parseHtml = (html) => {
             const { name, attribs, children } = element;
             const isInternalLink = (name === "a" && (internalLinkRegEx.test(attribs.href) || domainRegEx.test(attribs.href) === false ) && !attribs.onClick);
             const isFAQItem = attribs && attribs.class && attribs.class.includes("ewd-ufaq-faq-div");
+            const isCalculator = attribs && attribs['data-calculator-name'];
             const isResponsiveTable = (name === 'table' && attribs && attribs.class && attribs.class.includes("tablepress-responsive"))
             const isDatatrac = attribs && attribs.class && attribs.class.includes("datatrac-wrapper") && !attribs.class.includes('datatrac-wrapper__disclosure');
             const isDatatracContainer = attribs && attribs.class && attribs.class.includes("gb-block-container") && findChildren(element, 'data-datatrac-perform', '').length > 0;
@@ -76,6 +78,12 @@ export const parseHtml = (html) => {
             else if (isResponsiveTable) {
                 return (
                     <div className="cx-table--responsive"><table {...attributesToProps(attribs)}>{domToReact(children, options)}</table></div>
+                )
+            }
+
+            else if (isCalculator) {
+                return (
+                    <Calculator calculatorName={attribs['data-calculator-name']}></Calculator>
                 )
             }
             else if (isDatatracContainer) {
