@@ -1,3 +1,4 @@
+import Script from "next/script.js";
 import React, { useEffect } from "react";
 interface Props {
 	calculatorName: string;
