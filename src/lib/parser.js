@@ -1,4 +1,5 @@
 //import FAQ from "components/FAQs/faq";
+import dynamic from "next/dynamic";
 import parse, { domToReact, attributesToProps } from "html-react-parser";
 import { client } from 'client';
 import Link from "next/link";
@@ -8,6 +9,12 @@ import LinkLibraryCatLink from "components/LinkLibrary/NavItem";
 import LinkLibrary from "components/LinkLibrary/LinkLibrary";
 import Form from "components/Forms/Form";
 import Calculator from "components/Calculator/Calculator";
+import EqualHeightContainer from "components/Blocks/EqualHeight";
+import Container from "components/Blocks/Container";
+
+// const EqualHeightContainer = dynamic(() => import("components/Blocks/EqualHeight"), {ssr: true});
+// const Container = dynamic(() => import("components/Blocks/Container"), {ssr: true});
+// const Sidekick = dynamic(() => import("components/Blocks/Sidekick"), {ssr: false});
 // import { ciscoBubbleChat } from "./cisco-chat";
 
 const findChildren = (element, att, value) => {
@@ -28,7 +35,7 @@ const findChildren = (element, att, value) => {
 export const parseHtml = (html) => {
     const domainRegEx = new RegExp(/(http)/, 'i');
     const internalLinkRegEx = new RegExp(/(cxcu|(www\.connexus)|local)/, 'i');
-    //html = parseShortcode(html);
+    
     const options = {
         trim: false,
         replace: (element) => {
@@ -42,11 +49,30 @@ export const parseHtml = (html) => {
             const isCiscoBubbleChat = name === 'a' && attribs && attribs.class?.includes('chat_bubble');
             // const isLinkLibraryCatLink = name === 'a' && attribs && attribs.class?.includes('cx-link-lib-cats__link');
             const isLinkLibrary = attribs && attribs['data-link-library-cats'];
+            const isEqualHeight = attribs && attribs['data-equal-height'];
             const isForm = attribs?.class?.includes('nf-form-cont');
+            const isSidekick = attribs?.class && attribs?.class == 'cx-sidekick';
+            const isBlockContainer = attribs && attribs.class && attribs.class.includes("gb-block-container");
+            // const equalHeight = attribs?.id;
 
             if(isCiscoBubbleChat) {
                 return (
                     <Chat className={attribs.class}>{domToReact(children, options)}</Chat>
+                )
+            } 
+            // else if (isSidekick) {
+            //     return (
+            //         <Sidekick className={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</Sidekick>
+            //     )
+            // }
+            else if (isBlockContainer) {
+                return (
+                    <Container classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</Container>
+                )
+            }
+            else if (isEqualHeight) {
+                return (
+                    <EqualHeightContainer tagName={name} name={attribs['data-equal-height']} classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</EqualHeightContainer>
                 )
             }
 
