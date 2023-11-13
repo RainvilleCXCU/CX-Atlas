@@ -20,12 +20,21 @@ function EqualHeightContainer({
     children = <></>
 }: Props): JSX.Element {
 
+    const [isSSR, setIsSSR] = useState(true);
+
+    useEffect(() => {
+        if(document) {
+            setIsSSR(false);
+        }
+    }, []);
+
     const isDesktopOrLaptop = useMediaQuery({
         query: '(min-width: 782px)'
-      })
-  const element = React.createElement(tagName, {...props, className: classNames}, children);
+    });
+
+    const element = React.createElement(tagName, { ...props, className: classNames }, children);
     return (
-        <EqualHeightElement name={name}>{element}</EqualHeightElement>
+        <EqualHeightElement name={name} disable={!isDesktopOrLaptop && !isSSR}>{element}</EqualHeightElement>
     );
 }
 
