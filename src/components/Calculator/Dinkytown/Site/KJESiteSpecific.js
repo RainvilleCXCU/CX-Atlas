@@ -47,4 +47,6 @@ KJE.Default.RateAuto = 3.99;
 KJE.Default.RateFix30 = 4.00;
 KJE.Default.RateAdj = 4.50;
 
-export default {};
+module.exports = {
+    KJE
+}

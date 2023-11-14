@@ -12,6 +12,9 @@ KJE.parameters.set("MSG_TOTAL_YIELD", "Total annual yield");
 
 KJE.CalculatorTitle = "Certificate Calculator";
 
+module.exports = {
+  KJE
+}
 /**V3_CUSTOM_CODE**/
 /* <!--
   Financial Calculators, &copy;1998-2020 KJE Computer Solutions, Inc.

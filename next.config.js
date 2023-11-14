@@ -92,7 +92,6 @@ let nextConfig = {
             ],
         }
     },
-    trailingSlash: true,
-    reactStrictMode: false
+    trailingSlash: true
 };
 module.exports = withFaust(nextConfig);
