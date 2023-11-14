@@ -102,10 +102,7 @@ let nextConfig = {
                 const shouldExclude = /\/src\/components\/Calculator\/Dinkytown/.test(file);
 
                 return shouldExclude;
-            },
-            use: {
-                loader: 'babel-loader',
-            },
+            }
         });
 
         return config;
