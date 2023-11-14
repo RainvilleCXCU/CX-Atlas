@@ -8,10 +8,9 @@ import Chat from "components/Chat/cisco";
 import LinkLibraryCatLink from "components/LinkLibrary/NavItem";
 import LinkLibrary from "components/LinkLibrary/LinkLibrary";
 import Form from "components/Forms/Form";
-// import Calculator from "components/Calculator/Calculator";
+import Calculator from "components/Calculator/Calculator";
 import EqualHeightContainer from "components/Blocks/EqualHeight";
 import Container from "components/Blocks/Container";
-const Calculator = dynamic(() => import("components/Calculator/Calculator"), {ssr: false});
 
 // const EqualHeightContainer = dynamic(() => import("components/Blocks/EqualHeight"), {ssr: true});
 // const Container = dynamic(() => import("components/Blocks/Container"), {ssr: true});
