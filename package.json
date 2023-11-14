@@ -31,6 +31,7 @@
     "underscore": "^1.13.6"
   },
   "devDependencies": {
+    "@babel/plugin-transform-strict-mode": "^7.23.3",
     "@googlemaps/js-api-loader": "^1.16.2",
     "@googlemaps/react-wrapper": "^1.1.35",
     "@gqty/cli": "^3.4.0-alpha-e8dd298d.0",

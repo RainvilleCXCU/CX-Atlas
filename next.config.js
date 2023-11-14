@@ -93,19 +93,5 @@ let nextConfig = {
         }
     },
     trailingSlash: true,
-    reactStrictMode: true,
-    swcMinify: false,
-    webpack: (config) => {
-        config.module.rules.push({
-            test: /\.(js|jsx|ts|tsx)$/,
-            exclude: (file) => {
-                const shouldExclude = /\/src\/components\/Calculator\/Dinkytown/.test(file);
-
-                return shouldExclude;
-            }
-        });
-
-        return config;
-    },
 };
 module.exports = withFaust(nextConfig);
