@@ -50,12 +50,14 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 		externalScript.src = src;
 	}
 	useEffect(() => {
-		{jsFiles.map((file) => {
-			loadScript(file);
-		})}
-		// if(window.KJE?.init) {
-		// 	window.KJE?.init();
-		// }
+		if(!window.KJE.initFired) {
+			{jsFiles.map((file) => {
+				loadScript(file);
+			})}
+			// if(window.KJE?.init) {
+			// 	window.KJE?.init();
+			// }
+		}
 	}, [])
 
 	return (
