@@ -58,7 +58,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 			// 	window.KJE?.init();
 			// }
 		}
-	}, [window.KJE])
+	}, [])
 
 	return (
 		<>				
