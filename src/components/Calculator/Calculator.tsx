@@ -54,6 +54,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 			{jsFiles.map((file) => {
 				loadScript(file);
 			})}
+			console.log('KJE LOADED');
 			// if(window.KJE?.init) {
 			// 	window.KJE?.init();
 			// }
