@@ -68,9 +68,9 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 				calcLoaded &&
 				<div id={`dt-${calculatorName}`}>
 					<div id="KJEAllContent"></div>
+					calcLoaded: {JSON.stringify(calcLoaded)} : {new Date().getSeconds()}
 				</div>
 			}
-			calcLoaded: {calcLoaded}
 		</>
 	);
 };
