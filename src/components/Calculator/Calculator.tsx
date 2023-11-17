@@ -1,11 +1,12 @@
 import { addJSAsset } from "lib/enqueuedFiles";
 import Script from "next/script.js";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 interface Props {
 	calculatorName: string;
 }
 
 const Calculator = ({ calculatorName }: Props): JSX.Element => {
+    const [calcLoaded, setCalcLoaded] = useState(false);
 	// useEffect(() => {
 	// 	if(!window.KJE) {
 	// 		import("./Dinkytown/Core/KJE.js").then(({ KJE }) => {
@@ -54,7 +55,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 			{jsFiles.map((file) => {
 				loadScript(file);
 			})}
-			console.log('KJE LOADED');
+			setCalcLoaded(true);
 			// if(window.KJE?.init) {
 			// 	window.KJE?.init();
 			// }
@@ -63,33 +64,13 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 
 	return (
 		<>				
-			<div id={`dt-${calculatorName}`}>
-				<div id="KJEAllContent"></div>
-			</div>
 			{
-				// addJSAsset({
-				// 	id: 'KJECore',
-				// 	src: `/wp-content/themes/CXCU/vendors/calculators/KJE.js`,
-				// 	strategy: 'lazyOnload',
-				// 	onLoad: () => {
-				// 		addJSAsset({
-				// 			id: 'KJESiteCore',
-				// 			src: `/wp-content/themes/CXCU/vendors/calculators/KJESiteSpecific.js`,
-				// 			strategy: 'lazyOnload'
-				// 		})
-				// 		addJSAsset({
-				// 			id: `KJE${calculatorName}Params`,
-				// 			src: `/wp-content/themes/CXCU/vendors/calculators/${calculatorName}.js`,
-				// 			strategy: 'lazyOnload'
-				// 		})
-				// 		addJSAsset({
-				// 			id: `KJESite${calculatorName}Params`,
-				// 			src: `/wp-content/themes/CXCU/vendors/calculators/${calculatorName}Params.js`,
-				// 			strategy: 'lazyOnload'
-				// 		})
-				// 	}
-				// })
-			}		
+				calcLoaded &&
+				<div id={`dt-${calculatorName}`}>
+					<div id="KJEAllContent"></div>
+				</div>
+			}
+			calcLoaded: {calcLoaded}
 		</>
 	);
 };
