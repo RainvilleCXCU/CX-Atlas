@@ -48,6 +48,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 		externalScript.onload = onload;
 		// externalScript.setAttribute("crossorigin", "anonymous");
 		document.body.appendChild(externalScript);
+		console.log(`Load Script: ${src}`);
 		externalScript.src = src;
 	}
 	useEffect(() => {
