@@ -56,10 +56,12 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 				loadScript(file);
 			})}
 			setCalcLoaded(true);
-			// if(window.KJE?.init) {
-			// 	window.KJE?.init();
-			// }
+			// Specify how to clean up after this effect:
+			return function cleanup() {
+				setCalcLoaded(true);
+			};
 		}
+		
 	}, [calcLoaded])
 
 	return (
