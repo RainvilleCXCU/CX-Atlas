@@ -63,7 +63,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 			setCalcLoaded(true);
 		};
 		
-	}, [calcLoaded])
+	}, [])
 
 	return (
 		<>				
