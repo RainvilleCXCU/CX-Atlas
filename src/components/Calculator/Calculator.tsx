@@ -53,10 +53,10 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 	}
 	useEffect(() => {
 		if(window.KJE?.initFired !== true && !calcLoaded) {
+			setCalcLoaded(true);
 			{jsFiles.map((file) => {
 				loadScript(file);
 			})}
-			setCalcLoaded(true);
 			// Specify how to clean up after this effect:
 			return function cleanup() {
 				setCalcLoaded(true);
