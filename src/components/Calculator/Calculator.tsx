@@ -52,7 +52,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 		externalScript.src = src;
 	}
 	useEffect(() => {
-		if(window.KJE?.initFired !== true && !calcLoaded) {
+		if(!calcLoaded) {
 			setCalcLoaded(true);
 			{jsFiles.map((file) => {
 				loadScript(file);
