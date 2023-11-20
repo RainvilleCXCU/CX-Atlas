@@ -57,11 +57,11 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 			{jsFiles.map((file) => {
 				loadScript(file);
 			})}
-			// Specify how to clean up after this effect:
-			return function cleanup() {
-				setCalcLoaded(true);
-			};
 		}
+		// Specify how to clean up after this effect:
+		return () => {
+			setCalcLoaded(true);
+		};
 		
 	}, [calcLoaded])
 
