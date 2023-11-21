@@ -1,11 +1,23 @@
 import { addJSAsset } from "lib/enqueuedFiles";
 import Script from "next/script.js";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 interface Props {
 	calculatorName: string;
 }
 
 const Calculator = ({ calculatorName }: Props): JSX.Element => {
+	const [calcLoaded, setCalcLoaded] = useState(false);
+	const initialized = useRef(false)
+	const KJEFile = [{
+		id: 'KJECore',
+		src: `/wp-content/themes/CXCU/vendors/calculators/KJE.js`,
+		strategy: 'afterInteractive',
+		onload: () => {
+			jsFiles.map(file => {
+				loadScript(file);
+			})
+		}
+	}]
 	const jsFiles = [{
 			id: 'KJESiteCore',
 			src: `/wp-content/themes/CXCU/vendors/calculators/KJESiteSpecific.js`,
@@ -20,6 +32,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 			strategy: 'afterInteractive',
 			onload: () => {
 				window.KJE.initFired ? window.KJE.initAfterLoad() : window.KJE.init();
+				setCalcLoaded(true);
 			}
 		}
     ];
@@ -36,20 +49,19 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 		externalScript.src = src;
 	}
 
+	useEffect(() => {
+		if (!initialized.current) {
+			initialized.current = true
+			KJEFile.map(file => {
+				loadScript(file);
+			})
+		}
+	}, [calculatorName])
+	
 	return (
-		<>
-			<div id={`dt-${calculatorName}`}>
-				<div id="KJEAllContent"></div>
-			</div>
-			<Script src='/wp-content/themes/CXCU/vendors/calculators/KJE.js' id={`KJECore-${calculatorName}`}
-				onLoad={() => {
-					jsFiles.map(file => {
-						loadScript(file);
-					})
-				}
-			}></Script>
-			
-		</>
+		<div id={`dt-${calculatorName}`}>
+			<div id="KJEAllContent"></div>
+		</div>			
 	);
 };
 
