@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import { client } from "client";
 import Heading from "components/Heading";
 import Link from "next/link";
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useRef, useState } from "react";
 import ReactDOMServer from 'react-dom/server';
 import { LocationSettingsFragment } from 'fragments/LocationSettings';
 import InfoBox from "./infobox";
@@ -55,15 +55,16 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null, markers 
         scrollwheel,
         controlPosition,
         markerIconProps,
-        startMarker,
-        mapsLoaded
+        startMarker
     } = locationSettings;
 
+    const mapsLoaded = useRef(null)
+
     useEffect(() => {
-        mapsLoaded = setInterval( function() {
+        mapsLoaded.current = setInterval( function() {
             if ( typeof google === 'object' && typeof google.maps === 'object' && Object.keys(locationSettings).length > 0) {
                 console.log('Load Maps')
-                clearInterval( mapsLoaded );
+                clearInterval( mapsLoaded.current );
     
                 initMap( 'wpsl-gmap', 1);
             }
@@ -86,7 +87,7 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null, markers 
                 ...mapMarkers
             })
         }
-    }, [map, markers]);
+    }, [map, markers, markerIconProps]);
 
     useEffect(() => {
         if(map && markersArray) {
@@ -265,6 +266,7 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null, markers 
         } else {
             url = `/wp-content/plugins/wp-store-locator/img/markers/${locationSettings.storeMarker}`;
         }
+        console.log(`Store Marker ${url}`)
         const mapIcon = {
             url: url,
             scaledSize: new google.maps.Size( Number( markerIconProps?.scaledSize.split(',')[0] ), Number( markerIconProps?.scaledSize.split(',')[1] ) ), //retina format

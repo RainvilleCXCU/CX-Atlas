@@ -3,6 +3,7 @@ import Logo from "components/Logo";
 import FooterMenu from "./Nav";
 import Icons from "./Icons";
 import UtilityNav from "./UtilityNav";
+import Image from "next/image";
 
 interface Props {
 	copyrightHolder?: string;
@@ -54,14 +55,14 @@ function Footer({ copyrightHolder = "" }: Props): JSX.Element {
 					<ul className="cx-footer__identifiers">
 						<li>
 							<div id="ncua_eho_logos">
-								<img
+								<Image
 									src="/wp-content/themes/CXCU/images/ncua.svg"
 									width="95"
 									height="53"
 									alt="NCUA"
 								/>
 
-								<img
+								<Image
 									src="/wp-content/themes/CXCU/images/equal-housing.svg"
 									width="50"
 									height="53"
@@ -79,7 +80,7 @@ function Footer({ copyrightHolder = "" }: Props): JSX.Element {
 										aria-label="Copy Routing Number to Clipboard"
 										onClick={copyRoutingNumber}
 									>
-										<img
+										<Image
 											src="/wp-content/themes/CXCU/images/copy-icon.svg"
 											width="15"
 											height="15"

@@ -7,7 +7,6 @@ import React, { useState, useEffect } from 'react';
 import GTM from 'components/ThirdParty/gtm';
 import { GetServerSidePropsContext, GetStaticPropsContext } from 'next';
 import { getNextServerSideProps, getNextStaticProps, is404 } from '@faustjs/next';
-// import { getProductByName } from 'lib/data/products';
 import { parseHtml, parseShortcode } from 'lib/parser';
 import apolloClient from 'apolloClient';
 import { gql } from '@apollo/client';

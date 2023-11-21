@@ -6,34 +6,18 @@ interface Props {
 }
 
 const Calculator = ({ calculatorName }: Props): JSX.Element => {
-    const [calcLoaded, setCalcLoaded] = useState(false);
-	// useEffect(() => {
-	// 	if(!window.KJE) {
-	// 		import("./Dinkytown/Core/KJE.js").then(({ KJE }) => {
-	// 			window.KJE = Object(KJE);
-	// 			import(`./Dinkytown/Site/KJESiteSpecific.js`).then(() => {
-	// 				import(`./Dinkytown/Core/${calculatorName}.js`).then(() => {
-	// 					import(`./Dinkytown/Site/${calculatorName}Params.js`).then(() => {
-	// 						KJE.init();
-	// 					});
-	// 				});
-	// 			});
-	// 		});
-	// 	}
-	// });
-	const jsFiles = [
-		{
-			id: 'KJECore',
-			src: `/wp-content/themes/CXCU/vendors/calculators/KJE.js`
-		},{
+	const jsFiles = [{
 			id: 'KJESiteCore',
-			src: `/wp-content/themes/CXCU/vendors/calculators/KJESiteSpecific.js`
+			src: `/wp-content/themes/CXCU/vendors/calculators/KJESiteSpecific.js`,
+			strategy: 'afterInteractive'
 		},{
 			id: `KJE${calculatorName}Params`,
-			src: `/wp-content/themes/CXCU/vendors/calculators/${calculatorName}.js`
+			src: `/wp-content/themes/CXCU/vendors/calculators/${calculatorName}.js`,
+			strategy: 'afterInteractive'
 		},{
 			id: `KJESite${calculatorName}Params`,
 			src: `/wp-content/themes/CXCU/vendors/calculators/${calculatorName}Params.js`,
+			strategy: 'afterInteractive',
 			onload: () => {
 				window.KJE.init();
 			}
@@ -51,29 +35,20 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 		console.log(`Load Script: ${src}`);
 		externalScript.src = src;
 	}
-	useEffect(() => {
-		if(!calcLoaded) {
-			setCalcLoaded(true);
-			{jsFiles.map((file) => {
-				loadScript(file);
-			})}
-		}
-		// Specify how to clean up after this effect:
-		return () => {
-			setCalcLoaded(true);
-		};
-		
-	}, [])
 
 	return (
 		<>				
-			{
-				calcLoaded &&
-				<div id={`dt-${calculatorName}`}>
-					<div id="KJEAllContent"></div>
-					calcLoaded: {JSON.stringify(calcLoaded)} : {new Date().getSeconds()}
-				</div>
-			}
+			<div id={`dt-${calculatorName}`}>
+				<div id="KJEAllContent"></div>
+			</div>
+			<Script src='/wp-content/themes/CXCU/vendors/calculators/KJE.js' id='KJECore' strategy="afterInteractive"
+				onLoad={() => {
+					jsFiles.map(file => {
+						loadScript(file);
+					})
+				}
+			}></Script>
+			
 		</>
 	);
 };

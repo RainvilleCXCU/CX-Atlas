@@ -91,7 +91,7 @@ function LocationListing({
 						</span>
 					</div>
 					<div className="cx-location-listing__item--icon">
-						<img
+						<Image
 							src={logo}
 							width="145"
 							height="54"

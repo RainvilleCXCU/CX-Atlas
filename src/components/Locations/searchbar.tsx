@@ -14,7 +14,7 @@ const AddressBar = () => {
     const router = useRouter();
     const addressRef = useRef(null);
 
-    let autoComplete;
+    const autoComplete = useRef(null);
 
     const getLocation = () => {
         getGeoLocation()
@@ -41,13 +41,13 @@ const AddressBar = () => {
     // console.log(window.google.maps.places.Autocomplete)
     useEffect(() => {
         if(!autoCompleteLoaded) {
-            autoComplete = new google.maps.places.Autocomplete(
+            autoComplete.current = new google.maps.places.Autocomplete(
                 addressRef.current,
             )
     
             google.maps.event.addListener( autoComplete, "place_changed", function() {
-                const {formatted_address, geometry, name} = autoComplete.getPlace();
-                const places = autoComplete.getPlace();
+                const {formatted_address, geometry, name} = autoComplete.current.getPlace();
+                const places = autoComplete.current.getPlace();
                 let searchAddress = name;
                 let searchRadius = null;
                 console.log('PLACE CHANGED');
@@ -72,7 +72,7 @@ const AddressBar = () => {
             });
             setAutoCompleteLoaded(true);
         }    
-    })
+    }, [autoCompleteLoaded, setState, state])
     
     useEffect(() => {
         console.log('SET SEARCHBAR');

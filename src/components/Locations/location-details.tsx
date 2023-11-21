@@ -6,6 +6,7 @@ import {
 	showDetailsContext,
 } from "./locationsContext";
 import { Store } from "context/store";
+import Image from "next/image";
 
 function LocationDetails(): JSX.Element {
 	const { showDetails, setShowDetails } = useContext(showDetailsContext);
@@ -126,7 +127,7 @@ function LocationDetails(): JSX.Element {
 							</span>
 						</div>
 						<div className="cx-location-listing__item--icon">
-							<img
+							<Image
 								src="https://www.connexuscu.org/wp-content/uploads/2022/02/LogoConnexus.svg"
 								width="145"
 								height="54"
