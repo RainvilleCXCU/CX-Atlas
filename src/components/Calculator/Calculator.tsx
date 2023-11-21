@@ -9,7 +9,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 	const jsFiles = [{
 			id: 'KJESiteCore',
 			src: `/wp-content/themes/CXCU/vendors/calculators/KJESiteSpecific.js`,
-			strategy: 'afterInteractive'
+			strategy: 'afterInteractive',
 		},{
 			id: `KJE${calculatorName}Params`,
 			src: `/wp-content/themes/CXCU/vendors/calculators/${calculatorName}.js`,
@@ -19,7 +19,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 			src: `/wp-content/themes/CXCU/vendors/calculators/${calculatorName}Params.js`,
 			strategy: 'afterInteractive',
 			onload: () => {
-				window.KJE.init();
+				window.KJE.initFired ? window.KJE.initAfterLoad() : window.KJE.init();
 			}
 		}
     ];
@@ -37,11 +37,11 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 	}
 
 	return (
-		<>				
+		<>
 			<div id={`dt-${calculatorName}`}>
 				<div id="KJEAllContent"></div>
 			</div>
-			<Script src='/wp-content/themes/CXCU/vendors/calculators/KJE.js' id='KJECore' strategy="afterInteractive"
+			<Script src='/wp-content/themes/CXCU/vendors/calculators/KJE.js' id={`KJECore-${calculatorName}${new Date().getSeconds()}`}
 				onLoad={() => {
 					jsFiles.map(file => {
 						loadScript(file);
