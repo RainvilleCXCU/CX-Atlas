@@ -51,12 +51,12 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 
 	useEffect(() => {
 		if (!initialized.current) {
-			initialized.current = true
+			initialized.current = true;
 			KJEFile.map(file => {
 				loadScript(file);
 			})
 		}
-	}, [calculatorName])
+	}, [])
 	
 	return (
 		<div id={`dt-${calculatorName}`}>
