@@ -7,7 +7,7 @@ const { fetchWordPressRedirects } = require('./src/utils/redirects');
  **/
 
 let nextConfig = {
-    reactStrictMode: true,
+    reactStrictMode: false,
     async redirects() {
         const wpRedirects = await fetchWordPressRedirects({type: 'url'});
         return[
