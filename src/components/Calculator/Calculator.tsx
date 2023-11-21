@@ -41,7 +41,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 			<div id={`dt-${calculatorName}`}>
 				<div id="KJEAllContent"></div>
 			</div>
-			<Script src='/wp-content/themes/CXCU/vendors/calculators/KJE.js' id={`KJECore-${calculatorName}${new Date().getSeconds()}`}
+			<Script src='/wp-content/themes/CXCU/vendors/calculators/KJE.js' id={`KJECore-${calculatorName}`}
 				onLoad={() => {
 					jsFiles.map(file => {
 						loadScript(file);
