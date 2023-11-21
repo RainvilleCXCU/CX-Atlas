@@ -56,6 +56,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 				loadScript(file);
 			})
 		}
+		return (() => {initialized.current = true})
 	}, [])
 	
 	return (
