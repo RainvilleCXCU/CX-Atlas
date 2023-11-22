@@ -6,7 +6,7 @@ interface Props {
 }
 
 const Calculator = ({ calculatorName }: Props): JSX.Element => {
-	const [calcLoaded, setCalcLoaded] = useState(false);
+	const [calcsLoaded, setCalcsLoaded] = useState([]);
 	const initialized = useRef(false)
 	const KJEFile = [{
 		id: 'KJECore',
@@ -32,7 +32,6 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 			strategy: 'afterInteractive',
 			onload: () => {
 				window.KJE.initFired ? window.KJE.initAfterLoad() : window.KJE.init();
-				setCalcLoaded(true);
 			}
 		}
     ];
@@ -47,13 +46,16 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 		document.body.appendChild(externalScript);
 		console.log(`Load Script: ${src}`);
 		externalScript.src = src;
+		setCalcsLoaded([...calcsLoaded, id]);
 	}
 
 	useEffect(() => {
 		if (!initialized.current) {
 			initialized.current = true;
 			KJEFile.map(file => {
-				loadScript(file);
+				if(!calcsLoaded.includes(file.id)){
+					loadScript(file);
+				}
 			})
 		}
 		return (() => {initialized.current = true})
