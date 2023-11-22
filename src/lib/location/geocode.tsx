@@ -40,7 +40,7 @@ export const getLocationByLatLng = async ({ lat, lng }) => {
           }
 
           // If no zip code was found ( it's rare, but it happens ), then we use the city / town name as backup.
-          if (typeof filteredData?.zip === "undefined" && typeof filteredData?.locality !== "undefined") {
+          if (!filteredData?.zip && typeof filteredData?.locality !== "undefined") {
             userLocation = filteredData?.locality;
           } else {
             userLocation = filteredData?.zip;
@@ -71,10 +71,13 @@ export const getLatLngByLocation = ({ address }): Promise<any> => {
 
             latLng = response[0].geometry.location;
 
+            resolve(response);
+          } else {
+            reject(response);
           }
+
           console.log('LAT LNG');
           console.log(latLng)
-          resolve(latLng);
         });
       }
     }, 500);

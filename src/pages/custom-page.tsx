@@ -40,9 +40,6 @@ export default function Page() {
 						. Take a look at <code>src/pages/custom-page.tsx</code> for an
 						example.
 					</p>
-
-					<Calculator calculatorName="CUDeposit"></Calculator>
-
 					<Accordion title={title} content={content} isOpen={false} />
 					<Accordion title={title} content={content} isOpen={false} />
 					<FAQ id={"5540"} title={title} content={content} isOpen={false} />

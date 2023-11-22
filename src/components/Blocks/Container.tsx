@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Heading from 'components/Heading';
+import { EqualHeight } from 'react-equal-height/clean';
 
 export interface Props {
     align?,
@@ -13,13 +14,17 @@ function Container({
     children = <></>,
     classNames
 }: Props): JSX.Element {
+    // const [isSSR, setIsSSR] = useState(true);
+
+    // useEffect(() => {
+    //     if(document) {
+    //         setIsSSR(false);
+    //     }
+    // }, []);
+    
   return (
     <div className={`wp-block-genesis-blocks-gb-container${ align === 'full' ? ' alignfull' : ''} gb-block-container ${classNames}`}>
-        <div className='gb-container-inside'>
-            <div className='gb-container-content'>
-                {children}
-            </div>
-        </div>
+        <EqualHeight timeout={0} animationSpeed={0}>{children}</EqualHeight>
     </div>
   );
 }

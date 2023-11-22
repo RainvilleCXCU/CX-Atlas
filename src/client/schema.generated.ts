@@ -466,6 +466,8 @@ export enum ContentTypeEnum {
   /** The Type of Content object */
   GRAPHQL_DOCUMENT = "GRAPHQL_DOCUMENT",
   /** The Type of Content object */
+  INSTRUCTION = "INSTRUCTION",
+  /** The Type of Content object */
   LINK_LIBRARY_LINKS = "LINK_LIBRARY_LINKS",
   /** The Type of Content object */
   PAGE = "PAGE",
@@ -479,6 +481,8 @@ export enum ContentTypeEnum {
   SEARCHWIDGET = "SEARCHWIDGET",
   /** The Type of Content object */
   SERVICE = "SERVICE",
+  /** The Type of Content object */
+  STEP = "STEP",
   /** The Type of Content object */
   WPSL_STORES = "WPSL_STORES",
 }
@@ -663,6 +667,28 @@ export interface CreateGraphqlDocumentInput {
   maxAgeHeader?: InputMaybe<Scalars["Int"]>;
   /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
   menuOrder?: InputMaybe<Scalars["Int"]>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars["String"]>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars["String"]>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+}
+
+/** Input for the createInstruction mutation. */
+export interface CreateInstructionInput {
+  /** The userId to assign as the author of the object */
+  authorId?: InputMaybe<Scalars["ID"]>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars["String"]>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars["String"]>;
+  displayName: Scalars["String"];
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars["Int"]>;
+  name: Scalars["String"];
   /** The password used to protect the content of the object */
   password?: InputMaybe<Scalars["String"]>;
   /** The slug of the object */
@@ -981,6 +1007,30 @@ export interface CreateServiceInput {
   title?: InputMaybe<Scalars["String"]>;
 }
 
+/** Input for the createStep mutation. */
+export interface CreateStepInput {
+  /** The userId to assign as the author of the object */
+  authorId?: InputMaybe<Scalars["ID"]>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars["String"]>;
+  copy?: InputMaybe<Scalars["String"]>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars["String"]>;
+  heading: Scalars["String"];
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars["Int"]>;
+  name: Scalars["String"];
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars["String"]>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars["String"]>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  step?: InputMaybe<Scalars["Float"]>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+}
+
 /** Input for the createTag mutation. */
 export interface CreateTagInput {
   /** The slug that the post_tag will be an alias of */
@@ -1129,6 +1179,18 @@ export interface DeleteGraphqlDocumentInput {
   ignoreEditLock?: InputMaybe<Scalars["Boolean"]>;
 }
 
+/** Input for the deleteInstruction mutation. */
+export interface DeleteInstructionInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars["String"]>;
+  /** Whether the object should be force deleted instead of being moved to the trash */
+  forceDelete?: InputMaybe<Scalars["Boolean"]>;
+  /** The ID of the instruction to delete */
+  id: Scalars["ID"];
+  /** Override the edit lock when another user is editing the post */
+  ignoreEditLock?: InputMaybe<Scalars["Boolean"]>;
+}
+
 /** Input for the deleteLinklibrary mutation. */
 export interface DeleteLinklibraryInput {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -1259,6 +1321,18 @@ export interface DeleteServiceInput {
   ignoreEditLock?: InputMaybe<Scalars["Boolean"]>;
 }
 
+/** Input for the deleteStep mutation. */
+export interface DeleteStepInput {
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars["String"]>;
+  /** Whether the object should be force deleted instead of being moved to the trash */
+  forceDelete?: InputMaybe<Scalars["Boolean"]>;
+  /** The ID of the step to delete */
+  id: Scalars["ID"];
+  /** Override the edit lock when another user is editing the post */
+  ignoreEditLock?: InputMaybe<Scalars["Boolean"]>;
+}
+
 /** Input for the deleteTag mutation. */
 export interface DeleteTagInput {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
@@ -1379,6 +1453,18 @@ export interface HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs
   status?: InputMaybe<PostStatusEnum>;
   /** Title of the object */
   title?: InputMaybe<Scalars["String"]>;
+}
+
+/** The Type of Identifier used to fetch a single resource. Default is ID. */
+export enum InstructionIdType {
+  /** Identify a resource by the Database ID. */
+  DATABASE_ID = "DATABASE_ID",
+  /** Identify a resource by the (hashed) Global ID. */
+  ID = "ID",
+  /** Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier. */
+  SLUG = "SLUG",
+  /** Identify a resource by the URI. */
+  URI = "URI",
 }
 
 /** The Type of Identifier used to fetch a single resource. Default is ID. */
@@ -3455,6 +3541,54 @@ export interface RootQueryToGraphqlDocumentConnectionWhereArgs {
   title?: InputMaybe<Scalars["String"]>;
 }
 
+/** Arguments for filtering the RootQueryToInstructionConnection connection */
+export interface RootQueryToInstructionConnectionWhereArgs {
+  /** The user that's connected as the author of the object. Use the userId for the author object. */
+  author?: InputMaybe<Scalars["Int"]>;
+  /** Find objects connected to author(s) in the array of author's userIds */
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Find objects connected to the author by the author's nicename */
+  authorName?: InputMaybe<Scalars["String"]>;
+  /** Find objects NOT connected to author(s) in the array of author's userIds */
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars["Boolean"]>;
+  /** Specific database ID of the object */
+  id?: InputMaybe<Scalars["Int"]>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars["String"]>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Paginate Instructions with offsets */
+  offsetPagination?: InputMaybe<OffsetPagination>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars["ID"]>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars["String"]>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+}
+
 /** Arguments for filtering the RootQueryToLinklibraryConnection connection */
 export interface RootQueryToLinklibraryConnectionWhereArgs {
   /** Filter the connection based on dates */
@@ -4109,6 +4243,54 @@ export interface RootQueryToServiceConnectionWhereArgs {
   title?: InputMaybe<Scalars["String"]>;
 }
 
+/** Arguments for filtering the RootQueryToStepConnection connection */
+export interface RootQueryToStepConnectionWhereArgs {
+  /** The user that's connected as the author of the object. Use the userId for the author object. */
+  author?: InputMaybe<Scalars["Int"]>;
+  /** Find objects connected to author(s) in the array of author's userIds */
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Find objects connected to the author by the author's nicename */
+  authorName?: InputMaybe<Scalars["String"]>;
+  /** Find objects NOT connected to author(s) in the array of author's userIds */
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars["Boolean"]>;
+  /** Specific database ID of the object */
+  id?: InputMaybe<Scalars["Int"]>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars["String"]>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Paginate Steps with offsets */
+  offsetPagination?: InputMaybe<OffsetPagination>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars["ID"]>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars["String"]>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+}
+
 /** Arguments for filtering the RootQueryToTagConnection connection */
 export interface RootQueryToTagConnectionWhereArgs {
   /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
@@ -4269,6 +4451,18 @@ export interface SendPasswordResetEmailInput {
 
 /** The Type of Identifier used to fetch a single resource. Default is ID. */
 export enum ServiceIdType {
+  /** Identify a resource by the Database ID. */
+  DATABASE_ID = "DATABASE_ID",
+  /** Identify a resource by the (hashed) Global ID. */
+  ID = "ID",
+  /** Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier. */
+  SLUG = "SLUG",
+  /** Identify a resource by the URI. */
+  URI = "URI",
+}
+
+/** The Type of Identifier used to fetch a single resource. Default is ID. */
+export enum StepIdType {
   /** Identify a resource by the Database ID. */
   DATABASE_ID = "DATABASE_ID",
   /** Identify a resource by the (hashed) Global ID. */
@@ -4571,6 +4765,32 @@ export interface UpdateGraphqlDocumentInput {
   maxAgeHeader?: InputMaybe<Scalars["Int"]>;
   /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
   menuOrder?: InputMaybe<Scalars["Int"]>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars["String"]>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars["String"]>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+}
+
+/** Input for the updateInstruction mutation. */
+export interface UpdateInstructionInput {
+  /** The userId to assign as the author of the object */
+  authorId?: InputMaybe<Scalars["ID"]>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars["String"]>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars["String"]>;
+  displayName?: InputMaybe<Scalars["String"]>;
+  /** The ID of the instruction object */
+  id: Scalars["ID"];
+  /** Override the edit lock when another user is editing the post */
+  ignoreEditLock?: InputMaybe<Scalars["Boolean"]>;
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars["Int"]>;
+  name?: InputMaybe<Scalars["String"]>;
   /** The password used to protect the content of the object */
   password?: InputMaybe<Scalars["String"]>;
   /** The slug of the object */
@@ -4986,6 +5206,34 @@ export interface UpdateSettingsInput {
   writingSettingsUseSmilies?: InputMaybe<Scalars["Boolean"]>;
 }
 
+/** Input for the updateStep mutation. */
+export interface UpdateStepInput {
+  /** The userId to assign as the author of the object */
+  authorId?: InputMaybe<Scalars["ID"]>;
+  /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
+  clientMutationId?: InputMaybe<Scalars["String"]>;
+  copy?: InputMaybe<Scalars["String"]>;
+  /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
+  date?: InputMaybe<Scalars["String"]>;
+  heading?: InputMaybe<Scalars["String"]>;
+  /** The ID of the step object */
+  id: Scalars["ID"];
+  /** Override the edit lock when another user is editing the post */
+  ignoreEditLock?: InputMaybe<Scalars["Boolean"]>;
+  /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
+  menuOrder?: InputMaybe<Scalars["Int"]>;
+  name?: InputMaybe<Scalars["String"]>;
+  /** The password used to protect the content of the object */
+  password?: InputMaybe<Scalars["String"]>;
+  /** The slug of the object */
+  slug?: InputMaybe<Scalars["String"]>;
+  /** The status of the object */
+  status?: InputMaybe<PostStatusEnum>;
+  step?: InputMaybe<Scalars["Float"]>;
+  /** The title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+}
+
 /** Input for the updateTag mutation. */
 export interface UpdateTagInput {
   /** The slug that the post_tag will be an alias of */
@@ -5148,6 +5396,52 @@ export interface UserToCommentConnectionWhereArgs {
 
 /** Arguments for filtering the UserToContactConnection connection */
 export interface UserToContactConnectionWhereArgs {
+  /** The user that's connected as the author of the object. Use the userId for the author object. */
+  author?: InputMaybe<Scalars["Int"]>;
+  /** Find objects connected to author(s) in the array of author's userIds */
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Find objects connected to the author by the author's nicename */
+  authorName?: InputMaybe<Scalars["String"]>;
+  /** Find objects NOT connected to author(s) in the array of author's userIds */
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars["Boolean"]>;
+  /** Specific database ID of the object */
+  id?: InputMaybe<Scalars["Int"]>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars["String"]>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars["ID"]>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars["String"]>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+}
+
+/** Arguments for filtering the UserToInstructionConnection connection */
+export interface UserToInstructionConnectionWhereArgs {
   /** The user that's connected as the author of the object. Use the userId for the author object. */
   author?: InputMaybe<Scalars["Int"]>;
   /** Find objects connected to author(s) in the array of author's userIds */
@@ -5620,6 +5914,52 @@ export interface UserToServiceConnectionWhereArgs {
   title?: InputMaybe<Scalars["String"]>;
 }
 
+/** Arguments for filtering the UserToStepConnection connection */
+export interface UserToStepConnectionWhereArgs {
+  /** The user that's connected as the author of the object. Use the userId for the author object. */
+  author?: InputMaybe<Scalars["Int"]>;
+  /** Find objects connected to author(s) in the array of author's userIds */
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Find objects connected to the author by the author's nicename */
+  authorName?: InputMaybe<Scalars["String"]>;
+  /** Find objects NOT connected to author(s) in the array of author's userIds */
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Filter the connection based on dates */
+  dateQuery?: InputMaybe<DateQueryInput>;
+  /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
+  hasPassword?: InputMaybe<Scalars["Boolean"]>;
+  /** Specific database ID of the object */
+  id?: InputMaybe<Scalars["Int"]>;
+  /** Array of IDs for the objects to retrieve */
+  in?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Get objects with a specific mimeType property */
+  mimeType?: InputMaybe<MimeTypeEnum>;
+  /** Slug / post_name of the object */
+  name?: InputMaybe<Scalars["String"]>;
+  /** Specify objects to retrieve. Use slugs */
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+  /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** What paramater to use to order the objects by. */
+  orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
+  /** Use ID to return only children. Use 0 to return only top-level items */
+  parent?: InputMaybe<Scalars["ID"]>;
+  /** Specify objects whose parent is in an array */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Specify posts whose parent is not in an array */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+  /** Show posts with a specific password. */
+  password?: InputMaybe<Scalars["String"]>;
+  /** Show Posts based on a keyword search */
+  search?: InputMaybe<Scalars["String"]>;
+  /** Retrieve posts where post status is in an array. */
+  stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Show posts with a specific status. */
+  status?: InputMaybe<PostStatusEnum>;
+  /** Title of the object */
+  title?: InputMaybe<Scalars["String"]>;
+}
+
 /** Field to order the connection by */
 export enum UsersConnectionOrderbyEnum {
   /** Order by display name */
@@ -5683,6 +6023,7 @@ export const scalarsEnumsHash: import("gqty").ScalarsEnumsHash = {
   Float: true,
   GraphqlDocumentIdType: true,
   ID: true,
+  InstructionIdType: true,
   Int: true,
   LinklibraryIdType: true,
   LocationCategoryIdType: true,
@@ -5710,6 +6051,7 @@ export const scalarsEnumsHash: import("gqty").ScalarsEnumsHash = {
   SEOCardType: true,
   SearchWidgetIdType: true,
   ServiceIdType: true,
+  StepIdType: true,
   String: true,
   TagIdType: true,
   TaxonomyEnum: true,
@@ -9302,6 +9644,23 @@ export const generatedSchema = {
     clientMutationId: { __type: "String" },
     graphqlDocument: { __type: "GraphqlDocument" },
   },
+  CreateInstructionInput: {
+    authorId: { __type: "ID" },
+    clientMutationId: { __type: "String" },
+    date: { __type: "String" },
+    displayName: { __type: "String!" },
+    menuOrder: { __type: "Int" },
+    name: { __type: "String!" },
+    password: { __type: "String" },
+    slug: { __type: "String" },
+    status: { __type: "PostStatusEnum" },
+    title: { __type: "String" },
+  },
+  CreateInstructionPayload: {
+    __typename: { __type: "String!" },
+    clientMutationId: { __type: "String" },
+    instruction: { __type: "Instruction" },
+  },
   CreateLinklibraryInput: {
     clientMutationId: { __type: "String" },
     commentStatus: { __type: "String" },
@@ -9531,6 +9890,25 @@ export const generatedSchema = {
     clientMutationId: { __type: "String" },
     service: { __type: "Service" },
   },
+  CreateStepInput: {
+    authorId: { __type: "ID" },
+    clientMutationId: { __type: "String" },
+    copy: { __type: "String" },
+    date: { __type: "String" },
+    heading: { __type: "String!" },
+    menuOrder: { __type: "Int" },
+    name: { __type: "String!" },
+    password: { __type: "String" },
+    slug: { __type: "String" },
+    status: { __type: "PostStatusEnum" },
+    step: { __type: "Float" },
+    title: { __type: "String" },
+  },
+  CreateStepPayload: {
+    __typename: { __type: "String!" },
+    clientMutationId: { __type: "String" },
+    step: { __type: "Step" },
+  },
   CreateTagInput: {
     aliasOf: { __type: "String" },
     clientMutationId: { __type: "String" },
@@ -9653,6 +10031,18 @@ export const generatedSchema = {
     clientMutationId: { __type: "String" },
     deletedId: { __type: "ID" },
     graphqlDocument: { __type: "GraphqlDocument" },
+  },
+  DeleteInstructionInput: {
+    clientMutationId: { __type: "String" },
+    forceDelete: { __type: "Boolean" },
+    id: { __type: "ID!" },
+    ignoreEditLock: { __type: "Boolean" },
+  },
+  DeleteInstructionPayload: {
+    __typename: { __type: "String!" },
+    clientMutationId: { __type: "String" },
+    deletedId: { __type: "ID" },
+    instruction: { __type: "Instruction" },
   },
   DeleteLinklibraryInput: {
     clientMutationId: { __type: "String" },
@@ -9791,6 +10181,18 @@ export const generatedSchema = {
     deletedId: { __type: "ID" },
     service: { __type: "Service" },
   },
+  DeleteStepInput: {
+    clientMutationId: { __type: "String" },
+    forceDelete: { __type: "Boolean" },
+    id: { __type: "ID!" },
+    ignoreEditLock: { __type: "Boolean" },
+  },
+  DeleteStepPayload: {
+    __typename: { __type: "String!" },
+    clientMutationId: { __type: "String" },
+    deletedId: { __type: "ID" },
+    step: { __type: "Step" },
+  },
   DeleteTagInput: {
     clientMutationId: { __type: "String" },
     id: { __type: "ID!" },
@@ -9912,6 +10314,11 @@ export const generatedSchema = {
     seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
     $on: { __type: "$EnqueuedStylesheetConnectionPageInfo!" },
+  },
+  EqualHeight: {
+    __typename: { __type: "String!" },
+    breakpoint: { __type: "Float" },
+    selector: { __type: "String" },
   },
   FAQs: {
     __typename: { __type: "String!" },
@@ -10115,6 +10522,30 @@ export const generatedSchema = {
     genesisBlocksMailchimpApiKey: { __type: "String" },
     genesisProSubscriptionKey: { __type: "String" },
   },
+  GenesisCustomBlocksAccordion: {
+    __typename: { __type: "String!" },
+    apiVersion: { __type: "Int" },
+    attributes: { __type: "GenesisCustomBlocksAccordionAttributes" },
+    blockEditorCategoryName: { __type: "String" },
+    clientId: { __type: "String" },
+    cssClassNames: { __type: "[String]" },
+    innerBlocks: { __type: "[EditorBlock]" },
+    isDynamic: { __type: "Boolean!" },
+    name: { __type: "String" },
+    parentClientId: { __type: "String" },
+    renderedHtml: { __type: "String" },
+  },
+  GenesisCustomBlocksAccordionAttributes: {
+    __typename: { __type: "String!" },
+    blockVisibility: { __type: "BlockAttributesObject" },
+    className: { __type: "String" },
+    content: { __type: "String" },
+    heading: { __type: "String" },
+    id: { __type: "String" },
+    lock: { __type: "BlockAttributesObject" },
+    startOpen: { __type: "Boolean" },
+    stayOpen: { __type: "Boolean" },
+  },
   GenesisCustomBlocksBio: {
     __typename: { __type: "String!" },
     apiVersion: { __type: "Int" },
@@ -10172,6 +10603,7 @@ export const generatedSchema = {
     blockVisibility: { __type: "BlockAttributesObject" },
     btnPosition: { __type: "String" },
     btnlinkColor: { __type: "String" },
+    btnlinkOnclick: { __type: "String" },
     btnlinkRewrite: { __type: "String" },
     btnlinkSize: { __type: "String" },
     btnlinkText: { __type: "String" },
@@ -10509,6 +10941,7 @@ export const generatedSchema = {
     className: { __type: "String" },
     compareType: { __type: "String" },
     dbhide: { __type: "String" },
+    decimals: { __type: "String" },
     hidebuttons: { __type: "String" },
     lock: { __type: "BlockAttributesObject" },
     productName: { __type: "String" },
@@ -10755,15 +11188,21 @@ export const generatedSchema = {
     blockVisibility: { __type: "BlockAttributesObject" },
     className: { __type: "String" },
     ctaCustomLink: { __type: "String" },
+    ctaCustomLink2: { __type: "String" },
     ctaLink: { __type: "String" },
+    ctaLink2: { __type: "String" },
     ctaText: { __type: "String" },
+    ctaText2: { __type: "String" },
     heading: { __type: "String" },
     heroBody: { __type: "String" },
     heroColor: { __type: "String" },
     heroImage: { __type: "Int" },
     lock: { __type: "BlockAttributesObject" },
     openNewTab: { __type: "String" },
+    openNewTabSecondary: { __type: "String" },
     preheading: { __type: "String" },
+    secondaryBtnlinkColor: { __type: "String" },
+    secondaryBtnlinkType: { __type: "String" },
   },
   GenesisCustomBlocksHeroImage: {
     __typename: { __type: "String!" },
@@ -10851,6 +11290,49 @@ export const generatedSchema = {
     blockVisibility: { __type: "BlockAttributesObject" },
     className: { __type: "String" },
     hours: { __type: "String" },
+    lock: { __type: "BlockAttributesObject" },
+  },
+  GenesisCustomBlocksHoursToggle: {
+    __typename: { __type: "String!" },
+    apiVersion: { __type: "Int" },
+    attributes: { __type: "GenesisCustomBlocksHoursToggleAttributes" },
+    blockEditorCategoryName: { __type: "String" },
+    clientId: { __type: "String" },
+    cssClassNames: { __type: "[String]" },
+    innerBlocks: { __type: "[EditorBlock]" },
+    isDynamic: { __type: "Boolean!" },
+    name: { __type: "String" },
+    parentClientId: { __type: "String" },
+    renderedHtml: { __type: "String" },
+  },
+  GenesisCustomBlocksHoursToggleAttributes: {
+    __typename: { __type: "String!" },
+    blockVisibility: { __type: "BlockAttributesObject" },
+    className: { __type: "String" },
+    content: { __type: "String" },
+    hours: { __type: "String" },
+    lock: { __type: "BlockAttributesObject" },
+  },
+  GenesisCustomBlocksIconSection: {
+    __typename: { __type: "String!" },
+    apiVersion: { __type: "Int" },
+    attributes: { __type: "GenesisCustomBlocksIconSectionAttributes" },
+    blockEditorCategoryName: { __type: "String" },
+    clientId: { __type: "String" },
+    cssClassNames: { __type: "[String]" },
+    innerBlocks: { __type: "[EditorBlock]" },
+    isDynamic: { __type: "Boolean!" },
+    name: { __type: "String" },
+    parentClientId: { __type: "String" },
+    renderedHtml: { __type: "String" },
+  },
+  GenesisCustomBlocksIconSectionAttributes: {
+    __typename: { __type: "String!" },
+    blockVisibility: { __type: "BlockAttributesObject" },
+    className: { __type: "String" },
+    content: { __type: "String" },
+    hideHeading: { __type: "Boolean" },
+    icon: { __type: "String" },
     lock: { __type: "BlockAttributesObject" },
   },
   GenesisCustomBlocksIcons: {
@@ -11136,6 +11618,26 @@ export const generatedSchema = {
     link: { __type: "String" },
     lock: { __type: "BlockAttributesObject" },
   },
+  GenesisCustomBlocksRatesTable: {
+    __typename: { __type: "String!" },
+    apiVersion: { __type: "Int" },
+    attributes: { __type: "GenesisCustomBlocksRatesTableAttributes" },
+    blockEditorCategoryName: { __type: "String" },
+    clientId: { __type: "String" },
+    cssClassNames: { __type: "[String]" },
+    innerBlocks: { __type: "[EditorBlock]" },
+    isDynamic: { __type: "Boolean!" },
+    name: { __type: "String" },
+    parentClientId: { __type: "String" },
+    renderedHtml: { __type: "String" },
+  },
+  GenesisCustomBlocksRatesTableAttributes: {
+    __typename: { __type: "String!" },
+    blockVisibility: { __type: "BlockAttributesObject" },
+    className: { __type: "String" },
+    lock: { __type: "BlockAttributesObject" },
+    product: { __type: "String" },
+  },
   GenesisCustomBlocksSidekick: {
     __typename: { __type: "String!" },
     apiVersion: { __type: "Int" },
@@ -11224,9 +11726,14 @@ export const generatedSchema = {
   GenesisCustomBlocksTableAttributes: {
     __typename: { __type: "String!" },
     blockVisibility: { __type: "BlockAttributesObject" },
+    cellpadding: { __type: "String" },
     className: { __type: "String" },
+    header: { __type: "String" },
     id: { __type: "String" },
     lock: { __type: "BlockAttributesObject" },
+    rows: { __type: "String" },
+    tableFont: { __type: "String" },
+    tableWidth: { __type: "String" },
     variant: { __type: "String" },
   },
   GenesisCustomBlocksTaglessText: {
@@ -11646,6 +12153,107 @@ export const generatedSchema = {
     uri: { __type: "String" },
     $on: { __type: "$HierarchicalTermNode!" },
   },
+  Instruction: {
+    __typename: { __type: "String!" },
+    author: { __type: "NodeWithAuthorToUserConnectionEdge" },
+    authorDatabaseId: { __type: "Int" },
+    authorId: { __type: "ID" },
+    conditionalTags: { __type: "ConditionalTags" },
+    contentType: { __type: "ContentNodeToContentTypeConnectionEdge" },
+    contentTypeName: { __type: "String!" },
+    databaseId: { __type: "Int!" },
+    date: { __type: "String" },
+    dateGmt: { __type: "String" },
+    desiredSlug: { __type: "String" },
+    displayName: { __type: "String" },
+    editingLockedBy: { __type: "ContentNodeToEditLockConnectionEdge" },
+    enclosure: { __type: "String" },
+    enqueuedScripts: {
+      __type: "ContentNodeToEnqueuedScriptConnection",
+      __args: { after: "String", before: "String", first: "Int", last: "Int" },
+    },
+    enqueuedStylesheets: {
+      __type: "ContentNodeToEnqueuedStylesheetConnection",
+      __args: { after: "String", before: "String", first: "Int", last: "Int" },
+    },
+    guid: { __type: "String" },
+    id: { __type: "ID!" },
+    instructionId: { __type: "Int!" },
+    isContentNode: { __type: "Boolean!" },
+    isPreview: { __type: "Boolean" },
+    isRestricted: { __type: "Boolean" },
+    isTermNode: { __type: "Boolean!" },
+    lastEditedBy: { __type: "ContentNodeToEditLastConnectionEdge" },
+    link: { __type: "String" },
+    modified: { __type: "String" },
+    modifiedGmt: { __type: "String" },
+    name: { __type: "String" },
+    preview: { __type: "InstructionToPreviewConnectionEdge" },
+    previewRevisionDatabaseId: { __type: "Int" },
+    previewRevisionId: { __type: "ID" },
+    seo: { __type: "PostTypeSEO" },
+    slug: { __type: "String" },
+    status: { __type: "String" },
+    steps: {
+      __type: "InstructionToStepConnection",
+      __args: { after: "String", before: "String", first: "Int", last: "Int" },
+    },
+    template: { __type: "ContentTemplate" },
+    templates: { __type: "[String]" },
+    title: {
+      __type: "String",
+      __args: { format: "PostObjectFieldFormatEnum" },
+    },
+    uri: { __type: "String" },
+  },
+  InstructionConnection: {
+    __typename: { __type: "String!" },
+    edges: { __type: "[InstructionConnectionEdge!]!" },
+    nodes: { __type: "[Instruction!]!" },
+    pageInfo: { __type: "InstructionConnectionPageInfo!" },
+    $on: { __type: "$InstructionConnection!" },
+  },
+  InstructionConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "Instruction!" },
+    $on: { __type: "$InstructionConnectionEdge!" },
+  },
+  InstructionConnectionPageInfo: {
+    __typename: { __type: "String!" },
+    endCursor: { __type: "String" },
+    hasNextPage: { __type: "Boolean!" },
+    hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
+    startCursor: { __type: "String" },
+    $on: { __type: "$InstructionConnectionPageInfo!" },
+  },
+  InstructionToPreviewConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "Instruction!" },
+  },
+  InstructionToStepConnection: {
+    __typename: { __type: "String!" },
+    edges: { __type: "[InstructionToStepConnectionEdge!]!" },
+    nodes: { __type: "[Step!]!" },
+    pageInfo: { __type: "InstructionToStepConnectionPageInfo!" },
+  },
+  InstructionToStepConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "Step!" },
+  },
+  InstructionToStepConnectionPageInfo: {
+    __typename: { __type: "String!" },
+    endCursor: { __type: "String" },
+    hasNextPage: { __type: "Boolean!" },
+    hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
+    startCursor: { __type: "String" },
+  },
   LinkLibraryAddlinkBlock: {
     __typename: { __type: "String!" },
     apiVersion: { __type: "Int" },
@@ -11976,6 +12584,7 @@ export const generatedSchema = {
     date: { __type: "String" },
     dateGmt: { __type: "String" },
     desiredSlug: { __type: "String" },
+    details: { __type: "LocationDetails" },
     editingLockedBy: { __type: "ContentNodeToEditLockConnectionEdge" },
     editorBlocks: { __type: "[EditorBlock]", __args: { flat: "Boolean" } },
     enclosure: { __type: "String" },
@@ -12333,6 +12942,23 @@ export const generatedSchema = {
     startCursor: { __type: "String" },
     $on: { __type: "$LocationConnectionPageInfo!" },
   },
+  LocationDetails: {
+    __typename: { __type: "String!" },
+    address: { __type: "String" },
+    city: { __type: "String" },
+    contact: { __type: "String" },
+    driveThruHoursHTML: { __type: "String" },
+    lat: { __type: "String" },
+    lng: { __type: "String" },
+    lobbyHoursHTML: { __type: "String" },
+    services: { __type: "String" },
+    specialHoursHTML: { __type: "String" },
+    specialMessage: { __type: "String" },
+    specialMessageTitle: { __type: "String" },
+    specialMessageType: { __type: "String" },
+    state: { __type: "String" },
+    zip: { __type: "String" },
+  },
   LocationLocationCategoriesInput: {
     append: { __type: "Boolean" },
     nodes: { __type: "[LocationLocationCategoriesNodeInput]" },
@@ -12395,7 +13021,7 @@ export const generatedSchema = {
     mapType: { __type: "String" },
     markerClusters: { __type: "Int" },
     markerEffect: { __type: "String" },
-    markerIconProps: { __type: "String" },
+    markerIconProps: { __type: "Boolean" },
     markerStreetview: { __type: "Int" },
     markerZoomTo: { __type: "Int" },
     maxResults: { __type: "String" },
@@ -14992,6 +15618,50 @@ export const generatedSchema = {
     status: { __type: "PostStatusEnum" },
     title: { __type: "String" },
   },
+  RootQueryToInstructionConnection: {
+    __typename: { __type: "String!" },
+    edges: { __type: "[RootQueryToInstructionConnectionEdge!]!" },
+    nodes: { __type: "[Instruction!]!" },
+    pageInfo: { __type: "RootQueryToInstructionConnectionPageInfo!" },
+  },
+  RootQueryToInstructionConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "Instruction!" },
+  },
+  RootQueryToInstructionConnectionPageInfo: {
+    __typename: { __type: "String!" },
+    endCursor: { __type: "String" },
+    hasNextPage: { __type: "Boolean!" },
+    hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
+    startCursor: { __type: "String" },
+  },
+  RootQueryToInstructionConnectionWhereArgs: {
+    author: { __type: "Int" },
+    authorIn: { __type: "[ID]" },
+    authorName: { __type: "String" },
+    authorNotIn: { __type: "[ID]" },
+    dateQuery: { __type: "DateQueryInput" },
+    hasPassword: { __type: "Boolean" },
+    id: { __type: "Int" },
+    in: { __type: "[ID]" },
+    mimeType: { __type: "MimeTypeEnum" },
+    name: { __type: "String" },
+    nameIn: { __type: "[String]" },
+    notIn: { __type: "[ID]" },
+    offsetPagination: { __type: "OffsetPagination" },
+    orderby: { __type: "[PostObjectsConnectionOrderbyInput]" },
+    parent: { __type: "ID" },
+    parentIn: { __type: "[ID]" },
+    parentNotIn: { __type: "[ID]" },
+    password: { __type: "String" },
+    search: { __type: "String" },
+    stati: { __type: "[PostStatusEnum]" },
+    status: { __type: "PostStatusEnum" },
+    title: { __type: "String" },
+  },
   RootQueryToLinklibraryConnection: {
     __typename: { __type: "String!" },
     edges: { __type: "[RootQueryToLinklibraryConnectionEdge!]!" },
@@ -15639,6 +16309,50 @@ export const generatedSchema = {
     status: { __type: "PostStatusEnum" },
     title: { __type: "String" },
   },
+  RootQueryToStepConnection: {
+    __typename: { __type: "String!" },
+    edges: { __type: "[RootQueryToStepConnectionEdge!]!" },
+    nodes: { __type: "[Step!]!" },
+    pageInfo: { __type: "RootQueryToStepConnectionPageInfo!" },
+  },
+  RootQueryToStepConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "Step!" },
+  },
+  RootQueryToStepConnectionPageInfo: {
+    __typename: { __type: "String!" },
+    endCursor: { __type: "String" },
+    hasNextPage: { __type: "Boolean!" },
+    hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
+    startCursor: { __type: "String" },
+  },
+  RootQueryToStepConnectionWhereArgs: {
+    author: { __type: "Int" },
+    authorIn: { __type: "[ID]" },
+    authorName: { __type: "String" },
+    authorNotIn: { __type: "[ID]" },
+    dateQuery: { __type: "DateQueryInput" },
+    hasPassword: { __type: "Boolean" },
+    id: { __type: "Int" },
+    in: { __type: "[ID]" },
+    mimeType: { __type: "MimeTypeEnum" },
+    name: { __type: "String" },
+    nameIn: { __type: "[String]" },
+    notIn: { __type: "[ID]" },
+    offsetPagination: { __type: "OffsetPagination" },
+    orderby: { __type: "[PostObjectsConnectionOrderbyInput]" },
+    parent: { __type: "ID" },
+    parentIn: { __type: "[ID]" },
+    parentNotIn: { __type: "[ID]" },
+    password: { __type: "String" },
+    search: { __type: "String" },
+    stati: { __type: "[PostStatusEnum]" },
+    status: { __type: "PostStatusEnum" },
+    title: { __type: "String" },
+  },
   RootQueryToTagConnection: {
     __typename: { __type: "String!" },
     edges: { __type: "[RootQueryToTagConnectionEdge!]!" },
@@ -15874,6 +16588,7 @@ export const generatedSchema = {
     cXAlert: { __type: "SEOContentType" },
     contact: { __type: "SEOContentType" },
     graphqlDocument: { __type: "SEOContentType" },
+    instruction: { __type: "SEOContentType" },
     linklibrary: { __type: "SEOContentType" },
     location: { __type: "SEOContentType" },
     mediaItem: { __type: "SEOContentType" },
@@ -15883,6 +16598,7 @@ export const generatedSchema = {
     rate: { __type: "SEOContentType" },
     searchWidget: { __type: "SEOContentType" },
     service: { __type: "SEOContentType" },
+    step: { __type: "SEOContentType" },
   },
   SEOGlobalMeta: {
     __typename: { __type: "String!" },
@@ -16302,6 +17018,86 @@ export const generatedSchema = {
   Shortcode: {
     __typename: { __type: "String!" },
     content: { __type: "String" },
+  },
+  Step: {
+    __typename: { __type: "String!" },
+    author: { __type: "NodeWithAuthorToUserConnectionEdge" },
+    authorDatabaseId: { __type: "Int" },
+    authorId: { __type: "ID" },
+    conditionalTags: { __type: "ConditionalTags" },
+    contentType: { __type: "ContentNodeToContentTypeConnectionEdge" },
+    contentTypeName: { __type: "String!" },
+    copy: { __type: "String" },
+    databaseId: { __type: "Int!" },
+    date: { __type: "String" },
+    dateGmt: { __type: "String" },
+    desiredSlug: { __type: "String" },
+    editingLockedBy: { __type: "ContentNodeToEditLockConnectionEdge" },
+    enclosure: { __type: "String" },
+    enqueuedScripts: {
+      __type: "ContentNodeToEnqueuedScriptConnection",
+      __args: { after: "String", before: "String", first: "Int", last: "Int" },
+    },
+    enqueuedStylesheets: {
+      __type: "ContentNodeToEnqueuedStylesheetConnection",
+      __args: { after: "String", before: "String", first: "Int", last: "Int" },
+    },
+    guid: { __type: "String" },
+    heading: { __type: "String" },
+    id: { __type: "ID!" },
+    image: { __type: "MediaItem" },
+    isContentNode: { __type: "Boolean!" },
+    isPreview: { __type: "Boolean" },
+    isRestricted: { __type: "Boolean" },
+    isTermNode: { __type: "Boolean!" },
+    lastEditedBy: { __type: "ContentNodeToEditLastConnectionEdge" },
+    link: { __type: "String" },
+    modified: { __type: "String" },
+    modifiedGmt: { __type: "String" },
+    name: { __type: "String" },
+    preview: { __type: "StepToPreviewConnectionEdge" },
+    previewRevisionDatabaseId: { __type: "Int" },
+    previewRevisionId: { __type: "ID" },
+    seo: { __type: "PostTypeSEO" },
+    slug: { __type: "String" },
+    status: { __type: "String" },
+    step: { __type: "Float" },
+    stepId: { __type: "Int!" },
+    template: { __type: "ContentTemplate" },
+    templates: { __type: "[String]" },
+    title: {
+      __type: "String",
+      __args: { format: "PostObjectFieldFormatEnum" },
+    },
+    uri: { __type: "String" },
+  },
+  StepConnection: {
+    __typename: { __type: "String!" },
+    edges: { __type: "[StepConnectionEdge!]!" },
+    nodes: { __type: "[Step!]!" },
+    pageInfo: { __type: "StepConnectionPageInfo!" },
+    $on: { __type: "$StepConnection!" },
+  },
+  StepConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "Step!" },
+    $on: { __type: "$StepConnectionEdge!" },
+  },
+  StepConnectionPageInfo: {
+    __typename: { __type: "String!" },
+    endCursor: { __type: "String" },
+    hasNextPage: { __type: "Boolean!" },
+    hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
+    startCursor: { __type: "String" },
+    $on: { __type: "$StepConnectionPageInfo!" },
+  },
+  StepToPreviewConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "Step!" },
   },
   TablepressTable: {
     __typename: { __type: "String!" },
@@ -16969,6 +17765,25 @@ export const generatedSchema = {
     clientMutationId: { __type: "String" },
     graphqlDocument: { __type: "GraphqlDocument" },
   },
+  UpdateInstructionInput: {
+    authorId: { __type: "ID" },
+    clientMutationId: { __type: "String" },
+    date: { __type: "String" },
+    displayName: { __type: "String" },
+    id: { __type: "ID!" },
+    ignoreEditLock: { __type: "Boolean" },
+    menuOrder: { __type: "Int" },
+    name: { __type: "String" },
+    password: { __type: "String" },
+    slug: { __type: "String" },
+    status: { __type: "PostStatusEnum" },
+    title: { __type: "String" },
+  },
+  UpdateInstructionPayload: {
+    __typename: { __type: "String!" },
+    clientMutationId: { __type: "String" },
+    instruction: { __type: "Instruction" },
+  },
   UpdateLinklibraryInput: {
     clientMutationId: { __type: "String" },
     commentStatus: { __type: "String" },
@@ -17273,6 +18088,27 @@ export const generatedSchema = {
     widgetSettings: { __type: "WidgetSettings" },
     writingSettings: { __type: "WritingSettings" },
   },
+  UpdateStepInput: {
+    authorId: { __type: "ID" },
+    clientMutationId: { __type: "String" },
+    copy: { __type: "String" },
+    date: { __type: "String" },
+    heading: { __type: "String" },
+    id: { __type: "ID!" },
+    ignoreEditLock: { __type: "Boolean" },
+    menuOrder: { __type: "Int" },
+    name: { __type: "String" },
+    password: { __type: "String" },
+    slug: { __type: "String" },
+    status: { __type: "PostStatusEnum" },
+    step: { __type: "Float" },
+    title: { __type: "String" },
+  },
+  UpdateStepPayload: {
+    __typename: { __type: "String!" },
+    clientMutationId: { __type: "String" },
+    step: { __type: "Step" },
+  },
   UpdateTagInput: {
     aliasOf: { __type: "String" },
     clientMutationId: { __type: "String" },
@@ -17358,6 +18194,16 @@ export const generatedSchema = {
     extraCapabilities: { __type: "[String]" },
     firstName: { __type: "String" },
     id: { __type: "ID!" },
+    instructions: {
+      __type: "UserToInstructionConnection",
+      __args: {
+        after: "String",
+        before: "String",
+        first: "Int",
+        last: "Int",
+        where: "UserToInstructionConnectionWhereArgs",
+      },
+    },
     isContentNode: { __type: "Boolean!" },
     isRestricted: { __type: "Boolean" },
     isTermNode: { __type: "Boolean!" },
@@ -17464,6 +18310,16 @@ export const generatedSchema = {
     },
     shouldShowAdminToolbar: { __type: "Boolean" },
     slug: { __type: "String" },
+    steps: {
+      __type: "UserToStepConnection",
+      __args: {
+        after: "String",
+        before: "String",
+        first: "Int",
+        last: "Int",
+        where: "UserToStepConnectionWhereArgs",
+      },
+    },
     templates: { __type: "[String]" },
     uri: { __type: "String" },
     url: { __type: "String" },
@@ -17657,6 +18513,49 @@ export const generatedSchema = {
     offsetPagination: { __type: "OffsetPaginationPageInfo" },
     seo: { __type: "SEOPostTypePageInfo" },
     startCursor: { __type: "String" },
+  },
+  UserToInstructionConnection: {
+    __typename: { __type: "String!" },
+    edges: { __type: "[UserToInstructionConnectionEdge!]!" },
+    nodes: { __type: "[Instruction!]!" },
+    pageInfo: { __type: "UserToInstructionConnectionPageInfo!" },
+  },
+  UserToInstructionConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "Instruction!" },
+  },
+  UserToInstructionConnectionPageInfo: {
+    __typename: { __type: "String!" },
+    endCursor: { __type: "String" },
+    hasNextPage: { __type: "Boolean!" },
+    hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
+    startCursor: { __type: "String" },
+  },
+  UserToInstructionConnectionWhereArgs: {
+    author: { __type: "Int" },
+    authorIn: { __type: "[ID]" },
+    authorName: { __type: "String" },
+    authorNotIn: { __type: "[ID]" },
+    dateQuery: { __type: "DateQueryInput" },
+    hasPassword: { __type: "Boolean" },
+    id: { __type: "Int" },
+    in: { __type: "[ID]" },
+    mimeType: { __type: "MimeTypeEnum" },
+    name: { __type: "String" },
+    nameIn: { __type: "[String]" },
+    notIn: { __type: "[ID]" },
+    orderby: { __type: "[PostObjectsConnectionOrderbyInput]" },
+    parent: { __type: "ID" },
+    parentIn: { __type: "[ID]" },
+    parentNotIn: { __type: "[ID]" },
+    password: { __type: "String" },
+    search: { __type: "String" },
+    stati: { __type: "[PostStatusEnum]" },
+    status: { __type: "PostStatusEnum" },
+    title: { __type: "String" },
   },
   UserToLocationConnection: {
     __typename: { __type: "String!" },
@@ -18052,6 +18951,49 @@ export const generatedSchema = {
     status: { __type: "PostStatusEnum" },
     title: { __type: "String" },
   },
+  UserToStepConnection: {
+    __typename: { __type: "String!" },
+    edges: { __type: "[UserToStepConnectionEdge!]!" },
+    nodes: { __type: "[Step!]!" },
+    pageInfo: { __type: "UserToStepConnectionPageInfo!" },
+  },
+  UserToStepConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "Step!" },
+  },
+  UserToStepConnectionPageInfo: {
+    __typename: { __type: "String!" },
+    endCursor: { __type: "String" },
+    hasNextPage: { __type: "Boolean!" },
+    hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
+    startCursor: { __type: "String" },
+  },
+  UserToStepConnectionWhereArgs: {
+    author: { __type: "Int" },
+    authorIn: { __type: "[ID]" },
+    authorName: { __type: "String" },
+    authorNotIn: { __type: "[ID]" },
+    dateQuery: { __type: "DateQueryInput" },
+    hasPassword: { __type: "Boolean" },
+    id: { __type: "Int" },
+    in: { __type: "[ID]" },
+    mimeType: { __type: "MimeTypeEnum" },
+    name: { __type: "String" },
+    nameIn: { __type: "[String]" },
+    notIn: { __type: "[ID]" },
+    orderby: { __type: "[PostObjectsConnectionOrderbyInput]" },
+    parent: { __type: "ID" },
+    parentIn: { __type: "[ID]" },
+    parentNotIn: { __type: "[ID]" },
+    password: { __type: "String" },
+    search: { __type: "String" },
+    stati: { __type: "[PostStatusEnum]" },
+    status: { __type: "PostStatusEnum" },
+    title: { __type: "String" },
+  },
   UserToUserRoleConnection: {
     __typename: { __type: "String!" },
     edges: { __type: "[UserToUserRoleConnectionEdge!]!" },
@@ -18093,6 +19035,7 @@ export const generatedSchema = {
     applyStart: { __type: "String", __args: { account: "String" } },
     blogSidebar: { __type: "String" },
     blogtop: { __type: "String" },
+    locationsSearch: { __type: "String" },
     widgetSettings: { __type: "String" },
   },
   WritingSettings: {
@@ -18193,6 +19136,10 @@ export const generatedSchema = {
       __type: "CreateGraphqlDocumentPayload",
       __args: { input: "CreateGraphqlDocumentInput!" },
     },
+    createInstruction: {
+      __type: "CreateInstructionPayload",
+      __args: { input: "CreateInstructionInput!" },
+    },
     createLinklibrary: {
       __type: "CreateLinklibraryPayload",
       __args: { input: "CreateLinklibraryInput!" },
@@ -18241,6 +19188,10 @@ export const generatedSchema = {
       __type: "CreateServicePayload",
       __args: { input: "CreateServiceInput!" },
     },
+    createStep: {
+      __type: "CreateStepPayload",
+      __args: { input: "CreateStepInput!" },
+    },
     createTag: {
       __type: "CreateTagPayload",
       __args: { input: "CreateTagInput!" },
@@ -18268,6 +19219,10 @@ export const generatedSchema = {
     deleteGraphqlDocument: {
       __type: "DeleteGraphqlDocumentPayload",
       __args: { input: "DeleteGraphqlDocumentInput!" },
+    },
+    deleteInstruction: {
+      __type: "DeleteInstructionPayload",
+      __args: { input: "DeleteInstructionInput!" },
     },
     deleteLinklibrary: {
       __type: "DeleteLinklibraryPayload",
@@ -18317,6 +19272,10 @@ export const generatedSchema = {
       __type: "DeleteServicePayload",
       __args: { input: "DeleteServiceInput!" },
     },
+    deleteStep: {
+      __type: "DeleteStepPayload",
+      __args: { input: "DeleteStepInput!" },
+    },
     deleteTag: {
       __type: "DeleteTagPayload",
       __args: { input: "DeleteTagInput!" },
@@ -18365,6 +19324,10 @@ export const generatedSchema = {
     updateGraphqlDocument: {
       __type: "UpdateGraphqlDocumentPayload",
       __args: { input: "UpdateGraphqlDocumentInput!" },
+    },
+    updateInstruction: {
+      __type: "UpdateInstructionPayload",
+      __args: { input: "UpdateInstructionInput!" },
     },
     updateLinklibrary: {
       __type: "UpdateLinklibraryPayload",
@@ -18417,6 +19380,10 @@ export const generatedSchema = {
     updateSettings: {
       __type: "UpdateSettingsPayload",
       __args: { input: "UpdateSettingsInput!" },
+    },
+    updateStep: {
+      __type: "UpdateStepPayload",
+      __args: { input: "UpdateStepInput!" },
     },
     updateTag: {
       __type: "UpdateTagPayload",
@@ -18535,6 +19502,7 @@ export const generatedSchema = {
       __args: { after: "String", before: "String", first: "Int", last: "Int" },
     },
     discussionSettings: { __type: "DiscussionSettings" },
+    equalHeightColumns: { __type: "[EqualHeight]" },
     faq: { __type: "FAQs", __args: { faqId: "Float" } },
     footerSettings: { __type: "FooterSettings" },
     generalSettings: { __type: "GeneralSettings" },
@@ -18570,6 +19538,24 @@ export const generatedSchema = {
       },
     },
     headerSettings: { __type: "HeaderSettings" },
+    instruction: {
+      __type: "Instruction",
+      __args: { asPreview: "Boolean", id: "ID!", idType: "InstructionIdType" },
+    },
+    instructionBy: {
+      __type: "Instruction",
+      __args: { id: "ID", instructionId: "Int", slug: "String", uri: "String" },
+    },
+    instructions: {
+      __type: "RootQueryToInstructionConnection",
+      __args: {
+        after: "String",
+        before: "String",
+        first: "Int",
+        last: "Int",
+        where: "RootQueryToInstructionConnectionWhereArgs",
+      },
+    },
     linkLibraryByCatId: {
       __type: "[LinkLibraryLink]",
       __args: { catId: "Float" },
@@ -18718,6 +19704,7 @@ export const generatedSchema = {
         where: "RootQueryToPostFormatConnectionWhereArgs",
       },
     },
+    postPreview: { __type: "Page", __args: { pageId: "String" } },
     posts: {
       __type: "RootQueryToPostConnection",
       __args: {
@@ -18846,6 +19833,24 @@ export const generatedSchema = {
       },
     },
     shortcode: { __type: "Shortcode", __args: { shortcode: "String" } },
+    step: {
+      __type: "Step",
+      __args: { asPreview: "Boolean", id: "ID!", idType: "StepIdType" },
+    },
+    stepBy: {
+      __type: "Step",
+      __args: { id: "ID", slug: "String", stepId: "Int", uri: "String" },
+    },
+    steps: {
+      __type: "RootQueryToStepConnection",
+      __args: {
+        after: "String",
+        before: "String",
+        first: "Int",
+        last: "Int",
+        where: "RootQueryToStepConnectionWhereArgs",
+      },
+    },
     tag: { __type: "Tag", __args: { id: "ID!", idType: "TagIdType" } },
     tags: {
       __type: "RootQueryToTagConnection",
@@ -18918,6 +19923,7 @@ export const generatedSchema = {
       "CXAlert",
       "Contact",
       "GraphqlDocument",
+      "Instruction",
       "Linklibrary",
       "Location",
       "MediaItem",
@@ -18927,6 +19933,7 @@ export const generatedSchema = {
       "Rate",
       "SearchWidget",
       "Service",
+      "Step",
     ],
     DatabaseIdentifier: [
       "CXAlert",
@@ -18935,6 +19942,7 @@ export const generatedSchema = {
       "CommentAuthor",
       "Contact",
       "GraphqlDocument",
+      "Instruction",
       "Linklibrary",
       "Location",
       "LocationCategory",
@@ -18949,6 +19957,7 @@ export const generatedSchema = {
       "Rate",
       "SearchWidget",
       "Service",
+      "Step",
       "Tag",
       "User",
     ],
@@ -18972,6 +19981,7 @@ export const generatedSchema = {
       "EnqueuedScript",
       "EnqueuedStylesheet",
       "GraphqlDocument",
+      "Instruction",
       "Linklibrary",
       "Location",
       "LocationCategory",
@@ -18987,6 +19997,7 @@ export const generatedSchema = {
       "Rate",
       "SearchWidget",
       "Service",
+      "Step",
       "Tag",
       "Taxonomy",
       "Theme",
@@ -18999,6 +20010,7 @@ export const generatedSchema = {
       "CXAlert",
       "Contact",
       "GraphqlDocument",
+      "Instruction",
       "Linklibrary",
       "Location",
       "MediaItem",
@@ -19008,11 +20020,13 @@ export const generatedSchema = {
       "Rate",
       "SearchWidget",
       "Service",
+      "Step",
     ],
     NodeWithTitle: [
       "CXAlert",
       "Contact",
       "GraphqlDocument",
+      "Instruction",
       "Linklibrary",
       "Location",
       "MediaItem",
@@ -19022,10 +20036,12 @@ export const generatedSchema = {
       "Rate",
       "SearchWidget",
       "Service",
+      "Step",
     ],
     Previewable: [
       "CXAlert",
       "Contact",
+      "Instruction",
       "Location",
       "Page",
       "Post",
@@ -19033,6 +20049,7 @@ export const generatedSchema = {
       "Rate",
       "SearchWidget",
       "Service",
+      "Step",
     ],
     UniformResourceIdentifiable: [
       "CXAlert",
@@ -19040,6 +20057,7 @@ export const generatedSchema = {
       "Contact",
       "ContentType",
       "GraphqlDocument",
+      "Instruction",
       "Linklibrary",
       "Location",
       "LocationCategory",
@@ -19052,6 +20070,7 @@ export const generatedSchema = {
       "Rate",
       "SearchWidget",
       "Service",
+      "Step",
       "Tag",
       "User",
     ],
@@ -19085,6 +20104,8 @@ export const generatedSchema = {
       "HierarchicalContentNodeToContentNodeAncestorsConnectionEdge",
       "HierarchicalContentNodeToContentNodeChildrenConnectionEdge",
       "HierarchicalContentNodeToParentContentNodeConnectionEdge",
+      "InstructionToPreviewConnectionEdge",
+      "InstructionToStepConnectionEdge",
       "LinklibraryToCommentConnectionEdge",
       "LinklibraryToPreviewConnectionEdge",
       "LocationCategoryToAncestorsLocationCategoryConnectionEdge",
@@ -19136,6 +20157,7 @@ export const generatedSchema = {
       "RootQueryToEnqueuedScriptConnectionEdge",
       "RootQueryToEnqueuedStylesheetConnectionEdge",
       "RootQueryToGraphqlDocumentConnectionEdge",
+      "RootQueryToInstructionConnectionEdge",
       "RootQueryToLinklibraryConnectionEdge",
       "RootQueryToLocationCategoryConnectionEdge",
       "RootQueryToLocationConnectionEdge",
@@ -19152,6 +20174,7 @@ export const generatedSchema = {
       "RootQueryToRevisionsConnectionEdge",
       "RootQueryToSearchWidgetConnectionEdge",
       "RootQueryToServiceConnectionEdge",
+      "RootQueryToStepConnectionEdge",
       "RootQueryToTagConnectionEdge",
       "RootQueryToTaxonomyConnectionEdge",
       "RootQueryToTermNodeConnectionEdge",
@@ -19160,6 +20183,7 @@ export const generatedSchema = {
       "RootQueryToUserRoleConnectionEdge",
       "SearchWidgetToPreviewConnectionEdge",
       "ServiceToPreviewConnectionEdge",
+      "StepToPreviewConnectionEdge",
       "TagToContentNodeConnectionEdge",
       "TagToPostConnectionEdge",
       "TagToTaxonomyConnectionEdge",
@@ -19170,6 +20194,7 @@ export const generatedSchema = {
       "UserToContactConnectionEdge",
       "UserToEnqueuedScriptConnectionEdge",
       "UserToEnqueuedStylesheetConnectionEdge",
+      "UserToInstructionConnectionEdge",
       "UserToLocationConnectionEdge",
       "UserToMediaItemConnectionEdge",
       "UserToPageConnectionEdge",
@@ -19179,6 +20204,7 @@ export const generatedSchema = {
       "UserToRevisionsConnectionEdge",
       "UserToSearchWidgetConnectionEdge",
       "UserToServiceConnectionEdge",
+      "UserToStepConnectionEdge",
       "UserToUserRoleConnectionEdge",
     ],
     OneToOneConnection: [
@@ -19194,6 +20220,7 @@ export const generatedSchema = {
       "ContentNodeToEditLockConnectionEdge",
       "GraphqlDocumentToPreviewConnectionEdge",
       "HierarchicalContentNodeToParentContentNodeConnectionEdge",
+      "InstructionToPreviewConnectionEdge",
       "LinklibraryToPreviewConnectionEdge",
       "LocationCategoryToParentLocationCategoryConnectionEdge",
       "LocationCategoryToTaxonomyConnectionEdge",
@@ -19211,6 +20238,7 @@ export const generatedSchema = {
       "RateToPreviewConnectionEdge",
       "SearchWidgetToPreviewConnectionEdge",
       "ServiceToPreviewConnectionEdge",
+      "StepToPreviewConnectionEdge",
       "TagToTaxonomyConnectionEdge",
     ],
     CXAlertConnection: [
@@ -19230,6 +20258,7 @@ export const generatedSchema = {
       "ContentTypeToTaxonomyConnection",
       "HierarchicalContentNodeToContentNodeAncestorsConnection",
       "HierarchicalContentNodeToContentNodeChildrenConnection",
+      "InstructionToStepConnection",
       "LinklibraryToCommentConnection",
       "LocationCategoryToAncestorsLocationCategoryConnection",
       "LocationCategoryToContentNodeConnection",
@@ -19266,6 +20295,7 @@ export const generatedSchema = {
       "RootQueryToEnqueuedScriptConnection",
       "RootQueryToEnqueuedStylesheetConnection",
       "RootQueryToGraphqlDocumentConnection",
+      "RootQueryToInstructionConnection",
       "RootQueryToLinklibraryConnection",
       "RootQueryToLocationCategoryConnection",
       "RootQueryToLocationConnection",
@@ -19282,6 +20312,7 @@ export const generatedSchema = {
       "RootQueryToRevisionsConnection",
       "RootQueryToSearchWidgetConnection",
       "RootQueryToServiceConnection",
+      "RootQueryToStepConnection",
       "RootQueryToTagConnection",
       "RootQueryToTaxonomyConnection",
       "RootQueryToTermNodeConnection",
@@ -19297,6 +20328,7 @@ export const generatedSchema = {
       "UserToContactConnection",
       "UserToEnqueuedScriptConnection",
       "UserToEnqueuedStylesheetConnection",
+      "UserToInstructionConnection",
       "UserToLocationConnection",
       "UserToMediaItemConnection",
       "UserToPageConnection",
@@ -19306,6 +20338,7 @@ export const generatedSchema = {
       "UserToRevisionsConnection",
       "UserToSearchWidgetConnection",
       "UserToServiceConnection",
+      "UserToStepConnection",
       "UserToUserRoleConnection",
     ],
     CXAlertConnectionPageInfo: [
@@ -19325,6 +20358,7 @@ export const generatedSchema = {
       "ContentTypeToTaxonomyConnectionPageInfo",
       "HierarchicalContentNodeToContentNodeAncestorsConnectionPageInfo",
       "HierarchicalContentNodeToContentNodeChildrenConnectionPageInfo",
+      "InstructionToStepConnectionPageInfo",
       "LinklibraryToCommentConnectionPageInfo",
       "LocationCategoryToAncestorsLocationCategoryConnectionPageInfo",
       "LocationCategoryToContentNodeConnectionPageInfo",
@@ -19361,6 +20395,7 @@ export const generatedSchema = {
       "RootQueryToEnqueuedScriptConnectionPageInfo",
       "RootQueryToEnqueuedStylesheetConnectionPageInfo",
       "RootQueryToGraphqlDocumentConnectionPageInfo",
+      "RootQueryToInstructionConnectionPageInfo",
       "RootQueryToLinklibraryConnectionPageInfo",
       "RootQueryToLocationCategoryConnectionPageInfo",
       "RootQueryToLocationConnectionPageInfo",
@@ -19377,6 +20412,7 @@ export const generatedSchema = {
       "RootQueryToRevisionsConnectionPageInfo",
       "RootQueryToSearchWidgetConnectionPageInfo",
       "RootQueryToServiceConnectionPageInfo",
+      "RootQueryToStepConnectionPageInfo",
       "RootQueryToTagConnectionPageInfo",
       "RootQueryToTaxonomyConnectionPageInfo",
       "RootQueryToTermNodeConnectionPageInfo",
@@ -19392,6 +20428,7 @@ export const generatedSchema = {
       "UserToContactConnectionPageInfo",
       "UserToEnqueuedScriptConnectionPageInfo",
       "UserToEnqueuedStylesheetConnectionPageInfo",
+      "UserToInstructionConnectionPageInfo",
       "UserToLocationConnectionPageInfo",
       "UserToMediaItemConnectionPageInfo",
       "UserToPageConnectionPageInfo",
@@ -19401,6 +20438,7 @@ export const generatedSchema = {
       "UserToRevisionsConnectionPageInfo",
       "UserToSearchWidgetConnectionPageInfo",
       "UserToServiceConnectionPageInfo",
+      "UserToStepConnectionPageInfo",
       "UserToUserRoleConnectionPageInfo",
     ],
     WPPageInfo: [
@@ -19416,6 +20454,7 @@ export const generatedSchema = {
       "ContentTypeToTaxonomyConnectionPageInfo",
       "HierarchicalContentNodeToContentNodeAncestorsConnectionPageInfo",
       "HierarchicalContentNodeToContentNodeChildrenConnectionPageInfo",
+      "InstructionToStepConnectionPageInfo",
       "LinklibraryToCommentConnectionPageInfo",
       "LocationCategoryToAncestorsLocationCategoryConnectionPageInfo",
       "LocationCategoryToContentNodeConnectionPageInfo",
@@ -19452,6 +20491,7 @@ export const generatedSchema = {
       "RootQueryToEnqueuedScriptConnectionPageInfo",
       "RootQueryToEnqueuedStylesheetConnectionPageInfo",
       "RootQueryToGraphqlDocumentConnectionPageInfo",
+      "RootQueryToInstructionConnectionPageInfo",
       "RootQueryToLinklibraryConnectionPageInfo",
       "RootQueryToLocationCategoryConnectionPageInfo",
       "RootQueryToLocationConnectionPageInfo",
@@ -19468,6 +20508,7 @@ export const generatedSchema = {
       "RootQueryToRevisionsConnectionPageInfo",
       "RootQueryToSearchWidgetConnectionPageInfo",
       "RootQueryToServiceConnectionPageInfo",
+      "RootQueryToStepConnectionPageInfo",
       "RootQueryToTagConnectionPageInfo",
       "RootQueryToTaxonomyConnectionPageInfo",
       "RootQueryToTermNodeConnectionPageInfo",
@@ -19483,6 +20524,7 @@ export const generatedSchema = {
       "UserToContactConnectionPageInfo",
       "UserToEnqueuedScriptConnectionPageInfo",
       "UserToEnqueuedStylesheetConnectionPageInfo",
+      "UserToInstructionConnectionPageInfo",
       "UserToLocationConnectionPageInfo",
       "UserToMediaItemConnectionPageInfo",
       "UserToPageConnectionPageInfo",
@@ -19492,6 +20534,7 @@ export const generatedSchema = {
       "UserToRevisionsConnectionPageInfo",
       "UserToSearchWidgetConnectionPageInfo",
       "UserToServiceConnectionPageInfo",
+      "UserToStepConnectionPageInfo",
       "UserToUserRoleConnectionPageInfo",
     ],
     HierarchicalNode: [
@@ -19637,6 +20680,7 @@ export const generatedSchema = {
     CommenterConnectionEdge: ["CommentToCommenterConnectionEdge"],
     NodeWithAuthor: [
       "Contact",
+      "Instruction",
       "Location",
       "MediaItem",
       "Page",
@@ -19645,6 +20689,7 @@ export const generatedSchema = {
       "Rate",
       "SearchWidget",
       "Service",
+      "Step",
     ],
     ContactConnectionEdge: [
       "ContactToPreviewConnectionEdge",
@@ -19803,6 +20848,7 @@ export const generatedSchema = {
       "GenesisBlocksGbNewsletter",
       "GenesisBlocksGbPostGrid",
       "GenesisBlocksGbSharing",
+      "GenesisCustomBlocksAccordion",
       "GenesisCustomBlocksBio",
       "GenesisCustomBlocksBlogContentSection",
       "GenesisCustomBlocksButton",
@@ -19835,6 +20881,8 @@ export const generatedSchema = {
       "GenesisCustomBlocksHeroImage",
       "GenesisCustomBlocksHeroProduct",
       "GenesisCustomBlocksHours",
+      "GenesisCustomBlocksHoursToggle",
+      "GenesisCustomBlocksIconSection",
       "GenesisCustomBlocksIcons",
       "GenesisCustomBlocksInstructions",
       "GenesisCustomBlocksLede",
@@ -19847,6 +20895,7 @@ export const generatedSchema = {
       "GenesisCustomBlocksPromo",
       "GenesisCustomBlocksQualtrics",
       "GenesisCustomBlocksQuicklink",
+      "GenesisCustomBlocksRatesTable",
       "GenesisCustomBlocksSidekick",
       "GenesisCustomBlocksStatement",
       "GenesisCustomBlocksTabbed",
@@ -19892,6 +20941,27 @@ export const generatedSchema = {
     GraphqlDocumentConnectionEdge: [
       "GraphqlDocumentToPreviewConnectionEdge",
       "RootQueryToGraphqlDocumentConnectionEdge",
+    ],
+    InstructionConnectionEdge: [
+      "InstructionToPreviewConnectionEdge",
+      "RootQueryToInstructionConnectionEdge",
+      "UserToInstructionConnectionEdge",
+    ],
+    StepConnection: [
+      "InstructionToStepConnection",
+      "RootQueryToStepConnection",
+      "UserToStepConnection",
+    ],
+    StepConnectionEdge: [
+      "InstructionToStepConnectionEdge",
+      "RootQueryToStepConnectionEdge",
+      "StepToPreviewConnectionEdge",
+      "UserToStepConnectionEdge",
+    ],
+    StepConnectionPageInfo: [
+      "InstructionToStepConnectionPageInfo",
+      "RootQueryToStepConnectionPageInfo",
+      "UserToStepConnectionPageInfo",
     ],
     HierarchicalContentNode: ["Linklibrary", "Location", "MediaItem", "Page"],
     NodeWithComments: ["Linklibrary", "MediaItem", "Page", "Post"],
@@ -20099,6 +21169,14 @@ export const generatedSchema = {
     GraphqlDocumentConnection: ["RootQueryToGraphqlDocumentConnection"],
     GraphqlDocumentConnectionPageInfo: [
       "RootQueryToGraphqlDocumentConnectionPageInfo",
+    ],
+    InstructionConnection: [
+      "RootQueryToInstructionConnection",
+      "UserToInstructionConnection",
+    ],
+    InstructionConnectionPageInfo: [
+      "RootQueryToInstructionConnectionPageInfo",
+      "UserToInstructionConnectionPageInfo",
     ],
     LinklibraryConnection: ["RootQueryToLinklibraryConnection"],
     LinklibraryConnectionPageInfo: ["RootQueryToLinklibraryConnectionPageInfo"],
@@ -21786,6 +22864,7 @@ export interface Connection {
     | "ContentTypeToTaxonomyConnection"
     | "HierarchicalContentNodeToContentNodeAncestorsConnection"
     | "HierarchicalContentNodeToContentNodeChildrenConnection"
+    | "InstructionToStepConnection"
     | "LinklibraryToCommentConnection"
     | "LocationCategoryToAncestorsLocationCategoryConnection"
     | "LocationCategoryToContentNodeConnection"
@@ -21822,6 +22901,7 @@ export interface Connection {
     | "RootQueryToEnqueuedScriptConnection"
     | "RootQueryToEnqueuedStylesheetConnection"
     | "RootQueryToGraphqlDocumentConnection"
+    | "RootQueryToInstructionConnection"
     | "RootQueryToLinklibraryConnection"
     | "RootQueryToLocationCategoryConnection"
     | "RootQueryToLocationConnection"
@@ -21838,6 +22918,7 @@ export interface Connection {
     | "RootQueryToRevisionsConnection"
     | "RootQueryToSearchWidgetConnection"
     | "RootQueryToServiceConnection"
+    | "RootQueryToStepConnection"
     | "RootQueryToTagConnection"
     | "RootQueryToTaxonomyConnection"
     | "RootQueryToTermNodeConnection"
@@ -21853,6 +22934,7 @@ export interface Connection {
     | "UserToContactConnection"
     | "UserToEnqueuedScriptConnection"
     | "UserToEnqueuedStylesheetConnection"
+    | "UserToInstructionConnection"
     | "UserToLocationConnection"
     | "UserToMediaItemConnection"
     | "UserToPageConnection"
@@ -21862,6 +22944,7 @@ export interface Connection {
     | "UserToRevisionsConnection"
     | "UserToSearchWidgetConnection"
     | "UserToServiceConnection"
+    | "UserToStepConnection"
     | "UserToUserRoleConnection";
   /**
    * A list of edges (relational context) between connected nodes
@@ -22162,6 +23245,7 @@ export interface ContentNode {
     | "CXAlert"
     | "Contact"
     | "GraphqlDocument"
+    | "Instruction"
     | "Linklibrary"
     | "Location"
     | "MediaItem"
@@ -22170,7 +23254,8 @@ export interface ContentNode {
     | "Product"
     | "Rate"
     | "SearchWidget"
-    | "Service";
+    | "Service"
+    | "Step";
   /**
    * @deprecated Deprecated in favor of using Next.js pages
    */
@@ -32247,6 +33332,21 @@ export interface CreateGraphqlDocumentPayload {
 }
 
 /**
+ * The payload for the createInstruction mutation.
+ */
+export interface CreateInstructionPayload {
+  __typename?: "CreateInstructionPayload";
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The Post object mutation type.
+   */
+  instruction?: Maybe<Instruction>;
+}
+
+/**
  * The payload for the createLinklibrary mutation.
  */
 export interface CreateLinklibraryPayload {
@@ -32427,6 +33527,21 @@ export interface CreateServicePayload {
 }
 
 /**
+ * The payload for the createStep mutation.
+ */
+export interface CreateStepPayload {
+  __typename?: "CreateStepPayload";
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The Post object mutation type.
+   */
+  step?: Maybe<Step>;
+}
+
+/**
  * The payload for the createTag mutation.
  */
 export interface CreateTagPayload {
@@ -32467,6 +33582,7 @@ export interface DatabaseIdentifier {
     | "CommentAuthor"
     | "Contact"
     | "GraphqlDocument"
+    | "Instruction"
     | "Linklibrary"
     | "Location"
     | "LocationCategory"
@@ -32481,6 +33597,7 @@ export interface DatabaseIdentifier {
     | "Rate"
     | "SearchWidget"
     | "Service"
+    | "Step"
     | "Tag"
     | "User";
   /**
@@ -32594,6 +33711,25 @@ export interface DeleteGraphqlDocumentPayload {
    * The object before it was deleted
    */
   graphqlDocument?: Maybe<GraphqlDocument>;
+}
+
+/**
+ * The payload for the deleteInstruction mutation.
+ */
+export interface DeleteInstructionPayload {
+  __typename?: "DeleteInstructionPayload";
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The ID of the deleted object
+   */
+  deletedId?: Maybe<ScalarsEnums["ID"]>;
+  /**
+   * The object before it was deleted
+   */
+  instruction?: Maybe<Instruction>;
 }
 
 /**
@@ -32825,6 +33961,25 @@ export interface DeleteServicePayload {
 }
 
 /**
+ * The payload for the deleteStep mutation.
+ */
+export interface DeleteStepPayload {
+  __typename?: "DeleteStepPayload";
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The ID of the deleted object
+   */
+  deletedId?: Maybe<ScalarsEnums["ID"]>;
+  /**
+   * The object before it was deleted
+   */
+  step?: Maybe<Step>;
+}
+
+/**
  * The payload for the deleteTag mutation.
  */
 export interface DeleteTagPayload {
@@ -32906,6 +34061,8 @@ export interface Edge {
     | "HierarchicalContentNodeToContentNodeAncestorsConnectionEdge"
     | "HierarchicalContentNodeToContentNodeChildrenConnectionEdge"
     | "HierarchicalContentNodeToParentContentNodeConnectionEdge"
+    | "InstructionToPreviewConnectionEdge"
+    | "InstructionToStepConnectionEdge"
     | "LinklibraryToCommentConnectionEdge"
     | "LinklibraryToPreviewConnectionEdge"
     | "LocationCategoryToAncestorsLocationCategoryConnectionEdge"
@@ -32957,6 +34114,7 @@ export interface Edge {
     | "RootQueryToEnqueuedScriptConnectionEdge"
     | "RootQueryToEnqueuedStylesheetConnectionEdge"
     | "RootQueryToGraphqlDocumentConnectionEdge"
+    | "RootQueryToInstructionConnectionEdge"
     | "RootQueryToLinklibraryConnectionEdge"
     | "RootQueryToLocationCategoryConnectionEdge"
     | "RootQueryToLocationConnectionEdge"
@@ -32973,6 +34131,7 @@ export interface Edge {
     | "RootQueryToRevisionsConnectionEdge"
     | "RootQueryToSearchWidgetConnectionEdge"
     | "RootQueryToServiceConnectionEdge"
+    | "RootQueryToStepConnectionEdge"
     | "RootQueryToTagConnectionEdge"
     | "RootQueryToTaxonomyConnectionEdge"
     | "RootQueryToTermNodeConnectionEdge"
@@ -32981,6 +34140,7 @@ export interface Edge {
     | "RootQueryToUserRoleConnectionEdge"
     | "SearchWidgetToPreviewConnectionEdge"
     | "ServiceToPreviewConnectionEdge"
+    | "StepToPreviewConnectionEdge"
     | "TagToContentNodeConnectionEdge"
     | "TagToPostConnectionEdge"
     | "TagToTaxonomyConnectionEdge"
@@ -32991,6 +34151,7 @@ export interface Edge {
     | "UserToContactConnectionEdge"
     | "UserToEnqueuedScriptConnectionEdge"
     | "UserToEnqueuedStylesheetConnectionEdge"
+    | "UserToInstructionConnectionEdge"
     | "UserToLocationConnectionEdge"
     | "UserToMediaItemConnectionEdge"
     | "UserToPageConnectionEdge"
@@ -33000,6 +34161,7 @@ export interface Edge {
     | "UserToRevisionsConnectionEdge"
     | "UserToSearchWidgetConnectionEdge"
     | "UserToServiceConnectionEdge"
+    | "UserToStepConnectionEdge"
     | "UserToUserRoleConnectionEdge";
   /**
    * Opaque reference to the nodes position in the connection. Value can be used with pagination args.
@@ -33113,6 +34275,7 @@ export interface EditorBlock {
     | "GenesisBlocksGbNewsletter"
     | "GenesisBlocksGbPostGrid"
     | "GenesisBlocksGbSharing"
+    | "GenesisCustomBlocksAccordion"
     | "GenesisCustomBlocksBio"
     | "GenesisCustomBlocksBlogContentSection"
     | "GenesisCustomBlocksButton"
@@ -33145,6 +34308,8 @@ export interface EditorBlock {
     | "GenesisCustomBlocksHeroImage"
     | "GenesisCustomBlocksHeroProduct"
     | "GenesisCustomBlocksHours"
+    | "GenesisCustomBlocksHoursToggle"
+    | "GenesisCustomBlocksIconSection"
     | "GenesisCustomBlocksIcons"
     | "GenesisCustomBlocksInstructions"
     | "GenesisCustomBlocksLede"
@@ -33157,6 +34322,7 @@ export interface EditorBlock {
     | "GenesisCustomBlocksPromo"
     | "GenesisCustomBlocksQualtrics"
     | "GenesisCustomBlocksQuicklink"
+    | "GenesisCustomBlocksRatesTable"
     | "GenesisCustomBlocksSidekick"
     | "GenesisCustomBlocksStatement"
     | "GenesisCustomBlocksTabbed"
@@ -33487,6 +34653,15 @@ export interface EnqueuedStylesheetConnectionPageInfo {
    */
   startCursor?: Maybe<ScalarsEnums["String"]>;
   $on: $EnqueuedStylesheetConnectionPageInfo;
+}
+
+/**
+ * Keys and their values, both cast as strings
+ */
+export interface EqualHeight {
+  __typename?: "EqualHeight";
+  breakpoint?: Maybe<ScalarsEnums["Float"]>;
+  selector?: Maybe<ScalarsEnums["String"]>;
 }
 
 /**
@@ -34182,6 +35357,92 @@ export interface GenesisBlocksGlobalSettingsSettings {
 /**
  * A block used for editing the site
  */
+export interface GenesisCustomBlocksAccordion {
+  __typename?: "GenesisCustomBlocksAccordion";
+  /**
+   * The API version of the Gutenberg Block
+   */
+  apiVersion?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Attributes of the %s Block Type
+   */
+  attributes?: Maybe<GenesisCustomBlocksAccordionAttributes>;
+  /**
+   * The name of the category the Block belongs to
+   */
+  blockEditorCategoryName?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The id of the Block
+   */
+  clientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * CSS Classnames to apply to the block
+   */
+  cssClassNames?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The inner blocks of the Block
+   */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /**
+   * Whether the block is Dynamic (server rendered)
+   */
+  isDynamic: ScalarsEnums["Boolean"];
+  /**
+   * The name of the block
+   */
+  name?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The parent id of the Block
+   */
+  parentClientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The rendered HTML for the block
+   */
+  renderedHtml?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Attributes of the %s Block Type
+ */
+export interface GenesisCustomBlocksAccordionAttributes {
+  __typename?: "GenesisCustomBlocksAccordionAttributes";
+  /**
+   * The &quot;blockVisibility&quot; field on the &quot;GenesisCustomBlocksAccordion&quot; block
+   */
+  blockVisibility?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;className&quot; field on the &quot;GenesisCustomBlocksAccordion&quot; block
+   */
+  className?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;content&quot; field on the &quot;GenesisCustomBlocksAccordion&quot; block
+   */
+  content?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;heading&quot; field on the &quot;GenesisCustomBlocksAccordion&quot; block
+   */
+  heading?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;id&quot; field on the &quot;GenesisCustomBlocksAccordion&quot; block
+   */
+  id?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksAccordion&quot; block
+   */
+  lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;start_open&quot; field on the &quot;GenesisCustomBlocksAccordion&quot; block
+   */
+  startOpen?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * The &quot;stay_open&quot; field on the &quot;GenesisCustomBlocksAccordion&quot; block
+   */
+  stayOpen?: Maybe<ScalarsEnums["Boolean"]>;
+}
+
+/**
+ * A block used for editing the site
+ */
 export interface GenesisCustomBlocksBio {
   __typename?: "GenesisCustomBlocksBio";
   /**
@@ -34379,6 +35640,10 @@ export interface GenesisCustomBlocksButtonAttributes {
    * The &quot;btnlink-color&quot; field on the &quot;GenesisCustomBlocksButton&quot; block
    */
   btnlinkColor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;btnlink-onclick&quot; field on the &quot;GenesisCustomBlocksButton&quot; block
+   */
+  btnlinkOnclick?: Maybe<ScalarsEnums["String"]>;
   /**
    * The &quot;btnlink-rewrite&quot; field on the &quot;GenesisCustomBlocksButton&quot; block
    */
@@ -35578,6 +36843,10 @@ export interface GenesisCustomBlocksComparisonAttributes {
    */
   dbhide?: Maybe<ScalarsEnums["String"]>;
   /**
+   * The &quot;decimals&quot; field on the &quot;GenesisCustomBlocksComparison&quot; block
+   */
+  decimals?: Maybe<ScalarsEnums["String"]>;
+  /**
    * The &quot;hidebuttons&quot; field on the &quot;GenesisCustomBlocksComparison&quot; block
    */
   hidebuttons?: Maybe<ScalarsEnums["String"]>;
@@ -36452,13 +37721,25 @@ export interface GenesisCustomBlocksHeroAttributes {
    */
   ctaCustomLink?: Maybe<ScalarsEnums["String"]>;
   /**
+   * The &quot;cta-custom-link-2&quot; field on the &quot;GenesisCustomBlocksHero&quot; block
+   */
+  ctaCustomLink2?: Maybe<ScalarsEnums["String"]>;
+  /**
    * The &quot;cta-link&quot; field on the &quot;GenesisCustomBlocksHero&quot; block
    */
   ctaLink?: Maybe<ScalarsEnums["String"]>;
   /**
+   * The &quot;cta-link-2&quot; field on the &quot;GenesisCustomBlocksHero&quot; block
+   */
+  ctaLink2?: Maybe<ScalarsEnums["String"]>;
+  /**
    * The &quot;cta-text&quot; field on the &quot;GenesisCustomBlocksHero&quot; block
    */
   ctaText?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;cta-text-2&quot; field on the &quot;GenesisCustomBlocksHero&quot; block
+   */
+  ctaText2?: Maybe<ScalarsEnums["String"]>;
   /**
    * The &quot;heading&quot; field on the &quot;GenesisCustomBlocksHero&quot; block
    */
@@ -36484,9 +37765,21 @@ export interface GenesisCustomBlocksHeroAttributes {
    */
   openNewTab?: Maybe<ScalarsEnums["String"]>;
   /**
+   * The &quot;open-new-tab-secondary&quot; field on the &quot;GenesisCustomBlocksHero&quot; block
+   */
+  openNewTabSecondary?: Maybe<ScalarsEnums["String"]>;
+  /**
    * The &quot;preheading&quot; field on the &quot;GenesisCustomBlocksHero&quot; block
    */
   preheading?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;secondary-btnlink-color&quot; field on the &quot;GenesisCustomBlocksHero&quot; block
+   */
+  secondaryBtnlinkColor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;secondary-btnlink-type&quot; field on the &quot;GenesisCustomBlocksHero&quot; block
+   */
+  secondaryBtnlinkType?: Maybe<ScalarsEnums["String"]>;
 }
 
 /**
@@ -36807,6 +38100,158 @@ export interface GenesisCustomBlocksHoursAttributes {
   hours?: Maybe<ScalarsEnums["String"]>;
   /**
    * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksHours&quot; block
+   */
+  lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+}
+
+/**
+ * A block used for editing the site
+ */
+export interface GenesisCustomBlocksHoursToggle {
+  __typename?: "GenesisCustomBlocksHoursToggle";
+  /**
+   * The API version of the Gutenberg Block
+   */
+  apiVersion?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Attributes of the %s Block Type
+   */
+  attributes?: Maybe<GenesisCustomBlocksHoursToggleAttributes>;
+  /**
+   * The name of the category the Block belongs to
+   */
+  blockEditorCategoryName?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The id of the Block
+   */
+  clientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * CSS Classnames to apply to the block
+   */
+  cssClassNames?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The inner blocks of the Block
+   */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /**
+   * Whether the block is Dynamic (server rendered)
+   */
+  isDynamic: ScalarsEnums["Boolean"];
+  /**
+   * The name of the block
+   */
+  name?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The parent id of the Block
+   */
+  parentClientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The rendered HTML for the block
+   */
+  renderedHtml?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Attributes of the %s Block Type
+ */
+export interface GenesisCustomBlocksHoursToggleAttributes {
+  __typename?: "GenesisCustomBlocksHoursToggleAttributes";
+  /**
+   * The &quot;blockVisibility&quot; field on the &quot;GenesisCustomBlocksHoursToggle&quot; block
+   */
+  blockVisibility?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;className&quot; field on the &quot;GenesisCustomBlocksHoursToggle&quot; block
+   */
+  className?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;content&quot; field on the &quot;GenesisCustomBlocksHoursToggle&quot; block
+   */
+  content?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;hours&quot; field on the &quot;GenesisCustomBlocksHoursToggle&quot; block
+   */
+  hours?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksHoursToggle&quot; block
+   */
+  lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+}
+
+/**
+ * A block used for editing the site
+ */
+export interface GenesisCustomBlocksIconSection {
+  __typename?: "GenesisCustomBlocksIconSection";
+  /**
+   * The API version of the Gutenberg Block
+   */
+  apiVersion?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Attributes of the %s Block Type
+   */
+  attributes?: Maybe<GenesisCustomBlocksIconSectionAttributes>;
+  /**
+   * The name of the category the Block belongs to
+   */
+  blockEditorCategoryName?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The id of the Block
+   */
+  clientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * CSS Classnames to apply to the block
+   */
+  cssClassNames?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The inner blocks of the Block
+   */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /**
+   * Whether the block is Dynamic (server rendered)
+   */
+  isDynamic: ScalarsEnums["Boolean"];
+  /**
+   * The name of the block
+   */
+  name?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The parent id of the Block
+   */
+  parentClientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The rendered HTML for the block
+   */
+  renderedHtml?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Attributes of the %s Block Type
+ */
+export interface GenesisCustomBlocksIconSectionAttributes {
+  __typename?: "GenesisCustomBlocksIconSectionAttributes";
+  /**
+   * The &quot;blockVisibility&quot; field on the &quot;GenesisCustomBlocksIconSection&quot; block
+   */
+  blockVisibility?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;className&quot; field on the &quot;GenesisCustomBlocksIconSection&quot; block
+   */
+  className?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;content&quot; field on the &quot;GenesisCustomBlocksIconSection&quot; block
+   */
+  content?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;hide-heading&quot; field on the &quot;GenesisCustomBlocksIconSection&quot; block
+   */
+  hideHeading?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * The &quot;icon&quot; field on the &quot;GenesisCustomBlocksIconSection&quot; block
+   */
+  icon?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksIconSection&quot; block
    */
   lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
 }
@@ -37826,6 +39271,76 @@ export interface GenesisCustomBlocksQuicklinkAttributes {
 /**
  * A block used for editing the site
  */
+export interface GenesisCustomBlocksRatesTable {
+  __typename?: "GenesisCustomBlocksRatesTable";
+  /**
+   * The API version of the Gutenberg Block
+   */
+  apiVersion?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Attributes of the %s Block Type
+   */
+  attributes?: Maybe<GenesisCustomBlocksRatesTableAttributes>;
+  /**
+   * The name of the category the Block belongs to
+   */
+  blockEditorCategoryName?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The id of the Block
+   */
+  clientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * CSS Classnames to apply to the block
+   */
+  cssClassNames?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The inner blocks of the Block
+   */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /**
+   * Whether the block is Dynamic (server rendered)
+   */
+  isDynamic: ScalarsEnums["Boolean"];
+  /**
+   * The name of the block
+   */
+  name?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The parent id of the Block
+   */
+  parentClientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The rendered HTML for the block
+   */
+  renderedHtml?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Attributes of the %s Block Type
+ */
+export interface GenesisCustomBlocksRatesTableAttributes {
+  __typename?: "GenesisCustomBlocksRatesTableAttributes";
+  /**
+   * The &quot;blockVisibility&quot; field on the &quot;GenesisCustomBlocksRatesTable&quot; block
+   */
+  blockVisibility?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;className&quot; field on the &quot;GenesisCustomBlocksRatesTable&quot; block
+   */
+  className?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksRatesTable&quot; block
+   */
+  lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;product&quot; field on the &quot;GenesisCustomBlocksRatesTable&quot; block
+   */
+  product?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * A block used for editing the site
+ */
 export interface GenesisCustomBlocksSidekick {
   __typename?: "GenesisCustomBlocksSidekick";
   /**
@@ -38138,9 +39653,17 @@ export interface GenesisCustomBlocksTableAttributes {
    */
   blockVisibility?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
   /**
+   * The &quot;cellpadding&quot; field on the &quot;GenesisCustomBlocksTable&quot; block
+   */
+  cellpadding?: Maybe<ScalarsEnums["String"]>;
+  /**
    * The &quot;className&quot; field on the &quot;GenesisCustomBlocksTable&quot; block
    */
   className?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;header&quot; field on the &quot;GenesisCustomBlocksTable&quot; block
+   */
+  header?: Maybe<ScalarsEnums["String"]>;
   /**
    * The &quot;id&quot; field on the &quot;GenesisCustomBlocksTable&quot; block
    */
@@ -38149,6 +39672,18 @@ export interface GenesisCustomBlocksTableAttributes {
    * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksTable&quot; block
    */
   lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;rows&quot; field on the &quot;GenesisCustomBlocksTable&quot; block
+   */
+  rows?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;table-font&quot; field on the &quot;GenesisCustomBlocksTable&quot; block
+   */
+  tableFont?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;table-width&quot; field on the &quot;GenesisCustomBlocksTable&quot; block
+   */
+  tableWidth?: Maybe<ScalarsEnums["String"]>;
   /**
    * The &quot;variant&quot; field on the &quot;GenesisCustomBlocksTable&quot; block
    */
@@ -39452,6 +40987,368 @@ export interface HierarchicalTermNode {
 }
 
 /**
+ * The instruction type
+ */
+export interface Instruction {
+  __typename?: "Instruction";
+  /**
+   * Connection between the NodeWithAuthor type and the User type
+   */
+  author?: Maybe<NodeWithAuthorToUserConnectionEdge>;
+  /**
+   * The database identifier of the author of the node
+   */
+  authorDatabaseId?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * The globally unique identifier of the author of the node
+   */
+  authorId?: Maybe<ScalarsEnums["ID"]>;
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
+  conditionalTags?: Maybe<ConditionalTags>;
+  /**
+   * Connection between the ContentNode type and the ContentType type
+   */
+  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
+  /**
+   * The name of the Content Type the node belongs to
+   */
+  contentTypeName: ScalarsEnums["String"];
+  /**
+   * The unique identifier stored in the database
+   */
+  databaseId: ScalarsEnums["Int"];
+  /**
+   * Post publishing date.
+   */
+  date?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The publishing date set in GMT.
+   */
+  dateGmt?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The desired slug of the post
+   */
+  desiredSlug?: Maybe<ScalarsEnums["String"]>;
+  displayName?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds
+   */
+  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
+  /**
+   * The RSS enclosure for the object
+   */
+  enclosure?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Connection between the ContentNode type and the EnqueuedScript type
+   */
+  enqueuedScripts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+  }) => Maybe<ContentNodeToEnqueuedScriptConnection>;
+  /**
+   * Connection between the ContentNode type and the EnqueuedStylesheet type
+   */
+  enqueuedStylesheets: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+  }) => Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  /**
+   * The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table.
+   */
+  guid?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The globally unique identifier of the instruction object.
+   */
+  id: ScalarsEnums["ID"];
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of the databaseId field
+   */
+  instructionId: ScalarsEnums["Int"];
+  /**
+   * Whether the node is a Content Node
+   */
+  isContentNode: ScalarsEnums["Boolean"];
+  /**
+   * Whether the object is a node in the preview state
+   */
+  isPreview?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * Whether the object is restricted from the current viewer
+   */
+  isRestricted?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * Whether the node is a Term
+   */
+  isTermNode: ScalarsEnums["Boolean"];
+  /**
+   * The user that most recently edited the node
+   */
+  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
+  /**
+   * The permalink of the post
+   */
+  link?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time.
+   */
+  modified?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT.
+   */
+  modifiedGmt?: Maybe<ScalarsEnums["String"]>;
+  name?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Connection between the Instruction type and the instruction type
+   */
+  preview?: Maybe<InstructionToPreviewConnectionEdge>;
+  /**
+   * The database id of the preview node
+   */
+  previewRevisionDatabaseId?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Whether the object is a node in the preview state
+   */
+  previewRevisionId?: Maybe<ScalarsEnums["ID"]>;
+  /**
+   * The Yoast SEO data of the ContentNode
+   */
+  seo?: Maybe<PostTypeSEO>;
+  /**
+   * The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
+   */
+  slug?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The current status of the object
+   */
+  status?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Connection between the instruction type and the step type
+   */
+  steps: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+  }) => Maybe<InstructionToStepConnection>;
+  /**
+   * The template assigned to the node
+   */
+  template?: Maybe<ContentTemplate>;
+  templates?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made.
+   */
+  title: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums["String"]>;
+  /**
+   * The unique resource identifier path
+   */
+  uri?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Connection to instruction Nodes
+ */
+export interface InstructionConnection {
+  __typename?:
+    | "RootQueryToInstructionConnection"
+    | "UserToInstructionConnection";
+  /**
+   * A list of edges (relational context) between RootQuery and connected instruction Nodes
+   */
+  edges: Array<InstructionConnectionEdge>;
+  /**
+   * A list of connected instruction Nodes
+   */
+  nodes: Array<Instruction>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo: InstructionConnectionPageInfo;
+  $on: $InstructionConnection;
+}
+
+/**
+ * Edge between a Node and a connected instruction
+ */
+export interface InstructionConnectionEdge {
+  __typename?:
+    | "InstructionToPreviewConnectionEdge"
+    | "RootQueryToInstructionConnectionEdge"
+    | "UserToInstructionConnectionEdge";
+  /**
+   * Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The connected instruction Node
+   */
+  node: Instruction;
+  $on: $InstructionConnectionEdge;
+}
+
+/**
+ * Page Info on the connected InstructionConnectionEdge
+ */
+export interface InstructionConnectionPageInfo {
+  __typename?:
+    | "RootQueryToInstructionConnectionPageInfo"
+    | "UserToInstructionConnectionPageInfo";
+  /**
+   * When paginating forwards, the cursor to continue.
+   */
+  endCursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * When paginating forwards, are there more items?
+   */
+  hasNextPage: ScalarsEnums["Boolean"];
+  /**
+   * When paginating backwards, are there more items?
+   */
+  hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
+   * When paginating backwards, the cursor to continue.
+   */
+  startCursor?: Maybe<ScalarsEnums["String"]>;
+  $on: $InstructionConnectionPageInfo;
+}
+
+/**
+ * Connection between the Instruction type and the instruction type
+ */
+export interface InstructionToPreviewConnectionEdge {
+  __typename?: "InstructionToPreviewConnectionEdge";
+  /**
+   * Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The node of the connection, without the edges
+   */
+  node: Instruction;
+}
+
+/**
+ * Connection between the instruction type and the step type
+ */
+export interface InstructionToStepConnection {
+  __typename?: "InstructionToStepConnection";
+  /**
+   * Edges for the InstructionToStepConnection connection
+   */
+  edges: Array<InstructionToStepConnectionEdge>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes: Array<Step>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo: InstructionToStepConnectionPageInfo;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface InstructionToStepConnectionEdge {
+  __typename?: "InstructionToStepConnectionEdge";
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The item at the end of the edge
+   */
+  node: Step;
+}
+
+/**
+ * Page Info on the &quot;InstructionToStepConnection&quot;
+ */
+export interface InstructionToStepConnectionPageInfo {
+  __typename?: "InstructionToStepConnectionPageInfo";
+  /**
+   * When paginating forwards, the cursor to continue.
+   */
+  endCursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * When paginating forwards, are there more items?
+   */
+  hasNextPage: ScalarsEnums["Boolean"];
+  /**
+   * When paginating backwards, are there more items?
+   */
+  hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
+   * When paginating backwards, the cursor to continue.
+   */
+  startCursor?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
  * A block used for editing the site
  */
 export interface LinkLibraryAddlinkBlock {
@@ -40421,6 +42318,10 @@ export interface Location {
    */
   desiredSlug?: Maybe<ScalarsEnums["String"]>;
   /**
+   * Genesis Blog Top
+   */
+  details?: Maybe<LocationDetails>;
+  /**
    * If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds
    */
   editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
@@ -41365,6 +43266,27 @@ export interface LocationConnectionPageInfo {
 }
 
 /**
+ * Keys and their values, both cast as strings
+ */
+export interface LocationDetails {
+  __typename?: "LocationDetails";
+  address?: Maybe<ScalarsEnums["String"]>;
+  city?: Maybe<ScalarsEnums["String"]>;
+  contact?: Maybe<ScalarsEnums["String"]>;
+  driveThruHoursHTML?: Maybe<ScalarsEnums["String"]>;
+  lat?: Maybe<ScalarsEnums["String"]>;
+  lng?: Maybe<ScalarsEnums["String"]>;
+  lobbyHoursHTML?: Maybe<ScalarsEnums["String"]>;
+  services?: Maybe<ScalarsEnums["String"]>;
+  specialHoursHTML?: Maybe<ScalarsEnums["String"]>;
+  specialMessage?: Maybe<ScalarsEnums["String"]>;
+  specialMessageTitle?: Maybe<ScalarsEnums["String"]>;
+  specialMessageType?: Maybe<ScalarsEnums["String"]>;
+  state?: Maybe<ScalarsEnums["String"]>;
+  zip?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
  * The location setting type
  */
 export interface LocationSettings {
@@ -41572,7 +43494,7 @@ export interface LocationSettings {
   /**
    * Meta for the key marker_icon_props as a string
    */
-  markerIconProps?: Maybe<ScalarsEnums["String"]>;
+  markerIconProps?: Maybe<ScalarsEnums["Boolean"]>;
   /**
    * Meta for the key marker_streetview as a string
    */
@@ -43281,6 +45203,7 @@ export interface Node {
     | "EnqueuedScript"
     | "EnqueuedStylesheet"
     | "GraphqlDocument"
+    | "Instruction"
     | "Linklibrary"
     | "Location"
     | "LocationCategory"
@@ -43296,6 +45219,7 @@ export interface Node {
     | "Rate"
     | "SearchWidget"
     | "Service"
+    | "Step"
     | "Tag"
     | "Taxonomy"
     | "Theme"
@@ -43314,6 +45238,7 @@ export interface Node {
 export interface NodeWithAuthor {
   __typename?:
     | "Contact"
+    | "Instruction"
     | "Location"
     | "MediaItem"
     | "Page"
@@ -43321,7 +45246,8 @@ export interface NodeWithAuthor {
     | "Product"
     | "Rate"
     | "SearchWidget"
-    | "Service";
+    | "Service"
+    | "Step";
   /**
    * Connection between the NodeWithAuthor type and the User type
    */
@@ -43530,6 +45456,7 @@ export interface NodeWithTemplate {
     | "CXAlert"
     | "Contact"
     | "GraphqlDocument"
+    | "Instruction"
     | "Linklibrary"
     | "Location"
     | "MediaItem"
@@ -43538,7 +45465,8 @@ export interface NodeWithTemplate {
     | "Product"
     | "Rate"
     | "SearchWidget"
-    | "Service";
+    | "Service"
+    | "Step";
   /**
    * The globally unique ID for the object
    */
@@ -43558,6 +45486,7 @@ export interface NodeWithTitle {
     | "CXAlert"
     | "Contact"
     | "GraphqlDocument"
+    | "Instruction"
     | "Linklibrary"
     | "Location"
     | "MediaItem"
@@ -43566,7 +45495,8 @@ export interface NodeWithTitle {
     | "Product"
     | "Rate"
     | "SearchWidget"
-    | "Service";
+    | "Service"
+    | "Step";
   /**
    * The globally unique ID for the object
    */
@@ -43647,6 +45577,7 @@ export interface OneToOneConnection {
     | "ContentNodeToEditLockConnectionEdge"
     | "GraphqlDocumentToPreviewConnectionEdge"
     | "HierarchicalContentNodeToParentContentNodeConnectionEdge"
+    | "InstructionToPreviewConnectionEdge"
     | "LinklibraryToPreviewConnectionEdge"
     | "LocationCategoryToParentLocationCategoryConnectionEdge"
     | "LocationCategoryToTaxonomyConnectionEdge"
@@ -43664,6 +45595,7 @@ export interface OneToOneConnection {
     | "RateToPreviewConnectionEdge"
     | "SearchWidgetToPreviewConnectionEdge"
     | "ServiceToPreviewConnectionEdge"
+    | "StepToPreviewConnectionEdge"
     | "TagToTaxonomyConnectionEdge";
   /**
    * Opaque reference to the nodes position in the connection. Value can be used with pagination args.
@@ -44135,6 +46067,7 @@ export interface PageInfo {
     | "ContentTypeToTaxonomyConnectionPageInfo"
     | "HierarchicalContentNodeToContentNodeAncestorsConnectionPageInfo"
     | "HierarchicalContentNodeToContentNodeChildrenConnectionPageInfo"
+    | "InstructionToStepConnectionPageInfo"
     | "LinklibraryToCommentConnectionPageInfo"
     | "LocationCategoryToAncestorsLocationCategoryConnectionPageInfo"
     | "LocationCategoryToContentNodeConnectionPageInfo"
@@ -44171,6 +46104,7 @@ export interface PageInfo {
     | "RootQueryToEnqueuedScriptConnectionPageInfo"
     | "RootQueryToEnqueuedStylesheetConnectionPageInfo"
     | "RootQueryToGraphqlDocumentConnectionPageInfo"
+    | "RootQueryToInstructionConnectionPageInfo"
     | "RootQueryToLinklibraryConnectionPageInfo"
     | "RootQueryToLocationCategoryConnectionPageInfo"
     | "RootQueryToLocationConnectionPageInfo"
@@ -44187,6 +46121,7 @@ export interface PageInfo {
     | "RootQueryToRevisionsConnectionPageInfo"
     | "RootQueryToSearchWidgetConnectionPageInfo"
     | "RootQueryToServiceConnectionPageInfo"
+    | "RootQueryToStepConnectionPageInfo"
     | "RootQueryToTagConnectionPageInfo"
     | "RootQueryToTaxonomyConnectionPageInfo"
     | "RootQueryToTermNodeConnectionPageInfo"
@@ -44202,6 +46137,7 @@ export interface PageInfo {
     | "UserToContactConnectionPageInfo"
     | "UserToEnqueuedScriptConnectionPageInfo"
     | "UserToEnqueuedStylesheetConnectionPageInfo"
+    | "UserToInstructionConnectionPageInfo"
     | "UserToLocationConnectionPageInfo"
     | "UserToMediaItemConnectionPageInfo"
     | "UserToPageConnectionPageInfo"
@@ -44211,6 +46147,7 @@ export interface PageInfo {
     | "UserToRevisionsConnectionPageInfo"
     | "UserToSearchWidgetConnectionPageInfo"
     | "UserToServiceConnectionPageInfo"
+    | "UserToStepConnectionPageInfo"
     | "UserToUserRoleConnectionPageInfo";
   /**
    * When paginating forwards, the cursor to continue.
@@ -45926,13 +47863,15 @@ export interface Previewable {
   __typename?:
     | "CXAlert"
     | "Contact"
+    | "Instruction"
     | "Location"
     | "Page"
     | "Post"
     | "Product"
     | "Rate"
     | "SearchWidget"
-    | "Service";
+    | "Service"
+    | "Step";
   /**
    * Whether the object is a node in the preview state
    */
@@ -47972,6 +49911,71 @@ export interface RootQueryToGraphqlDocumentConnectionPageInfo {
 }
 
 /**
+ * Connection between the RootQuery type and the instruction type
+ */
+export interface RootQueryToInstructionConnection {
+  __typename?: "RootQueryToInstructionConnection";
+  /**
+   * Edges for the RootQueryToInstructionConnection connection
+   */
+  edges: Array<RootQueryToInstructionConnectionEdge>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes: Array<Instruction>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo: RootQueryToInstructionConnectionPageInfo;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface RootQueryToInstructionConnectionEdge {
+  __typename?: "RootQueryToInstructionConnectionEdge";
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The item at the end of the edge
+   */
+  node: Instruction;
+}
+
+/**
+ * Page Info on the &quot;RootQueryToInstructionConnection&quot;
+ */
+export interface RootQueryToInstructionConnectionPageInfo {
+  __typename?: "RootQueryToInstructionConnectionPageInfo";
+  /**
+   * When paginating forwards, the cursor to continue.
+   */
+  endCursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * When paginating forwards, are there more items?
+   */
+  hasNextPage: ScalarsEnums["Boolean"];
+  /**
+   * When paginating backwards, are there more items?
+   */
+  hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
+   * When paginating backwards, the cursor to continue.
+   */
+  startCursor?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
  * Connection between the RootQuery type and the linklibrary type
  */
 export interface RootQueryToLinklibraryConnection {
@@ -49012,6 +51016,71 @@ export interface RootQueryToServiceConnectionPageInfo {
 }
 
 /**
+ * Connection between the RootQuery type and the step type
+ */
+export interface RootQueryToStepConnection {
+  __typename?: "RootQueryToStepConnection";
+  /**
+   * Edges for the RootQueryToStepConnection connection
+   */
+  edges: Array<RootQueryToStepConnectionEdge>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes: Array<Step>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo: RootQueryToStepConnectionPageInfo;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface RootQueryToStepConnectionEdge {
+  __typename?: "RootQueryToStepConnectionEdge";
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The item at the end of the edge
+   */
+  node: Step;
+}
+
+/**
+ * Page Info on the &quot;RootQueryToStepConnection&quot;
+ */
+export interface RootQueryToStepConnectionPageInfo {
+  __typename?: "RootQueryToStepConnectionPageInfo";
+  /**
+   * When paginating forwards, the cursor to continue.
+   */
+  endCursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * When paginating forwards, are there more items?
+   */
+  hasNextPage: ScalarsEnums["Boolean"];
+  /**
+   * When paginating backwards, are there more items?
+   */
+  hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
+   * When paginating backwards, the cursor to continue.
+   */
+  startCursor?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
  * Connection between the RootQuery type and the tag type
  */
 export interface RootQueryToTagConnection {
@@ -49470,6 +51539,7 @@ export interface SEOContentTypes {
   cXAlert?: Maybe<SEOContentType>;
   contact?: Maybe<SEOContentType>;
   graphqlDocument?: Maybe<SEOContentType>;
+  instruction?: Maybe<SEOContentType>;
   linklibrary?: Maybe<SEOContentType>;
   location?: Maybe<SEOContentType>;
   mediaItem?: Maybe<SEOContentType>;
@@ -49479,6 +51549,7 @@ export interface SEOContentTypes {
   rate?: Maybe<SEOContentType>;
   searchWidget?: Maybe<SEOContentType>;
   service?: Maybe<SEOContentType>;
+  step?: Maybe<SEOContentType>;
 }
 
 /**
@@ -50556,6 +52627,288 @@ export interface Shortcode {
    * Shortcode Content
    */
   content?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * The step type
+ */
+export interface Step {
+  __typename?: "Step";
+  /**
+   * Connection between the NodeWithAuthor type and the User type
+   */
+  author?: Maybe<NodeWithAuthorToUserConnectionEdge>;
+  /**
+   * The database identifier of the author of the node
+   */
+  authorDatabaseId?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * The globally unique identifier of the author of the node
+   */
+  authorId?: Maybe<ScalarsEnums["ID"]>;
+  /**
+   * @deprecated Deprecated in favor of using Next.js pages
+   */
+  conditionalTags?: Maybe<ConditionalTags>;
+  /**
+   * Connection between the ContentNode type and the ContentType type
+   */
+  contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
+  /**
+   * The name of the Content Type the node belongs to
+   */
+  contentTypeName: ScalarsEnums["String"];
+  copy?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The unique identifier stored in the database
+   */
+  databaseId: ScalarsEnums["Int"];
+  /**
+   * Post publishing date.
+   */
+  date?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The publishing date set in GMT.
+   */
+  dateGmt?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The desired slug of the post
+   */
+  desiredSlug?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds
+   */
+  editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
+  /**
+   * The RSS enclosure for the object
+   */
+  enclosure?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Connection between the ContentNode type and the EnqueuedScript type
+   */
+  enqueuedScripts: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+  }) => Maybe<ContentNodeToEnqueuedScriptConnection>;
+  /**
+   * Connection between the ContentNode type and the EnqueuedStylesheet type
+   */
+  enqueuedStylesheets: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+  }) => Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  /**
+   * The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table.
+   */
+  guid?: Maybe<ScalarsEnums["String"]>;
+  heading?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The globally unique identifier of the step object.
+   */
+  id: ScalarsEnums["ID"];
+  image?: Maybe<MediaItem>;
+  /**
+   * Whether the node is a Content Node
+   */
+  isContentNode: ScalarsEnums["Boolean"];
+  /**
+   * Whether the object is a node in the preview state
+   */
+  isPreview?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * Whether the object is restricted from the current viewer
+   */
+  isRestricted?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * Whether the node is a Term
+   */
+  isTermNode: ScalarsEnums["Boolean"];
+  /**
+   * The user that most recently edited the node
+   */
+  lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
+  /**
+   * The permalink of the post
+   */
+  link?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time.
+   */
+  modified?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT.
+   */
+  modifiedGmt?: Maybe<ScalarsEnums["String"]>;
+  name?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Connection between the Step type and the step type
+   */
+  preview?: Maybe<StepToPreviewConnectionEdge>;
+  /**
+   * The database id of the preview node
+   */
+  previewRevisionDatabaseId?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Whether the object is a node in the preview state
+   */
+  previewRevisionId?: Maybe<ScalarsEnums["ID"]>;
+  /**
+   * The Yoast SEO data of the ContentNode
+   */
+  seo?: Maybe<PostTypeSEO>;
+  /**
+   * The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
+   */
+  slug?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The current status of the object
+   */
+  status?: Maybe<ScalarsEnums["String"]>;
+  step?: Maybe<ScalarsEnums["Float"]>;
+  /**
+   * The id field matches the WP_Post-&gt;ID field.
+   * @deprecated Deprecated in favor of the databaseId field
+   */
+  stepId: ScalarsEnums["Int"];
+  /**
+   * The template assigned to the node
+   */
+  template?: Maybe<ContentTemplate>;
+  templates?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made.
+   */
+  title: (args?: {
+    /**
+     * Format of the field output
+     */
+    format?: Maybe<PostObjectFieldFormatEnum>;
+  }) => Maybe<ScalarsEnums["String"]>;
+  /**
+   * The unique resource identifier path
+   */
+  uri?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Connection to step Nodes
+ */
+export interface StepConnection {
+  __typename?:
+    | "InstructionToStepConnection"
+    | "RootQueryToStepConnection"
+    | "UserToStepConnection";
+  /**
+   * A list of edges (relational context) between RootQuery and connected step Nodes
+   */
+  edges: Array<StepConnectionEdge>;
+  /**
+   * A list of connected step Nodes
+   */
+  nodes: Array<Step>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo: StepConnectionPageInfo;
+  $on: $StepConnection;
+}
+
+/**
+ * Edge between a Node and a connected step
+ */
+export interface StepConnectionEdge {
+  __typename?:
+    | "InstructionToStepConnectionEdge"
+    | "RootQueryToStepConnectionEdge"
+    | "StepToPreviewConnectionEdge"
+    | "UserToStepConnectionEdge";
+  /**
+   * Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The connected step Node
+   */
+  node: Step;
+  $on: $StepConnectionEdge;
+}
+
+/**
+ * Page Info on the connected StepConnectionEdge
+ */
+export interface StepConnectionPageInfo {
+  __typename?:
+    | "InstructionToStepConnectionPageInfo"
+    | "RootQueryToStepConnectionPageInfo"
+    | "UserToStepConnectionPageInfo";
+  /**
+   * When paginating forwards, the cursor to continue.
+   */
+  endCursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * When paginating forwards, are there more items?
+   */
+  hasNextPage: ScalarsEnums["Boolean"];
+  /**
+   * When paginating backwards, are there more items?
+   */
+  hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
+   * When paginating backwards, the cursor to continue.
+   */
+  startCursor?: Maybe<ScalarsEnums["String"]>;
+  $on: $StepConnectionPageInfo;
+}
+
+/**
+ * Connection between the Step type and the step type
+ */
+export interface StepToPreviewConnectionEdge {
+  __typename?: "StepToPreviewConnectionEdge";
+  /**
+   * Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The node of the connection, without the edges
+   */
+  node: Step;
 }
 
 /**
@@ -52225,6 +54578,7 @@ export interface UniformResourceIdentifiable {
     | "Contact"
     | "ContentType"
     | "GraphqlDocument"
+    | "Instruction"
     | "Linklibrary"
     | "Location"
     | "LocationCategory"
@@ -52237,6 +54591,7 @@ export interface UniformResourceIdentifiable {
     | "Rate"
     | "SearchWidget"
     | "Service"
+    | "Step"
     | "Tag"
     | "User";
   /**
@@ -52383,6 +54738,21 @@ export interface UpdateGraphqlDocumentPayload {
    * The Post object mutation type.
    */
   graphqlDocument?: Maybe<GraphqlDocument>;
+}
+
+/**
+ * The payload for the updateInstruction mutation.
+ */
+export interface UpdateInstructionPayload {
+  __typename?: "UpdateInstructionPayload";
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The Post object mutation type.
+   */
+  instruction?: Maybe<Instruction>;
 }
 
 /**
@@ -52625,6 +54995,21 @@ export interface UpdateSettingsPayload {
 }
 
 /**
+ * The payload for the updateStep mutation.
+ */
+export interface UpdateStepPayload {
+  __typename?: "UpdateStepPayload";
+  /**
+   * If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+   */
+  clientMutationId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The Post object mutation type.
+   */
+  step?: Maybe<Step>;
+}
+
+/**
  * The payload for the updateTag mutation.
  */
 export interface UpdateTagPayload {
@@ -52805,6 +55190,31 @@ export interface User {
    * The globally unique identifier for the user object.
    */
   id: ScalarsEnums["ID"];
+  /**
+   * Connection between the User type and the instruction type
+   */
+  instructions: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<UserToInstructionConnectionWhereArgs>;
+  }) => Maybe<UserToInstructionConnection>;
   /**
    * Whether the node is a Content Node
    */
@@ -53099,6 +55509,31 @@ export interface User {
    * The slug for the user. This field is equivalent to WP_User-&gt;user_nicename
    */
   slug?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Connection between the User type and the step type
+   */
+  steps: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+    /**
+     * Arguments for filtering the connection
+     */
+    where?: Maybe<UserToStepConnectionWhereArgs>;
+  }) => Maybe<UserToStepConnection>;
   templates?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
   /**
    * The unique resource identifier path
@@ -53524,6 +55959,71 @@ export interface UserToEnqueuedStylesheetConnectionEdge {
  */
 export interface UserToEnqueuedStylesheetConnectionPageInfo {
   __typename?: "UserToEnqueuedStylesheetConnectionPageInfo";
+  /**
+   * When paginating forwards, the cursor to continue.
+   */
+  endCursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * When paginating forwards, are there more items?
+   */
+  hasNextPage: ScalarsEnums["Boolean"];
+  /**
+   * When paginating backwards, are there more items?
+   */
+  hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
+   * When paginating backwards, the cursor to continue.
+   */
+  startCursor?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Connection between the User type and the instruction type
+ */
+export interface UserToInstructionConnection {
+  __typename?: "UserToInstructionConnection";
+  /**
+   * Edges for the UserToInstructionConnection connection
+   */
+  edges: Array<UserToInstructionConnectionEdge>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes: Array<Instruction>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo: UserToInstructionConnectionPageInfo;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface UserToInstructionConnectionEdge {
+  __typename?: "UserToInstructionConnectionEdge";
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The item at the end of the edge
+   */
+  node: Instruction;
+}
+
+/**
+ * Page Info on the &quot;UserToInstructionConnection&quot;
+ */
+export interface UserToInstructionConnectionPageInfo {
+  __typename?: "UserToInstructionConnectionPageInfo";
   /**
    * When paginating forwards, the cursor to continue.
    */
@@ -54136,6 +56636,71 @@ export interface UserToServiceConnectionPageInfo {
 }
 
 /**
+ * Connection between the User type and the step type
+ */
+export interface UserToStepConnection {
+  __typename?: "UserToStepConnection";
+  /**
+   * Edges for the UserToStepConnection connection
+   */
+  edges: Array<UserToStepConnectionEdge>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes: Array<Step>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo: UserToStepConnectionPageInfo;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface UserToStepConnectionEdge {
+  __typename?: "UserToStepConnectionEdge";
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The item at the end of the edge
+   */
+  node: Step;
+}
+
+/**
+ * Page Info on the &quot;UserToStepConnection&quot;
+ */
+export interface UserToStepConnectionPageInfo {
+  __typename?: "UserToStepConnectionPageInfo";
+  /**
+   * When paginating forwards, the cursor to continue.
+   */
+  endCursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * When paginating forwards, are there more items?
+   */
+  hasNextPage: ScalarsEnums["Boolean"];
+  /**
+   * When paginating backwards, are there more items?
+   */
+  hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
+   * When paginating backwards, the cursor to continue.
+   */
+  startCursor?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
  * Connection between the User type and the UserRole type
  */
 export interface UserToUserRoleConnection {
@@ -54217,6 +56782,7 @@ export interface WPPageInfo {
     | "ContentTypeToTaxonomyConnectionPageInfo"
     | "HierarchicalContentNodeToContentNodeAncestorsConnectionPageInfo"
     | "HierarchicalContentNodeToContentNodeChildrenConnectionPageInfo"
+    | "InstructionToStepConnectionPageInfo"
     | "LinklibraryToCommentConnectionPageInfo"
     | "LocationCategoryToAncestorsLocationCategoryConnectionPageInfo"
     | "LocationCategoryToContentNodeConnectionPageInfo"
@@ -54253,6 +56819,7 @@ export interface WPPageInfo {
     | "RootQueryToEnqueuedScriptConnectionPageInfo"
     | "RootQueryToEnqueuedStylesheetConnectionPageInfo"
     | "RootQueryToGraphqlDocumentConnectionPageInfo"
+    | "RootQueryToInstructionConnectionPageInfo"
     | "RootQueryToLinklibraryConnectionPageInfo"
     | "RootQueryToLocationCategoryConnectionPageInfo"
     | "RootQueryToLocationConnectionPageInfo"
@@ -54269,6 +56836,7 @@ export interface WPPageInfo {
     | "RootQueryToRevisionsConnectionPageInfo"
     | "RootQueryToSearchWidgetConnectionPageInfo"
     | "RootQueryToServiceConnectionPageInfo"
+    | "RootQueryToStepConnectionPageInfo"
     | "RootQueryToTagConnectionPageInfo"
     | "RootQueryToTaxonomyConnectionPageInfo"
     | "RootQueryToTermNodeConnectionPageInfo"
@@ -54284,6 +56852,7 @@ export interface WPPageInfo {
     | "UserToContactConnectionPageInfo"
     | "UserToEnqueuedScriptConnectionPageInfo"
     | "UserToEnqueuedStylesheetConnectionPageInfo"
+    | "UserToInstructionConnectionPageInfo"
     | "UserToLocationConnectionPageInfo"
     | "UserToMediaItemConnectionPageInfo"
     | "UserToPageConnectionPageInfo"
@@ -54293,6 +56862,7 @@ export interface WPPageInfo {
     | "UserToRevisionsConnectionPageInfo"
     | "UserToSearchWidgetConnectionPageInfo"
     | "UserToServiceConnectionPageInfo"
+    | "UserToStepConnectionPageInfo"
     | "UserToUserRoleConnectionPageInfo";
   /**
    * When paginating forwards, the cursor to continue.
@@ -54361,6 +56931,10 @@ export interface WidgetSettings {
    * Genesis Blog Top
    */
   blogtop?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Locations Search Page Content
+   */
+  locationsSearch?: Maybe<ScalarsEnums["String"]>;
   /**
    * The string Settings Group
    */
@@ -54653,6 +57227,9 @@ export interface Mutation {
   createGraphqlDocument: (args: {
     input: CreateGraphqlDocumentInput;
   }) => Maybe<CreateGraphqlDocumentPayload>;
+  createInstruction: (args: {
+    input: CreateInstructionInput;
+  }) => Maybe<CreateInstructionPayload>;
   createLinklibrary: (args: {
     input: CreateLinklibraryInput;
   }) => Maybe<CreateLinklibraryPayload>;
@@ -54683,6 +57260,7 @@ export interface Mutation {
   createService: (args: {
     input: CreateServiceInput;
   }) => Maybe<CreateServicePayload>;
+  createStep: (args: { input: CreateStepInput }) => Maybe<CreateStepPayload>;
   createTag: (args: { input: CreateTagInput }) => Maybe<CreateTagPayload>;
   createUser: (args: { input: CreateUserInput }) => Maybe<CreateUserPayload>;
   deleteCXAlert: (args: {
@@ -54700,6 +57278,9 @@ export interface Mutation {
   deleteGraphqlDocument: (args: {
     input: DeleteGraphqlDocumentInput;
   }) => Maybe<DeleteGraphqlDocumentPayload>;
+  deleteInstruction: (args: {
+    input: DeleteInstructionInput;
+  }) => Maybe<DeleteInstructionPayload>;
   deleteLinklibrary: (args: {
     input: DeleteLinklibraryInput;
   }) => Maybe<DeleteLinklibraryPayload>;
@@ -54730,6 +57311,7 @@ export interface Mutation {
   deleteService: (args: {
     input: DeleteServiceInput;
   }) => Maybe<DeleteServicePayload>;
+  deleteStep: (args: { input: DeleteStepInput }) => Maybe<DeleteStepPayload>;
   deleteTag: (args: { input: DeleteTagInput }) => Maybe<DeleteTagPayload>;
   deleteUser: (args: { input: DeleteUserInput }) => Maybe<DeleteUserPayload>;
   generateAuthorizationCode: (args: {
@@ -54765,6 +57347,9 @@ export interface Mutation {
   updateGraphqlDocument: (args: {
     input: UpdateGraphqlDocumentInput;
   }) => Maybe<UpdateGraphqlDocumentPayload>;
+  updateInstruction: (args: {
+    input: UpdateInstructionInput;
+  }) => Maybe<UpdateInstructionPayload>;
   updateLinklibrary: (args: {
     input: UpdateLinklibraryInput;
   }) => Maybe<UpdateLinklibraryPayload>;
@@ -54798,6 +57383,7 @@ export interface Mutation {
   updateSettings: (args: {
     input: UpdateSettingsInput;
   }) => Maybe<UpdateSettingsPayload>;
+  updateStep: (args: { input: UpdateStepInput }) => Maybe<UpdateStepPayload>;
   updateTag: (args: { input: UpdateTagInput }) => Maybe<UpdateTagPayload>;
   updateUser: (args: { input: UpdateUserInput }) => Maybe<UpdateUserPayload>;
 }
@@ -54895,6 +57481,7 @@ export interface Query {
     last?: Maybe<Scalars["Int"]>;
   }) => Maybe<RootQueryToContentTypeConnection>;
   discussionSettings?: Maybe<DiscussionSettings>;
+  equalHeightColumns?: Maybe<Array<Maybe<EqualHeight>>>;
   faq: (args?: { faqId?: Maybe<Scalars["Float"]> }) => Maybe<FAQs>;
   footerSettings?: Maybe<FooterSettings>;
   generalSettings?: Maybe<GeneralSettings>;
@@ -54919,6 +57506,24 @@ export interface Query {
     where?: Maybe<RootQueryToGraphqlDocumentConnectionWhereArgs>;
   }) => Maybe<RootQueryToGraphqlDocumentConnection>;
   headerSettings?: Maybe<HeaderSettings>;
+  instruction: (args: {
+    asPreview?: Maybe<Scalars["Boolean"]>;
+    id: Scalars["ID"];
+    idType?: Maybe<InstructionIdType>;
+  }) => Maybe<Instruction>;
+  instructionBy: (args?: {
+    id?: Maybe<Scalars["ID"]>;
+    instructionId?: Maybe<Scalars["Int"]>;
+    slug?: Maybe<Scalars["String"]>;
+    uri?: Maybe<Scalars["String"]>;
+  }) => Maybe<Instruction>;
+  instructions: (args?: {
+    after?: Maybe<Scalars["String"]>;
+    before?: Maybe<Scalars["String"]>;
+    first?: Maybe<Scalars["Int"]>;
+    last?: Maybe<Scalars["Int"]>;
+    where?: Maybe<RootQueryToInstructionConnectionWhereArgs>;
+  }) => Maybe<RootQueryToInstructionConnection>;
   linkLibraryByCatId: (args?: {
     catId?: Maybe<Scalars["Float"]>;
   }) => Maybe<Array<Maybe<LinkLibraryLink>>>;
@@ -55055,6 +57660,7 @@ export interface Query {
     last?: Maybe<Scalars["Int"]>;
     where?: Maybe<RootQueryToPostFormatConnectionWhereArgs>;
   }) => Maybe<RootQueryToPostFormatConnection>;
+  postPreview: (args?: { pageId?: Maybe<Scalars["String"]> }) => Maybe<Page>;
   posts: (args?: {
     after?: Maybe<Scalars["String"]>;
     before?: Maybe<Scalars["String"]>;
@@ -55178,6 +57784,24 @@ export interface Query {
   shortcode: (args?: {
     shortcode?: Maybe<Scalars["String"]>;
   }) => Maybe<Shortcode>;
+  step: (args: {
+    asPreview?: Maybe<Scalars["Boolean"]>;
+    id: Scalars["ID"];
+    idType?: Maybe<StepIdType>;
+  }) => Maybe<Step>;
+  stepBy: (args?: {
+    id?: Maybe<Scalars["ID"]>;
+    slug?: Maybe<Scalars["String"]>;
+    stepId?: Maybe<Scalars["Int"]>;
+    uri?: Maybe<Scalars["String"]>;
+  }) => Maybe<Step>;
+  steps: (args?: {
+    after?: Maybe<Scalars["String"]>;
+    before?: Maybe<Scalars["String"]>;
+    first?: Maybe<Scalars["Int"]>;
+    last?: Maybe<Scalars["Int"]>;
+    where?: Maybe<RootQueryToStepConnectionWhereArgs>;
+  }) => Maybe<RootQueryToStepConnection>;
   tag: (args: { id: Scalars["ID"]; idType?: Maybe<TagIdType> }) => Maybe<Tag>;
   tags: (args?: {
     after?: Maybe<Scalars["String"]>;
@@ -55483,6 +58107,7 @@ export interface SchemaObjectTypes {
   CreateCommentPayload: CreateCommentPayload;
   CreateContactPayload: CreateContactPayload;
   CreateGraphqlDocumentPayload: CreateGraphqlDocumentPayload;
+  CreateInstructionPayload: CreateInstructionPayload;
   CreateLinklibraryPayload: CreateLinklibraryPayload;
   CreateLocationCategoryPayload: CreateLocationCategoryPayload;
   CreateLocationPayload: CreateLocationPayload;
@@ -55495,6 +58120,7 @@ export interface SchemaObjectTypes {
   CreateRatePayload: CreateRatePayload;
   CreateSearchWidgetPayload: CreateSearchWidgetPayload;
   CreateServicePayload: CreateServicePayload;
+  CreateStepPayload: CreateStepPayload;
   CreateTagPayload: CreateTagPayload;
   CreateUserPayload: CreateUserPayload;
   DefaultTemplate: DefaultTemplate;
@@ -55503,6 +58129,7 @@ export interface SchemaObjectTypes {
   DeleteCommentPayload: DeleteCommentPayload;
   DeleteContactPayload: DeleteContactPayload;
   DeleteGraphqlDocumentPayload: DeleteGraphqlDocumentPayload;
+  DeleteInstructionPayload: DeleteInstructionPayload;
   DeleteLinklibraryPayload: DeleteLinklibraryPayload;
   DeleteLocationCategoryPayload: DeleteLocationCategoryPayload;
   DeleteLocationPayload: DeleteLocationPayload;
@@ -55515,11 +58142,13 @@ export interface SchemaObjectTypes {
   DeleteRatePayload: DeleteRatePayload;
   DeleteSearchWidgetPayload: DeleteSearchWidgetPayload;
   DeleteServicePayload: DeleteServicePayload;
+  DeleteStepPayload: DeleteStepPayload;
   DeleteTagPayload: DeleteTagPayload;
   DeleteUserPayload: DeleteUserPayload;
   DiscussionSettings: DiscussionSettings;
   EnqueuedScript: EnqueuedScript;
   EnqueuedStylesheet: EnqueuedStylesheet;
+  EqualHeight: EqualHeight;
   FAQs: FAQs;
   FilebirdBlockFilebirdGallery: FilebirdBlockFilebirdGallery;
   FilebirdBlockFilebirdGalleryAttributes: FilebirdBlockFilebirdGalleryAttributes;
@@ -55534,6 +58163,8 @@ export interface SchemaObjectTypes {
   GenesisBlocksGbSharing: GenesisBlocksGbSharing;
   GenesisBlocksGbSharingAttributes: GenesisBlocksGbSharingAttributes;
   GenesisBlocksGlobalSettingsSettings: GenesisBlocksGlobalSettingsSettings;
+  GenesisCustomBlocksAccordion: GenesisCustomBlocksAccordion;
+  GenesisCustomBlocksAccordionAttributes: GenesisCustomBlocksAccordionAttributes;
   GenesisCustomBlocksBio: GenesisCustomBlocksBio;
   GenesisCustomBlocksBioAttributes: GenesisCustomBlocksBioAttributes;
   GenesisCustomBlocksBlogContentSection: GenesisCustomBlocksBlogContentSection;
@@ -55598,6 +58229,10 @@ export interface SchemaObjectTypes {
   GenesisCustomBlocksHeroProductAttributes: GenesisCustomBlocksHeroProductAttributes;
   GenesisCustomBlocksHours: GenesisCustomBlocksHours;
   GenesisCustomBlocksHoursAttributes: GenesisCustomBlocksHoursAttributes;
+  GenesisCustomBlocksHoursToggle: GenesisCustomBlocksHoursToggle;
+  GenesisCustomBlocksHoursToggleAttributes: GenesisCustomBlocksHoursToggleAttributes;
+  GenesisCustomBlocksIconSection: GenesisCustomBlocksIconSection;
+  GenesisCustomBlocksIconSectionAttributes: GenesisCustomBlocksIconSectionAttributes;
   GenesisCustomBlocksIcons: GenesisCustomBlocksIcons;
   GenesisCustomBlocksIconsAttributes: GenesisCustomBlocksIconsAttributes;
   GenesisCustomBlocksInstructions: GenesisCustomBlocksInstructions;
@@ -55622,6 +58257,8 @@ export interface SchemaObjectTypes {
   GenesisCustomBlocksQualtricsAttributes: GenesisCustomBlocksQualtricsAttributes;
   GenesisCustomBlocksQuicklink: GenesisCustomBlocksQuicklink;
   GenesisCustomBlocksQuicklinkAttributes: GenesisCustomBlocksQuicklinkAttributes;
+  GenesisCustomBlocksRatesTable: GenesisCustomBlocksRatesTable;
+  GenesisCustomBlocksRatesTableAttributes: GenesisCustomBlocksRatesTableAttributes;
   GenesisCustomBlocksSidekick: GenesisCustomBlocksSidekick;
   GenesisCustomBlocksSidekickAttributes: GenesisCustomBlocksSidekickAttributes;
   GenesisCustomBlocksStatement: GenesisCustomBlocksStatement;
@@ -55650,6 +58287,11 @@ export interface SchemaObjectTypes {
   HierarchicalContentNodeToContentNodeChildrenConnectionEdge: HierarchicalContentNodeToContentNodeChildrenConnectionEdge;
   HierarchicalContentNodeToContentNodeChildrenConnectionPageInfo: HierarchicalContentNodeToContentNodeChildrenConnectionPageInfo;
   HierarchicalContentNodeToParentContentNodeConnectionEdge: HierarchicalContentNodeToParentContentNodeConnectionEdge;
+  Instruction: Instruction;
+  InstructionToPreviewConnectionEdge: InstructionToPreviewConnectionEdge;
+  InstructionToStepConnection: InstructionToStepConnection;
+  InstructionToStepConnectionEdge: InstructionToStepConnectionEdge;
+  InstructionToStepConnectionPageInfo: InstructionToStepConnectionPageInfo;
   LinkLibraryAddlinkBlock: LinkLibraryAddlinkBlock;
   LinkLibraryAddlinkBlockAttributes: LinkLibraryAddlinkBlockAttributes;
   LinkLibraryCatsBlock: LinkLibraryCatsBlock;
@@ -55682,6 +58324,7 @@ export interface SchemaObjectTypes {
   LocationCategoryToLocationConnectionPageInfo: LocationCategoryToLocationConnectionPageInfo;
   LocationCategoryToParentLocationCategoryConnectionEdge: LocationCategoryToParentLocationCategoryConnectionEdge;
   LocationCategoryToTaxonomyConnectionEdge: LocationCategoryToTaxonomyConnectionEdge;
+  LocationDetails: LocationDetails;
   LocationSettings: LocationSettings;
   LocationToLocationCategoryConnection: LocationToLocationCategoryConnection;
   LocationToLocationCategoryConnectionEdge: LocationToLocationCategoryConnectionEdge;
@@ -55815,6 +58458,9 @@ export interface SchemaObjectTypes {
   RootQueryToGraphqlDocumentConnection: RootQueryToGraphqlDocumentConnection;
   RootQueryToGraphqlDocumentConnectionEdge: RootQueryToGraphqlDocumentConnectionEdge;
   RootQueryToGraphqlDocumentConnectionPageInfo: RootQueryToGraphqlDocumentConnectionPageInfo;
+  RootQueryToInstructionConnection: RootQueryToInstructionConnection;
+  RootQueryToInstructionConnectionEdge: RootQueryToInstructionConnectionEdge;
+  RootQueryToInstructionConnectionPageInfo: RootQueryToInstructionConnectionPageInfo;
   RootQueryToLinklibraryConnection: RootQueryToLinklibraryConnection;
   RootQueryToLinklibraryConnectionEdge: RootQueryToLinklibraryConnectionEdge;
   RootQueryToLinklibraryConnectionPageInfo: RootQueryToLinklibraryConnectionPageInfo;
@@ -55863,6 +58509,9 @@ export interface SchemaObjectTypes {
   RootQueryToServiceConnection: RootQueryToServiceConnection;
   RootQueryToServiceConnectionEdge: RootQueryToServiceConnectionEdge;
   RootQueryToServiceConnectionPageInfo: RootQueryToServiceConnectionPageInfo;
+  RootQueryToStepConnection: RootQueryToStepConnection;
+  RootQueryToStepConnectionEdge: RootQueryToStepConnectionEdge;
+  RootQueryToStepConnectionPageInfo: RootQueryToStepConnectionPageInfo;
   RootQueryToTagConnection: RootQueryToTagConnection;
   RootQueryToTagConnectionEdge: RootQueryToTagConnectionEdge;
   RootQueryToTagConnectionPageInfo: RootQueryToTagConnectionPageInfo;
@@ -55924,6 +58573,8 @@ export interface SchemaObjectTypes {
   ServiceToPreviewConnectionEdge: ServiceToPreviewConnectionEdge;
   Settings: Settings;
   Shortcode: Shortcode;
+  Step: Step;
+  StepToPreviewConnectionEdge: StepToPreviewConnectionEdge;
   Subscription: Subscription;
   TablepressTable: TablepressTable;
   TablepressTableAttributes: TablepressTableAttributes;
@@ -55967,6 +58618,7 @@ export interface SchemaObjectTypes {
   UpdateCommentPayload: UpdateCommentPayload;
   UpdateContactPayload: UpdateContactPayload;
   UpdateGraphqlDocumentPayload: UpdateGraphqlDocumentPayload;
+  UpdateInstructionPayload: UpdateInstructionPayload;
   UpdateLinklibraryPayload: UpdateLinklibraryPayload;
   UpdateLocationCategoryPayload: UpdateLocationCategoryPayload;
   UpdateLocationPayload: UpdateLocationPayload;
@@ -55980,6 +58632,7 @@ export interface SchemaObjectTypes {
   UpdateSearchWidgetPayload: UpdateSearchWidgetPayload;
   UpdateServicePayload: UpdateServicePayload;
   UpdateSettingsPayload: UpdateSettingsPayload;
+  UpdateStepPayload: UpdateStepPayload;
   UpdateTagPayload: UpdateTagPayload;
   UpdateUserPayload: UpdateUserPayload;
   User: User;
@@ -55996,6 +58649,9 @@ export interface SchemaObjectTypes {
   UserToEnqueuedStylesheetConnection: UserToEnqueuedStylesheetConnection;
   UserToEnqueuedStylesheetConnectionEdge: UserToEnqueuedStylesheetConnectionEdge;
   UserToEnqueuedStylesheetConnectionPageInfo: UserToEnqueuedStylesheetConnectionPageInfo;
+  UserToInstructionConnection: UserToInstructionConnection;
+  UserToInstructionConnectionEdge: UserToInstructionConnectionEdge;
+  UserToInstructionConnectionPageInfo: UserToInstructionConnectionPageInfo;
   UserToLocationConnection: UserToLocationConnection;
   UserToLocationConnectionEdge: UserToLocationConnectionEdge;
   UserToLocationConnectionPageInfo: UserToLocationConnectionPageInfo;
@@ -56023,6 +58679,9 @@ export interface SchemaObjectTypes {
   UserToServiceConnection: UserToServiceConnection;
   UserToServiceConnectionEdge: UserToServiceConnectionEdge;
   UserToServiceConnectionPageInfo: UserToServiceConnectionPageInfo;
+  UserToStepConnection: UserToStepConnection;
+  UserToStepConnectionEdge: UserToStepConnectionEdge;
+  UserToStepConnectionPageInfo: UserToStepConnectionPageInfo;
   UserToUserRoleConnection: UserToUserRoleConnection;
   UserToUserRoleConnectionEdge: UserToUserRoleConnectionEdge;
   UserToUserRoleConnectionPageInfo: UserToUserRoleConnectionPageInfo;
@@ -56275,6 +58934,7 @@ export type SchemaObjectTypesNames =
   | "CreateCommentPayload"
   | "CreateContactPayload"
   | "CreateGraphqlDocumentPayload"
+  | "CreateInstructionPayload"
   | "CreateLinklibraryPayload"
   | "CreateLocationCategoryPayload"
   | "CreateLocationPayload"
@@ -56287,6 +58947,7 @@ export type SchemaObjectTypesNames =
   | "CreateRatePayload"
   | "CreateSearchWidgetPayload"
   | "CreateServicePayload"
+  | "CreateStepPayload"
   | "CreateTagPayload"
   | "CreateUserPayload"
   | "DefaultTemplate"
@@ -56295,6 +58956,7 @@ export type SchemaObjectTypesNames =
   | "DeleteCommentPayload"
   | "DeleteContactPayload"
   | "DeleteGraphqlDocumentPayload"
+  | "DeleteInstructionPayload"
   | "DeleteLinklibraryPayload"
   | "DeleteLocationCategoryPayload"
   | "DeleteLocationPayload"
@@ -56307,11 +58969,13 @@ export type SchemaObjectTypesNames =
   | "DeleteRatePayload"
   | "DeleteSearchWidgetPayload"
   | "DeleteServicePayload"
+  | "DeleteStepPayload"
   | "DeleteTagPayload"
   | "DeleteUserPayload"
   | "DiscussionSettings"
   | "EnqueuedScript"
   | "EnqueuedStylesheet"
+  | "EqualHeight"
   | "FAQs"
   | "FilebirdBlockFilebirdGallery"
   | "FilebirdBlockFilebirdGalleryAttributes"
@@ -56326,6 +58990,8 @@ export type SchemaObjectTypesNames =
   | "GenesisBlocksGbSharing"
   | "GenesisBlocksGbSharingAttributes"
   | "GenesisBlocksGlobalSettingsSettings"
+  | "GenesisCustomBlocksAccordion"
+  | "GenesisCustomBlocksAccordionAttributes"
   | "GenesisCustomBlocksBio"
   | "GenesisCustomBlocksBioAttributes"
   | "GenesisCustomBlocksBlogContentSection"
@@ -56390,6 +59056,10 @@ export type SchemaObjectTypesNames =
   | "GenesisCustomBlocksHeroProductAttributes"
   | "GenesisCustomBlocksHours"
   | "GenesisCustomBlocksHoursAttributes"
+  | "GenesisCustomBlocksHoursToggle"
+  | "GenesisCustomBlocksHoursToggleAttributes"
+  | "GenesisCustomBlocksIconSection"
+  | "GenesisCustomBlocksIconSectionAttributes"
   | "GenesisCustomBlocksIcons"
   | "GenesisCustomBlocksIconsAttributes"
   | "GenesisCustomBlocksInstructions"
@@ -56414,6 +59084,8 @@ export type SchemaObjectTypesNames =
   | "GenesisCustomBlocksQualtricsAttributes"
   | "GenesisCustomBlocksQuicklink"
   | "GenesisCustomBlocksQuicklinkAttributes"
+  | "GenesisCustomBlocksRatesTable"
+  | "GenesisCustomBlocksRatesTableAttributes"
   | "GenesisCustomBlocksSidekick"
   | "GenesisCustomBlocksSidekickAttributes"
   | "GenesisCustomBlocksStatement"
@@ -56442,6 +59114,11 @@ export type SchemaObjectTypesNames =
   | "HierarchicalContentNodeToContentNodeChildrenConnectionEdge"
   | "HierarchicalContentNodeToContentNodeChildrenConnectionPageInfo"
   | "HierarchicalContentNodeToParentContentNodeConnectionEdge"
+  | "Instruction"
+  | "InstructionToPreviewConnectionEdge"
+  | "InstructionToStepConnection"
+  | "InstructionToStepConnectionEdge"
+  | "InstructionToStepConnectionPageInfo"
   | "LinkLibraryAddlinkBlock"
   | "LinkLibraryAddlinkBlockAttributes"
   | "LinkLibraryCatsBlock"
@@ -56474,6 +59151,7 @@ export type SchemaObjectTypesNames =
   | "LocationCategoryToLocationConnectionPageInfo"
   | "LocationCategoryToParentLocationCategoryConnectionEdge"
   | "LocationCategoryToTaxonomyConnectionEdge"
+  | "LocationDetails"
   | "LocationSettings"
   | "LocationToLocationCategoryConnection"
   | "LocationToLocationCategoryConnectionEdge"
@@ -56607,6 +59285,9 @@ export type SchemaObjectTypesNames =
   | "RootQueryToGraphqlDocumentConnection"
   | "RootQueryToGraphqlDocumentConnectionEdge"
   | "RootQueryToGraphqlDocumentConnectionPageInfo"
+  | "RootQueryToInstructionConnection"
+  | "RootQueryToInstructionConnectionEdge"
+  | "RootQueryToInstructionConnectionPageInfo"
   | "RootQueryToLinklibraryConnection"
   | "RootQueryToLinklibraryConnectionEdge"
   | "RootQueryToLinklibraryConnectionPageInfo"
@@ -56655,6 +59336,9 @@ export type SchemaObjectTypesNames =
   | "RootQueryToServiceConnection"
   | "RootQueryToServiceConnectionEdge"
   | "RootQueryToServiceConnectionPageInfo"
+  | "RootQueryToStepConnection"
+  | "RootQueryToStepConnectionEdge"
+  | "RootQueryToStepConnectionPageInfo"
   | "RootQueryToTagConnection"
   | "RootQueryToTagConnectionEdge"
   | "RootQueryToTagConnectionPageInfo"
@@ -56716,6 +59400,8 @@ export type SchemaObjectTypesNames =
   | "ServiceToPreviewConnectionEdge"
   | "Settings"
   | "Shortcode"
+  | "Step"
+  | "StepToPreviewConnectionEdge"
   | "Subscription"
   | "TablepressTable"
   | "TablepressTableAttributes"
@@ -56759,6 +59445,7 @@ export type SchemaObjectTypesNames =
   | "UpdateCommentPayload"
   | "UpdateContactPayload"
   | "UpdateGraphqlDocumentPayload"
+  | "UpdateInstructionPayload"
   | "UpdateLinklibraryPayload"
   | "UpdateLocationCategoryPayload"
   | "UpdateLocationPayload"
@@ -56772,6 +59459,7 @@ export type SchemaObjectTypesNames =
   | "UpdateSearchWidgetPayload"
   | "UpdateServicePayload"
   | "UpdateSettingsPayload"
+  | "UpdateStepPayload"
   | "UpdateTagPayload"
   | "UpdateUserPayload"
   | "User"
@@ -56788,6 +59476,9 @@ export type SchemaObjectTypesNames =
   | "UserToEnqueuedStylesheetConnection"
   | "UserToEnqueuedStylesheetConnectionEdge"
   | "UserToEnqueuedStylesheetConnectionPageInfo"
+  | "UserToInstructionConnection"
+  | "UserToInstructionConnectionEdge"
+  | "UserToInstructionConnectionPageInfo"
   | "UserToLocationConnection"
   | "UserToLocationConnectionEdge"
   | "UserToLocationConnectionPageInfo"
@@ -56815,6 +59506,9 @@ export type SchemaObjectTypesNames =
   | "UserToServiceConnection"
   | "UserToServiceConnectionEdge"
   | "UserToServiceConnectionPageInfo"
+  | "UserToStepConnection"
+  | "UserToStepConnectionEdge"
+  | "UserToStepConnectionPageInfo"
   | "UserToUserRoleConnection"
   | "UserToUserRoleConnectionEdge"
   | "UserToUserRoleConnectionPageInfo"
@@ -56918,6 +59612,7 @@ export interface $Connection {
   ContentTypeToTaxonomyConnection?: ContentTypeToTaxonomyConnection;
   HierarchicalContentNodeToContentNodeAncestorsConnection?: HierarchicalContentNodeToContentNodeAncestorsConnection;
   HierarchicalContentNodeToContentNodeChildrenConnection?: HierarchicalContentNodeToContentNodeChildrenConnection;
+  InstructionToStepConnection?: InstructionToStepConnection;
   LinklibraryToCommentConnection?: LinklibraryToCommentConnection;
   LocationCategoryToAncestorsLocationCategoryConnection?: LocationCategoryToAncestorsLocationCategoryConnection;
   LocationCategoryToContentNodeConnection?: LocationCategoryToContentNodeConnection;
@@ -56954,6 +59649,7 @@ export interface $Connection {
   RootQueryToEnqueuedScriptConnection?: RootQueryToEnqueuedScriptConnection;
   RootQueryToEnqueuedStylesheetConnection?: RootQueryToEnqueuedStylesheetConnection;
   RootQueryToGraphqlDocumentConnection?: RootQueryToGraphqlDocumentConnection;
+  RootQueryToInstructionConnection?: RootQueryToInstructionConnection;
   RootQueryToLinklibraryConnection?: RootQueryToLinklibraryConnection;
   RootQueryToLocationCategoryConnection?: RootQueryToLocationCategoryConnection;
   RootQueryToLocationConnection?: RootQueryToLocationConnection;
@@ -56970,6 +59666,7 @@ export interface $Connection {
   RootQueryToRevisionsConnection?: RootQueryToRevisionsConnection;
   RootQueryToSearchWidgetConnection?: RootQueryToSearchWidgetConnection;
   RootQueryToServiceConnection?: RootQueryToServiceConnection;
+  RootQueryToStepConnection?: RootQueryToStepConnection;
   RootQueryToTagConnection?: RootQueryToTagConnection;
   RootQueryToTaxonomyConnection?: RootQueryToTaxonomyConnection;
   RootQueryToTermNodeConnection?: RootQueryToTermNodeConnection;
@@ -56985,6 +59682,7 @@ export interface $Connection {
   UserToContactConnection?: UserToContactConnection;
   UserToEnqueuedScriptConnection?: UserToEnqueuedScriptConnection;
   UserToEnqueuedStylesheetConnection?: UserToEnqueuedStylesheetConnection;
+  UserToInstructionConnection?: UserToInstructionConnection;
   UserToLocationConnection?: UserToLocationConnection;
   UserToMediaItemConnection?: UserToMediaItemConnection;
   UserToPageConnection?: UserToPageConnection;
@@ -56994,6 +59692,7 @@ export interface $Connection {
   UserToRevisionsConnection?: UserToRevisionsConnection;
   UserToSearchWidgetConnection?: UserToSearchWidgetConnection;
   UserToServiceConnection?: UserToServiceConnection;
+  UserToStepConnection?: UserToStepConnection;
   UserToUserRoleConnection?: UserToUserRoleConnection;
 }
 
@@ -57017,6 +59716,7 @@ export interface $ContentNode {
   CXAlert?: CXAlert;
   Contact?: Contact;
   GraphqlDocument?: GraphqlDocument;
+  Instruction?: Instruction;
   Linklibrary?: Linklibrary;
   Location?: Location;
   MediaItem?: MediaItem;
@@ -57026,6 +59726,7 @@ export interface $ContentNode {
   Rate?: Rate;
   SearchWidget?: SearchWidget;
   Service?: Service;
+  Step?: Step;
 }
 
 export interface $ContentNodeConnection {
@@ -57103,6 +59804,7 @@ export interface $DatabaseIdentifier {
   CommentAuthor?: CommentAuthor;
   Contact?: Contact;
   GraphqlDocument?: GraphqlDocument;
+  Instruction?: Instruction;
   Linklibrary?: Linklibrary;
   Location?: Location;
   LocationCategory?: LocationCategory;
@@ -57117,6 +59819,7 @@ export interface $DatabaseIdentifier {
   Rate?: Rate;
   SearchWidget?: SearchWidget;
   Service?: Service;
+  Step?: Step;
   Tag?: Tag;
   User?: User;
 }
@@ -57146,6 +59849,8 @@ export interface $Edge {
   HierarchicalContentNodeToContentNodeAncestorsConnectionEdge?: HierarchicalContentNodeToContentNodeAncestorsConnectionEdge;
   HierarchicalContentNodeToContentNodeChildrenConnectionEdge?: HierarchicalContentNodeToContentNodeChildrenConnectionEdge;
   HierarchicalContentNodeToParentContentNodeConnectionEdge?: HierarchicalContentNodeToParentContentNodeConnectionEdge;
+  InstructionToPreviewConnectionEdge?: InstructionToPreviewConnectionEdge;
+  InstructionToStepConnectionEdge?: InstructionToStepConnectionEdge;
   LinklibraryToCommentConnectionEdge?: LinklibraryToCommentConnectionEdge;
   LinklibraryToPreviewConnectionEdge?: LinklibraryToPreviewConnectionEdge;
   LocationCategoryToAncestorsLocationCategoryConnectionEdge?: LocationCategoryToAncestorsLocationCategoryConnectionEdge;
@@ -57197,6 +59902,7 @@ export interface $Edge {
   RootQueryToEnqueuedScriptConnectionEdge?: RootQueryToEnqueuedScriptConnectionEdge;
   RootQueryToEnqueuedStylesheetConnectionEdge?: RootQueryToEnqueuedStylesheetConnectionEdge;
   RootQueryToGraphqlDocumentConnectionEdge?: RootQueryToGraphqlDocumentConnectionEdge;
+  RootQueryToInstructionConnectionEdge?: RootQueryToInstructionConnectionEdge;
   RootQueryToLinklibraryConnectionEdge?: RootQueryToLinklibraryConnectionEdge;
   RootQueryToLocationCategoryConnectionEdge?: RootQueryToLocationCategoryConnectionEdge;
   RootQueryToLocationConnectionEdge?: RootQueryToLocationConnectionEdge;
@@ -57213,6 +59919,7 @@ export interface $Edge {
   RootQueryToRevisionsConnectionEdge?: RootQueryToRevisionsConnectionEdge;
   RootQueryToSearchWidgetConnectionEdge?: RootQueryToSearchWidgetConnectionEdge;
   RootQueryToServiceConnectionEdge?: RootQueryToServiceConnectionEdge;
+  RootQueryToStepConnectionEdge?: RootQueryToStepConnectionEdge;
   RootQueryToTagConnectionEdge?: RootQueryToTagConnectionEdge;
   RootQueryToTaxonomyConnectionEdge?: RootQueryToTaxonomyConnectionEdge;
   RootQueryToTermNodeConnectionEdge?: RootQueryToTermNodeConnectionEdge;
@@ -57221,6 +59928,7 @@ export interface $Edge {
   RootQueryToUserRoleConnectionEdge?: RootQueryToUserRoleConnectionEdge;
   SearchWidgetToPreviewConnectionEdge?: SearchWidgetToPreviewConnectionEdge;
   ServiceToPreviewConnectionEdge?: ServiceToPreviewConnectionEdge;
+  StepToPreviewConnectionEdge?: StepToPreviewConnectionEdge;
   TagToContentNodeConnectionEdge?: TagToContentNodeConnectionEdge;
   TagToPostConnectionEdge?: TagToPostConnectionEdge;
   TagToTaxonomyConnectionEdge?: TagToTaxonomyConnectionEdge;
@@ -57231,6 +59939,7 @@ export interface $Edge {
   UserToContactConnectionEdge?: UserToContactConnectionEdge;
   UserToEnqueuedScriptConnectionEdge?: UserToEnqueuedScriptConnectionEdge;
   UserToEnqueuedStylesheetConnectionEdge?: UserToEnqueuedStylesheetConnectionEdge;
+  UserToInstructionConnectionEdge?: UserToInstructionConnectionEdge;
   UserToLocationConnectionEdge?: UserToLocationConnectionEdge;
   UserToMediaItemConnectionEdge?: UserToMediaItemConnectionEdge;
   UserToPageConnectionEdge?: UserToPageConnectionEdge;
@@ -57240,6 +59949,7 @@ export interface $Edge {
   UserToRevisionsConnectionEdge?: UserToRevisionsConnectionEdge;
   UserToSearchWidgetConnectionEdge?: UserToSearchWidgetConnectionEdge;
   UserToServiceConnectionEdge?: UserToServiceConnectionEdge;
+  UserToStepConnectionEdge?: UserToStepConnectionEdge;
   UserToUserRoleConnectionEdge?: UserToUserRoleConnectionEdge;
 }
 
@@ -57340,6 +60050,7 @@ export interface $EditorBlock {
   GenesisBlocksGbNewsletter?: GenesisBlocksGbNewsletter;
   GenesisBlocksGbPostGrid?: GenesisBlocksGbPostGrid;
   GenesisBlocksGbSharing?: GenesisBlocksGbSharing;
+  GenesisCustomBlocksAccordion?: GenesisCustomBlocksAccordion;
   GenesisCustomBlocksBio?: GenesisCustomBlocksBio;
   GenesisCustomBlocksBlogContentSection?: GenesisCustomBlocksBlogContentSection;
   GenesisCustomBlocksButton?: GenesisCustomBlocksButton;
@@ -57372,6 +60083,8 @@ export interface $EditorBlock {
   GenesisCustomBlocksHeroImage?: GenesisCustomBlocksHeroImage;
   GenesisCustomBlocksHeroProduct?: GenesisCustomBlocksHeroProduct;
   GenesisCustomBlocksHours?: GenesisCustomBlocksHours;
+  GenesisCustomBlocksHoursToggle?: GenesisCustomBlocksHoursToggle;
+  GenesisCustomBlocksIconSection?: GenesisCustomBlocksIconSection;
   GenesisCustomBlocksIcons?: GenesisCustomBlocksIcons;
   GenesisCustomBlocksInstructions?: GenesisCustomBlocksInstructions;
   GenesisCustomBlocksLede?: GenesisCustomBlocksLede;
@@ -57384,6 +60097,7 @@ export interface $EditorBlock {
   GenesisCustomBlocksPromo?: GenesisCustomBlocksPromo;
   GenesisCustomBlocksQualtrics?: GenesisCustomBlocksQualtrics;
   GenesisCustomBlocksQuicklink?: GenesisCustomBlocksQuicklink;
+  GenesisCustomBlocksRatesTable?: GenesisCustomBlocksRatesTable;
   GenesisCustomBlocksSidekick?: GenesisCustomBlocksSidekick;
   GenesisCustomBlocksStatement?: GenesisCustomBlocksStatement;
   GenesisCustomBlocksTabbed?: GenesisCustomBlocksTabbed;
@@ -57492,6 +60206,22 @@ export interface $HierarchicalNode {
 export interface $HierarchicalTermNode {
   Category?: Category;
   LocationCategory?: LocationCategory;
+}
+
+export interface $InstructionConnection {
+  RootQueryToInstructionConnection?: RootQueryToInstructionConnection;
+  UserToInstructionConnection?: UserToInstructionConnection;
+}
+
+export interface $InstructionConnectionEdge {
+  InstructionToPreviewConnectionEdge?: InstructionToPreviewConnectionEdge;
+  RootQueryToInstructionConnectionEdge?: RootQueryToInstructionConnectionEdge;
+  UserToInstructionConnectionEdge?: UserToInstructionConnectionEdge;
+}
+
+export interface $InstructionConnectionPageInfo {
+  RootQueryToInstructionConnectionPageInfo?: RootQueryToInstructionConnectionPageInfo;
+  UserToInstructionConnectionPageInfo?: UserToInstructionConnectionPageInfo;
 }
 
 export interface $LinklibraryConnection {
@@ -57634,6 +60364,7 @@ export interface $Node {
   EnqueuedScript?: EnqueuedScript;
   EnqueuedStylesheet?: EnqueuedStylesheet;
   GraphqlDocument?: GraphqlDocument;
+  Instruction?: Instruction;
   Linklibrary?: Linklibrary;
   Location?: Location;
   LocationCategory?: LocationCategory;
@@ -57649,6 +60380,7 @@ export interface $Node {
   Rate?: Rate;
   SearchWidget?: SearchWidget;
   Service?: Service;
+  Step?: Step;
   Tag?: Tag;
   Taxonomy?: Taxonomy;
   Theme?: Theme;
@@ -57658,6 +60390,7 @@ export interface $Node {
 
 export interface $NodeWithAuthor {
   Contact?: Contact;
+  Instruction?: Instruction;
   Location?: Location;
   MediaItem?: MediaItem;
   Page?: Page;
@@ -57666,6 +60399,7 @@ export interface $NodeWithAuthor {
   Rate?: Rate;
   SearchWidget?: SearchWidget;
   Service?: Service;
+  Step?: Step;
 }
 
 export interface $NodeWithComments {
@@ -57717,6 +60451,7 @@ export interface $NodeWithTemplate {
   CXAlert?: CXAlert;
   Contact?: Contact;
   GraphqlDocument?: GraphqlDocument;
+  Instruction?: Instruction;
   Linklibrary?: Linklibrary;
   Location?: Location;
   MediaItem?: MediaItem;
@@ -57726,12 +60461,14 @@ export interface $NodeWithTemplate {
   Rate?: Rate;
   SearchWidget?: SearchWidget;
   Service?: Service;
+  Step?: Step;
 }
 
 export interface $NodeWithTitle {
   CXAlert?: CXAlert;
   Contact?: Contact;
   GraphqlDocument?: GraphqlDocument;
+  Instruction?: Instruction;
   Linklibrary?: Linklibrary;
   Location?: Location;
   MediaItem?: MediaItem;
@@ -57741,6 +60478,7 @@ export interface $NodeWithTitle {
   Rate?: Rate;
   SearchWidget?: SearchWidget;
   Service?: Service;
+  Step?: Step;
 }
 
 export interface $NodeWithTrackbacks {
@@ -57760,6 +60498,7 @@ export interface $OneToOneConnection {
   ContentNodeToEditLockConnectionEdge?: ContentNodeToEditLockConnectionEdge;
   GraphqlDocumentToPreviewConnectionEdge?: GraphqlDocumentToPreviewConnectionEdge;
   HierarchicalContentNodeToParentContentNodeConnectionEdge?: HierarchicalContentNodeToParentContentNodeConnectionEdge;
+  InstructionToPreviewConnectionEdge?: InstructionToPreviewConnectionEdge;
   LinklibraryToPreviewConnectionEdge?: LinklibraryToPreviewConnectionEdge;
   LocationCategoryToParentLocationCategoryConnectionEdge?: LocationCategoryToParentLocationCategoryConnectionEdge;
   LocationCategoryToTaxonomyConnectionEdge?: LocationCategoryToTaxonomyConnectionEdge;
@@ -57777,6 +60516,7 @@ export interface $OneToOneConnection {
   RateToPreviewConnectionEdge?: RateToPreviewConnectionEdge;
   SearchWidgetToPreviewConnectionEdge?: SearchWidgetToPreviewConnectionEdge;
   ServiceToPreviewConnectionEdge?: ServiceToPreviewConnectionEdge;
+  StepToPreviewConnectionEdge?: StepToPreviewConnectionEdge;
   TagToTaxonomyConnectionEdge?: TagToTaxonomyConnectionEdge;
 }
 
@@ -57812,6 +60552,7 @@ export interface $PageInfo {
   ContentTypeToTaxonomyConnectionPageInfo?: ContentTypeToTaxonomyConnectionPageInfo;
   HierarchicalContentNodeToContentNodeAncestorsConnectionPageInfo?: HierarchicalContentNodeToContentNodeAncestorsConnectionPageInfo;
   HierarchicalContentNodeToContentNodeChildrenConnectionPageInfo?: HierarchicalContentNodeToContentNodeChildrenConnectionPageInfo;
+  InstructionToStepConnectionPageInfo?: InstructionToStepConnectionPageInfo;
   LinklibraryToCommentConnectionPageInfo?: LinklibraryToCommentConnectionPageInfo;
   LocationCategoryToAncestorsLocationCategoryConnectionPageInfo?: LocationCategoryToAncestorsLocationCategoryConnectionPageInfo;
   LocationCategoryToContentNodeConnectionPageInfo?: LocationCategoryToContentNodeConnectionPageInfo;
@@ -57848,6 +60589,7 @@ export interface $PageInfo {
   RootQueryToEnqueuedScriptConnectionPageInfo?: RootQueryToEnqueuedScriptConnectionPageInfo;
   RootQueryToEnqueuedStylesheetConnectionPageInfo?: RootQueryToEnqueuedStylesheetConnectionPageInfo;
   RootQueryToGraphqlDocumentConnectionPageInfo?: RootQueryToGraphqlDocumentConnectionPageInfo;
+  RootQueryToInstructionConnectionPageInfo?: RootQueryToInstructionConnectionPageInfo;
   RootQueryToLinklibraryConnectionPageInfo?: RootQueryToLinklibraryConnectionPageInfo;
   RootQueryToLocationCategoryConnectionPageInfo?: RootQueryToLocationCategoryConnectionPageInfo;
   RootQueryToLocationConnectionPageInfo?: RootQueryToLocationConnectionPageInfo;
@@ -57864,6 +60606,7 @@ export interface $PageInfo {
   RootQueryToRevisionsConnectionPageInfo?: RootQueryToRevisionsConnectionPageInfo;
   RootQueryToSearchWidgetConnectionPageInfo?: RootQueryToSearchWidgetConnectionPageInfo;
   RootQueryToServiceConnectionPageInfo?: RootQueryToServiceConnectionPageInfo;
+  RootQueryToStepConnectionPageInfo?: RootQueryToStepConnectionPageInfo;
   RootQueryToTagConnectionPageInfo?: RootQueryToTagConnectionPageInfo;
   RootQueryToTaxonomyConnectionPageInfo?: RootQueryToTaxonomyConnectionPageInfo;
   RootQueryToTermNodeConnectionPageInfo?: RootQueryToTermNodeConnectionPageInfo;
@@ -57879,6 +60622,7 @@ export interface $PageInfo {
   UserToContactConnectionPageInfo?: UserToContactConnectionPageInfo;
   UserToEnqueuedScriptConnectionPageInfo?: UserToEnqueuedScriptConnectionPageInfo;
   UserToEnqueuedStylesheetConnectionPageInfo?: UserToEnqueuedStylesheetConnectionPageInfo;
+  UserToInstructionConnectionPageInfo?: UserToInstructionConnectionPageInfo;
   UserToLocationConnectionPageInfo?: UserToLocationConnectionPageInfo;
   UserToMediaItemConnectionPageInfo?: UserToMediaItemConnectionPageInfo;
   UserToPageConnectionPageInfo?: UserToPageConnectionPageInfo;
@@ -57888,6 +60632,7 @@ export interface $PageInfo {
   UserToRevisionsConnectionPageInfo?: UserToRevisionsConnectionPageInfo;
   UserToSearchWidgetConnectionPageInfo?: UserToSearchWidgetConnectionPageInfo;
   UserToServiceConnectionPageInfo?: UserToServiceConnectionPageInfo;
+  UserToStepConnectionPageInfo?: UserToStepConnectionPageInfo;
   UserToUserRoleConnectionPageInfo?: UserToUserRoleConnectionPageInfo;
 }
 
@@ -57949,6 +60694,7 @@ export interface $PostFormatConnectionPageInfo {
 export interface $Previewable {
   CXAlert?: CXAlert;
   Contact?: Contact;
+  Instruction?: Instruction;
   Location?: Location;
   Page?: Page;
   Post?: Post;
@@ -57956,6 +60702,7 @@ export interface $Previewable {
   Rate?: Rate;
   SearchWidget?: SearchWidget;
   Service?: Service;
+  Step?: Step;
 }
 
 export interface $ProductConnection {
@@ -58046,6 +60793,25 @@ export interface $ServiceConnectionPageInfo {
   UserToServiceConnectionPageInfo?: UserToServiceConnectionPageInfo;
 }
 
+export interface $StepConnection {
+  InstructionToStepConnection?: InstructionToStepConnection;
+  RootQueryToStepConnection?: RootQueryToStepConnection;
+  UserToStepConnection?: UserToStepConnection;
+}
+
+export interface $StepConnectionEdge {
+  InstructionToStepConnectionEdge?: InstructionToStepConnectionEdge;
+  RootQueryToStepConnectionEdge?: RootQueryToStepConnectionEdge;
+  StepToPreviewConnectionEdge?: StepToPreviewConnectionEdge;
+  UserToStepConnectionEdge?: UserToStepConnectionEdge;
+}
+
+export interface $StepConnectionPageInfo {
+  InstructionToStepConnectionPageInfo?: InstructionToStepConnectionPageInfo;
+  RootQueryToStepConnectionPageInfo?: RootQueryToStepConnectionPageInfo;
+  UserToStepConnectionPageInfo?: UserToStepConnectionPageInfo;
+}
+
 export interface $TagConnection {
   PostToTagConnection?: PostToTagConnection;
   RootQueryToTagConnection?: RootQueryToTagConnection;
@@ -58128,6 +60894,7 @@ export interface $UniformResourceIdentifiable {
   Contact?: Contact;
   ContentType?: ContentType;
   GraphqlDocument?: GraphqlDocument;
+  Instruction?: Instruction;
   Linklibrary?: Linklibrary;
   Location?: Location;
   LocationCategory?: LocationCategory;
@@ -58140,6 +60907,7 @@ export interface $UniformResourceIdentifiable {
   Rate?: Rate;
   SearchWidget?: SearchWidget;
   Service?: Service;
+  Step?: Step;
   Tag?: Tag;
   User?: User;
 }
@@ -58187,6 +60955,7 @@ export interface $WPPageInfo {
   ContentTypeToTaxonomyConnectionPageInfo?: ContentTypeToTaxonomyConnectionPageInfo;
   HierarchicalContentNodeToContentNodeAncestorsConnectionPageInfo?: HierarchicalContentNodeToContentNodeAncestorsConnectionPageInfo;
   HierarchicalContentNodeToContentNodeChildrenConnectionPageInfo?: HierarchicalContentNodeToContentNodeChildrenConnectionPageInfo;
+  InstructionToStepConnectionPageInfo?: InstructionToStepConnectionPageInfo;
   LinklibraryToCommentConnectionPageInfo?: LinklibraryToCommentConnectionPageInfo;
   LocationCategoryToAncestorsLocationCategoryConnectionPageInfo?: LocationCategoryToAncestorsLocationCategoryConnectionPageInfo;
   LocationCategoryToContentNodeConnectionPageInfo?: LocationCategoryToContentNodeConnectionPageInfo;
@@ -58223,6 +60992,7 @@ export interface $WPPageInfo {
   RootQueryToEnqueuedScriptConnectionPageInfo?: RootQueryToEnqueuedScriptConnectionPageInfo;
   RootQueryToEnqueuedStylesheetConnectionPageInfo?: RootQueryToEnqueuedStylesheetConnectionPageInfo;
   RootQueryToGraphqlDocumentConnectionPageInfo?: RootQueryToGraphqlDocumentConnectionPageInfo;
+  RootQueryToInstructionConnectionPageInfo?: RootQueryToInstructionConnectionPageInfo;
   RootQueryToLinklibraryConnectionPageInfo?: RootQueryToLinklibraryConnectionPageInfo;
   RootQueryToLocationCategoryConnectionPageInfo?: RootQueryToLocationCategoryConnectionPageInfo;
   RootQueryToLocationConnectionPageInfo?: RootQueryToLocationConnectionPageInfo;
@@ -58239,6 +61009,7 @@ export interface $WPPageInfo {
   RootQueryToRevisionsConnectionPageInfo?: RootQueryToRevisionsConnectionPageInfo;
   RootQueryToSearchWidgetConnectionPageInfo?: RootQueryToSearchWidgetConnectionPageInfo;
   RootQueryToServiceConnectionPageInfo?: RootQueryToServiceConnectionPageInfo;
+  RootQueryToStepConnectionPageInfo?: RootQueryToStepConnectionPageInfo;
   RootQueryToTagConnectionPageInfo?: RootQueryToTagConnectionPageInfo;
   RootQueryToTaxonomyConnectionPageInfo?: RootQueryToTaxonomyConnectionPageInfo;
   RootQueryToTermNodeConnectionPageInfo?: RootQueryToTermNodeConnectionPageInfo;
@@ -58254,6 +61025,7 @@ export interface $WPPageInfo {
   UserToContactConnectionPageInfo?: UserToContactConnectionPageInfo;
   UserToEnqueuedScriptConnectionPageInfo?: UserToEnqueuedScriptConnectionPageInfo;
   UserToEnqueuedStylesheetConnectionPageInfo?: UserToEnqueuedStylesheetConnectionPageInfo;
+  UserToInstructionConnectionPageInfo?: UserToInstructionConnectionPageInfo;
   UserToLocationConnectionPageInfo?: UserToLocationConnectionPageInfo;
   UserToMediaItemConnectionPageInfo?: UserToMediaItemConnectionPageInfo;
   UserToPageConnectionPageInfo?: UserToPageConnectionPageInfo;
@@ -58263,6 +61035,7 @@ export interface $WPPageInfo {
   UserToRevisionsConnectionPageInfo?: UserToRevisionsConnectionPageInfo;
   UserToSearchWidgetConnectionPageInfo?: UserToSearchWidgetConnectionPageInfo;
   UserToServiceConnectionPageInfo?: UserToServiceConnectionPageInfo;
+  UserToStepConnectionPageInfo?: UserToStepConnectionPageInfo;
   UserToUserRoleConnectionPageInfo?: UserToUserRoleConnectionPageInfo;
 }
 
@@ -58295,6 +61068,7 @@ export interface ScalarsEnums extends MakeNullable<Scalars> {
   ContentTypesOfProductNameEnum: ContentTypesOfProductNameEnum | undefined;
   ContentTypesOfTagEnum: ContentTypesOfTagEnum | undefined;
   GraphqlDocumentIdType: GraphqlDocumentIdType | undefined;
+  InstructionIdType: InstructionIdType | undefined;
   LinklibraryIdType: LinklibraryIdType | undefined;
   LocationCategoryIdType: LocationCategoryIdType | undefined;
   LocationIdType: LocationIdType | undefined;
@@ -58325,6 +61099,7 @@ export interface ScalarsEnums extends MakeNullable<Scalars> {
   SEOCardType: SEOCardType | undefined;
   SearchWidgetIdType: SearchWidgetIdType | undefined;
   ServiceIdType: ServiceIdType | undefined;
+  StepIdType: StepIdType | undefined;
   TagIdType: TagIdType | undefined;
   TaxonomyEnum: TaxonomyEnum | undefined;
   TaxonomyIdTypeEnum: TaxonomyIdTypeEnum | undefined;
