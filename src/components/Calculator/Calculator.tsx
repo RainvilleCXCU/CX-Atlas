@@ -8,35 +8,7 @@ interface Props {
 const Calculator = ({ calculatorName }: Props): JSX.Element => {
 	const [calcsLoaded, setCalcsLoaded] = useState([]);
 	const initialized = useRef(false)
-	const KJEFile = [{
-		id: 'KJECore',
-		src: `/wp-content/themes/CXCU/vendors/calculators/KJE.js`,
-		strategy: 'afterInteractive',
-		onload: () => {
-			jsFiles.map(file => {
-				if(!calcsLoaded.includes(file.id)){
-					loadScript(file);
-				}
-			})
-		}
-	}]
-	const jsFiles = [{
-			id: 'KJESiteCore',
-			src: `/wp-content/themes/CXCU/vendors/calculators/KJESiteSpecific.js`,
-			strategy: 'afterInteractive',
-		},{
-			id: `KJE${calculatorName}Params`,
-			src: `/wp-content/themes/CXCU/vendors/calculators/${calculatorName}.js`,
-			strategy: 'afterInteractive'
-		},{
-			id: `KJESite${calculatorName}Params`,
-			src: `/wp-content/themes/CXCU/vendors/calculators/${calculatorName}Params.js`,
-			strategy: 'afterInteractive',
-			onload: () => {
-				window.KJE.initFired ? window.KJE.initAfterLoad() : window.KJE.init();
-			}
-		}
-    ];
+	
 	const loadScript = ({id, src, onload = null}) => {
 		const externalScript = document.createElement("script");
 		// externalScript.onerror = loadError;
@@ -52,6 +24,35 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 	}
 
 	useEffect(() => {
+		const KJEFile = [{
+			id: 'KJECore',
+			src: `/wp-content/themes/CXCU/vendors/calculators/KJE.js`,
+			strategy: 'afterInteractive',
+			onload: () => {
+				jsFiles.map(file => {
+					if(!calcsLoaded.includes(file.id)){
+						loadScript(file);
+					}
+				})
+			}
+		}]
+		const jsFiles = [{
+				id: 'KJESiteCore',
+				src: `/wp-content/themes/CXCU/vendors/calculators/KJESiteSpecific.js`,
+				strategy: 'afterInteractive',
+			},{
+				id: `KJE${calculatorName}Params`,
+				src: `/wp-content/themes/CXCU/vendors/calculators/${calculatorName}.js`,
+				strategy: 'afterInteractive'
+			},{
+				id: `KJESite${calculatorName}Params`,
+				src: `/wp-content/themes/CXCU/vendors/calculators/${calculatorName}Params.js`,
+				strategy: 'afterInteractive',
+				onload: () => {
+					window.KJE.initFired ? window.KJE.initAfterLoad() : window.KJE.init();
+				}
+			}
+		];
 		console.log(initialized.current)
 		if (!initialized.current) {
 			initialized.current = true;
@@ -62,7 +63,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 			})
 		}
 		return () => {initialized.current = true}
-	}, [KJEFile])
+	}, [])
 	
 	return (
 		<div id={`dt-${calculatorName}`}>
