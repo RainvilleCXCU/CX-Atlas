@@ -7,6 +7,7 @@ const { fetchWordPressRedirects } = require('./src/utils/redirects');
  **/
 
 let nextConfig = {
+    // reactStrictMode: true,
     async redirects() {
         const wpRedirects = await fetchWordPressRedirects({type: 'url'});
         return[
@@ -63,6 +64,10 @@ let nextConfig = {
                     source: '/apply-:type/:path*',
                     destination: '/bridge/:type/',
                 },
+                {
+                    source: '/about/branch-and-atm-locations/',
+                    destination: '/locations',
+                },
                 // {
                 //     source: '/pgp.txt',
                 //     destination: '/wp-content/themes/Connexus/assets/txt/ConnexusFileTransfer_PGP.txt'
@@ -82,12 +87,12 @@ let nextConfig = {
                     destination: '/locations',
                 },
                 {
-                    source: '/about/branch-and-atm-locations/:path*',
-                    destination: '/locations',
+                    source: '/location/:location*',
+                    destination: '/locations/location',
                 }
             ],
         }
     },
-    trailingSlash: true
+    trailingSlash: true,
 };
 module.exports = withFaust(nextConfig);

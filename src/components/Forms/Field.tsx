@@ -84,16 +84,7 @@ function NFField({ id, form, type = 'text', name, label, label_pos = "label-abov
         })
     }
 
-    const showSubmit = () => {
-        for( const field in state?.forms?.[form]?.fields) {
-            const hasError = state?.forms?.[form]?.fields[field].error !== null;
-            const missingReq = ( (!state?.forms?.[form]?.fields[field].value || state?.forms?.[form]?.fields[field].value == '') && state?.forms?.[form]?.fields[field].required)
-            if(missingReq || hasError) {
-                return false;
-            }
-        }
-        return true;
-    }
+    
 
     useEffect(() => {
         if(!state.forms?.[form]?.fields?.[id]) {
@@ -118,8 +109,18 @@ function NFField({ id, form, type = 'text', name, label, label_pos = "label-abov
     });
 
     useEffect(() => {
+        const showSubmit = () => {
+            for( const field in state?.forms?.[form]?.fields) {
+                const hasError = state?.forms?.[form]?.fields[field].error !== null;
+                const missingReq = ( (!state?.forms?.[form]?.fields[field].value || state?.forms?.[form]?.fields[field].value == '') && state?.forms?.[form]?.fields[field].required)
+                if(missingReq || hasError) {
+                    return false;
+                }
+            }
+            return true;
+        }
         setValid(showSubmit());
-    }, [state?.forms?.[form]?.fields]);
+    }, [form, state?.forms?.[form]?.fields]);
 
     return (
         <div id={`nf-field-${id}-container`} className={`nf-field-container ${type}-container ${`label-${label_pos === 'default' || label_pos === 'label-above' ? 'above' : label_pos}`} ${container_classes}`}>

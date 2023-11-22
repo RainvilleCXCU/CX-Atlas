@@ -8,6 +8,10 @@ export const addCSSAsset = asset => {
 export const addJSAsset = asset => {
   console.log(asset);
   if (asset.src !== null && asset.src !== undefined) {
-    return (<Script src={asset.src.replace(process.env.NEXT_PUBLIC_WORDPRESS_URL, '')} key={asset.id} />);
+    return (<Script 
+      src={asset.src.replace(process.env.NEXT_PUBLIC_WORDPRESS_URL, '')} 
+      key={asset.id} 
+      strategy={asset.strategy || ''}
+      onLoad={asset.onLoad || null} />);
   }
 }

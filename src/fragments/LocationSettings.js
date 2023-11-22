@@ -14,6 +14,7 @@ export const LocationSettingsFragment = gql`
     storeMarker
     typeControl
     scrollwheel
+    searchRadius
     controlPosition
     autoZoomLevel
     markerIconProps

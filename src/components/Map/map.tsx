@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import { client } from "client";
 import Heading from "components/Heading";
 import Link from "next/link";
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useRef, useState } from "react";
 import ReactDOMServer from 'react-dom/server';
 import { LocationSettingsFragment } from 'fragments/LocationSettings';
 import InfoBox from "./infobox";
@@ -20,8 +20,10 @@ interface MapProps {
 function Map({ title = 'Categories', lat, lng, locationSettings = null, markers }: MapProps): JSX.Element {
 
 	const [state, setState] = useContext(Store);
+
 	const { showDetails, setShowDetails } = useContext(showDetailsContext);
 	const { selectedLocation, setSelectedLocation } = useContext(selectedLocationContext);
+    
     const [ map, setMap ] = useState(null);
     const [ infoWindow, setinfoWindow ] = useState(null);
     const [ openInfoWindow, setOpenInfoWindow ] = useState(null);
@@ -53,15 +55,16 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null, markers 
         scrollwheel,
         controlPosition,
         markerIconProps,
-        startMarker,
-        mapsLoaded
+        startMarker
     } = locationSettings;
 
+    const mapsLoaded = useRef(null)
+
     useEffect(() => {
-        mapsLoaded = setInterval( function() {
+        mapsLoaded.current = setInterval( function() {
             if ( typeof google === 'object' && typeof google.maps === 'object' && Object.keys(locationSettings).length > 0) {
                 console.log('Load Maps')
-                clearInterval( mapsLoaded );
+                clearInterval( mapsLoaded.current );
     
                 initMap( 'wpsl-gmap', 1);
             }
@@ -70,6 +73,8 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null, markers 
 
     useEffect(() => {
         let mapMarkers = {};
+        console.log('MAP MARKERS');
+        console.log(markers);
         if(markers?.length > 0) {
             for ( let marker in markersArray ) {
                 markersArray[marker].setMap(null);
@@ -82,11 +87,13 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null, markers 
                 ...mapMarkers
             })
         }
-    }, [markers]);
+    }, [map, markers, markerIconProps]);
 
     useEffect(() => {
-        fitBounds();
-    }, [markersArray]);
+        if(map && markersArray) {
+            fitBounds();
+        }
+    }, [map, markersArray]);
 
     useEffect(() => {
         const selectedMarker = markersArray[selectedLocation?.id];
@@ -141,6 +148,7 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null, markers 
             mapTypeControl: Number( typeControl ) ? true : false,
             streetViewControl: Number( streetview ) ? true : false,
             scrollwheel: locationSettings.scrollwheel === 1 ? true : false,
+            maxZoom: Number( locationSettings.autoZoomLevel ),
             zoomControlOptions: {
                 position: google.maps.ControlPosition[ controlPosition.toUpperCase() + '_TOP' ]
             }
@@ -171,9 +179,20 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null, markers 
 		for ( let marker in markersArray ) {
 			bounds.extend ( markersArray[marker].position );
 		}
+        // attachBoundsChangedListener(map, maxZoom);
 
 		map?.fitBounds( bounds );
 	}
+    const attachBoundsChangedListener = ( map, maxZoom )  => {
+        console.log(google)
+        google.maps.event.addListenerOnce( map, "bounds_changed", function() {
+            google.maps.event.addListenerOnce( map, "idle", function() {
+                if ( this.getZoom() > maxZoom ) {
+                    this.setZoom( maxZoom );
+                }
+            });
+        });
+    }
 
     const setInfoWindowContent = ( marker, infoWindowContent, infoWindow, currentMap ) => {
 		
@@ -247,6 +266,7 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null, markers 
         } else {
             url = `/wp-content/plugins/wp-store-locator/img/markers/${locationSettings.storeMarker}`;
         }
+        console.log(`Store Marker ${url}`)
         const mapIcon = {
             url: url,
             scaledSize: new google.maps.Size( Number( markerIconProps?.scaledSize.split(',')[0] ), Number( markerIconProps?.scaledSize.split(',')[1] ) ), //retina format

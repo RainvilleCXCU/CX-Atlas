@@ -1,55 +1,55 @@
 #KJECalculatorTable {
-    padding:0;
-    border: 1px solid #dddbda;
-    border-radius: 0;
+  padding:0;
+  border: 1px solid #dddbda;
+  border-radius: 0;
 }
 
 .KJECalculatorTable {
-  background: white;
+background: white;
 }
 
 .KJEFontTitle, .KJEFontHeading, .KJEGraphTitle, .KJEToggleTitle {
-  color: #12764d;
+color: #12764d;
 }
 
 .KJEInputDiv {
-  padding: 30px;
+padding: 30px;
 }
 
 @media only screen and (max-width: 800px) {
-  .KJEInputDiv {
-  padding: 0px;
-  }
+.KJEInputDiv {
+padding: 0px;
+}
 }
 
 .KJEInputContainer input[type=range]::-webkit-slider-thumb {
-  border-bottom-color: #12764d;
-  box-shadow: none;
+border-bottom-color: #12764d;
+box-shadow: none;
 }
 
 .KJEInputContainer input[type=range]:active::-webkit-slider-thumb {
-  border-bottom-color: #207e58;
-  box-shadow: none;
+border-bottom-color: #207e58;
+box-shadow: none;
 }
 
 .KJEInputContainer input[type=range]::-moz-range-thumb {
-  border-bottom-color: #12764d;
-  box-shadow: none;
+border-bottom-color: #12764d;
+box-shadow: none;
 }
 
 .KJEInputContainer input[type=range]:active::-moz-range-thumb {
-  border-bottom-color: #207e58;
-  box-shadow: none;
+border-bottom-color: #207e58;
+box-shadow: none;
 }
 
 .KJEInputContainer input[type=range]::-ms-thumb {
-  border-bottom-color: #12764d;
-  box-shadow: none;
+border-bottom-color: #12764d;
+box-shadow: none;
 }
 
 .KJEInputContainer input[type=range]:active::-ms-thumb {
-  border-bottom-color: #207e58;
-  box-shadow: none;
+border-bottom-color: #207e58;
+box-shadow: none;
 }
 
 table.KJEScheduleTable tr.KJEScheduleOddRow:hover,
@@ -60,7 +60,7 @@ table.KJEReportTable tr.KJEHeaderRow:hover,
 table.KJEReportTable tr.KJEFooterRow:hover,
 table.KJEReportTable tr.KJEEvenRow:hover,
 table.KJEReportTable tr.KJEOddRow:hover {
-  background-color: #12764d;
+background-color: #12764d;
 }
 
 table.KJEScheduleTable td.KJEScheduleCell:hover,
@@ -75,385 +75,389 @@ table.KJEReportTable a.KJELabel:hover,
 table.KJEReportTable td.KJECellStrong:hover,
 table.KJEReportTable td.KJECellSpecial:hover,
 table.KJEReportTable .KJELabel:hover {
-  background: #12764d;
+background: #12764d;
 }
 
 .KJECalculator {
-  font-size: 18px;
+font-size: 18px;
 }
 
 #main #KJEAllContent h2.KJEToggleTitle {
-  font-size: 21.408px;
-  line-height: 28.544px;
+font-size: 21.408px;
+line-height: 28.544px;
 }
 h2.KJEGraphTitle {
-  margin-bottom: clamp(.9152715625rem,.852317017rem + .2797979798vw,1.0883965625rem);
+margin-bottom: clamp(.9152715625rem,.852317017rem + .2797979798vw,1.0883965625rem);
 }
 #main #KJEAllContent .KJEReportHeader, #main #KJEAllContent .KJEScheduleHeader {
-  font-size: 21.408px;
-  line-height: 28.544px;
-  font-family: "AvenirNext Regular";
-  font-weight: 700;
-  line-height: 24pt;
-  letter-spacing: 0px;
-  font-style: normal;
+font-size: 21.408px;
+line-height: 28.544px;
+font-family: "AvenirNext Regular";
+font-weight: 700;
+line-height: 24pt;
+letter-spacing: 0px;
+font-style: normal;
 }
 
 #KJEAllContent {
-  padding: 0;
-  margin-top: 28px;
+padding: 0;
+margin-top: 28px;
 }
 
 .KJECalculatorTable {
-  border: none;
-  box-shadow: none !important;
-  padding: 0;
+border: none;
+box-shadow: none !important;
+padding: 0;
 }
 
 .KJEMenuContainer {
-  display: none;
+display: none;
 }
 
 button.KJEMenu {
-  display: none !important;
+display: none !important;
 }
 
 .KJETitle {
-  display: none;
-  height: 0;
-  overflow: hidden;
-  padding: 0 !important;
+display: none;
+height: 0;
+overflow: hidden;
+padding: 0 !important;
 }
 
 #KJERequiredNote {
-  display: none;
+display: none;
 }
 
 div.KJEDroppee {
-  padding: 30px;
+padding: 30px;
 }
 
 @media only screen and (max-width: 800px) {
-  div.KJEDroppee {
-  padding: 0px;
+div.KJEDroppee {
+padding: 0px;
 }
 }
 
 .KJEDropper {
-  padding: 15px 10px;
+padding: 15px 10px;
 }
 
 .KJEDropper {
-  border-bottom: 1px solid #ddddba;
+border-bottom: 1px solid #ddddba;
 }
 
 div.KJEDropper, div.KJEGraphDropper {
-    outline-offset: 0;
+  outline-offset: 0;
 }
 
 div.KJEDropper:hover, div.KJEGraphDropper:hover {
-    outline: none;
-    cursor: pointer;
-    background: #F7FBF9;
+  outline: none;
+  cursor: pointer;
+  background: #F7FBF9;
 }
 div.KJEDropper:focus, div.KJEGraphDropper:focus {
-    outline: 2px solid #0c6c3c;
-    cursor: pointer;
-    background: #F7FBF9;
+  outline: 2px solid #0c6c3c;
+  cursor: pointer;
+  background: #F7FBF9;
 }
 
 .KJEInputContainer {
-  height: 55px;
+height: 55px;
 }
 
 .KJEInputContainer .KJEHelp {
-  text-align: left;
+text-align: left;
 }
 
 .KJEInputContainer .KJELabel {
-  text-align: left;
+text-align: left;
 }
 
 .KJEDefinitionIcon {
-  display: none;
+display: none;
+}
+
+#dt-CUDeposit .KJEDefinitionIcon {
+display: none;
 }
 
 .KJEInputContainer input.KJEInputModern, div.KJEDropBoxDivModern {
-  box-shadow: none;
-  padding: 7px;
-  background-position: right center;
-  background-color: transparent;
-  max-width: 121px;
+box-shadow: none;
+padding: 7px;
+background-position: right center;
+background-color: transparent;
+max-width: 121px;
 }
 .KJEToggleTable td {
-  text-align: center;
+text-align: center;
 }
 
 @media only screen and (max-width: 800px) {
-  .KJEInputContainer input.KJEInputModern, div.KJEDropBoxDivModern {
-  background-position: right center;
+.KJEInputContainer input.KJEInputModern, div.KJEDropBoxDivModern {
+background-position: right center;
 }
 }
 
 input[type=radio].KJEInputModern {
-  padding: 0;
-  appearance: none !important;
+padding: 0;
+appearance: none !important;
 }
 
 .KJESlider {
-  width: calc(100% - 350px) !important;
-  margin-left: 40px;
+width: calc(100% - 350px) !important;
+margin-left: 40px;
 }
 
 .KJESlider .KJEScale:first-child {
-  width: calc(100% - 60px) !important;
+width: calc(100% - 60px) !important;
 }
 
 .KJERange {
-  width: calc(100% - 60px) !important;
+width: calc(100% - 60px) !important;
 }
 
 .KJEInputContainer input[type=range].KJERange {
-  padding: 0;
-  margin-top: 28px;
+padding: 0;
+margin-top: 28px;
 }
 .KJEInputContainer select.KJEDropBoxModern {
-  line-height: normal;
+line-height: normal;
 }
 
 .KJEDropBoxDivModern {
-  height: initial !important;
-  /* width: auto !important; */
-  min-width: 97px;
+height: initial !important;
+/* width: auto !important; */
+min-width: 97px;
 }
 div.KJECalcTableSidebySide {
-  flex-direction: column;
+flex-direction: column;
 }
 div.KJECalcTableDivLeft, div.KJECalcTableDivRight {
-  width: 100%;
+width: 100%;
 }
 .KJEDropBox.KJEDropBoxModern {
-  position: initial !important;
-  width: 100% !important;
-  padding-right: 28px !important;
+position: initial !important;
+width: 100% !important;
+padding-right: 28px !important;
 }
 #KJE-C-APY, #KJE-C-COMPOUND_INTEREST, #KJE-C-TOTAL_YIELD, #KJE-C-TOTAL_YIELD2, .KJEReportTableDiv, .KJEReportHeader {
-  display: none;
+display: none;
 }
 
 @media only screen and (max-width: 800px) {
-  .KJEDropBox.KJEDropBoxModern {
-  position: initial !important;
-  width: 100% !important;
-  }
+.KJEDropBox.KJEDropBoxModern {
+position: initial !important;
+width: 100% !important;
+}
 }
 
 span.KJERequired {
-  display: none;
+display: none;
 }
 
 .KJECalculatorTable {
-  width: 100% !important;
+width: 100% !important;
 }
 
 .KJEGraphContainer {
-  background: #E7F1ED !important;
-  width: 100% !important;
+background: #E7F1ED !important;
+width: 100% !important;
 }
 
 .KJEInputs figure:first-of-type .KJEGraphContainer .KJEGraphDropper {
-  border-top: none;
+border-top: none;
 }
 
 .KJEGraphDropper {
-  padding: 10px;
-  border-top: 1px solid #dddbda;
+padding: 10px;
+border-top: 1px solid #dddbda;
 }
 
 .KJEGraphDropper:hover {
-  background: #f1f7f4;
+background: #f1f7f4;
 }
 
 .KJEGraph {
-  margin: 0 auto;
+margin: 0 auto;
 }
 
 .KJEGraphTitle {
-  font-size: 21.33333px !important;
-  font-family: "AvenirNext demibold", Arial, Helvetica, sans-serif !important;
-  color: #333;
+font-size: 21.33333px !important;
+font-family: "AvenirNext demibold", Arial, Helvetica, sans-serif !important;
+color: #333;
 }
 
 .KJESubTitle {
-  font-size: 16.5px;
-  font-family: "AvenirNext", Arial, Helvetica, sans-serif !important;
+font-size: 16.5px;
+font-family: "AvenirNext", Arial, Helvetica, sans-serif !important;
 }
 
 #KJEFixed {
-  position: initial !important;
-  display: flex;
-  flex-direction: column-reverse;
-  border: none;
-  box-shadow: none;
-  width: calc(100% - 2px) !important;
-  margin-left: 0;
+position: initial !important;
+display: flex;
+flex-direction: column-reverse;
+border: none;
+box-shadow: none;
+width: calc(100% - 2px) !important;
+margin-left: 0;
 }
 
 div#KJEFixed.KJEButtonIsFixed {
-  margin: 0 !important;
-  width: 100% !important;
+margin: 0 !important;
+width: 100% !important;
 }
 
 #KJECommandButtons {
-  margin: 5px 0;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
+margin: 5px 0;
+display: flex;
+justify-content: space-between;
+width: 100%;
 }
 
 .KJECommandButton {
-  background-color: #12764d;
-  border: none;
-  border-radius: 2px;
-  color: white;
-  font-family: "AvenirNext Regular", Arial, Helvetica, sans-serif;
-  font-size: 21px;
-  font-weight: bold;
-  display: inline-block;
-  padding: 0.5em 1em 0.3em;
-  box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.06);
-  margin: 1em 0 1.5em;
-  width: 100%;
+background-color: #12764d;
+border: none;
+border-radius: 2px;
+color: white;
+font-family: "AvenirNext Regular", Arial, Helvetica, sans-serif;
+font-size: 21px;
+font-weight: bold;
+display: inline-block;
+padding: 0.5em 1em 0.3em;
+box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.06);
+margin: 1em 0 1.5em;
+width: 100%;
 }
 
 .KJECommandButton + .KJECommandButton {
-  margin-left: 15px;
+margin-left: 15px;
 }
 
 .KJECommandButton:hover, .KJECommandButton:hover, input.KJEMenuButton[type=button]:hover {
-  background-color: #207e58;
-  color: #fff;
+background-color: #207e58;
+color: #fff;
 }
 
 #KJECalculate {
-  display: none !important;
+display: none !important;
 }
 
 #KJEScrollSticky {
-  background: #E7F1ED;
-  margin: 0;
-  width: 100%;
-  border-top: none;
-  border-right: 1px solid #dddbda;
-  border-bottom: 1px solid #dddbda;
-  border-left: 1px solid #dddbda;
-  padding: 18px 0;
-  font-size: 21.33333px !important;
-  font-family: "AvenirNext demibold", Arial, Helvetica, sans-serif !important;
-  color: #12764d;
-  display: block !important;
+background: #E7F1ED;
+margin: 0;
+width: 100%;
+border-top: none;
+border-right: 1px solid #dddbda;
+border-bottom: 1px solid #dddbda;
+border-left: 1px solid #dddbda;
+padding: 18px 0;
+font-size: 21.33333px !important;
+font-family: "AvenirNext demibold", Arial, Helvetica, sans-serif !important;
+color: #12764d;
+display: block !important;
 }
 
 @media only screen and (min-width: 800px) {
-  #KJECommandButtons {
-    justify-content: center;
-  }
+#KJECommandButtons {
+  justify-content: center;
+}
 
-  .KJECommandButton {
-    width: auto;
-  }
+.KJECommandButton {
+  width: auto;
+}
 }
 
 #KJEViewReport, #KJEAllContent .KJECommandButton {
-  display: inline-block;
-  background: none;
-  box-shadow: none;
-  color: blue;
-  margin: 0;
-  padding: 0;
-  font-weight: normal;
-  font-size: 18px;
-  text-decoration: underline;
+display: inline-block;
+background: none;
+box-shadow: none;
+color: blue;
+margin: 0;
+padding: 0;
+font-weight: normal;
+font-size: 18px;
+text-decoration: underline;
 }
 #KJEAllContent .KJECommandButton:hover {
-  color: blue;
+color: blue;
 }
 
 .dt-cta-wrapper {
-  text-align: center;
+text-align: center;
 }
 
 table.KJEScheduleTable tr.KJEScheduleHeaderRow, table.KJEReportTable tr.KJEFooterRow, table.KJECalcTable tr.KJEFooterRow {
-  background-color: #dddbda;
+background-color: #dddbda;
 }
 
 table.KJEScheduleTable tr.KJEScheduleEvenRow, table.KJEReportTable tr.KJEEvenRow {
-  background-color: #f7f8f9;
+background-color: #f7f8f9;
 }
 
 .KJEDropperReport {
-  pointer-events: none;
+pointer-events: none;
 }
 
 #dt-CompareLoan #KJEScrollSticky {
-  display: none !important;
+display: none !important;
 }
 
 #dt-CompareLoan .KJEDrop:not(:first-child) {
-  border-top: 1px solid #dddbda;
+border-top: 1px solid #dddbda;
 }
 
 #dt-CUDeposit #KJEScrollSticky {
-  display: none !important;
+display: none !important;
 }
 
 #dt-AutoLoan .KJEInputContainer {
-  margin-bottom: 1em;
+margin-bottom: 1em;
 }
 
 #dt-CompareSavings .KJEDrop {
-  display: none;
-  pointer-events: none;
+display: none;
+pointer-events: none;
 }
 #dt-CompareSavings #KJE-E-INPUTS.KJEDroppee {
-  padding-bottom: 0;
+padding-bottom: 0;
 }
 #dt-CompareSavings #KJE-E-INPUTS2.KJEDroppee {
-  padding-top: 0;
+padding-top: 0;
 }
 
 #dt-EnhancedLoan .KJEDrop {
-  display: none;
-  pointer-events: none;
+display: none;
+pointer-events: none;
 }
 #dt-EnhancedLoan .KJEDropBoxDivModern {
-  width: calc(100% - 245px) !important;
-  background-position: right;
+width: calc(100% - 245px) !important;
+background-position: right;
 }
 #dt-EnhancedLoan .KJEDropBox.KJEDropBoxModern {
-  width: 100% !important;
+width: 100% !important;
 }
 
 #dt-MortgageLoan .KJEDrop {
-  display: none;
-  pointer-events: none;
+display: none;
+pointer-events: none;
 }
 #dt-MortgageLoan #KJE-E-INPUTS.KJEDroppee {
-  padding-bottom: 0;
+padding-bottom: 0;
 }
 #dt-MortgageLoan #KJE-E-PREPAY.KJEDroppee {
-  padding-top: 0;
+padding-top: 0;
 }
 
 #dt-ShouldIRefiAuto #KJEScrollSticky {
-  display: none !important;
+display: none !important;
 }
 #dt-ShouldIRefiAuto #KJE-C-CLOSING_COSTS {
-  display: none !important;
+display: none !important;
 }
 
 #KJECalculatorScreenSize, #KJEFixed, #KJECommandButtons, #KJEReportButtons, #KJEMoreButtons {
-  max-width: initial;
+max-width: initial;
 }
 
 /*# sourceMappingURL=KJESiteSpecific.css.map */
