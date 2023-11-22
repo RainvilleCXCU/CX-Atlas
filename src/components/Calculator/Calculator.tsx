@@ -56,8 +56,11 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 				loadScript(file);
 			})
 		}
-		return () => {initialized.current = true}
-	}, [calculatorName])
+		return () => {
+			console.log('Cleanup!');
+			initialized.current = true;
+		}
+	}, [initialized.current])
 	
 	return (
 		<div id={`dt-${calculatorName}`}>
