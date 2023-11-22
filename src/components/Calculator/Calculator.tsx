@@ -21,7 +21,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 			console.log(`Load Script: ${src}`);
 			externalScript.src = src;
 		}
-		const KJEFile = [{
+		let KJEFile = [{
 			id: 'KJECore',
 			src: `/wp-content/themes/CXCU/vendors/calculators/KJE.js`,
 			strategy: 'afterInteractive',
@@ -31,7 +31,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 				})
 			}
 		}]
-		const jsFiles = [{
+		let jsFiles = [{
 				id: 'KJESiteCore',
 				src: `/wp-content/themes/CXCU/vendors/calculators/KJESiteSpecific.js`,
 				strategy: 'afterInteractive',
@@ -54,10 +54,12 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 			KJEFile.map(file => {
 				loadScript(file);
 			})
+			KJEFile = [];
 		}
 		return () => {
 			console.log('Cleanup!');
 			initialized.current = true;
+			KJEFile = [];
 		}
 	}, [initialized, calculatorName])
 	
