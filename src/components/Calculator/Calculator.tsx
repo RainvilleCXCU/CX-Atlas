@@ -14,7 +14,9 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 		strategy: 'afterInteractive',
 		onload: () => {
 			jsFiles.map(file => {
-				loadScript(file);
+				if(!calcsLoaded.includes(file.id)){
+					loadScript(file);
+				}
 			})
 		}
 	}]
@@ -58,7 +60,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 				}
 			})
 		}
-		return (() => {initialized.current = true})
+		return () => {initialized.current = true}
 	}, [])
 	
 	return (
