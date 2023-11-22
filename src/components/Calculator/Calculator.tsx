@@ -8,20 +8,19 @@ interface Props {
 const Calculator = ({ calculatorName }: Props): JSX.Element => {
 	const initialized = useRef(false)
 	
-	const loadScript = ({id, src, onload = null}) => {
-		const externalScript = document.createElement("script");
-		// externalScript.onerror = loadError;
-		externalScript.id = id;
-		externalScript.async = false;
-		externalScript.type = "text/javascript";
-		externalScript.onload = onload;
-		// externalScript.setAttribute("crossorigin", "anonymous");
-		document.body.appendChild(externalScript);
-		console.log(`Load Script: ${src}`);
-		externalScript.src = src;
-	}
-
 	useEffect(() => {
+		const loadScript = ({id, src, onload = null}) => {
+			const externalScript = document.createElement("script");
+			// externalScript.onerror = loadError;
+			externalScript.id = id;
+			externalScript.async = false;
+			externalScript.type = "text/javascript";
+			externalScript.onload = onload;
+			// externalScript.setAttribute("crossorigin", "anonymous");
+			document.body.appendChild(externalScript);
+			console.log(`Load Script: ${src}`);
+			externalScript.src = src;
+		}
 		const KJEFile = [{
 			id: 'KJECore',
 			src: `/wp-content/themes/CXCU/vendors/calculators/KJE.js`,
@@ -60,7 +59,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 			console.log('Cleanup!');
 			initialized.current = true;
 		}
-	}, [initialized.current])
+	}, [initialized, calculatorName])
 	
 	return (
 		<div id={`dt-${calculatorName}`}>
