@@ -52,7 +52,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 			})
 		}
 		return () => {scriptsLoaded = true}
-	}, [calculatorName])
+	}, [KJEFile])
 	
 	return (
 		<div id={`dt-${calculatorName}`}>
