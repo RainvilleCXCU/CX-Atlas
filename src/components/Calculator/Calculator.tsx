@@ -49,7 +49,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 			}
 		];
 		console.log(initialized.current)
-		if (!initialized.current) {
+		if (initialized.current !== true) {
 			initialized.current = true;
 			KJEFile.map(file => {
 				loadScript(file);
@@ -61,7 +61,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 			initialized.current = true;
 			KJEFile = [];
 		}
-	}, [initialized, calculatorName])
+	}, [calculatorName])
 	
 	return (
 		<div id={`dt-${calculatorName}`}>
