@@ -10315,11 +10315,6 @@ export const generatedSchema = {
     startCursor: { __type: "String" },
     $on: { __type: "$EnqueuedStylesheetConnectionPageInfo!" },
   },
-  EqualHeight: {
-    __typename: { __type: "String!" },
-    breakpoint: { __type: "Float" },
-    selector: { __type: "String" },
-  },
   FAQs: {
     __typename: { __type: "String!" },
     content: { __type: "String" },
@@ -13021,7 +13016,7 @@ export const generatedSchema = {
     mapType: { __type: "String" },
     markerClusters: { __type: "Int" },
     markerEffect: { __type: "String" },
-    markerIconProps: { __type: "Boolean" },
+    markerIconProps: { __type: "String" },
     markerStreetview: { __type: "Int" },
     markerZoomTo: { __type: "Int" },
     maxResults: { __type: "String" },
@@ -19502,7 +19497,6 @@ export const generatedSchema = {
       __args: { after: "String", before: "String", first: "Int", last: "Int" },
     },
     discussionSettings: { __type: "DiscussionSettings" },
-    equalHeightColumns: { __type: "[EqualHeight]" },
     faq: { __type: "FAQs", __args: { faqId: "Float" } },
     footerSettings: { __type: "FooterSettings" },
     generalSettings: { __type: "GeneralSettings" },
@@ -34658,15 +34652,6 @@ export interface EnqueuedStylesheetConnectionPageInfo {
 /**
  * Keys and their values, both cast as strings
  */
-export interface EqualHeight {
-  __typename?: "EqualHeight";
-  breakpoint?: Maybe<ScalarsEnums["Float"]>;
-  selector?: Maybe<ScalarsEnums["String"]>;
-}
-
-/**
- * Keys and their values, both cast as strings
- */
 export interface FAQs {
   __typename?: "FAQs";
   content?: Maybe<ScalarsEnums["String"]>;
@@ -43492,9 +43477,9 @@ export interface LocationSettings {
    */
   markerEffect?: Maybe<ScalarsEnums["String"]>;
   /**
-   * Meta for the key marker_icon_props as a string
+   * Meta for the key category_default_label as a string
    */
-  markerIconProps?: Maybe<ScalarsEnums["Boolean"]>;
+  markerIconProps?: Maybe<ScalarsEnums["String"]>;
   /**
    * Meta for the key marker_streetview as a string
    */
@@ -57481,7 +57466,6 @@ export interface Query {
     last?: Maybe<Scalars["Int"]>;
   }) => Maybe<RootQueryToContentTypeConnection>;
   discussionSettings?: Maybe<DiscussionSettings>;
-  equalHeightColumns?: Maybe<Array<Maybe<EqualHeight>>>;
   faq: (args?: { faqId?: Maybe<Scalars["Float"]> }) => Maybe<FAQs>;
   footerSettings?: Maybe<FooterSettings>;
   generalSettings?: Maybe<GeneralSettings>;
@@ -58148,7 +58132,6 @@ export interface SchemaObjectTypes {
   DiscussionSettings: DiscussionSettings;
   EnqueuedScript: EnqueuedScript;
   EnqueuedStylesheet: EnqueuedStylesheet;
-  EqualHeight: EqualHeight;
   FAQs: FAQs;
   FilebirdBlockFilebirdGallery: FilebirdBlockFilebirdGallery;
   FilebirdBlockFilebirdGalleryAttributes: FilebirdBlockFilebirdGalleryAttributes;
@@ -58975,7 +58958,6 @@ export type SchemaObjectTypesNames =
   | "DiscussionSettings"
   | "EnqueuedScript"
   | "EnqueuedStylesheet"
-  | "EqualHeight"
   | "FAQs"
   | "FilebirdBlockFilebirdGallery"
   | "FilebirdBlockFilebirdGalleryAttributes"

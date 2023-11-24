@@ -6,7 +6,8 @@ interface Props {
 }
 
 const Calculator = ({ calculatorName }: Props): JSX.Element => {
-	const initialized = useRef(false)
+		const initialized = useRef(false);
+		const [calcsLoaded, setCalcsLoaded] = useState([])
 	
 	useEffect(() => {
 		const loadScript = ({id, src, onload = null}) => {
@@ -19,6 +20,8 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 			// externalScript.setAttribute("crossorigin", "anonymous");
 			document.body.appendChild(externalScript);
 			console.log(`Load Script: ${src}`);
+			setCalcsLoaded([...calcsLoaded, id]);
+			console.log(calcsLoaded);
 			externalScript.src = src;
 		}
 		let KJEFile = [{
@@ -49,7 +52,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 			}
 		];
 		console.log(initialized.current)
-		if (initialized.current !== true) {
+		if (!initialized.current) {
 			initialized.current = true;
 			KJEFile.map(file => {
 				loadScript(file);
