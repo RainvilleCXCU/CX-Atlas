@@ -11,6 +11,7 @@ import HotJar from "./ThirdParty/hotjar";
 import Qualtrics from "./ThirdParty/qualtrics";
 import Spectrum from "./ThirdParty/spectrum";
 import Personyze from "./ThirdParty/personyze";
+import Loading from "./common/loading";
 
 export default function Layout({ page, children = <></> }) {
 	const { useQuery } = client;
@@ -44,6 +45,7 @@ export default function Layout({ page, children = <></> }) {
 			<HotJar />
 			<Personyze />
 			<Alert id={page?.databaseId} />
+			<Loading />
 			<Header
 				title={generalSettings.title}
 				description={generalSettings.description}

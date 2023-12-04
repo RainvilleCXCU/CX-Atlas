@@ -85,6 +85,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                     accurateDate
                     loanBasedAmount
                     memberApplyNowURL
+                    memberQuickApplyURL
                     minorMemberApplyNowURL
                     minorNonMemberApplyNowURL
                     nonMemberApplyNowURL
@@ -112,7 +113,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             Page,
             client,
             redirect: {
-                destination: `/apply-now/?account=${query.account}&minor=no`,
+                destination: `/apply-now/?account=${query.account}&minor=na`,
                 permanent: false,
             }
         });
@@ -133,6 +134,16 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             client,
             redirect: {
                 destination: `/apply-now/?account=${query.account}&minor=no`,
+                permanent: false,
+            }
+        });
+    } else if (minor && minor != 'na' && product.minorMemberApplyNowURL == '' && type == 'now') {
+        // console.log('Change Minor to now, not available');
+        return getNextServerSideProps(context, {
+            Page,
+            client,
+            redirect: {
+                destination: `/apply-now/?account=${query.account}&minor=na`,
                 permanent: false,
             }
         });

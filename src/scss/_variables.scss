@@ -14,3 +14,40 @@ $content-width-extended: 1400px;
 
 $breakpoint-small: 600px;
 $breakpoint-medium: 1000px;
+
+
+// Color
+$colors: (
+    'green': (
+        'base': rgb(18,118,77), //#12764D
+        'hover': rgb(32,126,88), //#207E58
+        'highlight': rgb(231,241,237), //#E7F1ED
+        'shadow': rgba(18,118,77,0.46), //#12764D 46%
+    ),
+    'blue': (
+        'base': rgb(0,115,209), //#0073D1
+        'hover': rgb(0,98,176), //#0062B0
+        'highlight': rgb(243,252,255), //#F3FCFF
+        'border': rgb(23,128,213), //#1780D5
+    ),
+    'yellow': (
+        'base': rgb(247,183,0), //#F7B700
+        'shadow': rgba(247, 183, 0, 0.46), //#F7B700 46%
+    ),
+    'red': (
+        'base': rgb(183,28,28), //#b71c1c
+    ),
+    'neutral': (
+        'bg': rgb(247,248,249), //#F7F8F9
+        'text': rgb(32,32,32), //#202020
+        'gray': rgb(114,114,114), //#727272 
+        'light-gray': rgb(221,219,218), //#dddbda
+        'dark-gray': rgb(99,99,99), //#636363
+        'white': rgb(255,255,255), //#FFFFFF
+        'black': rgba(0,0,0), //#000000
+    )
+);
+
+@function color($color, $variant: 'base') {
+    @return map-get(map-get($colors, $color), $variant);
+}
