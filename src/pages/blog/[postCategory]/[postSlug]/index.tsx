@@ -10,11 +10,12 @@ import Categories from 'components/Posts/categories';
 import Image from 'next/image';
 import { parseHtml } from 'lib/parser';
 import Link from 'next/link';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import HotJar from 'components/ThirdParty/hotjar';
 import Qualtrics from 'components/ThirdParty/qualtrics';
 import Spectrum from 'components/ThirdParty/spectrum';
 import Personyze from 'components/ThirdParty/personyze';
+import { useRouter } from 'next/router';
 
 export interface PostProps {
   post: Post | Post['preview']['node'] | null | undefined;
@@ -23,9 +24,21 @@ export interface PostProps {
 export function PostComponent({ post }: PostProps) {
   const { useQuery } = client;
   const generalSettings = useQuery().generalSettings;
+  const router = useRouter();
+
+  const { uri } = useQuery().postBy({
+    id: post.id
+  })
 
   const enqueuedStylesheets = post.enqueuedStylesheets().edges;
   const blogSidebar = useQuery().widgetSettings.blogSidebar;
+
+  useEffect(() => {
+    console.log(`${uri} - ${router.asPath.split('?')[0]} - ${JSON.stringify(router.asPath.split('?')[1])}`)
+    if(uri !== router.asPath.split('?')[0]) {
+      router.push(`${uri}${router.asPath.split('?')[1] ? '?' + router.asPath.split('?')[1] : ''}`);
+    }
+  }, [router])
 
   return (
     <>
@@ -95,7 +108,7 @@ export function PostComponent({ post }: PostProps) {
 export default function Page() {
   const { usePost } = client;
   const post = usePost();
-
+  
   return <PostComponent post={post} />;
 }
 
