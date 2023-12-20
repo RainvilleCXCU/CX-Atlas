@@ -51,3 +51,7 @@ $colors: (
 @function color($color, $variant: 'base') {
     @return map-get(map-get($colors, $color), $variant);
 }
+
+// Loading
+$loader--num-lines: 8;
+$loader--spin-speed: 1s;

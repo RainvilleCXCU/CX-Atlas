@@ -1,0 +1,14 @@
+@mixin loading-lines($num, $rotation: 'cw', $rotateTime: 1s ) {
+    $interval: $rotateTime/$num;
+    @for $i from $num to 0 {
+        .lines div.bar#{$i} {
+            -webkit-transform: rotate(calc(360deg/$num*$i)) translate(0, -130%);
+            @if $rotation == 'cw' {
+                -webkit-animation-delay: calc(($interval*$i) - $interval);
+            }
+            @if $rotation == 'ccw' {
+                -webkit-animation-delay: calc(($interval*$i) - $interval * -1);
+            }
+        }
+    }
+}
