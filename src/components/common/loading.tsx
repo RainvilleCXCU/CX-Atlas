@@ -3,26 +3,37 @@ import { useRouter } from "next/router";
 
 function Loading({ type = 'lines' }): JSX.Element {
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
+  let loadingTimer;
+  const loadingTimeout: string = (process.env.NEXT_PUBLIC_loadingTimeout as string) ?? '1000';
+  console.log(`Timeout for loader: ${loadingTimeout} - ${process.env.NEXT_PUBLIC_loadingTimeout}`)
   useEffect(() => {
     router.events.on('routeChangeStart', () => {
-      setIsLoading(true);
+      loadingTimer = setTimeout(() => {
+        setIsLoading(true)
+      }, parseInt(loadingTimeout));
     })
     router.events.on('routeChangeComplete', () => {
       setIsLoading(false);
+      clearTimeout(loadingTimer);
     })
     router.events.on('routeChangeError', () => {
       setIsLoading(false);
+      clearTimeout(loadingTimer);
     })
     return () => {
       router.events.off('routeChangeStart', () => {
-        setIsLoading(true);
+        loadingTimer = setTimeout(() => {
+          setIsLoading(true)
+        }, parseInt(loadingTimeout));
       })
       router.events.off('routeChangeComplete', () => {
         setIsLoading(false);
+        clearTimeout(loadingTimer);
       })
       router.events.off('routeChangeError', () => {
         setIsLoading(false);
+        clearTimeout(loadingTimer);
       })
     }
   }, [router.events])
