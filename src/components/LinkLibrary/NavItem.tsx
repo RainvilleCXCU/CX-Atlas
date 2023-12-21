@@ -30,12 +30,16 @@ function LinkLibraryCatLinks({ categories, type = 'link' }: Props): JSX.Element 
                 activePage: 1
             }
         })
-        const url = getPageUri(router.query.pageUri);
+        const url = '/about/media-center/';
+        console.log('Query');
+        console.log(router.query);
         router.push(`${url}${category.id}`, undefined, { shallow: true });
     }
 
     useEffect(() => {
-        setActiveCat(state?.linkLibrary?.activeCat)
+        setActiveCat(state?.linkLibrary?.activeCat);
+        console.log('Active Cat');
+        console.log(state?.linkLibrary?.activeCat);
         return () => {}
     }, [state?.linkLibrary?.activeCat])
 

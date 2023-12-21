@@ -18,25 +18,23 @@ function LinkLibrary({ cat_ids, children = <></> }: Props): JSX.Element {
     const [activeCat, setActiveCat] = useState(null);
 
     const router = useRouter();
-
+    // const catId = router.query.pageUri[2] ?? cat_ids[0];
+    // const page = router.query.pageUri[4] ?? 1;
 
     useEffect(() => {
         setActiveCat(state?.linkLibrary?.activeCat)
     }, [state?.linkLibrary?.activeCat]);
 
     useEffect(() => {
-        if(router.isReady) {
-            console.log(`Query ${JSON.stringify(router.query)}`);
-            setState({
-                ...state,
-                linkLibrary: {
-                    ...state.linkLibrary,
-                    activeCat: cat_ids.filter(cat => cat.id == router.query.linkLibCatId).length === 1 ? cat_ids.filter(cat => cat.id == router.query.linkLibCatId)[0] : cat_ids[0],
-                    activePage: router.query.linkLibCatPage ? router.query.linkLibCatPage : 1
-                }
-            });
-        }
-    }, [router.isReady]);
+        setState({
+            ...state,
+            linkLibrary: {
+                ...state.linkLibrary,
+                activeCat: cat_ids.filter(cat => cat.id == state?.linkLibrary?.activeId).length === 1 ? cat_ids.filter(cat => cat.id == state?.linkLibrary?.activeId)[0] : cat_ids[0],
+                activePage: state?.linkLibrary?.activePage ?? '1'
+            }
+        });
+    }, [state?.linkLibrary?.activeId]);
     return (
         <div className="cx-link-library">
             <nav aria-label="secondary">

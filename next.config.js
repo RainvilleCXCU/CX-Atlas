@@ -67,7 +67,7 @@ let nextConfig = {
                 {
                     source: '/about/branch-and-atm-locations/',
                     destination: '/locations',
-                },
+                }
                 // {
                 //     source: '/pgp.txt',
                 //     destination: '/wp-content/themes/Connexus/assets/txt/ConnexusFileTransfer_PGP.txt'
@@ -75,22 +75,22 @@ let nextConfig = {
             ],
             afterFiles: [
                 {
-                    source: '/about/media-center/:linkLibCatId/page/:linkLibCatPage*',
-                    destination: `/about/media-center/`,
-                },
-                {
-                    source: '/about/media-center/:linkLibCatId*',
-                    destination: `/about/media-center/`,
-                },
-                {
                     source: '/about/branch-and-atm-locations/find-location/:location*',
                     destination: '/locations',
                 },
                 {
                     source: '/location/:location*',
                     destination: '/locations/location',
+                },
+                {
+                    source: '/about/media-center/:catId*/page/:pageNum*',
+                    destination: `/about/media-center`,
+                },
+                {
+                    source: '/about/media-center/:catId*',
+                    destination: `/about/media-center`,
                 }
-            ],
+            ]
         }
     },
     trailingSlash: true,

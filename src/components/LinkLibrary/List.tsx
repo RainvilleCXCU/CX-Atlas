@@ -11,8 +11,8 @@ import { getPageUri } from "lib/routing";
 export interface Props {
     category: {
         id: string,
-        name: string,
-        dateFormat: string
+        name?: string,
+        dateFormat?: string
     }
 }
 
@@ -22,7 +22,8 @@ function LinkLibraryList({ category }: Props): JSX.Element {
     const postPerPage = 7;
     const router = useRouter();
 
-    const url = getPageUri(router.query.pageUri);
+    // const url = getPageUri(router.query.pageUri ? router.query.pageUri : ['/']);
+    const url = '/about/media-center/';
 
     const pageinate = (page) => {
         setState({
@@ -32,11 +33,26 @@ function LinkLibraryList({ category }: Props): JSX.Element {
                 activePage: page
             }
         });
+        console.log('Query');
+        console.log(router.query);
+        // router.push(`${url}${category.id}`, undefined, { shallow: true });
     }
 
-    const links = client.useQuery().linkLibraryByCatId({
+    let links = client.useQuery().linkLibraryByCatId({
         catId: parseInt(category?.id)
     })
+    console.log(`LINKS for : ${category?.id}`);
+    console.log(links.length);
+    console.log(category)
+    // const getLinks = (id) => {
+    //     return client.useQuery().linkLibraryByCatId({
+    //         catId: parseInt(category?.id)
+    //     })
+    // }
+
+    // useEffect(() => {
+    //     links = getLinks(category?.id);
+    // }, [category?.id])
 
     return (
         <div className={`linklist LinkLibraryCat LinkLibraryCat${category?.name}`}>
@@ -55,7 +71,7 @@ function LinkLibraryList({ category }: Props): JSX.Element {
                             )).filter((e, i) => i >= ((state?.linkLibrary?.activePage - 1) * postPerPage) && i < ((state?.linkLibrary?.activePage - 1) * postPerPage) + postPerPage)
                         }
                     </ul>
-                    <Pagination currentPage={parseInt(state?.linkLibrary?.activePage)} totalResults={links.length} basePath={`${url}${category?.id}`} perPage={10} clickHandler={pageinate} />
+                    <Pagination currentPage={parseInt(state?.linkLibrary?.activePage)} totalResults={links.length} basePath={`${url}${category?.id}`} perPage={10} shallow={true} clickHandler={pageinate} />
                 </>
             }
         </div>
