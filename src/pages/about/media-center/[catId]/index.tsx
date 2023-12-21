@@ -45,3 +45,10 @@ export async function getStaticProps(context: GetStaticPropsContext) {
     revalidate: parseInt(process.env.PAGE_REVALIDATION) ? parseInt(process.env.PAGE_REVALIDATION) : null,
   });
 }
+
+export function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking'
+  };
+}
