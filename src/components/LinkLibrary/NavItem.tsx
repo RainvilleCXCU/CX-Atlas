@@ -33,11 +33,11 @@ function LinkLibraryCatLinks({ categories, type = 'link' }: Props): JSX.Element 
         const url = '/about/media-center/';
         console.log('Query');
         console.log(router.query);
-        router.push(`${url}${category.id}`, undefined, { shallow: true });
+        router.push(`${url}${category.id}`, undefined, {shallow:true})
     }
 
     useEffect(() => {
-        setActiveCat(state?.linkLibrary?.activeCat);
+        // setActiveCat(state?.linkLibrary?.activeCat);
         console.log('Active Cat');
         console.log(state?.linkLibrary?.activeCat);
         return () => {}
@@ -50,7 +50,7 @@ function LinkLibraryCatLinks({ categories, type = 'link' }: Props): JSX.Element 
                     {
                         categories?.map((category, index) => (
                             <li className="cx-link-lib-cats__item" key={`list-link-${category.id}`}>
-                                <a className={`cx-link cx-link--large cx-link-lib-cats__link${activeCat?.id === category?.id ? ' cx-link-lib-active' : ''}`} data-catid={category?.id}
+                                <a className={`cx-link cx-link--large cx-link-lib-cats__link${state?.linkLibrary?.activeCat?.id === category?.id ? ' cx-link-lib-active' : ''}`} data-catid={category?.id}
                                     onClick={(e) => {
                                         e.preventDefault();
                                         showCategory(category);
@@ -70,7 +70,7 @@ function LinkLibraryCatLinks({ categories, type = 'link' }: Props): JSX.Element 
                     onChange={(e) => {
                         e.preventDefault();
                         showCategory(JSON.parse(e.currentTarget.value));
-                    }} value={activeCat?.id}>
+                    }} value={state?.linkLibrary?.activeCat?.id}>
                     {
                         categories?.map((category, index) => (
                             <option value={JSON.stringify(category)} key={`category-option-${category.id}`}

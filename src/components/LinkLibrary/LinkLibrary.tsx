@@ -26,14 +26,18 @@ function LinkLibrary({ cat_ids, children = <></> }: Props): JSX.Element {
     }, [state?.linkLibrary?.activeCat]);
 
     useEffect(() => {
-        setState({
-            ...state,
-            linkLibrary: {
-                ...state.linkLibrary,
-                activeCat: cat_ids.filter(cat => cat.id == state?.linkLibrary?.activeId).length === 1 ? cat_ids.filter(cat => cat.id == state?.linkLibrary?.activeId)[0] : cat_ids[0],
-                activePage: state?.linkLibrary?.activePage ?? '1'
-            }
-        });
+        if(!state?.linkLibrary?.activeId) {
+            router.push(`/about/media-center/${cat_ids[0].id}`, undefined, {shallow:true});
+        } else {
+            setState({
+                ...state,
+                linkLibrary: {
+                    ...state.linkLibrary,
+                    activeCat: cat_ids.filter(cat => cat.id == state?.linkLibrary?.activeId).length === 1 ? cat_ids.filter(cat => cat.id == state?.linkLibrary?.activeId)[0] : cat_ids[0],
+                    activePage: state?.linkLibrary?.activePage ?? '1'
+                }
+            });
+        }
     }, [state?.linkLibrary?.activeId]);
     return (
         <div className="cx-link-library">
@@ -41,7 +45,9 @@ function LinkLibrary({ cat_ids, children = <></> }: Props): JSX.Element {
                 <LinkLibraryCatLinks categories={cat_ids} type="link"></LinkLibraryCatLinks>
                 <LinkLibraryCatLinks categories={cat_ids} type="select"></LinkLibraryCatLinks>
             </nav>
-            <LinkLibraryList category={activeCat}></LinkLibraryList>
+            { state?.linkLibrary?.activeCat?.id === activeCat?.id &&
+                <LinkLibraryList category={state?.linkLibrary?.activeCat}></LinkLibraryList>
+            }
         </div>
     );
 }

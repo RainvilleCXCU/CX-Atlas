@@ -82,14 +82,14 @@ let nextConfig = {
                     source: '/location/:location*',
                     destination: '/locations/location',
                 },
-                {
-                    source: '/about/media-center/:catId*/page/:pageNum*',
-                    destination: `/about/media-center`,
-                },
-                {
-                    source: '/about/media-center/:catId*',
-                    destination: `/about/media-center`,
-                }
+                // {
+                //     source: '/about/media-center/:catId*/page/:pageNum*',
+                //     destination: `/about/media-center`,
+                // },
+                // {
+                //     source: '/about/media-center/:catId*',
+                //     destination: `/about/media-center`,
+                // }
             ]
         }
     },
