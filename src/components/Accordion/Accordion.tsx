@@ -7,7 +7,7 @@ interface AccordionProps {
 	isOpen: boolean;
 }
 
-const Accordion: React.FC<AccordionProps> = ({ title, content = '', isOpen }) => {
+const Accordion: React.FC<AccordionProps> = ({ title = '', content = '', isOpen = false }) => {
 	return (
 		<div className="cx-accordion__brand">
 			<details open={isOpen}>
