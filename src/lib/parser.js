@@ -21,13 +21,12 @@ import Container from "components/Blocks/Container";
 const findChildren = (element, att, value) => {
     let children = [];
     const isChild = (child, att, value) => {
-        if(child?.attribs?.[att]) {
+        if(child?.attribs?.[att] !== undefined) {
             children.push(child);
-        } else {
-            child.children && child.children.forEach(el => {
-                isChild(el, att, value);
-            });
-        }
+        } 
+        child.children && child.children.forEach(el => {
+            isChild(el, att, value);
+        });
     }
     isChild(element, att, value);
     return children;
@@ -57,12 +56,12 @@ export const parseHtml = (html) => {
             const isForm = attribs?.class?.includes('nf-form-cont');
             const isBlockContainer = attribs && attribs.class && attribs.class.includes("gb-block-container");
 
-            if(attribs?.onclick) {
-                attribs.onClick = attribs?.onclick;
-                delete attribs.onclick;
+            // if(attribs?.onclick) {
+            //     attribs.onClick = attribs?.onclick;
+            //     delete attribs.onclick;
 
-                console.log(attribs)
-            }
+            //     console.log(attribs)
+            // }
 
             // const isSidekick = attribs?.class && attribs?.class == 'cx-sidekick';
             // const equalHeight = attribs?.id;
@@ -102,8 +101,10 @@ export const parseHtml = (html) => {
             }
 
             else if(isFAQItem) {
+                const title  = domToReact(findChildren(element, 'data-faq-title', '')[0].children, options); 
+                const content = domToReact(findChildren(element, 'data-faq-content', '')[0].children, options);
                 return (
-                    <FAQ id={attribs['data-post_id']} />
+                    <FAQ id={attribs['data-post_id']} title={title} content={content} />
                 )
             }
 

@@ -11,12 +11,12 @@ export interface Props {
 
 function FAQ({ id, title, content, isOpen }: Props): JSX.Element {
 	const { useQuery } = client;
-	const faqItem = useQuery().faq({
-		faqId: parseInt(id)
-	});
+	// const faqItem = useQuery().faq({
+	// 	faqId: parseInt(id)
+	// });
 	return (
-		<div id={faqItem.id} className="cx-faq_wrapper">
-			<Accordion title={faqItem.title} content={faqItem.content} isOpen={isOpen} />
+		<div id={id} className="cx-faq_wrapper">
+			<Accordion title={title} content={content} isOpen={isOpen} />
 		</div>
 	);
 }

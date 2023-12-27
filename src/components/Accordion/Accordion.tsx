@@ -12,7 +12,7 @@ const Accordion: React.FC<AccordionProps> = ({ title = '', content = '', isOpen 
 		<div className="cx-accordion__brand">
 			<details open={isOpen}>
 				<summary className="gb-accordion-title">{title}</summary>
-				<div className="gb-accordion-text">{parseHtml(content)}</div>
+				<div className="gb-accordion-text">{typeof(content) === 'string' ? parseHtml(content) : content}</div>
 			</details>
 		</div>
 	);
