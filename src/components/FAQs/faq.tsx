@@ -6,7 +6,7 @@ export interface Props {
 	id: string;
 	title: string;
 	content: string;
-	isOpen: boolean;
+	isOpen?: boolean;
 }
 
 function FAQ({ id, title, content, isOpen }: Props): JSX.Element {
@@ -15,8 +15,8 @@ function FAQ({ id, title, content, isOpen }: Props): JSX.Element {
 	// 	faqId: parseInt(id)
 	// });
 	return (
-		<div id={id} className="cx-faq_wrapper">
-			<Accordion title={title} content={content} isOpen={isOpen} />
+		<div className="cx-faq_wrapper">
+			<Accordion title={title} content={content} isOpen={isOpen} id={id}/>
 		</div>
 	);
 }
