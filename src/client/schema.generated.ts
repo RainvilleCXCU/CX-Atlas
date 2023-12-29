@@ -889,13 +889,15 @@ export interface CreateProductInput {
   bookNowURL?: InputMaybe<Scalars["String"]>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: InputMaybe<Scalars["String"]>;
-  dataSource?: InputMaybe<Scalars["String"]>;
+  dataSource?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   datatracID?: InputMaybe<Scalars["String"]>;
   /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
   date?: InputMaybe<Scalars["String"]>;
   displayName: Scalars["String"];
   loanBasedAmount?: InputMaybe<Scalars["String"]>;
   memberApplyNowURL?: InputMaybe<Scalars["String"]>;
+  memberQuickApplyMobileURL?: InputMaybe<Scalars["String"]>;
+  memberQuickApplyURL?: InputMaybe<Scalars["String"]>;
   /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
   menuOrder?: InputMaybe<Scalars["Int"]>;
   minorMemberApplyNowURL?: InputMaybe<Scalars["String"]>;
@@ -907,6 +909,7 @@ export interface CreateProductInput {
   productApplyURL?: InputMaybe<Scalars["String"]>;
   productPageURL?: InputMaybe<Scalars["String"]>;
   ratesTableID?: InputMaybe<Scalars["Float"]>;
+  showRatesInDigitalBanking?: InputMaybe<Scalars["String"]>;
   /** The slug of the object */
   slug?: InputMaybe<Scalars["String"]>;
   /** The status of the object */
@@ -5013,7 +5016,7 @@ export interface UpdateProductInput {
   bookNowURL?: InputMaybe<Scalars["String"]>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: InputMaybe<Scalars["String"]>;
-  dataSource?: InputMaybe<Scalars["String"]>;
+  dataSource?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   datatracID?: InputMaybe<Scalars["String"]>;
   /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
   date?: InputMaybe<Scalars["String"]>;
@@ -5024,6 +5027,8 @@ export interface UpdateProductInput {
   ignoreEditLock?: InputMaybe<Scalars["Boolean"]>;
   loanBasedAmount?: InputMaybe<Scalars["String"]>;
   memberApplyNowURL?: InputMaybe<Scalars["String"]>;
+  memberQuickApplyMobileURL?: InputMaybe<Scalars["String"]>;
+  memberQuickApplyURL?: InputMaybe<Scalars["String"]>;
   /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
   menuOrder?: InputMaybe<Scalars["Int"]>;
   minorMemberApplyNowURL?: InputMaybe<Scalars["String"]>;
@@ -5035,6 +5040,7 @@ export interface UpdateProductInput {
   productApplyURL?: InputMaybe<Scalars["String"]>;
   productPageURL?: InputMaybe<Scalars["String"]>;
   ratesTableID?: InputMaybe<Scalars["Float"]>;
+  showRatesInDigitalBanking?: InputMaybe<Scalars["String"]>;
   /** The slug of the object */
   slug?: InputMaybe<Scalars["String"]>;
   /** The status of the object */
@@ -9792,12 +9798,14 @@ export const generatedSchema = {
     authorId: { __type: "ID" },
     bookNowURL: { __type: "String" },
     clientMutationId: { __type: "String" },
-    dataSource: { __type: "String" },
+    dataSource: { __type: "[String]" },
     datatracID: { __type: "String" },
     date: { __type: "String" },
     displayName: { __type: "String!" },
     loanBasedAmount: { __type: "String" },
     memberApplyNowURL: { __type: "String" },
+    memberQuickApplyMobileURL: { __type: "String" },
+    memberQuickApplyURL: { __type: "String" },
     menuOrder: { __type: "Int" },
     minorMemberApplyNowURL: { __type: "String" },
     minorNonMemberApplyNowURL: { __type: "String" },
@@ -9807,6 +9815,7 @@ export const generatedSchema = {
     productApplyURL: { __type: "String" },
     productPageURL: { __type: "String" },
     ratesTableID: { __type: "Float" },
+    showRatesInDigitalBanking: { __type: "String" },
     slug: { __type: "String" },
     status: { __type: "PostStatusEnum" },
     title: { __type: "String" },
@@ -10797,6 +10806,7 @@ export const generatedSchema = {
     className: { __type: "String" },
     graphic: { __type: "Int" },
     headerText: { __type: "String" },
+    icon: { __type: "String" },
     image: { __type: "Int" },
     lock: { __type: "BlockAttributesObject" },
     title: { __type: "String" },
@@ -14742,7 +14752,7 @@ export const generatedSchema = {
     conditionalTags: { __type: "ConditionalTags" },
     contentType: { __type: "ContentNodeToContentTypeConnectionEdge" },
     contentTypeName: { __type: "String!" },
-    dataSource: { __type: "String" },
+    dataSource: { __type: "[String]" },
     databaseId: { __type: "Int!" },
     datatracID: { __type: "String" },
     date: { __type: "String" },
@@ -14769,6 +14779,8 @@ export const generatedSchema = {
     link: { __type: "String" },
     loanBasedAmount: { __type: "String" },
     memberApplyNowURL: { __type: "String" },
+    memberQuickApplyMobileURL: { __type: "String" },
+    memberQuickApplyURL: { __type: "String" },
     minorMemberApplyNowURL: { __type: "String" },
     minorNonMemberApplyNowURL: { __type: "String" },
     modified: { __type: "String" },
@@ -14787,6 +14799,7 @@ export const generatedSchema = {
     },
     ratesTableID: { __type: "Float" },
     seo: { __type: "PostTypeSEO" },
+    showRatesInDigitalBanking: { __type: "String" },
     slug: { __type: "String" },
     status: { __type: "String" },
     template: { __type: "ContentTemplate" },
@@ -17921,7 +17934,7 @@ export const generatedSchema = {
     authorId: { __type: "ID" },
     bookNowURL: { __type: "String" },
     clientMutationId: { __type: "String" },
-    dataSource: { __type: "String" },
+    dataSource: { __type: "[String]" },
     datatracID: { __type: "String" },
     date: { __type: "String" },
     displayName: { __type: "String" },
@@ -17929,6 +17942,8 @@ export const generatedSchema = {
     ignoreEditLock: { __type: "Boolean" },
     loanBasedAmount: { __type: "String" },
     memberApplyNowURL: { __type: "String" },
+    memberQuickApplyMobileURL: { __type: "String" },
+    memberQuickApplyURL: { __type: "String" },
     menuOrder: { __type: "Int" },
     minorMemberApplyNowURL: { __type: "String" },
     minorNonMemberApplyNowURL: { __type: "String" },
@@ -17938,6 +17953,7 @@ export const generatedSchema = {
     productApplyURL: { __type: "String" },
     productPageURL: { __type: "String" },
     ratesTableID: { __type: "Float" },
+    showRatesInDigitalBanking: { __type: "String" },
     slug: { __type: "String" },
     status: { __type: "PostStatusEnum" },
     title: { __type: "String" },
@@ -19025,9 +19041,22 @@ export const generatedSchema = {
   },
   WidgetSettings: {
     __typename: { __type: "String!" },
-    applyNow: { __type: "String", __args: { account: "String" } },
-    applyNowMinor: { __type: "String", __args: { account: "String" } },
-    applyStart: { __type: "String", __args: { account: "String" } },
+    applyNow: {
+      __type: "String",
+      __args: { account: "String", minor: "String" },
+    },
+    applyNowMember: {
+      __type: "String",
+      __args: { account: "String", minor: "String" },
+    },
+    applyNowMinor: {
+      __type: "String",
+      __args: { account: "String", minor: "String" },
+    },
+    applyStart: {
+      __type: "String",
+      __args: { account: "String", minor: "String" },
+    },
     blogSidebar: { __type: "String" },
     blogtop: { __type: "String" },
     locationsSearch: { __type: "String" },
@@ -36332,6 +36361,10 @@ export interface GenesisCustomBlocksCardFactAttributes {
    */
   headerText?: Maybe<ScalarsEnums["String"]>;
   /**
+   * The &quot;icon&quot; field on the &quot;GenesisCustomBlocksCardFact&quot; block
+   */
+  icon?: Maybe<ScalarsEnums["String"]>;
+  /**
    * The &quot;image&quot; field on the &quot;GenesisCustomBlocksCardFact&quot; block
    */
   image?: Maybe<ScalarsEnums["Int"]>;
@@ -47903,7 +47936,7 @@ export interface Product {
    * The name of the Content Type the node belongs to
    */
   contentTypeName: ScalarsEnums["String"];
-  dataSource?: Maybe<ScalarsEnums["String"]>;
+  dataSource?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
   /**
    * The unique identifier stored in the database
    */
@@ -48006,6 +48039,8 @@ export interface Product {
   link?: Maybe<ScalarsEnums["String"]>;
   loanBasedAmount?: Maybe<ScalarsEnums["String"]>;
   memberApplyNowURL?: Maybe<ScalarsEnums["String"]>;
+  memberQuickApplyMobileURL?: Maybe<ScalarsEnums["String"]>;
+  memberQuickApplyURL?: Maybe<ScalarsEnums["String"]>;
   minorMemberApplyNowURL?: Maybe<ScalarsEnums["String"]>;
   minorNonMemberApplyNowURL?: Maybe<ScalarsEnums["String"]>;
   /**
@@ -48063,6 +48098,7 @@ export interface Product {
    * The Yoast SEO data of the ContentNode
    */
   seo?: Maybe<PostTypeSEO>;
+  showRatesInDigitalBanking?: Maybe<ScalarsEnums["String"]>;
   /**
    * The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
    */
@@ -56889,6 +56925,23 @@ export interface WidgetSettings {
      * Description for how the argument will impact the field resolver
      */
     account?: Maybe<Scalars["String"]>;
+    /**
+     * Description for how the argument will impact the field resolver
+     */
+    minor?: Maybe<Scalars["String"]>;
+  }) => Maybe<ScalarsEnums["String"]>;
+  /**
+   * Apply Now Member Content
+   */
+  applyNowMember: (args?: {
+    /**
+     * Description for how the argument will impact the field resolver
+     */
+    account?: Maybe<Scalars["String"]>;
+    /**
+     * Description for how the argument will impact the field resolver
+     */
+    minor?: Maybe<Scalars["String"]>;
   }) => Maybe<ScalarsEnums["String"]>;
   /**
    * Apply Now Minor Content
@@ -56898,6 +56951,10 @@ export interface WidgetSettings {
      * Description for how the argument will impact the field resolver
      */
     account?: Maybe<Scalars["String"]>;
+    /**
+     * Description for how the argument will impact the field resolver
+     */
+    minor?: Maybe<Scalars["String"]>;
   }) => Maybe<ScalarsEnums["String"]>;
   /**
    * Apply Start Content
@@ -56907,6 +56964,10 @@ export interface WidgetSettings {
      * Description for how the argument will impact the field resolver
      */
     account?: Maybe<Scalars["String"]>;
+    /**
+     * Description for how the argument will impact the field resolver
+     */
+    minor?: Maybe<Scalars["String"]>;
   }) => Maybe<ScalarsEnums["String"]>;
   /**
    * Genesis Blog Sidebar
