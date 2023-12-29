@@ -6,7 +6,7 @@ interface AccordionProps {
   title: string;
   content: string;
   isOpen?: boolean;
-  id: string;
+  id?: string;
 }
 
 const Accordion: React.FC<AccordionProps> = ({ title = '', content = '', isOpen = false, id }) => {
