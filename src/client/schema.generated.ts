@@ -17548,6 +17548,8 @@ export const generatedSchema = {
     personyzeId: { __type: "String" },
     qualtricsEnabled: { __type: "String" },
     qualtricsId: { __type: "String" },
+    siteimproveEnabled: { __type: "String" },
+    siteimproveId: { __type: "String" },
     spectrumEnabled: { __type: "String" },
     spectrumId: { __type: "String" },
     thirdPartySettings: { __type: "String" },
@@ -54197,6 +54199,14 @@ export interface ThirdPartySettings {
    * The number of votes
    */
   qualtricsId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The number of votes
+   */
+  siteimproveEnabled?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The number of votes
+   */
+  siteimproveId?: Maybe<ScalarsEnums["String"]>;
   /**
    * The number of votes
    */

@@ -12,6 +12,7 @@ import Qualtrics from "./ThirdParty/qualtrics";
 import Spectrum from "./ThirdParty/spectrum";
 import Personyze from "./ThirdParty/personyze";
 import Loading from "./common/loading";
+import Siteimprove from "./ThirdParty/siteimprove";
 
 export default function Layout({ page, children = <></> }) {
 	const { useQuery } = client;
@@ -62,6 +63,7 @@ export default function Layout({ page, children = <></> }) {
 			<Footer copyrightHolder={generalSettings.footerText} />
 			<Qualtrics />
 			<Spectrum />
+			<Siteimprove />
 		</>
 	);
 }

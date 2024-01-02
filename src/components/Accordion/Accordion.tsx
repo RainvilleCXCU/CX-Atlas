@@ -16,13 +16,10 @@ const Accordion: React.FC<AccordionProps> = ({ title = '', content = '', isOpen 
   useEffect(() => {
 		// handle the hash change
     const handleHashChange = (url, { shallow }) => {
-      console.log('Hash changed to ' + window.location.hash.substring(1))
-
       const accordionElement = document.getElementById(id);
-
+			
       if (accordionElement && window.location.hash.substring(1) === id) {
         setIsAccordionOpen(true);
-				console.log('scrolled into view and opened');
       }
     }
  
@@ -37,7 +34,7 @@ const Accordion: React.FC<AccordionProps> = ({ title = '', content = '', isOpen 
 	
   return (
     <div className="cx-accordion__brand">
-      <details open={isAccordionOpen} id={id} onClick={() => setIsAccordionOpen(!isAccordionOpen)}>
+      <details open={isAccordionOpen} id={id}>
         <summary className="gb-accordion-title">{title}</summary>
         <div className="gb-accordion-text">{typeof(content) === 'string' ? parseHtml(content) : content}</div>
       </details>
