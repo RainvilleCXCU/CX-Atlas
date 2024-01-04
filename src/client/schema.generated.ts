@@ -12986,7 +12986,6 @@ export const generatedSchema = {
     autoZoomLevel: { __type: "Int" },
     autocomplete: { __type: "Int" },
     autoload: { __type: "Int" },
-    autoloadLimit: { __type: "Int" },
     backLabel: { __type: "String" },
     categoryDefaultLabel: { __type: "String" },
     categoryFilter: { __type: "Int" },
@@ -43351,10 +43350,6 @@ export interface LocationSettings {
    * Meta for the key autoload as a string
    */
   autoload?: Maybe<ScalarsEnums["Int"]>;
-  /**
-   * Meta for the key autoload_limit as a string
-   */
-  autoloadLimit?: Maybe<ScalarsEnums["Int"]>;
   /**
    * Meta for the key back_label as a string
    */

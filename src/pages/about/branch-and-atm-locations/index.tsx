@@ -34,14 +34,57 @@ import {
 import { useRouter } from "next/router";
 import Personyze from "components/ThirdParty/personyze";
 import { parseHtml } from "lib/parser";
+import Loading from "components/common/loading";
 
-export default function Page({ locationSettings, location }) {
+export default function Page() {
 	const { useQuery } = client;
 	const { query = {}, push } = useRouter();
+
+	const location = query.location;
+
 
 	const [state, setState] = useContext(Store);
 
 	const { generalSettings, widgetSettings } = useQuery();
+	
+	const {apiBrowserKey,
+		mapType,
+		zoomLevel,
+		urlLabel,
+		emailLabel,
+		phoneLabel,
+		streetview,
+		startLatlng,
+		startMarker,
+		storeMarker,
+		typeControl,
+		scrollwheel,
+		searchRadius,
+		controlPosition,
+		autoZoomLevel,
+		markerIconProps,
+		distanceUnit
+	} = useQuery().locationSettings;
+
+	const locationSettings = {
+		apiBrowserKey,
+		mapType,
+		zoomLevel,
+		urlLabel,
+		emailLabel,
+		phoneLabel,
+		streetview,
+		startLatlng,
+		startMarker,
+		storeMarker,
+		typeControl,
+		scrollwheel,
+		searchRadius,
+		controlPosition,
+		autoZoomLevel,
+		markerIconProps,
+		distanceUnit
+	}
 
 	const [data, setData] = useState(null);
 	const [length, setLength] = useState(null);
@@ -49,15 +92,23 @@ export default function Page({ locationSettings, location }) {
 	const [showDetails, setShowDetails] = useState(false);
 	const [selectedLocation, setSelectedLocation] = useState(null);
 
+	console.log('LOAD LOCATIONS INDEX');
+	console.log(JSON.stringify(location));
+	console.log(JSON.stringify(state?.location?.search))
+
 	useEffect(() => {
 		setLoading(true);
 		console.log(`Search: ${state?.location?.search} - ${location}`);
+		if (location && location !== '' && location == state?.location?.search) {
+			return;
+		}
 
-		if (location && location[0] && !state?.location?.search) {
-			getLatLngByLocation({ address: formatSearch(location[0]) })
+		if (location && !state?.location?.search) {
+			getLatLngByLocation({ address: formatSearch(location) })
 				.then((response) => {
 					const { geometry } = response[0];
 					const { types } = response[0];
+					console.log('First GetLatLngByLoc')
 					fetchLocations({
 						lat: geometry?.location.lat(),
 						lng: geometry?.location.lng(),
@@ -69,9 +120,9 @@ export default function Page({ locationSettings, location }) {
 						push(
 							`/about/branch-and-atm-locations/find-location/${location}/`,
 							undefined,
-							{ shallow: true }
-						);		
-					
+							{ shallow: false }
+						);
+
 				})
 				.catch((e) => {
 					console.log("NO LOCATION");
@@ -83,6 +134,7 @@ export default function Page({ locationSettings, location }) {
 				.then((response) => {
 					const { location, bounds } = response[0].geometry;
 					const { types } = response[0];
+					console.log('Second GetLatLngByLoc')
 					fetchLocations({
 						lat: location.lat(),
 						lng: location.lng(),
@@ -94,7 +146,7 @@ export default function Page({ locationSettings, location }) {
 						push(
 							`/about/branch-and-atm-locations/find-location/${state?.location?.search}/`,
 							undefined,
-							{ shallow: true }
+							{ shallow: false }
 						);
 				})
 				.catch((e) => {
@@ -109,6 +161,7 @@ export default function Page({ locationSettings, location }) {
 						lat: location.coords.latitude,
 						lng: location.coords.longitude,
 					}).then((data) => {
+						console.log('GET GEO LOCATION')
 						fetchLocations({
 							lat: location.coords.latitude,
 							lng: location.coords.longitude,
@@ -119,14 +172,15 @@ export default function Page({ locationSettings, location }) {
 									data
 								)}/`,
 								undefined,
-								{ shallow: true }
+								{ shallow: false }
 							);
 					});
 				})
 				.catch((err) => {
+					console.log(`Err: ${err}`)
 					fetchLocations({
-						lat: locationSettings.startLatLng?.split[","][0],
-						lng: locationSettings.startLatLng?.split[","][1],
+						lat: locationSettings.startLatlng?.split[","] ? locationSettings.startLatlng?.split[","][0] : 0,
+						lng: locationSettings.startLatlng?.split[","] ? locationSettings.startLatlng?.split[","][1] : 0,
 						autoload: 1,
 					});
 				});
@@ -137,28 +191,32 @@ export default function Page({ locationSettings, location }) {
 	}, [state?.location?.search]);
 
 	// useEffect(() => {
-	// 	if (location && location !== state?.location?.search) {
+	// 	console.log('Location Chance');
+	// 	console.log(location)
+	// 	console.log(state?.location?.search)
+	// 	if (reformatSearch(location) !== state?.location?.search) {
 	// 		setLoading(true);
 	// 		setState({
 	// 			...state,
 	// 			location: {
 	// 				...state.location,
-	// 				search: formatSearch(location[0]),
+	// 				search: reformatSearch(location),
 	// 			},
 	// 		});
 	// 	}
-	// }, [location]);
+	// }, [location, state?.location?.search]);
 
-	// useEffect(() => {
-	// 	setState({
-	// 		...state,
-	// 		location: {
-	// 			...state.location,
-	// 			settings: locationSettings,
-	// 			searchRadius: defaultRadius(),
-	// 		},
-	// 	});
-	// }, [locationSettings]);
+	useEffect(() => {
+		console.log('SET LOCATION SETTINGS');
+		console.log(locationSettings);
+		setState({
+			...state,
+			location: {
+				...state.location,
+				settings: locationSettings,
+			},
+		});
+	}, []);
 
 	const resetSearchResults = () => {
 		setShowDetails(false);
@@ -175,20 +233,26 @@ export default function Page({ locationSettings, location }) {
 	const fetchLocations = ({ lat, lng, autoload = 0, bounds = null }) => {
 		resetSearchResults();
 
+		// autoload = state?.location?.search && state?.location?.search !== '' ? autoload : 1;
+		// console.log('AutoLoad');
+		// console.log(autoload);
+		// console.log(JSON.stringify(state?.location));
+		// console.log(location);
+
 		const boundsRad = bounds
 			? distance(
-					bounds.toJSON().north,
-					bounds.toJSON().east,
-					bounds.toJSON().south,
-					bounds.toJSON().east
-			  ) / 2
+				bounds.toJSON().north,
+				bounds.toJSON().east,
+				bounds.toJSON().south,
+				bounds.toJSON().east
+			) / 2
 			: null;
 
 		let radius = boundsRad
 			? boundsRad
 			: state?.location?.searchRadius
-			? Math.max(state?.location?.searchRadius, defaultRadius())
-			: defaultRadius();
+				? Math.max(state?.location?.searchRadius, parseInt(defaultRadius()))
+				: defaultRadius();
 
 		fetch(
 			`/wp-admin/admin-ajax.php?action=store_search&lat=${lat}&lng=${lng}&max_results=25&search_radius=${radius}&autoload=${autoload}`
@@ -200,13 +264,12 @@ export default function Page({ locationSettings, location }) {
 				setLoading(false);
 				console.log('FETCH FINISHED');
 				console.log(JSON.stringify(location))
-				if(location && location[0] !== state?.location?.search) {
+				if (location && location !== state?.location?.search) {
 					setState({
 						...state,
 						location: {
 							...state.location,
-							search: location[0],
-							settings: locationSettings
+							search: location
 						},
 					});
 				}
@@ -216,6 +279,11 @@ export default function Page({ locationSettings, location }) {
 	const formatSearch = (address) => {
 		return address ? address.toString().replaceAll("+", " ") : "";
 	};
+    const reformatSearch = (address) => {
+        console.log('Format Search');
+        console.log(address);
+        return address?.replaceAll(' ', '+');
+    }
 
 	return (
 		<>
@@ -231,6 +299,7 @@ export default function Page({ locationSettings, location }) {
 			<GTM />
 			<Personyze />
 			<HotJar />
+			<Loading />
 			<showDetailsContext.Provider value={{ showDetails, setShowDetails }}>
 				<selectedLocationContext.Provider
 					value={{ selectedLocation, setSelectedLocation }}
@@ -265,7 +334,6 @@ export default function Page({ locationSettings, location }) {
 														locationSettings={locationSettings}
 														markers={data}
 													/>
-													{/* <div id="wpsl-gmap" className="wpsl-gmap-canvas" style={{ position: "relative", overflow: "hidden" }}></div> */}
 													<div id="wpsl-result-list">
 														<div id="wpsl-stores">
 															<div className="cx-location-listing__title wpsl-location--section">
@@ -303,26 +371,35 @@ export default function Page({ locationSettings, location }) {
 	);
 }
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-	const { req, res, query } = context;
 
-	const { data } = await apolloClient.query({
-		query: gql`
-			${LocationSettingsFragment}
-			query LocationSettings {
-				locationSettings {
-					...LocationSettingsFragment
-				}
-			}
-		`,
-	});
-	const location = query?.location;
-	return getNextServerSideProps(context, {
+export async function getStaticProps(context: GetStaticPropsContext) {
+	return getNextStaticProps(context, {
 		Page,
 		client,
-		props: {
-			locationSettings: data.locationSettings,
-			location: location ? location : null,
-		},
+		revalidate: parseInt(process.env.PAGE_REVALIDATION) ? parseInt(process.env.PAGE_REVALIDATION) : null,
 	});
 }
+
+// export async function getServerSideProps(context: GetServerSidePropsContext) {
+// 	const { req, res, query } = context;
+
+// 	const { data } = await apolloClient.query({
+// 		query: gql`
+// 			${LocationSettingsFragment}
+// 			query LocationSettings {
+// 				locationSettings {
+// 					...LocationSettingsFragment
+// 				}
+// 			}
+// 		`,
+// 	});
+// 	const location = query?.location;
+// 	return getNextServerSideProps(context, {
+// 		Page,
+// 		client,
+// 		props: {
+// 			locationSettings: data.locationSettings,
+// 			location: location ? location : null,
+// 		},
+// 	});
+// }

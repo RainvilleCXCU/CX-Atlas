@@ -10,6 +10,7 @@ export interface Props {
 function LocationListings({ data }: Props): JSX.Element {
 	const { useQuery } = client;
 	const generalSettings = useQuery().generalSettings;
+	const {distanceUnit} = useQuery().locationSettings
 
 	return (
 		<>
@@ -18,24 +19,9 @@ function LocationListings({ data }: Props): JSX.Element {
 					return (
 						<li key={location.id} data-store-id={location.id}>
 							<LocationListing
-								store={location.store}
-								id={location.id}
-								address={location.address}
-								city={location.city}
-								state={location.state}
-								zip={location.zip}
-								lat={location.lat}
-								lng={location.lng}
-								distance={location.distance}
-								logo={generalSettings.logo}
-								lobby_hours_html={location.lobby_hours_html}
-								drive_thru_hours_html={location.drive_thru_hours_html}
-								special_hours_html={location.special_hours_html}
-								services={location.services}
-								phone={location.phone}
-								special_message_type={location.special_message_type}
-								special_message_title={location.special_message_title}
-								special_message={location.special_message}
+								listing = {location}
+								logo = {generalSettings.logo}
+								unit = {distanceUnit}
 							/>
 						</li>
 					);
