@@ -18,5 +18,6 @@ export const LocationSettingsFragment = gql`
     controlPosition
     autoZoomLevel
     markerIconProps
+    distanceUnit
   }
 `;

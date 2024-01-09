@@ -57,6 +57,7 @@ function DesktopSearchBar(props: SearchBarProps) {
 			<button type="button" className="cx-search__close"
 				onClick={() => {
 					setIsSearchExpanded(false);
+					searchRef.current.value = '';
 				}}>
 				<span className="visually-hidden">close search</span>
 			</button>
@@ -89,7 +90,7 @@ function MobileSearchBar(props: SearchBarProps) {
 
 	return (
 		<>
-			<MobileHeader isSearchExpanded={isSearchExpanded} setIsSearchExpanded={setIsSearchExpanded} navOpen={navOpen} setNavOpen={setNavOpen} />
+			<MobileHeader setSearchTerm={setSearchTerm} isSearchExpanded={isSearchExpanded} setIsSearchExpanded={setIsSearchExpanded} navOpen={navOpen} setNavOpen={setNavOpen} />
 			<div className={`modal cx-modal${isSearchExpanded ? ' show' : ''}`} id="searchModal" aria-labelledby="searchModalLabel" aria-hidden="true">
 				<form className="modal-dialog cx-search-mobile" role="search" action="/" onSubmit={submitSearch}>
 					<div className="modal-content cx-search-mobile__content">

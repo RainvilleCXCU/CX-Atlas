@@ -54,12 +54,13 @@ export default function Pagination({ totalResults, currentPage = 1, basePath, pe
 
   const hasPrevious = currentPage > 1;
   const hasMore = currentPage < endPage;
+  const useShallow = shallow;
 
 
   const getNumberLinks = () => {
     let links = [];
     if (startPage >= 2) {
-      links.push(<Link href={`${basePath}/page/1/${querys && querys}`} className='page-numbers' key={`pagination-1`} prefetch={false} shallow onClick={() => {
+      links.push(<Link href={`${basePath}/page/1/${querys && querys}`} className='page-numbers' key={`pagination-1`} prefetch={false} shallow={useShallow} onClick={() => {
         clickHandler && clickHandler(1);
     }}>1</Link>);
       if (startPage > 2) {
@@ -70,7 +71,7 @@ export default function Pagination({ totalResults, currentPage = 1, basePath, pe
       if (p === currentPage) {
         links.push(<span className='page-numbers current' key={`pagination-${p}`}>{p}</span>)
       } else {
-        links.push(<Link href={p > 1 ? `${basePath}/page/${p}/${querys && querys}` : basePath} className='page-numbers' key={`pagination-${p}`} prefetch={false} shallow onClick={() => {
+        links.push(<Link href={p > 1 ? `${basePath}/page/${p}/${querys && querys}` : basePath} className='page-numbers' key={`pagination-${p}`} prefetch={false} shallow={useShallow} onClick={() => {
           clickHandler && clickHandler(p);
         }}>{p}</Link>);
       }
@@ -79,7 +80,7 @@ export default function Pagination({ totalResults, currentPage = 1, basePath, pe
       if (endPage < pages - 1) {
         links.push(<span className='page-numbers dots' key={`pagination-end-dots`}>...</span>);
       }
-      links.push(<Link href={`${basePath}/page/${pages}/${querys && querys}`} className='page-numbers' key={`pagination-${pages}`} prefetch={false} shallow onClick={() => {
+      links.push(<Link href={`${basePath}/page/${pages}/${querys && querys}`} className='page-numbers' key={`pagination-${pages}`} prefetch={false} shallow={useShallow} onClick={() => {
         clickHandler && clickHandler(pages);
       }}>{pages}</Link>);
     }
@@ -90,7 +91,7 @@ export default function Pagination({ totalResults, currentPage = 1, basePath, pe
     <nav className="pagination navigation" aria-label="Pagination">
       <div className="nav-links">
         {hasPrevious && (
-          <PreviousPageNavigation href={previousPageUrl} shallow onClick={() => {
+          <PreviousPageNavigation href={previousPageUrl} shallow={useShallow} onClick={() => {
             clickHandler && clickHandler(prevPage);
           }} />
         )}
@@ -98,7 +99,7 @@ export default function Pagination({ totalResults, currentPage = 1, basePath, pe
         {getNumberLinks()}
 
         {hasMore && (
-          <NextPageNavigation href={nextPageUrl} shallow onClick={() => {
+          <NextPageNavigation href={nextPageUrl} shallow={useShallow} onClick={() => {
             clickHandler && clickHandler(nextPage);
           }} />
         )}
