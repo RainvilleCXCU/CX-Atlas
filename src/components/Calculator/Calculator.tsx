@@ -6,23 +6,25 @@ interface Props {
 }
 
 const Calculator = ({ calculatorName }: Props): JSX.Element => {
-	const initialized = useRef(false)
+		const initialized = useRef(false);
+		const [calcsLoaded, setCalcsLoaded] = useState([])
 	
-	const loadScript = ({id, src, onload = null}) => {
-		const externalScript = document.createElement("script");
-		// externalScript.onerror = loadError;
-		externalScript.id = id;
-		externalScript.async = false;
-		externalScript.type = "text/javascript";
-		externalScript.onload = onload;
-		// externalScript.setAttribute("crossorigin", "anonymous");
-		document.body.appendChild(externalScript);
-		console.log(`Load Script: ${src}`);
-		externalScript.src = src;
-	}
-
 	useEffect(() => {
-		const KJEFile = [{
+		const loadScript = ({id, src, onload = null}) => {
+			const externalScript = document.createElement("script");
+			// externalScript.onerror = loadError;
+			externalScript.id = id;
+			externalScript.async = false;
+			externalScript.type = "text/javascript";
+			externalScript.onload = onload;
+			// externalScript.setAttribute("crossorigin", "anonymous");
+			document.body.appendChild(externalScript);
+			console.log(`Load Script: ${src}`);
+			setCalcsLoaded([...calcsLoaded, id]);
+			console.log(calcsLoaded);
+			externalScript.src = src;
+		}
+		let KJEFile = [{
 			id: 'KJECore',
 			src: `/wp-content/themes/CXCU/vendors/calculators/KJE.js`,
 			strategy: 'afterInteractive',
@@ -32,7 +34,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 				})
 			}
 		}]
-		const jsFiles = [{
+		let jsFiles = [{
 				id: 'KJESiteCore',
 				src: `/wp-content/themes/CXCU/vendors/calculators/KJESiteSpecific.js`,
 				strategy: 'afterInteractive',
@@ -55,8 +57,13 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 			KJEFile.map(file => {
 				loadScript(file);
 			})
+			KJEFile = [];
 		}
-		return () => {initialized.current = true}
+		return () => {
+			console.log('Cleanup!');
+			initialized.current = true;
+			KJEFile = [];
+		}
 	}, [calculatorName])
 	
 	return (

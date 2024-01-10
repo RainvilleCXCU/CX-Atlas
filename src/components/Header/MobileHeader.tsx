@@ -5,11 +5,12 @@ interface MobileHeader {
     navOpen?: boolean,
     setNavOpen,
     isSearchExpanded?: boolean,
-    setIsSearchExpanded?
+    setIsSearchExpanded?,
+    setSearchTerm?
 }
 
 export default function MobileHeader(props: MobileHeader) {
-    const { isSearchExpanded, setNavOpen, navOpen, setIsSearchExpanded } = props;
+    const { isSearchExpanded, setNavOpen, navOpen, setIsSearchExpanded, setSearchTerm } = props;
 
     return (
         <div className="cx-inner-wrapper">
@@ -34,6 +35,7 @@ export default function MobileHeader(props: MobileHeader) {
                     onClick={() => {
                         if(isSearchExpanded) {
                             setIsSearchExpanded(false);
+                            setSearchTerm('');
                         } else {
                             setNavOpen(!navOpen);
                         }

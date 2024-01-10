@@ -6,17 +6,17 @@ export interface Props {
 	id: string;
 	title: string;
 	content: string;
-	isOpen: boolean;
+	isOpen?: boolean;
 }
 
 function FAQ({ id, title, content, isOpen }: Props): JSX.Element {
 	const { useQuery } = client;
-	const faqItem = useQuery().faq({
-		faqId: parseInt(id)
-	});
+	// const faqItem = useQuery().faq({
+	// 	faqId: parseInt(id)
+	// });
 	return (
-		<div id={faqItem.id} className="cx-faq_wrapper">
-			<Accordion title={faqItem.title} content={faqItem.content} isOpen={isOpen} />
+		<div className="cx-faq_wrapper">
+			<Accordion title={title} content={content} isOpen={isOpen} id={id}/>
 		</div>
 	);
 }

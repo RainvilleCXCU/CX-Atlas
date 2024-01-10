@@ -42,7 +42,7 @@ function Posts({
   const { blogSidebar } = useQuery().widgetSettings;
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <section {...(id && { id })}>
+    <section {...(id && { id })} className='blog-wrapper'>
       <div className="wrap archives">
         <aside className="sidebar">
           {blogSidebar && category &&

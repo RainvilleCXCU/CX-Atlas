@@ -19,14 +19,25 @@ export interface PageProps {
     page: PageType | PageType['preview']['node'] | null | undefined;
 }
 
-export default function Page({ product, type, minor }) {
-    const { usePosts, useQuery } = client;
+export default function Page({ product, type, minor, member }) {
+    const { usePosts, useQuery, usePage } = client;
     const { generalSettings, widgetSettings } = useQuery();
 
-    const productInfo = { account: product.title };
-    let widget = ((type && type == 'start') ? widgetSettings?.applyStart(productInfo) : minor == 'no' ? widgetSettings?.applyNow(productInfo) : widgetSettings?.applyNowMinor(productInfo)) || ''
+    const productInfo = { 
+        account: product.title,
+        minor
+    };
+    let widget = (type && type == 'start') ? widgetSettings?.applyStart(productInfo) : widgetSettings?.applyNow(productInfo);
+    if(minor == 'yes') {
+        widget = widgetSettings?.applyNowMinor(productInfo);
+    } 
+    if(member) {
+        widget = widgetSettings?.applyNowMember(productInfo);
+    }
 
-    widget = widget.replace(/account=none/gi, `account=${product.title.replace(' ', '-').toLowerCase()}`);
+    widget = widget ? widget?.replace(/account=none/gi, `account=${product.title.replace(' ', '-').toLowerCase()}`) : '';
+    console.log('product info');
+    console.log(JSON.stringify(productInfo));
 
     return (
         <>
@@ -52,7 +63,7 @@ export default function Page({ product, type, minor }) {
                 <div id="page" className="container site">
                     <main id="main" className="content content-single">
                         <article className="entry-content">
-                            {parseHtml(widget)}
+                            {parseHtml(widget?.toString() || '')}
                         </article>
                     </main>
                 </div>
@@ -67,10 +78,12 @@ export default function Page({ product, type, minor }) {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
     const { req, res, query } = context;
-
+    console.log('QUERY');
+    console.log(JSON.stringify(query));
     const account = query.account?.toString().replace('-', ' ');
-    const type = query.type || '';
+    const type = query.type[0] || '';
     const minor = query.minor || '';
+    const member = query.member || '';
 
     const { data } = await apolloClient.query({
         query: gql`
@@ -85,6 +98,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                     accurateDate
                     loanBasedAmount
                     memberApplyNowURL
+                    memberQuickApplyURL
+                    memberQuickApplyMobileURL
                     minorMemberApplyNowURL
                     minorNonMemberApplyNowURL
                     nonMemberApplyNowURL
@@ -95,9 +110,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
           }
       `,
     });
+    console.log('DATA QUERY');
+    console.log(JSON.stringify(data));
     const product = data.products.edges[0]?.node;
 
     if (data.products.edges.length == 0) {
+        console.log('No Product');
         return getNextServerSideProps(context, {
             Page,
             client,
@@ -107,17 +125,27 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             }
         });
     } else if (product.minorMemberApplyNowURL == '' && type == 'start') {
-        // console.log('Minor accounts not available');
+        console.log('Minor accounts not available');
         return getNextServerSideProps(context, {
             Page,
             client,
             redirect: {
-                destination: `/apply-now/?account=${query.account}&minor=no`,
+                destination: `/apply-now/?account=${query.account}&minor=na`,
                 permanent: false,
             }
         });
     } else if (!minor && product.minorMemberApplyNowURL != '' && type != 'start') {
-        // console.log('Start Over');
+        console.log('Start Over');
+        return getNextServerSideProps(context, {
+            Page,
+            client,
+            redirect: {
+                destination: `/apply-start/?account=${query.account}`,
+                permanent: false,
+            }
+        });
+    } else if (minor && type == 'start') {
+        console.log('Start Over');
         return getNextServerSideProps(context, {
             Page,
             client,
@@ -127,7 +155,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             }
         });
     } else if (minor && minor == 'yes' && product.minorMemberApplyNowURL == '' && type == 'now') {
-        // console.log('Change Minor to now, not available');
+        console.log('Change Minor to now, not available');
         return getNextServerSideProps(context, {
             Page,
             client,
@@ -136,7 +164,18 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                 permanent: false,
             }
         });
+    } else if (minor && minor != 'na' && product.minorMemberApplyNowURL == '' && type == 'now' && !member) {
+        console.log('Change Minor to now, not available');
+        return getNextServerSideProps(context, {
+            Page,
+            client,
+            redirect: {
+                destination: `/apply-now/?account=${query.account}&minor=na`,
+                permanent: false,
+            }
+        });
     } else {
+        console.log('NO ELSE');
     }
     return getNextServerSideProps(context, {
         Page,
@@ -144,7 +183,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         props: {
             product,
             type,
-            minor
+            minor,
+            member
         }
     });
 }

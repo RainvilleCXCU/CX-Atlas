@@ -4,9 +4,9 @@ export const pageview = (url) => {
     page: url,
   });
   if(QSI) {
-    QSI.API.unload();
-    QSI.API.load();
-    QSI.API.run();
+    QSI.API?.unload();
+    QSI.API?.load();
+    QSI.API?.run();
   }
 }
 
