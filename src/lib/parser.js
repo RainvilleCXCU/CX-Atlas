@@ -34,7 +34,7 @@ const findChildren = (element, att, value) => {
 
 export const parseHtml = (html) => {
     const domainRegEx = new RegExp(/(http)/, 'i');
-    const internalLinkRegEx = new RegExp(/(cxcu|(www\.connexus)|local)/, 'i');
+    const internalLinkRegEx = new RegExp(/(cxcu|(www\.connexus)|local|wpengine)/, 'i');
     
     const options = {
         trim: false,
