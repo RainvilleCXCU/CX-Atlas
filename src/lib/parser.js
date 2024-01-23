@@ -12,6 +12,7 @@ import Form from "components/Forms/Form";
 const Calculator = dynamic(() => import("components/Calculator/Calculator"), {ssr: false});
 import EqualHeightContainer from "components/Blocks/EqualHeight";
 import Container from "components/Blocks/Container";
+import Disclosure from "components/Disclosure/Disclosure";
 
 // const EqualHeightContainer = dynamic(() => import("components/Blocks/EqualHeight"), {ssr: true});
 // const Container = dynamic(() => import("components/Blocks/Container"), {ssr: true});
@@ -55,6 +56,7 @@ export const parseHtml = (html) => {
             const isEqualHeight = attribs && attribs['data-equal-height'];
             const isForm = attribs?.class?.includes('nf-form-cont');
             const isBlockContainer = attribs && attribs.class && attribs.class.includes("gb-block-container");
+            const isDisclosure = attribs?.id?.includes('disclosures');
 
             // if(attribs?.onclick) {
             //     attribs.onClick = attribs?.onclick;
@@ -140,6 +142,10 @@ export const parseHtml = (html) => {
 
             else if(isForm) {
                 return <Form id={parseInt(attribs?.id.split('-')[2])} />
+            }
+
+            else if(isDisclosure) {
+                return <Disclosure {...attributesToProps(attribs)}>{domToReact(children, options)}</Disclosure>
             }
 
             else {
