@@ -13,6 +13,7 @@ const Chat: React.FC<ChatProps> = ({ className = '', children = <></> }) => {
         ciscoBubbleChat().showChatWindow();
     }
 	return (
+        
         <a href="" className={className} onClick={showChat}>{children}</a>
 	);
 };

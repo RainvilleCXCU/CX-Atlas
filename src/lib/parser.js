@@ -76,7 +76,7 @@ export const parseHtml = (html) => {
             // }
 
 
-            if (isInternalLink) {
+            if (isInternalLink && !isCiscoBubbleChat) {
                 const href = attribs.href;
                 delete attribs.href;
                 return (
