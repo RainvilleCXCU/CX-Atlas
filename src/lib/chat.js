@@ -125,7 +125,7 @@ export const ciscoBubbleChat = () => {
                             '<div style="width:100%;text-align:center;">' + msgWaitingForSecureConnectivity + '</div>' +
                         '</div>' +
                     '<div style="height:50%;display:flex;align-items:center;">' +
-                        '<a href="#" onclick="window.parent.postMessage({messageType: \'unmount\'}, \'*\'); return void(0);" style="width:100%;text-align:center;">' +
+                        '<a href="#" onClick="window.parent.postMessage({messageType: \'unmount\'}, \'*\'); return void(0);" style="width:100%;text-align:center;">' +
                             msgCloseButtonLabel +
                         '</a>' +
                     '</div>' +
