@@ -9,7 +9,9 @@ function Disclosure({ children }) {
 		const container = document.getElementsByClassName("disclosure_container");
 		const scrollHeight = container[0]?.scrollHeight;
 		const expandButton = document.getElementById("disclosureButton");
-		expandButton.addEventListener("click", toggleContainer);
+		if (expandButton) {
+			expandButton.addEventListener("click", toggleContainer);
+		}
 
 		// grab all of the "sup" links that are numbers and add click event listeners
 		const supElements = document.querySelectorAll("sup");
