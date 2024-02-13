@@ -67,7 +67,7 @@ export interface CXAlertToRevisionConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -167,7 +167,7 @@ export interface CategoryToContentNodeConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -221,7 +221,7 @@ export interface CategoryToPostConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -515,7 +515,7 @@ export interface ContentTypeToContentNodeConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -1398,7 +1398,7 @@ export interface HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArg
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -1438,7 +1438,7 @@ export interface HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -1578,7 +1578,7 @@ export interface LocationCategoryToContentNodeConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -1670,7 +1670,7 @@ export interface LocationCategoryToLocationConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -1792,7 +1792,7 @@ export interface LocationToRevisionConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -2032,185 +2032,185 @@ export interface MenuToMenuItemConnectionWhereArgs {
 
 /** The MimeType of the object */
 export enum MimeTypeEnum {
-  /** MimeType application/java */
+  /** application/java mime type. */
   APPLICATION_JAVA = "APPLICATION_JAVA",
-  /** MimeType application/msword */
+  /** application/msword mime type. */
   APPLICATION_MSWORD = "APPLICATION_MSWORD",
-  /** MimeType application/octet-stream */
+  /** application/octet-stream mime type. */
   APPLICATION_OCTET_STREAM = "APPLICATION_OCTET_STREAM",
-  /** MimeType application/onenote */
+  /** application/onenote mime type. */
   APPLICATION_ONENOTE = "APPLICATION_ONENOTE",
-  /** MimeType application/oxps */
+  /** application/oxps mime type. */
   APPLICATION_OXPS = "APPLICATION_OXPS",
-  /** MimeType application/pdf */
+  /** application/pdf mime type. */
   APPLICATION_PDF = "APPLICATION_PDF",
-  /** MimeType application/rar */
+  /** application/rar mime type. */
   APPLICATION_RAR = "APPLICATION_RAR",
-  /** MimeType application/rtf */
+  /** application/rtf mime type. */
   APPLICATION_RTF = "APPLICATION_RTF",
-  /** MimeType application/ttaf+xml */
+  /** application/ttaf+xml mime type. */
   APPLICATION_TTAF_XML = "APPLICATION_TTAF_XML",
-  /** MimeType application/vnd.apple.keynote */
+  /** application/vnd.apple.keynote mime type. */
   APPLICATION_VND_APPLE_KEYNOTE = "APPLICATION_VND_APPLE_KEYNOTE",
-  /** MimeType application/vnd.apple.numbers */
+  /** application/vnd.apple.numbers mime type. */
   APPLICATION_VND_APPLE_NUMBERS = "APPLICATION_VND_APPLE_NUMBERS",
-  /** MimeType application/vnd.apple.pages */
+  /** application/vnd.apple.pages mime type. */
   APPLICATION_VND_APPLE_PAGES = "APPLICATION_VND_APPLE_PAGES",
-  /** MimeType application/vnd.ms-access */
+  /** application/vnd.ms-access mime type. */
   APPLICATION_VND_MS_ACCESS = "APPLICATION_VND_MS_ACCESS",
-  /** MimeType application/vnd.ms-excel */
+  /** application/vnd.ms-excel mime type. */
   APPLICATION_VND_MS_EXCEL = "APPLICATION_VND_MS_EXCEL",
-  /** MimeType application/vnd.ms-excel.addin.macroEnabled.12 */
+  /** application/vnd.ms-excel.addin.macroEnabled.12 mime type. */
   APPLICATION_VND_MS_EXCEL_ADDIN_MACROENABLED_12 = "APPLICATION_VND_MS_EXCEL_ADDIN_MACROENABLED_12",
-  /** MimeType application/vnd.ms-excel.sheet.binary.macroEnabled.12 */
+  /** application/vnd.ms-excel.sheet.binary.macroEnabled.12 mime type. */
   APPLICATION_VND_MS_EXCEL_SHEET_BINARY_MACROENABLED_12 = "APPLICATION_VND_MS_EXCEL_SHEET_BINARY_MACROENABLED_12",
-  /** MimeType application/vnd.ms-excel.sheet.macroEnabled.12 */
+  /** application/vnd.ms-excel.sheet.macroEnabled.12 mime type. */
   APPLICATION_VND_MS_EXCEL_SHEET_MACROENABLED_12 = "APPLICATION_VND_MS_EXCEL_SHEET_MACROENABLED_12",
-  /** MimeType application/vnd.ms-excel.template.macroEnabled.12 */
+  /** application/vnd.ms-excel.template.macroEnabled.12 mime type. */
   APPLICATION_VND_MS_EXCEL_TEMPLATE_MACROENABLED_12 = "APPLICATION_VND_MS_EXCEL_TEMPLATE_MACROENABLED_12",
-  /** MimeType application/vnd.ms-powerpoint */
+  /** application/vnd.ms-powerpoint mime type. */
   APPLICATION_VND_MS_POWERPOINT = "APPLICATION_VND_MS_POWERPOINT",
-  /** MimeType application/vnd.ms-powerpoint.addin.macroEnabled.12 */
+  /** application/vnd.ms-powerpoint.addin.macroEnabled.12 mime type. */
   APPLICATION_VND_MS_POWERPOINT_ADDIN_MACROENABLED_12 = "APPLICATION_VND_MS_POWERPOINT_ADDIN_MACROENABLED_12",
-  /** MimeType application/vnd.ms-powerpoint.presentation.macroEnabled.12 */
+  /** application/vnd.ms-powerpoint.presentation.macroEnabled.12 mime type. */
   APPLICATION_VND_MS_POWERPOINT_PRESENTATION_MACROENABLED_12 = "APPLICATION_VND_MS_POWERPOINT_PRESENTATION_MACROENABLED_12",
-  /** MimeType application/vnd.ms-powerpoint.slideshow.macroEnabled.12 */
+  /** application/vnd.ms-powerpoint.slideshow.macroEnabled.12 mime type. */
   APPLICATION_VND_MS_POWERPOINT_SLIDESHOW_MACROENABLED_12 = "APPLICATION_VND_MS_POWERPOINT_SLIDESHOW_MACROENABLED_12",
-  /** MimeType application/vnd.ms-powerpoint.slide.macroEnabled.12 */
+  /** application/vnd.ms-powerpoint.slide.macroEnabled.12 mime type. */
   APPLICATION_VND_MS_POWERPOINT_SLIDE_MACROENABLED_12 = "APPLICATION_VND_MS_POWERPOINT_SLIDE_MACROENABLED_12",
-  /** MimeType application/vnd.ms-powerpoint.template.macroEnabled.12 */
+  /** application/vnd.ms-powerpoint.template.macroEnabled.12 mime type. */
   APPLICATION_VND_MS_POWERPOINT_TEMPLATE_MACROENABLED_12 = "APPLICATION_VND_MS_POWERPOINT_TEMPLATE_MACROENABLED_12",
-  /** MimeType application/vnd.ms-project */
+  /** application/vnd.ms-project mime type. */
   APPLICATION_VND_MS_PROJECT = "APPLICATION_VND_MS_PROJECT",
-  /** MimeType application/vnd.ms-word.document.macroEnabled.12 */
+  /** application/vnd.ms-word.document.macroEnabled.12 mime type. */
   APPLICATION_VND_MS_WORD_DOCUMENT_MACROENABLED_12 = "APPLICATION_VND_MS_WORD_DOCUMENT_MACROENABLED_12",
-  /** MimeType application/vnd.ms-word.template.macroEnabled.12 */
+  /** application/vnd.ms-word.template.macroEnabled.12 mime type. */
   APPLICATION_VND_MS_WORD_TEMPLATE_MACROENABLED_12 = "APPLICATION_VND_MS_WORD_TEMPLATE_MACROENABLED_12",
-  /** MimeType application/vnd.ms-write */
+  /** application/vnd.ms-write mime type. */
   APPLICATION_VND_MS_WRITE = "APPLICATION_VND_MS_WRITE",
-  /** MimeType application/vnd.ms-xpsdocument */
+  /** application/vnd.ms-xpsdocument mime type. */
   APPLICATION_VND_MS_XPSDOCUMENT = "APPLICATION_VND_MS_XPSDOCUMENT",
-  /** MimeType application/vnd.oasis.opendocument.chart */
+  /** application/vnd.oasis.opendocument.chart mime type. */
   APPLICATION_VND_OASIS_OPENDOCUMENT_CHART = "APPLICATION_VND_OASIS_OPENDOCUMENT_CHART",
-  /** MimeType application/vnd.oasis.opendocument.database */
+  /** application/vnd.oasis.opendocument.database mime type. */
   APPLICATION_VND_OASIS_OPENDOCUMENT_DATABASE = "APPLICATION_VND_OASIS_OPENDOCUMENT_DATABASE",
-  /** MimeType application/vnd.oasis.opendocument.formula */
+  /** application/vnd.oasis.opendocument.formula mime type. */
   APPLICATION_VND_OASIS_OPENDOCUMENT_FORMULA = "APPLICATION_VND_OASIS_OPENDOCUMENT_FORMULA",
-  /** MimeType application/vnd.oasis.opendocument.graphics */
+  /** application/vnd.oasis.opendocument.graphics mime type. */
   APPLICATION_VND_OASIS_OPENDOCUMENT_GRAPHICS = "APPLICATION_VND_OASIS_OPENDOCUMENT_GRAPHICS",
-  /** MimeType application/vnd.oasis.opendocument.presentation */
+  /** application/vnd.oasis.opendocument.presentation mime type. */
   APPLICATION_VND_OASIS_OPENDOCUMENT_PRESENTATION = "APPLICATION_VND_OASIS_OPENDOCUMENT_PRESENTATION",
-  /** MimeType application/vnd.oasis.opendocument.spreadsheet */
+  /** application/vnd.oasis.opendocument.spreadsheet mime type. */
   APPLICATION_VND_OASIS_OPENDOCUMENT_SPREADSHEET = "APPLICATION_VND_OASIS_OPENDOCUMENT_SPREADSHEET",
-  /** MimeType application/vnd.oasis.opendocument.text */
+  /** application/vnd.oasis.opendocument.text mime type. */
   APPLICATION_VND_OASIS_OPENDOCUMENT_TEXT = "APPLICATION_VND_OASIS_OPENDOCUMENT_TEXT",
-  /** MimeType application/vnd.openxmlformats-officedocument.presentationml.presentation */
+  /** application/vnd.openxmlformats-officedocument.presentationml.presentation mime type. */
   APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_PRESENTATION = "APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_PRESENTATION",
-  /** MimeType application/vnd.openxmlformats-officedocument.presentationml.slide */
+  /** application/vnd.openxmlformats-officedocument.presentationml.slide mime type. */
   APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_SLIDE = "APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_SLIDE",
-  /** MimeType application/vnd.openxmlformats-officedocument.presentationml.slideshow */
+  /** application/vnd.openxmlformats-officedocument.presentationml.slideshow mime type. */
   APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_SLIDESHOW = "APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_SLIDESHOW",
-  /** MimeType application/vnd.openxmlformats-officedocument.presentationml.template */
+  /** application/vnd.openxmlformats-officedocument.presentationml.template mime type. */
   APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_TEMPLATE = "APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_TEMPLATE",
-  /** MimeType application/vnd.openxmlformats-officedocument.spreadsheetml.sheet */
+  /** application/vnd.openxmlformats-officedocument.spreadsheetml.sheet mime type. */
   APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_SHEET = "APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_SHEET",
-  /** MimeType application/vnd.openxmlformats-officedocument.spreadsheetml.template */
+  /** application/vnd.openxmlformats-officedocument.spreadsheetml.template mime type. */
   APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_TEMPLATE = "APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_TEMPLATE",
-  /** MimeType application/vnd.openxmlformats-officedocument.wordprocessingml.document */
+  /** application/vnd.openxmlformats-officedocument.wordprocessingml.document mime type. */
   APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT = "APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT",
-  /** MimeType application/vnd.openxmlformats-officedocument.wordprocessingml.template */
+  /** application/vnd.openxmlformats-officedocument.wordprocessingml.template mime type. */
   APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_TEMPLATE = "APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_TEMPLATE",
-  /** MimeType application/wordperfect */
+  /** application/wordperfect mime type. */
   APPLICATION_WORDPERFECT = "APPLICATION_WORDPERFECT",
-  /** MimeType application/x-7z-compressed */
+  /** application/x-7z-compressed mime type. */
   APPLICATION_X_7Z_COMPRESSED = "APPLICATION_X_7Z_COMPRESSED",
-  /** MimeType application/x-gzip */
+  /** application/x-gzip mime type. */
   APPLICATION_X_GZIP = "APPLICATION_X_GZIP",
-  /** MimeType application/x-tar */
+  /** application/x-tar mime type. */
   APPLICATION_X_TAR = "APPLICATION_X_TAR",
-  /** MimeType application/zip */
+  /** application/zip mime type. */
   APPLICATION_ZIP = "APPLICATION_ZIP",
-  /** MimeType audio/aac */
+  /** audio/aac mime type. */
   AUDIO_AAC = "AUDIO_AAC",
-  /** MimeType audio/flac */
+  /** audio/flac mime type. */
   AUDIO_FLAC = "AUDIO_FLAC",
-  /** MimeType audio/midi */
+  /** audio/midi mime type. */
   AUDIO_MIDI = "AUDIO_MIDI",
-  /** MimeType audio/mpeg */
+  /** audio/mpeg mime type. */
   AUDIO_MPEG = "AUDIO_MPEG",
-  /** MimeType audio/ogg */
+  /** audio/ogg mime type. */
   AUDIO_OGG = "AUDIO_OGG",
-  /** MimeType audio/wav */
+  /** audio/wav mime type. */
   AUDIO_WAV = "AUDIO_WAV",
-  /** MimeType audio/x-matroska */
+  /** audio/x-matroska mime type. */
   AUDIO_X_MATROSKA = "AUDIO_X_MATROSKA",
-  /** MimeType audio/x-ms-wax */
+  /** audio/x-ms-wax mime type. */
   AUDIO_X_MS_WAX = "AUDIO_X_MS_WAX",
-  /** MimeType audio/x-ms-wma */
+  /** audio/x-ms-wma mime type. */
   AUDIO_X_MS_WMA = "AUDIO_X_MS_WMA",
-  /** MimeType audio/x-realaudio */
+  /** audio/x-realaudio mime type. */
   AUDIO_X_REALAUDIO = "AUDIO_X_REALAUDIO",
-  /** MimeType image/bmp */
+  /** image/bmp mime type. */
   IMAGE_BMP = "IMAGE_BMP",
-  /** MimeType image/gif */
+  /** image/gif mime type. */
   IMAGE_GIF = "IMAGE_GIF",
-  /** MimeType image/heic */
+  /** image/heic mime type. */
   IMAGE_HEIC = "IMAGE_HEIC",
-  /** MimeType image/jpeg */
+  /** image/jpeg mime type. */
   IMAGE_JPEG = "IMAGE_JPEG",
-  /** MimeType image/png */
+  /** image/png mime type. */
   IMAGE_PNG = "IMAGE_PNG",
-  /** MimeType image/svg+xml */
+  /** image/svg+xml mime type. */
   IMAGE_SVG_XML = "IMAGE_SVG_XML",
-  /** MimeType image/tiff */
+  /** image/tiff mime type. */
   IMAGE_TIFF = "IMAGE_TIFF",
-  /** MimeType image/webp */
+  /** image/webp mime type. */
   IMAGE_WEBP = "IMAGE_WEBP",
-  /** MimeType image/x-icon */
+  /** image/x-icon mime type. */
   IMAGE_X_ICON = "IMAGE_X_ICON",
-  /** MimeType text/calendar */
+  /** text/calendar mime type. */
   TEXT_CALENDAR = "TEXT_CALENDAR",
-  /** MimeType text/css */
+  /** text/css mime type. */
   TEXT_CSS = "TEXT_CSS",
-  /** MimeType text/csv */
+  /** text/csv mime type. */
   TEXT_CSV = "TEXT_CSV",
-  /** MimeType text/plain */
+  /** text/plain mime type. */
   TEXT_PLAIN = "TEXT_PLAIN",
-  /** MimeType text/richtext */
+  /** text/richtext mime type. */
   TEXT_RICHTEXT = "TEXT_RICHTEXT",
-  /** MimeType text/tab-separated-values */
+  /** text/tab-separated-values mime type. */
   TEXT_TAB_SEPARATED_VALUES = "TEXT_TAB_SEPARATED_VALUES",
-  /** MimeType text/vtt */
+  /** text/vtt mime type. */
   TEXT_VTT = "TEXT_VTT",
-  /** MimeType video/3gpp */
+  /** video/3gpp mime type. */
   VIDEO_3GPP = "VIDEO_3GPP",
-  /** MimeType video/3gpp2 */
+  /** video/3gpp2 mime type. */
   VIDEO_3GPP2 = "VIDEO_3GPP2",
-  /** MimeType video/avi */
+  /** video/avi mime type. */
   VIDEO_AVI = "VIDEO_AVI",
-  /** MimeType video/divx */
+  /** video/divx mime type. */
   VIDEO_DIVX = "VIDEO_DIVX",
-  /** MimeType video/mp4 */
+  /** video/mp4 mime type. */
   VIDEO_MP4 = "VIDEO_MP4",
-  /** MimeType video/mpeg */
+  /** video/mpeg mime type. */
   VIDEO_MPEG = "VIDEO_MPEG",
-  /** MimeType video/ogg */
+  /** video/ogg mime type. */
   VIDEO_OGG = "VIDEO_OGG",
-  /** MimeType video/quicktime */
+  /** video/quicktime mime type. */
   VIDEO_QUICKTIME = "VIDEO_QUICKTIME",
-  /** MimeType video/webm */
+  /** video/webm mime type. */
   VIDEO_WEBM = "VIDEO_WEBM",
-  /** MimeType video/x-flv */
+  /** video/x-flv mime type. */
   VIDEO_X_FLV = "VIDEO_X_FLV",
-  /** MimeType video/x-matroska */
+  /** video/x-matroska mime type. */
   VIDEO_X_MATROSKA = "VIDEO_X_MATROSKA",
-  /** MimeType video/x-ms-asf */
+  /** video/x-ms-asf mime type. */
   VIDEO_X_MS_ASF = "VIDEO_X_MS_ASF",
-  /** MimeType video/x-ms-wm */
+  /** video/x-ms-wm mime type. */
   VIDEO_X_MS_WM = "VIDEO_X_MS_WM",
-  /** MimeType video/x-ms-wmv */
+  /** video/x-ms-wmv mime type. */
   VIDEO_X_MS_WMV = "VIDEO_X_MS_WMV",
-  /** MimeType video/x-ms-wmx */
+  /** video/x-ms-wmx mime type. */
   VIDEO_X_MS_WMX = "VIDEO_X_MS_WMX",
 }
 
@@ -2328,7 +2328,7 @@ export interface PageToRevisionConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -2420,7 +2420,7 @@ export interface PostFormatToContentNodeConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -2474,7 +2474,7 @@ export interface PostFormatToPostConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -2836,7 +2836,7 @@ export interface PostToRevisionConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -3008,7 +3008,7 @@ export interface ProductNameToContentNodeConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -3054,7 +3054,7 @@ export interface ProductNameToRateConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -3286,7 +3286,7 @@ export interface RootQueryToCXAlertConnectionWhereArgs {
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
   /** Paginate CXAlerts with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -3442,7 +3442,7 @@ export interface RootQueryToContactConnectionWhereArgs {
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
   /** Paginate Contacts with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -3484,7 +3484,7 @@ export interface RootQueryToContentNodeConnectionWhereArgs {
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
   /** Paginate content nodes with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -3524,7 +3524,7 @@ export interface RootQueryToGraphqlDocumentConnectionWhereArgs {
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
   /** Paginate GraphqlDocuments with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -3572,7 +3572,7 @@ export interface RootQueryToInstructionConnectionWhereArgs {
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
   /** Paginate Instructions with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -3612,7 +3612,7 @@ export interface RootQueryToLinklibraryConnectionWhereArgs {
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
   /** Paginate Linklibrarys with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -3706,7 +3706,7 @@ export interface RootQueryToLocationConnectionWhereArgs {
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
   /** Paginate Locations with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -3754,7 +3754,7 @@ export interface RootQueryToMediaItemConnectionWhereArgs {
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
   /** Paginate MediaItems with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -3824,7 +3824,7 @@ export interface RootQueryToPageConnectionWhereArgs {
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
   /** Paginate Pages with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -3890,7 +3890,7 @@ export interface RootQueryToPostConnectionWhereArgs {
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
   /** Paginate Posts with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -3996,7 +3996,7 @@ export interface RootQueryToProductConnectionWhereArgs {
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
   /** Paginate Products with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -4090,7 +4090,7 @@ export interface RootQueryToRateConnectionWhereArgs {
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
   /** Paginate Rates with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -4130,7 +4130,7 @@ export interface RootQueryToRevisionsConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -4178,7 +4178,7 @@ export interface RootQueryToSearchWidgetConnectionWhereArgs {
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
   /** Paginate SearchWidgets with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -4226,7 +4226,7 @@ export interface RootQueryToServiceConnectionWhereArgs {
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
   /** Paginate Services with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -4274,7 +4274,7 @@ export interface RootQueryToStepConnectionWhereArgs {
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
   /** Paginate Steps with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -4410,7 +4410,7 @@ export interface RootQueryToUserConnectionWhereArgs {
   nicenameNotIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Paginate users with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<UsersConnectionOrderbyInput>>>;
   /** An array of role names that users must match to be included in results. Note that this is an inclusive list: users must match *each* role. */
   role?: InputMaybe<UserRoleEnum>;
@@ -4430,6 +4430,14 @@ export interface RootQueryToUserConnectionWhereArgs {
 export enum SEOCardType {
   summary = "summary",
   summary_large_image = "summary_large_image",
+}
+
+/** The strategy to use when loading the script */
+export enum ScriptLoadingStrategyEnum {
+  /** Use the script `async` attribute */
+  ASYNC = "ASYNC",
+  /** Use the script `defer` attribute */
+  DEFER = "DEFER",
 }
 
 /** The Type of Identifier used to fetch a single resource. Default is ID. */
@@ -4510,7 +4518,7 @@ export interface TagToContentNodeConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -4564,7 +4572,7 @@ export interface TagToPostConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -5426,7 +5434,7 @@ export interface UserToContactConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -5472,7 +5480,7 @@ export interface UserToInstructionConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -5518,7 +5526,7 @@ export interface UserToLocationConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -5564,7 +5572,7 @@ export interface UserToMediaItemConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -5610,7 +5618,7 @@ export interface UserToPageConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -5664,7 +5672,7 @@ export interface UserToPostConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -5722,7 +5730,7 @@ export interface UserToProductConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -5768,7 +5776,7 @@ export interface UserToRateConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -5808,7 +5816,7 @@ export interface UserToRevisionsConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -5854,7 +5862,7 @@ export interface UserToSearchWidgetConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -5900,7 +5908,7 @@ export interface UserToServiceConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -5946,7 +5954,7 @@ export interface UserToStepConnectionWhereArgs {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars["ID"]>;
@@ -6055,6 +6063,7 @@ export const scalarsEnumsHash: import("gqty").ScalarsEnumsHash = {
   RateIdType: true,
   RelationEnum: true,
   SEOCardType: true,
+  ScriptLoadingStrategyEnum: true,
   SearchWidgetIdType: true,
   ServiceIdType: true,
   StepIdType: true,
@@ -10249,8 +10258,11 @@ export const generatedSchema = {
   },
   EnqueuedAsset: {
     __typename: { __type: "String!" },
+    after: { __type: "[String]" },
     args: { __type: "Boolean" },
-    dependencies: { __type: "[EnqueuedScript]" },
+    before: { __type: "[String]" },
+    conditional: { __type: "String" },
+    dependencies: { __type: "[EnqueuedAsset]" },
     extra: { __type: "String" },
     handle: { __type: "String" },
     id: { __type: "ID!" },
@@ -10260,12 +10272,17 @@ export const generatedSchema = {
   },
   EnqueuedScript: {
     __typename: { __type: "String!" },
+    after: { __type: "[String]" },
     args: { __type: "Boolean" },
+    before: { __type: "[String]" },
+    conditional: { __type: "String" },
     dependencies: { __type: "[EnqueuedScript]" },
     extra: { __type: "String" },
+    extraData: { __type: "String" },
     handle: { __type: "String" },
     id: { __type: "ID!" },
     src: { __type: "String" },
+    strategy: { __type: "ScriptLoadingStrategyEnum" },
     version: { __type: "String" },
   },
   EnqueuedScriptConnection: {
@@ -10293,12 +10310,21 @@ export const generatedSchema = {
   },
   EnqueuedStylesheet: {
     __typename: { __type: "String!" },
+    after: { __type: "[String]" },
     args: { __type: "Boolean" },
-    dependencies: { __type: "[EnqueuedScript]" },
+    before: { __type: "[String]" },
+    conditional: { __type: "String" },
+    dependencies: { __type: "[EnqueuedStylesheet]" },
     extra: { __type: "String" },
     handle: { __type: "String" },
     id: { __type: "ID!" },
+    isRtl: { __type: "Boolean" },
+    media: { __type: "String" },
+    path: { __type: "String" },
+    rel: { __type: "String" },
     src: { __type: "String" },
+    suffix: { __type: "String" },
+    title: { __type: "String" },
     version: { __type: "String" },
   },
   EnqueuedStylesheetConnection: {
@@ -10636,6 +10662,32 @@ export const generatedSchema = {
     className: { __type: "String" },
     lock: { __type: "BlockAttributesObject" },
     type: { __type: "String" },
+  },
+  GenesisCustomBlocksCalculatorResults: {
+    __typename: { __type: "String!" },
+    apiVersion: { __type: "Int" },
+    attributes: { __type: "GenesisCustomBlocksCalculatorResultsAttributes" },
+    blockEditorCategoryName: { __type: "String" },
+    clientId: { __type: "String" },
+    cssClassNames: { __type: "[String]" },
+    innerBlocks: { __type: "[EditorBlock]" },
+    isDynamic: { __type: "Boolean!" },
+    name: { __type: "String" },
+    parentClientId: { __type: "String" },
+    renderedHtml: { __type: "String" },
+  },
+  GenesisCustomBlocksCalculatorResultsAttributes: {
+    __typename: { __type: "String!" },
+    blockVisibility: { __type: "BlockAttributesObject" },
+    className: { __type: "String" },
+    compoundLabel: { __type: "String" },
+    compoundTooltip: { __type: "String" },
+    ctaCustomLink: { __type: "String" },
+    ctaLink: { __type: "String" },
+    ctaText: { __type: "String" },
+    heading: { __type: "String" },
+    lock: { __type: "BlockAttributesObject" },
+    summary: { __type: "String" },
   },
   GenesisCustomBlocksCaption: {
     __typename: { __type: "String!" },
@@ -11097,6 +11149,7 @@ export const generatedSchema = {
     __typename: { __type: "String!" },
     blockVisibility: { __type: "BlockAttributesObject" },
     className: { __type: "String" },
+    decimals: { __type: "String" },
     disclaimer: { __type: "String" },
     disclaimer2: { __type: "String" },
     disclosures: { __type: "BlockAttributesObject" },
@@ -11831,6 +11884,31 @@ export const generatedSchema = {
     title: { __type: "String" },
     videoType: { __type: "String" },
     vimeoId: { __type: "String" },
+  },
+  GenesisCustomBlocksXp2Calculator: {
+    __typename: { __type: "String!" },
+    apiVersion: { __type: "Int" },
+    attributes: { __type: "GenesisCustomBlocksXp2CalculatorAttributes" },
+    blockEditorCategoryName: { __type: "String" },
+    clientId: { __type: "String" },
+    cssClassNames: { __type: "[String]" },
+    innerBlocks: { __type: "[EditorBlock]" },
+    isDynamic: { __type: "Boolean!" },
+    name: { __type: "String" },
+    parentClientId: { __type: "String" },
+    renderedHtml: { __type: "String" },
+  },
+  GenesisCustomBlocksXp2CalculatorAttributes: {
+    __typename: { __type: "String!" },
+    apyLabel: { __type: "String" },
+    apyTooltip: { __type: "String" },
+    blockVisibility: { __type: "BlockAttributesObject" },
+    className: { __type: "String" },
+    lock: { __type: "BlockAttributesObject" },
+    product: { __type: "String" },
+    type: { __type: "String" },
+    withdrawLabel: { __type: "String" },
+    withdrawTooltip: { __type: "String" },
   },
   GenesisPageBuilderGpbPortfolioGrid: {
     __typename: { __type: "String!" },
@@ -12986,6 +13064,7 @@ export const generatedSchema = {
     autoZoomLevel: { __type: "Int" },
     autocomplete: { __type: "Int" },
     autoload: { __type: "Int" },
+    autoloadLimit: { __type: "Int" },
     backLabel: { __type: "String" },
     categoryDefaultLabel: { __type: "String" },
     categoryFilter: { __type: "Int" },
@@ -17304,6 +17383,10 @@ export const generatedSchema = {
       __type: "TaxonomyToContentTypeConnection",
       __args: { after: "String", before: "String", first: "Int", last: "Int" },
     },
+    connectedTerms: {
+      __type: "TaxonomyToTermNodeConnection",
+      __args: { after: "String", before: "String", first: "Int", last: "Int" },
+    },
     description: { __type: "String" },
     graphqlPluralName: { __type: "String" },
     graphqlSingleName: { __type: "String" },
@@ -17386,6 +17469,26 @@ export const generatedSchema = {
     node: { __type: "ContentType!" },
   },
   TaxonomyToContentTypeConnectionPageInfo: {
+    __typename: { __type: "String!" },
+    endCursor: { __type: "String" },
+    hasNextPage: { __type: "Boolean!" },
+    hasPreviousPage: { __type: "Boolean!" },
+    offsetPagination: { __type: "OffsetPaginationPageInfo" },
+    seo: { __type: "SEOPostTypePageInfo" },
+    startCursor: { __type: "String" },
+  },
+  TaxonomyToTermNodeConnection: {
+    __typename: { __type: "String!" },
+    edges: { __type: "[TaxonomyToTermNodeConnectionEdge!]!" },
+    nodes: { __type: "[TermNode!]!" },
+    pageInfo: { __type: "TaxonomyToTermNodeConnectionPageInfo!" },
+  },
+  TaxonomyToTermNodeConnectionEdge: {
+    __typename: { __type: "String!" },
+    cursor: { __type: "String" },
+    node: { __type: "TermNode!" },
+  },
+  TaxonomyToTermNodeConnectionPageInfo: {
     __typename: { __type: "String!" },
     endCursor: { __type: "String" },
     hasNextPage: { __type: "Boolean!" },
@@ -20212,6 +20315,7 @@ export const generatedSchema = {
       "TagToPostConnectionEdge",
       "TagToTaxonomyConnectionEdge",
       "TaxonomyToContentTypeConnectionEdge",
+      "TaxonomyToTermNodeConnectionEdge",
       "TermNodeToEnqueuedScriptConnectionEdge",
       "TermNodeToEnqueuedStylesheetConnectionEdge",
       "UserToCommentConnectionEdge",
@@ -20346,6 +20450,7 @@ export const generatedSchema = {
       "TagToContentNodeConnection",
       "TagToPostConnection",
       "TaxonomyToContentTypeConnection",
+      "TaxonomyToTermNodeConnection",
       "TermNodeToEnqueuedScriptConnection",
       "TermNodeToEnqueuedStylesheetConnection",
       "UserToCommentConnection",
@@ -20446,6 +20551,7 @@ export const generatedSchema = {
       "TagToContentNodeConnectionPageInfo",
       "TagToPostConnectionPageInfo",
       "TaxonomyToContentTypeConnectionPageInfo",
+      "TaxonomyToTermNodeConnectionPageInfo",
       "TermNodeToEnqueuedScriptConnectionPageInfo",
       "TermNodeToEnqueuedStylesheetConnectionPageInfo",
       "UserToCommentConnectionPageInfo",
@@ -20542,6 +20648,7 @@ export const generatedSchema = {
       "TagToContentNodeConnectionPageInfo",
       "TagToPostConnectionPageInfo",
       "TaxonomyToContentTypeConnectionPageInfo",
+      "TaxonomyToTermNodeConnectionPageInfo",
       "TermNodeToEnqueuedScriptConnectionPageInfo",
       "TermNodeToEnqueuedStylesheetConnectionPageInfo",
       "UserToCommentConnectionPageInfo",
@@ -20877,6 +20984,7 @@ export const generatedSchema = {
       "GenesisCustomBlocksBlogContentSection",
       "GenesisCustomBlocksButton",
       "GenesisCustomBlocksCalculator",
+      "GenesisCustomBlocksCalculatorResults",
       "GenesisCustomBlocksCaption",
       "GenesisCustomBlocksCardAppointment",
       "GenesisCustomBlocksCardArticle",
@@ -20928,6 +21036,7 @@ export const generatedSchema = {
       "GenesisCustomBlocksUsp",
       "GenesisCustomBlocksUtterances",
       "GenesisCustomBlocksVimeo",
+      "GenesisCustomBlocksXp2Calculator",
       "GenesisPageBuilderGpbPortfolioGrid",
       "LinkLibraryAddlinkBlock",
       "LinkLibraryCatsBlock",
@@ -21039,18 +21148,21 @@ export const generatedSchema = {
       "PostToTermNodeConnection",
       "RateToTermNodeConnection",
       "RootQueryToTermNodeConnection",
+      "TaxonomyToTermNodeConnection",
     ],
     TermNodeConnectionEdge: [
       "LocationToTermNodeConnectionEdge",
       "PostToTermNodeConnectionEdge",
       "RateToTermNodeConnectionEdge",
       "RootQueryToTermNodeConnectionEdge",
+      "TaxonomyToTermNodeConnectionEdge",
     ],
     TermNodeConnectionPageInfo: [
       "LocationToTermNodeConnectionPageInfo",
       "PostToTermNodeConnectionPageInfo",
       "RateToTermNodeConnectionPageInfo",
       "RootQueryToTermNodeConnectionPageInfo",
+      "TaxonomyToTermNodeConnectionPageInfo",
     ],
     MenuItemObjectUnion: [
       "CXAlert",
@@ -22952,6 +23064,7 @@ export interface Connection {
     | "TagToContentNodeConnection"
     | "TagToPostConnection"
     | "TaxonomyToContentTypeConnection"
+    | "TaxonomyToTermNodeConnection"
     | "TermNodeToEnqueuedScriptConnection"
     | "TermNodeToEnqueuedStylesheetConnection"
     | "UserToCommentConnection"
@@ -33667,7 +33780,7 @@ export interface DeleteCXAlertPayload {
 export interface DeleteCategoryPayload {
   __typename?: "DeleteCategoryPayload";
   /**
-   * The deteted term object
+   * The deleted term object
    */
   category?: Maybe<Category>;
   /**
@@ -33789,7 +33902,7 @@ export interface DeleteLocationCategoryPayload {
    */
   deletedId?: Maybe<ScalarsEnums["ID"]>;
   /**
-   * The deteted term object
+   * The deleted term object
    */
   locationCategory?: Maybe<LocationCategory>;
 }
@@ -33865,7 +33978,7 @@ export interface DeletePostFormatPayload {
    */
   deletedId?: Maybe<ScalarsEnums["ID"]>;
   /**
-   * The deteted term object
+   * The deleted term object
    */
   postFormat?: Maybe<PostFormat>;
 }
@@ -33903,7 +34016,7 @@ export interface DeleteProductNamePayload {
    */
   deletedId?: Maybe<ScalarsEnums["ID"]>;
   /**
-   * The deteted term object
+   * The deleted term object
    */
   productName?: Maybe<ProductName>;
 }
@@ -34017,7 +34130,7 @@ export interface DeleteTagPayload {
    */
   deletedId?: Maybe<ScalarsEnums["ID"]>;
   /**
-   * The deteted term object
+   * The deleted term object
    */
   tag?: Maybe<Tag>;
 }
@@ -34169,6 +34282,7 @@ export interface Edge {
     | "TagToPostConnectionEdge"
     | "TagToTaxonomyConnectionEdge"
     | "TaxonomyToContentTypeConnectionEdge"
+    | "TaxonomyToTermNodeConnectionEdge"
     | "TermNodeToEnqueuedScriptConnectionEdge"
     | "TermNodeToEnqueuedStylesheetConnectionEdge"
     | "UserToCommentConnectionEdge"
@@ -34304,6 +34418,7 @@ export interface EditorBlock {
     | "GenesisCustomBlocksBlogContentSection"
     | "GenesisCustomBlocksButton"
     | "GenesisCustomBlocksCalculator"
+    | "GenesisCustomBlocksCalculatorResults"
     | "GenesisCustomBlocksCaption"
     | "GenesisCustomBlocksCardAppointment"
     | "GenesisCustomBlocksCardArticle"
@@ -34355,6 +34470,7 @@ export interface EditorBlock {
     | "GenesisCustomBlocksUsp"
     | "GenesisCustomBlocksUtterances"
     | "GenesisCustomBlocksVimeo"
+    | "GenesisCustomBlocksXp2Calculator"
     | "GenesisPageBuilderGpbPortfolioGrid"
     | "LinkLibraryAddlinkBlock"
     | "LinkLibraryCatsBlock"
@@ -34419,15 +34535,29 @@ export interface EditorBlock {
 export interface EnqueuedAsset {
   __typename?: "EnqueuedScript" | "EnqueuedStylesheet";
   /**
-   * @todo
+   * The inline code to be run after the asset is loaded.
+   */
+  after?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * Deprecated
+   * @deprecated Use `EnqueuedAsset.media` instead.
    */
   args?: Maybe<ScalarsEnums["Boolean"]>;
   /**
+   * The inline code to be run before the asset is loaded.
+   */
+  before?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The HTML conditional comment for the enqueued asset. E.g. IE 6, lte IE 7, etc
+   */
+  conditional?: Maybe<ScalarsEnums["String"]>;
+  /**
    * Dependencies needed to use this asset
    */
-  dependencies?: Maybe<Array<Maybe<EnqueuedScript>>>;
+  dependencies?: Maybe<Array<Maybe<EnqueuedAsset>>>;
   /**
    * Extra information needed for the script
+   * @deprecated Use `EnqueuedScript.extraData` instead.
    */
   extra?: Maybe<ScalarsEnums["String"]>;
   /**
@@ -34455,23 +34585,41 @@ export interface EnqueuedAsset {
 export interface EnqueuedScript {
   __typename?: "EnqueuedScript";
   /**
-   * @todo
+   * The inline code to be run after the asset is loaded.
+   */
+  after?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * Deprecated
+   * @deprecated Use `EnqueuedAsset.media` instead.
    */
   args?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * The inline code to be run before the asset is loaded.
+   */
+  before?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The HTML conditional comment for the enqueued asset. E.g. IE 6, lte IE 7, etc
+   */
+  conditional?: Maybe<ScalarsEnums["String"]>;
   /**
    * Dependencies needed to use this asset
    */
   dependencies?: Maybe<Array<Maybe<EnqueuedScript>>>;
   /**
    * Extra information needed for the script
+   * @deprecated Use `EnqueuedScript.extraData` instead.
    */
   extra?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Extra data supplied to the enqueued script
+   */
+  extraData?: Maybe<ScalarsEnums["String"]>;
   /**
    * The handle of the enqueued asset
    */
   handle?: Maybe<ScalarsEnums["String"]>;
   /**
-   * The ID of the enqueued asset
+   * The global ID of the enqueued script
    */
   id: ScalarsEnums["ID"];
   /**
@@ -34479,7 +34627,11 @@ export interface EnqueuedScript {
    */
   src?: Maybe<ScalarsEnums["String"]>;
   /**
-   * The version of the enqueued asset
+   * The loading strategy to use on the script tag
+   */
+  strategy?: Maybe<ScalarsEnums["ScriptLoadingStrategyEnum"]>;
+  /**
+   * The version of the enqueued script
    */
   version?: Maybe<ScalarsEnums["String"]>;
 }
@@ -34570,15 +34722,29 @@ export interface EnqueuedScriptConnectionPageInfo {
 export interface EnqueuedStylesheet {
   __typename?: "EnqueuedStylesheet";
   /**
-   * @todo
+   * The inline code to be run after the asset is loaded.
+   */
+  after?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * Deprecated
+   * @deprecated Use `EnqueuedAsset.media` instead.
    */
   args?: Maybe<ScalarsEnums["Boolean"]>;
   /**
+   * The inline code to be run before the asset is loaded.
+   */
+  before?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The HTML conditional comment for the enqueued asset. E.g. IE 6, lte IE 7, etc
+   */
+  conditional?: Maybe<ScalarsEnums["String"]>;
+  /**
    * Dependencies needed to use this asset
    */
-  dependencies?: Maybe<Array<Maybe<EnqueuedScript>>>;
+  dependencies?: Maybe<Array<Maybe<EnqueuedStylesheet>>>;
   /**
    * Extra information needed for the script
+   * @deprecated Use `EnqueuedScript.extraData` instead.
    */
   extra?: Maybe<ScalarsEnums["String"]>;
   /**
@@ -34586,15 +34752,39 @@ export interface EnqueuedStylesheet {
    */
   handle?: Maybe<ScalarsEnums["String"]>;
   /**
-   * The ID of the enqueued asset
+   * The global ID of the enqueued stylesheet
    */
   id: ScalarsEnums["ID"];
+  /**
+   * Whether the enqueued style is RTL or not
+   */
+  isRtl?: Maybe<ScalarsEnums["Boolean"]>;
+  /**
+   * The media attribute to use for the link
+   */
+  media?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The absolute path to the enqueued style. Set when the stylesheet is meant to load inline.
+   */
+  path?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The `rel` attribute to use for the link
+   */
+  rel?: Maybe<ScalarsEnums["String"]>;
   /**
    * The source of the asset
    */
   src?: Maybe<ScalarsEnums["String"]>;
   /**
-   * The version of the enqueued asset
+   * Optional suffix, used in combination with RTL
+   */
+  suffix?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The title of the enqueued style. Used for preferred/alternate stylesheets.
+   */
+  title?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The version of the enqueued style
    */
   version?: Maybe<ScalarsEnums["String"]>;
 }
@@ -35761,6 +35951,100 @@ export interface GenesisCustomBlocksCalculatorAttributes {
    * The &quot;type&quot; field on the &quot;GenesisCustomBlocksCalculator&quot; block
    */
   type?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * A block used for editing the site
+ */
+export interface GenesisCustomBlocksCalculatorResults {
+  __typename?: "GenesisCustomBlocksCalculatorResults";
+  /**
+   * The API version of the Gutenberg Block
+   */
+  apiVersion?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Attributes of the %s Block Type
+   */
+  attributes?: Maybe<GenesisCustomBlocksCalculatorResultsAttributes>;
+  /**
+   * The name of the category the Block belongs to
+   */
+  blockEditorCategoryName?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The id of the Block
+   */
+  clientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * CSS Classnames to apply to the block
+   */
+  cssClassNames?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The inner blocks of the Block
+   */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /**
+   * Whether the block is Dynamic (server rendered)
+   */
+  isDynamic: ScalarsEnums["Boolean"];
+  /**
+   * The name of the block
+   */
+  name?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The parent id of the Block
+   */
+  parentClientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The rendered HTML for the block
+   */
+  renderedHtml?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Attributes of the %s Block Type
+ */
+export interface GenesisCustomBlocksCalculatorResultsAttributes {
+  __typename?: "GenesisCustomBlocksCalculatorResultsAttributes";
+  /**
+   * The &quot;blockVisibility&quot; field on the &quot;GenesisCustomBlocksCalculatorResults&quot; block
+   */
+  blockVisibility?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;className&quot; field on the &quot;GenesisCustomBlocksCalculatorResults&quot; block
+   */
+  className?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;compound-label&quot; field on the &quot;GenesisCustomBlocksCalculatorResults&quot; block
+   */
+  compoundLabel?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;compound-tooltip&quot; field on the &quot;GenesisCustomBlocksCalculatorResults&quot; block
+   */
+  compoundTooltip?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;cta-custom-link&quot; field on the &quot;GenesisCustomBlocksCalculatorResults&quot; block
+   */
+  ctaCustomLink?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;cta-link&quot; field on the &quot;GenesisCustomBlocksCalculatorResults&quot; block
+   */
+  ctaLink?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;cta-text&quot; field on the &quot;GenesisCustomBlocksCalculatorResults&quot; block
+   */
+  ctaText?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;heading&quot; field on the &quot;GenesisCustomBlocksCalculatorResults&quot; block
+   */
+  heading?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksCalculatorResults&quot; block
+   */
+  lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;summary&quot; field on the &quot;GenesisCustomBlocksCalculatorResults&quot; block
+   */
+  summary?: Maybe<ScalarsEnums["String"]>;
 }
 
 /**
@@ -37395,6 +37679,10 @@ export interface GenesisCustomBlocksDisclosuresAttributes {
    * The &quot;className&quot; field on the &quot;GenesisCustomBlocksDisclosures&quot; block
    */
   className?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;decimals&quot; field on the &quot;GenesisCustomBlocksDisclosures&quot; block
+   */
+  decimals?: Maybe<ScalarsEnums["String"]>;
   /**
    * The &quot;disclaimer&quot; field on the &quot;GenesisCustomBlocksDisclosures&quot; block
    */
@@ -40031,6 +40319,96 @@ export interface GenesisCustomBlocksVimeoAttributes {
    * The &quot;vimeo-id&quot; field on the &quot;GenesisCustomBlocksVimeo&quot; block
    */
   vimeoId?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * A block used for editing the site
+ */
+export interface GenesisCustomBlocksXp2Calculator {
+  __typename?: "GenesisCustomBlocksXp2Calculator";
+  /**
+   * The API version of the Gutenberg Block
+   */
+  apiVersion?: Maybe<ScalarsEnums["Int"]>;
+  /**
+   * Attributes of the %s Block Type
+   */
+  attributes?: Maybe<GenesisCustomBlocksXp2CalculatorAttributes>;
+  /**
+   * The name of the category the Block belongs to
+   */
+  blockEditorCategoryName?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The id of the Block
+   */
+  clientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * CSS Classnames to apply to the block
+   */
+  cssClassNames?: Maybe<Array<Maybe<ScalarsEnums["String"]>>>;
+  /**
+   * The inner blocks of the Block
+   */
+  innerBlocks?: Maybe<Array<Maybe<EditorBlock>>>;
+  /**
+   * Whether the block is Dynamic (server rendered)
+   */
+  isDynamic: ScalarsEnums["Boolean"];
+  /**
+   * The name of the block
+   */
+  name?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The parent id of the Block
+   */
+  parentClientId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The rendered HTML for the block
+   */
+  renderedHtml?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
+ * Attributes of the %s Block Type
+ */
+export interface GenesisCustomBlocksXp2CalculatorAttributes {
+  __typename?: "GenesisCustomBlocksXp2CalculatorAttributes";
+  /**
+   * The &quot;apy-label&quot; field on the &quot;GenesisCustomBlocksXp2Calculator&quot; block
+   */
+  apyLabel?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;apy-tooltip&quot; field on the &quot;GenesisCustomBlocksXp2Calculator&quot; block
+   */
+  apyTooltip?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;blockVisibility&quot; field on the &quot;GenesisCustomBlocksXp2Calculator&quot; block
+   */
+  blockVisibility?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;className&quot; field on the &quot;GenesisCustomBlocksXp2Calculator&quot; block
+   */
+  className?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;lock&quot; field on the &quot;GenesisCustomBlocksXp2Calculator&quot; block
+   */
+  lock?: Maybe<ScalarsEnums["BlockAttributesObject"]>;
+  /**
+   * The &quot;product&quot; field on the &quot;GenesisCustomBlocksXp2Calculator&quot; block
+   */
+  product?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;type&quot; field on the &quot;GenesisCustomBlocksXp2Calculator&quot; block
+   */
+  type?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;withdraw-label&quot; field on the &quot;GenesisCustomBlocksXp2Calculator&quot; block
+   */
+  withdrawLabel?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The &quot;withdraw-tooltip&quot; field on the &quot;GenesisCustomBlocksXp2Calculator&quot; block
+   */
+  withdrawTooltip?: Maybe<ScalarsEnums["String"]>;
 }
 
 /**
@@ -43351,6 +43729,10 @@ export interface LocationSettings {
    */
   autoload?: Maybe<ScalarsEnums["Int"]>;
   /**
+   * Meta for the key autoload_limit as a string
+   */
+  autoloadLimit?: Maybe<ScalarsEnums["Int"]>;
+  /**
    * Meta for the key back_label as a string
    */
   backLabel?: Maybe<ScalarsEnums["String"]>;
@@ -46146,6 +46528,7 @@ export interface PageInfo {
     | "TagToContentNodeConnectionPageInfo"
     | "TagToPostConnectionPageInfo"
     | "TaxonomyToContentTypeConnectionPageInfo"
+    | "TaxonomyToTermNodeConnectionPageInfo"
     | "TermNodeToEnqueuedScriptConnectionPageInfo"
     | "TermNodeToEnqueuedStylesheetConnectionPageInfo"
     | "UserToCommentConnectionPageInfo"
@@ -53418,6 +53801,27 @@ export interface Taxonomy {
     last?: Maybe<Scalars["Int"]>;
   }) => Maybe<TaxonomyToContentTypeConnection>;
   /**
+   * List of Term Nodes associated with the Taxonomy
+   */
+  connectedTerms: (args?: {
+    /**
+     * Cursor used along with the "first" argument to reference where in the dataset to get data
+     */
+    after?: Maybe<Scalars["String"]>;
+    /**
+     * Cursor used along with the "last" argument to reference where in the dataset to get data
+     */
+    before?: Maybe<Scalars["String"]>;
+    /**
+     * The number of items to return after the referenced "after" cursor
+     */
+    first?: Maybe<Scalars["Int"]>;
+    /**
+     * The number of items to return before the referenced "before" cursor
+     */
+    last?: Maybe<Scalars["Int"]>;
+  }) => Maybe<TaxonomyToTermNodeConnection>;
+  /**
    * Description of the taxonomy. This field is equivalent to WP_Taxonomy-&gt;description
    */
   description?: Maybe<ScalarsEnums["String"]>;
@@ -53454,7 +53858,7 @@ export interface Taxonomy {
    */
   public?: Maybe<ScalarsEnums["Boolean"]>;
   /**
-   * Name of content type to diplay in REST API &quot;wp/v2&quot; namespace.
+   * Name of content type to display in REST API &quot;wp/v2&quot; namespace.
    */
   restBase?: Maybe<ScalarsEnums["String"]>;
   /**
@@ -53668,6 +54072,71 @@ export interface TaxonomyToContentTypeConnectionPageInfo {
 }
 
 /**
+ * Connection between the Taxonomy type and the TermNode type
+ */
+export interface TaxonomyToTermNodeConnection {
+  __typename?: "TaxonomyToTermNodeConnection";
+  /**
+   * Edges for the TaxonomyToTermNodeConnection connection
+   */
+  edges: Array<TaxonomyToTermNodeConnectionEdge>;
+  /**
+   * The nodes of the connection, without the edges
+   */
+  nodes: Array<TermNode>;
+  /**
+   * Information about pagination in a connection.
+   */
+  pageInfo: TaxonomyToTermNodeConnectionPageInfo;
+}
+
+/**
+ * An edge in a connection
+ */
+export interface TaxonomyToTermNodeConnectionEdge {
+  __typename?: "TaxonomyToTermNodeConnectionEdge";
+  /**
+   * A cursor for use in pagination
+   */
+  cursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The item at the end of the edge
+   */
+  node: TermNode;
+}
+
+/**
+ * Page Info on the &quot;TaxonomyToTermNodeConnection&quot;
+ */
+export interface TaxonomyToTermNodeConnectionPageInfo {
+  __typename?: "TaxonomyToTermNodeConnectionPageInfo";
+  /**
+   * When paginating forwards, the cursor to continue.
+   */
+  endCursor?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * When paginating forwards, are there more items?
+   */
+  hasNextPage: ScalarsEnums["Boolean"];
+  /**
+   * When paginating backwards, are there more items?
+   */
+  hasPreviousPage: ScalarsEnums["Boolean"];
+  /**
+   * Get information about the offset pagination state in the current connection
+   */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /**
+   * Raw schema for page
+   */
+  seo?: Maybe<SEOPostTypePageInfo>;
+  /**
+   * When paginating backwards, the cursor to continue.
+   */
+  startCursor?: Maybe<ScalarsEnums["String"]>;
+}
+
+/**
  * The template assigned to the node
  */
 export interface Template_ApplyNow {
@@ -53824,7 +54293,8 @@ export interface TermNodeConnection {
     | "LocationToTermNodeConnection"
     | "PostToTermNodeConnection"
     | "RateToTermNodeConnection"
-    | "RootQueryToTermNodeConnection";
+    | "RootQueryToTermNodeConnection"
+    | "TaxonomyToTermNodeConnection";
   /**
    * A list of edges (relational context) between RootQuery and connected TermNode Nodes
    */
@@ -53848,7 +54318,8 @@ export interface TermNodeConnectionEdge {
     | "LocationToTermNodeConnectionEdge"
     | "PostToTermNodeConnectionEdge"
     | "RateToTermNodeConnectionEdge"
-    | "RootQueryToTermNodeConnectionEdge";
+    | "RootQueryToTermNodeConnectionEdge"
+    | "TaxonomyToTermNodeConnectionEdge";
   /**
    * Opaque reference to the nodes position in the connection. Value can be used with pagination args.
    */
@@ -53868,7 +54339,8 @@ export interface TermNodeConnectionPageInfo {
     | "LocationToTermNodeConnectionPageInfo"
     | "PostToTermNodeConnectionPageInfo"
     | "RateToTermNodeConnectionPageInfo"
-    | "RootQueryToTermNodeConnectionPageInfo";
+    | "RootQueryToTermNodeConnectionPageInfo"
+    | "TaxonomyToTermNodeConnectionPageInfo";
   /**
    * When paginating forwards, the cursor to continue.
    */
@@ -55312,7 +55784,7 @@ export interface User {
     where?: Maybe<UserToMediaItemConnectionWhereArgs>;
   }) => Maybe<UserToMediaItemConnection>;
   /**
-   * Display name of the user. This is equivalent to the WP_User-&gt;dispaly_name property.
+   * Display name of the user. This is equivalent to the WP_User-&gt;display_name property.
    */
   name?: Maybe<ScalarsEnums["String"]>;
   /**
@@ -56872,6 +57344,7 @@ export interface WPPageInfo {
     | "TagToContentNodeConnectionPageInfo"
     | "TagToPostConnectionPageInfo"
     | "TaxonomyToContentTypeConnectionPageInfo"
+    | "TaxonomyToTermNodeConnectionPageInfo"
     | "TermNodeToEnqueuedScriptConnectionPageInfo"
     | "TermNodeToEnqueuedStylesheetConnectionPageInfo"
     | "UserToCommentConnectionPageInfo"
@@ -58222,6 +58695,8 @@ export interface SchemaObjectTypes {
   GenesisCustomBlocksButtonAttributes: GenesisCustomBlocksButtonAttributes;
   GenesisCustomBlocksCalculator: GenesisCustomBlocksCalculator;
   GenesisCustomBlocksCalculatorAttributes: GenesisCustomBlocksCalculatorAttributes;
+  GenesisCustomBlocksCalculatorResults: GenesisCustomBlocksCalculatorResults;
+  GenesisCustomBlocksCalculatorResultsAttributes: GenesisCustomBlocksCalculatorResultsAttributes;
   GenesisCustomBlocksCaption: GenesisCustomBlocksCaption;
   GenesisCustomBlocksCaptionAttributes: GenesisCustomBlocksCaptionAttributes;
   GenesisCustomBlocksCardAppointment: GenesisCustomBlocksCardAppointment;
@@ -58324,6 +58799,8 @@ export interface SchemaObjectTypes {
   GenesisCustomBlocksUtterancesAttributes: GenesisCustomBlocksUtterancesAttributes;
   GenesisCustomBlocksVimeo: GenesisCustomBlocksVimeo;
   GenesisCustomBlocksVimeoAttributes: GenesisCustomBlocksVimeoAttributes;
+  GenesisCustomBlocksXp2Calculator: GenesisCustomBlocksXp2Calculator;
+  GenesisCustomBlocksXp2CalculatorAttributes: GenesisCustomBlocksXp2CalculatorAttributes;
   GenesisPageBuilderGpbPortfolioGrid: GenesisPageBuilderGpbPortfolioGrid;
   GenesisPageBuilderGpbPortfolioGridAttributes: GenesisPageBuilderGpbPortfolioGridAttributes;
   GraphqlDocument: GraphqlDocument;
@@ -58640,6 +59117,9 @@ export interface SchemaObjectTypes {
   TaxonomyToContentTypeConnection: TaxonomyToContentTypeConnection;
   TaxonomyToContentTypeConnectionEdge: TaxonomyToContentTypeConnectionEdge;
   TaxonomyToContentTypeConnectionPageInfo: TaxonomyToContentTypeConnectionPageInfo;
+  TaxonomyToTermNodeConnection: TaxonomyToTermNodeConnection;
+  TaxonomyToTermNodeConnectionEdge: TaxonomyToTermNodeConnectionEdge;
+  TaxonomyToTermNodeConnectionPageInfo: TaxonomyToTermNodeConnectionPageInfo;
   Template_ApplyNow: Template_ApplyNow;
   Template_FullWidth: Template_FullWidth;
   Template_SlimHeader: Template_SlimHeader;
@@ -59048,6 +59528,8 @@ export type SchemaObjectTypesNames =
   | "GenesisCustomBlocksButtonAttributes"
   | "GenesisCustomBlocksCalculator"
   | "GenesisCustomBlocksCalculatorAttributes"
+  | "GenesisCustomBlocksCalculatorResults"
+  | "GenesisCustomBlocksCalculatorResultsAttributes"
   | "GenesisCustomBlocksCaption"
   | "GenesisCustomBlocksCaptionAttributes"
   | "GenesisCustomBlocksCardAppointment"
@@ -59150,6 +59632,8 @@ export type SchemaObjectTypesNames =
   | "GenesisCustomBlocksUtterancesAttributes"
   | "GenesisCustomBlocksVimeo"
   | "GenesisCustomBlocksVimeoAttributes"
+  | "GenesisCustomBlocksXp2Calculator"
+  | "GenesisCustomBlocksXp2CalculatorAttributes"
   | "GenesisPageBuilderGpbPortfolioGrid"
   | "GenesisPageBuilderGpbPortfolioGridAttributes"
   | "GraphqlDocument"
@@ -59466,6 +59950,9 @@ export type SchemaObjectTypesNames =
   | "TaxonomyToContentTypeConnection"
   | "TaxonomyToContentTypeConnectionEdge"
   | "TaxonomyToContentTypeConnectionPageInfo"
+  | "TaxonomyToTermNodeConnection"
+  | "TaxonomyToTermNodeConnectionEdge"
+  | "TaxonomyToTermNodeConnectionPageInfo"
   | "Template_ApplyNow"
   | "Template_FullWidth"
   | "Template_SlimHeader"
@@ -59724,6 +60211,7 @@ export interface $Connection {
   TagToContentNodeConnection?: TagToContentNodeConnection;
   TagToPostConnection?: TagToPostConnection;
   TaxonomyToContentTypeConnection?: TaxonomyToContentTypeConnection;
+  TaxonomyToTermNodeConnection?: TaxonomyToTermNodeConnection;
   TermNodeToEnqueuedScriptConnection?: TermNodeToEnqueuedScriptConnection;
   TermNodeToEnqueuedStylesheetConnection?: TermNodeToEnqueuedStylesheetConnection;
   UserToCommentConnection?: UserToCommentConnection;
@@ -59981,6 +60469,7 @@ export interface $Edge {
   TagToPostConnectionEdge?: TagToPostConnectionEdge;
   TagToTaxonomyConnectionEdge?: TagToTaxonomyConnectionEdge;
   TaxonomyToContentTypeConnectionEdge?: TaxonomyToContentTypeConnectionEdge;
+  TaxonomyToTermNodeConnectionEdge?: TaxonomyToTermNodeConnectionEdge;
   TermNodeToEnqueuedScriptConnectionEdge?: TermNodeToEnqueuedScriptConnectionEdge;
   TermNodeToEnqueuedStylesheetConnectionEdge?: TermNodeToEnqueuedStylesheetConnectionEdge;
   UserToCommentConnectionEdge?: UserToCommentConnectionEdge;
@@ -60103,6 +60592,7 @@ export interface $EditorBlock {
   GenesisCustomBlocksBlogContentSection?: GenesisCustomBlocksBlogContentSection;
   GenesisCustomBlocksButton?: GenesisCustomBlocksButton;
   GenesisCustomBlocksCalculator?: GenesisCustomBlocksCalculator;
+  GenesisCustomBlocksCalculatorResults?: GenesisCustomBlocksCalculatorResults;
   GenesisCustomBlocksCaption?: GenesisCustomBlocksCaption;
   GenesisCustomBlocksCardAppointment?: GenesisCustomBlocksCardAppointment;
   GenesisCustomBlocksCardArticle?: GenesisCustomBlocksCardArticle;
@@ -60154,6 +60644,7 @@ export interface $EditorBlock {
   GenesisCustomBlocksUsp?: GenesisCustomBlocksUsp;
   GenesisCustomBlocksUtterances?: GenesisCustomBlocksUtterances;
   GenesisCustomBlocksVimeo?: GenesisCustomBlocksVimeo;
+  GenesisCustomBlocksXp2Calculator?: GenesisCustomBlocksXp2Calculator;
   GenesisPageBuilderGpbPortfolioGrid?: GenesisPageBuilderGpbPortfolioGrid;
   LinkLibraryAddlinkBlock?: LinkLibraryAddlinkBlock;
   LinkLibraryCatsBlock?: LinkLibraryCatsBlock;
@@ -60664,6 +61155,7 @@ export interface $PageInfo {
   TagToContentNodeConnectionPageInfo?: TagToContentNodeConnectionPageInfo;
   TagToPostConnectionPageInfo?: TagToPostConnectionPageInfo;
   TaxonomyToContentTypeConnectionPageInfo?: TaxonomyToContentTypeConnectionPageInfo;
+  TaxonomyToTermNodeConnectionPageInfo?: TaxonomyToTermNodeConnectionPageInfo;
   TermNodeToEnqueuedScriptConnectionPageInfo?: TermNodeToEnqueuedScriptConnectionPageInfo;
   TermNodeToEnqueuedStylesheetConnectionPageInfo?: TermNodeToEnqueuedStylesheetConnectionPageInfo;
   UserToCommentConnectionPageInfo?: UserToCommentConnectionPageInfo;
@@ -60908,6 +61400,7 @@ export interface $TermNodeConnection {
   PostToTermNodeConnection?: PostToTermNodeConnection;
   RateToTermNodeConnection?: RateToTermNodeConnection;
   RootQueryToTermNodeConnection?: RootQueryToTermNodeConnection;
+  TaxonomyToTermNodeConnection?: TaxonomyToTermNodeConnection;
 }
 
 export interface $TermNodeConnectionEdge {
@@ -60915,6 +61408,7 @@ export interface $TermNodeConnectionEdge {
   PostToTermNodeConnectionEdge?: PostToTermNodeConnectionEdge;
   RateToTermNodeConnectionEdge?: RateToTermNodeConnectionEdge;
   RootQueryToTermNodeConnectionEdge?: RootQueryToTermNodeConnectionEdge;
+  TaxonomyToTermNodeConnectionEdge?: TaxonomyToTermNodeConnectionEdge;
 }
 
 export interface $TermNodeConnectionPageInfo {
@@ -60922,6 +61416,7 @@ export interface $TermNodeConnectionPageInfo {
   PostToTermNodeConnectionPageInfo?: PostToTermNodeConnectionPageInfo;
   RateToTermNodeConnectionPageInfo?: RateToTermNodeConnectionPageInfo;
   RootQueryToTermNodeConnectionPageInfo?: RootQueryToTermNodeConnectionPageInfo;
+  TaxonomyToTermNodeConnectionPageInfo?: TaxonomyToTermNodeConnectionPageInfo;
 }
 
 export interface $ThemeConnection {
@@ -61067,6 +61562,7 @@ export interface $WPPageInfo {
   TagToContentNodeConnectionPageInfo?: TagToContentNodeConnectionPageInfo;
   TagToPostConnectionPageInfo?: TagToPostConnectionPageInfo;
   TaxonomyToContentTypeConnectionPageInfo?: TaxonomyToContentTypeConnectionPageInfo;
+  TaxonomyToTermNodeConnectionPageInfo?: TaxonomyToTermNodeConnectionPageInfo;
   TermNodeToEnqueuedScriptConnectionPageInfo?: TermNodeToEnqueuedScriptConnectionPageInfo;
   TermNodeToEnqueuedStylesheetConnectionPageInfo?: TermNodeToEnqueuedStylesheetConnectionPageInfo;
   UserToCommentConnectionPageInfo?: UserToCommentConnectionPageInfo;
@@ -61145,6 +61641,7 @@ export interface ScalarsEnums extends MakeNullable<Scalars> {
   RateIdType: RateIdType | undefined;
   RelationEnum: RelationEnum | undefined;
   SEOCardType: SEOCardType | undefined;
+  ScriptLoadingStrategyEnum: ScriptLoadingStrategyEnum | undefined;
   SearchWidgetIdType: SearchWidgetIdType | undefined;
   ServiceIdType: ServiceIdType | undefined;
   StepIdType: StepIdType | undefined;

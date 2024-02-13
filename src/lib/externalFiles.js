@@ -33,14 +33,6 @@ export const files = {
             src: `/wp-content/plugins/wp-store-locator/css/styles.min.css`
         },
         {
-            id: 'ninja-forms',
-            src: `/wp-content/plugins/ninja-forms/assets/css/display-opinions-light.css`
-        },
-        {
-            id: 'ninja-forms',
-            src: `/wp-content/plugins/ninja-forms/assets/css/font-awesome.min.css`
-        },
-        {
             id: 'styleguide',
             src: `/wp-content/themes/CXCU/assets/${process.env.styleguideVersion || '0.6.35'}/cxcuatlas.css`
         },
@@ -49,6 +41,11 @@ export const files = {
         {
             id: 'cisco-chat',
             src: '/wp-content/themes/CXCU/vendors/cisco-chat/scripts.js',
+        },
+        {
+            id: 'cxcalc',
+            src: '/cxlib/calculators/0.0.1/scripts.js',
+            strategy: 'afterInteractive'
         }
     ]
 }

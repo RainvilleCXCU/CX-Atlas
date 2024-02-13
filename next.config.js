@@ -61,6 +61,10 @@ let nextConfig = {
                     destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp-content/:path*`,
                 },
                 {
+                    source: '/cxlib/:path*',
+                    destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/cxlib/:path*`,
+                },
+                {
                     source: '/apply-:type/:path*',
                     destination: '/bridge/:type/',
                 },
