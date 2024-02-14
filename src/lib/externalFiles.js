@@ -41,11 +41,6 @@ export const files = {
         {
             id: 'cisco-chat',
             src: '/wp-content/themes/CXCU/vendors/cisco-chat/scripts.js',
-        },
-        {
-            id: 'cxcalc',
-            src: '/cxlib/calculators/0.0.1/scripts.js',
-            strategy: 'afterInteractive'
         }
     ]
 }
