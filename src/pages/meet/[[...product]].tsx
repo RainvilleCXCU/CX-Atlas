@@ -9,17 +9,20 @@ import Qualtrics from "components/ThirdParty/qualtrics";
 import Spectrum from "components/ThirdParty/spectrum";
 import Personyze from "components/ThirdParty/personyze";
 import { parseHtml } from "lib/parser";
-import { useRouter } from "next/router";
 
 export default function Page({product, productFilters}) {
-    const { useQuery } = client;
+    const { useQuery } = client;    
     const { generalSettings, widgetSettings } = useQuery();
     const widget = widgetSettings?.scheduler;
+    // const productName = product && product !== ':path*' ? product.charAt(0).toUpperCase() + product.slice(1) : '';
+    const productName = product && product !== ':path*' ? product.split('-').map(word => { 
+        return word.charAt(0).toUpperCase() + word.slice(1)
+    }).join(' ') : null;
     return (
         <>
             <Head>
                 <title>
-                    {`Book a Call`}
+                    {`Schedule a Call${productName ? ' about ' : ''}${productName ? productName.replace('-', ' ') : ''} - ${generalSettings.title}`}
                 </title>
             </Head>
             <GTM />
