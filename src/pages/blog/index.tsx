@@ -67,7 +67,6 @@ export default function Page() {
       </main>
 
       <Footer copyrightHolder={generalSettings.title} />
-			<Qualtrics />
 			<Spectrum />
     </>
   );

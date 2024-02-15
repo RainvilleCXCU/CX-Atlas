@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { client, MenuLocationEnum } from 'client';
 import MenuNavigation from '../Navigation/Navbar';
@@ -38,6 +38,12 @@ function Header({
   }).nodes;
 
   const [navOpen, setNavOpen] = useState(false);
+
+  useEffect(() => {
+    if(!showSearch && !showNavigation && !showButtons) {
+      document.body.classList.add("page-template-slim");
+    }
+  })
 
   return (
     <header className={`cx-header${navOpen ? ' nav-open' : ''}`}>

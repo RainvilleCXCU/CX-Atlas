@@ -1,4 +1,3 @@
-//import FAQ from "components/FAQs/faq";
 import dynamic from "next/dynamic";
 import parse, { domToReact, attributesToProps } from "html-react-parser";
 import { client } from 'client';
@@ -13,6 +12,9 @@ const Calculator = dynamic(() => import("components/Calculator/Calculator"), {ss
 import EqualHeightContainer from "components/Blocks/EqualHeight";
 import Container from "components/Blocks/Container";
 import Disclosure from "components/Disclosure/Disclosure";
+import CXCalc from "components/Calculator/CXCalculator";
+import CXCalcResults from "components/Calculator/CXCalculatorResults";
+import Scheduler from "components/Salesforce/scheduler";
 
 // const EqualHeightContainer = dynamic(() => import("components/Blocks/EqualHeight"), {ssr: true});
 // const Container = dynamic(() => import("components/Blocks/Container"), {ssr: true});
@@ -57,6 +59,9 @@ export const parseHtml = (html) => {
             const isForm = attribs?.class?.includes('nf-form-cont');
             const isBlockContainer = attribs && attribs.class && attribs.class.includes("gb-block-container");
             const isDisclosure = attribs?.id?.includes('disclosures');
+            const isCXCalc = attribs?.class?.includes('cx-calculator');
+            const isCXCalcResults = attribs?.class?.includes('cx-calculator-results');
+            const isScheduler = attribs?.class?.includes('cx-scheduler');
 
             // if(attribs?.onclick) {
             //     attribs.onClick = attribs?.onclick;
@@ -83,6 +88,40 @@ export const parseHtml = (html) => {
                     <Link href={href.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} {...attributesToProps(attribs)}>{domToReact(children, options)}</Link>
                 );
             }
+
+            else if(isScheduler) {
+                return (
+                    <span {...attributesToProps(attribs)}>
+                    <Scheduler
+                        postSlug = {attribs['data-postslug']}
+                        flowId = {attribs['data-flowid']}
+                        appUrl = {attribs['data-appurl']}
+                        viewMoreButton = {attribs['data-viewmorebutton']}
+                        selectSubjectText = {attribs['data-selectsubjecttext']}
+                        selectResourceText = {attribs['data-selectresourcetext']}
+                        anyResourceText = {attribs['data-anyresourcetext']}
+                        reviewHeading = {attribs['data-reviewheading']}
+                        resourceHeading = {attribs['data-resourceheading']}
+                        resourcePageHeading = {attribs['data-resourcepageheading']}
+                        scheduledTimeHeading = {attribs['data-scheduledtimeheading']}
+                        finishText = {attribs['data-finishtext']}
+                        finishImage = {attribs['data-finishimage']}
+                        profileImage = {attribs['data-profileimage']}
+                    >{children}</Scheduler></span>
+                )
+            } 
+
+            else if(isCXCalcResults) {
+                return (
+                    <div {...attributesToProps(attribs)}><CXCalcResults>{children}</CXCalcResults></div>
+                )
+            } 
+
+            else if(isCXCalc) {
+                return (
+                    <div {...attributesToProps(attribs)}><CXCalc>{children}</CXCalc></div>
+                )
+            } 
 
             else if (isResponsiveTable) {
                 return (
