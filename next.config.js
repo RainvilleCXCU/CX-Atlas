@@ -20,7 +20,7 @@ let nextConfig = {
                 }],
                 permanent: false
             },
-            ...wpRedirects
+            // ...wpRedirects
         ]
     },
     async rewrites() {
@@ -61,9 +61,21 @@ let nextConfig = {
                     destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp-content/:path*`,
                 },
                 {
+                    source: '/cxlib/:path*',
+                    destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/cxlib/:path*`,
+                },
+                {
                     source: '/apply-:type/:path*',
                     destination: '/bridge/:type/',
                 },
+                {
+                    source: '/meet/:path*',
+                    destination: '/meet/?productType=:path*',
+                },
+                // {
+                //     source: '/meet/loans:path*',
+                //     destination: '/meet/?productFilters=auto-loans,home-equity-loans,home-loans,personal-loans,recreational-loans',
+                // },
                 // {
                 //     source: '/about/branch-and-atm-locations/',
                 //     destination: '/locations',

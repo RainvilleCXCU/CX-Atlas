@@ -3,10 +3,14 @@ export const pageview = (url) => {
     event: 'pageview',
     page: url,
   });
-  if(QSI) {
-    QSI.API?.unload();
-    QSI.API?.load();
-    QSI.API?.run();
+  try {
+    if(QSI) {
+      QSI.API?.unload();
+      QSI.API?.load();
+      QSI.API?.run();
+    }
+  } catch {
+    
   }
 }
 

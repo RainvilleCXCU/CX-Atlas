@@ -365,7 +365,6 @@ export default function Page() {
 			</showDetailsContext.Provider>
 
 			<Footer copyrightHolder={generalSettings.title} />
-			<Qualtrics />
 			<Spectrum />
 		</>
 	);
