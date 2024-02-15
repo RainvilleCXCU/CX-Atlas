@@ -6,5 +6,9 @@ declare global {
   interface Window {
     KJE: any;
     CXCalc: any;
+    $Lightning: any;
   }
+  interface Element {
+    style: CSSStyleDeclaration
+}
 }

@@ -17650,6 +17650,8 @@ export const generatedSchema = {
     personyzeId: { __type: "String" },
     qualtricsEnabled: { __type: "String" },
     qualtricsId: { __type: "String" },
+    salesforceEnabled: { __type: "String" },
+    salesforceId: { __type: "String" },
     siteimproveEnabled: { __type: "String" },
     siteimproveId: { __type: "String" },
     spectrumEnabled: { __type: "String" },
@@ -19164,6 +19166,7 @@ export const generatedSchema = {
     blogSidebar: { __type: "String" },
     blogtop: { __type: "String" },
     locationsSearch: { __type: "String" },
+    scheduler: { __type: "String" },
     widgetSettings: { __type: "String" },
   },
   WritingSettings: {
@@ -54669,6 +54672,14 @@ export interface ThirdPartySettings {
   /**
    * The number of votes
    */
+  salesforceEnabled?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The number of votes
+   */
+  salesforceId?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * The number of votes
+   */
   siteimproveEnabled?: Maybe<ScalarsEnums["String"]>;
   /**
    * The number of votes
@@ -57459,6 +57470,10 @@ export interface WidgetSettings {
    * Locations Search Page Content
    */
   locationsSearch?: Maybe<ScalarsEnums["String"]>;
+  /**
+   * Scheduler Page Content
+   */
+  scheduler?: Maybe<ScalarsEnums["String"]>;
   /**
    * The string Settings Group
    */
