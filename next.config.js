@@ -68,6 +68,14 @@ let nextConfig = {
                     source: '/apply-:type/:path*',
                     destination: '/bridge/:type/',
                 },
+                {
+                    source: '/meet/:path*',
+                    destination: '/meet/?productType=:path*',
+                },
+                // {
+                //     source: '/meet/loans:path*',
+                //     destination: '/meet/?productFilters=auto-loans,home-equity-loans,home-loans,personal-loans,recreational-loans',
+                // },
                 // {
                 //     source: '/about/branch-and-atm-locations/',
                 //     destination: '/locations',

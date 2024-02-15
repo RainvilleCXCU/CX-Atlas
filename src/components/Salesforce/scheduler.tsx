@@ -157,7 +157,7 @@ const Scheduler = ({
                 if (mutation.type === 'childList') {
                     const groupHeading = lightningNode.querySelector('.runtime_appointmentbookingFlowWorkType h2');
                     const typePage = lightningNode.querySelector('.runtime_appointmentbookingFlowWorkType .slds-form-element__control');
-                    const node = query.productType ? lightningNode.querySelector(`[title="${query.productType.toString().replace('-', ' ')}" i]`) : null;
+                    const node = query.productType ? lightningNode.querySelector(`[title="${query.productType.toString().replaceAll('-', ' ')}" i]`) : null;
                     const autoResource = lightningNode.querySelector('h2[title*="automatically assign" i]');
                     const finishTextHTML = lightningNode.querySelector('.runtime_appointmentbookingFlowConfirm h2');
                     const reviewPageForm = lightningNode.querySelector('.runtime_appointmentbookingFlowReview .slds-form');
@@ -165,7 +165,7 @@ const Scheduler = ({
 
                     if (!showAll) {
                         for (const elem of document.querySelectorAll('.runtime_appointmentbookingFlowWorkType .slds-form-element__control .slds-m-top_small')) {
-                            const productName = elem.querySelector(`label span[title]`).innerHTML.toLowerCase().replace(' ', '-');
+                            const productName = elem.querySelector(`label span[title]`).innerHTML.toLowerCase().replaceAll(' ', '-',);
                             if(!productFilters || !productFilters.includes(productName)) {
                                 elem.style.display = 'none';
                             }
