@@ -1,4 +1,4 @@
-import { getNextStaticProps } from '@faustjs/next';
+import { getNextStaticProps, is404 } from '@faustjs/next';
 import { client, OrderEnum, PostObjectsConnectionOrderbyEnum } from 'client';
 import { Footer, Header, Pagination, Posts } from 'components';
 import GTM from 'components/ThirdParty/gtm';
@@ -76,6 +76,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   return getNextStaticProps(context, {
     Page,
     client,
-    revalidate: parseInt(process.env.POST_REVALIDATION) ? parseInt(process.env.POST_REVALIDATION) : null
+    revalidate: parseInt(process.env.POST_REVALIDATION) ? parseInt(process.env.POST_REVALIDATION) : null,
+    notFound: await is404(context, { client }),
   });
 }
