@@ -62,7 +62,7 @@ export function PostComponent({ post }: PostProps) {
       <div id="page" className="container site">
         <main className="content single-post">
           <article className="post">
-
+        
             <aside className="sidebar">
               {blogSidebar &&
                 parseHtml(blogSidebar)
