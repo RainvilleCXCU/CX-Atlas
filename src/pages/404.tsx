@@ -13,6 +13,7 @@ import Container from "components/Blocks/Container";
 import Columns from "components/Blocks/Columns";
 import Column from "components/Blocks/Column";
 import SearchBar from "components/Search/SearchBar";
+import NotFound from "components/404";
 
 export default function Page(): JSX.Element {
 	const { useQuery } = client;
@@ -30,6 +31,7 @@ export default function Page(): JSX.Element {
 				title={generalSettings?.title}
 				description={generalSettings?.description}
 			/>
+			<NotFound />
 			<Container>
 				<Columns>
 					<div id="page" className="hfeed site container error404">
@@ -90,6 +92,8 @@ export default function Page(): JSX.Element {
 }
 
 export async function getStaticProps(context: GetStaticPropsContext) {
+	console.log('PATH');
+	console.log(context.params);
 	return getNextStaticProps(context, {
 		Page,
 		client,

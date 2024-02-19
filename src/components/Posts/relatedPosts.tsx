@@ -19,7 +19,7 @@ const RelatedPosts: React.FC<RelatedPostsProps> = ({ id, title = "Related Posts"
                 <h4>{title}</h4>
                 <ul>
                 {relatedPosts.map((post, index) => (
-                    <li key={post.title()}><p><Link href={post.uri ?? ""}>{post.title()}</Link></p></li>
+                    <li key={post.title() + '-' + index}><p><Link href={post.uri ?? ""}>{post.title()}</Link></p></li>
                 ))}
                 </ul>
             </div>
