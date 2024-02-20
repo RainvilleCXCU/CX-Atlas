@@ -48,7 +48,6 @@ function Posts({
           {blogSidebar && category &&
             parseHtml(blogSidebar)
           }
-          <Categories />
         </aside>
         {posts && posts?.length > 0 && intro && <p>{intro}</p>}
         <div id="post-wrap" className="posts archive-content">
