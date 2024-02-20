@@ -102,7 +102,7 @@ export default function Page({ locationSettings, location }) {
 					setData([]);
 					setLength(0);
 				});
-		} else {
+		} else if(locationSettings.autoLocate !== 0) {
 			getGeoLocation()
 				.then((location) => {
 					getLocationByLatLng({
@@ -130,6 +130,8 @@ export default function Page({ locationSettings, location }) {
 						autoload: 1,
 					});
 				});
+		} else {
+
 		}
 		return () => {
 			console.log('Cleanup location search');

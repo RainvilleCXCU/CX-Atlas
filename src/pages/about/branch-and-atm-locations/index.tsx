@@ -56,6 +56,7 @@ export default function Page() {
 		streetview,
 		startLatlng,
 		startMarker,
+		autoLocate,
 		storeMarker,
 		typeControl,
 		scrollwheel,
@@ -71,6 +72,7 @@ export default function Page() {
 		mapType,
 		zoomLevel,
 		urlLabel,
+		autoLocate,
 		emailLabel,
 		phoneLabel,
 		streetview,
@@ -154,7 +156,7 @@ export default function Page() {
 					setData([]);
 					setLength(0);
 				});
-		} else {
+		} else if(locationSettings.autoLocate !== 0) {
 			getGeoLocation()
 				.then((location) => {
 					getLocationByLatLng({
@@ -184,6 +186,8 @@ export default function Page() {
 						autoload: 1,
 					});
 				});
+		} else {
+			fetchLocations({lat: 45, lng: -89, autoload: 1})
 		}
 		return () => {
 			console.log('Cleanup location search');
