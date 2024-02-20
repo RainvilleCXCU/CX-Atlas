@@ -64,13 +64,12 @@ export function PostComponent({ post }: PostProps) {
           <article className="post">
         
             <aside className="sidebar">
-              {blogSidebar &&
-                parseHtml(blogSidebar)
-              }
               {post.databaseId &&
                 <RelatedPosts id={post.databaseId?.toString()} />
               }
-              <Categories />
+              {blogSidebar &&
+                parseHtml(blogSidebar)
+              }
             </aside>
             <div className='post-content'>
               <header className='entry-header'>
