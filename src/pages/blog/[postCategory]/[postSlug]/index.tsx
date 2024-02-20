@@ -99,7 +99,6 @@ export function PostComponent({ post }: PostProps) {
         </main>
       </div>
       <Footer copyrightHolder={generalSettings.title} />
-			<Qualtrics />
 			<Spectrum />
     </>
   );
