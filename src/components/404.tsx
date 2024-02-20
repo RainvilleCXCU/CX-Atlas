@@ -17,7 +17,7 @@ function NotFound({
         id:pathArray[pathArray.length-2],
         idType: PostIdType.SLUG
     });
-    if(post.uri && post.uri !== asPath) {
+    if(post && post.uri && post.uri !== asPath) {
         push(post.uri);
     }
   }
