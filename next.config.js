@@ -20,7 +20,7 @@ let nextConfig = {
                 }],
                 permanent: false
             },
-            // ...wpRedirects
+            ...wpRedirects
         ]
     },
     async rewrites() {
