@@ -30,7 +30,7 @@ let nextConfig = {
                     type: 'query',
                     key: 'page_id'
                 }],
-                missing: [,{
+                missing: [{
                     type: 'query',
                     key: '_ppp'
                 }],
