@@ -20,6 +20,27 @@ let nextConfig = {
                 }],
                 permanent: false
             },
+            {
+                source: '/:path*',
+                destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/:path*`,
+                has: [{
+                    type: 'query',
+                    key: 'preview'
+                },{
+                    type: 'query',
+                    key: 'page_id'
+                }],
+                permanent: false
+            },
+            {
+                source: '/:path*',
+                destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/:path*`,
+                has: [{
+                    type: 'query',
+                    key: 'mark_current_revision'
+                }],
+                permanent: false
+            },
             ...wpRedirects
         ]
     },
