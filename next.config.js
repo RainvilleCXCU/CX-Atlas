@@ -30,6 +30,22 @@ let nextConfig = {
                     type: 'query',
                     key: 'page_id'
                 }],
+                missing: [,{
+                    type: 'query',
+                    key: '_ppp'
+                }],
+                permanent: false
+            },
+            {
+                source: '/:path*',
+                destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/:path*`,
+                has: [{
+                    type: 'query',
+                    key: 'rv_preview'
+                },{
+                    type: 'query',
+                    key: 'page_id'
+                }],
                 permanent: false
             },
             {
