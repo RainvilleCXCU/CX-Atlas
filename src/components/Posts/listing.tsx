@@ -45,7 +45,7 @@ function Posts({
     <section {...(id && { id })} className='blog-wrapper'>
       <div className="wrap archives">
         <aside className="sidebar">
-          {blogSidebar && category &&
+          {blogSidebar &&
             parseHtml(blogSidebar)
           }
         </aside>
