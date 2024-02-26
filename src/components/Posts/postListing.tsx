@@ -29,7 +29,7 @@ const PostListing: React.FC<PostListingProps> = ({ post, className, postTitleLev
                         </Link>
                     </div>
                 }
-                <Heading level={postTitleLevel}>
+                <Heading level={postTitleLevel} className="cx-h3">
                     <Link href={`${post.uri}`}>{post.title()}
                     </Link>
                 </Heading>

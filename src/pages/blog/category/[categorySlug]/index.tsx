@@ -46,7 +46,7 @@ export default function Page() {
       <Personyze />
       <HotJar />
 
-      <main id="main" className="content content-single blog">
+      <main id="main" className="entry-content content content-single blog">
         {blogtop &&
           <div className="alignfull">
             {parseHtml(blogtop)}
