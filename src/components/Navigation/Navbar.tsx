@@ -141,9 +141,9 @@ function MobileHeaderNavigation(props: HeaderNavigationProps) {
                                     {link.label}
                                 </button>
                             </h2>
-                            {link?.childItems()?.nodes?.map((title, index) => {
+                            {link?.childItems()?.nodes.map((title, index) => {
                                 return (
-                                    <div id={`cx-acc-collapse${link.label}`} key={`collapse-${index}-${title.label}`} className={`accordion-collapse collapse${navsSelected.includes(link.label?.replace(' ', '_')) ? ' show' : ''}`} aria-labelledby={`cx-acc-heading${link.label}`}>
+                                    <div id={`cx-acc-collapse${link.label}-${index}`} key={`collapse-${index}-${title.label}`} className={`accordion-collapse collapse${navsSelected.includes(link.label?.replace(' ', '_')) ? ' show' : ''}${title.label != '[column]' ? '' : ' menu-nav--no-heading'}`} aria-labelledby={`cx-acc-heading${link.label}`}>
                                         <ul className="accordion-body cx-nav__accordion-body">
                                             <li className='cx-nav__accordion-section'>
                                                 {
