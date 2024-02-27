@@ -89,28 +89,6 @@ export const parseHtml = (html) => {
                 );
             }
 
-            else if(isScheduler) {
-                return (
-                    <span {...attributesToProps(attribs)}>
-                    <Scheduler
-                        postSlug = {attribs['data-postslug']}
-                        flowId = {attribs['data-flowid']}
-                        appUrl = {attribs['data-appurl']}
-                        viewMoreButton = {attribs['data-viewmorebutton']}
-                        selectSubjectText = {attribs['data-selectsubjecttext']}
-                        selectResourceText = {attribs['data-selectresourcetext']}
-                        anyResourceText = {attribs['data-anyresourcetext']}
-                        reviewHeading = {attribs['data-reviewheading']}
-                        resourceHeading = {attribs['data-resourceheading']}
-                        resourcePageHeading = {attribs['data-resourcepageheading']}
-                        scheduledTimeHeading = {attribs['data-scheduledtimeheading']}
-                        finishText = {attribs['data-finishtext']}
-                        finishImage = {attribs['data-finishimage']}
-                        profileImage = {attribs['data-profileimage']}
-                    >{children}</Scheduler></span>
-                )
-            } 
-
             else if(isCXCalcResults) {
                 return (
                     <div {...attributesToProps(attribs)}><CXCalcResults>{children}</CXCalcResults></div>
@@ -186,6 +164,28 @@ export const parseHtml = (html) => {
             else if(isDisclosure) {
                 return <Disclosure {...attributesToProps(attribs)}>{domToReact(children, options)}</Disclosure>
             }
+
+            else if(isScheduler) {
+                return (
+                    <span {...attributesToProps(attribs)}>
+                    <Scheduler
+                        postSlug = {attribs['data-postslug']}
+                        flowId = {attribs['data-flowid']}
+                        appUrl = {attribs['data-appurl']}
+                        viewMoreButton = {attribs['data-viewmorebutton']}
+                        selectSubjectText = {attribs['data-selectsubjecttext']}
+                        selectResourceText = {attribs['data-selectresourcetext']}
+                        anyResourceText = {attribs['data-anyresourcetext']}
+                        reviewHeading = {attribs['data-reviewheading']}
+                        resourceHeading = {attribs['data-resourceheading']}
+                        resourcePageHeading = {attribs['data-resourcepageheading']}
+                        scheduledTimeHeading = {attribs['data-scheduledtimeheading']}
+                        finishText = {attribs['data-finishtext']}
+                        finishImage = {attribs['data-finishimage']}
+                        profileImage = {attribs['data-profileimage']}
+                    >{children}</Scheduler></span>
+                )
+            } 
 
             else {
 

@@ -31,7 +31,7 @@ export default function Page(): JSX.Element {
 				title={generalSettings?.title}
 				description={generalSettings?.description}
 			/>
-			<NotFound />
+			{/* <NotFound /> */}
 			<Container>
 				<Columns>
 					<div id="page" className="hfeed site container error404">
