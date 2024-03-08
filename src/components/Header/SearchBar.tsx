@@ -122,7 +122,7 @@ function MobileSearchBar(props: SearchBarProps) {
 export default function SearchBar({ device, navOpen, setNavOpen, logo, children = <></> }) {
 	if (device.toLowerCase() === 'mobile') {
 		return (
-			<MobileSearchBar navOpen={navOpen} setNavOpen={setNavOpen} />
+			<MobileSearchBar logo={logo} navOpen={navOpen} setNavOpen={setNavOpen} />
 		);
 	}
 	return (
