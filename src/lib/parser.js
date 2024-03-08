@@ -48,7 +48,7 @@ export const parseHtml = (html) => {
             
             const isDatatracContainer = attribs && attribs.class && attribs.class.includes("gb-block-container") && /(data-datatrac-perform)/gi.test(html);
 
-            const isInternalLink = (name === "a" && (internalLinkRegEx.test(attribs.href) || domainRegEx.test(attribs.href) === false ) && !/(mailto:|tel:)/.test(attribs.href) && !attribs.onClick && !attribs.onclick);
+            const isInternalLink = (name === "a" && (internalLinkRegEx.test(attribs.href) || domainRegEx.test(attribs.href) === false ) && !attribs.onClick && !attribs.onclick);
             const isFAQItem = attribs && attribs.class && attribs.class.includes("ewd-ufaq-faq-div");
             const isCalculator = attribs && attribs['data-calculator-name'];
             const isResponsiveTable = (name === 'table' && attribs && attribs.class && attribs.class.includes("tablepress-responsive"))
