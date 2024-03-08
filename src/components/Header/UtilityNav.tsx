@@ -1,11 +1,8 @@
-import { client } from 'client';
-import Link from 'next/link';
+import { parseHtml } from 'lib/parser';
 import SearchBar from './SearchBar';
 import UtilityNavLinks from './UtilityNavLinks';
 
-export default function UtilityNav({ children = <></> }) {
-    const { useQuery } = client;
-    const generalSettings = useQuery().generalSettings;
+export default function UtilityNav({ navOpen = false, setNavOpen = false, children = <></>, headerUtilities }) {
     return (
         <>
             <ul className="cx-header__util-nav-list">
@@ -13,7 +10,7 @@ export default function UtilityNav({ children = <></> }) {
                     <SearchBar device="desktop" navOpen setNavOpen />
                 </li>
                 <li>
-                    <UtilityNavLinks />
+                    {parseHtml(headerUtilities.toString() ?? '' )}
                 </li>
             </ul>
         </>

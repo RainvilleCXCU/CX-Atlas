@@ -1,4 +1,3 @@
-import { Category, Edge } from "client";
 import Heading from "components/Heading";
 import { parseHtml } from "lib/parser";
 import Image from "next/image";
@@ -11,7 +10,7 @@ export interface Props {
     content: string;
     url: string;
     featuredImage?;
-    categories?: Array<Category>;
+    categories?;
 }
 
 function SearchListing({ id, title, content, url = '', featuredImage, categories }: Props): JSX.Element {
@@ -20,9 +19,9 @@ function SearchListing({ id, title, content, url = '', featuredImage, categories
         <article id={`post-${id}`} className="post" aria-label={title}>
             <div className="post-content">
 
-                {featuredImage && featuredImage.node?.sourceUrl() &&
+                {featuredImage && featuredImage.node?.sourceUrl &&
                     <div className="cx-search__thumbnail">
-                        <Image src={featuredImage.node?.sourceUrl()?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={featuredImage.node.mediaDetails.width || '100'} height={featuredImage.node?.mediaDetails.height || '100'} />
+                        <Image src={featuredImage.node?.sourceUrl?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={featuredImage.node.mediaDetails.width || '100'} height={featuredImage.node?.mediaDetails.height || '100'} />
                     </div>
                 }
                 <div className="cx-search__content">

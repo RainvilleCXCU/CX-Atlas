@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { client } from 'client';
 import Accordion from "components/Accordion/Accordion";
 import Link from "next/link";
 import { Store } from "context/store";
@@ -16,7 +15,6 @@ export interface Props {
 }
 
 function LinkLibraryCatLinks({ categories, type = 'link' }: Props): JSX.Element {
-    const { useQuery } = client;
     const [state, setState] = useContext(Store);
     const [activeCat, setActiveCat] = useState(null)
     const router = useRouter();

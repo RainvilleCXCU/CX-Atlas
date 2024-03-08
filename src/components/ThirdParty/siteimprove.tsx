@@ -1,19 +1,20 @@
 import React from 'react';
-import { client } from 'client';
 import Script from 'next/script';
 
 export interface Props {
+  enabled: Boolean;
+  id: String;
 }
 
 function Siteimprove({
+  enabled = false,
+  id
 }: Props): JSX.Element {
-  const { useQuery } = client;
-  const { siteimproveId, siteimproveEnabled } = useQuery().thirdPartySettings;
 
   return (
     <>
-    {siteimproveId && siteimproveEnabled ?
-          <Script id="siteimprove-script" strategy="afterInteractive" src={`//siteimproveanalytics.com/js/siteanalyze_${siteimproveId}.js`}>
+    {enabled && id ?
+          <Script id="siteimprove-script" strategy="afterInteractive" src={`//siteimproveanalytics.com/js/siteanalyze_${id}.js`}>
             </Script> : <></>
       }
       </>

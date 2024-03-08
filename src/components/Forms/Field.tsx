@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { client } from 'client';
-import Accordion from "components/Accordion/Accordion";
 import { parseHtml } from "lib/parser";
 import { Store } from "context/store";
 

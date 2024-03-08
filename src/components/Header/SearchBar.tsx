@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 interface SearchBarProps {
 	device?: string,
 	navOpen?: boolean,
-	setNavOpen
+	setNavOpen?
 }
 
 function DesktopSearchBar(props: SearchBarProps) {

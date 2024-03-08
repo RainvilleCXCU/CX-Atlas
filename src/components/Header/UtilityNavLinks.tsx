@@ -1,14 +1,12 @@
-import { client } from 'client';
 import { parseHtml } from 'lib/parser';
 
 interface UtilityNavLinksProps {
     device?: string;
     children?;
+    headerUtilities?;
 }
 
-export default function UtilityNavLinks({ device, children = <></> }: UtilityNavLinksProps) {
-    const { useQuery } = client;
-    const {headerUtilities} = useQuery().headerSettings;
+export default function UtilityNavLinks({ headerUtilities, device, children = <></> }: UtilityNavLinksProps) {
     return (
         <>
         {parseHtml(headerUtilities ?? '' )}
