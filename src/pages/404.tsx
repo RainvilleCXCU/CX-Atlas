@@ -113,7 +113,7 @@ export default function Component(props) {
 												<Column classNames="is-layout-flow wp-block-column">
 													<h3>Search Our Website</h3>
 													<p>
-														Can't find what you need? Take a moment and search
+														Can&apos;t find what you need? Take a moment and search
 														below!
 													</p>
 													<SearchBar showBtn={false} />

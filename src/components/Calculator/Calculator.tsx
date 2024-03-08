@@ -64,7 +64,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 			initialized.current = true;
 			KJEFile = [];
 		}
-	}, [calculatorName])
+	}, [calculatorName, calcsLoaded])
 	
 	return (
 		<div id={`dt-${calculatorName}`}>

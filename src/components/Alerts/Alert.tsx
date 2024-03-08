@@ -34,7 +34,7 @@ function Alert({ id = 'alertdefault', alerts }: AlertProps): JSX.Element {
             ]);
         }
         setLoaded(true);
-    }, [cookies.alertClosed])
+    }, [cookies.alertClosed, setAlertsClosed])
 
     return (
         <>

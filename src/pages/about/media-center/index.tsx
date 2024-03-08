@@ -21,14 +21,23 @@ import { getNextServerSideProps } from "@faustwp/core";
 import { GetServerSidePropsContext } from "next";
 
 export default function Component(props) {
-  // Loading state for previews
-  if (props.loading) {
-    return <>Loading...</>;
-  }
-
-  const { query = {}, isReady } = useRouter();
-  const { catId, page = "1" } = query;
+  const { catId, page = "1" } = props.query;
   const [state, setState] = useContext(Store);
+
+  useEffect(() => {
+    console.log('CAT ID');
+    console.log(catId);
+    if(catId) {
+        setState({
+        ...state,
+        linkLibrary: {
+            ...state.linkLibrary,
+            activeId: catId,
+            activePage: page ?? "1",
+        },
+        });
+    }
+  }, [catId]);
 
   const {
     title: siteTitle,
@@ -61,21 +70,6 @@ export default function Component(props) {
   const { footerUtilities, footerAppIcons, footerSocialIcons } =
     props?.data?.footerSettings;
 
-
-  useEffect(() => {
-    console.log('CAT ID');
-    console.log(catId);
-    if(catId) {
-        setState({
-        ...state,
-        linkLibrary: {
-            ...state.linkLibrary,
-            activeId: catId,
-            activePage: page ?? "1",
-        },
-        });
-    }
-  }, [catId]);
 
   return (
     <>
@@ -204,6 +198,9 @@ Component.query = gql`
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   return getNextServerSideProps(context, {
-    Page: Component
+    Page: Component,
+    props: {
+      query: context.query
+    }
   });
 }

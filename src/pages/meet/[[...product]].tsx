@@ -21,14 +21,6 @@ import { getNextServerSideProps } from "@faustwp/core";
 import { GetServerSidePropsContext } from "next";
 
 export default function Component(props) {
-  // Loading state for previews
-  if (props.loading) {
-    return <>Loading...</>;
-  }
-
-  const { query = {}, isReady } = useRouter();
-  const { catId, page = "1" } = query;
-  const [state, setState] = useContext(Store);
 
   const {
     title: siteTitle,
@@ -202,7 +194,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         Page: Component,
         props: {
             product,
-            productFilters
+            productFilters,
+            query
         }
     });
 }

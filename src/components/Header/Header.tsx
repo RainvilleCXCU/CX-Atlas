@@ -51,7 +51,7 @@ function Header({
               <Logo isH1={asPath === '/'} title={title} logo={logo} />
             }
             {showUtilityNav &&
-              <UtilityNav headerUtilities={headerSettings.headerUtilities} />
+              <UtilityNav logo={logo} headerUtilities={headerSettings.headerUtilities} />
             }
           </div>
         </section>

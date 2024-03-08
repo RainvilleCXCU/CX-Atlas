@@ -30,7 +30,7 @@ const Accordion: React.FC<AccordionProps> = ({ title = '', content = '', isOpen 
     return () => {
       router.events.off('hashChangeComplete', handleHashChange)
     }
-  }, [router])
+  }, [router, id])
 	
   return (
     <div className="cx-accordion__brand">
