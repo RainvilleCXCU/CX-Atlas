@@ -7,7 +7,7 @@ interface MobileHeader {
     isSearchExpanded?: boolean,
     setIsSearchExpanded?,
     setSearchTerm?
-    logo
+    logo?
 }
 
 export default function MobileHeader(props: MobileHeader) {

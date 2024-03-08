@@ -7,6 +7,7 @@ interface SearchBarProps {
 	device?: string,
 	navOpen?: boolean,
 	setNavOpen?
+	logo?
 }
 
 function DesktopSearchBar(props: SearchBarProps) {
@@ -71,7 +72,7 @@ function DesktopSearchBar(props: SearchBarProps) {
 function MobileSearchBar(props: SearchBarProps) {
 	const [isSearchExpanded, setIsSearchExpanded] = useState(false);
 	const [searchTerm, setSearchTerm] = useState('');
-	const {navOpen, setNavOpen} = props;
+	const {navOpen, setNavOpen, logo} = props;
 	const router = useRouter();
 
 	useEffect(() => {
@@ -90,7 +91,7 @@ function MobileSearchBar(props: SearchBarProps) {
 
 	return (
 		<>
-			<MobileHeader setSearchTerm={setSearchTerm} isSearchExpanded={isSearchExpanded} setIsSearchExpanded={setIsSearchExpanded} navOpen={navOpen} setNavOpen={setNavOpen} />
+			<MobileHeader logo={logo} setSearchTerm={setSearchTerm} isSearchExpanded={isSearchExpanded} setIsSearchExpanded={setIsSearchExpanded} navOpen={navOpen} setNavOpen={setNavOpen} />
 			<div className={`modal cx-modal${isSearchExpanded ? ' show' : ''}`} id="searchModal" aria-labelledby="searchModalLabel" aria-hidden="true">
 				<form className="modal-dialog cx-search-mobile" role="search" action="/" onSubmit={submitSearch}>
 					<div className="modal-content cx-search-mobile__content">
@@ -118,7 +119,7 @@ function MobileSearchBar(props: SearchBarProps) {
 	);
 }
 
-export default function SearchBar({ device, navOpen, setNavOpen, children = <></> }) {
+export default function SearchBar({ device, navOpen, setNavOpen, logo, children = <></> }) {
 	if (device.toLowerCase() === 'mobile') {
 		return (
 			<MobileSearchBar navOpen={navOpen} setNavOpen={setNavOpen} />

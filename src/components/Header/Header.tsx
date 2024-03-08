@@ -63,7 +63,7 @@ function Header({
             {(showSearch || showNavigation) &&
               <nav className="navbar navbar-expand-lg navbar-default cx-nav cx-header__mobile">
                 {showSearch &&
-                  <SearchBar device="mobile" setNavOpen={setNavOpen} navOpen={navOpen} />
+                  <SearchBar logo={logo} device="mobile" setNavOpen={setNavOpen} navOpen={navOpen} />
                 }
                 {showNavigation &&
                   <MobileNav links={menuItems} menuOpen={navOpen} navOpen={navOpen} setNavOpen={setNavOpen} />
