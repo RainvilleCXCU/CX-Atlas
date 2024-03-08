@@ -56,7 +56,7 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                                             {title?.childItems?.nodes?.map((navLink, index) => {
                                                                 return (
                                                                     <li key={`${navLink.id}-${navLink.databaseId}`}>
-                                                                        <Link href={navLink.uri || ''} passHref className='dropdown-item cx-nav__dropdown-item'
+                                                                        <Link href={navLink.uri || ''} className='dropdown-item cx-nav__dropdown-item'
                                                                             onClick={() => {
                                                                                 setIsNavExpanded(!isNavExpanded);
                                                                                 setNavSelected('');
@@ -85,7 +85,7 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                                         {title?.childItems?.nodes?.map((navLink, index) => {
                                                             return (
                                                                 <li key={`item-${navLink.id}-${navLink.databaseId}`}>
-                                                                    <Link href={navLink.uri || ''} passHref className='dropdown-item cx-nav__dropdown-item'
+                                                                    <Link href={navLink.uri || ''} className='dropdown-item cx-nav__dropdown-item'
                                                                         onClick={() => {
                                                                             setIsNavExpanded(!isNavExpanded);
                                                                             setNavSelected('');
@@ -153,7 +153,7 @@ function MobileHeaderNavigation(props: HeaderNavigationProps) {
                                                     {title.childItems.node ?? title.childItems.node ?.map((navLink, index) => {
                                                         return (
                                                             <li id={`menu-item-${navLink.databaseId}`} key={`${navLink.id}-${navLink.databaseId}`}>
-                                                                <Link href={navLink.uri || ''} passHref className='accordion-item cx-nav__accordion-item-link'
+                                                                <Link href={navLink.uri || ''} className='accordion-item cx-nav__accordion-item-link'
                                                                 onClick={() => {
                                                                     props.setNavOpen(false);
                                                                 }}>{parseHtml(navLink.label ?? "")}
