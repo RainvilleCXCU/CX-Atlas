@@ -17,7 +17,6 @@
   },
   "dependencies": {
     "@apollo/client": "^3.9.5",
-    "@atlaskit/dropdown-menu": "^12.5.0",
     "@faustwp/cli": "^3.0.0",
     "@faustwp/core": "^3.0.0",
     "@wordpress/base-styles": "^4.24.0",
