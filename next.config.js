@@ -1,5 +1,4 @@
-const { withFaust } = require('@faustwp/core');
-const { NextFetchEvent } = require('next/server');
+const { withFaust, getWpHostname } = require('@faustwp/core');
 const { fetchWordPressRedirects } = require('./src/utils/redirects');
 
 /**
