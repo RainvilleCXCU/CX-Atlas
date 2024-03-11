@@ -52,10 +52,10 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                                             title.label != '[column]' &&
                                                             <Heading level='h2' className='cx-h5 no-margin--top'>{title.label}</Heading>
                                                         }
-                                                        <ul className="cx-nav__dropdown-menu-list" key={`list-${title.id}-${title.databaseId}`}>
+                                                        <ul className="cx-nav__dropdown-menu-list" key={`list-${index}-${title.databaseId}`}>
                                                             {title?.childItems?.nodes?.map((navLink, index) => {
                                                                 return (
-                                                                    <li key={`${navLink.id}-${navLink.databaseId}`}>
+                                                                    <li key={`${index}-${navLink.databaseId}`}>
                                                                         <Link href={navLink.uri || ''} prefetch={false} passHref className='dropdown-item cx-nav__dropdown-item'
                                                                             onClick={() => {
                                                                                 setIsNavExpanded(!isNavExpanded);
@@ -74,17 +74,17 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                     </div>
                                     {link?.childItems?.nodes?.map((title, index) => {
                                         return (
-                                            <React.Fragment key={`${title.id}-${title.databaseId}`}>
+                                            <React.Fragment key={`${index}-${title.databaseId}`}>
                                             { resourcesRegEx.test(title.uri) &&
                                                 <div className='cx-nav__resources'>
                                                     {
                                                         title.label != '[column]' &&
                                                         <Heading level='h2' className='cx-h5 no-margin--top'>{title.label}</Heading>
                                                     }
-                                                    <ul className="cx-nav__dropdown-menu-list" key={`list-${title.id}-${title.databaseId}`}>
+                                                    <ul className="cx-nav__dropdown-menu-list" key={`list-${index}-${title.databaseId}`}>
                                                         {title?.childItems?.nodes?.map((navLink, index) => {
                                                             return (
-                                                                <li key={`item-${navLink.id}-${navLink.databaseId}`}>
+                                                                <li key={`item-${index}-${navLink.databaseId}`}>
                                                                     <Link href={navLink.uri || ''} passHref prefetch={false} className='dropdown-item cx-nav__dropdown-item'
                                                                         onClick={() => {
                                                                             setIsNavExpanded(!isNavExpanded);
@@ -152,7 +152,7 @@ function MobileHeaderNavigation(props: HeaderNavigationProps) {
                                                 <ul className='cx-nav__accordion-list'>
                                                     {title.childItems.node ?? title.childItems.node ?.map((navLink, index) => {
                                                         return (
-                                                            <li id={`menu-item-${navLink.databaseId}`} key={`${navLink.id}-${navLink.databaseId}`}>
+                                                            <li id={`menu-item-${navLink.databaseId}`} key={`${index}-${navLink.databaseId}`}>
                                                                 <Link href={navLink.uri || ''} passHref className='accordion-item cx-nav__accordion-item-link'
                                                                 onClick={() => {
                                                                     props.setNavOpen(false);
@@ -195,27 +195,21 @@ export default function MenuNavigation({ device, menuItems, menuOpen, setNavOpen
 MenuNavigation.fragments = {
     entry: gql`
       fragment NavigationMenuItemFragment on MenuItem {
-        id
         databaseId
         uri
         label
-        cssClasses
         parentDatabaseId
         childItems {
             nodes{
-                id
                 databaseId
                 uri
                 label
-                cssClasses
                 parentDatabaseId
                 childItems {
                     nodes{
-                        id
                         databaseId
                         uri
                         label
-                        cssClasses
                         parentDatabaseId
                     }
                 }
