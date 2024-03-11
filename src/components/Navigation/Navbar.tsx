@@ -56,7 +56,7 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                                             {title?.childItems?.nodes?.map((navLink, index) => {
                                                                 return (
                                                                     <li key={`${navLink.id}-${navLink.databaseId}`}>
-                                                                        <Link href={navLink.uri || ''} className='dropdown-item cx-nav__dropdown-item'
+                                                                        <Link prefetch={true} href={navLink.uri || ''} className='dropdown-item cx-nav__dropdown-item'
                                                                             onClick={() => {
                                                                                 setIsNavExpanded(!isNavExpanded);
                                                                                 setNavSelected('');
@@ -85,7 +85,7 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                                         {title?.childItems?.nodes?.map((navLink, index) => {
                                                             return (
                                                                 <li key={`item-${navLink.id}-${navLink.databaseId}`}>
-                                                                    <Link href={navLink.uri || ''} className='dropdown-item cx-nav__dropdown-item'
+                                                                    <Link prefetch={true} href={navLink.uri || ''} className='dropdown-item cx-nav__dropdown-item'
                                                                         onClick={() => {
                                                                             setIsNavExpanded(!isNavExpanded);
                                                                             setNavSelected('');
