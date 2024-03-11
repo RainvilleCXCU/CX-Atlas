@@ -1,17 +1,16 @@
-import { MenuItem, MenuLocationEnum, client } from 'client';
 import Link from 'next/link';
 import { useState } from 'react';
 
 interface FooterMenuProps {
     device?: string;
-    links: Array<MenuItem>
+    menuItems?;
 }
 
 function DesktopMenu(props: FooterMenuProps) {
     return (
         <nav className="cx-nav cx-nav__width-auto cx-footer__desktop">
             <ul className="cx-nav__dropdown-menu">
-                {props.links?.map((link, index) => {
+                {props.menuItems?.map((link, index) => {
                     if (link.parentDatabaseId !== 0) {
                         return;
                     } else {
@@ -20,10 +19,10 @@ function DesktopMenu(props: FooterMenuProps) {
                                 <h2 className="accordion-header cx-accordion__header" id={`cx-acc-heading${link.label?.replace(' ', '_')}`}>
                                         {link.label}
                                 </h2>
-                                {link.childItems()?.nodes?.map((title, index) => {
+                                {link.childItems?.nodes?.map((title, index) => {
                                     return(
                                         <ul className="cx-nav__dropdown-menu-list" key={`desktop-menu${title.label}-${index}`}>
-                                        {title.childItems()?.nodes?.map((title, index) => {
+                                        {title.childItems?.nodes?.map((title, index) => {
                                             return(
                                                 <li key={`link-${title.label}-${index}`}>
                                                     <Link href={title.uri || ''} className="dropdown-item cx-nav__dropdown-item">
@@ -60,7 +59,7 @@ function MobileMenu(props: FooterMenuProps) {
         <nav className="cx-nav cx-footer__mobile">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 cx-nav__navbar">
                 <div className="accordion accordion-flush" id="cxFooterNavAccordion">
-                    {props.links?.map((link, index) => {
+                    {props.menuItems?.map((link, index) => {
                         if (link.parentDatabaseId !== 0) {
                             return;
                         } else {
@@ -75,12 +74,12 @@ function MobileMenu(props: FooterMenuProps) {
                                         </button>
                                     </h2>
                                     <div id={`cx-acc-collapse${link.label?.replace(' ', '_')}`} className={`accordion-collapse collapse${navsSelected.includes(link.label?.replace(' ', '_')) ? ' show' : ''}`} aria-labelledby={`cx-acc-heading${link.label?.replace(' ', '_')}`}>
-                                        {link.childItems()?.nodes?.map((title, index) => {
+                                        {link.childItems?.nodes?.map((title, index) => {
                                             return(
                                                 <ul className="accordion-body cx-nav__accordion-body" key={`accordion-body-${index}`}>
                                                     <li className="cx-nav__accordion-section-no-heading">
                                                         <ul className="cx-nav__accordion-list">
-                                                            {title.childItems()?.nodes?.map((title, index) => {
+                                                            {title.childItems?.nodes?.map((title, index) => {
                                                                 return(
                                                                     <li key={`link-${title.label}-${index}`}>
                                                                         <Link href={title.uri || ''} className="accordion-item cx-nav__accordion-item-link"
@@ -108,21 +107,15 @@ function MobileMenu(props: FooterMenuProps) {
 };
 
 
-export default function FooterMenu({ device, children = <></> }) {
+export default function FooterMenu({ device, children = <></>, menuItems }) {
 
-
-    const { menuItems } = client.useQuery()
-    const links = menuItems({
-      first: 255,
-      where: { location: MenuLocationEnum.FOOTER },
-    }).nodes;
 
     if (device.toLowerCase() === 'mobile') {
         return (
-            <MobileMenu links={links} />
+            <MobileMenu menuItems={menuItems} />
         );
     }
     return (
-        <DesktopMenu links={links} />
+        <DesktopMenu menuItems={menuItems} />
     );
 };

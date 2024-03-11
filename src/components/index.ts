@@ -1,6 +1,8 @@
 import Footer from './Footer/Footer';
 import Header from './Header/Header';
-import Posts from './Posts/listing';
+// import Posts from './Posts/listing';
 import Pagination from './Pagination';
+import MenuNavigation from './Navigation/Navbar';
+import SEO from './SEO/SEO';
 
-export { Footer, Header, Posts, Pagination };
+export { Footer, Header, Pagination, MenuNavigation, SEO };

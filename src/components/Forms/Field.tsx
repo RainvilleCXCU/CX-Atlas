@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { client } from 'client';
-import Accordion from "components/Accordion/Accordion";
 import { parseHtml } from "lib/parser";
 import { Store } from "context/store";
 
@@ -120,7 +118,7 @@ function NFField({ id, form, type = 'text', name, label, label_pos = "label-abov
             return true;
         }
         setValid(showSubmit());
-    }, [form, state?.forms?.[form]?.fields]);
+    }, [form, state?.forms, state?.forms?.[form]?.fields]);
 
     return (
         <div id={`nf-field-${id}-container`} className={`nf-field-container ${type}-container ${`label-${label_pos === 'default' || label_pos === 'label-above' ? 'above' : label_pos}`} ${container_classes}`}>

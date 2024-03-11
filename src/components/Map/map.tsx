@@ -1,10 +1,5 @@
-import { gql } from "@apollo/client";
-import { client } from "client";
-import Heading from "components/Heading";
-import Link from "next/link";
 import React, { Fragment, useContext, useEffect, useRef, useState } from "react";
 import ReactDOMServer from 'react-dom/server';
-import { LocationSettingsFragment } from 'fragments/LocationSettings';
 import InfoBox from "./infobox";
 import { Store } from "context/store";
 import { selectedLocationContext, showDetailsContext } from "components/Locations/locationsContext";

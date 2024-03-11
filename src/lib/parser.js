@@ -1,6 +1,5 @@
 import dynamic from "next/dynamic";
 import parse, { domToReact, attributesToProps } from "html-react-parser";
-import { client } from 'client';
 import Link from "next/link";
 import FAQ from "components/FAQs/faq";
 import Chat from "components/Chat/cisco";
@@ -84,6 +83,7 @@ export const parseHtml = (html) => {
             if (isInternalLink && !isCiscoBubbleChat) {
                 const href = attribs.href;
                 delete attribs.href;
+                console.log('INTERNAL LINK')
                 return (
                     <Link href={href.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} {...attributesToProps(attribs)}>{domToReact(children, options)}</Link>
                 );
@@ -194,12 +194,3 @@ export const parseHtml = (html) => {
     }
     return parse(html, options);
 };
-
-export const parseShortcode = (html) => {
-    const shortcodeRegEx = new RegExp(/\[(.*)\]/, 'ig');
-    return html.replace(shortcodeRegEx, match => {
-        client.useQuery().shortcode({
-            shortcode: match.replace(']')
-        })
-    })
-}

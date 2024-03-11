@@ -1,8 +1,7 @@
-import 'faust.config';
-import { FaustProvider } from '@faustjs/next';
+import '../faust.config';
+import { FaustProvider } from '@faustwp/core';
 import React, { useEffect } from 'react';
 import Provider from '../provider/store';
-import { client } from 'client';
 import { useRouter } from 'next/router'
 import type { AppProps } from 'next/app';
 import { pageview } from '../lib/routing';
@@ -18,12 +17,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     }
   }, [router.events])
   return (
-    <>
-      <FaustProvider client={client} pageProps={pageProps}>
-        <Provider>
-          <Component {...pageProps} />
-        </Provider>
-      </FaustProvider>
-    </>
+    <FaustProvider pageProps={pageProps}>
+      <Provider>
+        <Component {...pageProps} key={router.asPath} />
+      </Provider>
+    </FaustProvider>
   );
 }

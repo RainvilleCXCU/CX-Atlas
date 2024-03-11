@@ -1,17 +1,20 @@
-import React from "react";
-import { client } from "client";
-import Script from "next/script";
+import React from 'react';
+import Script from 'next/script';
 
-export interface Props {}
+export interface Props {
+  enabled: Boolean;
+  id: String;
+  domains: String
+}
 
-function Personyze({}: Props): JSX.Element {
-	const { useQuery } = client;
-	const { personyzeId, personyzeEnabled, personyzeDomains } =
-		useQuery().thirdPartySettings;
-
+function Personyze({
+  enabled = false,
+  id,
+  domains
+}: Props): JSX.Element {
 	return (
 		<>
-			{personyzeEnabled && personyzeId ? (
+			{enabled && id ? (
 				<Script id="personyze" strategy="afterInteractive">
 					{`
               window._S_T ||
@@ -19,7 +22,7 @@ function Personyze({}: Props): JSX.Element {
                 var s = d.createElement('script'),
                   u = s.onload===undefined && s.onreadystatechange===undefined,
                   i = 0,
-                  f = function() {window._S_T ? (_S_T.async=true) && _S_T.setup(${personyzeId}, "${personyzeDomains} *.${personyzeDomains}") : i++<120 && setTimeout(f, 600)},
+                  f = function() {window._S_T ? (_S_T.async=true) && _S_T.setup(${id}, "${domains} *.${domains}") : i++<120 && setTimeout(f, 600)},
                   h = d.getElementsByTagName('head');
                 s.async = true;
                 s.src = '\/\/counter.personyze.com\/stat-track-lib.js';

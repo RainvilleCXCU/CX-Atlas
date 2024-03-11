@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import type { WPPageInfo } from 'client';
 
 interface NextPageNavigationProps {
   href: string;

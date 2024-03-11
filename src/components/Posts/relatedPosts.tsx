@@ -1,4 +1,3 @@
-import { Post, client } from "client";
 import Link from "next/link";
 import React, { Fragment } from "react";
 
@@ -6,11 +5,10 @@ interface RelatedPostsProps {
 	id: string;
     title?: string;
     className?: string;
+    relatedPosts?;
 }
 
-const RelatedPosts: React.FC<RelatedPostsProps> = ({ id, title = "Related Posts", className }) => {
-    const { useQuery } = client;
-    const relatedPosts = useQuery().relatedPosts({postId:id});
+const RelatedPosts: React.FC<RelatedPostsProps> = ({ id, title = "Related Posts", className, relatedPosts }) => {
 	return (
         <>
         {

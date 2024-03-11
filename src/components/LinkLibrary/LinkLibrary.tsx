@@ -26,7 +26,8 @@ function LinkLibrary({ cat_ids, children = <></> }: Props): JSX.Element {
     }, [state?.linkLibrary?.activeCat]);
 
     useEffect(() => {
-        if(!state?.linkLibrary?.activeId) {
+        if(state?.linkLibrary?.activeId == 0) {
+            console.log('NO ACTIVE ID!!!!')
             router.push(`/about/media-center/${cat_ids[0].id}`, undefined, {shallow:true});
         } else {
             setState({

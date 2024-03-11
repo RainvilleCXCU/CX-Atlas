@@ -1,5 +1,4 @@
-const { withFaust } = require('@faustjs/next');
-const { NextFetchEvent } = require('next/server');
+const { withFaust, getWpHostname } = require('@faustwp/core');
 const { fetchWordPressRedirects } = require('./src/utils/redirects');
 
 /**
@@ -108,6 +107,34 @@ let nextConfig = {
                 {
                     source: '/meet/:path*',
                     destination: '/meet/?productType=:path*',
+                },
+                {
+                    source: '/about/media-center/:catId{/}?',
+                    destination: '/about/media-center/?catId=:catId',
+                },
+                {
+                    source: '/about/media-center/:catId/page/:page{/}?',
+                    destination: '/about/media-center/?page=:page',
+                },
+                {
+                    source: '/blog/category/:categoryName{/}?',
+                    destination: '/blog/category/:categoryName/?categoryName=:categoryName',
+                },
+                {
+                    source: '/blog/category/:categoryName/page/:page{/}?',
+                    destination: '/blog/category/:categoryName/?categoryName=:categoryName&page=:page',
+                },
+                {
+                    source: '/blog/page/:page{/}?',
+                    destination: '/blog/page/:page/?page=:page',
+                },
+                {
+                    source: '/search/page/:page{/}?',
+                    destination: '/search/?page=:page',
+                    has: [{
+                        type: 'query',
+                        key: 's'
+                    }],
                 },
                 // {
                 //     source: '/meet/loans:path*',

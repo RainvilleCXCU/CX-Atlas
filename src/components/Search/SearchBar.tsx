@@ -1,4 +1,3 @@
-import { Category, Edge } from "client";
 import Heading from "components/Heading";
 import { parseHtml } from "lib/parser";
 import Image from "next/image";

@@ -1,4 +1,3 @@
-import { client } from 'client';
 import Link from 'next/link';
 import SearchBar from './SearchBar';
 import UtilityNavLinks from './UtilityNavLinks';
@@ -6,8 +5,6 @@ import MenuNavigation from 'components/Navigation/Navbar';
 import { useEffect, useState } from 'react';
 
 export default function MobileNav({ links, menuOpen = false, navOpen, setNavOpen, children = <></> }) {
-    const { useQuery } = client;
-    const generalSettings = useQuery().generalSettings;
     //const [navOpen, setNavOpen] = useState(false);
     useEffect(() => {
         if(navOpen) {

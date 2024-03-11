@@ -1,16 +1,11 @@
 import React from 'react';
-import Link from 'next/link';
-import { Post, client } from 'client';
 import Heading, { HeadingProps } from '../Heading';
-import Image from 'next/image';
 import { parseHtml } from 'lib/parser';
-import RelatedPosts from './relatedPosts';
-import Categories from './categories';
 import Pagination from '../Pagination';
 import PostListing from './postListing';
 
 interface Props {
-  posts: Post[] | undefined;
+  posts;
   intro?: string;
   id?: string;
   heading?: string;
@@ -22,6 +17,7 @@ interface Props {
   postInfo?;
   readMoreText?: string;
   currentPage?: number;
+  blogSidebar;
 }
 
 function Posts({
@@ -36,10 +32,9 @@ function Posts({
   readMoreText = 'Read more',
   postsPerPage = 6,
   currentPage = 1,
-  postInfo
+  postInfo,
+  blogSidebar
 }: Props): JSX.Element {
-  const { useQuery } = client;
-  const { blogSidebar } = useQuery().widgetSettings;
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <section {...(id && { id })} className='blog-wrapper'>
@@ -55,13 +50,13 @@ function Posts({
 
             <h2 className="no-margin"><span className="screen-reader-text">Category: </span><span>{categoryName}</span></h2>
           }
-          {posts.map((post) => (
+          {posts?.map((post) => (
               <PostListing
                 key={`listing-${post.id}`}
                 post={post}
               />
           ))}
-          <Pagination currentPage={currentPage} totalResults={postInfo.offsetPagination?.total} basePath={`/blog${category ? `/category/${category}` : ''}`} perPage={postsPerPage} />
+          <Pagination currentPage={currentPage} totalResults={postInfo?.offsetPagination?.total} basePath={`/blog${category ? `/category/${category}` : ''}`} perPage={postsPerPage} />
           {posts && posts?.length < 1 && <p>No posts found.</p>}
                           
         </div>

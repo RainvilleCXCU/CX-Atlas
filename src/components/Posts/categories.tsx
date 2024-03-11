@@ -1,15 +1,13 @@
-import { client } from "client";
 import Heading from "components/Heading";
 import Link from "next/link";
 import React, { Fragment } from "react";
 
 interface CategoriesProps {
 	title?: string;
+    categories?;
 }
 
-const Categories: React.FC<CategoriesProps> = ({ title = 'Categories' }) => {
-    const { useQuery } = client;
-    const categories = useQuery().categories().nodes;
+const Categories: React.FC<CategoriesProps> = ({ title = 'Categories', categories }) => {
 	return (
         <>
             <Heading level="h3">{ title }</Heading>

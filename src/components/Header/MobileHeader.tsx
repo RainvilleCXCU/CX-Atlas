@@ -7,14 +7,15 @@ interface MobileHeader {
     isSearchExpanded?: boolean,
     setIsSearchExpanded?,
     setSearchTerm?
+    logo?
 }
 
 export default function MobileHeader(props: MobileHeader) {
-    const { isSearchExpanded, setNavOpen, navOpen, setIsSearchExpanded, setSearchTerm } = props;
+    const { isSearchExpanded, logo, setNavOpen, navOpen, setIsSearchExpanded, setSearchTerm } = props;
 
     return (
         <div className="cx-inner-wrapper">
-            <Logo />
+            <Logo logo={logo} />
             <div className="cx-nav__mobile-buttons">
                 <button
                     className={`cx-search-mobile__toggler${isSearchExpanded ? ' cx-hide' : ''}`}

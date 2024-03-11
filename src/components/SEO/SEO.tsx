@@ -1,4 +1,4 @@
-import { client } from "client";
+import { gql } from "@apollo/client";
 import Head from "next/head";
 
 interface SEOProps {
@@ -23,7 +23,7 @@ interface SEOProps {
 	twitter_data1: string;
 }
 
-const SEO: React.FC<SEOProps> = ({
+const SEO = ({
 	// These are some default values of everything that's being shown in the Head by Yoast for our current site
 	title = "Connexus Credit Union - High Yields, Low Rates, Online Services",
 	metaDesc = "Connexus Credit Union helps members reach their financial goals with higher yields, lower rates, and innovative online services.",
@@ -44,14 +44,12 @@ const SEO: React.FC<SEOProps> = ({
 	twitter_card = "summary_large_image",
 	twitter_label1 = "Est. reading time",
 	twitter_data1 = "",
-}) => {
-	const { useQuery } = client;
-	const generalSettings = useQuery().generalSettings;
-	const { logo } = useQuery().generalSettings;
+}:SEOProps) => {
 
 	//logic for the URL breadcrumbs in the Yoast <script> tag
 	let i;
 	let itemListElementArray = [];
+	let logo = ogImage;
 	for (i = 0; i < breadcrumbs.length; i++) {
 		let object = `{"@type": "ListItem","position": ${i + 1},"name": "${
 			breadcrumbs[i].text
@@ -61,7 +59,7 @@ const SEO: React.FC<SEOProps> = ({
 
 	return (
 		<Head>
-			<title>{`${title} - ${generalSettings.title}`}</title>
+			<title>{`${title} - ${title}`}</title>
 			<meta name="description" content={metaDesc} />
 			<link
 				rel="canonical"
@@ -139,7 +137,7 @@ const SEO: React.FC<SEOProps> = ({
 				className="yoast-seo-meta-tag"
 			></meta>
 			<script type="application/ld+json" className="yoast-schema-graph">
-				{`{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"${canonicalURL}","url":"${canonicalURL}","name":"${title} - ${generalSettings.title}","isPartOf":{"@id":"https://www.connexuscu.org/#website"},"primaryImageOfPage":{"@id":"${canonicalURL}#primaryimage"},"image":{"@id":"${canonicalURL}#primaryimage"},"thumbnailUrl":"${ogImage}","datePublished":"${published_time}","dateModified":"${modified_time}","description":"${metaDesc}","breadcrumb":{"@id":"${canonicalURL}#breadcrumb"},"inLanguage":"${ogLocale}","potentialAction":[{"@type":"ReadAction","target":["${canonicalURL}"]}]},{"@type":"ImageObject","inLanguage":"${ogLocale}","@id":"${canonicalURL}#primaryimage","url":"${ogImage}","contentUrl":"${ogImage}","width":${ogImageWidth},"height":${ogImageHeight}},{"@type":"BreadcrumbList","@id":"${ogURL}#breadcrumb","itemListElement":[${itemListElementArray}]},{"@type":"WebSite","@id":"https://www.connexuscu.org/#website","url":"https://www.connexuscu.org/","name":"Connexus Credit Union","description":"High Yields, Low Rates, Online Services","publisher":{"@id":"https://www.connexuscu.org/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.connexuscu.org/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"${ogLocale}"},{"@type":"Organization","@id":"https://www.connexuscu.org/#organization","name":"Connexus Credit Union","url":"https://www.connexuscu.org/","logo":{"@type":"ImageObject","inLanguage":"${ogLocale}","@id":"https://www.connexuscu.org/#/schema/logo/image/","url":"${logo}","contentUrl":"${logo}","width":145,"height":54,"caption":"Connexus Credit Union"},"image":{"@id":"https://www.connexuscu.org/#/schema/logo/image/"}}]}`}
+				{`{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"${canonicalURL}","url":"${canonicalURL}","name":"${title} - ${title}","isPartOf":{"@id":"https://www.connexuscu.org/#website"},"primaryImageOfPage":{"@id":"${canonicalURL}#primaryimage"},"image":{"@id":"${canonicalURL}#primaryimage"},"thumbnailUrl":"${ogImage}","datePublished":"${published_time}","dateModified":"${modified_time}","description":"${metaDesc}","breadcrumb":{"@id":"${canonicalURL}#breadcrumb"},"inLanguage":"${ogLocale}","potentialAction":[{"@type":"ReadAction","target":["${canonicalURL}"]}]},{"@type":"ImageObject","inLanguage":"${ogLocale}","@id":"${canonicalURL}#primaryimage","url":"${ogImage}","contentUrl":"${ogImage}","width":${ogImageWidth},"height":${ogImageHeight}},{"@type":"BreadcrumbList","@id":"${ogURL}#breadcrumb","itemListElement":[${itemListElementArray}]},{"@type":"WebSite","@id":"https://www.connexuscu.org/#website","url":"https://www.connexuscu.org/","name":"Connexus Credit Union","description":"High Yields, Low Rates, Online Services","publisher":{"@id":"https://www.connexuscu.org/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.connexuscu.org/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"${ogLocale}"},{"@type":"Organization","@id":"https://www.connexuscu.org/#organization","name":"Connexus Credit Union","url":"https://www.connexuscu.org/","logo":{"@type":"ImageObject","inLanguage":"${ogLocale}","@id":"https://www.connexuscu.org/#/schema/logo/image/","url":"${logo}","contentUrl":"${logo}","width":145,"height":54,"caption":"Connexus Credit Union"},"image":{"@id":"https://www.connexuscu.org/#/schema/logo/image/"}}]}`}
 			</script>
 		</Head>
 	);

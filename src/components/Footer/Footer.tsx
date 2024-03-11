@@ -4,12 +4,19 @@ import FooterMenu from "./Nav";
 import Icons from "./Icons";
 import UtilityNav from "./UtilityNav";
 import Image from "next/image";
+import { gql } from "@apollo/client";
 
 interface Props {
 	copyrightHolder?: string;
+	title?: string;
+	logo?: string;
+	menuItems?;
+	footerUtilities?;
+	footerAppIcons?;
+	footerSocialIcons?;
 }
 
-function Footer({ copyrightHolder = "" }: Props): JSX.Element {
+function Footer({ copyrightHolder = "", title, logo, menuItems, footerUtilities, footerAppIcons, footerSocialIcons }: Props): JSX.Element {
 	const year = new Date().getFullYear();
 
 	// copies the routing number to the clipboard
@@ -40,14 +47,14 @@ function Footer({ copyrightHolder = "" }: Props): JSX.Element {
 		<footer className="cx-footer">
 			<section className="cx-footer__header">
 				<div className="cx-footer__wrapper">
-					<Logo />
+					<Logo title={title} logo={logo} />
 				</div>
 			</section>
 			<section className="cx-footer__main-nav">
 				<div className="cx-footer__wrapper">
-					<FooterMenu device="desktop" />
-					<FooterMenu device="mobile" />
-					<UtilityNav />
+					<FooterMenu menuItems={menuItems} device="desktop" />
+					<FooterMenu menuItems={menuItems}  device="mobile" />
+					<UtilityNav footerUtilities={footerUtilities} />
 				</div>
 			</section>
 			<section className="cx-footer__info">
@@ -93,7 +100,7 @@ function Footer({ copyrightHolder = "" }: Props): JSX.Element {
 							</div>
 						</li>
 					</ul>
-					<Icons />
+					<Icons footerAppIcons={footerAppIcons} footerSocialIcons={footerSocialIcons} />
 				</div>
 			</section>
 			<section className="cx-footer__copyright">
@@ -104,5 +111,14 @@ function Footer({ copyrightHolder = "" }: Props): JSX.Element {
 		</footer>
 	);
 }
+
+Footer.fragments = {
+    entry: gql`
+      fragment FooterFragment on FooterSettings {
+		footerAppIcons
+		footerSocialIcons
+	  }
+    `,
+  };
 
 export default Footer;

@@ -1,15 +1,13 @@
+import { gql } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import { client, Page as PageType } from 'client';
 import { useCookies } from "react-cookie";
 
 export interface AlertProps {
-    id
+    id;
+    alerts?;
 }
 
-function Alert({ id }: AlertProps): JSX.Element {
-
-    const { useQuery } = client;
-    const alerts = useQuery().cXAlerts().edges.map(a => a.node);
+function Alert({ id = 'alertdefault', alerts }: AlertProps): JSX.Element {
 
     const [alertsClosed, setAlertsClosed] = useState([]);
     const [loaded, setLoaded] = useState(false);
@@ -36,7 +34,7 @@ function Alert({ id }: AlertProps): JSX.Element {
             ]);
         }
         setLoaded(true);
-    }, [cookies.alertClosed])
+    }, [cookies.alertClosed, setAlertsClosed])
 
     return (
         <>
@@ -59,3 +57,16 @@ function Alert({ id }: AlertProps): JSX.Element {
 }
 
 export default Alert;
+
+Alert.fragments = {
+	entry: gql`
+	  fragment AlertsFragment on CXAlert {
+        displayPages
+        databaseId
+        ctaButtonText
+        ctaButtonUrl
+        name
+        message
+	  }
+	`,
+  };
