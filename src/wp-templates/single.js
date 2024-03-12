@@ -1,46 +1,125 @@
 import { gql } from '@apollo/client';
 import * as MENUS from '../constants/menus';
 import { BlogInfoFragment } from '../fragments/GeneralSettings';
+import { ThirdPartySettingsFragment, GTM, HotJar, Personyze, Qualtrics, Spectrum, Siteimprove } from '../components/ThirdParty';
 import {
   Header,
   Footer,
-  Main,
-  Container,
-  EntryHeader,
   MenuNavigation,
-  ContentWrapper,
-  FeaturedImage,
   SEO,
 } from '../components';
+import Alert from 'components/Alerts/Alert';
+import Loading from 'components/common/loading';
+import { parseHtml } from 'lib/parser';
+import Posts from 'components/Posts/listing';
+import RelatedPosts from 'components/Posts/relatedPosts';
+import Image from 'next/image';
+import { Fragment } from 'react';
+import Link from 'next/link';
 
 export default function Component(props) {
 
-  const { title: siteTitle, description: siteDescription } =
+  const { title: siteTitle, description: siteDescription, logo: siteLogo, footerText: footerText } =
     props?.data?.generalSettings;
+  const { gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
-  const { title, content, featuredImage, date, author } = props.data.post;
+  const { title, content, seo, link, featuredImage, databaseId, categories } = props?.data?.post ?? { title: '' };
+  const headerSettings = props?.data?.headerSettings; 
+  const { footerUtilities, footerAppIcons, footerSocialIcons } = props?.data?.footerSettings;
+  const { blogtop, blogSidebar } = props?.data?.widgetSettings;
 
   return (
     <>
       <SEO
-        title={siteTitle}
-        description={siteDescription}
-        imageUrl={featuredImage?.node?.sourceUrl}
-      />
-      <Header
-        title={siteTitle}
-        description={siteDescription}
+				title={title}
+				metaDesc={seo?.metaDesc}
+				canonicalURL={seo?.canonical ? seo?.canonical : link} //I'm unsure about this. Changing the canonical URL in Yoast doesn't seem to do anything...
+				ogLocale={seo?.locale} // Not sure where this is in the page object
+				ogType={seo?.opengraphType}
+				ogTitle={seo?.title}
+				ogDescription={seo?.opengraphDescription}
+				ogURL={seo?.opengraphUrl}
+				breadcrumbs={seo?.breadcrumbs}
+				ogSite_Name={seo?.opengraphSiteName}
+				published_time={seo?.opengraphPublishedTime}
+				modified_time={seo?.opengraphModifiedTime}
+				ogImage={seo?.opengraphImage?.mediaItemUrl}
+				ogImageWidth={seo?.opengraphImage?.mediaDetails.width}
+				ogImageHeight={seo?.opengraphImage?.mediaDetails.height}
+				ogImageType={seo?.opengraphImage?.mimeType}
+				twitter_card={"summary_large_image"} // Not sure where this is in the page object
+				twitter_label1={"Est. reading time"} // Not sure where this is in the page object
+				twitter_data1={seo?.readingTime + " minutes"}
+  />
+			<GTM
+        id={gtmId}
+        enabled={gtmEnabled} />
+      <HotJar
+        id={hotjarId}
+        enabled={hotjarEnabled} />
+			<Personyze
+        id={personyzeId}
+        enabled={personyzeEnabled}
+        domains={personyzeDomains} />
+			<Alert id={databaseId} />
+			<Loading /> 
+			<Header
+				title={title}
+				description={siteDescription}
+				logo={siteLogo}
         menuItems={primaryMenu}
-      />
-      <Main>
-        <>
-          <Container>
-            <ContentWrapper content={content} />
-          </Container>
-        </>
-      </Main>
-      <Footer title={siteTitle} menuItems={footerMenu} />
+        headerSettings={headerSettings}
+			/>
+     <div id="page" className="container site">
+        <main className="content single-post">
+          <article className="post">
+        
+            <aside className="sidebar">
+              {databaseId &&
+                <RelatedPosts id={databaseId?.toString()} />
+              }
+              {blogSidebar &&
+                parseHtml(blogSidebar)
+              }
+            </aside>
+            <div className='post-content'>
+              <header className='entry-header'>
+                <div className='featured-image'>
+                  <Image src={featuredImage?.node.sourceUrl?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={featuredImage.node.mediaDetails.width} height={featuredImage.node.mediaDetails.height} />
+                </div>
+                <h1>{title}</h1>
+                {categories &&
+                  <div className='categories'>
+                    {categories.nodes.map((category, index) => (
+                      <Fragment key={category.name}>
+                        {category.uri &&
+                          <><Link href={category.uri}>{category.name}</Link>{index < categories.nodes.length - 1 ? ', ' : ''}</>
+                        }
+                      </Fragment>
+                    ))}
+                  </div>}
+              </header>
+              <div className='entry-content'>
+                {parseHtml(content ?? "")}
+
+			          <div id="cx-qt-feedback" className="blog-post"></div>
+              </div>
+            </div>
+          </article>
+        </main>
+      </div>
+
+      <Footer copyrightHolder={footerText} menuItems={footerMenu} logo={siteLogo} footerUtilities={footerUtilities} footerAppIcons={footerAppIcons} footerSocialIcons={footerSocialIcons} />
+			<Qualtrics
+        id={qualtricsId}
+        enabled={qualtricsEnabled} />
+			<Spectrum
+        id={spectrumId}
+        enabled={spectrumEnabled} />
+			<Siteimprove
+        id={siteimproveId}
+        enabled={siteimproveEnabled} />
     </>
   );
 }
@@ -48,6 +127,8 @@ export default function Component(props) {
 Component.query = gql`
   ${BlogInfoFragment}
   ${MenuNavigation.fragments.entry}
+  ${ThirdPartySettingsFragment}
+  ${Alert.fragments.entry}
   query GetPost(
     $databaseId: ID!
     $headerLocation: MenuLocationEnum
@@ -55,6 +136,8 @@ Component.query = gql`
     $asPreview: Boolean = false
   ) {
     post(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
+      id
+      databaseId
       title
       content
       date
@@ -63,16 +146,56 @@ Component.query = gql`
           name
         }
       }
+      categories {
+          nodes {
+              name
+              uri
+          }
+      }
+      featuredImage {
+        node {
+            id
+            sourceUrl
+            altText
+            mediaDetails {
+                width
+                height
+            }
+        }
+      }
     }
     generalSettings {
       ...BlogInfoFragment
     }
-    headerMenuItems: menuItems(where: { location: $headerLocation }) {
+    headerSettings {
+      headerUtilities
+    }
+    footerSettings {
+      footerUtilities
+      footerAppIcons
+      footerSocialIcons
+    }
+    widgetSettings {
+        blogtop
+        blogSidebar
+    }
+    thirdPartySettings {
+      ...ThirdPartySettingsFragment
+    }
+
+    cxAlerts: cXAlerts {
+        edges {
+          node{
+            ...AlertsFragment
+          }
+        }
+    }
+    footerMenuItems: menuItems(where: { location: $footerLocation }, first: 255) {
       nodes {
         ...NavigationMenuItemFragment
       }
     }
-    footerMenuItems: menuItems(where: { location: $footerLocation }) {
+    headerMenuItems: menuItems(where: { location: $headerLocation }, first: 255) {
       nodes {
         ...NavigationMenuItemFragment
       }

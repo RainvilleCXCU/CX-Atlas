@@ -197,33 +197,30 @@ Page.query = gql`
   }
 `;
 
-export async function getServerSideProps(context) {
-  console.log('Context');
-  console.log(context)
-  return getNextServerSideProps(context, {
-    Page,
-  });
-}
-
-
-// export function getStaticProps(ctx, props) {
-//   /**
-//    * @link https://faustjs.org/docs/next/reference/getNextStaticProps
-//    */
-//   console.log('params');
-//   console.log(JSON.stringify(props))
-//   return getNextStaticProps(ctx, {
+// export async function getServerSideProps(context) {
+//   console.log('Context');
+//   console.log(context)
+//   return getNextServerSideProps(context, {
 //     Page,
-//     props: {
-//       params: ctx.props
-//     }
 //   });
 // }
 
 
-  // export function getStaticPaths() {
-  //   return {
-  //     paths: [],
-  //     fallback: 'blocking',
-  //   };
-  // }
+export function getStaticProps(ctx, props) {
+  /**
+   * @link https://faustjs.org/docs/next/reference/getNextStaticProps
+   */
+  console.log('params');
+  console.log(JSON.stringify(props))
+  return getNextStaticProps(ctx, {
+    Page
+  });
+}
+
+
+  export function getStaticPaths() {
+    return {
+      paths: [],
+      fallback: 'blocking',
+    };
+  }
