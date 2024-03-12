@@ -25,6 +25,7 @@ export default function Component(props) {
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
   const { title, content, seo, link, featuredImage, databaseId, categories } = props?.data?.post ?? { title: '' };
+  const { relatedPosts } = props?.data;
   const headerSettings = props?.data?.headerSettings; 
   const { footerUtilities, footerAppIcons, footerSocialIcons } = props?.data?.footerSettings;
   const { blogtop, blogSidebar } = props?.data?.widgetSettings;
@@ -73,11 +74,11 @@ export default function Component(props) {
 			/>
      <div id="page" className="container site">
         <main className="content single-post">
-          <article className="post">
+          <article id={`post-${databaseId}`} className="post">
         
             <aside className="sidebar">
               {databaseId &&
-                <RelatedPosts id={databaseId?.toString()} />
+                <RelatedPosts relatedPosts={relatedPosts} />
               }
               {blogSidebar &&
                 parseHtml(blogSidebar)
@@ -131,6 +132,7 @@ Component.query = gql`
   ${Alert.fragments.entry}
   query GetPost(
     $databaseId: ID!
+    $id: String
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
     $asPreview: Boolean = false
@@ -163,6 +165,10 @@ Component.query = gql`
             }
         }
       }
+    }
+    relatedPosts(postId: $id) {
+      title
+      uri
     }
     generalSettings {
       ...BlogInfoFragment
@@ -205,6 +211,7 @@ Component.query = gql`
 
 Component.variables = ({ databaseId }, ctx) => {
   return {
+    id: String(databaseId),
     databaseId,
     headerLocation: MENUS.PRIMARY_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION,
