@@ -139,6 +139,7 @@ Page.query = gql`
             id
             uri
             excerpt
+            title
             categories {
                 nodes {
                     name
