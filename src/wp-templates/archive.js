@@ -15,6 +15,7 @@ import { useRouter } from 'next/router';
 import Posts from '../components/Posts/listing';
 import { getNextStaticProps, getWordPressProps } from '@faustwp/core';
 import { use } from 'react';
+import { getPageNum } from 'utils/urlParser';
 
 const POSTS_PER_PAGE = 5;
 
@@ -32,7 +33,7 @@ export default function Page(props) {
   const { blogtop, blogSidebar } = props?.data?.widgetSettings;
   const posts = props?.data?.posts;
   const { postSlug, postCursor } = query;
-  const currentPage = query.page ? parseInt(query.page) : 1;
+  const currentPage = getPageNum(query.wordpressNode);
 
   return (
     <>

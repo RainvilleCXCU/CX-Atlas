@@ -8,13 +8,15 @@ import Loading from 'components/common/loading';
 import { parseHtml } from 'lib/parser';
 import Posts from 'components/Posts/listing';
 import { useRouter } from 'next/router';
+import { getPageNum } from '../utils/urlParser';
 
 const POSTS_PER_PAGE = 5;
 export default function Component(props) {
   const { query = {} } = useRouter();
+  
   const { blogtop, blogSidebar } = props?.data?.widgetSettings;
   const { posts } = props?.data;
-  const { name } = props?.data?.nodeByUri;
+  const { name, slug } = props?.data?.category;
   const { title: siteTitle, description: siteDescription, logo: siteLogo, footerText: footerText, databaseId: databaseId } =
     props?.data?.generalSettings;
   const { gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
@@ -23,8 +25,7 @@ export default function Component(props) {
   const { title, content, seo, link, featuredImage } = props?.data?.page ?? { title: '' };
   const headerSettings = props?.data?.headerSettings; 
   const { footerUtilities, footerAppIcons, footerSocialIcons } = props?.data?.footerSettings;
-  const currentPage = query?.page?.[0] ? parseInt(query.page[0]) : 1;
-
+  const currentPage = getPageNum(query.wordpressNode);
   return (
     <>
       <SEO
@@ -77,7 +78,7 @@ export default function Component(props) {
         <Posts
           posts={posts?.nodes}
           postInfo={posts?.pageInfo}          
-          category={name}
+          category={slug}
           categoryName={name}
           currentPage={currentPage}
           postsPerPage={POSTS_PER_PAGE}
@@ -100,13 +101,11 @@ export default function Component(props) {
 
 Component.variables = (seedQuery, context, extra) => {
   const page = extra?.query?.page ? parseInt(extra?.query?.page) : 1;
-  const categoryName = extra?.query?.categoryName ? extra?.query?.categoryName : "";
-  console.log(`Page: ${page}`)
-  console.log(categoryName);
+  const categoryName = seedQuery?.slug ? seedQuery?.slug : "";
   return {
-    uri: seedQuery.uri,
     page: page,
-    categoryName: categoryName,
+    categoryName,
+    id: seedQuery.databaseId,
     headerLocation: MENUS.PRIMARY_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION,
   };
@@ -119,15 +118,16 @@ Component.query = gql`
   ${ThirdPartySettingsFragment}
   ${Alert.fragments.entry}
   query GetCategoryPage(
-    $uri: String!
     $page: Int
+    $id: ID!
     $categoryName: String
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
   ) {
-    nodeByUri(uri: $uri) {
+    category(id: $id, idType: DATABASE_ID) {
       ... on Category {
         name
+        slug
       }
     }
     posts(where: {offsetPagination: {offset: $page, size: 5}, categoryName: $categoryName}) {
