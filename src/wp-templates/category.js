@@ -128,6 +128,29 @@ Component.query = gql`
       ... on Category {
         name
         slug
+        seo {
+          canonical
+          cornerstone
+          focuskw
+          fullHead
+          metaDesc
+          metaKeywords
+          metaRobotsNofollow
+          metaRobotsNoindex
+          opengraphAuthor
+          opengraphDescription
+          opengraphModifiedTime
+          opengraphPublishedTime
+          opengraphPublisher
+          opengraphSiteName
+          opengraphTitle
+          opengraphType
+          opengraphUrl
+          readingTime
+          title
+          twitterDescription
+          twitterTitle
+        }
       }
     }
     posts(where: {offsetPagination: {offset: $page, size: 5}, categoryName: $categoryName}) {

@@ -114,6 +114,30 @@ Component.query = gql`
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
       content
+        seo {
+          canonical
+          cornerstone
+          focuskw
+          fullHead
+          metaDesc
+          metaKeywords
+          metaRobotsNofollow
+          metaRobotsNoindex
+          opengraphAuthor
+          opengraphDescription
+          opengraphModifiedTime
+          opengraphPublishedTime
+          opengraphPublisher
+          opengraphSiteName
+          opengraphTitle
+          opengraphType
+          opengraphUrl
+          readingTime
+          title
+          twitterDescription
+          twitterTitle
+        }
+      link
     }
     generalSettings {
       ...BlogInfoFragment

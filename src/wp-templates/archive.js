@@ -141,6 +141,29 @@ Page.query = gql`
             uri
             excerpt
             title
+            seo {
+              canonical
+              cornerstone
+              focuskw
+              fullHead
+              metaDesc
+              metaKeywords
+              metaRobotsNofollow
+              metaRobotsNoindex
+              opengraphAuthor
+              opengraphDescription
+              opengraphModifiedTime
+              opengraphPublishedTime
+              opengraphPublisher
+              opengraphSiteName
+              opengraphTitle
+              opengraphType
+              opengraphUrl
+              readingTime
+              title
+              twitterDescription
+              twitterTitle
+            }
             categories {
                 nodes {
                     name
