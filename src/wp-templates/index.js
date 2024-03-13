@@ -9,5 +9,6 @@ export default {
   'front-page': frontPage,
   page,
   single,
-  archive
+  archive,
+  home: archive
 };
