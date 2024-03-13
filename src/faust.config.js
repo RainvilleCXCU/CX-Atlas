@@ -11,5 +11,4 @@ export default setConfig({
   templates,
   plugins: [],
   possibleTypes,
-  usePersistedQueries: true,
 });
