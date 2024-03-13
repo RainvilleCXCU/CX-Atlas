@@ -116,17 +116,21 @@ let nextConfig = {
                     source: '/about/media-center/:catId/page/:page{/}?',
                     destination: '/about/media-center/?page=:page',
                 },
+                // {
+                //     source: '/blog/category/:categoryName{/}?',
+                //     destination: '/blog/category/:categoryName/?categoryName=:categoryName',
+                // },
+                // {
+                //     source: '/blog/category/:categoryName/page/:page{/}?',
+                //     destination: '/blog/category/:categoryName/?categoryName=:categoryName&page=:page',
+                // },
+                // {
+                //     source: '/blog/page/:page',
+                //     destination: '/blog/?page=:page',
+                // },
                 {
-                    source: '/blog/category/:categoryName{/}?',
-                    destination: '/blog/category/:categoryName/?categoryName=:categoryName',
-                },
-                {
-                    source: '/blog/category/:categoryName/page/:page{/}?',
-                    destination: '/blog/category/:categoryName/?categoryName=:categoryName&page=:page',
-                },
-                {
-                    source: '/blog/page/:page{/}?',
-                    destination: '/blog/page/:page/?page=:page',
+                    source: '/about/branch-and-atm-locations/find-location/:location{/}?',
+                    destination: '/about/branch-and-atm-locations/?location=:location'
                 },
                 {
                     source: '/search/page/:page{/}?',

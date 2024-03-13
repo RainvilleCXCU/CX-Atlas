@@ -15,6 +15,7 @@ import { useRouter } from 'next/router';
 import Posts from '../components/Posts/listing';
 import { getNextStaticProps, getWordPressProps } from '@faustwp/core';
 import { use } from 'react';
+import { getPageNum } from 'utils/urlParser';
 
 const POSTS_PER_PAGE = 5;
 
@@ -32,7 +33,7 @@ export default function Page(props) {
   const { blogtop, blogSidebar } = props?.data?.widgetSettings;
   const posts = props?.data?.posts;
   const { postSlug, postCursor } = query;
-  const currentPage = query.page ? parseInt(query.page) : 1;
+  const currentPage = getPageNum(query.wordpressNode);
 
   return (
     <>
@@ -139,6 +140,7 @@ Page.query = gql`
             id
             uri
             excerpt
+            title
             categories {
                 nodes {
                     name
@@ -197,33 +199,30 @@ Page.query = gql`
   }
 `;
 
-export async function getServerSideProps(context) {
-  console.log('Context');
-  console.log(context)
-  return getNextServerSideProps(context, {
-    Page,
-  });
-}
-
-
-// export function getStaticProps(ctx, props) {
-//   /**
-//    * @link https://faustjs.org/docs/next/reference/getNextStaticProps
-//    */
-//   console.log('params');
-//   console.log(JSON.stringify(props))
-//   return getNextStaticProps(ctx, {
+// export async function getServerSideProps(context) {
+//   console.log('Context');
+//   console.log(context)
+//   return getNextServerSideProps(context, {
 //     Page,
-//     props: {
-//       params: ctx.props
-//     }
 //   });
 // }
 
 
-  // export function getStaticPaths() {
-  //   return {
-  //     paths: [],
-  //     fallback: 'blocking',
-  //   };
-  // }
+export function getStaticProps(ctx, props) {
+  /**
+   * @link https://faustjs.org/docs/next/reference/getNextStaticProps
+   */
+  console.log('params');
+  console.log(JSON.stringify(props))
+  return getNextStaticProps(ctx, {
+    Page
+  });
+}
+
+
+  export function getStaticPaths() {
+    return {
+      paths: [],
+      fallback: 'blocking',
+    };
+  }

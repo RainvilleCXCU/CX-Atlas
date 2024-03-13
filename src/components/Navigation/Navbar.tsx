@@ -139,34 +139,36 @@ function MobileHeaderNavigation(props: HeaderNavigationProps) {
                                     {link.label}
                                 </button>
                             </h2>
-                            {link.childItems.node  ?? link.childItems.node?.map((title, index) => {
-                                return (
-                                    <div id={`cx-acc-collapse${link.label}-${index}`} key={`collapse-${index}-${title.label}`} className={`accordion-collapse collapse${navsSelected.includes(link.label?.replace(' ', '_')) ? ' show' : ''}${title.label != '[column]' ? '' : ' menu-nav--no-heading'}`} aria-labelledby={`cx-acc-heading${link.label}`}>
-                                        <ul className="accordion-body cx-nav__accordion-body">
-                                            <li className='cx-nav__accordion-section'>
-                                                {
-                                                    title.label != '[column]' &&
-                                                    <h3>{title.label}</h3>
-                                                }
+                            {link.childItems.nodes &&
+                                <div id={`cx-acc-collapse${link.label}-${index}`} key={`collapse-${index}-${link.label}`} className={`accordion-collapse collapse${navsSelected.includes(link.label?.replace(' ', '_')) ? ' show' : ''}`} aria-labelledby={`cx-acc-heading${link.label}`}>
+                                    <ul className="accordion-body cx-nav__accordion-body">
+                                        {link.childItems.nodes?.map((title, index) => {
+                                            return (
+                                                        <li className={ title.label != '[column]' ? 'cx-nav__accordion-section' : 'cx-nav__accordion-section-no-heading' }>
+                                                            {
+                                                                title.label != '[column]' &&
+                                                                <h3 className='cx-h5 no-margin--top'>{title.label}</h3>
+                                                            }
 
-                                                <ul className='cx-nav__accordion-list'>
-                                                    {title.childItems.node ?? title.childItems.node ?.map((navLink, index) => {
-                                                        return (
-                                                            <li id={`menu-item-${navLink.databaseId}`} key={`${index}-${navLink.databaseId}`}>
-                                                                <Link href={navLink.uri || ''} passHref className='accordion-item cx-nav__accordion-item-link'
-                                                                onClick={() => {
-                                                                    props.setNavOpen(false);
-                                                                }}>{parseHtml(navLink.label ?? "")}
-                                                                </Link>
-                                                            </li>
-                                                        )
-                                                    })}
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                )
-                            })}
+                                                            <ul className='cx-nav__accordion-list'>
+                                                                {title.childItems.nodes && title.childItems.nodes ?.map((navLink, index) => {
+                                                                    return (
+                                                                        <li id={`menu-item-${navLink.databaseId}`} key={`${index}-${navLink.databaseId}`}>
+                                                                            <Link href={navLink.uri || ''} passHref className='accordion-item cx-nav__accordion-item-link'
+                                                                            onClick={() => {
+                                                                                props.setNavOpen(false);
+                                                                            }}>{parseHtml(navLink.label ?? "")}
+                                                                            </Link>
+                                                                        </li>
+                                                                    )
+                                                                })}
+                                                            </ul>
+                                                        </li>
+                                            )
+                                        })}
+                                    </ul>
+                                </div>
+                            }
                         </li>
                     );
                 }

@@ -41,9 +41,13 @@ export default function Page() {
 	const props = useQuery(Page.query, {
 	  variables: Page.variables(),
 	});
-	const { query = {}, push } = useRouter();
+	const { query = {}, push, isReady } = useRouter();
 
 	const location = query.location;
+
+	console.log('QUERY');
+	console.log(query);
+	console.log(location);
 
 	const [state, setState] = useContext(Store);
 
@@ -54,7 +58,7 @@ export default function Page() {
 	const widgetSettings = props?.data?.widgetSettings; 
 	const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
 	const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
-	// const { title, content, seo, link, featuredImage } = props?.data?.page ?? { title: '' };
+	
 	const headerSettings = props?.data?.headerSettings; 
 	const { footerUtilities, footerAppIcons, footerSocialIcons } = props?.data?.footerSettings;
 
@@ -67,37 +71,41 @@ export default function Page() {
 	useEffect(() => {
 		setLoading(true);
 		console.log(`Search: ${state?.location?.search} - ${location}`);
-		if (location && location !== '' && location == state?.location?.search) {
-			return;
-		}
+		// if (location && location !== '' && location == state?.location?.search) {
+		// 	return () => {
+		// 		console.log('Same Location');
+		// 		setLoading(false);
+		// 	}
+		// }
 
-		if (location && !state?.location?.search) {
-			getLatLngByLocation({ address: formatSearch(location) })
-				.then((response) => {
-					const { geometry } = response[0];
-					const { types } = response[0];
-					console.log('First GetLatLngByLoc')
-					fetchLocations({
-						lat: geometry?.location.lat(),
-						lng: geometry?.location.lng(),
-						bounds: types.includes("administrative_area_level_1")
-							? geometry?.bounds
-							: null,
-					});
-					// data &&
-					// 	push(
-					// 		`/about/branch-and-atm-locations/find-location/${location}/`,
-					// 		undefined,
-					// 		{ shallow: false }
-					// 	);
+		// if (location && !state?.location?.search) {
+		// 	getLatLngByLocation({ address: formatSearch(location) })
+		// 		.then((response) => {
+		// 			const { geometry } = response[0];
+		// 			const { types } = response[0];
+		// 			console.log('First GetLatLngByLoc')
+		// 			fetchLocations({
+		// 				lat: geometry?.location.lat(),
+		// 				lng: geometry?.location.lng(),
+		// 				bounds: types.includes("administrative_area_level_1")
+		// 					? geometry?.bounds
+		// 					: null,
+		// 			});
+		// 			data &&
+		// 				push(
+		// 					`/about/branch-and-atm-locations/find-location/${location}/`,
+		// 					undefined,
+		// 					{ shallow: false }
+		// 				);
 
-				})
-				.catch((e) => {
-					console.log("NO LOCATION");
-					setData([]);
-					setLength(0);
-				});
-		} else if (state?.location?.search) {
+		// 		})
+		// 		.catch((e) => {
+		// 			console.log("NO LOCATION");
+		// 			setData([]);
+		// 			setLength(0);
+		// 		});
+		// } else 
+		if (state?.location?.search) {
 			getLatLngByLocation({ address: state?.location?.search })
 				.then((response) => {
 					const { location, bounds } = response[0].geometry;
@@ -111,11 +119,11 @@ export default function Page() {
 							: null,
 					});
 					data &&
-						push(
-							`/about/branch-and-atm-locations/find-location/${state?.location?.search}/`,
-							undefined,
-							{ shallow: false }
-						);
+					push(
+						`/about/branch-and-atm-locations/find-location/${state?.location?.search}/`,
+						undefined,
+						{ shallow: true }
+					);
 				})
 				.catch((e) => {
 					console.log("NO LOCATION");
@@ -152,34 +160,33 @@ export default function Page() {
 						autoload: 1,
 					});
 				});
-		} else {
+		} else if(!location) {
+			console.log('FETCH DEFAULT NO SEARCH')
 			fetchLocations({lat: 45, lng: -89, autoload: 1})
 		}
 		return () => {
 			console.log('Cleanup location search');
 			setLoading(false);
 		}
-	}, [state?.location?.search]);
-
-	// useEffect(() => {
-	// 	console.log('Location Chance');
-	// 	console.log(location)
-	// 	console.log(state?.location?.search)
-	// 	if (reformatSearch(location) !== state?.location?.search) {
-	// 		setLoading(true);
-	// 		setState({
-	// 			...state,
-	// 			location: {
-	// 				...state.location,
-	// 				search: reformatSearch(location),
-	// 			},
-	// 		});
-	// 	}
-	// }, [location, state?.location?.search]);
+	}, [isReady, state?.location?.search]);
 
 	useEffect(() => {
-		console.log('SET LOCATION SETTINGS');
-		console.log(locationSettings);
+		console.log('Location Chance');
+		console.log(location)
+		console.log(state?.location?.search)
+		if (reformatSearch(location) !== state?.location?.search) {
+			setLoading(true);
+			setState({
+				...state,
+				location: {
+					...state.location,
+					search: reformatSearch(location),
+				},
+			});
+		}
+	}, [location]);
+
+	useEffect(() => {
 		setState({
 			...state,
 			location: {
@@ -197,18 +204,11 @@ export default function Page() {
 
 	const defaultRadius = () => {
 		const regex = new RegExp(/\[([0-9]+)\]/, "i");
-		console.log(locationSettings.searchRadius);
 		return locationSettings.searchRadius.match(regex)[1];
 	};
 
 	const fetchLocations = ({ lat, lng, autoload = 0, bounds = null }) => {
-		resetSearchResults();
-
-		// autoload = state?.location?.search && state?.location?.search !== '' ? autoload : 1;
-		// console.log('AutoLoad');
-		// console.log(autoload);
-		// console.log(JSON.stringify(state?.location));
-		// console.log(location);
+		// resetSearchResults();
 
 		const boundsRad = bounds
 			? distance(
@@ -224,7 +224,8 @@ export default function Page() {
 			: state?.location?.searchRadius
 				? Math.max(state?.location?.searchRadius, parseInt(defaultRadius()))
 				: defaultRadius();
-
+		console.log('FETCH SEARCH');
+		console.log(`${lat} - ${lng}`)
 		fetch(
 			`/wp-admin/admin-ajax.php?action=store_search&lat=${lat}&lng=${lng}&max_results=25&search_radius=${radius}&autoload=${autoload}`
 		)
@@ -235,15 +236,15 @@ export default function Page() {
 				setLoading(false);
 				console.log('FETCH FINISHED');
 				console.log(JSON.stringify(location))
-				if (location && location[0] !== state?.location?.search) {
-					setState({
-						...state,
-						location: {
-							...state.location,
-							search: location
-						},
-					});
-				}
+				// if (location && location[0] !== state?.location?.search) {
+				// 	setState({
+				// 		...state,
+				// 		location: {
+				// 			...state.location,
+				// 			search: location
+				// 		},
+				// 	});
+				// }
 			});
 	};
 
@@ -251,8 +252,6 @@ export default function Page() {
 		return address ? address.toString().replaceAll("+", " ") : "";
 	};
     const reformatSearch = (address) => {
-        console.log('Format Search');
-        console.log(address);
         return address?.replaceAll(' ', '+');
     }
 
@@ -448,9 +447,9 @@ Page.variables = () => {
 	}
   `;
 
-// export function getStaticProps(ctx) {
-// 	return getNextStaticProps(ctx, {Page, revalidate: parseInt(process.env.PAGE_REVALIDATION) ? parseInt(process.env.PAGE_REVALIDATION) : null});
-//   }
+export function getStaticProps(ctx) {
+	return getNextStaticProps(ctx, {Page, revalidate: parseInt(process.env.PAGE_REVALIDATION) ? parseInt(process.env.PAGE_REVALIDATION) : null});
+  }
 
 
 // export async function getStaticProps(context: GetStaticPropsContext) {
@@ -461,11 +460,11 @@ Page.variables = () => {
 // 	});
 // }
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-	const { req, res, query } = context;
+// export async function getServerSideProps(context: GetServerSidePropsContext) {
+// 	const { req, res, query } = context;
 
-	const location = query?.location;
-	return getNextServerSideProps(context, {
-		Page,
-	});
-}
+// 	const location = query?.location;
+// 	return getNextServerSideProps(context, {
+// 		Page,
+// 	});
+// }

@@ -83,7 +83,6 @@ export const parseHtml = (html) => {
             if (isInternalLink && !isCiscoBubbleChat) {
                 const href = attribs.href;
                 delete attribs.href;
-                console.log('INTERNAL LINK')
                 return (
                     <Link href={href.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} {...attributesToProps(attribs)}>{domToReact(children, options)}</Link>
                 );

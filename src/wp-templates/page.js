@@ -14,9 +14,6 @@ import Loading from 'components/common/loading';
 
 export default function Component(props) {
   // Loading state for previews
-  if (props.loading) {
-    return <>Loading...</>;
-  }
 
   const { title: siteTitle, description: siteDescription, logo: siteLogo, footerText: footerText, databaseId: databaseId } =
     props?.data?.generalSettings;
