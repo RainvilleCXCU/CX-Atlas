@@ -1,4 +1,3 @@
-import { MediaItem, Post, client } from "client";
 import Heading from "components/Heading";
 import { HeadingProps } from "components/Heading";
 import { parseHtml } from "lib/parser";
@@ -9,9 +8,9 @@ import { format } from "path";
 import React, { Fragment } from "react";
 
 interface PostListingProps {
-    post: Post;
+    post;
     className?: string;
-    featuredImage?: MediaItem;
+    featuredImage?;
     postTitleLevel?: HeadingProps['level'];
 }
 
@@ -25,20 +24,20 @@ const PostListing: React.FC<PostListingProps> = ({ post, className, postTitleLev
                 {post.featuredImage &&
                     <div className="featured-image">
                         <Link href={`${post.uri}`}>
-                            <Image src={post.featuredImage.node?.sourceUrl()?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={post.featuredImage.node.mediaDetails.width} height={post.featuredImage.node?.mediaDetails.height} />
+                            <img src={post.featuredImage.node?.sourceUrl?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={post.featuredImage.node.mediaDetails.width} height={post.featuredImage.node?.mediaDetails.height} />
                         </Link>
                     </div>
                 }
                 <Heading level={postTitleLevel} className="cx-h3">
-                    <Link href={`${post.uri}`}>{post.title()}
+                    <Link href={`${post.uri}`}>{post?.title}
                     </Link>
                 </Heading>
                 {post.categories &&
                     <div className='categories'>
-                        {post.categories().nodes?.map((category, index) => (
+                        {post.categories.nodes?.map((category, index) => (
                             <Fragment key={`categories-${post.id}-${index}-${category.name}`}>
                                 {category.uri &&
-                                    <><Link href={category.uri}>{category.name}</Link>{index < post.categories().nodes.length - 1 ? ', ' : ''}</>
+                                    <><Link href={category.uri}>{category.name}</Link>{index < post.categories.nodes.length - 1 ? ', ' : ''}</>
                                 }
                             </Fragment>
                         ))}
@@ -46,7 +45,7 @@ const PostListing: React.FC<PostListingProps> = ({ post, className, postTitleLev
                 }
             </header>
             <div className="excerpt">
-                {parseHtml(post.excerpt() ?? "")}
+                {parseHtml(post.excerpt ?? "")}
             </div>
         </div>
     );

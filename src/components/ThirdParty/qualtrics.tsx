@@ -1,18 +1,20 @@
 import React from 'react';
-import { client } from 'client';
 import Script from 'next/script';
 
+
 export interface Props {
+  enabled: Boolean;
+  id: String;
 }
 
 function Qualtrics({
+  enabled = false,
+  id
 }: Props): JSX.Element {
-  const { useQuery } = client;
-  const { qualtricsId, qualtricsEnabled } = useQuery().thirdPartySettings;
 
   return (
     <>
-    {qualtricsId && qualtricsEnabled ?
+    {enabled && id ?
           <>
           <Script id="qualtrics-script" strategy="afterInteractive">
               {`
@@ -22,10 +24,10 @@ function Qualtrics({
                   this.check=function(){var a=this.get(f);if(a)a=a.split(":");else if(100!=e)"v"==h&&(e=Math.random()>=e/100?0:100),a=[h,e,0],this.set(f,a.join(":"));else return!0;var c=a[1];if(100==c)return!0;switch(a[0]){case "v":return!1;case "r":return c=a[2]%Math.floor(100/c),a[2]++,this.set(f,a.join(":")),!c}return!0};
                   this.go=function(){if(this.check()){var a=document.createElement("script");a.type="text/javascript";a.src=g;document.body&&document.body.appendChild(a)}};
                   this.start=function(){var t=this;"complete"!==document.readyState?window.addEventListener?window.addEventListener("load",function(){t.go()},!1):window.attachEvent&&window.attachEvent("onload",function(){t.go()}):t.go()};};
-                  try{(new g(100,"r","QSI_S_ZN_${qualtricsId}","https://zn${qualtricsId}-connexuscu.siteintercept.qualtrics.com/SIE/?Q_ZID=ZN_${qualtricsId}")).start()}catch(i){}})();
+                  try{(new g(100,"r","QSI_S_ZN_${id}","https://zn${id}-connexuscu.siteintercept.qualtrics.com/SIE/?Q_ZID=ZN_${id}")).start()}catch(i){}})();
               `}
             </Script>
-            <div id={`ZN_${qualtricsId}`}></div>
+            <div id={`ZN_${id}`}></div>
             </> : <></>            
       }
       </>

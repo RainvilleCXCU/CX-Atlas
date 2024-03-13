@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { client, MenuLocationEnum } from 'client';
 import MenuNavigation from '../Navigation/Navbar';
 import UtilityNav from './UtilityNav';
-import UtilityNavLinks from './UtilityNavLinks';
 import SearchBar from './SearchBar';
 import Logo from 'components/Logo';
 import { useRouter } from 'next/router';
@@ -17,6 +15,8 @@ interface Props {
   showSearch?: boolean;
   showButtons?: boolean;
   showLogo?: boolean;
+  menuItems?;
+  headerSettings?;
 }
 
 function Header({
@@ -27,15 +27,12 @@ function Header({
   showUtilityNav = true,
   showButtons = true,
   showSearch = true,
-  showLogo = true
+  showLogo = true,
+  menuItems,
+  headerSettings
 }: Props): JSX.Element {
 
   const { asPath, pathname } = useRouter();
-  const { menuItems } = client.useQuery()
-  const links = menuItems({
-    first: 255,
-    where: { location: MenuLocationEnum.PRIMARY },
-  }).nodes;
 
   const [navOpen, setNavOpen] = useState(false);
 
@@ -51,10 +48,10 @@ function Header({
         <section className="cx-header__util-nav cx-header__desktop">
           <div className="cx-header__wrapper">
             {showLogo &&
-              <Logo isH1={asPath === '/'} />
+              <Logo isH1={asPath === '/'} title={title} logo={logo} />
             }
             {showUtilityNav &&
-              <UtilityNav />
+              <UtilityNav logo={logo} headerUtilities={headerSettings.headerUtilities} />
             }
           </div>
         </section>
@@ -66,10 +63,10 @@ function Header({
             {(showSearch || showNavigation) &&
               <nav className="navbar navbar-expand-lg navbar-default cx-nav cx-header__mobile">
                 {showSearch &&
-                  <SearchBar device="mobile" setNavOpen={setNavOpen} navOpen={navOpen} />
+                  <SearchBar logo={logo} device="mobile" setNavOpen={setNavOpen} navOpen={navOpen} />
                 }
                 {showNavigation &&
-                  <MobileNav links={links} menuOpen={navOpen} navOpen={navOpen} setNavOpen={setNavOpen} />
+                  <MobileNav links={menuItems} menuOpen={navOpen} navOpen={navOpen} setNavOpen={setNavOpen} />
                 }
               </nav>
             }
@@ -79,7 +76,7 @@ function Header({
               <nav className="navbar navbar-expand-lg navbar-default cx-nav cx-header__desktop">
                 <div className="collapse navbar-collapse cx-nav__collapse" id="navbarSupportedContent">
                   {showNavigation &&
-                    <MenuNavigation device="Desktop" menuItems={links} menuOpen={false} setNavOpen={setNavOpen} /> || <div></div>
+                    <MenuNavigation device="Desktop" menuItems={menuItems} menuOpen={false} setNavOpen={setNavOpen} /> || <div></div>
                   }
                   {showButtons &&
                     <div>

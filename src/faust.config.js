@@ -1,15 +1,15 @@
-import { config as coreConfig } from '@faustjs/core';
-
-if (!process.env.NEXT_PUBLIC_WORDPRESS_URL) {
-  console.error(
-    'You must provide a NEXT_PUBLIC_WORDPRESS_URL environment variable, did you forget to load your .env.local file?',
-  );
-}
+import { setConfig } from '@faustwp/core';
+import templates from './wp-templates';
+import possibleTypes from './possibleTypes.json';
 
 /**
- * @type {import("@faustjs/core").Config}
- */
-export default coreConfig({
+ * @type {import('@faustwp/core').FaustConfig}
+ **/
+export default setConfig({
   wpUrl: process.env.NEXT_PUBLIC_WORDPRESS_URL,
-  apiClientSecret: process.env.WP_HEADLESS_SECRET,
+  apiClientSecret: process.env.FAUST_SECRET_KEY,
+  templates,
+  plugins: [],
+  possibleTypes,
+  usePersistedQueries: true,
 });

@@ -1,6 +1,5 @@
 import dynamic from "next/dynamic";
 import parse, { domToReact, attributesToProps } from "html-react-parser";
-import { client } from 'client';
 import Link from "next/link";
 import FAQ from "components/FAQs/faq";
 import Chat from "components/Chat/cisco";
@@ -194,12 +193,3 @@ export const parseHtml = (html) => {
     }
     return parse(html, options);
 };
-
-export const parseShortcode = (html) => {
-    const shortcodeRegEx = new RegExp(/\[(.*)\]/, 'ig');
-    return html.replace(shortcodeRegEx, match => {
-        client.useQuery().shortcode({
-            shortcode: match.replace(']')
-        })
-    })
-}

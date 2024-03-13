@@ -59,13 +59,8 @@ const AddressBar = () => {
                 if(formatted_address) {
                     setAddress(formatted_address);           
 		            searchRadius = distance(geometry.viewport.getNorthEast().lng(), geometry.viewport.getNorthEast().lat(), geometry.viewport.getSouthWest().lng(), geometry.viewport.getSouthWest().lat()) / 2;
-                    
-                    console.log('RADIUS');
-                    console.log(searchRadius);
                     searchAddress = formatted_address;
                 }
-                console.log('SEARCH ADDRESS CHANGED WITH PLACES');
-                console.log(searchAddress);
                 setState({
                     ...state,
                     location: {
@@ -112,26 +107,30 @@ const AddressBar = () => {
 
     const clearInput = e => {
         setAddress('');
-        router.push(`/about/branch-and-atm-locations/`, undefined, { shallow: false })
-        .then(() => {
-            setState({
-                ...state,
-                location: {
-                    ...state.location,
-                    search: null
-                }
-            })
-        });
+        const newLocation = state?.location;
+        delete newLocation.search;
+        router.push(`/about/branch-and-atm-locations/`, undefined, { shallow: false });
+        // .then(() => {
+        //     setState({
+        //         ...state,
+        //         location: {
+        //             ...state.location,
+        //             search: null
+        //         }
+        //     })
+        // });
+        setState({
+            ...state,
+            location: {
+                ...newLocation
+            }
+        })
     }
 
     const formatSearch = (address) => {
-        console.log('Format Search');
-        console.log(address);
         return address?.replaceAll(' ', '+');
     }
     const reformatSearch = (address) => {
-        console.log('Format Search');
-        console.log(address);
         return address?.replaceAll('+', ' ');
     }
 

@@ -1,12 +1,11 @@
 import React from 'react';
 import Image from 'next/image';
 import Heading from 'components/Heading';
-import { MediaItem } from 'client';
 
 export interface Props {
   color?: string;
   heading: string;
-  image?: MediaItem
+  image?
   body?: string
 }
 

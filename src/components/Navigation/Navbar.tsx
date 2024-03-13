@@ -1,13 +1,11 @@
 import Link from 'next/link';
-import { MenuItem } from 'client';
-import { client, MenuLocationEnum } from 'client';
 import React, { useEffect, useState } from 'react';
 import Heading from 'components/Heading';
 import { parseHtml } from 'lib/parser';
-
+import { gql } from '@apollo/client';
 interface HeaderNavigationProps {
     device: string;
-    menuItems: Array<MenuItem>;
+    menuItems?;
     menuOpen: boolean;
     setNavOpen;
 }
@@ -27,7 +25,7 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                             <a className={`nav-link dropdown-toggle cx-nav__link cx-dropdown-toggle cx-dropdown-toggle__main-dropdown${navSelected === link.label ? ' show' : ''}`} aria-expanded={navSelected === link.label ? true : false} data-bs-toggle="dropdown" href={link.uri}
                                 onMouseOver={() => {
                                     setIsNavExpanded(!isNavExpanded);
-                                    setNavSelected(link?.label);
+                                    setNavSelected(link.label);
                                 }}
                                 onMouseOut={() => {
                                     setIsNavExpanded(!isNavExpanded);
@@ -45,7 +43,7 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                 }}>
                                 <div className="cx-nav__dropdown-menu-container">
                                     <div className='cx-nav__dropdown-menu-container__menu-items'>
-                                        {link?.childItems()?.nodes?.map((title, index) => {
+                                        {link?.childItems?.nodes?.map((title, index) => {
                                             return (
                                                 <React.Fragment key={`${title.id}-${title.databaseId}`}>
                                                 { !resourcesRegEx.test(title.uri) &&
@@ -54,11 +52,11 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                                             title.label != '[column]' &&
                                                             <Heading level='h2' className='cx-h5 no-margin--top'>{title.label}</Heading>
                                                         }
-                                                        <ul className="cx-nav__dropdown-menu-list" key={`list-${title.id}-${title.databaseId}`}>
-                                                            {title?.childItems()?.nodes?.map((navLink, index) => {
+                                                        <ul className="cx-nav__dropdown-menu-list" key={`list-${index}-${title.databaseId}`}>
+                                                            {title?.childItems?.nodes?.map((navLink, index) => {
                                                                 return (
-                                                                    <li key={`${navLink.id}-${navLink.databaseId}`}>
-                                                                        <Link href={navLink.uri || ''} passHref prefetch={false} className='dropdown-item cx-nav__dropdown-item'
+                                                                    <li key={`${index}-${navLink.databaseId}`}>
+                                                                        <Link href={navLink.uri || ''} prefetch={false} passHref className='dropdown-item cx-nav__dropdown-item'
                                                                             onClick={() => {
                                                                                 setIsNavExpanded(!isNavExpanded);
                                                                                 setNavSelected('');
@@ -74,19 +72,19 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                             );
                                         })}
                                     </div>
-                                    {link?.childItems()?.nodes?.map((title, index) => {
+                                    {link?.childItems?.nodes?.map((title, index) => {
                                         return (
-                                            <React.Fragment key={`${title.id}-${title.databaseId}`}>
+                                            <React.Fragment key={`${index}-${title.databaseId}`}>
                                             { resourcesRegEx.test(title.uri) &&
                                                 <div className='cx-nav__resources'>
                                                     {
                                                         title.label != '[column]' &&
                                                         <Heading level='h2' className='cx-h5 no-margin--top'>{title.label}</Heading>
                                                     }
-                                                    <ul className="cx-nav__dropdown-menu-list" key={`list-${title.id}-${title.databaseId}`}>
-                                                        {title?.childItems()?.nodes?.map((navLink, index) => {
+                                                    <ul className="cx-nav__dropdown-menu-list" key={`list-${index}-${title.databaseId}`}>
+                                                        {title?.childItems?.nodes?.map((navLink, index) => {
                                                             return (
-                                                                <li key={`item-${navLink.id}-${navLink.databaseId}`}>
+                                                                <li key={`item-${index}-${navLink.databaseId}`}>
                                                                     <Link href={navLink.uri || ''} passHref prefetch={false} className='dropdown-item cx-nav__dropdown-item'
                                                                         onClick={() => {
                                                                             setIsNavExpanded(!isNavExpanded);
@@ -141,34 +139,36 @@ function MobileHeaderNavigation(props: HeaderNavigationProps) {
                                     {link.label}
                                 </button>
                             </h2>
-                            {link?.childItems()?.nodes.map((title, index) => {
-                                return (
-                                    <div id={`cx-acc-collapse${link.label}-${index}`} key={`collapse-${index}-${title.label}`} className={`accordion-collapse collapse${navsSelected.includes(link.label?.replace(' ', '_')) ? ' show' : ''}${title.label != '[column]' ? '' : ' menu-nav--no-heading'}`} aria-labelledby={`cx-acc-heading${link.label}`}>
-                                        <ul className="accordion-body cx-nav__accordion-body">
-                                            <li className='cx-nav__accordion-section'>
-                                                {
-                                                    title.label != '[column]' &&
-                                                    <h3>{title.label}</h3>
-                                                }
+                            {link.childItems.nodes &&
+                                <div id={`cx-acc-collapse${link.label}-${index}`} key={`collapse-${index}-${link.label}`} className={`accordion-collapse collapse${navsSelected.includes(link.label?.replace(' ', '_')) ? ' show' : ''}`} aria-labelledby={`cx-acc-heading${link.label}`}>
+                                    <ul className="accordion-body cx-nav__accordion-body">
+                                        {link.childItems.nodes?.map((title, index) => {
+                                            return (
+                                                        <li className={ title.label != '[column]' ? 'cx-nav__accordion-section' : 'cx-nav__accordion-section-no-heading' }>
+                                                            {
+                                                                title.label != '[column]' &&
+                                                                <h3 className='cx-h5 no-margin--top'>{title.label}</h3>
+                                                            }
 
-                                                <ul className='cx-nav__accordion-list'>
-                                                    {title?.childItems()?.nodes?.map((navLink, index) => {
-                                                        return (
-                                                            <li id={`menu-item-${navLink.databaseId}`} key={`${navLink.id}-${navLink.databaseId}`}>
-                                                                <Link href={navLink.uri || ''} passHref className='accordion-item cx-nav__accordion-item-link'
-                                                                onClick={() => {
-                                                                    props.setNavOpen(false);
-                                                                }}>{parseHtml(navLink.label ?? "")}
-                                                                </Link>
-                                                            </li>
-                                                        )
-                                                    })}
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                )
-                            })}
+                                                            <ul className='cx-nav__accordion-list'>
+                                                                {title.childItems.nodes && title.childItems.nodes ?.map((navLink, index) => {
+                                                                    return (
+                                                                        <li id={`menu-item-${navLink.databaseId}`} key={`${index}-${navLink.databaseId}`}>
+                                                                            <Link href={navLink.uri || ''} passHref className='accordion-item cx-nav__accordion-item-link'
+                                                                            onClick={() => {
+                                                                                props.setNavOpen(false);
+                                                                            }}>{parseHtml(navLink.label ?? "")}
+                                                                            </Link>
+                                                                        </li>
+                                                                    )
+                                                                })}
+                                                            </ul>
+                                                        </li>
+                                            )
+                                        })}
+                                    </ul>
+                                </div>
+                            }
                         </li>
                     );
                 }
@@ -179,7 +179,7 @@ function MobileHeaderNavigation(props: HeaderNavigationProps) {
 
 export interface MenuNavigationProps {
     device: string;
-    menuItems: Array<MenuItem>;
+    menuItems?;
     menuOpen: boolean;
     setNavOpen;
 }
@@ -194,3 +194,29 @@ export default function MenuNavigation({ device, menuItems, menuOpen, setNavOpen
         <DesktopHeaderNavigation device={device} menuItems={menuItems} menuOpen={menuOpen} setNavOpen={setNavOpen} />
     );
 }
+MenuNavigation.fragments = {
+    entry: gql`
+      fragment NavigationMenuItemFragment on MenuItem {
+        databaseId
+        uri
+        label
+        parentDatabaseId
+        childItems {
+            nodes{
+                databaseId
+                uri
+                label
+                parentDatabaseId
+                childItems {
+                    nodes{
+                        databaseId
+                        uri
+                        label
+                        parentDatabaseId
+                    }
+                }
+            }
+        }
+      }
+    `,
+  };

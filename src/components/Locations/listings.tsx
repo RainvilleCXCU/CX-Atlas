@@ -1,16 +1,14 @@
 // This component renders a list of branch locations
 import React from "react";
-import { client } from "client";
 import LocationListing from "./listing";
 
 export interface Props {
 	data: any;
+	distanceUnit: any;
+	logo: string;
 }
 
-function LocationListings({ data }: Props): JSX.Element {
-	const { useQuery } = client;
-	const generalSettings = useQuery().generalSettings;
-	const {distanceUnit} = useQuery().locationSettings
+function LocationListings({ data, distanceUnit, logo }: Props): JSX.Element {
 
 	return (
 		<>
@@ -20,7 +18,7 @@ function LocationListings({ data }: Props): JSX.Element {
 						<li key={location.id} data-store-id={location.id}>
 							<LocationListing
 								listing = {location}
-								logo = {generalSettings.logo}
+								logo = {logo}
 								unit = {distanceUnit}
 							/>
 						</li>
