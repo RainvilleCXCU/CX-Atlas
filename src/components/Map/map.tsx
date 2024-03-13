@@ -68,8 +68,6 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null, markers 
 
     useEffect(() => {
         let mapMarkers = {};
-        console.log('MAP MARKERS');
-        console.log(markers);
         if(markers?.length > 0) {
             for ( let marker in markersArray ) {
                 markersArray[marker].setMap(null);
@@ -261,14 +259,12 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null, markers 
         } else {
             url = `/wp-content/plugins/wp-store-locator/img/markers/${locationSettings.storeMarker}`;
         }
-        console.log(`Store Marker ${url}`)
         const mapIcon = {
             url: url,
             scaledSize: new google.maps.Size( Number( markerIconProps?.scaledSize.split(',')[0] ), Number( markerIconProps?.scaledSize.split(',')[1] ) ), //retina format
             // origin: new google.maps.Point( Number( markerIconProps.anchor.split(',')[0] ), Number( markerIconProps.anchor.split(',')[1] ) ),
             anchor: new google.maps.Point( Number( markerIconProps?.anchor.split(',')[0] ), Number( markerIconProps?.anchor.split(',')[1] ) )
         };
-        console.log(`Add to Map: ${map}`)
         const marker = new google.maps.Marker({
             position: latLng,
             map: map,

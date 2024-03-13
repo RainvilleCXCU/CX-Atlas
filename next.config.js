@@ -129,6 +129,10 @@ let nextConfig = {
                 //     destination: '/blog/?page=:page',
                 // },
                 {
+                    source: '/about/branch-and-atm-locations/find-location/:location{/}?',
+                    destination: '/about/branch-and-atm-locations/?location=:location'
+                },
+                {
                     source: '/search/page/:page{/}?',
                     destination: '/search/?page=:page',
                     has: [{
