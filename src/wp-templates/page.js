@@ -20,7 +20,7 @@ export default function Component(props) {
   const { gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
-  const { title, content, seo, link, featuredImage } = props?.data?.page ?? { title: '' };
+  const { title, content, seo, link } = props?.data?.page ?? { title: '' };
   const headerSettings = props?.data?.headerSettings; 
   const { footerUtilities, footerAppIcons, footerSocialIcons } = props?.data?.footerSettings;
 
@@ -112,6 +112,30 @@ Component.query = gql`
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
       content
+        seo {
+          canonical
+          cornerstone
+          focuskw
+          fullHead
+          metaDesc
+          metaKeywords
+          metaRobotsNofollow
+          metaRobotsNoindex
+          opengraphAuthor
+          opengraphDescription
+          opengraphModifiedTime
+          opengraphPublishedTime
+          opengraphPublisher
+          opengraphSiteName
+          opengraphTitle
+          opengraphType
+          opengraphUrl
+          readingTime
+          title
+          twitterDescription
+          twitterTitle
+        }
+      link
     }
     generalSettings {
       ...BlogInfoFragment

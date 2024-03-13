@@ -19,6 +19,7 @@ import { Store } from "context/store";
 import { useRouter } from "next/router";
 import { getNextServerSideProps } from "@faustwp/core";
 import { GetServerSidePropsContext } from "next";
+import Head from "next/head";
 
 export default function Component(props) {
 
@@ -46,21 +47,20 @@ export default function Component(props) {
   } = props?.data?.thirdPartySettings;
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
-  const { title, content, seo, link, featuredImage } = props?.data?.page ?? {
-    title: "",
-  };
   const headerSettings = props?.data?.headerSettings;
   const { footerUtilities, footerAppIcons, footerSocialIcons } =
     props?.data?.footerSettings;
+
+  const { scheduler } = props?.data?.widgetSettings;
 
     // const productName = product && product !== ':path*' ? product.charAt(0).toUpperCase() + product.slice(1) : '';
     const productName = props.product && props.product !== ':path*' ? props.product.split('-').map(word => { 
         return word.charAt(0).toUpperCase() + word.slice(1)
     }).join(' ') : null;
-
+  const title = `Schedule a Call${productName ? ' about ' : ''}${productName ? productName.replace('-', ' ') : ''} - ${siteTitle}`;
   return (
     <>
-      <SEO
+      {/* <SEO
         title={title}
         metaDesc={seo?.metaDesc}
         canonicalURL={seo?.canonical ? seo?.canonical : link} //I'm unsure about this. Changing the canonical URL in Yoast doesn't seem to do anything...
@@ -80,7 +80,10 @@ export default function Component(props) {
         twitter_card={"summary_large_image"} // Not sure where this is in the page object
         twitter_label1={"Est. reading time"} // Not sure where this is in the page object
         twitter_data1={seo?.readingTime + " minutes"}
-      />
+      /> */}
+
+		<Head>
+			<title>{`${title}`}</title></Head>
       <GTM id={gtmId} enabled={gtmEnabled} />
       <HotJar id={hotjarId} enabled={hotjarEnabled} />
       <Personyze
@@ -105,7 +108,7 @@ export default function Component(props) {
       <div id="page" className="container site">
           <main id="main" className="content content-single">
               <article className="entry-content">
-                {parseHtml(content ?? "")}
+                        {parseHtml(scheduler?.toString() || '')}
             </article>
         </main>
       </div>
@@ -140,10 +143,6 @@ Component.query = gql`
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
   ) {
-    page(id: "/meet/", idType: URI) {
-      title
-      content
-    }
     generalSettings {
       ...BlogInfoFragment
     }
@@ -154,6 +153,9 @@ Component.query = gql`
       footerUtilities
       footerAppIcons
       footerSocialIcons
+    }
+    widgetSettings {
+      scheduler
     }
     thirdPartySettings {
       ...ThirdPartySettingsFragment
