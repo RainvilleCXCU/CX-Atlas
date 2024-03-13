@@ -11,4 +11,5 @@ export default setConfig({
   templates,
   plugins: [],
   possibleTypes,
+  usePersistedQueries: process.env.USE_PERSISTED_QUERIES || true,
 });

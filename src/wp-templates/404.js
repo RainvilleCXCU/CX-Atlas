@@ -49,7 +49,7 @@ export default function Component(props) {
 Component.query = gql`
   ${BlogInfoFragment}
   ${MenuNavigation.fragments.entry}
-  query GetPost(
+  query Get404(
     $databaseId: ID!
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
