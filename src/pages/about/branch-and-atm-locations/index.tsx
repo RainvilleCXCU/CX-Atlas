@@ -70,41 +70,6 @@ export default function Page() {
 
 	useEffect(() => {
 		setLoading(true);
-		console.log(`Search: ${state?.location?.search} - ${location}`);
-		// if (location && location !== '' && location == state?.location?.search) {
-		// 	return () => {
-		// 		console.log('Same Location');
-		// 		setLoading(false);
-		// 	}
-		// }
-
-		// if (location && !state?.location?.search) {
-		// 	getLatLngByLocation({ address: formatSearch(location) })
-		// 		.then((response) => {
-		// 			const { geometry } = response[0];
-		// 			const { types } = response[0];
-		// 			console.log('First GetLatLngByLoc')
-		// 			fetchLocations({
-		// 				lat: geometry?.location.lat(),
-		// 				lng: geometry?.location.lng(),
-		// 				bounds: types.includes("administrative_area_level_1")
-		// 					? geometry?.bounds
-		// 					: null,
-		// 			});
-		// 			data &&
-		// 				push(
-		// 					`/about/branch-and-atm-locations/find-location/${location}/`,
-		// 					undefined,
-		// 					{ shallow: false }
-		// 				);
-
-		// 		})
-		// 		.catch((e) => {
-		// 			console.log("NO LOCATION");
-		// 			setData([]);
-		// 			setLength(0);
-		// 		});
-		// } else 
 		if (state?.location?.search) {
 			getLatLngByLocation({ address: state?.location?.search })
 				.then((response) => {

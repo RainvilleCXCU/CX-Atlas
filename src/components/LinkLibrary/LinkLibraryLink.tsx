@@ -1,7 +1,3 @@
-import React, { useContext, useEffect, useState } from "react";
-import dateFormat from 'dateformat';
-import Link from "next/link";
-
 export interface Props {
     date: string
     url: string

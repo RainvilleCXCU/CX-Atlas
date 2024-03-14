@@ -34,7 +34,6 @@ function LocationListing({listing, unit = 'km', logo = ''}: Props): JSX.Element 
 	const { setShowDetails } = useContext(showDetailsContext);
 	const { setSelectedLocation } = useContext(selectedLocationContext);
     const [state, setState] = useContext(Store);
-	const [distanceUnit, setDistanceUnit] = useState('');
 
 	const {
 		store,

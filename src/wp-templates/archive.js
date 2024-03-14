@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
 import * as MENUS from '../constants/menus';
 import { BlogInfoFragment } from '../fragments/GeneralSettings';
 import { ThirdPartySettingsFragment, GTM, HotJar, Personyze, Qualtrics, Spectrum, Siteimprove } from '../components/ThirdParty';
@@ -13,8 +13,7 @@ import Alert from 'components/Alerts/Alert';
 import Loading from 'components/common/loading';
 import { useRouter } from 'next/router';
 import Posts from '../components/Posts/listing';
-import { getNextStaticProps, getWordPressProps } from '@faustwp/core';
-import { use } from 'react';
+import { getNextStaticProps } from '@faustwp/core';
 import { getPageNum } from 'utils/urlParser';
 
 const POSTS_PER_PAGE = 5;

@@ -1,6 +1,6 @@
 import Heading from "components/Heading";
 import Link from "next/link";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 
 interface CategoriesProps {
 	title?: string;

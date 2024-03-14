@@ -1,9 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import Accordion from "components/Accordion/Accordion";
-import Link from "next/link";
 import { Store } from "context/store";
 import { useRouter } from "next/router";
-import { getPageUri } from "lib/routing";
 
 export interface Props {
     categories: [{

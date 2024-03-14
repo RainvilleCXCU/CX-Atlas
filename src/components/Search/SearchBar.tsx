@@ -1,9 +1,5 @@
-import Heading from "components/Heading";
-import { parseHtml } from "lib/parser";
-import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export interface Props {
 	showBtn?: boolean;

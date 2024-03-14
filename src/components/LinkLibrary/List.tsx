@@ -1,12 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Store } from "context/store";
 import LinkLibraryLink from "./LinkLibraryLink";
 import dateFormat from 'dateformat';
 import Pagination from "components/Pagination";
 import { useRouter } from "next/router";
-import { getPageUri } from "lib/routing";
 import { gql, useQuery } from "@apollo/client";
-
 
 export interface Props {
     category: {

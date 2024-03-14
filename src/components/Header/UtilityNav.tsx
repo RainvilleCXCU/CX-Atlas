@@ -1,6 +1,5 @@
 import { parseHtml } from 'lib/parser';
 import SearchBar from './SearchBar';
-import UtilityNavLinks from './UtilityNavLinks';
 
 export default function UtilityNav({ logo, navOpen = false, setNavOpen = false, children = <></>, headerUtilities }) {
     return (

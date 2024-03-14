@@ -1,6 +1,3 @@
-import { Store } from "context/store";
-import { useContext } from "react";
-
 export interface Props {
     id: string;
     name: string;
