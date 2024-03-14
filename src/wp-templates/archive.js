@@ -121,8 +121,6 @@ Page.query = gql`
   ${MenuNavigation.fragments.entry}
   ${ThirdPartySettingsFragment}
   ${Alert.fragments.entry}
-
-
   query GetPosts(
     $page: Int
     $headerLocation: MenuLocationEnum
