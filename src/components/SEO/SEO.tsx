@@ -5,7 +5,7 @@ interface SEOProps {
 	title: string;
 	metaDesc: string;
 	canonicalURL: string;
-	ogLocale: string;
+	ogLocale?: string;
 	ogType: string;
 	ogTitle: string;
 	ogDescription: string;
