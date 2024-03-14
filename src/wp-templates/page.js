@@ -20,7 +20,7 @@ export default function Component(props) {
   const { gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
-  const { title, content, seo, link, featuredImage } = props?.data?.page ?? { title: '' };
+  const { title, content, seo, link } = props?.data?.page ?? { title: '' };
   const headerSettings = props?.data?.headerSettings; 
   const { footerUtilities, footerAppIcons, footerSocialIcons } = props?.data?.footerSettings;
 
@@ -30,12 +30,10 @@ export default function Component(props) {
 				title={title}
 				metaDesc={seo?.metaDesc}
 				canonicalURL={seo?.canonical ? seo?.canonical : link} //I'm unsure about this. Changing the canonical URL in Yoast doesn't seem to do anything...
-				ogLocale={seo?.locale} // Not sure where this is in the page object
 				ogType={seo?.opengraphType}
 				ogTitle={seo?.title}
 				ogDescription={seo?.opengraphDescription}
 				ogURL={seo?.opengraphUrl}
-				breadcrumbs={seo?.breadcrumbs}
 				ogSite_Name={seo?.opengraphSiteName}
 				published_time={seo?.opengraphPublishedTime}
 				modified_time={seo?.opengraphModifiedTime}
@@ -112,6 +110,26 @@ Component.query = gql`
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
       content
+      seo {
+          canonical
+          metaDesc
+          opengraphDescription
+          opengraphModifiedTime
+          opengraphPublishedTime
+          opengraphType
+          opengraphUrl
+          title
+          opengraphSiteName
+          opengraphImage {
+            mimeType
+            mediaItemUrl
+            mediaDetails {
+              height
+              width
+            }
+          }
+        }
+      link
     }
     generalSettings {
       ...BlogInfoFragment

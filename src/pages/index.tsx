@@ -5,5 +5,7 @@ export default function Page(props) {
 }
 
 export function getStaticProps(ctx) {
-  return getWordPressProps({ ctx });
+  return getWordPressProps({ ctx,
+    revalidate: parseInt(process.env.PAGE_REVALIDATION) ? parseInt(process.env.PAGE_REVALIDATION) : null
+  });
 }
