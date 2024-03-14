@@ -84,9 +84,11 @@ export default function Component(props) {
             </aside>
             <div className='post-content'>
               <header className='entry-header'>
-                <div className='featured-image'>
-                  <Image src={featuredImage?.node.sourceUrl?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={featuredImage.node.mediaDetails.width} height={featuredImage.node.mediaDetails.height} />
-                </div>
+                {featuredImage?.node?.sourceUrl && 
+                  <div className='featured-image'>
+                    <Image src={featuredImage?.node.sourceUrl?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={featuredImage.node.mediaDetails.width} height={featuredImage.node.mediaDetails.height} />
+                  </div>
+                }
                 <h1>{title}</h1>
                 {categories &&
                   <div className='categories'>
