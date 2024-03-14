@@ -150,7 +150,6 @@ Component.query = gql`
           opengraphType
           opengraphUrl
           title
-          breadcrumbs
           opengraphSiteName
           opengraphImage {
             mimeType
