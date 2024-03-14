@@ -33,12 +33,10 @@ export default function Component(props) {
 				title={title}
 				metaDesc={seo?.metaDesc}
 				canonicalURL={seo?.canonical ? seo?.canonical : link} //I'm unsure about this. Changing the canonical URL in Yoast doesn't seem to do anything...
-				ogLocale={seo?.locale} // Not sure where this is in the page object
 				ogType={seo?.opengraphType}
 				ogTitle={seo?.title}
 				ogDescription={seo?.opengraphDescription}
 				ogURL={seo?.opengraphUrl}
-				breadcrumbs={seo?.breadcrumbs}
 				ogSite_Name={seo?.opengraphSiteName}
 				published_time={seo?.opengraphPublishedTime}
 				modified_time={seo?.opengraphModifiedTime}
@@ -123,9 +121,7 @@ Component.query = gql`
           opengraphType
           opengraphUrl
           title
-          breadcrumbs
           opengraphSiteName
-          locale
           opengraphImage {
             mimeType
             mediaItemUrl

@@ -5,12 +5,12 @@ interface SEOProps {
 	title: string;
 	metaDesc: string;
 	canonicalURL: string;
-	ogLocale: string;
+	ogLocale?: string;
 	ogType: string;
 	ogTitle: string;
 	ogDescription: string;
 	ogURL: string;
-	breadcrumbs: any;
+	breadcrumbs?: any;
 	ogSite_Name: string;
 	published_time: string;
 	modified_time: string;
