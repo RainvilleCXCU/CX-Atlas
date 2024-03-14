@@ -130,26 +130,24 @@ Component.query = gql`
         slug
         seo {
           canonical
-          cornerstone
-          focuskw
-          fullHead
           metaDesc
-          metaKeywords
-          metaRobotsNofollow
-          metaRobotsNoindex
-          opengraphAuthor
           opengraphDescription
           opengraphModifiedTime
           opengraphPublishedTime
-          opengraphPublisher
-          opengraphSiteName
-          opengraphTitle
           opengraphType
           opengraphUrl
-          readingTime
           title
-          twitterDescription
-          twitterTitle
+          breadcrumbs
+          opengraphSiteName
+          locale
+          opengraphImage {
+            mimeType
+            mediaItemUrl
+            mediaDetails {
+              height
+              width
+            }
+          }
         }
       }
     }
