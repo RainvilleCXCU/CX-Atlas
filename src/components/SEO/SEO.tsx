@@ -10,7 +10,7 @@ interface SEOProps {
 	ogTitle: string;
 	ogDescription: string;
 	ogURL: string;
-	breadcrumbs: any;
+	breadcrumbs?: any;
 	ogSite_Name: string;
 	published_time: string;
 	modified_time: string;

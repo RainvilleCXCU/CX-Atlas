@@ -37,7 +37,6 @@ export default function Component(props) {
 				ogTitle={seo?.title}
 				ogDescription={seo?.opengraphDescription}
 				ogURL={seo?.opengraphUrl}
-				breadcrumbs={seo?.breadcrumbs}
 				ogSite_Name={seo?.opengraphSiteName}
 				published_time={seo?.opengraphPublishedTime}
 				modified_time={seo?.opengraphModifiedTime}
@@ -137,7 +136,6 @@ Component.query = gql`
           opengraphType
           opengraphUrl
           title
-          breadcrumbs
           opengraphSiteName
           locale
           opengraphImage {
