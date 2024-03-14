@@ -1,10 +1,8 @@
 import Heading from "components/Heading";
 import { HeadingProps } from "components/Heading";
 import { parseHtml } from "lib/parser";
-import RenderResult from "next/dist/server/render-result";
 import Image from "next/image";
 import Link from "next/link";
-import { format } from "path";
 import React, { Fragment } from "react";
 
 interface PostListingProps {
@@ -24,7 +22,7 @@ const PostListing: React.FC<PostListingProps> = ({ post, className, postTitleLev
                 {post.featuredImage &&
                     <div className="featured-image">
                         <Link href={`${post.uri}`}>
-                            <img src={post.featuredImage.node?.sourceUrl?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={post.featuredImage.node.mediaDetails.width} height={post.featuredImage.node?.mediaDetails.height} />
+                            <Image src={post.featuredImage.node?.sourceUrl?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={post.featuredImage.node.mediaDetails.width} height={post.featuredImage.node?.mediaDetails.height} />
                         </Link>
                     </div>
                 }

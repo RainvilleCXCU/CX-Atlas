@@ -1,19 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Store } from "context/store";
 
 function Loading({ type = 'lines' }): JSX.Element {
   const [isLoading, setIsLoading] = useState(false);
 	const [state, setState] = useContext(Store);
+  const [loadingTimer, setLoadingTimer]  = useState(null)
   const router = useRouter();
-  let loadingTimer;
+  
   const loadingTimeout: string = (process.env.NEXT_PUBLIC_loadingTimeout as string) ?? '1000';
   console.log(`Timeout for loader: ${loadingTimeout} - ${process.env.NEXT_PUBLIC_loadingTimeout}`)
   useEffect(() => {
     router.events.on('routeChangeStart', () => {
-      loadingTimer = setTimeout(() => {
+      setLoadingTimer(setTimeout(() => {
         setIsLoading(true)
-      }, parseInt(loadingTimeout));
+      }, parseInt(loadingTimeout)));
     })
     router.events.on('routeChangeComplete', () => {
       setIsLoading(false);
@@ -25,9 +26,9 @@ function Loading({ type = 'lines' }): JSX.Element {
     })
     return () => {
       router.events.off('routeChangeStart', () => {
-        loadingTimer = setTimeout(() => {
+        setLoadingTimer(setTimeout(() => {
           setIsLoading(true)
-        }, parseInt(loadingTimeout));
+        }, parseInt(loadingTimeout)));
       })
       router.events.off('routeChangeComplete', () => {
         setIsLoading(false);

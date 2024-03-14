@@ -16,7 +16,6 @@ import Alert from "components/Alerts/Alert";
 import Loading from "components/common/loading";
 import { useContext, useEffect } from "react";
 import { Store } from "context/store";
-import { useRouter } from "next/router";
 import { getNextServerSideProps } from "@faustwp/core";
 import { GetServerSidePropsContext } from "next";
 

@@ -1,6 +1,3 @@
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import Heading from 'components/Heading';
 import { EqualHeight } from 'react-equal-height/clean';
 
 export interface Props {

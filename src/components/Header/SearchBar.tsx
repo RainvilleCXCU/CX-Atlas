@@ -1,4 +1,3 @@
-import Logo from 'components/Logo';
 import { useEffect, useRef, useState } from 'react';
 import MobileHeader from './MobileHeader';
 import { useRouter } from 'next/router';

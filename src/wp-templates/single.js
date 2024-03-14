@@ -11,7 +11,6 @@ import {
 import Alert from 'components/Alerts/Alert';
 import Loading from 'components/common/loading';
 import { parseHtml } from 'lib/parser';
-import Posts from 'components/Posts/listing';
 import RelatedPosts from 'components/Posts/relatedPosts';
 import Image from 'next/image';
 import { Fragment } from 'react';

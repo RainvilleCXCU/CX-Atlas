@@ -1,6 +1,6 @@
 import '../faust.config';
 import { FaustProvider } from '@faustwp/core';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Provider from '../provider/store';
 import { useRouter } from 'next/router'
 import type { AppProps } from 'next/app';

@@ -7,9 +7,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 const AddressBar = () => {
 	const { query = {}, push } = useRouter();
 
-    // const [address, setAddress] = useState('');
     const [autoCompleteLoaded, setAutoCompleteLoaded] = useState(false);
-    const [data, setData] = useState(null);
     const [state, setState] = useContext(Store);
     const router = useRouter();
     const addressRef = useRef(null);

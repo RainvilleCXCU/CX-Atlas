@@ -1,5 +1,4 @@
-import React from 'react';
-import Heading, { HeadingProps } from '../Heading';
+import { HeadingProps } from '../Heading';
 import { parseHtml } from 'lib/parser';
 import Pagination from '../Pagination';
 import PostListing from './postListing';

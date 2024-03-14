@@ -1,5 +1,4 @@
 // This component renders a list of branch locations
-import React from "react";
 import LocationListing from "./listing";
 
 export interface Props {

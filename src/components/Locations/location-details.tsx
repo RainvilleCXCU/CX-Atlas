@@ -1,5 +1,4 @@
 // This component renders the "location details" modal when a location listing is clicked
-import React from "react";
 import { useEffect, useState, useContext } from "react";
 import {
 	selectedLocationContext,

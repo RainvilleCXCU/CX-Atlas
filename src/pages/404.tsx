@@ -8,7 +8,6 @@ import {
   MenuNavigation,
   SEO,
 } from '../components';
-import { parseHtml } from 'lib/parser';
 import Alert from 'components/Alerts/Alert';
 import Loading from 'components/common/loading';
 import { getNextStaticProps } from '@faustwp/core';
@@ -17,6 +16,7 @@ import Container from 'components/Blocks/Container';
 import Columns from 'components/Blocks/Columns';
 import Column from 'components/Blocks/Column';
 import SearchBar from 'components/Search/SearchBar';
+import Link from 'next/link';
 
 export default function Component(props) {
   // Loading state for previews
@@ -98,10 +98,10 @@ export default function Component(props) {
 													<h3>Helpful Links</h3>
 													<ul id="menu-404-menu" className="menu">
 														<li>
-															<a href="/">Home</a>
+															<Link href="/">Home</Link>
 														</li>
 														<li>
-															<a href="/about/contact-us/">Contact Us</a>
+															<Link href="/about/contact-us/">Contact Us</Link>
 														</li>
 														<li>
 															<a href="https://onlinebanking.connexuscu.org/">
