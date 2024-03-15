@@ -1,12 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Store } from "context/store";
 import LinkLibraryLink from "./LinkLibraryLink";
 import dateFormat from 'dateformat';
 import Pagination from "components/Pagination";
 import { useRouter } from "next/router";
-import { getPageUri } from "lib/routing";
 import { gql, useQuery } from "@apollo/client";
-
 
 export interface Props {
     category: {
@@ -21,8 +19,6 @@ function LinkLibraryList({ category }: Props): JSX.Element {
     const [activeCat, setActiveCat] = useState(null)
     const postPerPage = 7;
     const router = useRouter();
-
-    let links;
 
     const { loading, error, data, refetch } = useQuery(gql`
     query GetLinkData($id: Float!) {
@@ -61,8 +57,15 @@ function LinkLibraryList({ category }: Props): JSX.Element {
     }
 
     useEffect(() => {
-        getLinks(parseInt(category?.id));
-    }, [category?.id])
+        console.log('Get Links');
+        console.log(`${category?.id} - ${activeCat}`)
+        if(category?.id && category?.id !== activeCat) {
+            getLinks(parseInt(category?.id));
+            setActiveCat(category?.id);
+        }
+        console.log('DATA');
+        console.log(data);
+    }, [category])
 
     return (
         <div className={`linklist LinkLibraryCat LinkLibraryCat${category?.name}`}>
@@ -72,7 +75,7 @@ function LinkLibraryList({ category }: Props): JSX.Element {
                 </div>
             </div>
             {
-                data?.linkLibraryByCatId && data?.linkLibraryByCatId.length > 1 &&
+                data?.linkLibraryByCatId && data?.linkLibraryByCatId.length > 0 &&
                 <>
                     <ul>
                         {

@@ -1,6 +1,4 @@
 import Link from "next/link";
-import React, { Fragment } from "react";
-
 interface RelatedPostsProps {
 	id: string;
     title?: string;

@@ -1,9 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import Accordion from "components/Accordion/Accordion";
-import Link from "next/link";
 import { Store } from "context/store";
 import { useRouter } from "next/router";
-import { getPageUri } from "lib/routing";
 
 export interface Props {
     categories: [{
@@ -20,14 +17,14 @@ function LinkLibraryCatLinks({ categories, type = 'link' }: Props): JSX.Element 
     const router = useRouter();
 
     const showCategory = (category) => {
-        setState({
-            ...state,
-            linkLibrary: {
-                ...state.linkLibrary,
-                activeCat: category,
-                activePage: 1
-            }
-        })
+        // setState({
+        //     ...state,
+        //     linkLibrary: {
+        //         ...state.linkLibrary,
+        //         activeCat: category,
+        //         activePage: 1
+        //     }
+        // })
         const url = '/about/media-center/';
         console.log('Query');
         console.log(router.query);

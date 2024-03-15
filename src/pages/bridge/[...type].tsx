@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
 import * as MENUS from '../../constants/menus';
 import { BlogInfoFragment } from '../../fragments/GeneralSettings';
 import { ThirdPartySettingsFragment, GTM, HotJar, Personyze, Qualtrics, Spectrum, Siteimprove } from '../../components/ThirdParty';
@@ -20,7 +20,6 @@ import Loading from 'components/common/loading';
 import { GetServerSidePropsContext } from 'next';
 import { getNextServerSideProps } from '@faustwp/core';
 import apolloClient from 'apolloClient';
-import { useEffect, useState } from 'react';
 
 export default function Component(props) {
 

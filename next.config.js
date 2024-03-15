@@ -108,13 +108,13 @@ let nextConfig = {
                     source: '/meet/:path*',
                     destination: '/meet/?productType=:path*',
                 },
-                {
-                    source: '/about/media-center/:catId{/}?',
-                    destination: '/about/media-center/?catId=:catId',
-                },
+                // {
+                //     source: '/about/media-center/:catId{/}?',
+                //     destination: '/about/media-center/?catId=:catId',
+                // },
                 {
                     source: '/about/media-center/:catId/page/:page{/}?',
-                    destination: '/about/media-center/?page=:page',
+                    destination: '/about/media-center/:catId/?page=:page',
                 },
                 // {
                 //     source: '/blog/category/:categoryName{/}?',

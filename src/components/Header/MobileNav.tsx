@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import SearchBar from './SearchBar';
 import UtilityNavLinks from './UtilityNavLinks';
 import MenuNavigation from 'components/Navigation/Navbar';
 import { useEffect, useState } from 'react';
@@ -26,7 +25,7 @@ export default function MobileNav({ links, menuOpen = false, navOpen, setNavOpen
                 }}></button>
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 cx-nav__navbar">
                 <li className="nav-item cx-nav__item">
-                    <a className="nav-link cx-nav__link cx-nav__link--primary" href="/mdr?loc=LStUVVkwNi1DO1c1Tj0nLTYsQGBgCmAK&login=mobile">Log in</a>
+                    <Link className="nav-link cx-nav__link cx-nav__link--primary" href="/mdr?loc=LStUVVkwNi1DO1c1Tj0nLTYsQGBgCmAK&login=mobile">Log in</Link>
                 </li>
                 <li className="nav-item cx-nav__item">
                     <Link href="/pay-my-loan/" passHref className="nav-link cx-nav__link cx-nav__link--primary"

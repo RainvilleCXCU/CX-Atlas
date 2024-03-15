@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { parseHtml } from "lib/parser";
 import { Store } from "context/store";
 

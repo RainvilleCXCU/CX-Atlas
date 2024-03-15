@@ -1,6 +1,5 @@
-import React from "react";
 import { Store } from "../context/store";
-var { useState } = React;
+import { useState } from 'react';;
 const Index = (props) => { 
     const [state, setState] = useState({
         version: 1

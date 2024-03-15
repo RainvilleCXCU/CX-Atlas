@@ -1,7 +1,4 @@
-import { parseHtml } from "lib/parser";
 import { ciscoBubbleChat } from "lib/chat";
-import React from "react";
-
 interface ChatProps {
 	children: string;
     className: string;

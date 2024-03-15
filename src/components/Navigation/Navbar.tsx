@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 import Heading from 'components/Heading';
 import { parseHtml } from 'lib/parser';
 import { gql } from '@apollo/client';
@@ -45,7 +45,7 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                     <div className='cx-nav__dropdown-menu-container__menu-items'>
                                         {link?.childItems?.nodes?.map((title, index) => {
                                             return (
-                                                <React.Fragment key={`${title.id}-${title.databaseId}`}>
+                                                <Fragment key={`${title.id}-${title.databaseId}`}>
                                                 { !resourcesRegEx.test(title.uri) &&
                                                     <li className="cx-nav__dropdown-menu-section">
                                                         {
@@ -68,13 +68,13 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                                         </ul>
                                                     </li>
                                                 }
-                                                </React.Fragment>
+                                                </Fragment>
                                             );
                                         })}
                                     </div>
                                     {link?.childItems?.nodes?.map((title, index) => {
                                         return (
-                                            <React.Fragment key={`${index}-${title.databaseId}`}>
+                                            <Fragment key={`${index}-${title.databaseId}`}>
                                             { resourcesRegEx.test(title.uri) &&
                                                 <div className='cx-nav__resources'>
                                                     {
@@ -97,7 +97,7 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                                     </ul>
                                                 </div>
                                             }
-                                            </React.Fragment>
+                                            </Fragment>
                                         );
                                     })}
                                 </div>

@@ -1,6 +1,4 @@
 import Logo from 'components/Logo';
-import { useEffect, useRef } from 'react';
-
 interface MobileHeader {
     navOpen?: boolean,
     setNavOpen,

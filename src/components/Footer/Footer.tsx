@@ -1,4 +1,3 @@
-import React, { ButtonHTMLAttributes } from "react";
 import Logo from "components/Logo";
 import FooterMenu from "./Nav";
 import Icons from "./Icons";

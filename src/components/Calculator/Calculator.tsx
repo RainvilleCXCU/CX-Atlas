@@ -1,6 +1,4 @@
-import { addJSAsset } from "lib/enqueuedFiles";
-import Script from "next/script.js";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 interface Props {
 	calculatorName: string;
 }

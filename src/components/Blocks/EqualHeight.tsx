@@ -1,7 +1,5 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
-import Image from 'next/image';
-import Heading from 'components/Heading';
-import { EqualHeight, EqualHeightElement } from 'react-equal-height/clean';
+import React, { useEffect, useState } from 'react';
+import { EqualHeightElement } from 'react-equal-height/clean';
 import { useMediaQuery } from 'react-responsive'
 
 export interface Props {
