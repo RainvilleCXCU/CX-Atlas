@@ -3,6 +3,7 @@ import { Store } from "context/store";
 import LinkLibraryCatLinks from "./NavItem";
 import LinkLibraryList from "./List";
 import { useRouter } from "next/router";
+import { getDynamicQueryVal, getPageNum } from '../../utils/urlParser';
 
 export interface Props {
     cat_ids: [{
@@ -16,30 +17,37 @@ export interface Props {
 function LinkLibrary({ cat_ids, children = <></> }: Props): JSX.Element {
     const [state, setState] = useContext(Store);
     const [activeCat, setActiveCat] = useState(null);
+    const [currPage, setCurrPage] = useState('1');
 
     const router = useRouter();
-    // const catId = router.query.pageUri[2] ?? cat_ids[0];
-    // const page = router.query.pageUri[4] ?? 1;
+
+    const cat = getDynamicQueryVal({
+        urlObj: router.query.wordpressNode,
+        key: 'media-center'
+    })
 
     useEffect(() => {
-        setActiveCat(state?.linkLibrary?.activeCat)
-    }, [state?.linkLibrary?.activeCat]);
+        if(router.query.page) {
+            setCurrPage(router.query.page.toString());
+        }
+    }, [router.query.page]);
 
     useEffect(() => {
-        if(state?.linkLibrary?.activeId == 0) {
+        if(cat == '') {
             console.log('NO ACTIVE ID!!!!')
             router.push(`/about/media-center/${cat_ids[0].id}`, undefined, {shallow:true});
         } else {
+            setActiveCat(cat_ids.filter(category => category.id == cat).length === 1 ? cat_ids.filter(category => category.id == cat)[0] : cat_ids[0])
             setState({
                 ...state,
                 linkLibrary: {
                     ...state.linkLibrary,
-                    activeCat: cat_ids.filter(cat => cat.id == state?.linkLibrary?.activeId).length === 1 ? cat_ids.filter(cat => cat.id == state?.linkLibrary?.activeId)[0] : cat_ids[0],
-                    activePage: state?.linkLibrary?.activePage ?? '1'
+                    activeCat: cat_ids.filter(category => category.id == cat).length === 1 ? cat_ids.filter(category => category.id == cat)[0] : cat_ids[0],
+                    activePage: currPage
                 }
             });
         }
-    }, [state?.linkLibrary?.activeId]);
+    }, [cat, currPage]);
     return (
         <div className="cx-link-library">
             <nav aria-label="secondary">
@@ -47,7 +55,7 @@ function LinkLibrary({ cat_ids, children = <></> }: Props): JSX.Element {
                 <LinkLibraryCatLinks categories={cat_ids} type="select"></LinkLibraryCatLinks>
             </nav>
             { state?.linkLibrary?.activeCat?.id === activeCat?.id &&
-                <LinkLibraryList category={state?.linkLibrary?.activeCat}></LinkLibraryList>
+                <LinkLibraryList category={activeCat}></LinkLibraryList>
             }
         </div>
     );

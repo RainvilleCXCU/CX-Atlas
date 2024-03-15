@@ -20,8 +20,6 @@ function LinkLibraryList({ category }: Props): JSX.Element {
     const postPerPage = 7;
     const router = useRouter();
 
-    let links;
-
     const { loading, error, data, refetch } = useQuery(gql`
     query GetLinkData($id: Float!) {
         linkLibraryByCatId(catId: $id) {
@@ -59,8 +57,15 @@ function LinkLibraryList({ category }: Props): JSX.Element {
     }
 
     useEffect(() => {
-        getLinks(parseInt(category?.id));
-    }, [category?.id])
+        console.log('Get Links');
+        console.log(`${category?.id} - ${activeCat}`)
+        if(category?.id && category?.id !== activeCat) {
+            getLinks(parseInt(category?.id));
+            setActiveCat(category?.id);
+        }
+        console.log('DATA');
+        console.log(data);
+    }, [category])
 
     return (
         <div className={`linklist LinkLibraryCat LinkLibraryCat${category?.name}`}>
@@ -70,7 +75,7 @@ function LinkLibraryList({ category }: Props): JSX.Element {
                 </div>
             </div>
             {
-                data?.linkLibraryByCatId && data?.linkLibraryByCatId.length > 1 &&
+                data?.linkLibraryByCatId && data?.linkLibraryByCatId.length > 0 &&
                 <>
                     <ul>
                         {
