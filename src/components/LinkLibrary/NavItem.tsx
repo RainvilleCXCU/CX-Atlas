@@ -17,14 +17,14 @@ function LinkLibraryCatLinks({ categories, type = 'link' }: Props): JSX.Element 
     const router = useRouter();
 
     const showCategory = (category) => {
-        setState({
-            ...state,
-            linkLibrary: {
-                ...state.linkLibrary,
-                activeCat: category,
-                activePage: 1
-            }
-        })
+        // setState({
+        //     ...state,
+        //     linkLibrary: {
+        //         ...state.linkLibrary,
+        //         activeCat: category,
+        //         activePage: 1
+        //     }
+        // })
         const url = '/about/media-center/';
         console.log('Query');
         console.log(router.query);
