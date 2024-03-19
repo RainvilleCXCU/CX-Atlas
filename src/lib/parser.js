@@ -15,6 +15,9 @@ import CXCalc from "components/Calculator/CXCalculator";
 import CXCalcResults from "components/Calculator/CXCalculatorResults";
 import Scheduler from "components/Salesforce/scheduler";
 
+const domainRegEx = new RegExp(/(http)/, 'i');
+const internalLinkRegEx = new RegExp(/(cxcu|(www\.connexus)|local|wpengine)/, 'i');
+
 const findChildren = (element, att, value) => {
     let children = [];
     const isChild = (child, att, value) => {
