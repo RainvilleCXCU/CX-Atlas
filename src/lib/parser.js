@@ -106,11 +106,11 @@ export const parseHtml = (html) => {
                 )
             }
 
-            else if (isBlockContainer) {
-                return (
-                    <Container classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</Container>
-                )
-            }
+            // else if (isBlockContainer) {
+            //     return (
+            //         <Container classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</Container>
+            //     )
+            // }
 
             else if (isEqualHeight) {
                 return (
@@ -187,7 +187,7 @@ export const parseHtml = (html) => {
             } 
 
             else {
-
+                return element
             }
         },
     }
