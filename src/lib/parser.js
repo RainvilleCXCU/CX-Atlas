@@ -87,7 +87,9 @@ const findChildren = (element, att, value) => {
 }
 
 export const parseHtml = (html) => {
-    
+    const start = performance.now();
+
+
     const options = {
         trim: false,
         htmlparser2: {
@@ -211,5 +213,9 @@ export const parseHtml = (html) => {
             }
         },
     }
-    return parse(html, options);
+    const results = parse(html, options);
+
+    const end = performance.now();
+    console.log(`Execution time: ${end - start} ms`);
+    return results;
 };
