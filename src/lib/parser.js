@@ -88,6 +88,12 @@ export const parseHtml = (html) => {
                 );
             }
 
+            else if (isBlockContainer) {
+                return (
+                    <Container classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</Container>
+                )
+            }
+
             else if(isCXCalcResults) {
                 return (
                     <div {...attributesToProps(attribs)}><CXCalcResults>{children}</CXCalcResults></div>
@@ -105,12 +111,6 @@ export const parseHtml = (html) => {
                     <div className="cx-table--responsive"><table {...attributesToProps(attribs)}>{domToReact(children, options)}</table></div>
                 )
             }
-
-            // else if (isBlockContainer) {
-            //     return (
-            //         <Container classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</Container>
-            //     )
-            // }
 
             else if (isEqualHeight) {
                 return (
@@ -187,7 +187,6 @@ export const parseHtml = (html) => {
             } 
 
             else {
-                return element
             }
         },
     }
