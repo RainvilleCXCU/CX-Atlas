@@ -67,7 +67,6 @@ export default function Component(props) {
 			<div id="page" className="container site">
 				<main id="main" className="content content-single">
 					<article className="entry-content">
-						{parseHtml(content ?? "")}
 					</article>
 				</main>
 			</div>
@@ -109,7 +108,6 @@ Component.query = gql`
   ) {
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
-      content
       seo {
           canonical
           metaDesc
