@@ -96,7 +96,119 @@ export const parseHtml = (html) => {
         replace: (element) => {
             const { name, attribs, children } = element;
             
-           
+            if(name !== 'a' && name !== 'div' && name !== 'span' && name !== 'button') {
+                return;
+            }
+
+            else if (isBlock({checkName:'isInternalLink', element: element}) && !isBlock({checkName: 'isCiscoBubbleChat', element: element})) {
+                const href = attribs.href;
+                delete attribs.href;
+                return (
+                    <Link href={href.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} {...attributesToProps(attribs)}>{domToReact(children, options)}</Link>
+                );
+            }
+
+            // else if(isBlock({checkName: 'isCXCalcResults', element: element})) {
+            //     return (
+            //         <div {...attributesToProps(attribs)}><CXCalcResults>{children}</CXCalcResults></div>
+            //     )
+            // } 
+
+            // else if(isBlock({checkName: 'isCXCalc', element: element})) {
+            //     return (
+            //         <div {...attributesToProps(attribs)}><CXCalc>{children}</CXCalc></div>
+            //     )
+            // } 
+
+            // else if (isBlock({checkName: 'isResponsiveTable', element: element})) {
+            //     return (
+            //         <div className="cx-table--responsive"><table {...attributesToProps(attribs)}>{domToReact(children, options)}</table></div>
+            //     )
+            // }
+
+            // else if (isBlock({checkName: 'isBlockContainer', element: element})) {
+            //     return (
+            //         <Container classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</Container>
+            //     )
+            // }
+
+            // else if (isBlock({checkName: 'isEqualHeight', element: element})) {
+            //     return (
+            //         <EqualHeightContainer tagName={name} name={attribs['data-equal-height']} classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</EqualHeightContainer>
+            //     )
+            // }
+
+            // else if(isBlock({checkName: 'isFAQItem', element: element})) {
+            //     const title  = domToReact(findChildren(element, 'data-faq-title', '')[0].children, options); 
+            //     const content = domToReact(findChildren(element, 'data-faq-content', '')[0].children, options);
+            //     return (
+            //         <FAQ id={attribs['data-post_id']} title={title} content={content} />
+            //     )
+            // }
+
+            // else if(isBlock({checkName: 'isCiscoBubbleChat', element: element})) {
+            //     return (
+            //         <Chat className={attribs.class}>{domToReact(children, options)}</Chat>
+            //     )
+            // } 
+
+            // else if (isBlock({checkName: 'isCalculator', element: element})) {
+            //     return (
+            //         <Calculator calculatorName={attribs['data-calculator-name']}></Calculator>
+            //     )
+            // }
+
+            // else if (isBlock({checkName: 'isDatatracContainer', element: element})) {
+            //     const children = findChildren(element, 'data-datatrac-perform', '');
+            //     let showContainer = true;
+            //     children.forEach(el => {
+            //         if(el.attribs && el.attribs['data-datatrac-perform'] === 'false') {
+            //             showContainer = false;
+            //         }
+            //     })
+            //     return ( showContainer ? element : <></>);
+            // }
+
+            // else if(isBlock({checkName: 'isLinkLibrary', element: element})) {
+            //     const cats = JSON.parse(attribs?.['data-link-library-cats']);
+            //     return (
+            //         <LinkLibrary cat_ids={cats} {...attributesToProps(attribs)}>{domToReact(children, options)}</LinkLibrary>
+            //     )
+            // }
+
+            // else if(isBlock({checkName: 'isForm', element: element})) {
+            //     return <Form id={parseInt(attribs?.id.split('-')[2])} />
+            // }
+
+            // else if(isBlock({checkName: 'isDisclosure', element: element})) {
+            //     return <Disclosure {...attributesToProps(attribs)}>{domToReact(children, options)}</Disclosure>
+            // }
+
+            // else if(isBlock({checkName: 'isScheduler', element: element})) {
+            //     return (
+            //         <span {...attributesToProps(attribs)}>
+            //         <Scheduler
+            //             postSlug = {attribs['data-postslug']}
+            //             flowId = {attribs['data-flowid']}
+            //             appUrl = {attribs['data-appurl']}
+            //             viewMoreButton = {attribs['data-viewmorebutton']}
+            //             selectSubjectText = {attribs['data-selectsubjecttext']}
+            //             selectResourceText = {attribs['data-selectresourcetext']}
+            //             anyResourceText = {attribs['data-anyresourcetext']}
+            //             reviewHeading = {attribs['data-reviewheading']}
+            //             resourceHeading = {attribs['data-resourceheading']}
+            //             resourcePageHeading = {attribs['data-resourcepageheading']}
+            //             scheduledTimeHeading = {attribs['data-scheduledtimeheading']}
+            //             finishText = {attribs['data-finishtext']}
+            //             finishImage = {attribs['data-finishimage']}
+            //             profileImage = {attribs['data-profileimage']}
+            //         >{children}</Scheduler></span>
+            //     )
+            // } 
+
+            else {
+                return;
+            }
         },
     }
     return parse(html, options);
