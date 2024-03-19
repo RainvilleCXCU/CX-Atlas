@@ -102,13 +102,13 @@ export const parseHtml = (html) => {
                 return;
             }
 
-            else if (isBlock({checkName:'isInternalLink', element: element}) && !isBlock({checkName: 'isCiscoBubbleChat', element: element})) {
-                const href = attribs.href;
-                delete attribs.href;
-                return (
-                    <Link href={href.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} {...attributesToProps(attribs)}>{domToReact(children, options)}</Link>
-                );
-            }
+            // else if (isBlock({checkName:'isInternalLink', element: element}) && !isBlock({checkName: 'isCiscoBubbleChat', element: element})) {
+            //     const href = attribs.href;
+            //     delete attribs.href;
+            //     return (
+            //         <Link href={href.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} {...attributesToProps(attribs)}>{domToReact(children, options)}</Link>
+            //     );
+            // }
 
             // else if(isBlock({checkName: 'isCXCalcResults', element: element})) {
             //     return (
