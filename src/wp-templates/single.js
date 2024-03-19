@@ -101,9 +101,10 @@ export default function Component(props) {
                   </div>}
               </header>
               <div className='entry-content'>
-                {parseHtml(content ?? "")}
-
-			          <div id="cx-qt-feedback" className="blog-post"></div>
+                { content && 
+                    parseHtml(content.toString())
+                }
+			          {/* <div id="cx-qt-feedback" className="blog-post"></div> */}
               </div>
             </div>
           </article>
