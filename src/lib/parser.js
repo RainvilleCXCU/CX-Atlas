@@ -20,6 +20,58 @@ import Scheduler from "components/Salesforce/scheduler";
 // const Sidekick = dynamic(() => import("components/Blocks/Sidekick"), {ssr: false});
 // import { ciscoBubbleChat } from "./cisco-chat";
 
+const isBlock = ({checkName, element}) => {
+    const { name, attribs, children } = element;
+    const domainRegEx = new RegExp(/(http)/, 'i');
+    const internalLinkRegEx = new RegExp(/(cxcu|(www\.connexus)|local|wpengine)/, 'i');
+    switch(checkName) {
+        case 'isInternalLink':
+            return (name === "a" && (internalLinkRegEx.test(attribs.href) || domainRegEx.test(attribs.href) === false ) && !/(mailto:|tel:)/.test(attribs.href) && !attribs.onClick && !attribs.onclick);
+        case 'isDisclosure' : 
+            return attribs?.id?.includes('disclosures');
+        case 'isFAQItem' : 
+			return attribs && attribs.class && attribs.class.includes("ewd-ufaq-faq-div");
+        case 'isDatatracContainer': 
+            return false;
+            // return attribs && attribs.class && attribs.class.includes("gb-block-container") && /(data-datatrac-perform)/gi.test(html);
+        case 'isResponsiveTable' : 
+			return (name === 'table' && attribs && attribs.class && attribs.class.includes("tablepress-responsive"))
+        case 'isEqualHeight' : 
+            return attribs && attribs['data-equal-height'];
+        case 'isCalculator' : 
+            return attribs && attribs['data-calculator-name'];
+        case 'isCiscoBubbleChat' : 
+            return name === 'a' && attribs && attribs.class?.includes('chat_bubble');
+        case 'isLinkLibrary' : 
+            return attribs && attribs['data-link-library-cats'];
+        case 'isBlockContainer' : 
+			return attribs && attribs.class && attribs.class.includes("gb-block-container");
+        case 'isCXCalc' : 
+			return attribs?.class?.includes('cx-calculator');
+        case 'isCXCalcResults' : 
+			return attribs?.class?.includes('cx-calculator-results');
+        case 'isScheduler' : 
+			return attribs?.class?.includes('cx-scheduler');
+        case 'isForm' : 
+            return attribs?.class?.includes('nf-form-cont');
+        default:
+            return false;
+    }
+    // const isInternalLink = (name === "a" && (internalLinkRegEx.test(attribs.href) || domainRegEx.test(attribs.href) === false ) && !/(mailto:|tel:)/.test(attribs.href) && !attribs.onClick && !attribs.onclick);
+    // const isFAQItem = attribs && attribs.class && attribs.class.includes("ewd-ufaq-faq-div");
+    // const isCalculator = attribs && attribs['data-calculator-name'];
+    // const isResponsiveTable = (name === 'table' && attribs && attribs.class && attribs.class.includes("tablepress-responsive"))
+    // const isCiscoBubbleChat = name === 'a' && attribs && attribs.class?.includes('chat_bubble');
+    // const isLinkLibrary = attribs && attribs['data-link-library-cats'];
+    // const isEqualHeight = attribs && attribs['data-equal-height'];
+    // const isForm = attribs?.class?.includes('nf-form-cont');
+    // // const isBlockContainer = attribs && attribs.class && attribs.class.includes("gb-block-container");
+    // const isDisclosure = attribs?.id?.includes('disclosures');
+    // const isCXCalc = attribs?.class?.includes('cx-calculator');
+    // const isCXCalcResults = attribs?.class?.includes('cx-calculator-results');
+    // const isScheduler = attribs?.class?.includes('cx-scheduler');
+}
+
 const findChildren = (element, att, value) => {
     let children = [];
     const isChild = (child, att, value) => {
@@ -35,8 +87,6 @@ const findChildren = (element, att, value) => {
 }
 
 export const parseHtml = (html) => {
-    const domainRegEx = new RegExp(/(http)/, 'i');
-    const internalLinkRegEx = new RegExp(/(cxcu|(www\.connexus)|local|wpengine)/, 'i');
     
     const options = {
         trim: false,
@@ -46,21 +96,8 @@ export const parseHtml = (html) => {
         replace: (element) => {
             const { name, attribs, children } = element;
             
-            const isDatatracContainer = attribs && attribs.class && attribs.class.includes("gb-block-container") && /(data-datatrac-perform)/gi.test(html);
-
-            const isInternalLink = (name === "a" && (internalLinkRegEx.test(attribs.href) || domainRegEx.test(attribs.href) === false ) && !/(mailto:|tel:)/.test(attribs.href) && !attribs.onClick && !attribs.onclick);
-            const isFAQItem = attribs && attribs.class && attribs.class.includes("ewd-ufaq-faq-div");
-            const isCalculator = attribs && attribs['data-calculator-name'];
-            const isResponsiveTable = (name === 'table' && attribs && attribs.class && attribs.class.includes("tablepress-responsive"))
-            const isCiscoBubbleChat = name === 'a' && attribs && attribs.class?.includes('chat_bubble');
-            const isLinkLibrary = attribs && attribs['data-link-library-cats'];
-            const isEqualHeight = attribs && attribs['data-equal-height'];
-            const isForm = attribs?.class?.includes('nf-form-cont');
-            const isBlockContainer = attribs && attribs.class && attribs.class.includes("gb-block-container");
-            const isDisclosure = attribs?.id?.includes('disclosures');
-            const isCXCalc = attribs?.class?.includes('cx-calculator');
-            const isCXCalcResults = attribs?.class?.includes('cx-calculator-results');
-            const isScheduler = attribs?.class?.includes('cx-scheduler');
+            if(name !== 'a' && name !== 'div' && name !== 'span' && name !== 'button') {
+            }
 
             // if(attribs?.onclick) {
             //     attribs.onClick = attribs?.onclick;
@@ -80,7 +117,7 @@ export const parseHtml = (html) => {
             // }
 
 
-            if (isInternalLink && !isCiscoBubbleChat) {
+            else if (isBlock({checkName:'isInternalLink', element: element}) && !isBlock({checkName: 'isCiscoBubbleChat', element: element})) {
                 const href = attribs.href;
                 delete attribs.href;
                 return (
@@ -88,37 +125,37 @@ export const parseHtml = (html) => {
                 );
             }
 
-            else if (isBlockContainer) {
-                return (
-                    <Container classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</Container>
-                )
-            }
-
-            else if(isCXCalcResults) {
+            else if(isBlock({checkName: 'isCXCalcResults', element: element})) {
                 return (
                     <div {...attributesToProps(attribs)}><CXCalcResults>{children}</CXCalcResults></div>
                 )
             } 
 
-            else if(isCXCalc) {
+            else if(isBlock({checkName: 'isCXCalc', element: element})) {
                 return (
                     <div {...attributesToProps(attribs)}><CXCalc>{children}</CXCalc></div>
                 )
             } 
 
-            else if (isResponsiveTable) {
+            else if (isBlock({checkName: 'isResponsiveTable', element: element})) {
                 return (
                     <div className="cx-table--responsive"><table {...attributesToProps(attribs)}>{domToReact(children, options)}</table></div>
                 )
             }
 
-            else if (isEqualHeight) {
+            else if (isBlock({checkName: 'isBlockContainer', element: element})) {
+                return (
+                    <Container classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</Container>
+                )
+            }
+
+            else if (isBlock({checkName: 'isEqualHeight', element: element})) {
                 return (
                     <EqualHeightContainer tagName={name} name={attribs['data-equal-height']} classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</EqualHeightContainer>
                 )
             }
 
-            else if(isFAQItem) {
+            else if(isBlock({checkName: 'isFAQItem', element: element})) {
                 const title  = domToReact(findChildren(element, 'data-faq-title', '')[0].children, options); 
                 const content = domToReact(findChildren(element, 'data-faq-content', '')[0].children, options);
                 return (
@@ -126,19 +163,19 @@ export const parseHtml = (html) => {
                 )
             }
 
-            else if(isCiscoBubbleChat) {
+            else if(isBlock({checkName: 'isCiscoBubbleChat', element: element})) {
                 return (
                     <Chat className={attribs.class}>{domToReact(children, options)}</Chat>
                 )
             } 
 
-            else if (isCalculator) {
+            else if (isBlock({checkName: 'isCalculator', element: element})) {
                 return (
                     <Calculator calculatorName={attribs['data-calculator-name']}></Calculator>
                 )
             }
 
-            else if (isDatatracContainer) {
+            else if (isBlock({checkName: 'isDatatracContainer', element: element})) {
                 const children = findChildren(element, 'data-datatrac-perform', '');
                 let showContainer = true;
                 children.forEach(el => {
@@ -149,22 +186,22 @@ export const parseHtml = (html) => {
                 return ( showContainer ? element : <></>);
             }
 
-            else if(isLinkLibrary) {
+            else if(isBlock({checkName: 'isLinkLibrary', element: element})) {
                 const cats = JSON.parse(attribs?.['data-link-library-cats']);
                 return (
                     <LinkLibrary cat_ids={cats} {...attributesToProps(attribs)}>{domToReact(children, options)}</LinkLibrary>
                 )
             }
 
-            else if(isForm) {
+            else if(isBlock({checkName: 'isForm', element: element})) {
                 return <Form id={parseInt(attribs?.id.split('-')[2])} />
             }
 
-            else if(isDisclosure) {
+            else if(isBlock({checkName: 'isDisclosure', element: element})) {
                 return <Disclosure {...attributesToProps(attribs)}>{domToReact(children, options)}</Disclosure>
             }
 
-            else if(isScheduler) {
+            else if(isBlock({checkName: 'isScheduler', element: element})) {
                 return (
                     <span {...attributesToProps(attribs)}>
                     <Scheduler
