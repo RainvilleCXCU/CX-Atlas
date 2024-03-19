@@ -108,6 +108,7 @@ Component.query = gql`
   ) {
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
+      content
       seo {
           canonical
           metaDesc
