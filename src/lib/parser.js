@@ -3,13 +3,13 @@ import parse, { domToReact, attributesToProps } from "html-react-parser";
 import Link from "next/link";
 import FAQ from "components/FAQs/faq";
 import Chat from "components/Chat/cisco";
-import LinkLibraryCatLink from "components/LinkLibrary/NavItem";
+// import LinkLibraryCatLink from "components/LinkLibrary/NavItem";
 import LinkLibrary from "components/LinkLibrary/LinkLibrary";
 import Form from "components/Forms/Form";
 // import Calculator from "components/Calculator/Calculator";
 const Calculator = dynamic(() => import("components/Calculator/Calculator"), {ssr: false});
-import EqualHeightContainer from "components/Blocks/EqualHeight";
-import Container from "components/Blocks/Container";
+// import EqualHeightContainer from "components/Blocks/EqualHeight";
+// import Container from "components/Blocks/Container";
 import Disclosure from "components/Disclosure/Disclosure";
 import CXCalc from "components/Calculator/CXCalculator";
 import CXCalcResults from "components/Calculator/CXCalculatorResults";
@@ -26,7 +26,7 @@ const isBlock = ({checkName, element}) => {
     const internalLinkRegEx = new RegExp(/(cxcu|(www\.connexus)|local|wpengine)/, 'i');
     switch(checkName) {
         case 'isInternalLink':
-            return (name === "a" && (internalLinkRegEx.test(attribs.href) || domainRegEx.test(attribs.href) === false ) && !/(mailto:|tel:)/.test(attribs.href) && !attribs.onClick && !attribs.onclick);
+            return (name === "a" && (internalLinkRegEx.test(attribs.href) || domainRegEx.test(attribs.href) === false ) && !attribs.onClick && !attribs.onclick);
         case 'isDisclosure' : 
             return attribs?.id?.includes('disclosures');
         case 'isFAQItem' : 
@@ -91,12 +91,13 @@ export const parseHtml = (html) => {
     const options = {
         trim: false,
         htmlparser2: {
-            lowerCaseTags: false
+            lowerCaseTags: false,
         },
         replace: (element) => {
             const { name, attribs, children } = element;
             
             if(name !== 'a' && name !== 'div' && name !== 'span' && name !== 'button') {
+                return;
             }
 
             // if(attribs?.onclick) {
@@ -143,17 +144,17 @@ export const parseHtml = (html) => {
                 )
             }
 
-            else if (isBlock({checkName: 'isBlockContainer', element: element})) {
-                return (
-                    <Container classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</Container>
-                )
-            }
+            // else if (isBlock({checkName: 'isBlockContainer', element: element})) {
+            //     return (
+            //         <Container classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</Container>
+            //     )
+            // }
 
-            else if (isBlock({checkName: 'isEqualHeight', element: element})) {
-                return (
-                    <EqualHeightContainer tagName={name} name={attribs['data-equal-height']} classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</EqualHeightContainer>
-                )
-            }
+            // else if (isBlock({checkName: 'isEqualHeight', element: element})) {
+            //     return (
+            //         <EqualHeightContainer tagName={name} name={attribs['data-equal-height']} classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</EqualHeightContainer>
+            //     )
+            // }
 
             else if(isBlock({checkName: 'isFAQItem', element: element})) {
                 const title  = domToReact(findChildren(element, 'data-faq-title', '')[0].children, options); 
@@ -224,6 +225,7 @@ export const parseHtml = (html) => {
             } 
 
             else {
+                return;
             }
         },
     }
