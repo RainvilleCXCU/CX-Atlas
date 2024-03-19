@@ -11,8 +11,6 @@ interface SearchBarProps {
 
 function DesktopSearchBar(props: SearchBarProps) {
 	const [isSearchExpanded, setIsSearchExpanded] = useState(false);
-	const [searchSelected, setSearchSelected] = useState('');
-	const [fetchTimer, setFetchTimer]  = useState(null)
 	const searchRef = useRef(null);
 	const router = useRouter();
 
@@ -27,15 +25,6 @@ function DesktopSearchBar(props: SearchBarProps) {
 		router.push(`/search/?s=${searchRef.current.value}`);
 		setIsSearchExpanded(false);
 	} 
-
-	const searchChange = e => {
-		console.log('searchUpdated');
-		clearTimeout(fetchTimer);
-		setFetchTimer(setTimeout(() => {
-			console.log('Prefetch Search Page');
-			router.prefetch(`/search/?s=${searchRef.current.value}`)
-		  },2000))
-	}
 
 	return (
 		<form className={`cx-search${isSearchExpanded ? ' cx-active' : ''}`} role="search" action="/" onSubmit={submitSearch}>
@@ -57,7 +46,7 @@ function DesktopSearchBar(props: SearchBarProps) {
 			</button>
 
 			<div className="cx-search__input">
-				<input type="search" aria-label="Search" placeholder="Search" id="cxsearch" name="s" ref={searchRef} onChange={searchChange} />
+				<input type="search" aria-label="Search" placeholder="Search" defaultValue="" id="cxsearch" name="s" ref={searchRef} />
 			</div>
 
 			<button type="button" className="cx-search__clear">
@@ -80,7 +69,6 @@ function DesktopSearchBar(props: SearchBarProps) {
 
 function MobileSearchBar(props: SearchBarProps) {
 	const [isSearchExpanded, setIsSearchExpanded] = useState(false);
-	const [fetchTimer, setFetchTimer]  = useState(null)
 	const [searchTerm, setSearchTerm] = useState('');
 	const {navOpen, setNavOpen, logo} = props;
 	const router = useRouter();
@@ -100,15 +88,6 @@ function MobileSearchBar(props: SearchBarProps) {
 		setIsSearchExpanded(false);
 	} 
 
-	const searchChange = e => {
-		console.log('searchUpdated');
-		clearTimeout(fetchTimer);
-		setFetchTimer(setTimeout(() => {
-			console.log('Prefetch Search Page');
-			router.prefetch(`/search/?s=${searchRef.current.value}`)
-		  }, 2000))
-	}
-
 	return (
 		<>
 			<MobileHeader logo={logo} setSearchTerm={setSearchTerm} isSearchExpanded={isSearchExpanded} setIsSearchExpanded={setIsSearchExpanded} navOpen={navOpen} setNavOpen={setNavOpen} />
@@ -117,7 +96,7 @@ function MobileSearchBar(props: SearchBarProps) {
 					<div className="modal-content cx-search-mobile__content">
 						<div className={`modal-body cx-search-mobile__body${isSearchExpanded ? ' cx-search-mobile__body--show' : ''}`}>
 							<div className="cx-search-mobile__input">
-								<input type="search" aria-label="Search" value={searchTerm} placeholder="Search the site..." id="cxMobileSearch" name="s" ref={searchRef} onChange={searchChange} />
+								<input type="search" aria-label="Search" defaultValue="" placeholder="Search the site..." id="cxMobileSearch" name="s" ref={searchRef} />
 							</div>
 							<button type="button" className={`cx-search-mobile__clear${ searchTerm !== '' ? ' show' : ''}`}
 								onClick={() => {

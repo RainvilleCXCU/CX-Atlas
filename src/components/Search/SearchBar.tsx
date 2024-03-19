@@ -8,7 +8,6 @@ export interface Props {
 function SearchBar({ showBtn = true }: Props): JSX.Element {
 	const searchInlineRef = useRef(null);
 	const router = useRouter();
-	const [fetchTimer, setFetchTimer]  = useState(null)
 	const { searchCursor, s = "" } = useRouter().query;
 
 	const submitSearch = (e) => {
@@ -19,15 +18,6 @@ function SearchBar({ showBtn = true }: Props): JSX.Element {
 	useEffect(() => {
 		searchInlineRef.current.value = s;
 	}, [s]);
-
-	const searchChange = e => {
-		console.log('searchUpdated');
-		clearTimeout(fetchTimer);
-		setFetchTimer(setTimeout(() => {
-			console.log('Prefetch Search Page');
-			router.prefetch(`/search/?s=${searchInlineRef.current.value}`)
-		  },2000))
-	}
 
 	return (
 		<div className="cx-search__search-bar">
@@ -41,7 +31,6 @@ function SearchBar({ showBtn = true }: Props): JSX.Element {
 						id="cxsearch"
 						name="s"
 						ref={searchInlineRef}
-						onChange={searchChange}
 					/>
 					{showBtn && (
 						<button
