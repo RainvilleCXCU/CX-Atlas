@@ -27,6 +27,8 @@ const isBlock = ({checkName, element}) => {
     switch(checkName) {
         case 'isInternalLink':
             return (name === "a" && (internalLinkRegEx.test(attribs.href) || domainRegEx.test(attribs.href) === false ) && !attribs.onClick && !attribs.onclick);
+        case 'isCiscoBubbleChat' : 
+            return name === 'a' && attribs && attribs.class?.includes('chat_bubble');
         case 'isDisclosure' : 
             return attribs?.id?.includes('disclosures');
         case 'isFAQItem' : 
@@ -40,8 +42,6 @@ const isBlock = ({checkName, element}) => {
             return attribs && attribs['data-equal-height'];
         case 'isCalculator' : 
             return attribs && attribs['data-calculator-name'];
-        case 'isCiscoBubbleChat' : 
-            return name === 'a' && attribs && attribs.class?.includes('chat_bubble');
         case 'isLinkLibrary' : 
             return attribs && attribs['data-link-library-cats'];
         case 'isBlockContainer' : 
