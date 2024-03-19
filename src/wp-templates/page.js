@@ -67,7 +67,9 @@ export default function Component(props) {
 			<div id="page" className="container site">
 				<main id="main" className="content content-single">
 					<article className="entry-content">
-						{parseHtml(content ? content.toString() : "")}
+            { content && 
+                parseHtml(content.toString())
+            }
 					</article>
 				</main>
 			</div>
