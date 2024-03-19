@@ -107,10 +107,8 @@ export const parseHtml = (html) => {
                 )
             } 
             else if (isBlock({checkName:'isInternalLink', element: element})) {
-                const href = attribs.href;
-                delete attribs.href;
                 return (
-                    <Link href={href.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} {...attributesToProps(attribs)}>{domToReact(children, options)}</Link>
+                    <Link {...attributesToProps(attribs)}>{domToReact(children, options)}</Link>
                 );
             }
 
