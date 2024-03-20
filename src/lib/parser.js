@@ -13,7 +13,6 @@ import CXCalc from "components/Calculator/CXCalculator";
 import CXCalcResults from "components/Calculator/CXCalculatorResults";
 import Scheduler from "components/Salesforce/scheduler";
 
-const domainRegEx = new RegExp(/(http)/, 'i');
 const internalLinkRegEx = new RegExp(/(cxcu|(www\.connexus)|local|wpengine)/, 'i');
 
 const findChildren = (element, att, value) => {
@@ -31,9 +30,6 @@ const findChildren = (element, att, value) => {
 }
 
 export const parseHtml = (html) => {
-    const start = performance.now();
-
-
     const options = {
         trim: false,
         htmlparser2: {
@@ -41,20 +37,23 @@ export const parseHtml = (html) => {
         },
         replace: (element) => {
             const { name, attribs, children } = element;
-            
+            // Skip none block elements
             if(name !== 'a' && name !== 'div' && name !== 'span' && name !== 'button') {
                 return;
             }
+
             // Cisco Chat Button
-            if(name === 'a' && attribs && attribs.class?.includes('chat_bubble')) {
+            else if(name === 'a' && attribs && attribs.class?.includes('chat_bubble')) {
                 return (
                     <Chat className={attribs.class}>{domToReact(children, options)}</Chat>
                 )
             } 
             // Internal Link
-            else if (name === "a" && (internalLinkRegEx.test(attribs.href) || domainRegEx.test(attribs.href) === false ) && !attribs.onClick && !attribs.onclick) {
+            else if (name === "a" && (internalLinkRegEx.test(attribs.href) || attribs.href.includes('http') === false ) && !attribs.onClick && !attribs.onclick) {                
+                const href = attribs.href;
+                delete attribs.href;
                 return (
-                    <Link {...attributesToProps(attribs)}>{domToReact(children, options)}</Link>
+                    <Link href={href.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} {...attributesToProps(attribs)}>{domToReact(children, options)}</Link>
                 );
             }
 
@@ -166,9 +165,5 @@ export const parseHtml = (html) => {
             }
         },
     }
-    const results = parse(html, options);
-
-    const end = performance.now();
-    console.log(`Execution time: ${end - start} ms`);
-    return results;
+    return parse(html, options);
 };
