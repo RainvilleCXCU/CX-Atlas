@@ -50,6 +50,10 @@ export const parseHtml = (html) => {
             } 
             // Internal Link
             else if (name === "a" && (internalLinkRegEx.test(attribs.href) || domainRegEx.test(attribs.href) === false ) && !attribs.onClick && !attribs.onclick) {
+                attribs = {
+                    ...attribs,
+                    href : attribs.href.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')
+                }
                 return (
                     <Link {...attributesToProps(attribs)}>{domToReact(children, options)}</Link>
                 );
