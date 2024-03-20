@@ -11,7 +11,6 @@ interface SearchBarProps {
 
 function DesktopSearchBar(props: SearchBarProps) {
 	const [isSearchExpanded, setIsSearchExpanded] = useState(false);
-	const [searchSelected, setSearchSelected] = useState('');
 	const searchRef = useRef(null);
 	const router = useRouter();
 
@@ -47,7 +46,7 @@ function DesktopSearchBar(props: SearchBarProps) {
 			</button>
 
 			<div className="cx-search__input">
-				<input type="search" aria-label="Search" placeholder="Search" id="cxsearch" name="s" ref={searchRef} />
+				<input type="search" aria-label="Search" placeholder="Search" defaultValue="" id="cxsearch" name="s" ref={searchRef} />
 			</div>
 
 			<button type="button" className="cx-search__clear">
@@ -73,6 +72,7 @@ function MobileSearchBar(props: SearchBarProps) {
 	const [searchTerm, setSearchTerm] = useState('');
 	const {navOpen, setNavOpen, logo} = props;
 	const router = useRouter();
+	const searchRef = useRef(null);
 
 	useEffect(() => {
 		if (isSearchExpanded) {
@@ -84,7 +84,7 @@ function MobileSearchBar(props: SearchBarProps) {
 
 	const submitSearch = (e) => {
 		e.preventDefault();
-		router.push(`/search/?s=${searchTerm}`);
+		router.push(`/search/?s=${searchRef.current.value}`);
 		setIsSearchExpanded(false);
 	} 
 
@@ -96,7 +96,7 @@ function MobileSearchBar(props: SearchBarProps) {
 					<div className="modal-content cx-search-mobile__content">
 						<div className={`modal-body cx-search-mobile__body${isSearchExpanded ? ' cx-search-mobile__body--show' : ''}`}>
 							<div className="cx-search-mobile__input">
-								<input type="search" aria-label="Search" value={searchTerm} placeholder="Search the site..." id="cxMobileSearch" name="s" onChange={(e) => setSearchTerm(e.target.value)} />
+								<input type="search" aria-label="Search" defaultValue="" placeholder="Search the site..." id="cxMobileSearch" name="s" ref={searchRef} />
 							</div>
 							<button type="button" className={`cx-search-mobile__clear${ searchTerm !== '' ? ' show' : ''}`}
 								onClick={() => {

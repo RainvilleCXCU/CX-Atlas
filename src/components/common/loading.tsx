@@ -11,10 +11,12 @@ function Loading({ type = 'lines' }): JSX.Element {
   const loadingTimeout: string = (process.env.NEXT_PUBLIC_loadingTimeout as string) ?? '1000';
   console.log(`Timeout for loader: ${loadingTimeout} - ${process.env.NEXT_PUBLIC_loadingTimeout}`)
   useEffect(() => {
-    router.events.on('routeChangeStart', () => {
-      setLoadingTimer(setTimeout(() => {
-        setIsLoading(true)
-      }, parseInt(loadingTimeout)));
+    router.events.on('routeChangeStart', (e) => {
+      if(e !== router.asPath) {
+        setLoadingTimer(setTimeout(() => {
+          setIsLoading(true)
+        }, parseInt(loadingTimeout)));
+      }
     })
     router.events.on('routeChangeComplete', () => {
       setIsLoading(false);
@@ -25,10 +27,12 @@ function Loading({ type = 'lines' }): JSX.Element {
       clearTimeout(loadingTimer);
     })
     return () => {
-      router.events.off('routeChangeStart', () => {
-        setLoadingTimer(setTimeout(() => {
-          setIsLoading(true)
-        }, parseInt(loadingTimeout)));
+      router.events.off('routeChangeStart', e => {
+        if(e !== router.asPath) {
+          setLoadingTimer(setTimeout(() => {
+            setIsLoading(true)
+          }, parseInt(loadingTimeout)));
+        }
       })
       router.events.off('routeChangeComplete', () => {
         setIsLoading(false);
