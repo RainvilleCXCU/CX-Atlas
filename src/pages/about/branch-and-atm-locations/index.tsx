@@ -413,7 +413,7 @@ Page.variables = () => {
   `;
 
 export function getStaticProps(ctx) {
-	return getNextStaticProps(ctx, {Page, revalidate: parseInt(process.env.PAGE_REVALIDATION) ? parseInt(process.env.PAGE_REVALIDATION) : null});
+	return getNextStaticProps(ctx, {Page, revalidate: process.env.NEXT_PUBLIC_PAGE_REVALIDATION ? parseInt(process.env.NEXT_PUBLIC_PAGE_REVALIDATION) : null});
   }
 
 
@@ -421,7 +421,7 @@ export function getStaticProps(ctx) {
 // 	return getNextStaticProps(context, {
 // 		Page,
 // 		client,
-// 		revalidate: parseInt(process.env.PAGE_REVALIDATION) ? parseInt(process.env.PAGE_REVALIDATION) : null,
+// 		revalidate: parseInt(process.env.NEXT_PUBLIC_PAGE_REVALIDATION) ? parseInt(process.env.NEXT_PUBLIC_PAGE_REVALIDATION) : null,
 // 	});
 // }
 
