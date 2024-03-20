@@ -8,8 +8,7 @@ function Loading({ type = 'lines' }): JSX.Element {
   const [loadingTimer, setLoadingTimer]  = useState(null)
   const router = useRouter();
   
-  const loadingTimeout: string = (process.env.NEXT_PUBLIC_loadingTimeout as string) ?? '1000';
-  console.log(`Timeout for loader: ${loadingTimeout} - ${process.env.NEXT_PUBLIC_loadingTimeout}`)
+  const loadingTimeout: string = process.env.NEXT_PUBLIC_loadingTimeout ? (process.env.NEXT_PUBLIC_loadingTimeout as string) : '1000';
   useEffect(() => {
     router.events.on('routeChangeStart', (e) => {
       if(e !== router.asPath) {
