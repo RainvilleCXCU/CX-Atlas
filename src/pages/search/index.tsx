@@ -15,7 +15,7 @@ import { Pagination } from 'components';
 import { getNextServerSideProps } from '@faustwp/core';
 import { GetServerSidePropsContext } from 'next';
 
-import {gql} from 'graphql-tag';
+import { gql } from '@apollo/client';
 import { useRouter } from 'next/router';
 import Categories from 'components/Posts/categories';
 

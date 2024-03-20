@@ -7,7 +7,7 @@ export default function Page(props) {
 
 export function getStaticProps(ctx) {
   return getWordPressProps({ ctx,
-    revalidate: parseInt(process.env.PAGE_REVALIDATION) ? parseInt(process.env.PAGE_REVALIDATION) : null, 
+    revalidate: process.env.NEXT_PUBLIC_PAGE_REVALIDATION ? parseInt(process.env.NEXT_PUBLIC_PAGE_REVALIDATION) : null, 
     extra: {
       query: {
         page: getPageNum(ctx.params.wordpressNode)
