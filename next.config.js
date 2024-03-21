@@ -40,7 +40,7 @@ let nextConfig = {
                 destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/:path*`,
                 has: [{
                     type: 'query',
-                    key: 'rv_preview'
+                    key: 'preview'
                 },{
                     type: 'query',
                     key: 'page_id'
