@@ -377,6 +377,7 @@ Page.variables = () => {
 		searchRadius
 		apiBrowserKey
 		mapType
+		distanceUnit
 		zoomLevel
 		urlLabel
 		streetview

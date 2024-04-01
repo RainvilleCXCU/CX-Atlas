@@ -76,6 +76,17 @@ function Disclosure({ children }) {
 			container[0].classList.toggle("expanded");
 			expandButton.innerHTML = expandButton.innerHTML === "+ Expand" ? "- Collapse" : "+ Expand";
 		}
+		function removeDatatrac () {
+			Array.prototype.forEach.call(document.querySelectorAll('.datatrac-wrapper:not(.datatrac-wrapper__disclosure'), function(element) {
+				element.closest('.cx-section').remove();
+			});
+			Array.prototype.forEach.call(document.querySelectorAll('.datatrac-wrapper__disclosure'), function(element) {
+				element.remove();
+			});
+		}
+		if(document.querySelectorAll('.datatrac-wrapper:not(.datatrac-wrapper__disclosure').length === 0) {
+			removeDatatrac();
+		}
 	}, []);
 
 	return <>{children}</>;
