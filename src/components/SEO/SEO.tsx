@@ -58,7 +58,7 @@ const SEO = ({
 
 	return (
 		<Head>
-			<title>{`${title} - ${title}`}</title>
+			<title>{`${title} - ${ogSite_Name}`}</title>
 			<meta name="description" content={metaDesc} />
 			<link
 				rel="canonical"

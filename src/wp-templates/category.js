@@ -29,7 +29,7 @@ export default function Component(props) {
   return (
     <>
       <SEO
-				title={title}
+				title={seo?.title}
 				metaDesc={seo?.metaDesc}
 				canonicalURL={seo?.canonical ? seo?.canonical : link} //I'm unsure about this. Changing the canonical URL in Yoast doesn't seem to do anything...
 				ogType={seo?.opengraphType}
