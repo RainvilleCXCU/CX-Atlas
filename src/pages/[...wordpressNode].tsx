@@ -18,7 +18,7 @@ export function getStaticProps(ctx) {
 export async function getStaticPaths() {
   return {
     paths: [
-      '/'
+      { page: '/' }
     ],
     fallback: 'blocking',
   };
