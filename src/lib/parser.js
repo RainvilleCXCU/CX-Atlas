@@ -127,7 +127,9 @@ export const parseHtml = (html) => {
 
             // Form
             else if(attribs?.class?.includes('nf-form-cont')) {
-                return <Form id={parseInt(attribs?.id.split('-')[2])} />
+                return ( 
+                    <Form id={attribs?.id.split('-')[2]} /> 
+                );
             }
 
             // Disclosures
