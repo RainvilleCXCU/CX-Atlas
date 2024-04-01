@@ -9,3 +9,12 @@ export function getStaticProps(ctx) {
     revalidate: process.env.NEXT_PUBLIC_PAGE_REVALIDATION ? parseInt(process.env.NEXT_PUBLIC_PAGE_REVALIDATION) : null
   });
 }
+
+export async function getStaticPaths() {
+  return {
+    paths: [
+      '/'
+    ],
+    fallback: 'blocking',
+  };
+}
