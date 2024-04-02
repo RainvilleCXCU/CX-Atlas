@@ -12,6 +12,7 @@ import Disclosure from "components/Disclosure/Disclosure";
 import CXCalc from "components/Calculator/CXCalculator";
 import CXCalcResults from "components/Calculator/CXCalculatorResults";
 import Scheduler from "components/Salesforce/scheduler";
+import DataTracComparison from "components/Datatrac/Comparison";
 
 const internalLinkRegEx = new RegExp(/(cxcu|(www\.connexus)|local|wpengine)/, 'i');
 
@@ -38,18 +39,18 @@ export const parseHtml = (html) => {
         replace: (element) => {
             const { name, attribs, children } = element;
             // Skip none block elements
-            if(name !== 'a' && name !== 'div' && name !== 'span' && name !== 'button') {
+            if(name !== 'a' && name !== 'div' && name !== 'span' && name !== 'button' && name !== 'p' && name !== 'h3') {
                 return;
             }
 
             // Cisco Chat Button
-            else if(name === 'a' && attribs && attribs.class?.includes('chat_bubble')) {
+            else if(name === 'a' && attribs?.class?.includes('chat_bubble')) {
                 return (
                     <Chat className={attribs.class}>{domToReact(children, options)}</Chat>
                 )
             } 
             // Internal Link
-            else if (name === "a" && (internalLinkRegEx.test(attribs.href) || attribs.href.includes('http') === false ) && !attribs.onClick && !attribs.onclick) {                
+            else if (name === "a") {                
                 return (
                     <Link {...attributesToProps(attribs)}>{domToReact(children, options)}</Link>
                 );
@@ -70,28 +71,28 @@ export const parseHtml = (html) => {
             } 
 
             // Responsive Table
-            else if (name === 'table' && attribs && attribs.class && attribs.class.includes("tablepress-responsive")) {
+            else if (name === 'table' && attribs?.class.includes("tablepress-responsive")) {
                 return (
                     <div className="cx-table--responsive"><table {...attributesToProps(attribs)}>{domToReact(children, options)}</table></div>
                 )
             }
 
             // Block Container 
-            else if (attribs && attribs.class && attribs.class.includes("gb-block-container")) {
+            else if (attribs?.class?.includes("gb-block-container")) {
                 return (
                     <Container classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</Container>
                 )
             }
 
             // Equal Height
-            else if (attribs && attribs['data-equal-height']) {
+            else if (attribs?.['data-equal-height']) {
                 return (
                     <EqualHeightContainer tagName={name} name={attribs['data-equal-height']} classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</EqualHeightContainer>
                 )
             }
 
             // FAQ 
-            else if(attribs && attribs.class && attribs.class.includes("ewd-ufaq-faq-div")) {
+            else if(attribs?.class?.includes("ewd-ufaq-faq-div")) {
                 const title  = domToReact(findChildren(element, 'data-faq-title', '')[0].children, options); 
                 const content = domToReact(findChildren(element, 'data-faq-content', '')[0].children, options);
                 return (
@@ -99,29 +100,30 @@ export const parseHtml = (html) => {
                 )
             }
             // DinkyTown Calc
-            else if (attribs && attribs['data-calculator-name']) {
+            else if (attribs?.['data-calculator-name']) {
                 return (
                     <Calculator calculatorName={attribs['data-calculator-name']}></Calculator>
                 )
             }
 
+            // Disclosures
+            else if(attribs?.id?.includes('disclosures')) {
+                return (
+                    <Disclosure {...attributesToProps(attribs)}>{domToReact(children, options)}</Disclosure>
+                )
+            }
+
             // Datatrac
-            else if (attribs && attribs.class && attribs.class.includes("gb-block-container") && /(data-datatrac-perform)/gi.test(html)) {
-                const children = findChildren(element, 'data-datatrac-perform', '');
-                let showContainer = true;
-                children.forEach(el => {
-                    if(el.attribs && el.attribs['data-datatrac-perform'] === 'false') {
-                        showContainer = false;
-                    }
-                })
-                return ( showContainer ? element : <></>);
+            else if (attribs?.['data-datatrac-perform']) {
+                return ( 
+                    <DataTracComparison performs={attribs?.['data-datatrac-perform']}>{domToReact(children, options)}</DataTracComparison>
+                );
             }
 
             // Link Library
-            else if(attribs && attribs['data-link-library-cats']) {
-                const cats = JSON.parse(attribs?.['data-link-library-cats']);
+            else if(attribs?.['data-link-library-cats']) {
                 return (
-                    <LinkLibrary cat_ids={cats} {...attributesToProps(attribs)}>{domToReact(children, options)}</LinkLibrary>
+                    <LinkLibrary cat_ids={JSON.parse(attribs?.['data-link-library-cats'])} {...attributesToProps(attribs)}>{domToReact(children, options)}</LinkLibrary>
                 )
             }
 
@@ -130,11 +132,6 @@ export const parseHtml = (html) => {
                 return ( 
                     <Form id={attribs?.id.split('-')[2]} /> 
                 );
-            }
-
-            // Disclosures
-            else if(attribs?.id?.includes('disclosures')) {
-                return <Disclosure {...attributesToProps(attribs)}>{domToReact(children, options)}</Disclosure>
             }
 
             // Salesforce Scheduler
