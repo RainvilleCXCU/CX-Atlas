@@ -25,27 +25,27 @@ export function getStaticProps(ctx) {
 
 export async function getStaticPaths() {
   // Get all Paths in Header Navigation
-  // const { data } = await apolloClient.query({
-  //   query: gql`
-  //   ${MenuNavigation.fragments.entry}
-  //   query GetMenuItems(
-  //     $headerLocation: MenuLocationEnum
-  //   ) {
-  //   headerMenuItems: menuItems(where: { location: $headerLocation }, first: 255) {
-  //     nodes {
-  //       ...NavigationMenuItemFragment
-  //     }
-  //   }}`,
-  //   variables: {
-  //     headerLocation: MENUS.PRIMARY_LOCATION,
-  //   }
-  // })
-  // const paths = data.headerMenuItems.nodes.map(item => {
-  //   if(item.uri[0] === '/') {
-  //     return item.uri
-  //   }
-  // }).filter(uri => uri !== undefined && uri !== '/about/branch-and-atm-locations/');
-  // paths.push('/rates/');
+  const NavData = await apolloClient.query({
+    query: gql`
+    ${MenuNavigation.fragments.entry}
+    query GetMenuItems(
+      $headerLocation: MenuLocationEnum
+    ) {
+    headerMenuItems: menuItems(where: { location: $headerLocation }, first: 255) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }}`,
+    variables: {
+      headerLocation: MENUS.PRIMARY_LOCATION,
+    }
+  })
+  const navPaths = NavData.data.headerMenuItems.nodes.map(item => {
+    if(item.uri[0] === '/') {
+      return item.uri
+    }
+  }).filter(uri => uri !== undefined && uri !== '/about/branch-and-atm-locations/');
+  navPaths.push('/rates/');
 
   /**
    * Pre Render all Pages and Posts
@@ -88,11 +88,11 @@ export async function getStaticPaths() {
     (uri) => uri !== undefined
   );
 
+  let paths = process.env.NEXT_PUBLIC_PREBUILD_PAGESPOSTS === 'true' ? [...pages,...posts] : process.env.NEXT_PUBLIC_PREBUILD_NAVIGATION === 'true' ? navPaths : [];
+
+
   return {
-    paths: [
-      ...pages,
-      ...posts
-    ],
+    paths: paths,
     fallback: "blocking",
   };
 }
