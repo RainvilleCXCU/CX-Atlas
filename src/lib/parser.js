@@ -39,7 +39,7 @@ export const parseHtml = (html) => {
         replace: (element) => {
             const { name, attribs, children } = element;
             // Skip none block elements
-            if(name !== 'a' && name !== 'div' && name !== 'span' && name !== 'button' && name !== 'p' && name !== 'h3') {
+            if(name !== 'a' && name !== 'div' && name !== 'span' && name !== 'button' && name !== 'p' && name !== 'h3' && name !== 'table') {
                 return;
             }
 
@@ -56,22 +56,8 @@ export const parseHtml = (html) => {
                 );
             }
 
-            // CX Calculator Results
-            else if(attribs?.class?.includes('cx-calculator-results')) {
-                return (
-                    <div {...attributesToProps(attribs)}><CXCalcResults>{children}</CXCalcResults></div>
-                )
-            } 
-
-            // CX Calculator
-            else if(attribs?.class?.includes('cx-calculator')) {
-                return (
-                    <div {...attributesToProps(attribs)}><CXCalc>{children}</CXCalc></div>
-                )
-            } 
-
             // Responsive Table
-            else if (name === 'table' && attribs?.class.includes("tablepress-responsive")) {
+            else if (name === 'table' && attribs?.class?.includes("tablepress-responsive")) {
                 return (
                     <div className="cx-table--responsive"><table {...attributesToProps(attribs)}>{domToReact(children, options)}</table></div>
                 )
@@ -112,6 +98,20 @@ export const parseHtml = (html) => {
                     <Disclosure {...attributesToProps(attribs)}>{domToReact(children, options)}</Disclosure>
                 )
             }
+
+            // CX Calculator Results
+            else if(attribs?.class?.includes('cx-calculator-results')) {
+                return (
+                    <div {...attributesToProps(attribs)}><CXCalcResults>{children}</CXCalcResults></div>
+                )
+            } 
+
+            // CX Calculator
+            else if(attribs?.class?.includes('cx-calculator')) {
+                return (
+                    <div {...attributesToProps(attribs)}><CXCalc>{children}</CXCalc></div>
+                )
+            } 
 
             // Datatrac
             else if (attribs?.['data-datatrac-perform']) {
