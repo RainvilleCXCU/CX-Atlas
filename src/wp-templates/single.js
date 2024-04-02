@@ -43,8 +43,8 @@ export default function Component(props) {
 				published_time={seo?.opengraphPublishedTime}
 				modified_time={seo?.opengraphModifiedTime}
 				ogImage={seo?.opengraphImage?.mediaItemUrl}
-				ogImageWidth={seo?.opengraphImage?.mediaDetails.width}
-				ogImageHeight={seo?.opengraphImage?.mediaDetails.height}
+				ogImageWidth={seo?.opengraphImage?.mediaDetails?.width}
+				ogImageHeight={seo?.opengraphImage?.mediaDetails?.height}
 				ogImageType={seo?.opengraphImage?.mimeType}
 				twitter_card={"summary_large_image"} // Not sure where this is in the page object
 				twitter_label1={"Est. reading time"} // Not sure where this is in the page object
@@ -83,7 +83,7 @@ export default function Component(props) {
             </aside>
             <div className='post-content'>
               <header className='entry-header'>
-                {featuredImage?.node?.sourceUrl && 
+                {featuredImage && featuredImage?.node?.sourceUrl && 
                   <div className='featured-image'>
                     <Image src={featuredImage?.node.sourceUrl?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={featuredImage.node.mediaDetails.width} height={featuredImage.node.mediaDetails.height} />
                   </div>
