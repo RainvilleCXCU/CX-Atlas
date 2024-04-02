@@ -50,36 +50,27 @@ export async function getStaticPaths() {
   /**
    * Pre Render all Pages and Posts
    */
+  let pages, posts = [];
 
-  const pageData = await apolloClient.query({
+  const pathData = await apolloClient.query({
     query: gql`
-      query GetAllPages {
+      query GetAllPagesAndPages {
         pages(first: 255, where: {status: PUBLISH}) {
-          edges {
-            node {
-              uri
-            }
+          nodes {
+            uri
           }
         }
-      }
-    `,
-  });
-  const postData = await apolloClient.query({
-    query: gql`
-      query GetAllPosts {
         posts(first: 255, where: {status: PUBLISH}) {
-          edges {
-            node {
-              uri
-            }
+          nodes {
+            uri
           }
         }
       }
     `,
   });
-  const pages = pageData.data.pages.nodes
+  pages = pathData.data.pages.nodes
     .map((item) => {
-      if (item.uri[0] === '/' && item !== '/') {
+      if (item.uri && item.uri[0] === '/' && item.uri !== '/') {
         return item.uri;
       }
     })
@@ -87,9 +78,9 @@ export async function getStaticPaths() {
       (uri) => uri !== undefined && uri !== "/about/branch-and-atm-locations/"
     );
 
-  const posts = postData.data.headerMenuItems.nodes
+  posts = pathData.data.posts.nodes
   .map((item) => {
-    if (item.uri[0] === '/' && item !== '/') {
+    if (item.uri && item.uri[0] === '/' && item.uri !== '/') {
       return item.uri;
     }
   })
