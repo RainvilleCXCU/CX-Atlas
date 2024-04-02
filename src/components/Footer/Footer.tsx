@@ -95,7 +95,6 @@ function Footer({ copyrightHolder = "", title, logo, menuItems, footerUtilities,
 									</button>
 									{}
 								</div>
-								<div>NMLS ID 649316</div>
 							</div>
 						</li>
 					</ul>
