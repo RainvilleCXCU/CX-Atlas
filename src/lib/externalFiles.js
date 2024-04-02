@@ -47,9 +47,5 @@ export const files = {
             id: 'cisco-chat',
             src: '/wp-content/themes/CXCU/vendors/cisco-chat/scripts.js',
         },
-        {
-            id: 'vimeo',
-            src: `https://player.vimeo.com/api/player.js`
-        }
     ]
 }
