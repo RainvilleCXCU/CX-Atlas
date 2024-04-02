@@ -2,8 +2,9 @@ import Link from 'next/link';
 import UtilityNavLinks from './UtilityNavLinks';
 import MenuNavigation from 'components/Navigation/Navbar';
 import { useEffect, useState } from 'react';
+import { parseHtml } from 'lib/parser';
 
-export default function MobileNav({ links, menuOpen = false, navOpen, setNavOpen, children = <></> }) {
+export default function MobileNav({ links, menuOpen = false, navOpen, setNavOpen, headerSettings, children = <></> }) {
     //const [navOpen, setNavOpen] = useState(false);
     useEffect(() => {
         if(navOpen) {
@@ -24,22 +25,37 @@ export default function MobileNav({ links, menuOpen = false, navOpen, setNavOpen
                     setNavOpen(false);
                 }}></button>
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 cx-nav__navbar">
-                <li className="nav-item cx-nav__item">
-                    <Link className="nav-link cx-nav__link cx-nav__link--primary" href="/mdr?loc=LStUVVkwNi1DO1c1Tj0nLTYsQGBgCmAK&login=mobile">Log in</Link>
-                </li>
-                <li className="nav-item cx-nav__item">
-                    <Link href="/pay-my-loan/" passHref className="nav-link cx-nav__link cx-nav__link--primary"
+
+                {
+                    headerSettings?.headerButtonsMobile && headerSettings?.headerButtonsMobile !== '' ?
+                    <li className="cx-nav__buttons header-buttons-mobile"
                     onClick={() => {
                         setNavOpen(false);
-                    }}>Pay my loan</Link>
-                </li>
+                    }}>
+                        {parseHtml(headerSettings.headerButtonsMobile)}
+                    </li>
+                     :
+                    <>
+                        <li className="nav-item cx-nav__item">
+                            <Link className="nav-link cx-nav__link cx-nav__link--primary" href="/mdr?loc=LStUVVkwNi1DO1c1Tj0nLTYsQGBgCmAK&login=mobile">Log in</Link>
+                        </li>
+                        <li className="nav-item cx-nav__item">
+                            <Link href="/pay-my-loan/" passHref className="nav-link cx-nav__link cx-nav__link--primary"
+                            onClick={() => {
+                                setNavOpen(false);
+                            }}>Pay my loan</Link>
+                        </li>
+                    </>
+                }
+
+
                 <div className="accordion accordion-flush" id="cxNavAccordion">
                     <MenuNavigation device="Mobile" menuItems={links} menuOpen={menuOpen} setNavOpen={setNavOpen} />
                     <span className="cx-nav__items"
                     onClick={() => {
                         setNavOpen(false);
                     }}>
-                    <UtilityNavLinks />
+                    <UtilityNavLinks headerUtilities={headerSettings.headerUtilitiesMobile}  />
                     </span>
                 </div>
             </ul>

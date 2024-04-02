@@ -66,7 +66,7 @@ function Header({
                   <SearchBar logo={logo} device="mobile" setNavOpen={setNavOpen} navOpen={navOpen} />
                 }
                 {showNavigation &&
-                  <MobileNav links={menuItems} menuOpen={navOpen} navOpen={navOpen} setNavOpen={setNavOpen} />
+                  <MobileNav headerSettings={headerSettings} links={menuItems} menuOpen={navOpen} navOpen={navOpen} setNavOpen={setNavOpen} />
                 }
               </nav>
             }
