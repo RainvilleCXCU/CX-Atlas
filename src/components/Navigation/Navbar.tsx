@@ -60,7 +60,7 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                                                             onClick={() => {
                                                                                 setIsNavExpanded(!isNavExpanded);
                                                                                 setNavSelected('');
-                                                                            }}>{navLink.label ?? ""}
+                                                                            }}>{parseHtml(navLink.label ?? "")}
                                                                         </Link>
                                                                     </li>
                                                                 );
@@ -89,7 +89,7 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                                                         onClick={() => {
                                                                             setIsNavExpanded(!isNavExpanded);
                                                                             setNavSelected('');
-                                                                        }}>{navLink.label ?? ""}
+                                                                        }}>{parseHtml(navLink.label ?? "")}
                                                                     </Link>
                                                                 </li>
                                                             );
@@ -157,7 +157,7 @@ function MobileHeaderNavigation(props: HeaderNavigationProps) {
                                                                             <Link href={navLink.uri || ''} passHref className='accordion-item cx-nav__accordion-item-link'
                                                                             onClick={() => {
                                                                                 props.setNavOpen(false);
-                                                                            }}>{navLink.label ?? ""}
+                                                                            }}>{parseHtml(navLink.label ?? "")}
                                                                             </Link>
                                                                         </li>
                                                                     )
