@@ -57,7 +57,7 @@ export const parseHtml = (html) => {
             }
 
             // Responsive Table
-            else if (name === 'table' && attribs?.class.includes("tablepress-responsive")) {
+            else if (name === 'table' && attribs?.class?.includes("tablepress-responsive")) {
                 return (
                     <div className="cx-table--responsive"><table {...attributesToProps(attribs)}>{domToReact(children, options)}</table></div>
                 )

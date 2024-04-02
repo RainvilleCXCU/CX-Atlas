@@ -42,6 +42,7 @@ export async function getStaticPaths() {
       return item.uri
     }
   }).filter(uri => uri !== undefined && uri !== '/about/branch-and-atm-locations/');
+  paths.push('/rates/');
   
   return {
     paths: paths,
