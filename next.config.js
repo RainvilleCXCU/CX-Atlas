@@ -1,5 +1,9 @@
 const { withFaust, getWpHostname } = require('@faustwp/core');
 const { fetchWordPressRedirects } = require('./src/utils/redirects');
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+    enabled: process.env.ANALYZE === 'true',
+  })
+  module.exports = withBundleAnalyzer({})
 
 /**
  * @type {import('next').NextConfig}
@@ -174,5 +178,6 @@ let nextConfig = {
         }
     },
     trailingSlash: true,
+    swcMinify: true
 };
-module.exports = withFaust(nextConfig);
+module.exports = withFaust(withBundleAnalyzer(nextConfig));
