@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { EqualHeightElement } from 'react-equal-height/clean';
-import { useMediaQuery } from 'react-responsive'
 
 export interface Props {
     name?,
@@ -25,10 +24,8 @@ function EqualHeightContainer({
             setIsSSR(false);
         }
     }, []);
-
-    const isDesktopOrLaptop = useMediaQuery({
-        query: '(min-width: 782px)'
-    });
+    
+    const isDesktopOrLaptop = true;
 
     const element = React.createElement(tagName, { ...props, className: classNames }, children);
     return (

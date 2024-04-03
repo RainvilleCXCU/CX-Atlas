@@ -2,19 +2,17 @@ import dynamic from "next/dynamic";
 import parse, { domToReact, attributesToProps } from "html-react-parser";
 import Link from "next/link";
 import FAQ from "components/FAQs/faq";
-import Chat from "components/Chat/cisco";
-import LinkLibrary from "components/LinkLibrary/LinkLibrary";
 import Form from "components/Forms/Form";
-const Calculator = dynamic(() => import("components/Calculator/Calculator"), {ssr: false});
 import EqualHeightContainer from "components/Blocks/EqualHeight";
 import Container from "components/Blocks/Container";
 import Disclosure from "components/Disclosure/Disclosure";
-import CXCalc from "components/Calculator/CXCalculator";
-import CXCalcResults from "components/Calculator/CXCalculatorResults";
-import Scheduler from "components/Salesforce/scheduler";
 import DataTracComparison from "components/Datatrac/Comparison";
-
-const internalLinkRegEx = new RegExp(/(cxcu|(www\.connexus)|local|wpengine)/, 'i');
+const LinkLibrary = dynamic(() => import ("components/LinkLibrary/LinkLibrary"), {ssr: false});
+const Chat = dynamic(() => import ("components/Chat/cisco"), {ssr: false});
+const Calculator = dynamic(() => import("components/Calculator/Calculator"), {ssr: false});
+const CXCalc = dynamic(() => import("components/Calculator/CXCalculator"), {ssr: false});
+const CXCalcResults = dynamic(() => import("components/Calculator/CXCalculatorResults"), {ssr: false});
+const Scheduler = dynamic(() => import("components/Salesforce/scheduler"), {ssr: false});
 
 const findChildren = (element, att, value) => {
     let children = [];
