@@ -10,12 +10,13 @@ import {
   SEO,
 } from '../components';
 import { parseHtml } from 'lib/parser';
-import Alert from 'components/Alerts/Alert';
+const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});;
 import Loading from 'components/common/loading';
 import { useRouter } from 'next/router';
 import Posts from '../components/Posts/listing';
 import { getNextStaticProps } from '@faustwp/core';
 import { getPageNum } from 'utils/urlParser';
+import dynamic from 'next/dynamic';
 
 const POSTS_PER_PAGE = 5;
 

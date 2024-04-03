@@ -1,5 +1,6 @@
 import * as MENUS from "constants/menus";
 import { BlogInfoFragment } from "../../../fragments/GeneralSettings";
+import { AlertFragment } from '../../../fragments/Alerts';
 import {
   ThirdPartySettingsFragment,
   GTM,
@@ -11,7 +12,7 @@ import {
 } from "components/ThirdParty";
 import { Header, Footer, MenuNavigation } from "components";
 import { parseHtml } from "lib/parser";
-import Alert from "components/Alerts/Alert";
+const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});
 import Loading from "components/common/loading";
 import Head from "next/head";
 import { useState, useEffect, useContext } from "react";
@@ -38,6 +39,7 @@ import {
 } from "lib/location/geocode";
 import { useRouter } from "next/router";
 import { getNextStaticProps } from "@faustwp/core";
+import dynamic from "next/dynamic";
 export default function Page() {
   const props = useQuery(Page.query, {
     variables: Page.variables(),
@@ -88,6 +90,7 @@ export default function Page() {
   const [isLoading, setLoading] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const activeAlerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
 
   useEffect(() => {
     setLoading(true);
@@ -285,7 +288,11 @@ export default function Page() {
         enabled={personyzeEnabled}
         domains={personyzeDomains}
       />
-      <Alert id={databaseId} />
+        
+      {
+        activeAlerts.length > 0 &&
+        <Alert alerts={activeAlerts} />
+      }
       <Loading />
       <showDetailsContext.Provider value={{ showDetails, setShowDetails }}>
         <selectedLocationContext.Provider
@@ -382,7 +389,7 @@ Page.query = gql`
   ${BlogInfoFragment}
   ${MenuNavigation.fragments.entry}
   ${ThirdPartySettingsFragment}
-  ${Alert.fragments.entry}
+  ${AlertFragment}
   query GetLocationPageData(
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum

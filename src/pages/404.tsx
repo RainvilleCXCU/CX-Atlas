@@ -1,6 +1,8 @@
+import dynamic from 'next/dynamic';
 import { gql } from '@apollo/client';
 import * as MENUS from '../constants/menus';
 import { BlogInfoFragment } from '../fragments/GeneralSettings';
+import { AlertFragment } from 'fragments/Alerts';
 import { ThirdPartySettingsFragment, GTM, HotJar, Personyze, Qualtrics, Spectrum, Siteimprove } from '../components/ThirdParty';
 import {
   Header,
@@ -8,7 +10,6 @@ import {
   MenuNavigation,
   SEO,
 } from '../components';
-import Alert from 'components/Alerts/Alert';
 import Loading from 'components/common/loading';
 import { getNextStaticProps } from '@faustwp/core';
 import { GetStaticPropsContext } from 'next';
@@ -17,6 +18,7 @@ import Columns from 'components/Blocks/Columns';
 import Column from 'components/Blocks/Column';
 import SearchBar from 'components/Search/SearchBar';
 import Link from 'next/link';
+const Alert = dynamic(() => import('../components/Alerts/Alert'), {ssr: false});
 
 export default function Component(props) {
   // Loading state for previews
@@ -32,6 +34,7 @@ export default function Component(props) {
   const { title, content, seo, link, featuredImage } = props?.data?.page ?? { title: '' };
   const headerSettings = props?.data?.headerSettings; 
   const { footerUtilities, footerAppIcons, footerSocialIcons } = props?.data?.footerSettings;
+  const activeAlerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
 
   return (
     <>
@@ -66,7 +69,11 @@ export default function Component(props) {
         id={personyzeId}
         enabled={personyzeEnabled}
         domains={personyzeDomains} />
-			<Alert id={databaseId} />
+        
+        {
+          activeAlerts.length > 0 &&
+          <Alert alerts={activeAlerts} />
+        }
 			<Loading /> 
 			<Header
 				title={title}
@@ -146,7 +153,7 @@ Component.query = gql`
   ${BlogInfoFragment}
   ${MenuNavigation.fragments.entry}
   ${ThirdPartySettingsFragment}
-  ${Alert.fragments.entry}
+  ${AlertFragment}
   query Get404(
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
