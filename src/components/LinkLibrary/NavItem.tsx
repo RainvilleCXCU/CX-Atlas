@@ -65,7 +65,7 @@ function LinkLibraryCatLinks({ categories, type = 'link' }: Props): JSX.Element 
                     onChange={(e) => {
                         e.preventDefault();
                         showCategory(JSON.parse(e.currentTarget.value));
-                    }} value={state?.linkLibrary?.activeCat?.id}>
+                    }} value={JSON.stringify(state?.linkLibrary?.activeCat ? state?.linkLibrary?.activeCat : categories[0])}>
                     {
                         categories?.map((category, index) => (
                             <option value={JSON.stringify(category)} key={`category-option-${category.id}`}
