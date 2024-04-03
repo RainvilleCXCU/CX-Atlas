@@ -1,5 +1,6 @@
 import * as MENUS from 'constants/menus';
 import { BlogInfoFragment } from '../../fragments/GeneralSettings';
+import { AlertFragment } from 'fragments/Alerts';
 import { ThirdPartySettingsFragment, GTM, HotJar, Personyze, Qualtrics, Spectrum, Siteimprove } from 'components/ThirdParty';
 import {
   Header,
@@ -7,7 +8,7 @@ import {
   MenuNavigation,
   SEO,
 } from 'components';
-import Alert from 'components/Alerts/Alert';
+const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});
 import Loading from 'components/common/loading';
 import SearchBar from 'components/Search/SearchBar';
 import SearchListing from 'components/Search/Listing';
@@ -18,6 +19,7 @@ import { GetServerSidePropsContext } from 'next';
 import { gql } from '@apollo/client';
 import { useRouter } from 'next/router';
 import Categories from 'components/Posts/categories';
+import dynamic from 'next/dynamic';
 
 const POSTS_PER_PAGE = 5;
 export default function Component(props) {
@@ -35,6 +37,7 @@ export default function Component(props) {
   const currentPage = query?.page?.[0] ? parseInt(query.page[0]) : 1;
   const search = query.s;
   const categories = props?.data?.categories;
+  const activeAlerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
 
   return (
     <>
@@ -69,7 +72,11 @@ export default function Component(props) {
         id={personyzeId}
         enabled={personyzeEnabled}
         domains={personyzeDomains} />
-			<Alert id={databaseId} />
+        
+        {
+          activeAlerts.length > 0 &&
+          <Alert alerts={activeAlerts} />
+        }
 			<Loading /> 
 			<Header
 				title={title}
@@ -130,7 +137,7 @@ Component.query = gql`
   ${BlogInfoFragment}
   ${MenuNavigation.fragments.entry}
   ${ThirdPartySettingsFragment}
-  ${Alert.fragments.entry}
+  ${AlertFragment}
   query GetSearchData(
     $searchTerm: String!
     $offset: String!

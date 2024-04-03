@@ -9,13 +9,14 @@ import {
   MenuNavigation,
   SEO,
 } from '../components';
-import Alert from 'components/Alerts/Alert';
+const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});
 import Loading from 'components/common/loading';
 import { parseHtml } from 'lib/parser';
 import RelatedPosts from 'components/Posts/relatedPosts';
 import Image from 'next/image';
 import { Fragment } from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 
 export default function Component(props) {
 

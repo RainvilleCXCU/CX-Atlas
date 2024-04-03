@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client';
 import * as MENUS from '../../constants/menus';
 import { BlogInfoFragment } from '../../fragments/GeneralSettings';
+import { AlertFragment } from '../../fragments/Alerts';
 import { ThirdPartySettingsFragment, GTM, HotJar, Personyze, Qualtrics, Spectrum, Siteimprove } from '../../components/ThirdParty';
 import {
   Header,
@@ -15,11 +16,12 @@ import {
     ApplyNowMemberFragment
 } from '../../fragments/ApplyWidgets';
 import { parseHtml } from 'lib/parser';
-import Alert from 'components/Alerts/Alert';
+const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});
 import Loading from 'components/common/loading';
 import { GetServerSidePropsContext } from 'next';
 import { getNextServerSideProps } from '@faustwp/core';
 import apolloClient from 'apolloClient';
+import dynamic from 'next/dynamic';
 
 export default function Component(props) {
 
@@ -34,6 +36,7 @@ export default function Component(props) {
     const { footerUtilities, footerAppIcons, footerSocialIcons } = props?.data?.footerSettings;
     
     widget ? widget?.replace(/account=none/gi, `account=${product.title.replace(' ', '-').toLowerCase()}`) : '';
+    const activeAlerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
     
 
     return (
@@ -69,7 +72,11 @@ export default function Component(props) {
                 id={personyzeId}
                 enabled={personyzeEnabled}
                 domains={personyzeDomains} />
-			<Alert id={databaseId} />
+        
+                {
+                  activeAlerts.length > 0 &&
+                  <Alert alerts={activeAlerts} />
+                }
 			<Loading /> 
             <span id='cx-bridge'>
                 <Header
@@ -119,7 +126,7 @@ Component.variables = (props) => {
     ${BlogInfoFragment}
     ${MenuNavigation.fragments.entry}
     ${ThirdPartySettingsFragment}
-    ${Alert.fragments.entry}
+    ${AlertFragment}
     query GetHomePageData(
       $headerLocation: MenuLocationEnum
       $footerLocation: MenuLocationEnum

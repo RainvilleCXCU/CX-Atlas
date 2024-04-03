@@ -10,8 +10,9 @@ import {
   SEO,
 } from '../components';
 import { parseHtml } from 'lib/parser';
-import Alert from 'components/Alerts/Alert';
+const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});;
 import Loading from 'components/common/loading';
+import dynamic from 'next/dynamic';
 
 export default function Component(props) {
   // Loading state for previews
