@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { Fragment, useState } from 'react';
-import Heading from 'components/Heading';
 import { parseHtml } from 'lib/parser';
 import { gql } from '@apollo/client';
 interface HeaderNavigationProps {
@@ -50,7 +49,7 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                                     <li className="cx-nav__dropdown-menu-section">
                                                         {
                                                             title.label != '[column]' &&
-                                                            <Heading level='h2' className='cx-h5 no-margin--top'>{title.label}</Heading>
+                                                            <h2 className='cx-h5 no-margin--top'>{title.label}</h2>
                                                         }
                                                         <ul className="cx-nav__dropdown-menu-list" key={`list-${index}-${title.databaseId}`}>
                                                             {title?.childItems?.nodes?.map((navLink, index) => {
@@ -79,7 +78,7 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                                 <div className='cx-nav__resources'>
                                                     {
                                                         title.label != '[column]' &&
-                                                        <Heading level='h2' className='cx-h5 no-margin--top'>{title.label}</Heading>
+                                                        <h2 className='cx-h5 no-margin--top'>{title.label}</h2>
                                                     }
                                                     <ul className="cx-nav__dropdown-menu-list" key={`list-${index}-${title.databaseId}`}>
                                                         {title?.childItems?.nodes?.map((navLink, index) => {
