@@ -40,16 +40,14 @@ function Alert({ id = 'alertdefault', alerts }: AlertProps): JSX.Element {
         <>
             {(alerts && alerts.length > 0) && alerts.map((post, index) => (
                 <React.Fragment key={`${post?.name}-${index}`}>
-                    {post && post.displayPages.includes(id?.toString()) &&
-                        <div id="alert-banner" className={`cx-alert${showAlert(post.databaseId) ? ' show': ' hidden'}`}>
-                            <button className="cx-alert__close" onClick={closeAlert} data-alert-name={post.databaseId}>&times;</button>
-                            <p className="cx-alert__message">{post.message}
-                                {post.ctaButtonText &&
-                                    <a href={post.ctaButtonUrl} className="cx-alert__cta">{post.ctaButtonText}</a>
-                                }
-                            </p>
-                        </div>
-                    }
+                    <div id="alert-banner" className={`cx-alert${showAlert(post.databaseId) ? ' show': ' hidden'}`}>
+                        <button className="cx-alert__close" onClick={closeAlert} data-alert-name={post.databaseId}>&times;</button>
+                        <p className="cx-alert__message">{post.message}
+                            {post.ctaButtonText &&
+                                <a href={post.ctaButtonUrl} className="cx-alert__cta">{post.ctaButtonText}</a>
+                            }
+                        </p>
+                    </div>
                 </ React.Fragment>
             ))}
         </>
@@ -57,16 +55,3 @@ function Alert({ id = 'alertdefault', alerts }: AlertProps): JSX.Element {
 }
 
 export default Alert;
-
-Alert.fragments = {
-	entry: gql`
-	  fragment AlertsFragment on CXAlert {
-        displayPages
-        databaseId
-        ctaButtonText
-        ctaButtonUrl
-        name
-        message
-	  }
-	`,
-  };
