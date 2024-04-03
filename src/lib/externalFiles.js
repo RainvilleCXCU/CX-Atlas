@@ -13,10 +13,6 @@ export const files = {
             src: '/wp-includes/css/dist/block-library/style.min.css',
         },
         {
-            id: 'block-style',
-            src: '/wp-includes/css/dist/block-library/style.min.css',
-        },
-        {
             id: 'tablepress-style',
             src: '/wp-content/plugins/tablepress/css/build/default.css',
         },
@@ -39,13 +35,8 @@ export const files = {
         {
             id: 'styleguide',
             src: `/wp-content/themes/CXCU/assets/${process.env.styleguideVersion || '0.6.35'}/cxcuatlas.css`
-        },
-        
+        },        
     ],
     js: [
-        {
-            id: 'cisco-chat',
-            src: '/wp-content/themes/CXCU/vendors/cisco-chat/scripts.js',
-        },
     ]
 }
