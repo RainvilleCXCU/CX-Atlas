@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client';
 import * as MENUS from '../constants/menus';
 import { BlogInfoFragment } from '../fragments/GeneralSettings';
+import { AlertFragment } from '../fragments/Alerts';
 import { Footer, Header, MenuNavigation, SEO } from 'components';
 import Alert from 'components/Alerts/Alert';
 import { ThirdPartySettingsFragment, GTM, HotJar, Personyze, Qualtrics, Spectrum, Siteimprove } from '../components/ThirdParty';
@@ -26,6 +27,7 @@ export default function Component(props) {
   const headerSettings = props?.data?.headerSettings; 
   const { footerUtilities, footerAppIcons, footerSocialIcons } = props?.data?.footerSettings;
   const currentPage = getPageNum(query.wordpressNode);
+  const activeAlerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
   return (
     <>
       <SEO
@@ -57,7 +59,11 @@ export default function Component(props) {
         id={personyzeId}
         enabled={personyzeEnabled}
         domains={personyzeDomains} />
-			<Alert id={databaseId} />
+        
+        {
+          activeAlerts.length > 0 &&
+          <Alert alerts={activeAlerts} />
+        }
 			<Loading /> 
 			<Header
 				title={title}
@@ -114,7 +120,7 @@ Component.query = gql`
   ${BlogInfoFragment}
   ${MenuNavigation.fragments.entry}
   ${ThirdPartySettingsFragment}
-  ${Alert.fragments.entry}
+  ${AlertFragment}
   query GetCategoryPage(
     $page: Int
     $id: ID!

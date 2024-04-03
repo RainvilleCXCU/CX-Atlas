@@ -1,6 +1,8 @@
+import dynamic from 'next/dynamic';
 import { gql } from '@apollo/client';
 import * as MENUS from '../constants/menus';
 import { BlogInfoFragment } from '../fragments/GeneralSettings';
+import { AlertFragment } from '../fragments/Alerts';
 import { ThirdPartySettingsFragment, GTM, HotJar, Personyze, Qualtrics, Spectrum, Siteimprove } from '../components/ThirdParty';
 import {
   Header,
@@ -9,19 +11,20 @@ import {
   SEO,
 } from '../components';
 import { parseHtml } from 'lib/parser';
-import Alert from 'components/Alerts/Alert';
+const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});;
 import Loading from 'components/common/loading';
 
 export default function Component(props) {
 
-  const { title: siteTitle, description: siteDescription, logo: siteLogo, footerText: footerText, databaseId: databaseId } =
+  const { title: siteTitle, description: siteDescription, logo: siteLogo, footerText: footerText } =
     props?.data?.generalSettings;
   const { gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
   const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
   const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
-  const { title, content, seo, link, featuredImage } = props?.data?.page ?? { title: '' };
+  const { title, content, seo, link, featuredImage, databaseId } = props?.data?.page ?? { title: '' };
   const headerSettings = props?.data?.headerSettings; 
   const { footerUtilities, footerAppIcons, footerSocialIcons } = props?.data?.footerSettings;
+  const activeAlerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
 
   return (
     <>
@@ -54,7 +57,11 @@ export default function Component(props) {
         id={personyzeId}
         enabled={personyzeEnabled}
         domains={personyzeDomains} />
-			<Alert id={databaseId} />
+        
+      {
+        activeAlerts.length > 0 &&
+  			<Alert alerts={activeAlerts} />
+      }
 			<Loading /> 
 			<Header
 				title={title}
@@ -98,7 +105,7 @@ Component.query = gql`
   ${BlogInfoFragment}
   ${MenuNavigation.fragments.entry}
   ${ThirdPartySettingsFragment}
-  ${Alert.fragments.entry}
+  ${AlertFragment}
   query GetHomePageData(
     $databaseId: ID!
     $headerLocation: MenuLocationEnum
@@ -108,6 +115,7 @@ Component.query = gql`
     page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
       title
       content
+      databaseId
       seo {
           canonical
           metaDesc
@@ -148,10 +156,8 @@ Component.query = gql`
     }
 
     cxAlerts: cXAlerts {
-        edges {
-          node{
-            ...AlertsFragment
-          }
+        nodes {
+          ...AlertsFragment
         }
     }
     footerMenuItems: menuItems(where: { location: $footerLocation }, first: 255) {

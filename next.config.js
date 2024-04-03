@@ -178,6 +178,7 @@ let nextConfig = {
         }
     },
     trailingSlash: true,
-    swcMinify: true
+    swcMinify: true,
+    output: 'standalone'
 };
 module.exports = withFaust(withBundleAnalyzer(nextConfig));

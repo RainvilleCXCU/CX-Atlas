@@ -14,7 +14,7 @@ function HotJar({
     <>
     {enabled && id ?
     
-        <Script id="hotjar-script" strategy="afterInteractive">
+        <Script id="hotjar-script" strategy="lazyOnload">
             {`
               (function(h,o,t,j,a,r){
                 h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
