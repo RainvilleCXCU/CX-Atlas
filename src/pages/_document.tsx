@@ -9,6 +9,7 @@ class CXDoc extends Document {
       <Html>
         <Head>
         </Head>
+          <link rel="preload" href={`https://cloud.typography.com/6914618/${process.env.NEXT_PUBLIC_CLOUD_FONTS || '7711232'}/css/fonts.css`} as="style" />
           {files.css.map((sheet) => {
               return addCSSAsset(sheet);
           })}
