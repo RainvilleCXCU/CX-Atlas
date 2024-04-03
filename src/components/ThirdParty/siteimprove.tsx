@@ -13,7 +13,7 @@ function Siteimprove({
   return (
     <>
     {enabled && id ?
-          <Script id="siteimprove-script" strategy="afterInteractive" src={`//siteimproveanalytics.com/js/siteanalyze_${id}.js`}>
+          <Script id="siteimprove-script" strategy="lazyOnload" src={`//siteimproveanalytics.com/js/siteanalyze_${id}.js`}>
             </Script> : <></>
       }
       </>

@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client';
 import * as MENUS from '../constants/menus';
 import { BlogInfoFragment } from '../fragments/GeneralSettings';
+import { AlertFragment } from '../fragments/Alerts';
 import { ThirdPartySettingsFragment, GTM, HotJar, Personyze, Qualtrics, Spectrum, Siteimprove } from '../components/ThirdParty';
 import {
   Header,
@@ -33,6 +34,7 @@ export default function Page(props) {
   const posts = props?.data?.posts;
   const { postSlug, postCursor } = query;
   const currentPage = getPageNum(query.wordpressNode);
+  const activeAlerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
 
   return (
     <>
@@ -65,7 +67,11 @@ export default function Page(props) {
         id={personyzeId}
         enabled={personyzeEnabled}
         domains={personyzeDomains} />
-			<Alert id={databaseId} />
+        
+        {
+          activeAlerts.length > 0 &&
+          <Alert alerts={activeAlerts} />
+        }
 			<Loading /> 
 			<Header
 				title={title}
@@ -119,7 +125,7 @@ Page.query = gql`
   ${BlogInfoFragment}
   ${MenuNavigation.fragments.entry}
   ${ThirdPartySettingsFragment}
-  ${Alert.fragments.entry}
+  ${AlertFragment}
   query GetPosts(
     $page: Int
     $headerLocation: MenuLocationEnum

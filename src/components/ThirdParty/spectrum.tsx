@@ -14,7 +14,7 @@ function Spectrum({
     <>
     {enabled && id ?
     
-        <Script id="spectrum-script" strategy="afterInteractive" src={`//tag.brandcdn.com/autoscript/${id}/Connexus_Credit_Union.js`}></Script> : <></>
+        <Script id="spectrum-script" strategy="lazyOnload" src={`//tag.brandcdn.com/autoscript/${id}/Connexus_Credit_Union.js`}></Script> : <></>
       }
       </>
   );

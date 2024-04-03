@@ -15,7 +15,7 @@ function Qualtrics({
     <>
     {enabled && id ?
           <>
-          <Script id="qualtrics-script" strategy="afterInteractive">
+          <Script id="qualtrics-script" strategy="lazyOnload">
               {`
                 (function(){var g=function(e,h,f,g){
                   this.get=function(a){for(var a=a+"=",c=document.cookie.split(";"),b=0,e=c.length;b<e;b++){for(var d=c[b];" "==d.charAt(0);)d=d.substring(1,d.length);if(0==d.indexOf(a))return d.substring(a.length,d.length)}return null};
