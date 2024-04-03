@@ -3,13 +3,14 @@ import * as MENUS from '../constants/menus';
 import { BlogInfoFragment } from '../fragments/GeneralSettings';
 import { AlertFragment } from '../fragments/Alerts';
 import { Footer, Header, MenuNavigation, SEO } from 'components';
-import Alert from 'components/Alerts/Alert';
+const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});;
 import { ThirdPartySettingsFragment, GTM, HotJar, Personyze, Qualtrics, Spectrum, Siteimprove } from '../components/ThirdParty';
 import Loading from 'components/common/loading';
 import { parseHtml } from 'lib/parser';
 import Posts from 'components/Posts/listing';
 import { useRouter } from 'next/router';
 import { getPageNum } from '../utils/urlParser';
+import dynamic from 'next/dynamic';
 
 const POSTS_PER_PAGE = 5;
 export default function Component(props) {

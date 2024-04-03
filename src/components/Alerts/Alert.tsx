@@ -1,9 +1,8 @@
-import { gql } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 
 export interface AlertProps {
-    id;
+    id?;
     alerts?;
 }
 
