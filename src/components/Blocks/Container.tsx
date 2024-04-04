@@ -10,15 +10,7 @@ function Container({
     align = '',
     children = <></>,
     classNames
-}: Props): JSX.Element {
-    // const [isSSR, setIsSSR] = useState(true);
-
-    // useEffect(() => {
-    //     if(document) {
-    //         setIsSSR(false);
-    //     }
-    // }, []);
-    
+}: Props): JSX.Element {    
   return (
     <div className={`wp-block-genesis-blocks-gb-container${ align === 'full' ? ' alignfull' : ''} gb-block-container ${classNames}`}>
         <EqualHeight timeout={0} animationSpeed={0}>{children}</EqualHeight>
