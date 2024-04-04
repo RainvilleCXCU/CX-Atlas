@@ -177,7 +177,6 @@ let nextConfig = {
             ]
         }
     },
-    trailingSlash: true,
     swcMinify: true,
     webpack: (config, { dev, isServer }) => {
         if (!dev && !isServer) {
