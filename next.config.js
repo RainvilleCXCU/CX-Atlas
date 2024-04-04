@@ -117,7 +117,7 @@ let nextConfig = {
                 //     destination: '/about/media-center/?catId=:catId',
                 // },
                 {
-                    source: '/about/media-center/:catId/page/:page{/}?',
+                    source: '/about/media-center/:catId/page/:page?',
                     destination: '/about/media-center/:catId/?page=:page',
                 },
                 // {
@@ -133,11 +133,11 @@ let nextConfig = {
                 //     destination: '/blog/?page=:page',
                 // },
                 {
-                    source: '/about/branch-and-atm-locations/find-location/:location{/}?',
+                    source: '/about/branch-and-atm-locations/find-location/:location?',
                     destination: '/about/branch-and-atm-locations/?location=:location'
                 },
                 {
-                    source: '/search/page/:page{/}?',
+                    source: '/search/page/:page?',
                     destination: '/search/?page=:page',
                     has: [{
                         type: 'query',
@@ -177,8 +177,24 @@ let nextConfig = {
             ]
         }
     },
-    skipTrailingSlashRedirect: true,
+    compiler: {
+      removeConsole: process.env.NODE_ENV === 'development',
+    },
     swcMinify: true,
+    experimental: {
+        webVitalsAttribution: ['CLS', 'LCP', 'FCP'],
+        optimizePackageImports: [
+            "@apollo/client",
+            "@faustwp/cli",
+            "@faustwp/core",
+            "dateformat",
+            "mobile-device-detect",
+            "preact",
+            "preact-render-to-string",
+            "react-cookie",
+            "react-equal-height"
+        ]
+    },
     webpack: (config, { dev, isServer }) => {
         if (!dev && !isServer) {
             Object.assign(config.resolve.alias, {

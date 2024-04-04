@@ -14,8 +14,8 @@ function Personyze({
 	return (
 		<>
 			{enabled && id ? (
-				<Script id="personyze" strategy="afterInteractive">
-					{`
+				<Script id="personyze" strategy="afterInteractive"
+        dangerouslySetInnerHTML={{ __html:`
               window._S_T ||
               (function(d){
                 var s = d.createElement('script'),
@@ -29,8 +29,7 @@ function Personyze({
                 (h && h[0] || d.documentElement).appendChild(s);
                 if (u) f();
               })(document);
-            `}
-				</Script>
+            `}}/>
 			) : (
 				<></>
 			)}
