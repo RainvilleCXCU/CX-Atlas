@@ -1,4 +1,5 @@
 import Script from 'next/script';
+import { useEffect, useState } from 'react';
 
 
 export interface Props {
@@ -10,13 +11,54 @@ function Qualtrics({
   enabled = false,
   id
 }: Props): JSX.Element {
+  const [loaded, setLoaded] = useState(false);
+  const [loadScriptTimer, setLoadScriptTimer] = useState(null);
+  const [eventAdded, setEventAdded] = useState(false);
+
+  const userInteractionEvents = [
+    'click',
+    'dblclick',
+    'mouseover',
+    'mouseleave',
+    'mousemove',
+    'mouseout',
+    'mouseenter',
+    'keypress',
+    'wheel'
+  ];
+
+  const triggerScriptLoader = e => {
+    setLoaded(true);
+  }
+  useEffect(() => {
+    if(loaded) {
+      clearTimeout(loadScriptTimer);
+			userInteractionEvents.forEach(event => {				
+        window.removeEventListener(event, triggerScriptLoader);
+			});
+    }
+  }, [loaded]);
+
+  useEffect(() => {
+    if(!eventAdded) {      
+      setLoadScriptTimer(setTimeout(() => {
+        setLoaded(true);
+      }, 5000));
+      userInteractionEvents.forEach(event => {
+        window.addEventListener(event, triggerScriptLoader, {
+            passive: true
+          });
+      });
+      setEventAdded(true);
+    }
+  }, [eventAdded])
 
   return (
     <>
-    {enabled && id ?
+    {enabled && id && loaded ?
           <>
-          <Script id="qualtrics-script" strategy="lazyOnload">
-              {`
+          <Script id="qualtrics-script" strategy="lazyOnload"
+            dangerouslySetInnerHTML={{ __html:`
                 (function(){var g=function(e,h,f,g){
                   this.get=function(a){for(var a=a+"=",c=document.cookie.split(";"),b=0,e=c.length;b<e;b++){for(var d=c[b];" "==d.charAt(0);)d=d.substring(1,d.length);if(0==d.indexOf(a))return d.substring(a.length,d.length)}return null};
                   this.set=function(a,c){var b="",b=new Date;b.setTime(b.getTime()+6048E5);b="; expires="+b.toGMTString();document.cookie=a+"="+c+b+"; path=/; "};
@@ -24,8 +66,7 @@ function Qualtrics({
                   this.go=function(){if(this.check()){var a=document.createElement("script");a.type="text/javascript";a.src=g;document.body&&document.body.appendChild(a)}};
                   this.start=function(){var t=this;"complete"!==document.readyState?window.addEventListener?window.addEventListener("load",function(){t.go()},!1):window.attachEvent&&window.attachEvent("onload",function(){t.go()}):t.go()};};
                   try{(new g(100,"r","QSI_S_ZN_${id}","https://zn${id}-connexuscu.siteintercept.qualtrics.com/SIE/?Q_ZID=ZN_${id}")).start()}catch(i){}})();
-              `}
-            </Script>
+              `}} />
             <div id={`ZN_${id}`}></div>
             </> : <></>            
       }

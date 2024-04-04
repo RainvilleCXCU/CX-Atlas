@@ -1,11 +1,11 @@
 import dynamic from "next/dynamic";
 import parse, { domToReact, attributesToProps } from "html-react-parser";
 import Link from "next/link";
-import FAQ from "components/FAQs/faq";
-import Form from "components/Forms/Form";
-import EqualHeightContainer from "components/Blocks/EqualHeight";
-import Container from "components/Blocks/Container";
-import DataTracComparison from "components/Datatrac/Comparison";
+const FAQ = dynamic(() => import("components/FAQs/faq"));
+const Form = dynamic(() => import("components/Forms/Form"));
+const EqualHeightContainer = dynamic(() => import("components/Blocks/EqualHeight"));
+const Container = dynamic(() => import("components/Blocks/Container"));
+const DataTracComparison = dynamic(() => import("components/Datatrac/Comparison"));
 const Disclosure = dynamic(() => import("components/Disclosure/Disclosure"), {ssr: false});
 const LinkLibrary = dynamic(() => import ("components/LinkLibrary/LinkLibrary"), {ssr: false});
 const Chat = dynamic(() => import ("components/Chat/cisco"), {ssr: false});
