@@ -82,21 +82,23 @@ export default function Page(props) {
         headerSettings={headerSettings}
 			/>
       <main id="main" className="entry-content content content-index blog">
+        <article className='post-content'>
           {blogtop &&
             <div className="alignfull">
               {parseHtml(blogtop)}
             </div>
           }
-        <Posts
-          posts={posts.nodes}
-          heading="Blog Posts"
-          headingLevel="h2"
-          postTitleLevel="h3"
-          postInfo={posts.pageInfo}
-          currentPage={currentPage}
-          postsPerPage={POSTS_PER_PAGE}
-          blogSidebar={blogSidebar}
-        />
+          <Posts
+            posts={posts.nodes}
+            heading="Blog Posts"
+            headingLevel="h2"
+            postTitleLevel="h3"
+            postInfo={posts.pageInfo}
+            currentPage={currentPage}
+            postsPerPage={POSTS_PER_PAGE}
+            blogSidebar={blogSidebar}
+          />
+        </article>
       </main>
 
       <Footer copyrightHolder={footerText} menuItems={footerMenu} logo={siteLogo} footerUtilities={footerUtilities} footerAppIcons={footerAppIcons} footerSocialIcons={footerSocialIcons} />
