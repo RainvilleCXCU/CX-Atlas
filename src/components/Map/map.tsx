@@ -43,6 +43,7 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null, markers 
     let {
         mapType,
         zoomLevel,
+        autoZoomLevel,
         urlLabel,
         streetview,
         startLatlng,
@@ -89,10 +90,14 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null, markers 
     }, [map, markersArray]);
 
     useEffect(() => {
-        const selectedMarker = markersArray[selectedLocation?.id];
-		selectedMarker && google.maps.event.trigger( selectedMarker, "click" );
-        map?.setCenter( selectedMarker?.position );
-        map?.setZoom( Number( locationSettings?.autoZoomLevel ) );
+        const selectedMarker = markersArray[parseInt(selectedLocation?.id)];
+		if(selectedMarker) {
+            google.maps.event.trigger( selectedMarker, "click" );
+            console.log('DETAILS VIEW');
+            console.log({lng:selectedMarker?.position?.lng(), lat:selectedMarker?.position?.lat()});
+            map?.setCenter( {lng:selectedMarker?.position?.lng(), lat:selectedMarker?.position?.lat()} );
+            map?.setZoom( Number( locationSettings?.autoZoomLevel ) );
+        }
         // fitBounds();
     }, [selectedLocation]);
 

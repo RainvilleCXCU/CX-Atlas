@@ -206,6 +206,7 @@ Page.query = gql`
       startLatlng
       searchRadius
       apiBrowserKey
+      autoZoomLevel
       mapType
       distanceUnit
       zoomLevel
