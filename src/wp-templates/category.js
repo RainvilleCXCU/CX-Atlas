@@ -75,20 +75,22 @@ export default function Component(props) {
 			/>
 
       <main id="main" className="entry-content content content-single blog">
-        {blogtop &&
-          <div className="alignfull">
-            {parseHtml(blogtop)}
-          </div>
-        }
-        <Posts
-          posts={posts?.nodes}
-          postInfo={posts?.pageInfo}          
-          category={slug}
-          categoryName={name}
-          currentPage={currentPage}
-          postsPerPage={POSTS_PER_PAGE}
-          blogSidebar={blogSidebar}
-          />
+        <article className='post-content'>
+          {blogtop &&
+            <div className="alignfull">
+              {parseHtml(blogtop)}
+            </div>
+          }
+          <Posts
+            posts={posts?.nodes}
+            postInfo={posts?.pageInfo}          
+            category={slug}
+            categoryName={name}
+            currentPage={currentPage}
+            postsPerPage={POSTS_PER_PAGE}
+            blogSidebar={blogSidebar}
+            />
+          </article>
       </main>
       <Footer copyrightHolder={footerText} menuItems={footerMenu} logo={siteLogo} footerUtilities={footerUtilities} footerAppIcons={footerAppIcons} footerSocialIcons={footerSocialIcons} />
 			<Qualtrics
