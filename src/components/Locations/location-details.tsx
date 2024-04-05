@@ -175,16 +175,16 @@ function LocationDetails(): JSX.Element {
 									</span>
 
 									<span className="wpsl-hours hide-days">
-										<div className="wpsl-hours-heading">Lobby</div>
+										{selectedLocation?.lobby_hours_html && <div className="wpsl-hours-heading">Lobby</div> }
 										<div
 											dangerouslySetInnerHTML={{
 												__html: selectedLocation?.lobby_hours_html,
 											}}
 										/>
 									</span>
-
+									
 									<span className="wpsl-hours hide-days">
-										<div className="wpsl-hours-heading">Drive-Thru</div>
+										{selectedLocation?.drive_thru_hours_html && <div className="wpsl-hours-heading">Drive-Thru</div>}
 										<div
 											dangerouslySetInnerHTML={{
 												__html: selectedLocation?.drive_thru_hours_html,
@@ -211,29 +211,30 @@ function LocationDetails(): JSX.Element {
 							</div>
 						</details>
 					</div>
-
-					<div className="wp-block-genesis-blocks-gb-accordion cx-accordion__brand gb-block-accordion wpsl-location--section">
-						<details>
-							<summary className="gb-accordion-title">
-								<span className="wpsl-hours cx-h5">
-									Services &amp; Amenities
-								</span>
-							</summary>
-							<div className="gb-accordion-text">
-								<span className="wpsl-services">
-									{selectedLocation?.services ? (
-										<div
-											dangerouslySetInnerHTML={{
-												__html: selectedLocation?.services,
-											}}
-										/>
-									) : (
-										"Unavailable"
-									)}
-								</span>
-							</div>
-						</details>
-					</div>
+					{selectedLocation?.services &&
+						<div className="wp-block-genesis-blocks-gb-accordion cx-accordion__brand gb-block-accordion wpsl-location--section">
+							<details>
+								<summary className="gb-accordion-title">
+									<span className="wpsl-hours cx-h5">
+										Services &amp; Amenities
+									</span>
+								</summary>
+								<div className="gb-accordion-text">
+									<span className="wpsl-services">
+										{selectedLocation?.services ? (
+											<div
+												dangerouslySetInnerHTML={{
+													__html: selectedLocation?.services,
+												}}
+											/>
+										) : (
+											"Unavailable"
+										)}
+									</span>
+								</div>
+							</details>
+						</div>
+					}
 
 					<div className="cx-location-content__footer u-is-hidden">
 						<div className="cx-location-content__footer--btn">
