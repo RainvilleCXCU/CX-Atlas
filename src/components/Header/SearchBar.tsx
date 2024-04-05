@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import MobileHeader from './MobileHeader';
 import { useRouter } from 'next/router';
+import { Store } from 'context/store';
 
 interface SearchBarProps {
 	device?: string,
@@ -73,12 +74,29 @@ function MobileSearchBar(props: SearchBarProps) {
 	const {navOpen, setNavOpen, logo} = props;
 	const router = useRouter();
 	const searchRef = useRef(null);
+    const [state, setState] = useContext(Store);
 
 	useEffect(() => {
 		if (isSearchExpanded) {
 			document.querySelector('html').classList.add('nav-open');
+			setState({
+				...state,
+				search: {
+					...state.search,
+					isOpen: true
+				}
+			})
 		} else {
 			document.querySelector('html').classList.remove('nav-open');
+			setTimeout(()=>{
+				setState({
+					...state,
+					search: {
+						...state.search,
+						isOpen: false
+					}
+				})
+			}, 300)
 		}
 	}, [isSearchExpanded])
 
