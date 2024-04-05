@@ -72,7 +72,7 @@ export default function Component(props) {
 			/>
 			<div id="page" className="container site">
 				<main id="main" className="content content-single">
-					<article className="entry-content">
+					<article className="entry-content post-content">
 						{parseHtml(content ?? "")}
 					</article>
 				</main>

@@ -78,7 +78,7 @@ export default function Component(props) {
 			/>
      <div id="page" className="container site">
         <main className="content single-post">
-          <article id={`post-${databaseId}`} className="post">
+          <article id={`post-${databaseId}`} className="post post-content">
         
             <aside className="sidebar">
               {databaseId &&
