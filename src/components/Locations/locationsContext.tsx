@@ -32,6 +32,7 @@ interface SelectedLocation {
   special_message_type?: string,
   special_message_title?: string,
   special_message?: string,
+  position?: string
 }
 interface ISelectedLocationContext {
   selectedLocation: SelectedLocation;
