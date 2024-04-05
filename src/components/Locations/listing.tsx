@@ -71,6 +71,7 @@ function LocationListing({listing, unit = 'km', logo = ''}: Props): JSX.Element 
 			special_message_type: special_message_type,
 			special_message_title: special_message_title,
 			special_message: special_message,
+			position: `${lat},${lng}`
 		});
 	};
 
