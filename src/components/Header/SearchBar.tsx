@@ -79,23 +79,23 @@ function MobileSearchBar(props: SearchBarProps) {
 	useEffect(() => {
 		if (isSearchExpanded) {
 			document.querySelector('html').classList.add('nav-open');
-			setState({
+			setState(state => ({
 				...state,
 				search: {
 					...state.search,
 					isOpen: true
 				}
-			})
+			}))
 		} else {
 			document.querySelector('html').classList.remove('nav-open');
 			setTimeout(()=>{
-				setState({
+				setState(state => ({
 					...state,
 					search: {
 						...state.search,
 						isOpen: false
 					}
-				})
+				}))
 			}, 300)
 		}
 	}, [isSearchExpanded])
