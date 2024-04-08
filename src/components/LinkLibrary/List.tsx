@@ -20,7 +20,7 @@ function LinkLibraryList({ category }: Props): JSX.Element {
     const postPerPage = 7;
     const router = useRouter();
 
-    const { loading, error, data, refetch } = useQuery(gql`
+    const LinkQuery = useQuery(gql`
     query GetLinkData($id: Float!) {
         linkLibraryByCatId(catId: $id) {
             id
@@ -52,7 +52,7 @@ function LinkLibraryList({ category }: Props): JSX.Element {
     }
 
     const getLinks = ($id: number) => {
-        const newLinks = refetch({catid: $id});
+        const newLinks = LinkQuery.refetch({catid: $id});
        return newLinks;
     }
 
@@ -64,7 +64,7 @@ function LinkLibraryList({ category }: Props): JSX.Element {
             setActiveCat(category?.id);
         }
         console.log('DATA');
-        console.log(data);
+        console.log(LinkQuery.data);
     }, [category])
 
     return (
@@ -75,16 +75,16 @@ function LinkLibraryList({ category }: Props): JSX.Element {
                 </div>
             </div>
             {
-                data?.linkLibraryByCatId && data?.linkLibraryByCatId.length > 0 &&
+                LinkQuery?.data?.linkLibraryByCatId && LinkQuery?.data?.linkLibraryByCatId.length > 0 &&
                 <>
                     <ul>
                         {
-                            data?.linkLibraryByCatId.map((link, index) => (
+                            LinkQuery?.data?.linkLibraryByCatId.map((link, index) => (
                                 <LinkLibraryLink key={`link-lib-link-${link.id}`} date={link.date && dateFormat(link?.date, category?.dateFormat)} url={link.url}>{link.title}</LinkLibraryLink>
                             )).filter((e, i) => i >= ((state?.linkLibrary?.activePage - 1) * postPerPage) && i < ((state?.linkLibrary?.activePage - 1) * postPerPage) + postPerPage)
                         }
                     </ul>
-                    <Pagination currentPage={parseInt(state?.linkLibrary?.activePage)} totalResults={data?.linkLibraryByCatId.length} basePath={`${url}${category?.id}`} perPage={10} shallow={true} clickHandler={pageinate} />
+                    <Pagination currentPage={parseInt(state?.linkLibrary?.activePage)} totalResults={LinkQuery?.data?.linkLibraryByCatId.length} basePath={`${url}${category?.id}`} perPage={10} shallow={true} clickHandler={pageinate} />
                 </>
             }
         </div>
