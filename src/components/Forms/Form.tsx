@@ -15,13 +15,14 @@ function Form({ id }: Props): JSX.Element {
 
     const [formSettings, setFormSettings] = useState(null);
     const [nonce, setNonce] = useState('');
+    const [ formId, setFormId ] = useState('');
     // const formData = useQuery().getForm({
     //     formId: id.toString()
     // });
 
 
 
-    const { loading, error, data, refetch } = useQuery(gql`
+    const FormQuery = useQuery(gql`
     query GetFormData($id: String!) {
         getForm(formId: $id) {
             settings
@@ -31,7 +32,7 @@ function Form({ id }: Props): JSX.Element {
         
     }`, {
         variables: {
-            id: "5"
+            id: id
         }
     });
 
@@ -39,26 +40,31 @@ function Form({ id }: Props): JSX.Element {
 
 
     const getForm = ($id: string) => {
-        const newForm = refetch({formid: $id});
-       return newForm;
+        console.log('Form Info')
+        console.log(`${$id} = ${formId}`)
+        if($id !== formId) {
+            FormQuery?.refetch({formid: $id});
+            setFormId($id);
+        }
     }
 
 
     useEffect(() => {
-        setState({
+        setState(state => ({
             ...state,
             formSettings: {
                 ...state.formSettings, 
                 ...formSettings
             }
-        });
-        if(data) {
-            setFormSettings(data?.getForm?.settings && JSON.parse(data?.getForm?.settings));
-            setNonce(data?.getForm?.ajaxNonce);
+        }));
+        if(FormQuery?.data) {
+            setFormSettings(FormQuery?.data?.getForm?.settings && JSON.parse(FormQuery?.data?.getForm?.settings));
+            setNonce(FormQuery?.data?.getForm?.ajaxNonce);
         }
-    }, [data]);
+    }, [FormQuery?.data]);
 
     useEffect(() => {
+        console.log('Form Effect')
         getForm(id);
     }, [id])
 
@@ -126,7 +132,7 @@ function Form({ id }: Props): JSX.Element {
                                     </div>
                                 </div>
                                 <div className="nf-form-content">
-                                    {data?.getForm?.fields && JSON.parse(data?.getForm?.fields).map((field, index) => (
+                                    {FormQuery?.data?.getForm?.fields && JSON.parse(FormQuery?.data?.getForm?.fields).map((field, index) => (
                                         <NFField
                                             id={field.id}
                                             key={`form-${id}-field-${field.id}`}

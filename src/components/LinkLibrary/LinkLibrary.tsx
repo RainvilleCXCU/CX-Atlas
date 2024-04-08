@@ -38,14 +38,14 @@ function LinkLibrary({ cat_ids, children = <></> }: Props): JSX.Element {
             router.push(`/about/media-center/${cat_ids[0].id}`, undefined, {shallow:true});
         } else {
             setActiveCat(cat_ids.filter(category => category.id == cat).length === 1 ? cat_ids.filter(category => category.id == cat)[0] : cat_ids[0])
-            setState({
+            setState(state => ({
                 ...state,
                 linkLibrary: {
                     ...state.linkLibrary,
                     activeCat: cat_ids.filter(category => category.id == cat).length === 1 ? cat_ids.filter(category => category.id == cat)[0] : cat_ids[0],
                     activePage: currPage
                 }
-            });
+            }));
         }
     }, [cat, currPage]);
     return (
