@@ -20,55 +20,55 @@ function LinkLibraryList({ category }: Props): JSX.Element {
     const postPerPage = 7;
     const router = useRouter();
 
-    const LinkQuery = useQuery(gql`
-    query GetLinkData($id: Float!) {
-        linkLibraryByCatId(catId: $id) {
-            id
-            date
-            title
-            url
-        }
-        
-    }`, {
-        variables: {
-            id: parseInt(category?.id)
-        }
-    });
+    
+        const LinkQuery = useQuery(gql`
+        query GetLinkData($id: Float!) {
+            linkLibraryByCatId(catId: $id) {
+                id
+                date
+                title
+                url
+            }
+            
+        }`, {
+            variables: {
+                id: parseInt(category?.id)
+            }
+        });
 
     // const url = getPageUri(router.query.pageUri ? router.query.pageUri : ['/']);
     const url = '/about/media-center/';
 
     const pageinate = (page) => {
-        setState({
+        setState(state => ({
             ...state,
             linkLibrary: {
                 ...state.linkLibrary,
                 activePage: page
             }
-        });
+        }));
         console.log('Query');
         console.log(router.query);
         // router.push(`${url}${category.id}`, undefined, { shallow: true });
     }
 
     const getLinks = ($id: number) => {
-        const newLinks = LinkQuery.refetch({catid: $id});
-       return newLinks;
+       LinkQuery.refetch({catid: $id});
     }
 
     useEffect(() => {
         console.log('Get Links');
         console.log(`${category?.id} - ${activeCat}`)
         if(category?.id && category?.id !== activeCat) {
-            getLinks(parseInt(category?.id));
+            // getLinks(parseInt(category?.id));
             setActiveCat(category?.id);
         }
         console.log('DATA');
-        console.log(LinkQuery.data);
+        console.log(LinkQuery?.data);
     }, [category])
 
     return (
-        <div className={`linklist LinkLibraryCat LinkLibraryCat${category?.name}`}>
+        <div className={`linklist LinkLibraryCat LinkLibraryCat${category?.name}`}> 
             <div id={`LinkLibraryCat-${category?.name}`}>
                 <div className="linklistcatname">
                     <span className="linklistcatclass">{category?.name}</span>
