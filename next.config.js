@@ -149,7 +149,19 @@ let nextConfig = {
                     destination: '/dynamic/:path*',
                     has: [{
                         type: 'query',
-                        key: ['prso-lg','prso-img','prso-cta-lm','dyn-content']
+                        key: 'prso-lg'
+                    }],
+                    has: [{
+                        type: 'query',
+                        key: 'prso-img'
+                    }],
+                    has: [{
+                        type: 'query',
+                        key: 'prso-cta-lm'
+                    }],
+                    has: [{
+                        type: 'query',
+                        key: 'dyn-content'
                     }],
                 },
                 // {
