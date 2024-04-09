@@ -144,6 +144,14 @@ let nextConfig = {
                         key: 's'
                     }],
                 },
+                {
+                    source: '/:path*',
+                    destination: '/dynamic/:path*',
+                    has: [{
+                        type: 'query',
+                        key: ['prso-lg','prso-img','prso-cta-lm','dyn-content']
+                    }],
+                },
                 // {
                 //     source: '/meet/loans:path*',
                 //     destination: '/meet/?productFilters=auto-loans,home-equity-loans,home-loans,personal-loans,recreational-loans',
