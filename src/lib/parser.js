@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import parse, { domToReact, attributesToProps } from "html-react-parser";
 import Link from "next/link";
+import { css } from '@emotion/css';
 const FAQ = dynamic(() => import("components/FAQs/faq"));
 const Form = dynamic(() => import("components/Forms/Form"));
 const EqualHeightContainer = dynamic(() => import("components/Blocks/EqualHeight"));
@@ -34,8 +35,15 @@ export const parseHtml = (html) => {
         htmlparser2: {
             lowerCaseTags: false,
         },
+        // library: require('preact'),
         replace: (element) => {
-            const { name, attribs, children } = element;
+            let { name, attribs, children } = element;
+            if(attribs?.style) {
+                attribs = {
+                    ...attribs,
+                    css: css`${attribs.style}`
+                }
+            }
             // Skip none block elements
             if(name !== 'a' && name !== 'div' && name !== 'span' && name !== 'button' && name !== 'p' && name !== 'h3' && name !== 'table') {
                 return;
@@ -63,6 +71,8 @@ export const parseHtml = (html) => {
 
             // Block Container 
             else if (attribs?.class?.includes("gb-block-container")) {
+                console.log('Styles');
+                console.log(attribs)
                 return (
                     <Container classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</Container>
                 )
