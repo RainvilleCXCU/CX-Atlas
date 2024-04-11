@@ -50,16 +50,16 @@ export default function Component(props) {
 				twitter_label1={"Est. reading time"} // Not sure where this is in the page object
 				twitter_data1={seo?.readingTime + " minutes"}
   />
-			<GTM
+			{/* <GTM
         id={gtmId}
-        enabled={gtmEnabled} />
+        enabled={gtmEnabled} /> */}
       <HotJar
         id={hotjarId}
         enabled={hotjarEnabled} />
-			<Personyze
+			{/* <Personyze
         id={personyzeId}
         enabled={personyzeEnabled}
-        domains={personyzeDomains} />
+        domains={personyzeDomains} /> */}
         
         {
           activeAlerts.length > 0 &&
