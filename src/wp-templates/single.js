@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 import * as MENUS from '../constants/menus';
 import { BlogInfoFragment } from '../fragments/GeneralSettings';
 import { AlertFragment } from '../fragments/Alerts';
-import { ThirdPartySettingsFragment, GTM, HotJar, Personyze, Qualtrics, Spectrum, Siteimprove } from '../components/ThirdParty';
+import { ThirdPartySettingsFragment, HotJar, Qualtrics, Spectrum, Siteimprove } from '../components/ThirdParty';
 import {
   Header,
   Footer,
@@ -10,7 +10,7 @@ import {
   SEO,
 } from '../components';
 const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});
-import Loading from 'components/common/loading';
+const Loading = dynamic(() => import('components/common/loading'), {ssr:false});
 import { parseHtml } from 'lib/parser';
 import RelatedPosts from 'components/Posts/relatedPosts';
 import Image from 'next/image';

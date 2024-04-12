@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 import * as MENUS from '../constants/menus';
 import { BlogInfoFragment } from '../fragments/GeneralSettings';
 import { AlertFragment } from '../fragments/Alerts';
-import { ThirdPartySettingsFragment, GTM, HotJar, Personyze, Qualtrics, Spectrum, Siteimprove } from '../components/ThirdParty';
+import { ThirdPartySettingsFragment,HotJar, Qualtrics, Spectrum, Siteimprove } from '../components/ThirdParty';
 import {
   Header,
   Footer,
@@ -10,8 +10,8 @@ import {
   SEO,
 } from '../components';
 import { parseHtml } from 'lib/parser';
-const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});;
-import Loading from 'components/common/loading';
+const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});
+const Loading = dynamic(() => import('components/common/loading'), {ssr:false});
 import dynamic from 'next/dynamic';
 
 export default function Component(props) {
