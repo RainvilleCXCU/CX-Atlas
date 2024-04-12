@@ -9,6 +9,8 @@ class CXDoc extends Document {
     return (
       <Html>
         <Head>
+          <link href='https://www.googletagmanager.com' rel='preconnect' />
+          <link href='https://cloud.typography.com' rel='preconnect' />
           <link
             rel="preload"
             href={`https://cloud.typography.com/6914618/${
