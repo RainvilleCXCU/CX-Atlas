@@ -25,7 +25,8 @@
     "preact": "^10.20.1",
     "preact-render-to-string": "^6.4.1",
     "react-cookie": "^4.1.1",
-    "react-equal-height": "^1.2.2"
+    "react-equal-height": "^1.2.2",
+    "react-helmet": "^6.1.0"
   },
   "devDependencies": {
     "@googlemaps/react-wrapper": "^1.1.35",
