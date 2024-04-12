@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import parse, { domToReact, attributesToProps } from "html-react-parser";
 import Link from "next/link";
 import { css } from '@emotion/css';
+import Image from 'next/image';
 const FAQ = dynamic(() => import("components/FAQs/faq"));
 const Form = dynamic(() => import("components/Forms/Form"));
 const EqualHeightContainer = dynamic(() => import("components/Blocks/EqualHeight"));
@@ -45,7 +46,7 @@ export const parseHtml = (html) => {
                 }
             }
             // Skip none block elements
-            if(name !== 'a' && name !== 'div' && name !== 'span' && name !== 'button' && name !== 'p' && name !== 'h3' && name !== 'table') {
+            if(name !== 'a' && name !== 'div' && name !== 'span' && name !== 'button' && name !== 'p' && name !== 'h3' && name !== 'table' && name !== 'img') {
                 return;
             }
 
@@ -60,6 +61,9 @@ export const parseHtml = (html) => {
                 return (
                     <Link {...attributesToProps(attribs)}>{domToReact(children, options)}</Link>
                 );
+            }
+            else if (name === 'img') {
+                <Image priority={true} {...attributesToProps(attribs)} />
             }
 
             // Responsive Table
