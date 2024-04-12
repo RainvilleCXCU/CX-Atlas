@@ -25,7 +25,7 @@ function PageTitle({
             </div>
             { image &&
                 <div className="cx-page-title__grid-image">
-                    <Image src={image.mediaDetails.file} height={image.mediaDetails.height} width={image.mediaDetails.width} alt={image.altText} />
+                    <Image src={image.mediaDetails.file} height={image.mediaDetails.height} width={image.mediaDetails.width} alt={image.altText} priority={true} />
                 </div>
             }
         </div>

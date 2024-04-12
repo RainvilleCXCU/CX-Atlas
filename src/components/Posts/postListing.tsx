@@ -22,7 +22,7 @@ const PostListing: React.FC<PostListingProps> = ({ post, className, postTitleLev
                 {post.featuredImage && post.featuredImage.node?.sourceUrl &&
                     <div className="featured-image">
                         <Link href={`${post.uri}`}>
-                            <Image src={post.featuredImage.node?.sourceUrl?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={post.featuredImage.node.mediaDetails.width} height={post.featuredImage.node?.mediaDetails.height} />
+                            <Image src={post.featuredImage.node?.sourceUrl?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={post.featuredImage.node.mediaDetails.width} height={post.featuredImage.node?.mediaDetails.height} priority={true} />
                         </Link>
                     </div>
                 }
