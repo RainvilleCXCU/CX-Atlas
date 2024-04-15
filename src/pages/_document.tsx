@@ -1,12 +1,15 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import { files } from "../lib/externalFiles";
 import { addCSSAsset, addJSAsset } from "lib/enqueuedFiles";
+import { GTM } from "components/ThirdParty";
+import Script from "next/script";
 
 class CXDoc extends Document {
   render() {
     return (
       <Html>
         <Head>
+        <style>{`body { display: block !important }`}</style>
           <link href='https://www.googletagmanager.com' rel='preconnect' />
           <link href='https://cloud.typography.com' rel='preconnect' />
           <link
