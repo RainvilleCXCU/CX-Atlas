@@ -10,8 +10,8 @@ import {
   SEO,
 } from '../components';
 import { parseHtml } from 'lib/parser';
-const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});
-const Loading = dynamic(() => import('components/common/loading'), {ssr:false});
+const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:true});
+const Loading = dynamic(() => import('components/common/loading'), {ssr:true});
 import dynamic from 'next/dynamic';
 
 export default function Component(props) {
