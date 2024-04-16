@@ -1,6 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-// import { client } from 'client';
-import Accordion from "components/Accordion/Accordion";
+import { useContext, useEffect, useState } from "react";
 import { parseHtml } from "lib/parser";
 import NFField from "./Field";
 import { Store } from "context/store";

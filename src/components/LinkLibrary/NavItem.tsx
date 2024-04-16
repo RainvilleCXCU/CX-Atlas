@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Store } from "context/store";
 import { useRouter } from "next/router";
 
@@ -13,7 +13,6 @@ export interface Props {
 
 function LinkLibraryCatLinks({ categories, type = 'link' }: Props): JSX.Element {
     const [state, setState] = useContext(Store);
-    const [activeCat, setActiveCat] = useState(null)
     const router = useRouter();
 
     const showCategory = (category) => {

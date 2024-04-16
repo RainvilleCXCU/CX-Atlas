@@ -1,4 +1,3 @@
-import React from "react";
-const { createContext } = React;
+import { createContext } from 'react';
 
 export const Store = createContext([]);

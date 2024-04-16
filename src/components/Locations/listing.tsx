@@ -1,5 +1,5 @@
 // This component renders a single branch listing
-import React, { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import Image from "next/image";
 import { showDetailsContext } from "./locationsContext";
 import { selectedLocationContext } from "./locationsContext";

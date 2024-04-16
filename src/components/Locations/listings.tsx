@@ -10,21 +10,19 @@ export interface Props {
 function LocationListings({ data, distanceUnit, logo }: Props): JSX.Element {
 
 	return (
-		<>
-			<ul id="store-list" className="accordion-collapse collapse show">
-				{data?.map((location, index) => {
-					return (
-						<li key={location.id} data-store-id={location.id}>
-							<LocationListing
-								listing = {location}
-								logo = {logo}
-								unit = {distanceUnit}
-							/>
-						</li>
-					);
-				})}
-			</ul>
-		</>
+		<ul id="store-list" className="accordion-collapse collapse show">
+			{data?.map((location, index) => {
+				return (
+					<li key={location.id} data-store-id={location.id}>
+						<LocationListing
+							listing = {location}
+							logo = {logo}
+							unit = {distanceUnit}
+						/>
+					</li>
+				);
+			})}
+		</ul>
 	);
 }
 

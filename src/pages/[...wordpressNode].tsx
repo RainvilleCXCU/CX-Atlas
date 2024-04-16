@@ -1,4 +1,4 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
 import { getWordPressProps, WordPressTemplate } from "@faustwp/core";
 import * as MENUS from "../constants/menus";
 import apolloClient from "apolloClient";

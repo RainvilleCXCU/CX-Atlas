@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import ReactDOMServer from 'react-dom/server';
 import InfoBox from "./infobox";
 import { Store } from "context/store";
@@ -25,16 +25,7 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null, markers 
     const [ markersArray, setMarkersArray ] = useState({});
 
     
-    let geocoder, directionsDisplay, directionsService, autoCompleteLatLng,
-    activeWindowMarkerId, markerClusterer, startMarkerData, startAddress,
-    mapsArray = [],
-    markerSettings = {},
-    directionMarkerPosition = {},
-    mapDefaults = {},
-    resetMap = false,
-    streetViewAvailable = false,
-    autoLoad = true,
-    userGeolocation = {},
+    let geocoder, directionsDisplay, directionsService,
     statistics = {
         enabled: false,
         addressComponents: ''

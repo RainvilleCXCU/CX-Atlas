@@ -1,5 +1,5 @@
 import { Store } from "context/store";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, Fragment } from "react";
 import { useCookies } from "react-cookie";
 
 export interface AlertProps {
@@ -11,8 +11,8 @@ function Alert({ id = 'alertdefault', alerts }: AlertProps): JSX.Element {
 
     const [alertsClosed, setAlertsClosed] = useState([]);
     const [loaded, setLoaded] = useState(false);
-    const [cookies, setCookie, removeCookie] = useCookies(['alertClosed']);
-    const [state, setState] = useContext(Store);
+    const [cookies, setCookie ] = useCookies(['alertClosed']);
+    const [state] = useContext(Store);
 
     const showAlert = id => {
         return loaded && id !== undefined && alertsClosed.indexOf(id?.toString()) < 0;
@@ -40,7 +40,7 @@ function Alert({ id = 'alertdefault', alerts }: AlertProps): JSX.Element {
     return (
         <>
             {(!state?.search?.isOpen && alerts && alerts.length > 0) && alerts.map((post, index) => (
-                <React.Fragment key={`${post?.name}-${index}`}>
+                <Fragment key={`${post?.name}-${index}`}>
                     <div id="alert-banner" className={`cx-alert${showAlert(post.databaseId) ? ' show': ' hidden'}`}>
                         <button className="cx-alert__close" onClick={closeAlert} data-alert-name={post.databaseId}>&times;</button>
                         <p className="cx-alert__message">{post.message}
@@ -49,7 +49,7 @@ function Alert({ id = 'alertdefault', alerts }: AlertProps): JSX.Element {
                             }
                         </p>
                     </div>
-                </ React.Fragment>
+                </ Fragment>
             ))}
         </>
     );

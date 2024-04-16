@@ -1,10 +1,11 @@
 import { ciscoBubbleChat } from "lib/chat";
+import { FC } from 'react';
 interface ChatProps {
 	children: string;
     className: string;
 }
 
-const Chat: React.FC<ChatProps> = ({ className = '', children = <></> }) => {
+const Chat: FC<ChatProps> = ({ className = '', children = <></> }) => {
     const showChat = e => {
         e.preventDefault();
         ciscoBubbleChat().showChatWindow();

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export interface Props {
 	showBtn?: boolean;
@@ -7,12 +7,12 @@ export interface Props {
 
 function SearchBar({ showBtn = true }: Props): JSX.Element {
 	const searchInlineRef = useRef(null);
-	const router = useRouter();
-	const { searchCursor, s = "" } = useRouter().query;
+	const { push, query } = useRouter();
+	const { searchCursor, s = "" } = query;
 
 	const submitSearch = (e) => {
 		e.preventDefault();
-		router.push(`/search/?s=${searchInlineRef.current.value}`);
+		push(`/search/?s=${searchInlineRef.current.value}`);
 	};
 
 	useEffect(() => {

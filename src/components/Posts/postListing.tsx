@@ -3,7 +3,7 @@ import { HeadingProps } from "components/Heading";
 import { parseHtml } from "lib/parser";
 import Image from "next/image";
 import Link from "next/link";
-import React, { Fragment } from "react";
+import { Fragment, FC } from "react";
 
 interface PostListingProps {
     post;
@@ -12,7 +12,7 @@ interface PostListingProps {
     postTitleLevel?: HeadingProps['level'];
 }
 
-const PostListing: React.FC<PostListingProps> = ({ post, className, postTitleLevel = 'h2' }) => {
+const PostListing: FC<PostListingProps> = ({ post, className, postTitleLevel = 'h2' }) => {
     return (
         <div
             id={`post-${post.id}`}

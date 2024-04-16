@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import UtilityNavLinks from './UtilityNavLinks';
 import MenuNavigation from 'components/Navigation/Navbar';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { parseHtml } from 'lib/parser';
 
 export default function MobileNav({ links, menuOpen = false, navOpen, setNavOpen, headerSettings, children = <></> }) {
