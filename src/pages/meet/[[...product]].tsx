@@ -11,7 +11,7 @@ const Spectrum = dynamic(() => import('components/ThirdParty/spectrum'), {ssr:fa
 const Siteimprove = dynamic(() => import('components/ThirdParty/siteimprove'), {ssr:false});
 const Header = dynamic(()=> import('components/Header/Header'));
 const Footer = dynamic(() => import('components/Footer/Footer'));
-const SEO = dynamic(()=> import('components/SEO/SEO'));
+// const SEO = dynamic(()=> import('components/SEO/SEO'));
 import { parseHtml } from "lib/parser";
 const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});
 import Loading from "components/common/loading";

@@ -1,4 +1,4 @@
-import React from 'react';
+import { createElement } from 'react';
 
 // HeadingProps constrains headings to levels h1-h6.
 interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
@@ -12,7 +12,7 @@ function Heading({
   className,
 }: HeadingProps): JSX.Element {
   const H = ({ ...props }: React.HTMLAttributes<HTMLHeadingElement>) =>
-    React.createElement(level, props, children);
+    createElement(level, props, children);
 
   return <H className={className}>{children}</H>;
 }

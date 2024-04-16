@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, createElement } from 'react';
 import { EqualHeightElement } from 'react-equal-height/clean';
 
 export interface Props {
@@ -27,7 +27,7 @@ function EqualHeightContainer({
     
     const isDesktopOrLaptop = true;
 
-    const element = React.createElement(tagName, { ...props, className: classNames }, children);
+    const element = createElement(tagName, { ...props, className: classNames }, children);
     return (
         <EqualHeightElement name={name} disable={!isDesktopOrLaptop && !isSSR}>{element}</EqualHeightElement>
     );

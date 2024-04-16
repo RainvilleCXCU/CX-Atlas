@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { Fragment, useState } from 'react';
 import { parseHtml } from 'lib/parser';
-import { gql } from '@apollo/client';
 interface HeaderNavigationProps {
     device: string;
     menuItems?;

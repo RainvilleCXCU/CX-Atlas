@@ -1,11 +1,6 @@
-import { gql, useQuery } from "@apollo/client";
 import { getWordPressProps, WordPressTemplate } from "@faustwp/core";
-import * as MENUS from "constants/menus";
-import apolloClient from "apolloClient";
-import { MenuNavigation } from "components";
 import { getPageNum } from "utils/urlParser";
 import { GetServerSidePropsContext } from "next";
-import { encode } from 'querystring';
 
 export default function Page(props) {
   return (
@@ -14,7 +9,7 @@ export default function Page(props) {
 }
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-  const { req, res, query } = ctx;
+  const { query } = ctx;
   console.log('ServerSide ')
   console.log(query);
   ctx.resolvedUrl = ctx.resolvedUrl.replace('/dynamic','');

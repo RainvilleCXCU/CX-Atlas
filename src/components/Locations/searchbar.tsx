@@ -9,7 +9,6 @@ const AddressBar = () => {
 
     const [autoCompleteLoaded, setAutoCompleteLoaded] = useState(false);
     const [state, setState] = useContext(Store);
-    const router = useRouter();
     const addressRef = useRef(null);
 
     let autoComplete;
@@ -31,7 +30,7 @@ const AddressBar = () => {
 
             })
             .catch(err => {
-                router.push(`/about/branch-and-atm-locations/`, undefined, { shallow: true });
+                push(`/about/branch-and-atm-locations/`, undefined, { shallow: true });
             })
     }
 
@@ -107,7 +106,7 @@ const AddressBar = () => {
         setAddress('');
         const newLocation = state?.location;
         delete newLocation.search;
-        router.push(`/about/branch-and-atm-locations/`, undefined, { shallow: false });
+        push(`/about/branch-and-atm-locations/`, undefined, { shallow: false });
         // .then(() => {
         //     setState({
         //         ...state,

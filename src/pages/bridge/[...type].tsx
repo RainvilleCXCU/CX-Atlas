@@ -34,10 +34,10 @@ export default function Component(props) {
       props?.data?.generalSettings;
     const { gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
     const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
-    const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
+    // const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
     const { title, content, seo, link, featuredImage } = props?.data?.page ?? { title: '' };
     const headerSettings = props?.data?.headerSettings; 
-    const { footerUtilities, footerAppIcons, footerSocialIcons } = props?.data?.footerSettings;
+    // const { footerUtilities, footerAppIcons, footerSocialIcons } = props?.data?.footerSettings;
     
     widget ? widget?.replace(/account=none/gi, `account=${product.title.replace(' ', '-').toLowerCase()}`) : '';
     const activeAlerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
@@ -185,7 +185,7 @@ Component.variables = (props) => {
   
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-    const { req, res, query } = context;
+    const { query } = context;
     const $account = query.account?.toString().replace('-', ' ');
     const type = query.type[0] || '';
     const minor = query.minor || '';

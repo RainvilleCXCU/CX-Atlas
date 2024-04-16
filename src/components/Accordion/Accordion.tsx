@@ -1,5 +1,5 @@
 import { parseHtml } from "lib/parser";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 import { useRouter } from 'next/router';
 
 interface AccordionProps {
@@ -9,7 +9,7 @@ interface AccordionProps {
   id?: string;
 }
 
-const Accordion: React.FC<AccordionProps> = ({ title = '', content = '', isOpen = false, id }) => {
+const Accordion: FC<AccordionProps> = ({ title = '', content = '', isOpen = false, id }) => {
 	const [isAccordionOpen, setIsAccordionOpen] = useState(isOpen);
 	const router = useRouter();
 

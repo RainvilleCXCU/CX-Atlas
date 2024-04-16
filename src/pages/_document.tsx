@@ -1,8 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import { files } from "../lib/externalFiles";
 import { addCSSAsset, addJSAsset } from "lib/enqueuedFiles";
-import { GTM } from "components/ThirdParty";
-import Script from "next/script";
 
 class CXDoc extends Document {
   render() {
@@ -11,14 +9,18 @@ class CXDoc extends Document {
         <Head>
         <style>{`body { display: block !important }`}</style>
           <link href='https://www.googletagmanager.com' rel='preconnect' />
+          <link href='https://www.googletagmanager.com' rel='dns-prefetch' />
           <link href='https://cloud.typography.com' rel='preconnect' />
-          <link
+          <link href='https://cloud.typography.com' rel='dns-prefetch' />
+          <link href={process.env.NEXT_PUBLIC_WORDPRESS_URL} rel='preconnect' />
+          <link href={process.env.NEXT_PUBLIC_WORDPRESS_URL} rel='dns-prefetch' />
+          {/* <link
             rel="preload"
             href={`https://cloud.typography.com/6914618/${
               process.env.NEXT_PUBLIC_CLOUD_FONTS || "7711232"
             }/css/fonts.css`}
             as="style"
-          />
+          /> */}
           {files.css.map((sheet) => {
             return addCSSAsset(sheet);
           })}

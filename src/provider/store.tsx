@@ -1,5 +1,5 @@
 import { Store } from "../context/store";
-import { useState } from 'react';;
+import { useState } from 'react';
 const Index = (props) => { 
     const [state, setState] = useState({
         version: 1
