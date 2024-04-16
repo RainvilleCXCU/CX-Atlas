@@ -3,13 +3,17 @@ import { gql } from '@apollo/client';
 import * as MENUS from '../constants/menus';
 import { BlogInfoFragment } from '../fragments/GeneralSettings';
 import { AlertFragment } from 'fragments/Alerts';
-import { ThirdPartySettingsFragment, GTM, HotJar, Personyze, Qualtrics, Spectrum, Siteimprove } from '../components/ThirdParty';
-import {
-  Header,
-  Footer,
-  MenuNavigation,
-  SEO,
-} from '../components';
+import { NavigationMenuItemFragment } from 'fragments/MenuItems';
+import { ThirdPartySettingsFragment } from 'fragments/ThirdParty';
+const GTM = dynamic(() => import('components/ThirdParty/gtm'), {ssr:false});
+const Personyze = dynamic(() => import('components/ThirdParty/personyze'), {ssr:false});
+const HotJar = dynamic(() => import('components/ThirdParty/hotjar'), {ssr:false});
+const Qualtrics = dynamic(() => import('components/ThirdParty/qualtrics'), {ssr:false});
+const Spectrum = dynamic(() => import('components/ThirdParty/spectrum'), {ssr:false});
+const Siteimprove = dynamic(() => import('components/ThirdParty/siteimprove'), {ssr:false});
+const Header = dynamic(()=> import('components/Header/Header'));
+const Footer = dynamic(() => import('components/Footer/Footer'));
+const SEO = dynamic(()=> import('components/SEO/SEO'));
 import Loading from 'components/common/loading';
 import { getNextStaticProps } from '@faustwp/core';
 import { GetStaticPropsContext } from 'next';
@@ -59,21 +63,27 @@ export default function Component(props) {
 				twitter_label1={"Est. reading time"} // Not sure where this is in the page object
 				twitter_data1={seo?.readingTime + " minutes"}
   />
-			<GTM
-        id={gtmId}
-        enabled={gtmEnabled} />
-      <HotJar
-        id={hotjarId}
-        enabled={hotjarEnabled} />
-			<Personyze
-        id={personyzeId}
-        enabled={personyzeEnabled}
-        domains={personyzeDomains} />
-        
-        {
-          activeAlerts.length > 0 &&
-          <Alert alerts={activeAlerts} />
-        }
+  {gtmEnabled &&
+  <GTM
+    id={gtmId}
+    enabled={gtmEnabled} />
+  }
+  {hotjarEnabled &&
+  <HotJar
+    id={hotjarId}
+    enabled={hotjarEnabled} />
+  }
+  {personyzeEnabled &&
+  <Personyze
+    id={personyzeId}
+    enabled={personyzeEnabled}
+    domains={personyzeDomains} />
+  }
+    
+  {
+    activeAlerts.length > 0 &&
+    <Alert alerts={activeAlerts} />
+  }
 			<Loading /> 
 			<Header
 				title={title}
@@ -136,22 +146,29 @@ export default function Component(props) {
 			</Container>
 
 			<Footer copyrightHolder={footerText} menuItems={footerMenu} logo={siteLogo} footerUtilities={footerUtilities} footerAppIcons={footerAppIcons} footerSocialIcons={footerSocialIcons} />
+			
+      {qualtricsEnabled &&
 			<Qualtrics
         id={qualtricsId}
         enabled={qualtricsEnabled} />
+     }
+     {spectrumEnabled &&
 			<Spectrum
         id={spectrumId}
         enabled={spectrumEnabled} />
+     }
+     {siteimproveEnabled &&
 			<Siteimprove
         id={siteimproveId}
         enabled={siteimproveEnabled} />
+     }
     </>
   );
 }
 
 Component.query = gql`
   ${BlogInfoFragment}
-  ${MenuNavigation.fragments.entry}
+  ${NavigationMenuItemFragment}
   ${ThirdPartySettingsFragment}
   ${AlertFragment}
   query Get404(
