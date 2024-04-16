@@ -6,35 +6,35 @@ export const files = {
         },
         {
             id: 'genesis-blocks-style',
-            src: '/wp-content/plugins/genesis-page-builder/vendor/genesis/blocks/dist/style-blocks.build.css'
+            src: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp-content/plugins/genesis-page-builder/vendor/genesis/blocks/dist/style-blocks.build.css`
         },
         {
             id: 'block-style',
-            src: '/wp-includes/css/dist/block-library/style.min.css',
+            src: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp-includes/css/dist/block-library/style.min.css`,
         },
         {
             id: 'tablepress-style',
-            src: '/wp-content/plugins/tablepress/css/build/default.css',
+            src: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp-content/plugins/tablepress/css/build/default.css`,
         },
         {
             id: 'parent-theme',
-            src: '/wp-content/themes/genesis-block-theme/style.css',
+            src: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp-content/themes/genesis-block-theme/style.css`,
         },
         {
             id: 'cisco-chat',
-            src: '/wp-content/themes/CXCU/vendors/cisco-chat/styles.css',
+            src: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp-content/themes/CXCU/vendors/cisco-chat/styles.css`,
         },
         {
             id: 'child-theme',
-            src: '/wp-content/themes/CXCU/style.css',
+            src: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp-content/themes/CXCU/style.css`,
         },
         {
             id: 'locator',
-            src: `/wp-content/plugins/wp-store-locator/css/styles.min.css`
+            src: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp-content/plugins/wp-store-locator/css/styles.min.css`
         },
         {
             id: 'styleguide',
-            src: `/wp-content/themes/CXCU/assets/${process.env.styleguideVersion || '0.6.35'}/cxcuatlas.css`
+            src: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp-content/themes/CXCU/assets/${process.env.styleguideVersion || '0.6.35'}/cxcuatlas.css`
         },        
     ],
     js: [
