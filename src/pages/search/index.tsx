@@ -9,16 +9,14 @@ const HotJar = dynamic(() => import('components/ThirdParty/hotjar'), {ssr:false}
 const Qualtrics = dynamic(() => import('components/ThirdParty/qualtrics'), {ssr:false});
 const Spectrum = dynamic(() => import('components/ThirdParty/spectrum'), {ssr:false});
 const Siteimprove = dynamic(() => import('components/ThirdParty/siteimprove'), {ssr:false});
-import {
-  Header,
-  Footer,
-  SEO,
-} from 'components';
+const Header = dynamic(()=> import('components/Header/Header'));
+const Footer = dynamic(() => import('components/Footer/Footer'));
+const Pagination = dynamic(() => import('components/Pagination'));
+const SEO = dynamic(()=> import('components/SEO/SEO'));
 const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});
 import Loading from 'components/common/loading';
 import SearchBar from 'components/Search/SearchBar';
 import SearchListing from 'components/Search/Listing';
-import { Pagination } from 'components';
 import { getNextServerSideProps } from '@faustwp/core';
 import { GetServerSidePropsContext } from 'next';
 

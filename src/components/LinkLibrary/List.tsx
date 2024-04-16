@@ -18,8 +18,6 @@ function LinkLibraryList({ category }: Props): JSX.Element {
     const [state, setState] = useContext(Store);
     const [activeCat, setActiveCat] = useState(null)
     const postPerPage = 7;
-    const router = useRouter();
-
     
         const LinkQuery = useQuery(gql`
         query GetLinkData($id: Float!) {
@@ -47,13 +45,6 @@ function LinkLibraryList({ category }: Props): JSX.Element {
                 activePage: page
             }
         }));
-        console.log('Query');
-        console.log(router.query);
-        // router.push(`${url}${category.id}`, undefined, { shallow: true });
-    }
-
-    const getLinks = ($id: number) => {
-       LinkQuery.refetch({catid: $id});
     }
 
     useEffect(() => {

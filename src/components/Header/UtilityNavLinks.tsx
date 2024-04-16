@@ -9,7 +9,7 @@ interface UtilityNavLinksProps {
 export default function UtilityNavLinks({ headerUtilities, device, children = <></> }: UtilityNavLinksProps) {
     return (
         <>
-        {parseHtml(headerUtilities ?? '' )}
+            {parseHtml(headerUtilities ?? '' )}
         </>
     );
 };

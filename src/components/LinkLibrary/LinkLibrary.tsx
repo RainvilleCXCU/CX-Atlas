@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Store } from "context/store";
 import LinkLibraryCatLinks from "./NavItem";
 import LinkLibraryList from "./List";
 import { useRouter } from "next/router";
-import { getDynamicQueryVal, getPageNum } from '../../utils/urlParser';
+import { getDynamicQueryVal } from '../../utils/urlParser';
 
 export interface Props {
     cat_ids: [{

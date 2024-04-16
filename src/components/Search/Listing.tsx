@@ -2,7 +2,7 @@ import Heading from "components/Heading";
 import { parseHtml } from "lib/parser";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { Fragment } from "react";
 
 export interface Props {
     id: string;
@@ -31,9 +31,9 @@ function SearchListing({ id, title, content, url = '', featuredImage, categories
                         {categories &&
                             <div className="categories">
                                 {categories.map((a, i) => (
-                                    <React.Fragment key={`post-category-${a.name?.replace(' ', '_')}`}>
+                                    <Fragment key={`post-category-${a.name?.replace(' ', '_')}`}>
                                         <Link href={a.uri || ''}>{a.name}</Link>{i != categories.length - 1 ? ', ' : ""}
-                                    </React.Fragment>
+                                    </Fragment>
                                 ))}
                             </div>
                         }

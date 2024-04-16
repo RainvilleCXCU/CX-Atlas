@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FC } from 'react';
 interface RelatedPostsProps {
 	id: string;
     title?: string;
@@ -6,7 +7,7 @@ interface RelatedPostsProps {
     relatedPosts?;
 }
 
-const RelatedPosts: React.FC<RelatedPostsProps> = ({ id, title = "Related Posts", className, relatedPosts }) => {
+const RelatedPosts: FC<RelatedPostsProps> = ({ id, title = "Related Posts", className, relatedPosts }) => {
 	return (
         <>
         {

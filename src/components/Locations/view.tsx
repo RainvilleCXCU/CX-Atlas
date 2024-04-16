@@ -36,7 +36,7 @@ export interface Props {
 }
 
 function Locations({ locationSettings, siteLogo, location }: Props): JSX.Element {
-    const { query = {}, push, isReady } = useRouter();
+    const { push, isReady } = useRouter();
 
 
     const [state, setState] = useContext(Store);
