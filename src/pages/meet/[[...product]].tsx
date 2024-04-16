@@ -1,16 +1,17 @@
 import { gql } from '@apollo/client';
 import * as MENUS from "../../constants/menus";
 import { BlogInfoFragment } from "../../fragments/GeneralSettings";
-import {
-  ThirdPartySettingsFragment,
-  GTM,
-  HotJar,
-  Personyze,
-  Qualtrics,
-  Spectrum,
-  Siteimprove,
-} from "../../components/ThirdParty";
-import { Header, Footer, MenuNavigation } from "../../components";
+import { NavigationMenuItemFragment } from 'fragments/MenuItems';
+import { ThirdPartySettingsFragment } from 'fragments/ThirdParty';
+const GTM = dynamic(() => import('components/ThirdParty/gtm'), {ssr:false});
+const Personyze = dynamic(() => import('components/ThirdParty/personyze'), {ssr:false});
+const HotJar = dynamic(() => import('components/ThirdParty/hotjar'), {ssr:false});
+const Qualtrics = dynamic(() => import('components/ThirdParty/qualtrics'), {ssr:false});
+const Spectrum = dynamic(() => import('components/ThirdParty/spectrum'), {ssr:false});
+const Siteimprove = dynamic(() => import('components/ThirdParty/siteimprove'), {ssr:false});
+const Header = dynamic(()=> import('components/Header/Header'));
+const Footer = dynamic(() => import('components/Footer/Footer'));
+const SEO = dynamic(()=> import('components/SEO/SEO'));
 import { parseHtml } from "lib/parser";
 const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});
 import Loading from "components/common/loading";
@@ -62,13 +63,22 @@ export default function Component(props) {
     <>
 		<Head>
 			<title>{`${title}`}</title></Head>
-      <GTM id={gtmId} enabled={gtmEnabled} />
-      <HotJar id={hotjarId} enabled={hotjarEnabled} />
-      <Personyze
+      {gtmEnabled &&
+			<GTM
+        id={gtmId}
+        enabled={gtmEnabled} />
+      }
+      {hotjarEnabled &&
+      <HotJar
+        id={hotjarId}
+        enabled={hotjarEnabled} />
+      }
+      {personyzeEnabled &&
+			<Personyze
         id={personyzeId}
         enabled={personyzeEnabled}
-        domains={personyzeDomains}
-      />
+        domains={personyzeDomains} />
+      }
         
       {
         activeAlerts.length > 0 &&
@@ -103,9 +113,22 @@ export default function Component(props) {
         footerAppIcons={footerAppIcons}
         footerSocialIcons={footerSocialIcons}
       />
-      <Qualtrics id={qualtricsId} enabled={qualtricsEnabled} />
-      <Spectrum id={spectrumId} enabled={spectrumEnabled} />
-      <Siteimprove id={siteimproveId} enabled={siteimproveEnabled} />
+      
+     {qualtricsEnabled &&
+			<Qualtrics
+        id={qualtricsId}
+        enabled={qualtricsEnabled} />
+     }
+     {spectrumEnabled &&
+			<Spectrum
+        id={spectrumId}
+        enabled={spectrumEnabled} />
+     }
+     {siteimproveEnabled &&
+			<Siteimprove
+        id={siteimproveId}
+        enabled={siteimproveEnabled} />
+     }
     </>
   );
 }
@@ -118,7 +141,7 @@ Component.variables = (params) => {
 
 Component.query = gql`
   ${BlogInfoFragment}
-  ${MenuNavigation.fragments.entry}
+  ${NavigationMenuItemFragment}
   ${ThirdPartySettingsFragment}
   ${AlertFragment}
   query GetMediaCenterData(

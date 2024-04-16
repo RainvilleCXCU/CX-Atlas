@@ -23,7 +23,7 @@ class CXDoc extends Document {
             return addCSSAsset(sheet);
           })}
         </Head>
-        <body className="">
+        <body>
           <Main />
           <NextScript />
           {files.js.map((sheet) => {

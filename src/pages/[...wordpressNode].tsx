@@ -2,7 +2,7 @@ import { gql, useQuery } from "@apollo/client";
 import { getWordPressProps, WordPressTemplate } from "@faustwp/core";
 import * as MENUS from "../constants/menus";
 import apolloClient from "apolloClient";
-import { MenuNavigation } from "components";
+import { NavigationMenuItemFragment } from '../fragments/MenuItems';
 import { getPageNum } from "utils/urlParser";
 
 export default function Page(props) {
@@ -27,7 +27,7 @@ export async function getStaticPaths() {
   // Get all Paths in Header Navigation
   const NavData = await apolloClient.query({
     query: gql`
-    ${MenuNavigation.fragments.entry}
+    ${NavigationMenuItemFragment}
     query GetMenuItems(
       $headerLocation: MenuLocationEnum
     ) {

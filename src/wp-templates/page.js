@@ -1,18 +1,29 @@
 import { gql } from '@apollo/client';
+import dynamic from 'next/dynamic';
 import * as MENUS from '../constants/menus';
 import { BlogInfoFragment } from '../fragments/GeneralSettings';
 import { AlertFragment } from '../fragments/Alerts';
-import { ThirdPartySettingsFragment, GTM, Personyze, HotJar, Qualtrics, Spectrum, Siteimprove } from '../components/ThirdParty';
-import {
-  Header,
-  Footer,
-  MenuNavigation,
-  SEO,
-} from '../components';
+import { NavigationMenuItemFragment } from '../fragments/MenuItems';
 import { parseHtml } from 'lib/parser';
+// import { ThirdPartySettingsFragment, GTM, Personyze, HotJar, Qualtrics, Spectrum, Siteimprove } from '../components/ThirdParty';
+import { ThirdPartySettingsFragment } from 'fragments/ThirdParty';
+const GTM = dynamic(() => import('components/ThirdParty/gtm'), {ssr:false});
+const Personyze = dynamic(() => import('components/ThirdParty/personyze'), {ssr:false});
+const HotJar = dynamic(() => import('components/ThirdParty/hotjar'), {ssr:false});
+const Qualtrics = dynamic(() => import('components/ThirdParty/qualtrics'), {ssr:false});
+const Spectrum = dynamic(() => import('components/ThirdParty/spectrum'), {ssr:false});
+const Siteimprove = dynamic(() => import('components/ThirdParty/siteimprove'), {ssr:false});
+// import {
+//   Header,
+//   MenuNavigation,
+//   SEO,
+// } from '../components';
+const Header = dynamic(()=> import('components/Header/Header'));
+const MenuNavigation = dynamic(()=> import('components/Navigation/Navbar'));
+const Footer = dynamic(() => import('components/Footer/Footer'));
+const SEO = dynamic(()=> import('components/SEO/SEO'));
 const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:true});
 const Loading = dynamic(() => import('components/common/loading'), {ssr:true});
-import dynamic from 'next/dynamic';
 
 export default function Component(props) {
   // Loading state for previews
@@ -48,16 +59,22 @@ export default function Component(props) {
 				twitter_label1={"Est. reading time"} // Not sure where this is in the page object
 				twitter_data1={seo?.readingTime + " minutes"}
   />
+      {gtmEnabled &&
 			<GTM
         id={gtmId}
         enabled={gtmEnabled} />
+      }
+      {hotjarEnabled &&
       <HotJar
         id={hotjarId}
         enabled={hotjarEnabled} />
+      }
+      {personyzeEnabled &&
 			<Personyze
         id={personyzeId}
         enabled={personyzeEnabled}
         domains={personyzeDomains} />
+      }
         
       {
         activeAlerts.length > 0 &&
@@ -80,17 +97,24 @@ export default function Component(props) {
 					</article>
 				</main>
 			</div>
-
+     {footerMenu &&
 			<Footer copyrightHolder={footerText} menuItems={footerMenu} logo={siteLogo} footerUtilities={footerUtilities} footerAppIcons={footerAppIcons} footerSocialIcons={footerSocialIcons} />
+     }
+     {qualtricsEnabled &&
 			<Qualtrics
         id={qualtricsId}
         enabled={qualtricsEnabled} />
+     }
+     {spectrumEnabled &&
 			<Spectrum
         id={spectrumId}
         enabled={spectrumEnabled} />
+     }
+     {siteimproveEnabled &&
 			<Siteimprove
         id={siteimproveId}
         enabled={siteimproveEnabled} />
+     }
     </>
   );
 }
@@ -107,7 +131,7 @@ Component.variables = (seedQuery, ctx, extra) => {
 
 Component.query = gql`
   ${BlogInfoFragment}
-  ${MenuNavigation.fragments.entry}
+  ${NavigationMenuItemFragment}
   ${ThirdPartySettingsFragment}
   ${AlertFragment}
   query GetPageData(
