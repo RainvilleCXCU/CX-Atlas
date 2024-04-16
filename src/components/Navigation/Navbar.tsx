@@ -193,29 +193,3 @@ export default function MenuNavigation({ device, menuItems, menuOpen, setNavOpen
         <DesktopHeaderNavigation device={device} menuItems={menuItems} menuOpen={menuOpen} setNavOpen={setNavOpen} />
     );
 }
-MenuNavigation.fragments = {
-    entry: gql`
-      fragment NavigationMenuItemFragment on MenuItem {
-        databaseId
-        uri
-        label
-        parentDatabaseId
-        childItems {
-            nodes{
-                databaseId
-                uri
-                label
-                parentDatabaseId
-                childItems {
-                    nodes{
-                        databaseId
-                        uri
-                        label
-                        parentDatabaseId
-                    }
-                }
-            }
-        }
-      }
-    `,
-  };
