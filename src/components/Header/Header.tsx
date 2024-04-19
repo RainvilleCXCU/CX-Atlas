@@ -36,12 +36,6 @@ function Header({
 
   const [navOpen, setNavOpen] = useState(false);
 
-  useEffect(() => {
-    if(!showSearch && !showNavigation && !showButtons) {
-      document.body.classList.add("page-template-slim");
-    }
-  })
-
   return (
     <header className={`cx-header${navOpen ? ' nav-open' : ''}`}>
       {(showLogo || showUtilityNav) &&
@@ -56,20 +50,16 @@ function Header({
           </div>
         </section>
       }
-      {(showSearch || showNavigation || showButtons) &&
         <section className="cx-header__main-nav">
           <div className="cx-header__wrapper">
 
-            {(showSearch || showNavigation) &&
-              <nav className="navbar navbar-expand-lg navbar-default cx-nav cx-header__mobile">
-                {showSearch &&
-                  <SearchBar logo={logo} device="mobile" setNavOpen={setNavOpen} navOpen={navOpen} />
-                }
-                {showNavigation &&
-                  <MobileNav headerSettings={headerSettings} links={menuItems} menuOpen={navOpen} navOpen={navOpen} setNavOpen={setNavOpen} />
-                }
-              </nav>
-            }
+            <nav className="navbar navbar-expand-lg navbar-default cx-nav cx-header__mobile">
+                <SearchBar logo={logo} device="mobile" setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} />
+              
+              {showNavigation &&
+                <MobileNav headerSettings={headerSettings} links={menuItems} menuOpen={navOpen} navOpen={navOpen} setNavOpen={setNavOpen} />
+              }
+            </nav>
 
 
             {(showNavigation || showButtons) &&
@@ -90,7 +80,6 @@ function Header({
             }
           </div>
         </section >
-      }
     </header >
   );
 }

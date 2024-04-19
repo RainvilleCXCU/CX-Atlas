@@ -10,7 +10,7 @@ const HotJar = dynamic(() => import('components/ThirdParty/hotjar'), {ssr:false}
 const Qualtrics = dynamic(() => import('components/ThirdParty/qualtrics'), {ssr:false});
 const Spectrum = dynamic(() => import('components/ThirdParty/spectrum'), {ssr:false});
 const Siteimprove = dynamic(() => import('components/ThirdParty/siteimprove'), {ssr:false});
-const Header = dynamic(()=> import('components/Header/Header'));
+import Header from 'components/Header/Header';
 // const Footer = dynamic(() => import('components/Footer/Footer'));
 const SEO = dynamic(()=> import('components/SEO/SEO'));
 import {
@@ -33,7 +33,6 @@ export default function Component(props) {
     const { title: siteTitle, description: siteDescription, logo: siteLogo, footerText: footerText, databaseId: databaseId } =
       props?.data?.generalSettings;
     const { gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
-    const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
     // const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
     const { title, content, seo, link, featuredImage } = props?.data?.page ?? { title: '' };
     const headerSettings = props?.data?.headerSettings; 
@@ -89,7 +88,6 @@ export default function Component(props) {
                     title={title}
                     description={siteDescription}
                     logo={siteLogo}
-                    menuItems={primaryMenu}
                     headerSettings={headerSettings}
                     showButtons={false}
                     showNavigation={false}
@@ -130,7 +128,6 @@ export default function Component(props) {
 
 Component.variables = (props) => {
     return {
-      headerLocation: MENUS.PRIMARY_LOCATION,
       footerLocation: MENUS.FOOTER_LOCATION
     };
   };
@@ -141,7 +138,6 @@ Component.variables = (props) => {
     ${ThirdPartySettingsFragment}
     ${AlertFragment}
     query GetHomePageData(
-      $headerLocation: MenuLocationEnum
       $footerLocation: MenuLocationEnum
     ) {
       generalSettings {
@@ -167,11 +163,6 @@ Component.variables = (props) => {
           }
       }
       footerMenuItems: menuItems(where: { location: $footerLocation }, first: 255) {
-        nodes {
-          ...NavigationMenuItemFragment
-        }
-      }
-      headerMenuItems: menuItems(where: { location: $headerLocation }, first: 255) {
         nodes {
           ...NavigationMenuItemFragment
         }
