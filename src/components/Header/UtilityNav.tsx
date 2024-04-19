@@ -5,7 +5,7 @@ export default function UtilityNav({ logo, navOpen = false, setNavOpen = false, 
     return (
         <ul className="cx-header__util-nav-list">
             <li>
-                <SearchBar logo={logo} device="desktop" navOpen setNavOpen />
+                <SearchBar logo={logo} device="desktop" navOpen setNavOpen showSearch={true} />
             </li>
             <li>
                 {parseHtml(headerUtilities.toString() ?? '' )}
