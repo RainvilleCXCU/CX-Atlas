@@ -4,7 +4,7 @@ import MenuNavigation from 'components/Navigation/Navbar';
 import { useEffect } from 'react';
 import { parseHtml } from 'lib/parser';
 
-export default function MobileNav({ links, menuOpen = false, navOpen, setNavOpen, headerSettings, children = <></> }) {
+export default function MobileNav({ links, menuOpen = false, navOpen = false, setNavOpen, headerSettings, children = <></> }) {
     //const [navOpen, setNavOpen] = useState(false);
     useEffect(() => {
         if(navOpen) {
