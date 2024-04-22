@@ -11,6 +11,15 @@
 // @import '~@wordpress/base-styles/z-index';
 // @import '~@wordpress/block-library/src/style.scss';
 
+
+@import './vendors/wordpress/block-library/style';
+@import './vendors/wordpress/genesis/blocks';
+@import './vendors/wordpress/genesis/style-blocks';
+@import './vendors/wordpress/genesis/style';
+@import './vendors/wordpress/style';
+@import './vendors/chat/styles';
+@import './vendors/wordpress/tablepress/default';
+
 @import "./utilities/visibility";
 @import "./components/accordions";
 @import "./components/links";
