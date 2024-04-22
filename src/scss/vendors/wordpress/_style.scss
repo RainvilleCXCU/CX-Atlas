@@ -1,0 +1,107 @@
+/*
+Theme Name: Connexus CU
+Description: Child theme for Genesis Pro
+Author: Connexus
+Author URI: https://www.connexuscu.org
+Template: genesis-block-theme
+Version: 1.0.0
+Text Domain:  Genesis Block Theme
+*/
+
+ul ul, ol ol, ul ol, ol ul {
+    padding: 0;
+    margin: 0;
+}
+ol, ul {
+    margin: 1rem 0;
+}
+.entry-content li {
+    margin-bottom: .67em;
+}
+/* --------------------------------------------------------------
+Form Elements
+-------------------------------------------------------------- */
+form {
+    display: block;
+}
+button,
+input:not(input[type="radio"]),
+textarea {
+	margin: 0;
+	vertical-align: baseline;
+	-webkit-appearance: none;
+	box-sizing: border-box;
+}
+
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.button,
+.comment-navigation a {
+	background: #0072e5;
+	border: none;
+	border-radius: 3px;
+	color: #fff;
+	font-family: "Public Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: initial;
+	font-weight: initial;
+	padding: initial;
+	-webkit-appearance: none;
+	transition: initial;
+}
+
+@media (max-width: 600px) {
+	button,
+	input[type="button"],
+	input[type="reset"],
+	input[type="submit"],
+	.button,
+	.comment-navigation a {
+		padding: 10px 16px;
+		font-size: 16px;
+	}
+}
+
+button:hover,
+input[type="button"]:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.button:hover,
+.comment-navigation a:hover,
+.drawer .tax-widget a:hover,
+a.added_to_cart:hover {
+	box-shadow: inset 0 0 80px rgba(255, 255, 255, 0.25);
+	-webkit-box-shadow: inset 0 0 80px rgba(255, 255, 255, 0.25);
+	color: #fff;
+	cursor: pointer;
+}
+
+button:focus,
+input[type="button"]:focus,
+input[type="reset"]:focus,
+input[type="submit"]:focus,
+button:active,
+input[type="button"]:active,
+input[type="reset"]:active,
+input[type="submit"]:active,
+.button:active,
+.button:focus,
+.comment-navigation a:focus,
+a.added_to_cart:active,
+a.added_to_cart:focus {
+	color: #fff;
+	box-shadow: none;
+}
+
+/** Layout **/
+#page .aligncenter {
+    margin: 4rem auto;
+}
+
+.wp-block-columns {
+	gap: 2rem;
+}
+a:focus {
+	outline: auto;
+}
