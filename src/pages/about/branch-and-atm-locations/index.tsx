@@ -85,13 +85,7 @@ export default function Page() {
 
   return (
     <>
-      <Header
-        title={siteTitle}
-        description={siteDescription}
-        logo={siteLogo}
-        menuItems={primaryMenu}
-        headerSettings={headerSettings}
-      />
+      
       <Head>
         <title>{`Locations - ${siteTitle}`}</title>
       </Head>
@@ -135,6 +129,13 @@ export default function Page() {
         <Alert alerts={activeAlerts} />
       }
       <Loading />
+      <Header
+        title={siteTitle}
+        description={siteDescription}
+        logo={siteLogo}
+        menuItems={primaryMenu}
+        headerSettings={headerSettings}
+      />
       <showDetailsContext.Provider value={{ showDetails, setShowDetails }}>
         <selectedLocationContext.Provider
           value={{ selectedLocation, setSelectedLocation }}
