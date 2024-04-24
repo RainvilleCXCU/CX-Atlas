@@ -32,8 +32,8 @@ const findChildren = (element, att, value) => {
 }
 
 export const parseHtml = (html) => {
-    const whitelistRegex = new RegExp(`(${global?.location?.hostname})(connexuscu.org)|(mortgagewebcenter)|(meridianlink)|(loanspq)|(myworkdayjobs)|(issuu)|(az1.qualtrics)|(docusign)|(billerpayments)|(#)|(tel:)|(mailto:)|(javascript:)`, "i");
-    const options = {
+    const whitelistRegex = new RegExp(`(.local)|(wpenginepowered.)|(wpengine.com)|(connexuscu.org)|(mortgagewebcenter)|(meridianlink)|(loanspq)|(myworkdayjobs)|(issuu)|(az1.qualtrics)|(docusign)|(billerpayments)|(#)|(tel:)|(mailto:)|(javascript:)`, "i");
+        const options = {
         trim: false,
         htmlparser2: {
             lowerCaseTags: false,
