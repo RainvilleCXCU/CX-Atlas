@@ -14,6 +14,8 @@ const Footer = dynamic(() => import('components/Footer/Footer'));
 // const SEO = dynamic(()=> import('components/SEO/SEO'));
 import { parseHtml } from "lib/parser";
 const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});
+import Modal from 'components/Modal/modal';
+import {isModalOpenContext, modalContentContext} from 'components/Modal/modalContext';
 import Loading from "components/common/loading";
 import Head from "next/head";
 import { useState, useContext } from "react";
@@ -82,6 +84,8 @@ export default function Page() {
   const [showDetails, setShowDetails] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const activeAlerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
 
   return (
     <>
@@ -124,6 +128,9 @@ export default function Page() {
     enabled={hotjarEnabled} />
   }
         
+    <isModalOpenContext.Provider value={{ isModalOpen, setIsModalOpen }}>
+      <modalContentContext.Provider value={{modalContent, setModalContent}}>
+      <Modal />
       {
         activeAlerts.length > 0 &&
         <Alert alerts={activeAlerts} />
@@ -172,7 +179,8 @@ export default function Page() {
         footerAppIcons={footerAppIcons}
         footerSocialIcons={footerSocialIcons}
       />
-      
+      </modalContentContext.Provider>
+      </isModalOpenContext.Provider>
      {qualtricsEnabled &&
 			<Qualtrics
         id={qualtricsId}

@@ -21,11 +21,14 @@ import {
 } from '../../fragments/ApplyWidgets';
 import { parseHtml } from 'lib/parser';
 const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});
+import Modal from 'components/Modal/modal';
+import {isModalOpenContext, modalContentContext} from 'components/Modal/modalContext';
 import Loading from 'components/common/loading';
 import { GetServerSidePropsContext } from 'next';
 import { getNextServerSideProps } from '@faustwp/core';
 import apolloClient from 'apolloClient';
 import dynamic from 'next/dynamic';
+import { useState } from 'react';
 
 export default function Component(props) {
 
@@ -40,7 +43,8 @@ export default function Component(props) {
     
     widget ? widget?.replace(/account=none/gi, `account=${product.title.replace(' ', '-').toLowerCase()}`) : '';
     const activeAlerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
-    
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalContent, setModalContent] = useState(null);    
 
     return (
         <>
@@ -78,6 +82,9 @@ export default function Component(props) {
               enabled={hotjarEnabled} />
             }
               
+    <isModalOpenContext.Provider value={{ isModalOpen, setIsModalOpen }}>
+      <modalContentContext.Provider value={{modalContent, setModalContent}}>
+      <Modal />
             {
               activeAlerts.length > 0 &&
               <Alert alerts={activeAlerts} />
@@ -106,7 +113,8 @@ export default function Component(props) {
             </span>
 
         {/* <Footer copyrightHolder={footerText} menuItems={footerMenu} logo={siteLogo} footerUtilities={footerUtilities} footerAppIcons={footerAppIcons} footerSocialIcons={footerSocialIcons} /> */}
-                
+        </modalContentContext.Provider>
+        </isModalOpenContext.Provider>
      {qualtricsEnabled &&
 			<Qualtrics
         id={qualtricsId}

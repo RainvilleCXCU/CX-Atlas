@@ -14,12 +14,15 @@ const Footer = dynamic(() => import('components/Footer/Footer'));
 // const SEO = dynamic(()=> import('components/SEO/SEO'));
 import { parseHtml } from "lib/parser";
 const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});
+import Modal from 'components/Modal/modal';
+import {isModalOpenContext, modalContentContext} from 'components/Modal/modalContext';
 import Loading from "components/common/loading";
 import { getNextServerSideProps } from "@faustwp/core";
 import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { AlertFragment } from 'fragments/Alerts';
 import dynamic from 'next/dynamic';
+import { useState } from 'react';
 
 export default function Component(props) {
 
@@ -59,6 +62,8 @@ export default function Component(props) {
         return word.charAt(0).toUpperCase() + word.slice(1)
     }).join(' ') : null;
   const title = `Schedule a Call${productName ? ' about ' : ''}${productName ? productName.replace('-', ' ') : ''} - ${siteTitle}`;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
   return (
     <>
 		<Head>
@@ -76,6 +81,9 @@ export default function Component(props) {
     enabled={hotjarEnabled} />
   }
         
+    <isModalOpenContext.Provider value={{ isModalOpen, setIsModalOpen }}>
+      <modalContentContext.Provider value={{modalContent, setModalContent}}>
+      <Modal />
       {
         activeAlerts.length > 0 &&
         <Alert alerts={activeAlerts} />
@@ -109,7 +117,8 @@ export default function Component(props) {
         footerAppIcons={footerAppIcons}
         footerSocialIcons={footerSocialIcons}
       />
-      
+      </modalContentContext.Provider>
+      </isModalOpenContext.Provider>
      {qualtricsEnabled &&
 			<Qualtrics
         id={qualtricsId}
