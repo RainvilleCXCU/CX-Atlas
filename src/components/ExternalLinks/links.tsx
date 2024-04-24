@@ -31,7 +31,7 @@ function ExternalLink({
       }
     };
     return (
-        <a href={href} className={`${classNames}`} onClick={handleClick} ref={linkRef} >
+        <a href={href} className={`${classNames}`} target="_blank" onClick={handleClick} ref={linkRef} >
             {children}
         </a>
     );
