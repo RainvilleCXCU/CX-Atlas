@@ -1,10 +1,20 @@
 import { getWordPressProps, WordPressTemplate } from "@faustwp/core";
 import { getPageNum } from "utils/urlParser";
 import { GetServerSidePropsContext } from "next";
+import { useState } from "react";
+import Modal from 'components/Modal/modal';
+import {isModalOpenContext, modalContentContext} from 'components/Modal/modalContext';
 
 export default function Page(props) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
   return (
-    <WordPressTemplate {...props} />
+    <isModalOpenContext.Provider value={{ isModalOpen, setIsModalOpen }}>
+      <modalContentContext.Provider value={{modalContent, setModalContent}}>
+        <Modal />
+        <WordPressTemplate {...props} />
+      </modalContentContext.Provider>
+    </isModalOpenContext.Provider>
   );
 }
 

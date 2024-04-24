@@ -3,6 +3,7 @@ import parse, { domToReact, attributesToProps } from "html-react-parser";
 import Link from "next/link";
 import { css } from '@emotion/css';
 import Image from 'next/image';
+import ExternalLink from "components/ExternalLinks/links";
 const FAQ = dynamic(() => import("components/FAQs/faq"));
 const Form = dynamic(() => import("components/Forms/Form"));
 const EqualHeightContainer = dynamic(() => import("components/Blocks/EqualHeight"));
@@ -31,6 +32,7 @@ const findChildren = (element, att, value) => {
 }
 
 export const parseHtml = (html) => {
+    const whitelistRegex = new RegExp(`(${global?.location?.hostname})(connexuscu.org)|(mortgagewebcenter)|(meridianlink)|(loanspq)|(myworkdayjobs)|(issuu)|(az1.qualtrics)|(docusign)|(billerpayments)|(#)|(tel:)|(mailto:)|(javascript:)`, "i");
     const options = {
         trim: false,
         htmlparser2: {
@@ -55,7 +57,12 @@ export const parseHtml = (html) => {
                 return (
                     <Chat className={attribs.class}>{domToReact(children, options)}</Chat>
                 )
-            } 
+            }
+            else if(name === 'a' && whitelistRegex.test(attribs?.href) === false && attribs?.href[0] !== '/') {
+                return (
+                    <ExternalLink href={attribs?.href} classNames={attribs?.class}>{domToReact(children, options)}</ExternalLink>
+                )
+            }
             // Internal Link
             else if (name === "a") {                
                 return (

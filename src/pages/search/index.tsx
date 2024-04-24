@@ -14,6 +14,8 @@ const Footer = dynamic(() => import('components/Footer/Footer'));
 const Pagination = dynamic(() => import('components/Pagination'));
 const SEO = dynamic(()=> import('components/SEO/SEO'));
 const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});
+import Modal from 'components/Modal/modal';
+import {isModalOpenContext, modalContentContext} from 'components/Modal/modalContext';
 import Loading from 'components/common/loading';
 import SearchBar from 'components/Search/SearchBar';
 import SearchListing from 'components/Search/Listing';
@@ -24,6 +26,7 @@ import { gql } from '@apollo/client';
 import { useRouter } from 'next/router';
 import Categories from 'components/Posts/categories';
 import dynamic from 'next/dynamic';
+import { useState } from 'react';
 
 const POSTS_PER_PAGE = 5;
 export default function Component(props) {
@@ -42,6 +45,8 @@ export default function Component(props) {
   const search = query.s;
   const categories = props?.data?.categories;
   const activeAlerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
 
   return (
     <>
@@ -79,6 +84,10 @@ export default function Component(props) {
     enabled={hotjarEnabled} />
   }
     
+
+    <isModalOpenContext.Provider value={{ isModalOpen, setIsModalOpen }}>
+      <modalContentContext.Provider value={{modalContent, setModalContent}}>
+      <Modal />
   {
     activeAlerts.length > 0 &&
     <Alert alerts={activeAlerts} />
@@ -116,7 +125,8 @@ export default function Component(props) {
       </main>
 
 			<Footer copyrightHolder={footerText} menuItems={footerMenu} logo={siteLogo} footerUtilities={footerUtilities} footerAppIcons={footerAppIcons} footerSocialIcons={footerSocialIcons} />
-			
+			</modalContentContext.Provider>
+      </isModalOpenContext.Provider>
       {qualtricsEnabled &&
 			<Qualtrics
         id={qualtricsId}
