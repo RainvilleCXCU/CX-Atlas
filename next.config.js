@@ -1,3 +1,5 @@
+
+const path = require("path");
 const { withFaust, getWpHostname } = require("@faustwp/core");
 const { fetchWordPressRedirects } = require("./src/utils/redirects");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -263,15 +265,29 @@ let nextConfig = {
         "react-dom": "preact/compat",
       });
     }
+    const originalEntry = config.entry;
+    config.entry = async () => {
+      const entries = await originalEntry();
+    
+      return {
+        ...entries,
+        'styles': {
+          import: './src/scss/main.scss',
+          dependOn: undefined,
+          filename: 'styles'
+        },
+      };
+    };
+
+    
     config.plugins.push(
         new MiniCssExtractPlugin({
-            filename: `static/[name].css`,
-            chunkFilename: "static/[name].css",
-            insert: function (linkTag) {
-                // console.log('ADD CSS')
-                document.body.prepend(linkTag);
-              },
+          filename: `static/css/styles.css`,
+          chunkFilename: "static/css/styles.css",
         }),)
+    config.resolve.extensions.push('.scss');
+    config.resolve.extensions.push('.css');
+    console.log(JSON.stringify(config.entry))
     config.module.rules.push(
         {
             test: /\.(scss|css)$/,

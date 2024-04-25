@@ -5,7 +5,6 @@ import Provider from '../provider/store';
 import { useRouter } from 'next/router'
 import type { AppProps } from 'next/app';
 import { pageview } from '../lib/routing';
-import 'scss/main.scss';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
 
