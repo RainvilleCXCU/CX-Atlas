@@ -38,7 +38,7 @@ function Header({
 
   return (
     <header className={`cx-header${navOpen ? ' nav-open' : ''}`}>
-      {(showLogo || showUtilityNav) &&
+      {/* {(showLogo || showUtilityNav) &&
         <section className="cx-header__util-nav cx-header__desktop">
           <div className="cx-header__wrapper">
             {showLogo &&
@@ -50,15 +50,15 @@ function Header({
           </div>
         </section>
       }
+        {showNavigation &&
         <section className="cx-header__main-nav">
           <div className="cx-header__wrapper">
 
             <nav className="navbar navbar-expand-lg navbar-default cx-nav cx-header__mobile">
-                <SearchBar logo={logo} device="mobile" setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} />
+                <SearchBar showNavigation={showNavigation} logo={logo} device="mobile" setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} />
               
-              {showNavigation &&
-                <MobileNav headerSettings={headerSettings} links={menuItems} menuOpen={navOpen} navOpen={navOpen} setNavOpen={setNavOpen} />
-              }
+                <MobileNav showNavigation={showNavigation} headerSettings={headerSettings} links={menuItems} menuOpen={navOpen} navOpen={navOpen} setNavOpen={setNavOpen} />
+              
             </nav>
 
 
@@ -80,6 +80,7 @@ function Header({
             }
           </div>
         </section >
+        } */}
     </header >
   );
 }
