@@ -6,6 +6,7 @@ import SearchBar from './SearchBar';
 import Logo from 'components/Logo';
 import { useRouter } from 'next/router';
 import MobileNav from './MobileNav';
+import Navigation from './Navigation';
 interface Props {
   title?: string;
   description?: string;
@@ -36,6 +37,8 @@ function Header({
 
   const [navOpen, setNavOpen] = useState(false);
 
+  
+
   return (
     <header className={`cx-header${navOpen ? ' nav-open' : ''}`}>
       {(showLogo || showUtilityNav) &&
@@ -49,37 +52,16 @@ function Header({
             }
           </div>
         </section>
-      }
-        <section className="cx-header__main-nav">
-          <div className="cx-header__wrapper">
-
-            <nav className="navbar navbar-expand-lg navbar-default cx-nav cx-header__mobile">
-                <SearchBar logo={logo} device="mobile" setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} />
-              
-              {showNavigation &&
-                <MobileNav headerSettings={headerSettings} links={menuItems} menuOpen={navOpen} navOpen={navOpen} setNavOpen={setNavOpen} />
-              }
-            </nav>
-
-
-            {(showNavigation || showButtons) &&
-              <nav className="navbar navbar-expand-lg navbar-default cx-nav cx-header__desktop">
-                <div className="collapse navbar-collapse cx-nav__collapse" id="navbarSupportedContent">
-                  {showNavigation &&
-                    <MenuNavigation device="Desktop" menuItems={menuItems} menuOpen={false} setNavOpen={setNavOpen} /> || <div></div>
-                  }
-                  {showButtons &&
-                    <div>
-                      <Link href="/pay-my-loan/" passHref className="cx-button cx-button--compact cx-button--text cx-button--outlined" type="button">Pay my loan
-                      </Link>
-                      <Link href="/mdr?loc=LStUVVkwNi1DO1c1Tj0nLTYsQGBgCmAK&login=desktop" className="cx-button cx-button--compact">Log in</Link>
-                    </div>
-                  }
-                </div>
-              </nav>
-            }
-          </div>
-        </section >
+      } 
+        {!showNavigation ?
+              <Navigation showNavigation={showNavigation} showButtons={showButtons} logo={logo} setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} headerSettings={headerSettings} menuItems={menuItems} />
+             :
+          <section className="cx-header__main-nav">
+            <div className="cx-header__wrapper">
+              <Navigation showNavigation={showNavigation} logo={logo} showButtons={showButtons} setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} headerSettings={headerSettings} menuItems={menuItems} />
+            </div>
+          </section >
+        }
     </header >
   );
 }

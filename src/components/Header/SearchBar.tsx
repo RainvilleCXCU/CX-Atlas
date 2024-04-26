@@ -9,6 +9,7 @@ interface SearchBarProps {
 	setNavOpen?
 	showSearch?: boolean
 	logo?
+	showNavigation?: boolean
 }
 
 function DesktopSearchBar(props: SearchBarProps) {
@@ -139,10 +140,10 @@ function MobileSearchBar(props: SearchBarProps) {
 	);
 }
 
-export default function SearchBar({ device, navOpen, setNavOpen, logo, showSearch, children = <></> }) {
+export default function SearchBar({ device, navOpen, setNavOpen, logo, showSearch, showNavigation = true, children = <></> }) {
 	if (device.toLowerCase() === 'mobile') {
 		return (
-			<MobileSearchBar logo={logo} navOpen={navOpen} setNavOpen={setNavOpen} showSearch={showSearch} />
+			<MobileSearchBar logo={logo} navOpen={navOpen} setNavOpen={setNavOpen} showNavigation={showNavigation} showSearch={showSearch} />
 		);
 	}
 	return (

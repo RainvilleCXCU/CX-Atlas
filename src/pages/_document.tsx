@@ -8,6 +8,7 @@ class CXDoc extends Document {
     return (
       <Html>
         <Head>
+          <style>{`body { display: block !important }`}</style>
           <link href='https://www.googletagmanager.com' rel='preconnect' />
           <link href='https://www.googletagmanager.com' rel='dns-prefetch' />
           {/* <link href='https://cloud.typography.com' rel='preconnect' />
@@ -19,7 +20,7 @@ class CXDoc extends Document {
             href={`/856897/9F6C645B2367EC4D3.css`}
           />
           <link rel="stylesheet" href="/_next/static/css/styles.css" />
-          <link rel="stylesheet" href={`${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp-content/themes/CXCU/assets/${
+          <link rel="stylesheet" href={`/wp-content/themes/CXCU/assets/${
                 process.env.NEXT_PUBLIC_styleguideVersion || "latest"
               }/cxcuatlas.css`} />
         </Head>

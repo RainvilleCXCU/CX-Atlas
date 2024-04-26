@@ -18,10 +18,9 @@ const Siteimprove = dynamic(() => import('components/ThirdParty/siteimprove'), {
 //   MenuNavigation,
 //   SEO,
 // } from '../components';
+import SEO from 'components/SEO/SEO';
 const Header = dynamic(()=> import('components/Header/Header'));
-const MenuNavigation = dynamic(()=> import('components/Navigation/Navbar'));
 const Footer = dynamic(() => import('components/Footer/Footer'));
-const SEO = dynamic(()=> import('components/SEO/SEO'));
 const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:true});
 const Loading = dynamic(() => import('components/common/loading'), {ssr:true});
 
@@ -58,7 +57,7 @@ export default function Component(props) {
 				twitter_card={"summary_large_image"} // Not sure where this is in the page object
 				twitter_label1={"Est. reading time"} // Not sure where this is in the page object
 				twitter_data1={seo?.readingTime + " minutes"}
-  />
+    />
   <GTM
     id={gtmId}
     enabled={gtmEnabled} />
