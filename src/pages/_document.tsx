@@ -10,18 +10,16 @@ class CXDoc extends Document {
         <Head>
           <link href='https://www.googletagmanager.com' rel='preconnect' />
           <link href='https://www.googletagmanager.com' rel='dns-prefetch' />
-          <link href='https://cloud.typography.com' rel='preconnect' />
-          <link href='https://cloud.typography.com' rel='dns-prefetch' />
+          {/* <link href='https://cloud.typography.com' rel='preconnect' />
+          <link href='https://cloud.typography.com' rel='dns-prefetch' /> */}
           <link href={process.env.NEXT_PUBLIC_WORDPRESS_URL} rel='preconnect' />
           <link href={process.env.NEXT_PUBLIC_WORDPRESS_URL} rel='dns-prefetch' />
           <link
             rel="stylesheet"
-            href={`https://cloud.typography.com/6914618/${
-              process.env.NEXT_PUBLIC_CLOUD_FONTS || "7711232"
-            }/css/fonts.css`}
+            href={`/856897/9F6C645B2367EC4D3.css`}
           />
           <link rel="stylesheet" href="/_next/static/css/styles.css" />
-          <link rel="stylesheet" href={`/wp-content/themes/CXCU/assets/${
+          <link rel="stylesheet" href={`${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp-content/themes/CXCU/assets/${
                 process.env.NEXT_PUBLIC_styleguideVersion || "latest"
               }/cxcuatlas.css`} />
         </Head>
