@@ -4,7 +4,7 @@ import MenuNavigation from 'components/Navigation/Navbar';
 import { useEffect } from 'react';
 import { parseHtml } from 'lib/parser';
 
-export default function MobileNav({ links, menuOpen = false, navOpen = false, setNavOpen, headerSettings, children = <></> }) {
+export default function MobileNav({ links, menuOpen = false, navOpen = false, setNavOpen, headerSettings, showNavigation, children = <></> }) {
     //const [navOpen, setNavOpen] = useState(false);
     useEffect(() => {
         if(navOpen) {
@@ -19,6 +19,8 @@ export default function MobileNav({ links, menuOpen = false, navOpen = false, se
     },[menuOpen])
     
     return (
+        <>
+        {showNavigation &&
         <div className={`cx-nav__collapse offcanvas offcanvas-end${navOpen ? ' show' : ''}`} id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
             <button type="button" className="visually-hidden" data-bs-dismiss="offcanvas" aria-label="Close navigation"
                 onClick={() => {
@@ -60,5 +62,7 @@ export default function MobileNav({ links, menuOpen = false, navOpen = false, se
                 </div>
             </ul>
         </div>
+                }
+        </>
     )
 }
