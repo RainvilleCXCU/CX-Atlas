@@ -43,7 +43,7 @@ function Modal({
   return (
     <>
         <div className={`cx-container-modal--fixed cx-container-modal--force-close${isModalOpen ? '' : ' cx-modal__hidden'}`}>
-          <div className="cx-container-modal__modal-bg" onClick={forceAction && closeModal}></div>
+          <div className="cx-container-modal__modal-bg" onClick={forceAction ? closeModal : () => {}}></div>
           <div className="cx-container-modal__content">
             <button className="cx-button--close" onClick={closeModal}></button>
             <span>
