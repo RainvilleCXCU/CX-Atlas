@@ -110,6 +110,7 @@ function MobileSearchBar(props: SearchBarProps) {
 
 	return (
 		<>
+			<MobileHeader logo={logo} setSearchTerm={setSearchTerm} showNav={showSearch} isSearchExpanded={isSearchExpanded} setIsSearchExpanded={setIsSearchExpanded} navOpen={navOpen} setNavOpen={setNavOpen} />
 			{ showSearch &&
 				<div className={`modal cx-modal${isSearchExpanded ? ' show' : ''}`} id="searchModal" aria-labelledby="searchModalLabel" aria-hidden="true">
 					<form className="modal-dialog cx-search-mobile" role="search" action="/" onSubmit={submitSearch}>
