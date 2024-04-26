@@ -38,7 +38,7 @@ function Header({
 
   return (
     <header className={`cx-header${navOpen ? ' nav-open' : ''}`}>
-      {/* {(showLogo || showUtilityNav) &&
+      {(showLogo || showUtilityNav) &&
         <section className="cx-header__util-nav cx-header__desktop">
           <div className="cx-header__wrapper">
             {showLogo &&
@@ -80,7 +80,7 @@ function Header({
             }
           </div>
         </section >
-        } */}
+        }
     </header >
   );
 }

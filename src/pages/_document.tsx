@@ -8,6 +8,7 @@ class CXDoc extends Document {
     return (
       <Html>
         <Head>
+          <style>{`body { display: block !important }`}</style>
           <link href='https://www.googletagmanager.com' rel='preconnect' />
           <link href='https://www.googletagmanager.com' rel='dns-prefetch' />
           {/* <link href='https://cloud.typography.com' rel='preconnect' />
