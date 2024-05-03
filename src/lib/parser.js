@@ -67,11 +67,11 @@ export const parseHtml = (html) => {
                 )
             }
             // Content Toggle Link
-            // else if(name === 'a' && attribs?.class?.includes('cx-toggle-content__toggler')) {
-            //     return (
-            //         <ToggleContentLink attribs={attribs}>{domToReact(children, options)}</ToggleContentLink>
-            //     )
-            // }
+            else if(name === 'a' && attribs?.class?.includes('cx-toggle-content__toggler')) {
+                return (
+                    <ToggleContentLink attribs={attribs}>{domToReact(children, options)}</ToggleContentLink>
+                )
+            }
             // Internal Link
             else if (name === "a") {                
                 return (
@@ -120,18 +120,18 @@ export const parseHtml = (html) => {
                 )
             }
             // // Content Toggle Link
-            // else if(attribs?.class?.includes('cx-toggle-content__select')) {
-            //     return (
-            //         <ToggleContentSelect attribs={attribs}>{domToReact(children, options)}</ToggleContentSelect>
-            //     )
-            // }
+            else if(attribs?.class?.includes('cx-toggle-content__select')) {
+                return (
+                    <ToggleContentSelect attribs={attribs}>{domToReact(children, options)}</ToggleContentSelect>
+                )
+            }
 
-            // // Toggle Content
-            // else if (attribs?.['data-toggle-content']) {
-            //     return (
-            //         <ToggleContent attribs={attribs}>{domToReact(children, options)}</ToggleContent>
-            //     )
-            // }
+            // Toggle Content
+            else if (attribs?.['data-toggle-content']) {
+                return (
+                    <ToggleContent attribs={attribs}>{domToReact(children, options)}</ToggleContent>
+                )
+            }
 
             // Disclosures
             else if(attribs?.id?.includes('disclosures') || attribs?.class?.includes("disclosure_trigger")) {
