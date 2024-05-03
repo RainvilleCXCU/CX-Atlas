@@ -55,7 +55,9 @@ function Form({ id }: Props): JSX.Element {
                 ...formSettings
             }
         }));
+        console.log('FORM DATA')
         if(FormQuery?.data) {
+            console.log(JSON.parse(FormQuery?.data?.getForm?.settings));
             setFormSettings(FormQuery?.data?.getForm?.settings && JSON.parse(FormQuery?.data?.getForm?.settings));
             setNonce(FormQuery?.data?.getForm?.ajaxNonce);
         }
@@ -111,6 +113,8 @@ function Form({ id }: Props): JSX.Element {
 
     return (
         <div id="nf-form-1-cont" className="nf-form-cont" aria-live="polite" aria-labelledby="nf-form-title-1" aria-describedby="nf-form-errors-1" role="form">
+            <link rel="stylesheet" href="/wp-content/plugins/ninja-forms/assets/css/font-awesome.min.css?ver=6.2.4" />
+            <link rel="stylesheet" href="/wp-content/plugins/ninja-forms/assets/css/display-opinions-light.css?ver=6.2.4" />
             <span id="nf-form-title-1" className="nf-form-title">
                 {formSettings && formSettings?.show_title !== 0 && parseHtml(formSettings?.title)}
             </span>
@@ -144,6 +148,7 @@ function Form({ id }: Props): JSX.Element {
                                             container_classes={field.container_class}
                                             element_classes={field.element_class}
                                             description={field.desc_text}
+                                            formSettings={formSettings}
                                             error_message={response?.errors?.fields && response?.errors?.fields[field.id] || null}
                                         />
                                     ))

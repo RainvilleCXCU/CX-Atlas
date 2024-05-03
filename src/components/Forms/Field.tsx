@@ -15,9 +15,10 @@ export interface Props {
     container_classes?: string;
     element_classes?: string;
     error_message?: string;
+    formSettings?
 }
 
-function NFField({ id, form, type = 'text', name, label, label_pos = "label-above", container_classes, element_classes, description, content, required = false, error_message }: Props): JSX.Element {
+function NFField({ id, form, type = 'text', name, label, label_pos = "label-above", container_classes, element_classes, description, content, formSettings, required = false, error_message }: Props): JSX.Element {
 
     const fieldRef = useRef(null);
     const emailValid = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'i');
@@ -32,16 +33,17 @@ function NFField({ id, form, type = 'text', name, label, label_pos = "label-abov
         let error = null;
         if(fieldRef.current.value === '' && required) {
             setEdited(true);
-            error = state.formSettings.validateRequiredField;
+            error = formSettings.validateRequiredField;
         } else {
             if(type === 'email' && !emailValid.test(fieldRef.current.value)) {
                 setEdited(true);
-                error = state.formSettings.changeEmailErrorMsg;
+                error = formSettings.changeEmailErrorMsg;
             }
         }
 
         setErrorMessage(error);
-
+        console.log('ERROR MESSAGE');
+        console.log(error);
         setState({
             ...state,
             forms: {
