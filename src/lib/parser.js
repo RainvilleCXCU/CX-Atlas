@@ -4,6 +4,9 @@ import Link from "next/link";
 import { css } from '@emotion/css';
 import Image from 'next/image';
 import ExternalLink from "components/ExternalLinks/links";
+import ToggleContent from "components/ContentToggle/Content";
+import ToggleContentLink from "components/ContentToggle/ContentToggleLink";
+import ToggleContentSelect from "components/ContentToggle/ContentToggleSelect";
 const FAQ = dynamic(() => import("components/FAQs/faq"));
 const Form = dynamic(() => import("components/Forms/Form"));
 const EqualHeightContainer = dynamic(() => import("components/Blocks/EqualHeight"));
@@ -48,7 +51,7 @@ export const parseHtml = (html) => {
                 }
             }
             // Skip none block elements
-            if(name !== 'a' && name !== 'div' && name !== 'span' && name !== 'button' && name !== 'p' && name !== 'h3' && name !== 'table' && name !== 'img') {
+            if(name !== 'a' && name !== 'div' && name !== 'span' && name !== 'button' && name !== 'p' && name !== 'h3' && name !== 'table' && name !== 'img' && name !== 'select') {
                 return;
             }
 
@@ -61,6 +64,12 @@ export const parseHtml = (html) => {
             else if(name === 'a' && whitelistRegex.test(attribs?.href) === false && attribs?.href[0] !== '/') {
                 return (
                     <ExternalLink href={attribs?.href} classNames={attribs?.class}>{domToReact(children, options)}</ExternalLink>
+                )
+            }
+            // Content Toggle Link
+            else if(name === 'a' && attribs?.class?.includes('cx-toggle-content__toggler')) {
+                return (
+                    <ToggleContentLink attribs={attribs}>{domToReact(children, options)}</ToggleContentLink>
                 )
             }
             // Internal Link
@@ -110,9 +119,22 @@ export const parseHtml = (html) => {
                     <Calculator calculatorName={attribs['data-calculator-name']}></Calculator>
                 )
             }
+            // Content Toggle Link
+            else if(attribs?.class?.includes('cx-toggle-content__select')) {
+                return (
+                    <ToggleContentSelect attribs={attribs}>{domToReact(children, options)}</ToggleContentSelect>
+                )
+            }
+
+            // Toggle Content
+            else if (attribs?.['data-toggle-content']) {
+                return (
+                    <ToggleContent attribs={attribs}>{domToReact(children, options)}</ToggleContent>
+                )
+            }
 
             // Disclosures
-            else if(attribs?.id?.includes('disclosures')) {
+            else if(attribs?.id?.includes('disclosures') || attribs?.class?.includes("disclosure_trigger")) {
                 return (
                     <Disclosure {...attributesToProps(attribs)}>{domToReact(children, options)}</Disclosure>
                 )
