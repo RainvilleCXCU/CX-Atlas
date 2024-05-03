@@ -126,7 +126,7 @@ function NFField({ id, form, type = 'text', name, label, label_pos = "label-abov
         <div id={`nf-field-${id}-container`} className={`nf-field-container ${type}-container ${`label-${label_pos === 'default' || label_pos === 'label-above' ? 'above' : label_pos}`} ${container_classes}`}>
             <div className="nf-field">
                 <div id={`nf-field-${id}-wrap`} className={`field-wrap ${type}-wrap${errorMessage && ' nf-fail nf-error'}${(edited && !errorMessage) ? ' nf-pass' : ''}`} data-field-id={id}>
-                    {type !== 'button' && type !== 'submit' && required &&
+                    {type !== 'button' && type !== 'submit' &&
                         <div className="nf-field-label">
                                 <label htmlFor={`nf-field-${id}`} id={`nf-label-field-${id}`} className="">
                                     {label} {required && <span className="ninja-forms-req-symbol">*</span> }
