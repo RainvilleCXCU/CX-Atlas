@@ -1,6 +1,7 @@
+import { attributesToProps } from "html-react-parser";
 import { useEffect } from "react";
 
-function Disclosure({ children }) {
+function Disclosure({ attribs, children }) {
 	useEffect(() => {
 		let clickedReference = null;
 		let clickedReferenceLast = null;
@@ -89,7 +90,7 @@ function Disclosure({ children }) {
 		}
 	}, []);
 
-	return <>{children}</>;
+	return <div {...attributesToProps(attribs)}>{children}</div>;
 }
 
 export default Disclosure;
