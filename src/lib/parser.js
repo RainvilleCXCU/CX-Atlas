@@ -51,7 +51,7 @@ export const parseHtml = (html) => {
                 }
             }
             // Skip none block elements
-            if(name !== 'a' && name !== 'div' && name !== 'span' && name !== 'button' && name !== 'p' && name !== 'h3' && name !== 'table' && name !== 'img' && name !== 'select') {
+            if(name !== 'a' && name !== 'div' && name !== 'span' && name !== 'button' && name !== 'p' && name !== 'h3' && name !== 'table' && name !== 'img') {
                 return;
             }
 
