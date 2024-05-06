@@ -15,15 +15,15 @@ function Disclosure({ attribs, children }) {
 		}
 
 		// grab all of the "sup" links that are numbers and add click event listeners
-		const supElements = document.querySelectorAll("sup");
-		supElements.forEach((supElement) => {
-			const innerTextAsNumber = supElement.innerText;
-			if (parseInt(innerTextAsNumber, 10)) {
-				supElement.addEventListener("click", (e) =>
-					referenceClick(e, innerTextAsNumber)
-				);
-			}
-		});
+		// const supElements = document.querySelectorAll("sup");
+		// supElements.forEach((supElement) => {
+		// 	const innerTextAsNumber = supElement.innerText;
+		// 	if (parseInt(innerTextAsNumber, 10)) {
+		// 		supElement.addEventListener("click", (e) =>
+		// 			referenceClick(e, innerTextAsNumber)
+		// 		);
+		// 	}
+		// });
 
 		// grab all of the "return" links in the disclosures and add click event listeners
 		const returnElements = document.querySelectorAll(".disclosure_wrapper a > svg");
