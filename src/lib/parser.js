@@ -119,7 +119,7 @@ export const parseHtml = (html) => {
                     <Calculator calculatorName={attribs['data-calculator-name']}></Calculator>
                 )
             }
-            // // Content Toggle Link
+            // Content Toggle Link
             else if(attribs?.class?.includes('cx-toggle-content__select')) {
                 return (
                     <ToggleContentSelect attribs={attribs}>{domToReact(children, options)}</ToggleContentSelect>

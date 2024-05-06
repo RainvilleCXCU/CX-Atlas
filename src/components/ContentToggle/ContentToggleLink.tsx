@@ -20,7 +20,7 @@ function ToggleContentLink({
 
   const toggleContent = e => {
     e.preventDefault();
-    const target = linkRef.current.href.split('#')[1];
+    const target = linkRef?.current?.href.split('#')[1];
     console.log(`Target: ${target}`)
     setState(state => ({
         ...state,
@@ -32,14 +32,14 @@ function ToggleContentLink({
   useEffect(() => {
     if(!state?.toggleContent) {
         if(document?.location?.hash && document?.location?.hash === '#' + linkRef?.current?.href?.split('#')[1]) {        
-            const target = linkRef.current.href.split('#')[1];
+            const target = linkRef?.current?.href.split('#')[1];
             console.log(`Target: ${target}`)
             setState(state => ({
                 ...state,
                 toggleContent: target
             }));
         } else if(document?.location?.hash == '' && attribs?.['data-content-default']) {
-            const target = linkRef.current.href.split('#')[1];
+            const target = linkRef?.current?.href.split('#')[1];
             setState(state => ({
                 ...state,
                 toggleContent: target

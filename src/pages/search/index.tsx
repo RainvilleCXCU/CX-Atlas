@@ -14,7 +14,7 @@ const Footer = dynamic(() => import('components/Footer/Footer'));
 const Pagination = dynamic(() => import('components/Pagination'));
 const SEO = dynamic(()=> import('components/SEO/SEO'));
 const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});
-import Modal from 'components/Modal/modal';
+const Modal = dynamic(() => import("components/Modal/modal"));
 import {isModalOpenContext, modalContentContext} from 'components/Modal/modalContext';
 import Loading from 'components/common/loading';
 import SearchBar from 'components/Search/SearchBar';
@@ -87,7 +87,9 @@ export default function Component(props) {
 
     <isModalOpenContext.Provider value={{ isModalOpen, setIsModalOpen }}>
       <modalContentContext.Provider value={{modalContent, setModalContent}}>
-      <Modal />
+        {isModalOpen && modalContent &&
+          <Modal />
+        }
   {
     activeAlerts.length > 0 &&
     <Alert alerts={activeAlerts} />
