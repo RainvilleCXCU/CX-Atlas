@@ -134,7 +134,7 @@ export const parseHtml = (html) => {
             }
 
             // Disclosures
-            else if(attribs?.id?.includes('disclosures') || attribs?.class?.includes("disclosure_trigger")) {
+            else if(attribs?.id?.includes('disclosures')) {
                 return (
                     <Disclosure {...attributesToProps(attribs)}>{domToReact(children, options)}</Disclosure>
                 )
