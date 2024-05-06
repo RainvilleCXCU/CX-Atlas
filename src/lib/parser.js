@@ -134,11 +134,11 @@ export const parseHtml = (html) => {
             }
 
             // Disclosures
-            else if(attribs?.id?.includes('disclosures') || attribs?.class?.includes("disclosure_trigger")) {
-                return (
-                    <Disclosure attribs={attribs}>{domToReact(children, options)}</Disclosure>
-                )
-            }
+            // else if(attribs?.id?.includes('disclosures') || attribs?.class?.includes("disclosure_trigger")) {
+            //     return (
+            //         <Disclosure attribs={attribs}>{domToReact(children, options)}</Disclosure>
+            //     )
+            // }
 
             // CX Calculator Results
             else if(attribs?.class?.includes('cx-calculator-results')) {
