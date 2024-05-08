@@ -16,15 +16,14 @@ const Siteimprove = dynamic(() => import('components/ThirdParty/siteimprove'), {
 //   MenuNavigation,
 //   SEO,
 // } from '../components';
-const Header = dynamic(()=> import('components/Header/Header'));
-const Footer = dynamic(() => import('components/Footer/Footer'));
+import Header from 'components/Header/Header';
+import Footer from 'components/Footer/Footer';
 const SEO = dynamic(()=> import('components/SEO/SEO'));
 import { parseHtml } from 'lib/parser';
 const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});
 const Loading = dynamic(() => import('components/common/loading'), {ssr:false});
 import { useRouter } from 'next/router';
 import Posts from '../components/Posts/listing';
-import { getNextStaticProps } from '@faustwp/core';
 import { getPageNum } from 'utils/urlParser';
 import dynamic from 'next/dynamic';
 
@@ -244,31 +243,3 @@ Page.query = gql`
     }
   }
 `;
-
-// export async function getServerSideProps(context) {
-//   console.log('Context');
-//   console.log(context)
-//   return getNextServerSideProps(context, {
-//     Page,
-//   });
-// }
-
-
-export function getStaticProps(ctx, props) {
-  /**
-   * @link https://faustjs.org/docs/next/reference/getNextStaticProps
-   */
-  console.log('params');
-  console.log(JSON.stringify(props))
-  return getNextStaticProps(ctx, {
-    Page
-  });
-}
-
-
-  export function getStaticPaths() {
-    return {
-      paths: [],
-      fallback: 'blocking',
-    };
-  }
