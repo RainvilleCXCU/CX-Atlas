@@ -225,6 +225,9 @@ Page.query = gql`
     }
     headerSettings {
       headerUtilities
+      headerUtilitiesMobile
+      headerButtons
+      headerButtonsMobile
     }
     footerSettings {
       footerUtilities

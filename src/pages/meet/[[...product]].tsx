@@ -162,6 +162,9 @@ Component.query = gql`
     }
     headerSettings {
       headerUtilities
+      headerUtilitiesMobile
+      headerButtons
+      headerButtonsMobile
     }
     footerSettings {
       footerUtilities

@@ -155,6 +155,9 @@ Component.variables = (props) => {
       }
       headerSettings {
         headerUtilities
+        headerUtilitiesMobile
+        headerButtons
+        headerButtonsMobile
       }
       footerSettings {
         footerUtilities
