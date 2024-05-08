@@ -82,7 +82,6 @@ export default function Component(props) {
         menuItems={primaryMenu}
         headerSettings={headerSettings}
 			/>
-      test
 			<div id="page" className="container site">
 				<main id="main" className="content content-single">
 					<article className="entry-content post-content">
