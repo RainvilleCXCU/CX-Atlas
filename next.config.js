@@ -233,15 +233,12 @@ let nextConfig = {
       ],
     };
   },
-  i18n: {
-    localeDetection: false,
-  },
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
   swcMinify: true,
   experimental: {
-    webVitalsAttribution:  process.env.NODE_ENV !== "production" ? ["CLS", "LCP", "FCP"] : false,
+    webVitalsAttribution:  process.env.NODE_ENV !== "production" ? ["CLS", "LCP", "FCP"] : [],
     optimizePackageImports: [
       "@apollo/client",
       "@faustwp/cli",
