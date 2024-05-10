@@ -6,7 +6,6 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
-module.exports = withBundleAnalyzer({});
 
 /**
  * @type {import('next').NextConfig}
@@ -234,12 +233,15 @@ let nextConfig = {
       ],
     };
   },
+  i18n: {
+    localeDetection: false,
+  },
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
   swcMinify: true,
   experimental: {
-    webVitalsAttribution: ["CLS", "LCP", "FCP"],
+    webVitalsAttribution:  process.env.NODE_ENV !== "production" ? ["CLS", "LCP", "FCP"] : false,
     optimizePackageImports: [
       "@apollo/client",
       "@faustwp/cli",
@@ -257,14 +259,12 @@ let nextConfig = {
     outputStyle: "compressed",
   },
   webpack: (config, { dev, isServer }) => {
-    if (!dev && !isServer) {
-      Object.assign(config.resolve.alias, {
-        "react/jsx-runtime.js": "preact/compat/jsx-runtime",
-        react: "preact/compat",
-        "react-dom/test-utils": "preact/test-utils",
-        "react-dom": "preact/compat",
-      });
-    }
+    Object.assign(config.resolve.alias, {
+      "react/jsx-runtime.js": "preact/compat/jsx-runtime",
+      react: "preact/compat",
+      "react-dom/test-utils": "preact/test-utils",
+      "react-dom": "preact/compat",
+    });
     const originalEntry = config.entry;
     config.entry = async () => {
       const entries = await originalEntry();
