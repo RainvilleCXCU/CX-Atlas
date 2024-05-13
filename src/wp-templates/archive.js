@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 import Posts from '../components/Posts/listing';
 import { getPageNum } from 'utils/urlParser';
 import dynamic from 'next/dynamic';
-const BaseLayout = dynamic(() => import('pages/layout'));
+const BaseLayout = dynamic(() => import('components/layout'));
 
 const POSTS_PER_PAGE = 5;
 

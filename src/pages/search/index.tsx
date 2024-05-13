@@ -14,7 +14,7 @@ import { useRouter } from 'next/router';
 import Categories from 'components/Posts/categories';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
-import BaseLayout from 'pages/layout';
+import BaseLayout from 'components/layout';
 
 const POSTS_PER_PAGE = 5;
 

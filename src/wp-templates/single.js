@@ -10,7 +10,7 @@ import Image from 'next/image';
 import { Fragment } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-const BaseLayout = dynamic(() => import('pages/layout'));
+const BaseLayout = dynamic(() => import('components/layout'));
 export default function Component(props) {
   const { title, content, databaseId, featuredImage, categories, relatedPosts } = props?.data?.post ?? { title: '' };
   const { blogtop, blogSidebar } = props?.data?.widgetSettings;

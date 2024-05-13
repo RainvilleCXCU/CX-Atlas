@@ -12,7 +12,7 @@ import Columns from 'components/Blocks/Columns';
 import Column from 'components/Blocks/Column';
 const SearchBar = dynamic(() => import('components/Search/SearchBar'));
 import Link from 'next/link';
-import BaseLayout from './layout';
+import BaseLayout from '../components/layout';
 export default function Component(props) {
 
   if (props.loading) {

@@ -5,7 +5,7 @@ import { AlertFragment } from '../fragments/Alerts';
 import { NavigationMenuItemFragment } from '../fragments/MenuItems';
 import { ThirdPartySettingsFragment } from 'fragments/ThirdParty';
 import dynamic from 'next/dynamic';
-const BaseLayout = dynamic(() => import('pages/layout'));
+const BaseLayout = dynamic(() => import('components/layout'));
 import { parseHtml } from 'lib/parser';
 
 export default function Component(props) {
