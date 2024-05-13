@@ -1,9 +1,10 @@
 import Logo from "components/Logo";
-import FooterMenu from "./Nav";
+const FooterMenu = dynamic(() => import('./Nav'));
 import Icons from "./Icons";
 import UtilityNav from "./UtilityNav";
 import Image from "next/image";
 import { gql } from "@apollo/client";
+import dynamic from "next/dynamic";
 
 interface Props {
 	copyrightHolder?: string;

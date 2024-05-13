@@ -3,10 +3,11 @@ import parse, { domToReact, attributesToProps } from "html-react-parser";
 import Link from "next/link";
 import { css } from '@emotion/css';
 import Image from 'next/image';
-import ExternalLink from "components/ExternalLinks/links";
-import ToggleContent from "components/ContentToggle/Content";
-import ToggleContentLink from "components/ContentToggle/ContentToggleLink";
-import ToggleContentSelect from "components/ContentToggle/ContentToggleSelect";
+
+const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
+const ToggleContent = dynamic(() => import("components/ContentToggle/Content"));
+const ToggleContentLink = dynamic(() => import("components/ContentToggle/ContentToggleLink"));
+const ToggleContentSelect = dynamic(() => import("components/ContentToggle/ContentToggleSelect"));
 const FAQ = dynamic(() => import("components/FAQs/faq"));
 const Form = dynamic(() => import("components/Forms/Form"));
 const EqualHeightContainer = dynamic(() => import("components/Blocks/EqualHeight"));

@@ -15,10 +15,11 @@ export interface Props {
     container_classes?: string;
     element_classes?: string;
     error_message?: string;
+    options?
     formSettings?
 }
 
-function NFField({ id, form, type = 'text', name, label, label_pos = "label-above", container_classes, element_classes, description, content, formSettings, required = false, error_message }: Props): JSX.Element {
+function NFField({ id, form, type = 'text', name, label, label_pos = "label-above", container_classes, options, element_classes, description, content, formSettings, required = false, error_message }: Props): JSX.Element {
 
     const fieldRef = useRef(null);
     const emailValid = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'i');
@@ -26,7 +27,8 @@ function NFField({ id, form, type = 'text', name, label, label_pos = "label-abov
     const [state, setState] = useContext(Store);
     const [errorMessage, setErrorMessage] = useState(null);
     const [edited, setEdited] = useState(false);
-    const [isValid, setValid] = useState(false)
+    const [isValid, setValid] = useState(false);
+    const [val, setVal] = useState(null);
 
     const validateField = () => {
         setErrorMessage(null);
@@ -66,6 +68,9 @@ function NFField({ id, form, type = 'text', name, label, label_pos = "label-abov
         if(edited) {
             validateField();
         }
+        console.log('CHANGE FIELD');
+        console.log(e.target.value)
+        setVal(e.target.value);
         setState({
             ...state,
             forms: {
@@ -125,7 +130,7 @@ function NFField({ id, form, type = 'text', name, label, label_pos = "label-abov
     return (
         <div id={`nf-field-${id}-container`} className={`nf-field-container ${type}-container ${`label-${label_pos === 'default' || label_pos === 'label-above' ? 'above' : label_pos}`} ${container_classes}`}>
             <div className="nf-field">
-                <div id={`nf-field-${id}-wrap`} className={`field-wrap ${type}-wrap${errorMessage && ' nf-fail nf-error'}${(edited && !errorMessage) ? ' nf-pass' : ''}`} data-field-id={id}>
+                <div id={`nf-field-${id}-wrap`} className={`field-wrap ${type}-wrap${type === 'listradio' ? ' list-wrap list-radio-wrap' : ""}${type === 'listselect' ? ' list-wrap list-select-wrap' : ""}${errorMessage ? ' nf-fail nf-error' : ''}${(edited && !errorMessage) ? ' nf-pass' : ''}`} data-field-id={id}>
                     {type !== 'button' && type !== 'submit' &&
                         <div className="nf-field-label">
                                 <label htmlFor={`nf-field-${id}`} id={`nf-label-field-${id}`} className="">
@@ -134,14 +139,31 @@ function NFField({ id, form, type = 'text', name, label, label_pos = "label-abov
                         </div>
                     }
                     <div className="nf-field-element">
-                        {type !== 'textarea' && type !== 'button' && type !== 'html'  && type !== 'submit' &&   
-                            <input id={`nf-field${id}`} ref={fieldRef} data-field-id={id} name={name || `nf-field${id}`} aria-invalid="false" aria-describedby={`nf-error-${id}`} onChange={changeField} onBlur={validateField} className={`ninja-forms-field nf-element ${element_classes}`} aria-labelledby={`nf-label-field-${id}`} aria-required={required ? 'true' : 'false'} required={required}/>
+                        {type !== 'textarea' && type !== 'button' && type !== 'html'  && type !== 'submit' && type !== 'listradio' && type !== 'listselect' &&
+                            <input type={type === 'phone' ? 'tel' : 'text'} ref={fieldRef} data-field-id={id} name={name || `nf-field-${id}`} aria-invalid="false" aria-describedby={`nf-error-${id}`} onChange={changeField} onBlur={validateField} className={`ninja-forms-field nf-element ${element_classes}`} aria-labelledby={`nf-label-field-${id}`} aria-required={required ? 'true' : 'false'} required={required}/>
+                        }
+                        {type === 'listradio' && 
+                            <ul>
+                                {options && options.map(({label, value, selected}, index) => (
+                                    <li key={`nf-field-${id}-${index}`}>
+                                        <input type="radio" id={`nf-field-${id}-${index}`} value={value} ref={fieldRef} name={name || `nf-field-${id}`} aria-describedby={`nf-error-${id}-${index}`} className={`ninja-forms-field nf-element`} aria-labelledby={`nf-label-field-${id}`} onChange={changeField} aria-required={required ? 'true' : 'false'} required={required} />
+                                        <label htmlFor={`nf-field-${id}-${index}`} id={`nf-label-class-field-${id}`} className={val === value ? 'nf-checked-label' : ''}>{label}</label>
+                                    </li>
+                                ))}
+                            </ul>
+                        }
+                        {type === 'listselect' && 
+                            <select ref={fieldRef} name={name || `nf-field${id}`} aria-invalid="false"aria-describedby={`nf-error-${id}`} onChange={changeField} onBlur={validateField} className={`custom-select-opener ninja-forms-field nf-element ${element_classes}`} aria-labelledby={`nf-label-field-${id}`}  aria-required={required ? 'true' : 'false'} required={required}>
+                                {options && options.map(({label, value, selected}, index) => (
+                                    <option value={value} key={`nf-field${id}-${index}`} selected={val}>{label}</option>
+                                ))}
+                            </select>
                         }
                         {type === 'textarea' && 
-                            <textarea id={`nf-field${id}`} ref={fieldRef} data-field-id={id} name={name || `nf-field${id}`} aria-invalid="false" aria-describedby={`nf-error-${id}`} onChange={changeField} onBlur={validateField} className={`ninja-forms-field nf-element ${element_classes}`} aria-labelledby={`nf-label-field-${id}`}  aria-required={required ? 'true' : 'false'} required={required}></textarea>
+                            <textarea ref={fieldRef} data-field-id={id} name={name || `nf-field${id}`} aria-invalid="false" aria-describedby={`nf-error-${id}`} onChange={changeField} onBlur={validateField} className={`ninja-forms-field nf-element ${element_classes}`} aria-labelledby={`nf-label-field-${id}`}  aria-required={required ? 'true' : 'false'} required={required}></textarea>
                         }
                         {type === 'button' || type === 'submit' && 
-                            <input id={`nf-field${id}`} ref={fieldRef} className={`ninja-forms-field nf-element ${element_classes}`} type="submit" value="Submit" disabled={!isValid}></input>
+                            <input ref={fieldRef} className={`ninja-forms-field nf-element ${element_classes}`} type="submit" value="Submit"></input>
                         }
                         {type === 'html' && 
                             parseHtml(content)

@@ -142,6 +142,7 @@ function Form({ id }: Props): JSX.Element {
                                             type={field.type}
                                             name={field.custom_name_attribute}
                                             label={field.label}
+                                            options={field.options}
                                             label_pos={field.label_pos === 'default' ? formSettings?.default_label_pos : field?.label_pos?.replace('label-', '')}
                                             content={field.default ? field.default : ''}
                                             required={field.required?.toString() === "1" ? true : false}

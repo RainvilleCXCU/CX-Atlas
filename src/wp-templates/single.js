@@ -3,93 +3,22 @@ import * as MENUS from '../constants/menus';
 import { BlogInfoFragment } from '../fragments/GeneralSettings';
 import { AlertFragment } from '../fragments/Alerts';
 import { NavigationMenuItemFragment } from '../fragments/MenuItems';
-// import { ThirdPartySettingsFragment, GTM, Personyze, HotJar, Qualtrics, Spectrum, Siteimprove } from '../components/ThirdParty';
 import { ThirdPartySettingsFragment } from 'fragments/ThirdParty';
-const GTM = dynamic(() => import('components/ThirdParty/gtm'), {ssr:false});
-const Personyze = dynamic(() => import('components/ThirdParty/personyze'), {ssr:false});
-const HotJar = dynamic(() => import('components/ThirdParty/hotjar'), {ssr:false});
-const Qualtrics = dynamic(() => import('components/ThirdParty/qualtrics'), {ssr:false});
-const Spectrum = dynamic(() => import('components/ThirdParty/spectrum'), {ssr:false});
-const Siteimprove = dynamic(() => import('components/ThirdParty/siteimprove'), {ssr:false});
-// import {
-//   Header,
-//   MenuNavigation,
-//   SEO,
-// } from '../components';
-const Header = dynamic(()=> import('components/Header/Header'));
-const MenuNavigation = dynamic(()=> import('components/Navigation/Navbar'));
-const Footer = dynamic(() => import('components/Footer/Footer'));
-const SEO = dynamic(()=> import('components/SEO/SEO'));
-const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});
-const Loading = dynamic(() => import('components/common/loading'), {ssr:false});
 import { parseHtml } from 'lib/parser';
 import RelatedPosts from 'components/Posts/relatedPosts';
 import Image from 'next/image';
 import { Fragment } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-
+const BaseLayout = dynamic(() => import('components/layout'));
 export default function Component(props) {
-
-  const { title: siteTitle, description: siteDescription, logo: siteLogo, footerText: footerText } =
-    props?.data?.generalSettings;
-  const { gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
-  const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
-  const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
-  const { title, content, seo, link, featuredImage, databaseId, categories } = props?.data?.post ?? { title: '' };
-  const { relatedPosts } = props?.data;
-  const headerSettings = props?.data?.headerSettings; 
-  const { footerUtilities, footerAppIcons, footerSocialIcons } = props?.data?.footerSettings;
+  const { title, content, databaseId, featuredImage, categories, relatedPosts } = props?.data?.post ?? { title: '' };
   const { blogtop, blogSidebar } = props?.data?.widgetSettings;
-  const activeAlerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
 
   return (
     <>
-      <SEO
-				title={title}
-				metaDesc={seo?.metaDesc}
-				canonicalURL={seo?.canonical ? seo?.canonical : link} //I'm unsure about this. Changing the canonical URL in Yoast doesn't seem to do anything...
-				ogType={seo?.opengraphType}
-				ogTitle={seo?.title}
-				ogDescription={seo?.opengraphDescription}
-				ogURL={seo?.opengraphUrl}
-				ogSite_Name={seo?.opengraphSiteName}
-				published_time={seo?.opengraphPublishedTime}
-				modified_time={seo?.opengraphModifiedTime}
-				ogImage={seo?.opengraphImage?.mediaItemUrl}
-				ogImageWidth={seo?.opengraphImage?.mediaDetails?.width}
-				ogImageHeight={seo?.opengraphImage?.mediaDetails?.height}
-				ogImageType={seo?.opengraphImage?.mimeType}
-				twitter_card={"summary_large_image"} // Not sure where this is in the page object
-				twitter_label1={"Est. reading time"} // Not sure where this is in the page object
-				twitter_data1={seo?.readingTime + " minutes"}
-  />
-  <GTM
-    id={gtmId}
-    enabled={gtmEnabled} />
-  <Personyze
-    id={personyzeId}
-    enabled={personyzeEnabled}
-    domains={personyzeDomains} />
-  {hotjarEnabled &&
-  <HotJar
-    id={hotjarId}
-    enabled={hotjarEnabled} />
-  }
-    
-  {
-    activeAlerts.length > 0 &&
-    <Alert alerts={activeAlerts} />
-  }
-			<Loading /> 
-			<Header
-				title={title}
-				description={siteDescription}
-				logo={siteLogo}
-        menuItems={primaryMenu}
-        headerSettings={headerSettings}
-			/>
-     <div id="page" className="container site">
+    <BaseLayout props={props}>
+      <div id="page" className="container site">
         <main className="content single-post">
           <article id={`post-${databaseId}`} className="post post-content">
         
@@ -130,25 +59,7 @@ export default function Component(props) {
           </article>
         </main>
       </div>
-
-      {footerMenu &&
-			<Footer copyrightHolder={footerText} menuItems={footerMenu} logo={siteLogo} footerUtilities={footerUtilities} footerAppIcons={footerAppIcons} footerSocialIcons={footerSocialIcons} />
-     }
-     {qualtricsEnabled &&
-			<Qualtrics
-        id={qualtricsId}
-        enabled={qualtricsEnabled} />
-     }
-     {spectrumEnabled &&
-			<Spectrum
-        id={spectrumId}
-        enabled={spectrumEnabled} />
-     }
-     {siteimproveEnabled &&
-			<Siteimprove
-        id={siteimproveId}
-        enabled={siteimproveEnabled} />
-     }
+    </BaseLayout>
     </>
   );
 }
@@ -171,6 +82,7 @@ Component.query = gql`
       title
       content
       date
+      link
       seo {
           canonical
           metaDesc
