@@ -35,8 +35,8 @@ const findChildren = (element, att, value) => {
     return children;
 }
 
-export const parseHtml = (html) => {
     const whitelistRegex = new RegExp(`(.local)|(wpenginepowered.)|(wpengine.com)|(connexuscu.org)|(mortgagewebcenter)|(meridianlink)|(loanspq)|(myworkdayjobs)|(issuu)|(az1.qualtrics)|(docusign)|(billerpayments)|(#)|(tel:)|(mailto:)|(javascript:)`, "i");
+export const parseHtml = (html) => {
         const options = {
         trim: false,
         htmlparser2: {
@@ -44,6 +44,7 @@ export const parseHtml = (html) => {
         },
         // library: require('preact'),
         replace: (element) => {
+            return;
             let { name, attribs, children } = element;
             if(attribs?.style) {
                 attribs = {
