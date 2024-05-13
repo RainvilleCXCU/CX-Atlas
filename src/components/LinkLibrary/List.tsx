@@ -2,9 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { Store } from "context/store";
 import LinkLibraryLink from "./LinkLibraryLink";
 import dateFormat from 'dateformat';
-import Pagination from "components/Pagination";
-import { useRouter } from "next/router";
+const Pagination = dynamic(() => import('components/Pagination'))
 import { gql, useQuery } from "@apollo/client";
+import dynamic from "next/dynamic";
 
 export interface Props {
     category: {

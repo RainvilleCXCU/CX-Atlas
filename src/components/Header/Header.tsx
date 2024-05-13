@@ -1,12 +1,10 @@
 import { useState } from 'react';
-import Link from 'next/link';
-import MenuNavigation from '../Navigation/Navbar';
 import UtilityNav from './UtilityNav';
-import SearchBar from './SearchBar';
 import Logo from 'components/Logo';
 import { useRouter } from 'next/router';
-import MobileNav from './MobileNav';
-import Navigation from './Navigation';
+// import Navigation from './Navigation';
+import dynamic from 'next/dynamic';
+const Navigation = dynamic(() => import('./Navigation'));
 interface Props {
   title?: string;
   description?: string;
@@ -33,7 +31,7 @@ function Header({
   headerSettings
 }: Props): JSX.Element {
 
-  const { asPath, pathname } = useRouter();
+  const { asPath } = useRouter();
 
   const [navOpen, setNavOpen] = useState(false);
 

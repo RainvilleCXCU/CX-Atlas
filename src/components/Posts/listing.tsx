@@ -1,7 +1,8 @@
 import { HeadingProps } from '../Heading';
 import { parseHtml } from 'lib/parser';
-import Pagination from '../Pagination';
-import PostListing from './postListing';
+import dynamic from 'next/dynamic';
+const Pagination = dynamic(() => import('components/Pagination'));
+const PostListing = dynamic(() => import('./postListing'));
 
 interface Props {
   posts;
