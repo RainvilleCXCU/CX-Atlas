@@ -14,7 +14,6 @@ const SearchBar = dynamic(() => import('components/Search/SearchBar'));
 import Link from 'next/link';
 import BaseLayout from './layout';
 export default function Component(props) {
-  const { content } = props?.data?.page ?? { title: '' };
 
   if (props.loading) {
     return <>Loading...</>;

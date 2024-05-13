@@ -22,12 +22,20 @@ interface BaseLayoutProps {
 }
 
 const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></> }) => {
-    const { title: siteTitle, description: siteDescription, logo: siteLogo, footerText: footerText } =
-    props?.data?.generalSettings;
+    const { description: siteDescription = '', logo: siteLogo = '', footerText: footerText = '' } = props?.data?.generalSettings ?? {
+        description: '',
+        logo: '',
+        footerText: ''
+    };
     const { gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
     const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
     const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
-    const { title, content, seo, link, featuredImage, databaseId } = props?.data?.page ?? { title: '' };
+    const { title = '', content, seo = {}, link = '', featuredImage, databaseId = '' } = props?.data?.page ?? props?.data?.post ?? {
+        title: '',
+        seo: {},
+        link: '',
+        databaseId: ''
+    };
     const headerSettings = props?.data?.headerSettings; 
     const { footerUtilities, footerAppIcons, footerSocialIcons } = props?.data?.footerSettings;
     const activeAlerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];

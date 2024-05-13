@@ -50,6 +50,7 @@ Component.query = gql`
     page(id: $uri, idType: URI, asPreview: $asPreview) {
       title
       content
+      databaseId
       seo {
           canonical
           metaDesc

@@ -29,7 +29,6 @@ export default function Component(props) {
   return (
     <>
     <BaseLayout props={props}>
-      
 			<main id="main" className="content content-index container">
           <div id="post-wrap" className='cx-search__wrapper search'>
           <div className='cx-search__results'>

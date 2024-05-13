@@ -82,6 +82,7 @@ Component.query = gql`
       title
       content
       date
+      link
       seo {
           canonical
           metaDesc

@@ -179,6 +179,7 @@ Page.query = gql`
             uri
             excerpt
             title
+            link
             seo {
               canonical
               metaDesc
