@@ -1,6 +1,7 @@
 import { Store } from "context/store";
 import { attributesToProps } from "html-react-parser";
 import { useContext } from "react";
+import { toggleContentContext } from "context/toggleContext";
 
 export interface Props {
 //   title?;
@@ -23,16 +24,16 @@ function ToggleContent({
   children = <></>,
   classNames = "",
 }: Props): JSX.Element {
-  const [ state, setState ] = useContext(Store);
+  const {toggleContent, setToggleContent} = useContext(toggleContentContext);
   const target = attribs?.['data-toggle-content'];
   return (
-    <>
-        {state?.toggleContent === target &&
+      <>
+        {toggleContent === target &&
             <div {...attributesToProps(attribs)}>
                 {children}
             </div>
         }
-    </>
+        </>
       )
 }
 

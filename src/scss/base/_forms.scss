@@ -1,3 +1,12 @@
 .nf-form-content .list-select-wrap>div select {
     
 }
+
+.checkbox-container.label-right label{
+    &:before {
+        top: -5px;
+    }
+    &:after {
+        top: 5px;
+    }
+}
