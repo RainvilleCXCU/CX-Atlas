@@ -1,8 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { parseHtml } from "lib/parser";
 import NFField from "./Field";
 import { Store } from "context/store";
 import { gql, useQuery } from "@apollo/client";
+import { Helmet } from 'react-helmet';
 
 export interface Props {
     id: string;
@@ -10,10 +11,14 @@ export interface Props {
 
 function Form({ id }: Props): JSX.Element {
     const [state, setState] = useContext(Store);
+    const formRef = useRef(null);
+
+    const [submitNum, setSubmitNum] = useState(0);
 
     const [formSettings, setFormSettings] = useState(null);
     const [nonce, setNonce] = useState('');
     const [ formId, setFormId ] = useState('');
+    const [isLinkElementLoaded, setLinkElementLoaded] = useState(false)
     // const formData = useQuery().getForm({
     //     formId: id.toString()
     // });
@@ -66,6 +71,28 @@ function Form({ id }: Props): JSX.Element {
     useEffect(() => {
         console.log('Form Effect')
         getForm(id);
+
+        const linkElement = document.createElement("link");
+          linkElement.setAttribute("rel", "stylesheet");
+          linkElement.setAttribute("type", "text/css");
+          linkElement.setAttribute(
+            "href",
+            "/wp-content/plugins/ninja-forms/assets/css/display-opinions-light.css?ver=6.2.4"
+          );
+          document.head.prepend(linkElement);
+
+          const fonts = document.createElement("link");
+          fonts.setAttribute("rel", "stylesheet");
+          fonts.setAttribute("type", "text/css");
+          fonts.setAttribute(
+              "href",
+              "/wp-content/plugins/ninja-forms/assets/css/font-awesome.min.css?ver=6.2.4"
+            );
+            document.head.prepend(fonts);
+
+          
+
+          setLinkElementLoaded(true)
     }, [id])
 
     const submitForm = e => {
@@ -76,7 +103,7 @@ function Form({ id }: Props): JSX.Element {
             if(element.attributes['data-field-id']) {
                 fields[element.attributes['data-field-id'].value] =  {
                     id: element.attributes['data-field-id'].value,
-                    value: element.value
+                    value: element.type === 'checkbox' ? element.checked : element.value
                 }
             }
         }
@@ -92,8 +119,12 @@ function Form({ id }: Props): JSX.Element {
             action: 'nf_ajax_submit',
             security: nonce
         }
+        console.log('SUBMIT DATA');
+        console.log(submitData);
 
         const formBody = Object.keys(submitData).map(key =>      encodeURIComponent(key) + '=' + encodeURIComponent(submitData[key])).join('&');
+
+        setSubmitNum(submitNum+1);
 
         fetch(
             "/wp-admin/admin-ajax.php",
@@ -113,8 +144,7 @@ function Form({ id }: Props): JSX.Element {
 
     return (
         <div id="nf-form-1-cont" className="nf-form-cont" aria-live="polite" aria-labelledby="nf-form-title-1" aria-describedby="nf-form-errors-1" role="form">
-            <link rel="stylesheet" href="/wp-content/plugins/ninja-forms/assets/css/font-awesome.min.css?ver=6.2.4" />
-            <link rel="stylesheet" href="/wp-content/plugins/ninja-forms/assets/css/display-opinions-light.css?ver=6.2.4" />
+            
             <span id="nf-form-title-1" className="nf-form-title">
                 {formSettings && formSettings?.show_title !== 0 && parseHtml(formSettings?.title)}
             </span>
@@ -126,7 +156,7 @@ function Form({ id }: Props): JSX.Element {
                 }
                 { !response?.data?.actions?.success_message &&
                     <div className="nf-form-layout">
-                        <form onSubmit={submitForm}>
+                        <form onSubmit={submitForm} ref={formRef} noValidate>
                             <div className="nf-form-cont">
                                 <div className="nf-before-form-content">
                                     <div className="nf-form-fields-required">
@@ -150,6 +180,7 @@ function Form({ id }: Props): JSX.Element {
                                             element_classes={field.element_class}
                                             description={field.desc_text}
                                             formSettings={formSettings}
+                                            submitNum={submitNum}
                                             error_message={response?.errors?.fields && response?.errors?.fields[field.id] || null}
                                         />
                                     ))
