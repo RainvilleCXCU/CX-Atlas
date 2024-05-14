@@ -15,13 +15,16 @@ export interface Props {
     container_classes?: string;
     element_classes?: string;
     error_message?: string;
+    submitNum?
     options?
     formSettings?
 }
 
-function NFField({ id, form, type = 'text', name, label, label_pos = "label-above", container_classes, options, element_classes, description, content, formSettings, required = false, error_message }: Props): JSX.Element {
+function NFField({ id, form, type = 'text', name, label, label_pos = "label-above", container_classes, options, element_classes, description, content, formSettings, required = false, error_message, submitNum }: Props): JSX.Element {
 
     const fieldRef = useRef(null);
+    const [fieldVal, setFieldVal] = useState(null);
+    const [ subNum, setSubNum ] = useState(0);
     const emailValid = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'i');
     
     const [state, setState] = useContext(Store);
@@ -33,11 +36,14 @@ function NFField({ id, form, type = 'text', name, label, label_pos = "label-abov
     const validateField = () => {
         setErrorMessage(null);
         let error = null;
-        if(fieldRef.current.value === '' && required) {
+        console.log('Validate');
+        console.log(fieldVal);
+        console.log(required)
+        if((fieldVal === null || fieldVal === '' || fieldVal === false) && required) {
             setEdited(true);
             error = formSettings.validateRequiredField;
         } else {
-            if(type === 'email' && !emailValid.test(fieldRef.current.value)) {
+            if(name === 'email' && !emailValid.test(fieldVal)) {
                 setEdited(true);
                 error = formSettings.changeEmailErrorMsg;
             }
@@ -63,14 +69,15 @@ function NFField({ id, form, type = 'text', name, label, label_pos = "label-abov
             }
         });
     }
+    
 
     const changeField = e => {
-        if(edited) {
-            validateField();
+        setFieldVal(type === 'checkbox' ? e.currentTarget.checked : e.currentTarget.value);
+        if(type === 'checkbox') {
+            setEdited(true);
         }
         console.log('CHANGE FIELD');
-        console.log(e.target.value)
-        setVal(e.target.value);
+        console.log(e.currentTarget.checked)
         setState({
             ...state,
             forms: {
@@ -81,7 +88,7 @@ function NFField({ id, form, type = 'text', name, label, label_pos = "label-abov
                         ...state.forms?.[form].fields,
                         [id]: {
                             ...state.forms?.[form]?.fields?.[id],
-                            value: e.target.value
+                            value: type === 'checkbox' ? e.target.checked : e.target.value
                         }
                     }
                 }
@@ -89,6 +96,19 @@ function NFField({ id, form, type = 'text', name, label, label_pos = "label-abov
         })
     }
 
+    useEffect(() => {
+        if(edited) {
+            console.log('ValidateField')
+            validateField();
+        }
+    }, [fieldVal])
+
+    useEffect(() => {
+        if(submitNum !== subNum) {
+            validateField();
+            setSubNum(submitNum);
+        }
+    }, [submitNum])
     
 
     useEffect(() => {
@@ -133,14 +153,17 @@ function NFField({ id, form, type = 'text', name, label, label_pos = "label-abov
                 <div id={`nf-field-${id}-wrap`} className={`field-wrap ${type}-wrap${type === 'listradio' ? ' list-wrap list-radio-wrap' : ""}${type === 'listselect' ? ' list-wrap list-select-wrap' : ""}${errorMessage ? ' nf-fail nf-error' : ''}${(edited && !errorMessage) ? ' nf-pass' : ''}`} data-field-id={id}>
                     {type !== 'button' && type !== 'submit' &&
                         <div className="nf-field-label">
-                                <label htmlFor={`nf-field-${id}`} id={`nf-label-field-${id}`} className="">
+                                <label htmlFor={`nf-field-${id}`} id={`nf-label-field-${id}`} className={`${type === 'checkbox' && fieldVal ? ' nf-checked-label' : ''}`}>
                                     {label} {required && <span className="ninja-forms-req-symbol">*</span> }
                                 </label>
                         </div>
                     }
                     <div className="nf-field-element">
-                        {type !== 'textarea' && type !== 'button' && type !== 'html'  && type !== 'submit' && type !== 'listradio' && type !== 'listselect' &&
-                            <input type={type === 'phone' ? 'tel' : 'text'} ref={fieldRef} data-field-id={id} name={name || `nf-field-${id}`} aria-invalid="false" aria-describedby={`nf-error-${id}`} onChange={changeField} onBlur={validateField} className={`ninja-forms-field nf-element ${element_classes}`} aria-labelledby={`nf-label-field-${id}`} aria-required={required ? 'true' : 'false'} required={required}/>
+                        {type === 'button' || type === 'submit' && 
+                            <input ref={fieldRef} className={`ninja-forms-field nf-element ${element_classes}`} type={type} value={label}></input>
+                        }
+                        {type === 'checkbox' &&
+                            <input type={'checkbox'} ref={fieldRef} data-field-id={id} name={name || `nf-field-${id}`} id={name || `nf-field-${id}`} aria-invalid="false" aria-describedby={`nf-error-${id}`} onChange={changeField} className={`ninja-forms-field nf-element ${element_classes}${type === 'checkbox' && fieldVal ? ' nf-checked' : ''}`} aria-labelledby={`nf-label-field-${id}`} aria-required={required ? 'true' : 'false'} required={required}/>
                         }
                         {type === 'listradio' && 
                             <ul>
@@ -162,11 +185,11 @@ function NFField({ id, form, type = 'text', name, label, label_pos = "label-abov
                         {type === 'textarea' && 
                             <textarea ref={fieldRef} data-field-id={id} name={name || `nf-field${id}`} aria-invalid="false" aria-describedby={`nf-error-${id}`} onChange={changeField} onBlur={validateField} className={`ninja-forms-field nf-element ${element_classes}`} aria-labelledby={`nf-label-field-${id}`}  aria-required={required ? 'true' : 'false'} required={required}></textarea>
                         }
-                        {type === 'button' || type === 'submit' && 
-                            <input ref={fieldRef} className={`ninja-forms-field nf-element ${element_classes}`} type="submit" value="Submit"></input>
-                        }
                         {type === 'html' && 
                             parseHtml(content)
+                        }
+                        {type !== 'textarea' && type !== 'button' && type !== 'html'  && type !== 'submit' && type !== 'listradio' && type !== 'listselect' && type !== 'checkbox' &&
+                            <input type={type === 'phone' ? 'tel' : type === 'checkbox' ? 'checkbox' : 'text'} ref={fieldRef} data-field-id={id} name={name || `nf-field-${id}`} id={name || `nf-field-${id}`} aria-invalid="false" aria-describedby={`nf-error-${id}`} onChange={changeField} onBlur={type !== 'checkbox' ? validateField : null} className={`ninja-forms-field nf-element ${element_classes}${type === 'checkbox' && fieldVal ? ' nf-checked' : ''}`} aria-labelledby={`nf-label-field-${id}`} aria-required={required ? 'true' : 'false'} required={required} autoComplete="given-name" />
                         }
                     </div>
                     { description &&
