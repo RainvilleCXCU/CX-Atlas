@@ -4,14 +4,15 @@ import Link from "next/link";
 import { css } from '@emotion/css';
 import Image from 'next/image';
 
+import EqualHeightContainer  from "components/Blocks/EqualHeight";
+import Container from "components/Blocks/Container";
+
 const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
-const ToggleContent = dynamic(() => import("components/ContentToggle/Content"));
-const ToggleContentLink = dynamic(() => import("components/ContentToggle/ContentToggleLink"));
-const ToggleContentSelect = dynamic(() => import("components/ContentToggle/ContentToggleSelect"));
+const ToggleContent = dynamic(() => import("components/ContentToggle/Content"), {ssr: false});
+const ToggleContentLink = dynamic(() => import("components/ContentToggle/ContentToggleLink"), {ssr: false});
+const ToggleContentSelect = dynamic(() => import("components/ContentToggle/ContentToggleSelect"), {ssr: false});
 const FAQ = dynamic(() => import("components/FAQs/faq"));
 const Form = dynamic(() => import("components/Forms/Form"));
-const EqualHeightContainer = dynamic(() => import("components/Blocks/EqualHeight"));
-const Container = dynamic(() => import("components/Blocks/Container"));
 const DataTracComparison = dynamic(() => import("components/Datatrac/Comparison"));
 const Disclosure = dynamic(() => import("components/Disclosure/Disclosure"), {ssr: false});
 const LinkLibrary = dynamic(() => import ("components/LinkLibrary/LinkLibrary"), {ssr: false});
@@ -34,8 +35,8 @@ const findChildren = (element, att, value) => {
     isChild(element, att, value);
     return children;
 }
+const whitelistRegex = new RegExp(`(.local)|(wpenginepowered.)|(wpengine.com)|(connexuscu.org)|(mortgagewebcenter)|(meridianlink)|(loanspq)|(myworkdayjobs)|(issuu)|(az1.qualtrics)|(docusign)|(billerpayments)|(#)|(tel:)|(mailto:)|(javascript:)`, "i");
 
-    const whitelistRegex = new RegExp(`(.local)|(wpenginepowered.)|(wpengine.com)|(connexuscu.org)|(mortgagewebcenter)|(meridianlink)|(loanspq)|(myworkdayjobs)|(issuu)|(az1.qualtrics)|(docusign)|(billerpayments)|(#)|(tel:)|(mailto:)|(javascript:)`, "i");
 export const parseHtml = (html) => {
         const options = {
         trim: false,
@@ -44,7 +45,8 @@ export const parseHtml = (html) => {
         },
         // library: require('preact'),
         replace: (element) => {
-            return;
+
+            // return;
             let { name, attribs, children } = element;
             if(attribs?.style) {
                 attribs = {
