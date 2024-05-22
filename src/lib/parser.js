@@ -21,6 +21,7 @@ const Calculator = dynamic(() => import("components/Calculator/Calculator"), {ss
 const CXCalc = dynamic(() => import("components/Calculator/CXCalculator"), {ssr: false});
 const CXCalcResults = dynamic(() => import("components/Calculator/CXCalculatorResults"), {ssr: false});
 const Scheduler = dynamic(() => import("components/Salesforce/scheduler"), {ssr: false});
+const Tooltip = dynamic(() => import("components/Tooltip/Tooltip"), {ssr: false});
 
 const findChildren = (element, att, value) => {
     let children = [];
@@ -95,8 +96,8 @@ export const parseHtml = (html) => {
 
             // Block Container 
             else if (attribs?.class?.includes("gb-block-container")) {
-                console.log('Styles');
-                console.log(attribs)
+                // console.log('Styles');
+                // console.log(attribs)
                 return (
                     <Container classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</Container>
                 )
@@ -199,6 +200,13 @@ export const parseHtml = (html) => {
                         finishImage = {attribs['data-finishimage']}
                         profileImage = {attribs['data-profileimage']}
                     >{children}</Scheduler></span>
+                )
+            } 
+
+            // Tooltip
+            else if(attribs?.class?.includes('tooltip')) {
+                return (
+                    <Tooltip attribs={attributesToProps(attribs)}>{domToReact(children, options)}</Tooltip>
                 )
             } 
 
