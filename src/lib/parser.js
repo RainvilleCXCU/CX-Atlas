@@ -6,6 +6,7 @@ import Image from 'next/image';
 
 import EqualHeightContainer  from "components/Blocks/EqualHeight";
 import Container from "components/Blocks/Container";
+import Vimeo from "components/Video/vimeo";
 
 const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
 const ToggleContent = dynamic(() => import("components/ContentToggle/Content"), {ssr: false});
@@ -135,6 +136,11 @@ export const parseHtml = (html) => {
             else if (attribs?.['data-toggle-content']) {
                 return (
                     <ToggleContent attribs={attribs}>{domToReact(children, options)}</ToggleContent>
+                )
+            }
+            else if (attribs?.['data-vimeo-id']) {
+                return (
+                    <Vimeo id={attribs?.['data-vimeo-id']} />
                 )
             }
 
