@@ -6,6 +6,7 @@ import Image from 'next/image';
 
 import EqualHeightContainer  from "components/Blocks/EqualHeight";
 import Container from "components/Blocks/Container";
+import Vimeo from "components/Video/vimeo";
 
 const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
 const ToggleContent = dynamic(() => import("components/ContentToggle/Content"), {ssr: false});
@@ -21,6 +22,7 @@ const Calculator = dynamic(() => import("components/Calculator/Calculator"), {ss
 const CXCalc = dynamic(() => import("components/Calculator/CXCalculator"), {ssr: false});
 const CXCalcResults = dynamic(() => import("components/Calculator/CXCalculatorResults"), {ssr: false});
 const Scheduler = dynamic(() => import("components/Salesforce/scheduler"), {ssr: false});
+const Tooltip = dynamic(() => import("components/Tooltip/Tooltip"), {ssr: false});
 
 const findChildren = (element, att, value) => {
     let children = [];
@@ -95,8 +97,8 @@ export const parseHtml = (html) => {
 
             // Block Container 
             else if (attribs?.class?.includes("gb-block-container")) {
-                console.log('Styles');
-                console.log(attribs)
+                // console.log('Styles');
+                // console.log(attribs)
                 return (
                     <Container classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</Container>
                 )
@@ -134,6 +136,11 @@ export const parseHtml = (html) => {
             else if (attribs?.['data-toggle-content']) {
                 return (
                     <ToggleContent attribs={attribs}>{domToReact(children, options)}</ToggleContent>
+                )
+            }
+            else if (attribs?.['data-vimeo-id']) {
+                return (
+                    <Vimeo id={attribs?.['data-vimeo-id']} />
                 )
             }
 
@@ -199,6 +206,13 @@ export const parseHtml = (html) => {
                         finishImage = {attribs['data-finishimage']}
                         profileImage = {attribs['data-profileimage']}
                     >{children}</Scheduler></span>
+                )
+            } 
+
+            // Tooltip
+            else if(attribs?.class?.includes('tooltip')) {
+                return (
+                    <Tooltip attribs={attributesToProps(attribs)}>{domToReact(children, options)}</Tooltip>
                 )
             } 
 
