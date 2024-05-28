@@ -247,7 +247,7 @@ const Scheduler = ({
         console.log(appUrl);
         let SalesforceFile = [{
             id: 'lightningLocatorScript',
-            src: `https://connexusexperience--stage.sandbox.my.site.com/lightning/lightning.out.js`,
+            src: `https://connexusexperience.my.site.com/lightning/lightning.out.js`,
             strategy: 'afterInteractive',
             onload: () => {
                 window.$Lightning.use("runtime_appointmentbooking:lightningOutGuest",
