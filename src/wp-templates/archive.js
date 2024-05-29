@@ -151,7 +151,7 @@ export default function Page(props) {
 
 
 Page.variables = (seedQuery, context, extra) => {
-    const page = extra?.query?.page ? parseInt(extra?.query?.page) : 1;
+  const page = extra?.query?.page ? parseInt(extra?.query?.page - 1) * 5 : 0;
     return {
       page: page,
       headerLocation: MENUS.PRIMARY_LOCATION,
