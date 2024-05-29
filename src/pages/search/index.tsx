@@ -178,7 +178,7 @@ export default function Component(props) {
 Component.variables = (params) => {
   return {
     searchTerm: params.query.s || '',
-    offset: params.query.page || '1',
+    offset: params.query.page ? (POSTS_PER_PAGE * parseInt(params.query.page)).toString() : '0',
     postsPerPage: POSTS_PER_PAGE.toString(),
     headerLocation: MENUS.PRIMARY_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION
