@@ -181,6 +181,10 @@ Page.query = gql`
             title
             link
             seo {
+              breadcrumbs {
+                text,
+                url
+              }
               canonical
               metaDesc
               opengraphDescription

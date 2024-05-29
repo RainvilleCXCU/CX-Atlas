@@ -205,6 +205,7 @@ export const parseHtml = (html) => {
                         finishText = {attribs['data-finishtext']}
                         finishImage = {attribs['data-finishimage']}
                         profileImage = {attribs['data-profileimage']}
+                        salesforceDomain = {attribs['data-sf-domain']}
                     >{children}</Scheduler></span>
                 )
             } 

@@ -73,6 +73,10 @@ Component.query = gql`
         name
         slug
         seo {
+          breadcrumbs {
+            text,
+            url
+          }
           canonical
           metaDesc
           opengraphDescription
