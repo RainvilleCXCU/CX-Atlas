@@ -202,9 +202,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                     id
                     title
                     displayName
-                    bookNowURL
-                    accurateDate
-                    loanBasedAmount
                     memberApplyNowURL
                     memberQuickApplyURL
                     memberQuickApplyMobileURL
@@ -226,7 +223,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
     let widgetData;
     let widgetHtml = '';
-    if(type && type == 'start') {
+
+    // GET WIDGET
+    if(type && type == 'start' && (!minor || minor == '')) {
         console.log(`Start ${JSON.stringify(productInfo)}`)
         widgetData = await apolloClient.query({
             query: gql`
@@ -240,6 +239,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             });
         widgetHtml = widgetData.data.widgetSettings.applyStart
     } else if(minor == 'yes') {
+        console.log('YES')
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowMinorFragment}
@@ -251,6 +251,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             });
             widgetHtml = widgetData.data.widgetSettings.applyNowMinor
     } else if(member) {
+        console.log('Member')
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowMemberFragment}
@@ -274,6 +275,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             });
             widgetHtml = widgetData.data.widgetSettings.applyNow
     }
+
+    // Perform Redirect if needed
 
     if (data.products.edges.length == 0) {
         console.log('No Product');

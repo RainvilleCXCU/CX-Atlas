@@ -86,6 +86,10 @@ Component.query = gql`
       seo {
           canonical
           metaDesc
+          breadcrumbs {
+            text,
+            url
+          }
           opengraphDescription
           opengraphModifiedTime
           opengraphPublishedTime
