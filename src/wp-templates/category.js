@@ -44,7 +44,7 @@ export default function Component(props) {
   );
 }
 Component.variables = (seedQuery, context, extra) => {
-  const page = extra?.query?.page ? parseInt(extra?.query?.page) : 1;
+  const page = extra?.query?.page ? parseInt(extra?.query?.page - 1) * 5 : 0;
   const categoryName = seedQuery?.slug ? seedQuery?.slug : "";
   return {
     page: page,
@@ -73,6 +73,10 @@ Component.query = gql`
         name
         slug
         seo {
+          breadcrumbs {
+            text,
+            url
+          }
           canonical
           metaDesc
           opengraphDescription

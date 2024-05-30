@@ -14,6 +14,7 @@ interface CXCalcProps {
     resourceHeading?;
     resourcePageHeading? : string;
     scheduledTimeHeading?;
+    salesforceDomain?;
     finishText?;
     finishImage?;
     profileImage?;
@@ -32,6 +33,7 @@ const Scheduler = ({
     resourceHeading = '',
     resourcePageHeading = '',
     scheduledTimeHeading = '',
+    salesforceDomain = '',
     finishText = '',
     finishImage = '',
     profileImage = '',
@@ -247,7 +249,7 @@ const Scheduler = ({
         console.log(appUrl);
         let SalesforceFile = [{
             id: 'lightningLocatorScript',
-            src: `https://connexusexperience.my.site.com/lightning/lightning.out.js`,
+            src: `https://${salesforceDomain}/lightning/lightning.out.js`,
             strategy: 'afterInteractive',
             onload: () => {
                 window.$Lightning.use("runtime_appointmentbooking:lightningOutGuest",

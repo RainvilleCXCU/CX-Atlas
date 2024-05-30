@@ -48,6 +48,7 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></> }) => {
             ogType={seo?.opengraphType}
             ogTitle={seo?.title}
             ogDescription={seo?.opengraphDescription}
+            breadcrumbs={seo?.breadcrumbs}
             ogURL={seo?.opengraphUrl}
             ogSite_Name={seo?.opengraphSiteName}
             published_time={seo?.opengraphPublishedTime}

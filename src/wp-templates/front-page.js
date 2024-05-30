@@ -51,6 +51,10 @@ Component.query = gql`
       content
       databaseId
       seo {
+          breadcrumbs {
+            text,
+            url
+          }
           canonical
           metaDesc
           opengraphDescription
