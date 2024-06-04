@@ -119,6 +119,14 @@ let nextConfig = {
           destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/cxlib/:path*`,
         },
         {
+          source: "/page-sitemap.xml",
+          destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/page-sitemap.xml`,
+        },
+        {
+          source: "/post-sitemap.xml",
+          destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/post-sitemap.xml`,
+        },
+        {
           source: "/apply-:type/:path*",
           destination: "/bridge/:type/",
         },
