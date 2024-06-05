@@ -56,6 +56,8 @@ const SEO = ({
 		itemListElementArray.push(object);
 	}
 
+	canonicalURL = process.env.NEXT_PUBLIC_FRONTEND_URL ? canonicalURL.replace(process.env.NEXT_PUBLIC_WORDPRESS_URL, process.env.NEXT_PUBLIC_FRONTEND_URL) : canonicalURL;
+
 	return (
 		<Head>
 			<title>{`${title} - ${ogSite_Name}`}</title>
