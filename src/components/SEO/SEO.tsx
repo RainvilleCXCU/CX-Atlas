@@ -55,6 +55,7 @@ const SEO = ({
 		}","item": "${breadcrumbs[i].url}"}`;
 		itemListElementArray.push(object);
 	}
+
 	canonicalURL = process.env.NEXT_PUBLIC_FRONTEND_URL ? canonicalURL.replace(process.env.NEXT_PUBLIC_WORDPRESS_URL, process.env.NEXT_PUBLIC_FRONTEND_URL) : canonicalURL;
 
 	return (

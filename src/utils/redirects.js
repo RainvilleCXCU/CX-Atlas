@@ -12,10 +12,10 @@ const fetchWordPressRedirects = async ({type = 'url'}) => {
     ).then((res) => res.json());
     
     return data.redirection
-        .filter((redirect) => redirect.action_type === type)
+        .filter((redirect) => redirect.action_type === type && redirect.match_type !== 'agent')
         .map((redirect) => {
             let redirectObj =
-             {
+            {
                 source: formatPathMatch(redirect.url),
                 destination: redirect.action_data.replace('$1', '')
             };

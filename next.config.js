@@ -27,42 +27,42 @@ let nextConfig = {
         ],
         permanent: false,
       },
-      {
-        source: "/:path*",
-        destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/:path*`,
-        has: [
-          {
-            type: "query",
-            key: "preview",
-          },
-          {
-            type: "query",
-            key: "page_id",
-          },
-        ],
-        missing: [
-          {
-            type: "query",
-            key: "_ppp",
-          },
-        ],
-        permanent: false,
-      },
-      {
-        source: "/:path*",
-        destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/:path*`,
-        has: [
-          {
-            type: "query",
-            key: "preview",
-          },
-          {
-            type: "query",
-            key: "page_id",
-          },
-        ],
-        permanent: false,
-      },
+      // {
+      //   source: "/:path*",
+      //   destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/:path*`,
+      //   has: [
+      //     {
+      //       type: "query",
+      //       key: "preview",
+      //     },
+      //     {
+      //       type: "query",
+      //       key: "page_id",
+      //     },
+      //   ],
+      //   missing: [
+      //     {
+      //       type: "query",
+      //       key: "_ppp",
+      //     },
+      //   ],
+      //   permanent: false,
+      // },
+      // {
+      //   source: "/:path*",
+      //   destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/:path*`,
+      //   has: [
+      //     {
+      //       type: "query",
+      //       key: "preview",
+      //     },
+      //     {
+      //       type: "query",
+      //       key: "page_id",
+      //     },
+      //   ],
+      //   permanent: false,
+      // },
       {
         source: "/:path*",
         destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/:path*`,
@@ -82,6 +82,25 @@ let nextConfig = {
     return {
       beforeFiles: [
         ...wpRewrites,
+        // {
+        //   source: "/:path*",
+        //   destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/:path*`,
+        //   has: [
+        //     {
+        //       type: "query",
+        //       key: "preview",
+        //     },
+        //     {
+        //       type: "query",
+        //       key: "page_id",
+        //     },
+        //     {
+        //       type: "query",
+        //       key: "_ppp",
+        //     },
+        //   ],
+        //   permanent: false,
+        // },
         {
           source: "/mdr/:path*/",
           destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/mdr/:path*/`,
@@ -117,14 +136,6 @@ let nextConfig = {
         {
           source: "/cxlib/:path*",
           destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/cxlib/:path*`,
-        },
-        {
-          source: "/page-sitemap.xml",
-          destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/page-sitemap.xml`,
-        },
-        {
-          source: "/post-sitemap.xml",
-          destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/post-sitemap.xml`,
         },
         {
           source: "/apply-:type/:path*",
@@ -208,6 +219,27 @@ let nextConfig = {
             },
           ],
         },
+        {
+          source: "/:path*",
+          destination: "/dynamic/ppp/:path*",
+          has: [
+                {
+                  type: "query",
+                  key: "preview",
+                },
+                {
+                  type: "query",
+                  key: "page_id",
+                },
+                {
+                  type: "query",
+                  key: "_ppp",
+                },
+              ],
+        },
+
+
+        
         // {
         //     source: '/meet/loans:path*',
         //     destination: '/meet/?productFilters=auto-loans,home-equity-loans,home-loans,personal-loans,recreational-loans',
