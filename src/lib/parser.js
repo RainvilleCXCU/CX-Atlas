@@ -7,6 +7,7 @@ import Image from 'next/image';
 import EqualHeightContainer  from "components/Blocks/EqualHeight";
 import Container from "components/Blocks/Container";
 import Vimeo from "components/Video/vimeo";
+import Step from "components/Steps/Step";
 
 const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
 const ToggleContent = dynamic(() => import("components/ContentToggle/Content"), {ssr: false});
@@ -117,6 +118,12 @@ export const parseHtml = (html) => {
                 const content = domToReact(findChildren(element, 'data-faq-content', '')[0].children, options);
                 return (
                     <FAQ id={attribs['data-post_id']} title={title} content={content} />
+                )
+            }
+            // Step
+            else if (attribs?.['data-acf-block'] && attribs?.['data-acf-block'] === 'step') {
+                return (
+                    <Step step={attribs?.['data-step-number']} lastStep={attribs?.['data-last-step']} route={attribs?.['data-svg-route']}>{domToReact(children, options)}</Step>
                 )
             }
             // DinkyTown Calc
