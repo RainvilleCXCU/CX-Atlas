@@ -1,6 +1,5 @@
 import Arrow from "components/Arrow/Arrow";
-import { motion, useMotionValue, useTransform, Variants } from "framer-motion";
-import { parseHtml } from "lib/parser";
+import { m } from "framer-motion";
 
 export interface Props {
     step?
@@ -23,13 +22,13 @@ function Step({
 }: Props): JSX.Element {    
   return (
 
-    <motion.div
+    <m.div
       className="step"
       initial="offscreen"
       whileInView="onscreen"
       viewport={{ once: true, amount: 0.6 }}
     >
-            <motion.div
+            <m.div
                 className="step__number"
                 initial={{ opacity: 0 }}
                 variants={{
@@ -40,11 +39,11 @@ function Step({
                 }}
             >
                 {step}
-            </motion.div>
+            </m.div>
             {!lastStep && 
                 <Arrow delay={step-1} route={route} duration={1} variant={'onscreen'} />
             }
-            <motion.p
+            <m.p
                 className="step__content"
                 initial={{ opacity: 0 }}
                 variants={{
@@ -55,8 +54,8 @@ function Step({
                 }}
             >
                 {children}
-            </motion.p>
-    </motion.div>
+            </m.p>
+    </m.div>
   );
 }
 

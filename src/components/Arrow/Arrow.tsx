@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useTransform, Variants } from "framer-motion";
+import { m, Variants } from "framer-motion";
 
 export interface Props {
     delay?
@@ -40,7 +40,7 @@ function Arrow({
         <svg
             viewBox="0 0 100 20"
             id="svg1033">
-            <motion.path
+            <m.path
                 initial={{ pathLength: 0 }}
                 animate={!variant ? { pathLength: 1 } : {}}
                 transition={!variant ? {
@@ -63,7 +63,7 @@ function Arrow({
                 d={routes[route]}
                 id="path1155"
             />
-            <motion.path id="head" d="M 0 -1 L 2 0 L 0 1 Z"
+            <m.path id="head" d="M 0 -1 L 2 0 L 0 1 Z"
                 stroke={'#198754'} fill={'#198754'}
                 initial={{opacity: 0}}
                 animate={!variant ? {opacity: 1} : {}}
@@ -86,7 +86,7 @@ function Arrow({
                     fill="freeze"
                     path={routes[route]}>
                 </animateMotion>
-            </motion.path>
+            </m.path>
         </svg>
     </div>
   );
