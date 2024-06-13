@@ -81,7 +81,7 @@ function Arrow({
             >
                 <animateMotion 
                     dur={`0s`}
-                    begin={`${delay+transition.duration}s`}
+                    begin={`0s`}
                     rotate={'auto'}
                     keyPoints="1;0" 
                     keyTimes="0;1"
