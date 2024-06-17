@@ -80,11 +80,9 @@ function Arrow({
                 }: {}}
             >
                 <animateMotion 
-                    dur={`0s`}
-                    begin={`0s`}
+                    dur={`${0.000001}s`}
+                    begin={`${0.000001}s`}
                     rotate={'auto'}
-                    keyPoints="1;0" 
-                    keyTimes="0;1"
                     fill="freeze"
                     path={routes[route]}>
                 </animateMotion>
