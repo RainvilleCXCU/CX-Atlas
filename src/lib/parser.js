@@ -68,8 +68,6 @@ export const parseHtml = (html) => {
             // ML Referral Source
             else if(name === 'a' && cookies?.referralsource !== '' && (attribs?.href?.includes('loanspq') || attribs?.href?.includes('meridianlink'))) {
                 const currDestReferral = getQueryVariable('referralsource', attribs?.href);
-                console.log("ML LINK");
-                console.log(attribs.href)
                 let href = attribs.href;
                 if (currDestReferral) {
                     href = attribs?.href.replace(currDestReferral, cookies?.referralsource);
