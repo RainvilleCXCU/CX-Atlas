@@ -38,7 +38,17 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></> }) => {
     };
     const headerSettings = props?.data?.headerSettings; 
     const { footerUtilities, footerAppIcons, footerSocialIcons } = props?.data?.footerSettings;
-    const activeAlerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
+    let activeAlerts;
+    if (props.data.page.title != 'Home') //This 'if' statement is needed for the homepage. For some reason the GraphQL structure is different (nodes vs. edges)
+        {
+            activeAlerts = props?.data?.cxAlerts?.edges[0]?.node?.displayPages?.includes(databaseId.toString())
+            ? [props?.data?.cxAlerts?.edges[0]?.node]
+            : '';
+        } else {
+            activeAlerts = props?.data?.cxAlerts?.nodes[0]?.displayPages?.includes(databaseId.toString())
+            ? [props?.data?.cxAlerts?.nodes[0]]
+            : '';
+        }
 	return (
         <>
         <SEO
@@ -75,7 +85,7 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></> }) => {
         }
                 
             {
-                activeAlerts.length > 0 &&
+                activeAlerts &&
                 <Alert alerts={activeAlerts} />
             }
                     <Loading /> 
