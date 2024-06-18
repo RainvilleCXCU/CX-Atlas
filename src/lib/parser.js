@@ -139,7 +139,7 @@ export const parseHtml = (html) => {
             // Step
             else if (attribs?.['data-acf-block'] && attribs?.['data-acf-block'] === 'step') {
                 return (
-                    <Step step={attribs?.['data-step-number']} lastStep={attribs?.['data-last-step']} route={attribs?.['data-svg-route']}>{domToReact(children, options)}</Step>
+                    <Step step={attribs?.['data-step-number']} lastStep={attribs?.['data-last-step']} route={attribs?.['data-svg-route']} encodedContent={attribs?.['data-encoded-copy']}></Step>
                 )
             }
             // DinkyTown Calc
