@@ -3,11 +3,13 @@ import parse, { domToReact, attributesToProps } from "html-react-parser";
 import Link from "next/link";
 import { css } from '@emotion/css';
 import Image from 'next/image';
+import { useCookies } from "react-cookie";
 
 import EqualHeightContainer  from "components/Blocks/EqualHeight";
 import Container from "components/Blocks/Container";
 import Vimeo from "components/Video/vimeo";
 import Step from "components/Steps/Step";
+import { getQueryVariable } from "./routing";
 
 const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
 const ToggleContent = dynamic(() => import("components/ContentToggle/Content"), {ssr: false});
@@ -40,6 +42,8 @@ const findChildren = (element, att, value) => {
 }
 const whitelistRegex = new RegExp(`(.local)|(wpenginepowered.)|(wpengine.com)|(connexuscu.org)|(mortgagewebcenter)|(meridianlink)|(loanspq)|(myworkdayjobs)|(issuu)|(az1.qualtrics)|(docusign)|(billerpayments)|(#)|(tel:)|(mailto:)|(javascript:)`, "i");
 
+
+
 export const parseHtml = (html) => {
         const options = {
         trim: false,
@@ -48,7 +52,7 @@ export const parseHtml = (html) => {
         },
         // library: require('preact'),
         replace: (element) => {
-
+            const [cookies, setCookie ] = useCookies(['referralsource']);
             // return;
             let { name, attribs, children } = element;
             if(attribs?.style) {
@@ -61,7 +65,17 @@ export const parseHtml = (html) => {
             if(name !== 'a' && name !== 'div' && name !== 'span' && name !== 'button' && name !== 'p' && name !== 'h3' && name !== 'table' && name !== 'img' && name !== 'select') {
                 return;
             }
-
+            // ML Referral Source
+            else if(name === 'a' && cookies?.referralsource !== '' && (attribs?.href?.includes('loanspq') || attribs?.href?.includes('meridianlink'))) {
+                const currDestReferral = getQueryVariable('referralsource', attribs?.href);
+                let href = attribs.href;
+                if (currDestReferral) {
+                    href = attribs?.href.replace(currDestReferral, cookies?.referralsource);
+                }
+                return (
+                    <a href={href} className={attribs?.class} target={attribs?.targets}>{domToReact(children, options)}</a>
+                )
+            }
             // Cisco Chat Button
             else if(name === 'a' && attribs?.class?.includes('chat_bubble')) {
                 return (
@@ -123,7 +137,7 @@ export const parseHtml = (html) => {
             // Step
             else if (attribs?.['data-acf-block'] && attribs?.['data-acf-block'] === 'step') {
                 return (
-                    <Step step={attribs?.['data-step-number']} lastStep={attribs?.['data-last-step']} route={attribs?.['data-svg-route']}>{domToReact(children, options)}</Step>
+                    <Step step={attribs?.['data-step-number']} lastStep={attribs?.['data-last-step']} route={attribs?.['data-svg-route']} encodedContent={attribs?.['data-encoded-copy']}></Step>
                 )
             }
             // DinkyTown Calc

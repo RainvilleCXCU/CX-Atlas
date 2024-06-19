@@ -95,11 +95,9 @@ Component.query = gql`
     }
 
     cxAlerts: cXAlerts {
-        edges {
-          node{
-            ...AlertsFragment
-          }
-        }
+      nodes {
+        ...AlertsFragment
+      }
     }
     footerMenuItems: menuItems(where: { location: $footerLocation }, first: 255) {
       nodes {
