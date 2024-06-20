@@ -26,8 +26,7 @@ class CXDoc extends Document {
           
           <link rel="stylesheet" href="/_next/static/css/styles.css" />
           <link rel="stylesheet" href={`/wp-content/themes/CXCU/assets/${
-                process.env.NEXT_PUBLIC_styleguideVersion || "latest"
-              }/cxcuatlas.css?v=1`} />
+                process.env.NEXT_PUBLIC_styleguideVersion || "latest"}/cxcuatlas.css${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`} />
         </Head>
         <body>
           <Main />
