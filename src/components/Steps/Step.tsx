@@ -27,8 +27,8 @@ function Step({
 }: Props): JSX.Element {
 //   const delay = (step - 1) * duration < 0 ? 0 : (step - 1)  * duration;
 //   const slowDelay = (step - 1) * duration /2 < 0 ? 0 : (step - 1)  * duration/2;
-    const arrowDelay = (duration * 1.5) * (step);
-    const stepDelay = arrowDelay - 1;
+    const arrowDelay = (duration * .75) * (step);
+    const stepDelay = arrowDelay - .5;
   return (
 
     <m.div
