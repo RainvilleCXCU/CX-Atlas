@@ -66,7 +66,7 @@ export const parseHtml = (html) => {
                 return;
             }
             // ML Referral Source
-            else if(name === 'a' && cookies?.referralsource !== '' && (attribs?.href?.includes('loanspq') || attribs?.href?.includes('meridianlink'))) {
+            else if(name === 'a' && cookies?.referralsource && cookies?.referralsource !== '' && (attribs?.href?.includes('loanspq') || attribs?.href?.includes('meridianlink'))) {
                 const currDestReferral = getQueryVariable('referralsource', attribs?.href);
                 let href = attribs.href;
                 if (currDestReferral) {
