@@ -6,7 +6,8 @@ import { addCSSAsset, addJSAsset } from "lib/enqueuedFiles";
 class CXDoc extends Document {
   render() {
     return (
-      <Html>
+      <Html
+        lang="en-us">
         <Head>
           <style>{`body { display: block !important }`}</style>
           <link href='https://www.googletagmanager.com' rel='preconnect' />

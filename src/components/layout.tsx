@@ -5,6 +5,7 @@ const HotJar = dynamic(() => import('components/ThirdParty/hotjar'), {ssr:false}
 const Qualtrics = dynamic(() => import('components/ThirdParty/qualtrics'), {ssr:false});
 const Spectrum = dynamic(() => import('components/ThirdParty/spectrum'), {ssr:false});
 const Siteimprove = dynamic(() => import('components/ThirdParty/siteimprove'), {ssr:false});
+const Clarity = dynamic(() => import('components/ThirdParty/clarity'), {ssr:false});
 // import {
 //   Header,
 //   MenuNavigation,
@@ -27,7 +28,7 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></> }) => {
         logo: '',
         footerText: ''
     };
-    const { gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
+    const { clarityId, clarityEnabled, gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
     const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
     const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
     const { title = '', content, seo = {}, link = '', featuredImage, databaseId = '' } = props?.data?.page ?? props?.data?.post ?? {
@@ -72,6 +73,11 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></> }) => {
         <HotJar
             id={hotjarId}
             enabled={hotjarEnabled} />
+        }
+        {clarityEnabled &&
+        <Clarity
+            id={clarityId}
+            enabled={clarityEnabled} />
         }
                 
             {

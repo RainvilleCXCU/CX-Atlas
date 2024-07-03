@@ -9,6 +9,7 @@ const HotJar = dynamic(() => import('components/ThirdParty/hotjar'), {ssr:false}
 const Qualtrics = dynamic(() => import('components/ThirdParty/qualtrics'), {ssr:false});
 const Spectrum = dynamic(() => import('components/ThirdParty/spectrum'), {ssr:false});
 const Siteimprove = dynamic(() => import('components/ThirdParty/siteimprove'), {ssr:false});
+const Clarity = dynamic(() => import('components/ThirdParty/clarity'), {ssr:false});
 // const Header = dynamic(()=> import('components/Header/Header'));
 // const Footer = dynamic(() => import('components/Footer/Footer'));
 import Header from 'components/Header/Header';
@@ -36,6 +37,8 @@ export default function Component(props) {
     databaseId: databaseId,
   } = props?.data?.generalSettings;
   const {
+    clarityEnabled,
+    clarityId,
     gtmId,
     gtmEnabled,
     hotjarEnabled,
@@ -81,6 +84,11 @@ export default function Component(props) {
   <HotJar
     id={hotjarId}
     enabled={hotjarEnabled} />
+  }
+  {clarityEnabled &&
+  <Clarity
+      id={clarityId}
+      enabled={clarityEnabled} />
   }
         
     <isModalOpenContext.Provider value={{ isModalOpen, setIsModalOpen }}>

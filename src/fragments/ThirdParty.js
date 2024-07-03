@@ -2,6 +2,8 @@ import { gql } from '@apollo/client';
 
 export const ThirdPartySettingsFragment = gql`
   fragment ThirdPartySettingsFragment on ThirdPartySettings {
+    clarityEnabled
+    clarityId
     datatracEnabled
     datatracId
     gtmEnabled
