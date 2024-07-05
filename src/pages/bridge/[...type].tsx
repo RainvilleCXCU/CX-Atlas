@@ -10,6 +10,7 @@ const HotJar = dynamic(() => import('components/ThirdParty/hotjar'), {ssr:false}
 const Qualtrics = dynamic(() => import('components/ThirdParty/qualtrics'), {ssr:false});
 const Spectrum = dynamic(() => import('components/ThirdParty/spectrum'), {ssr:false});
 const Siteimprove = dynamic(() => import('components/ThirdParty/siteimprove'), {ssr:false});
+const Clarity = dynamic(() => import('components/ThirdParty/clarity'), {ssr:false});
 import Header from 'components/Header/Header';
 // const Footer = dynamic(() => import('components/Footer/Footer'));
 const SEO = dynamic(()=> import('components/SEO/SEO'));
@@ -35,7 +36,7 @@ export default function Component(props) {
     const { product, type, minor, member, widget } = props;
     const { title: siteTitle, description: siteDescription, logo: siteLogo, footerText: footerText, databaseId: databaseId } =
       props?.data?.generalSettings;
-    const { gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
+    const { clarityEnabled, clarityId, gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
     // const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
     const { title, content, seo, link, featuredImage } = props?.data?.page ?? { title: '' };
     const headerSettings = props?.data?.headerSettings; 
@@ -80,6 +81,11 @@ export default function Component(props) {
             <HotJar
               id={hotjarId}
               enabled={hotjarEnabled} />
+            }
+            {clarityEnabled &&
+            <Clarity
+                id={clarityId}
+                enabled={clarityEnabled} />
             }
               
     <isModalOpenContext.Provider value={{ isModalOpen, setIsModalOpen }}>

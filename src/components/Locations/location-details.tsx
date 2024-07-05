@@ -184,7 +184,7 @@ function LocationDetails(): JSX.Element {
 									</span>
 									
 									<span className="wpsl-hours hide-days">
-										{selectedLocation?.drive_thru_hours_html && <div className="wpsl-hours-heading">Drive-Thru</div>}
+										{selectedLocation?.drive_thru_hours_html && <div className="wpsl-hours-heading">Drive-thru</div>}
 										<div
 											dangerouslySetInnerHTML={{
 												__html: selectedLocation?.drive_thru_hours_html,
