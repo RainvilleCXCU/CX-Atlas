@@ -221,6 +221,16 @@ let nextConfig = {
         },
         {
           source: "/:path*",
+          destination: "/dynamic/:path*",
+          has: [
+            {
+              type: "query",
+              key: "goal",
+            },
+          ],
+        },
+        {
+          source: "/:path*",
           destination: "/dynamic/ppp/:path*",
           has: [
                 {
