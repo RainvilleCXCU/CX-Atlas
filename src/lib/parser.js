@@ -84,7 +84,7 @@ export const parseHtml = (html) => {
             }
             else if(name === 'a' && whitelistRegex.test(attribs?.href) === false && attribs?.href[0] !== '/') {
                 return (
-                    <ExternalLink href={attribs?.href} classNames={attribs?.class}>{domToReact(children, options)}</ExternalLink>
+                    <ExternalLink ariaLabel={attribs?.['aria-label']} href={attribs?.href} classNames={attribs?.class}>{domToReact(children, options)}</ExternalLink>
                 )
             }
             // Content Toggle Link
