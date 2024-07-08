@@ -1,12 +1,21 @@
 import Player from '@vimeo/player';
 
 export const embedVimeo = (
-    {container}
+    {   
+        container,
+        id,
+        hasBackground = true,
+        responsive = true
+    }
 ) => {
-    console.log('VIDEO LOAD');
-    
+    console.log('VIDEO LOAD');    
     if(Player) {
-        const videoPlayer = new Player(container);
+        const options = {
+            id: id,
+            background: hasBackground,
+            responsive: responsive
+        }
+        const videoPlayer = new Player(container, options);
         videoPlayer.on('play', function() {
             console.log('Played the video');
         });        
