@@ -11,7 +11,7 @@ export interface Props {
 function ExternalLink({
     href = '',
     children = <></>,
-    ariaLabel = '',
+    ariaLabel = null,
     classNames = ''
 }: Props): JSX.Element {
     const linkRef = useRef<HTMLAnchorElement>(null);
@@ -33,7 +33,7 @@ function ExternalLink({
       }
     };
     return (
-        <a href={href} aria-label={ariaLabel !== '' ? ariaLabel : false} className={`${classNames}`} target="_blank" onClick={handleClick} ref={linkRef} >
+        <a href={href} aria-label={ariaLabel ? ariaLabel : null} className={`${classNames}`} target="_blank" onClick={handleClick} ref={linkRef} >
             {children}
         </a>
     );
