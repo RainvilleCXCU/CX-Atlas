@@ -81,6 +81,30 @@ function Disclosure({ attribs, children }) {
 		}
 	}, []);
 
+	// handle the anchor linking issue
+	const scrolledRef = useRef(false);
+	const hash = window.location.hash.substring(1);
+	const hashRef = useRef(hash);
+
+	useEffect(() => {
+		if (hash) {
+			// We want to reset if the hash has changed
+			if (hashRef.current !== hash) {
+				hashRef.current = hash;
+				scrolledRef.current = false;
+			}
+
+			// only attempt to scroll if we haven't yet (this could have just reset above if hash changed)
+			if (!scrolledRef.current) {
+				const element = document.getElementById(hash);
+				if (element) {
+					element.scrollIntoView();
+					scrolledRef.current = true;
+				}
+			}
+		}
+	});
+
 	return <div {...attributesToProps(attribs)} ref={disclosureWrapper}>{children}</div>;
 }
 
