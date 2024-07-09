@@ -41,7 +41,7 @@ function ToggleContentLink({
             //     ...state,
             //     toggleContent: target
             // }));
-        } else if(document?.location?.hash == '' && attribs?.['data-content-default']) {
+        } else if(attribs?.['data-content-default']) {
             const target = linkRef?.current?.href.split('#')[1];
             console.log(`Target: ${target}`)
             setToggleContent(target);
