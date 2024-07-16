@@ -1869,11 +1869,12 @@ Page Navigation
 		font-size: 17px;
 	}
 }
-
-.page-numbers.current,
-.page-numbers:hover {
-	background: #0072e5;
-	color: #fff;
+.entry-content{
+	.page-numbers.current,
+	.page-numbers:hover {
+		background: #0072e5;
+		color: #fff;
+	}
 }
 
 span.page-numbers.dots {
