@@ -1878,11 +1878,12 @@ Page Navigation
 	.page-numbers:hover {
 		text-decoration: underline;
 	}
-}
 
-span.page-numbers.dots {
-	background: transparent;
-	color: #272c30;
+	span.page-numbers.dots {
+		background: transparent;
+		color: #272c30;
+		text-decoration: none;
+	}
 }
 
 .post-navigation {
