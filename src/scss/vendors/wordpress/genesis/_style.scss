@@ -1869,11 +1869,15 @@ Page Navigation
 		font-size: 17px;
 	}
 }
-
-.page-numbers.current,
-.page-numbers:hover {
-	background: #0072e5;
-	color: #fff;
+.entry-content, .search {
+	.page-numbers.current,
+	.page-numbers:hover {
+		background: #0072e5;
+		color: #fff;
+	}
+	.page-numbers:hover {
+		text-decoration: underline;
+	}
 }
 
 span.page-numbers.dots {

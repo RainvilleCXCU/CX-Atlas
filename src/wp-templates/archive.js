@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import Posts from '../components/Posts/listing';
 import { getPageNum } from 'utils/urlParser';
 import dynamic from 'next/dynamic';
+import Head from 'next/head';
 const BaseLayout = dynamic(() => import('components/layout'));
 
 const POSTS_PER_PAGE = 5;
@@ -21,6 +22,7 @@ export default function Page(props) {
 
   return (
     <BaseLayout props={props}>
+      <Head><title>Financial Tips, News & Insights - Connexus Credit Union</title></Head>
        <main id="main" className="entry-content content content-index blog">
          <article className='post-content'>
            {blogtop &&
