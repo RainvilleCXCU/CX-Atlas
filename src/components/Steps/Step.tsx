@@ -6,6 +6,7 @@ export interface Props {
     step?
     lastStep?
     route?
+    heading?
     duration?
     align?
     encodedContent?
@@ -18,6 +19,7 @@ function Step({
     step = 1,
     lastStep = false,
     route = 'topArc',
+    heading = '',
     encodedContent = '',
     duration = 1,
     align = '',
@@ -54,6 +56,7 @@ function Step({
                     <span className="cx-hidden__mobile"><Arrow delay={arrowDelay} route={route} duration={duration/3} variant={'onscreen'} /></span>
                 </>
             }
+            
             <m.p
                 className="step__content"
                 initial={{ opacity: 0 }}
@@ -64,6 +67,9 @@ function Step({
                     }
                 }}
             >
+                {heading && heading !== '' &&
+                    <h3 className="no-margin--vertical-top">{heading}</h3>
+                }
                 {encodedContent !== '' ? parseHtml(Buffer.from(encodedContent, 'base64').toString()) : parseHtml(children)}
             </m.p>
             {!lastStep && 
