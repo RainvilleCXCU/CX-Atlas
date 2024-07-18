@@ -247,6 +247,24 @@ let nextConfig = {
                 },
               ],
         },
+        {
+          source: "/:path*",
+          destination: "/dynamic/postppp/:path*",
+          has: [
+                {
+                  type: "query",
+                  key: "preview",
+                },
+                {
+                  type: "query",
+                  key: "p",
+                },
+                {
+                  type: "query",
+                  key: "_ppp",
+                },
+              ],
+        },
 
 
         
