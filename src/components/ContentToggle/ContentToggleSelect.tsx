@@ -1,4 +1,4 @@
-import { Store } from "context/store";
+import { toggleContentContext } from "context/toggleContext";
 import { attributesToProps } from "html-react-parser";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useRef } from "react";
@@ -14,46 +14,24 @@ function ToggleContentSelect({
   children = <></>,
   classNames = "",
 }: Props): JSX.Element {
-  const [ state, setState ] = useContext(Store);
+  const { toggleContent, setToggleContent } = useContext(toggleContentContext);
   const selectRef = useRef<HTMLSelectElement>(null);
-  const {push, isReady} = useRouter();
+  const { push } = useRouter();
 
-  const toggleContent = e => {
+  const toggleSelectContent = e => {
     e.preventDefault();
-    const target = selectRef?.current?.value.split('#')[1];
+    const target = selectRef.current.value.split('#')[1];
     console.log(`Target: ${target}`)
-    if(target !== state?.toggleContent) {
-      setState(state => ({
-          ...state,
-          toggleContent: target
-      }));
-      push(`#${target}`, undefined, {shallow: true});
-    }
+    setToggleContent(target);
+    push(`#${target}`, undefined, {shallow: true});
   }
   useEffect(() => {
-    selectRef.current.value = '#'+state?.toggleContent;
-  }, [state?.toggleContent])
-
-  useEffect(() => {
-      if(document?.location?.hash && document?.location?.hash === '#' + selectRef?.current?.value?.split('#')[1]) {        
-          const target = selectRef.current.value.split('#')[1];
-          console.log(`Select Target: ${target}`)
-          setState(state => ({
-              ...state,
-              toggleContent: target
-          }));
-      } else if(document?.location?.hash == '' && attribs?.['data-content-default']) {
-          const target = selectRef.current.value.split('#')[1];
-          setState(state => ({
-              ...state,
-              toggleContent: target
-          }));
-      }
-  }, [])
+    selectRef.current.value = '#'+toggleContent;
+  }, [toggleContent]);
   
   return (
     <>
-        <select {...attributesToProps(attribs)} className={`${attribs?.class}`} onChange={toggleContent} ref={selectRef}>
+        <select {...attributesToProps(attribs)} className={`${attribs?.class}`} onChange={toggleSelectContent} ref={selectRef}>
             {children}
         </select>
     </>
