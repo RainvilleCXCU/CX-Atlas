@@ -1,6 +1,8 @@
 import Arrow from "components/Arrow/Arrow";
+import EqualHeightContainer from "components/Blocks/EqualHeight";
 import { m } from "framer-motion";
 import { parseHtml } from "lib/parser";
+import { EqualHeight, EqualHeightElement } from "react-equal-height";
 
 export interface Props {
     step?
@@ -68,7 +70,7 @@ function Step({
                 }}
             >
                 {heading && heading !== '' &&
-                    <h3 className="no-margin--vertical-top">{heading}</h3>
+                    <h3 className="no-margin--vertical-top cx-h3--mobile"><EqualHeightContainer name={'step-heading'}>{heading}</EqualHeightContainer></h3>
                 }
                 {encodedContent !== '' ? parseHtml(Buffer.from(encodedContent, 'base64').toString()) : parseHtml(children)}
             </m.p>
