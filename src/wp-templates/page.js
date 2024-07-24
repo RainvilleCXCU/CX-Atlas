@@ -28,14 +28,8 @@ export default function Component(props) {
 
 Component.variables = (seedQuery, ctx, extra) => {
   const {databaseId, uri} = seedQuery;
-  console.log('PAGE');
-  console.log(ctx)
-  console.log(seedQuery)
-  console.log(databaseId);
-  console.log(uri)
   return {
-    // uri: `${uri}${extra?.query?.params ? `?${JSON.stringify(extra?.query?.params)}`: ''}`,
-    databaseId: databaseId,
+    uri: `${uri}${extra?.query?.params ? `?${JSON.stringify(extra?.query?.params)}`: ''}`,
     headerLocation: MENUS.PRIMARY_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION,
     asPreview: ctx?.asPreview,
@@ -48,12 +42,12 @@ Component.query = gql`
   ${ThirdPartySettingsFragment}
   ${AlertFragment}
   query GetPageData(
-    $databaseId: ID!
+    $uri: ID!
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
     $asPreview: Boolean = false
   ) {
-    page(id: $databaseId, idType: DATABASE_ID, asPreview: $asPreview) {
+    page(id: $uri, idType: URI, asPreview: $asPreview) {
       title
       content
       databaseId
