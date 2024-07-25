@@ -37,9 +37,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   console.log(query)
   return getWordPressProps({
     ctx,
-    revalidate: process.env.NEXT_PUBLIC_PAGE_REVALIDATION
-      ? parseInt(process.env.NEXT_PUBLIC_PAGE_REVALIDATION)
-      : null,
+    revalidate: 1,
     extra: {
       query: {
         page: getPageNum(ctx.params.wordpressNode),
