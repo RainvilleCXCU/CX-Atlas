@@ -17,6 +17,7 @@ export default function Component(props) {
 
   return (
     <>
+    test
     <BaseLayout props={props}>
       <div id="page" className="container site">
         <main className="content single-post">
@@ -174,6 +175,8 @@ Component.query = gql`
 `;
 
 Component.variables = ({ databaseId }, ctx) => {
+  console.log('Variables');
+  console.log(ctx)
   return {
     id: String(databaseId),
     databaseId,

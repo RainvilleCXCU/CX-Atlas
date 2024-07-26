@@ -70,6 +70,7 @@ Component.variables = (seedQuery, ctx, extra) => {
   const {databaseId, uri} = seedQuery;
   return {
     // uri: `${uri}${extra?.query?.params ? `?${JSON.stringify(extra?.query?.params)}`: ''}`,
+    cache: new Date().getSeconds().toString(),
     pageId: extra?.query?.query?.page_id ? extra?.query?.query?.page_id : extra?.query?.query?.p,
     headerLocation: MENUS.PRIMARY_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION
@@ -83,10 +84,11 @@ Component.query = gql`
   ${AlertFragment}
   query GetPagePreviewData(
     $pageId: String
+    $cache: String
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
   ) {
-    postPreview(pageId: $pageId) {
+    postPreview(pageId: $pageId, cache:$cache) {
       title
       content
       databaseId

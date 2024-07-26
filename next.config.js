@@ -180,6 +180,34 @@ let nextConfig = {
           ],
         },
         {
+          source: "/preview/:path*",
+          destination: "/dynamic/ppp/:path*",
+          has: [
+                {
+                  type: "query",
+                  key: "preview",
+                },
+                {
+                  type: "query",
+                  key: "page_id",
+                }
+              ],
+        },
+        {
+          source: "/preview/:path*",
+          destination: "/dynamic/postppp/:path*",
+          has: [
+                {
+                  type: "query",
+                  key: "preview",
+                },
+                {
+                  type: "query",
+                  key: "p",
+                }
+              ],
+        },
+        {
           source: "/:path*",
           destination: "/dynamic/:path*",
           has: [
