@@ -21,8 +21,7 @@ export default function Page(props) {
   const currentPage = getPageNum(query.wordpressNode);
 
   return (
-    <BaseLayout props={props}>
-      <Head><title>Financial Tips, News & Insights - Connexus Credit Union</title></Head>
+    <BaseLayout props={props} pageTitle="Financial Tips, News & Insights - Connexus Credit Union">
        <main id="main" className="entry-content content content-index blog">
          <article className='post-content'>
            {blogtop &&

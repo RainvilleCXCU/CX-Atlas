@@ -165,7 +165,7 @@ export default function Page() {
                 <Container align="full" classNames={`no-margin`}>
                   <Columns classNames={`no-margin`}>
                     <Column>
-                      <PageTitle heading="Locations & ATMs" />
+                      <PageTitle heading="Locations & ATMs" color="green-gradient"/>
                     </Column>
                   </Columns>
                 </Container>

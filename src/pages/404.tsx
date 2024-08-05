@@ -13,13 +13,20 @@ import Column from 'components/Blocks/Column';
 const SearchBar = dynamic(() => import('components/Search/SearchBar'));
 import Link from 'next/link';
 import BaseLayout from '../components/layout';
+import Head from "next/head";
 export default function Component(props) {
 
   if (props.loading) {
     return <>Loading...</>;
   }
+  
+  const { title } = props?.data?.generalSettings;
+
   return (
     <BaseLayout props={props}>
+      <Head>
+        <title>{`Page not found - ${title}`}</title>
+      </Head>
     <Container>
 				<Columns>
 					<div id="page" className="hfeed site container error404">

@@ -21,7 +21,7 @@ export default function Component(props) {
   const currentPage = getPageNum(query.wordpressNode);
 
   return (
-    <BaseLayout props={props}>
+    <BaseLayout props={props} pageTitle={`${name} Archives`}>
       <main id="main" className="entry-content content content-single blog">
           <article className='post-content'>
             {blogtop &&
