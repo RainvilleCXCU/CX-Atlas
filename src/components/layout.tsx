@@ -19,10 +19,11 @@ const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});
 const Loading = dynamic(() => import('components/common/loading'), {ssr:false});
 interface BaseLayoutProps {
     props?
+    pageTitle?
     children
 }
 
-const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></> }) => {
+const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle }) => {
     const { description: siteDescription = '', logo: siteLogo = '', footerText: footerText = '' } = props?.data?.generalSettings ?? {
         description: '',
         logo: '',
@@ -31,7 +32,7 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></> }) => {
     const { clarityId, clarityEnabled, gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
     const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
     const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
-    const { title = '', content, seo = {}, link = '', featuredImage, databaseId = '' } = props?.data?.page ?? props?.data?.post ?? {
+    let { title = '', content, seo = {}, link = '', featuredImage, databaseId = '' } = props?.data?.page ?? props?.data?.post ?? {
         title: '',
         seo: {},
         link: '',
@@ -40,6 +41,7 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></> }) => {
     const headerSettings = props?.data?.headerSettings; 
     const { footerUtilities, footerAppIcons, footerSocialIcons } = props?.data?.footerSettings;
     const activeAlerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
+    title = pageTitle ? pageTitle : title;
 	return (
         <>
         <SEO
