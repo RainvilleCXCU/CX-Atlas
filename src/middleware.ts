@@ -25,7 +25,9 @@ export async function middleware(request: NextRequest) {
       return NextResponse.rewrite(new URL(rewrite[0].destination, request.url))
     }
     if(redirect.length > 0) {
-      return NextResponse.redirect(new URL(redirect[0].destination, request.url))
+      return NextResponse.redirect(new URL(redirect[0].destination, request.url), {
+        status: redirect[0].permanent ? 308 : 307
+      })
     }
   }
     
