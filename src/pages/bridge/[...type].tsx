@@ -299,7 +299,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             Page: Component,
             redirect: {
                 destination: `/apply-now/?account=${query.account}&minor=na`,
-                permanent: false,
+                permanent: true,
             }
         });
     } else if (!minor && product.minorMemberApplyNowURL != '' && type != 'start') {
@@ -326,7 +326,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             Page: Component,
             redirect: {
                 destination: `/apply-now/?account=${query.account}&minor=no`,
-                permanent: false,
+                permanent: true,
             }
         });
     } else if (minor && minor != 'na' && product.minorMemberApplyNowURL == '' && type == 'now' && !member) {
@@ -335,7 +335,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             Page: Component,
             redirect: {
                 destination: `/apply-now/?account=${query.account}&minor=na`,
-                permanent: false,
+                permanent: true,
             }
         });
     } else {
