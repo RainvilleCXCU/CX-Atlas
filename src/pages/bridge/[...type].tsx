@@ -224,11 +224,23 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
     const product = data.products.edges[0]?.node;
     const productInfo = { 
-        account: product.title,
+        account: product?.title,
         minor
     };
     let widgetData;
     let widgetHtml = '';
+
+    if (data.products.edges.length == 0) {
+        console.log('No Product');
+        return getNextServerSideProps(context, {
+            Page: Component,
+            redirect: {
+                destination: `/open-an-account/`,
+                permanent: false,
+            }
+        });
+    }
+    
 
     // GET WIDGET
     if(type && type == 'start' && (!minor || minor == '')) {
@@ -284,16 +296,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
     // Perform Redirect if needed
 
-    if (data.products.edges.length == 0) {
-        console.log('No Product');
-        return getNextServerSideProps(context, {
-            Page: Component,
-            redirect: {
-                destination: `/open-an-account/`,
-                permanent: false,
-            }
-        });
-    } else if (product.minorMemberApplyNowURL == '' && type == 'start') {
+    if (product.minorMemberApplyNowURL == '' && type == 'start') {
         console.log('Minor accounts not available');
         return getNextServerSideProps(context, {
             Page: Component,
