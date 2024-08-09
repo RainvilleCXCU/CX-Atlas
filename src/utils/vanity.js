@@ -22,8 +22,8 @@ const fetchVanityByPath = async ({path = null}) => {
     }
     ).then((res) => res.json());
     
-    const vanity = data.vanityURLs.nodes
-    .filter((vanity) => vanity.vanityUrlFields.vanityUrl === path && vanity.vanityUrlFields.active);
+    const vanity = data.vanityURLs ? data.vanityURLs.nodes
+    .filter((vanity) => vanity.vanityUrlFields.vanityUrl === path && vanity.vanityUrlFields.active) : [];
     
     return vanity.length > 0 ? vanity[0].vanityUrlFields : null
 }
