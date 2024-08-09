@@ -25,9 +25,6 @@ export async function middleware(request: NextRequest) {
     });
 
     if(vanityURL) {
-      console.log('VANITY!!')
-      console.log(vanityURL);
-      console.log(pathname)
       return NextResponse.rewrite(new URL(vanityURL.destinationUrl, request.url))
     }
     if(rewrite.length == 1) {
