@@ -5,7 +5,7 @@ const { fetchVanityByPath } = require("./utils/vanity");
  
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  if(!request.nextUrl.searchParams.get('wordpressNode') && !process.env.NEXT_PUBLIC_DISABLE_MIDDLEWARE_REDIRECT) {
+  if(!request.nextUrl.searchParams.get('wordpressNode') && (!process.env.NEXT_PUBLIC_DISABLE_MIDDLEWARE_REDIRECT || process.env.NEXT_PUBLIC_DISABLE_MIDDLEWARE_REDIRECT == 'false')) {
     const wpRewrites = await fetchWordPressRedirects({ type: "pass" });
     const wpRedirects = await fetchWordPressRedirects({ type: "url" });
     const vanityURL = await fetchVanityByPath({path: pathname});

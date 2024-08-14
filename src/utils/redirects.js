@@ -21,7 +21,7 @@ const fetchWordPressRedirects = async ({type = 'url'}) => {
             };
             if(type !== 'pass') {
                 redirectObj.permanent = parseInt(redirect.action_code) === 301;
-                if(!process.env.NEXT_PUBLIC_DISABLE_MIDDLEWARE_REDIRECT) {
+                if(!process.env.NEXT_PUBLIC_DISABLE_MIDDLEWARE_REDIRECT || process.env.NEXT_PUBLIC_DISABLE_MIDDLEWARE_REDIRECT == 'false') {
                     redirectObj.regex = redirect.regex === '1'
                 }
             } else {

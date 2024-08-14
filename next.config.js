@@ -74,7 +74,7 @@ let nextConfig = {
         ],
         permanent: false,
       },
-      ...(process.env.NEXT_PUBLIC_DISABLE_MIDDLEWARE_REDIRECT ? wpRedirects : []),
+      ...(process.env.NEXT_PUBLIC_DISABLE_MIDDLEWARE_REDIRECT && process.env.NEXT_PUBLIC_DISABLE_MIDDLEWARE_REDIRECT == 'true' ? wpRedirects : []),
     ];
   },
   async rewrites() {
@@ -82,7 +82,7 @@ let nextConfig = {
     return {
       beforeFiles: [
 
-        ...(process.env.NEXT_PUBLIC_DISABLE_MIDDLEWARE_REDIRECT ? wpRewrites : []),
+        ...(process.env.NEXT_PUBLIC_DISABLE_MIDDLEWARE_REDIRECT && process.env.NEXT_PUBLIC_DISABLE_MIDDLEWARE_REDIRECT == 'true' ? wpRewrites : []),
         // {
         //   source: "/:path*",
         //   destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/:path*`,
