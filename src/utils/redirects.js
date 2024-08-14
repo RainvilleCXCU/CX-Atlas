@@ -18,10 +18,12 @@ const fetchWordPressRedirects = async ({type = 'url'}) => {
             {
                 source: formatPathMatch(redirect.url),
                 destination: redirect.action_data.replace('$1', ''),
-                regex: redirect.regex === '1'
             };
             if(type !== 'pass') {
                 redirectObj.permanent = parseInt(redirect.action_code) === 301;
+                if(!process.env.NEXT_PUBLIC_DISABLE_MIDDLEWARE_REDIRECT) {
+                    redirectObj.regex = redirect.regex === '1'
+                }
             } else {
                 redirectObj.destination = redirectObj.destination;
             }
