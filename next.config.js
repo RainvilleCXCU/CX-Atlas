@@ -74,14 +74,15 @@ let nextConfig = {
         ],
         permanent: false,
       },
-      ...wpRedirects,
+      ...(process.env.NEXT_PUBLIC_DISABLE_MIDDLEWARE_REDIRECT && process.env.NEXT_PUBLIC_DISABLE_MIDDLEWARE_REDIRECT == 'true' ? wpRedirects : []),
     ];
   },
   async rewrites() {
     const wpRewrites = await fetchWordPressRedirects({ type: "pass" });
     return {
       beforeFiles: [
-        ...wpRewrites,
+
+        ...(process.env.NEXT_PUBLIC_DISABLE_MIDDLEWARE_REDIRECT && process.env.NEXT_PUBLIC_DISABLE_MIDDLEWARE_REDIRECT == 'true' ? wpRewrites : []),
         // {
         //   source: "/:path*",
         //   destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/:path*`,
