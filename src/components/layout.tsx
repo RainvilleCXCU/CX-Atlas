@@ -60,6 +60,8 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTi
             ogImageWidth={seo?.opengraphImage?.mediaDetails.width}
             ogImageHeight={seo?.opengraphImage?.mediaDetails.height}
             ogImageType={seo?.opengraphImage?.mimeType}
+            metaRobotsNoindex={seo?.metaRobotsNoindex}
+            metaRobotsNofollow={seo?.metaRobotsNofollow}
             twitter_card={"summary_large_image"} // Not sure where this is in the page object
             twitter_label1={"Est. reading time"} // Not sure where this is in the page object
             twitter_data1={seo?.readingTime + " minutes"}

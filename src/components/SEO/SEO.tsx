@@ -8,6 +8,8 @@ interface SEOProps {
 	ogType: string;
 	ogTitle: string;
 	ogDescription: string;
+	metaRobotsNoindex: string;
+	metaRobotsNofollow: string;
 	ogURL: string;
 	breadcrumbs?: any;
 	ogSite_Name: string;
@@ -40,6 +42,8 @@ const SEO = ({
 	ogImageWidth = "801",
 	ogImageHeight = "486",
 	ogImageType = "Image",
+	metaRobotsNoindex = "",
+	metaRobotsNofollow = "",
 	twitter_card = "summary_large_image",
 	twitter_label1 = "Est. reading time",
 	twitter_data1 = "",
@@ -62,6 +66,7 @@ const SEO = ({
 		<Head>
 			<title>{`${title} - ${ogSite_Name}`}</title>
 			<meta name="description" content={metaDesc} />
+			<meta name="robots" content={`${metaRobotsNoindex}, ${metaRobotsNofollow}`} />			
 			<link
 				rel="canonical"
 				href={canonicalURL}
