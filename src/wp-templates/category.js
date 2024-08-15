@@ -84,6 +84,8 @@ Component.query = gql`
           opengraphPublishedTime
           opengraphType
           opengraphUrl
+          metaRobotsNofollow
+          metaRobotsNoindex
           title
           opengraphSiteName
           opengraphImage {
