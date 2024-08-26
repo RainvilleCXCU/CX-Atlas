@@ -44,7 +44,7 @@ export default function Navigation(props: NavigationProps) {
                     <div>
                       <Link href="/pay-my-loan/" passHref className="cx-button cx-button--compact cx-button--text cx-button--outlined" type="button">Pay my loan
                       </Link>
-                      <Link href="/mdr?loc=LStUVVkwNi1DO1c1Tj0nLTYsQGBgCmAK&login=desktop" className="cx-button cx-button--compact" onClick={trackMember}>Log in</Link>
+                      <Link href="/mdr?loc=LStUVVkwNi1DO1c1Tj0nLTYsQGBgCmAK&login=desktop" className="cx-button cx-button--compact">Log in</Link>
                     </div>
                   }
                 </div>
