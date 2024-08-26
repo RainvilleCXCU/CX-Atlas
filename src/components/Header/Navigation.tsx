@@ -2,6 +2,7 @@ import SearchBar from './SearchBar';
 import MobileNav from './MobileNav';
 import MenuNavigation from 'components/Navigation/Navbar';
 import Link from 'next/link';
+import { useCookies } from 'react-cookie';
 interface NavigationProps {
     navOpen?: boolean,
     setNavOpen,
@@ -14,8 +15,15 @@ interface NavigationProps {
 }
 
 export default function Navigation(props: NavigationProps) {
+    const [cookies, setCookie ] = useCookies(['ismember']);
     const { showNavigation, showButtons, logo, setNavOpen, navOpen, headerSettings, menuItems, showSearch } = props;
-
+    const trackMember = e => {
+      let expires = new Date();
+      expires.setTime(expires.getTime() + (30 * 24 * 60 * 60 * 1000));
+      setCookie('ismember', 'true', {
+          expires
+      });
+    }
     return (
         <>
         <nav className="navbar navbar-expand-lg navbar-default cx-nav cx-header__mobile">

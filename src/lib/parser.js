@@ -10,6 +10,7 @@ import Container from "components/Blocks/Container";
 import Vimeo from "components/Video/vimeo";
 import Step from "components/Steps/Step";
 import { getQueryVariable } from "./routing";
+import Conditional from "components/Blocks/Conditional";
 
 const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
 const ToggleContent = dynamic(() => import("components/ContentToggle/Content"), {ssr: false});
@@ -153,6 +154,19 @@ export const parseHtml = (html) => {
                 )
             }
 
+            else if(attribs?.['data-acf-block']) {
+                if(attribs?.['data-acf-block'] == 'conditional') {
+                    return (
+                        <Conditional
+                            condition={attribs?.['data-condition']}
+                            comparison={attribs?.['data-comparison']}
+                            comparisonKey={attribs?.['data-comparison-key']}
+                            comparisonValue={attribs?.['data-comparison-value']}
+                            isDefault={attribs?.['data-is-default']}
+                        >{domToReact(children, options)}</Conditional>
+                    )
+                }
+            }
             // Toggle Content
             else if (attribs?.['data-toggle-content']) {
                 return (
