@@ -25,6 +25,8 @@ const Chat = dynamic(() => import ("components/Chat/cisco"), {ssr: false});
 const Calculator = dynamic(() => import("components/Calculator/Calculator"), {ssr: false});
 const CXCalc = dynamic(() => import("components/Calculator/CXCalculator"), {ssr: false});
 const CXCalcResults = dynamic(() => import("components/Calculator/CXCalculatorResults"), {ssr: false});
+const DynamicRateTableInput = dynamic(() => import("components/Calculator/DynamicRateTableInput"), {ssr: false});
+const DynamicRateTable = dynamic(() => import("components/Calculator/DynamicRateTable"), {ssr: false});
 const Scheduler = dynamic(() => import("components/Salesforce/scheduler"), {ssr: false});
 const Tooltip = dynamic(() => import("components/Tooltip/Tooltip"), {ssr: false});
 
@@ -197,6 +199,20 @@ export const parseHtml = (html) => {
             else if(attribs?.class?.includes('cx-calculator')) {
                 return (
                     <div {...attributesToProps(attribs)}><CXCalc>{children}</CXCalc></div>
+                )
+            }
+            
+            // Dynamic Rate table calculator input
+            else if(attribs?.class?.includes('dynamic-rate-table-input')) {
+                return (
+                    <div {...attributesToProps(attribs)}><DynamicRateTableInput>{children}</DynamicRateTableInput></div>
+                )
+            } 
+
+            // Dynamic Rate table calculator table
+            else if(attribs?.class?.includes('dynamic-rate-table-output')) {
+                return (
+                    <div {...attributesToProps(attribs)}><DynamicRateTable>{children}</DynamicRateTable></div>
                 )
             } 
 
