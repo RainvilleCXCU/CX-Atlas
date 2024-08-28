@@ -25,7 +25,7 @@ const DynamicRateTable = ({ children = <></>}: CXCalcProps): JSX.Element => {
     	}
     	let CXCalcFile = [{
     		id: 'DynamicRateTable',
-    		src: `/cxlib/calculators/0.0.1/scripts.js`,
+    		src: `/cxlib/calculators/${process.env.NEXT_PUBLIC_CALCULATOR_VERSION ? process.env.NEXT_PUBLIC_CALCULATOR_VERSION : '0.0.1'}/scripts.js${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`,
     		strategy: 'afterInteractive',
     		onload: () => {
                 console.log(window.CXCalc);
