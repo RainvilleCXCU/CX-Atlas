@@ -4,7 +4,7 @@ interface CXCalcProps {
     children;
 }
 
-const CXCalcResults = ({ children = <></>}: CXCalcProps): JSX.Element => {
+const DynamicRateTable = ({ children = <></>}: CXCalcProps): JSX.Element => {
     const initialized = useRef(false);
     const [calcsLoaded, setCalcsLoaded] = useState([]);
 
@@ -24,29 +24,24 @@ const CXCalcResults = ({ children = <></>}: CXCalcProps): JSX.Element => {
     		externalScript.src = src;
     	}
     	let CXCalcFile = [{
-    		id: 'CXCalculatorResults',
+    		id: 'DynamicRateTable',
     		src: `/cxlib/calculators/${process.env.NEXT_PUBLIC_CALCULATOR_VERSION ? process.env.NEXT_PUBLIC_CALCULATOR_VERSION : '0.0.1'}/scripts.js${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`,
     		strategy: 'afterInteractive',
     		onload: () => {
-                console.log('LOAD CALCULATOR RESULTS');
                 console.log(window.CXCalc);
-                window.CXCalc ? window.CXCalc?.CertificateCompoundResultUI?.init() : null
+                window.CXCalc ? window.CXCalc?.DynamicTableUI?.init() : null
     		}
     	}];
-    	console.log(initialized.current)
+    	console.log('initialized current:', initialized.current)
     	if (!initialized.current) {
     		initialized.current = true;
-            // if(!window.CXCalc) {
-                CXCalcFile.map(file => {
-                    loadScript(file);
-        		})
-                CXCalcFile = [];
-            // } else {
-            //     window.CXCalc ? window.CXCalc?.CertificateCompoundResultsUI?.init() : null
-            // }
+    		CXCalcFile.map(file => {
+    			loadScript(file);
+    		})
+    		CXCalcFile = [];
     	}
-        if(window?.CXCalc) {
-            window?.CXCalc ? window.CXCalc?.CertificateCompoundResultUI?.init() : null
+        if(window.CXCalc) {
+            window.CXCalc ? window.CXCalc?.DynamicTableUI?.init() : null
         }
 
     	return () => {
@@ -62,4 +57,4 @@ const CXCalcResults = ({ children = <></>}: CXCalcProps): JSX.Element => {
 
 };
 
-export default CXCalcResults;
+export default DynamicRateTable;
