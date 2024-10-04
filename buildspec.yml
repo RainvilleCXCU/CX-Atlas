@@ -2,8 +2,7 @@ version: 0.2
 
 env:
   variables:
-    ENVIRONMENT: "dev"
-    PRIVATE_KEY: "-----BEGIN RSA PRIVATE KEY-----\n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\n-----END RSA PRIVATE KEY-----"
+    ENVIRONMENT: "develop"
     EXTERNAL_REPO_NAME: "CX-Atlas"
 
 phases:
@@ -21,13 +20,10 @@ phases:
 
       - ssh-agent
 
+      - aws secretsmanager get-secret-value --secret-id $secret_arn --query SecretString --output text | jq -r '.WP_ENGINE_PRIVATE_KEY' | base64 -d > ~/.ssh/id_rsa
+      - chmod 0700 ~/.ssh/id_rsa
 
-      - touch /root/.ssh/id_rsa
-      - echo "$PRIVATE_KEY" > /root/.ssh/id_rsa
-      - chmod 0700 /root/.ssh/id_rsa
-
-      - ssh-keyscan -t rsa git.github.com >> /root/.ssh/known_hosts
-
+      # - ssh-keyscan -t rsa git.github.com >> ~/.ssh/known_hosts
   build:
     commands:
       - echo Building the application for $ENVIRONMENT ...
@@ -43,31 +39,17 @@ phases:
 
       #DEVELOP
       - cd ./${EXTERNAL_REPO_NAME}
-      - git checkout develop      
+      - git checkout ${ENVIRONMENT}      
       - cd ../
-      - rsync -r --exclude './CX-Atlas/*' ./* ./CX-Atlas
+      - rsync -r --exclude './${EXTERNAL_REPO_NAME}/*' ./* ./${EXTERNAL_REPO_NAME}
       - cd ./${EXTERNAL_REPO_NAME}     
 
-      - git add --all .
       - ls
+
+      - git add --all .
+      - git status
       - git commit -m 'AWS CodeBuild Updates'
-      - git push -v origin develop
-      - git status
-
-      # - git checkout master
-      # - git merge release-aws-build
-      # - git status
-      
-      # - if [ -n "$(git diff --cached)" ]; then
-      #     git commit -m 'aws-build Updates';
-      #     git push -v origin master;
-      #   else 
-      #     echo "No staged changes."; 
-      #     echo "No Changes";
-      #   fi
-        
-      - git status
-
+      - git push -v origin ${ENVIRONMENT}
 
   post_build:
     commands:
