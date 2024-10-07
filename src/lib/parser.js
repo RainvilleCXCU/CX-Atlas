@@ -11,6 +11,8 @@ import Vimeo from "components/Video/vimeo";
 import Step from "components/Steps/Step";
 import { getQueryVariable } from "./routing";
 import Conditional from "components/Blocks/Conditional";
+import BusinessDetails from "components/Business/BusinessDetails";
+import Accordion from "components/Accordion/Accordion";
 
 const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
 const ToggleContent = dynamic(() => import("components/ContentToggle/Content"), {ssr: false});
@@ -134,7 +136,7 @@ export const parseHtml = (html) => {
                 const title  = domToReact(findChildren(element, 'data-faq-title', '')[0].children, options); 
                 const content = domToReact(findChildren(element, 'data-faq-content', '')[0].children, options);
                 return (
-                    <FAQ id={attribs['data-post_id']} title={title} content={content} />
+                    <FAQ id={`FAQ-${attribs?.['data-post_id']}`} title={title} content={content} />
                 )
             }
             // Step
@@ -155,6 +157,20 @@ export const parseHtml = (html) => {
                     <ToggleContentSelect attribs={attribs}>{domToReact(children, options)}</ToggleContentSelect>
                 )
             }
+            // Content Toggle Link
+            else if(attribs?.['data-genesis-block']) {
+                if(attribs?.['data-genesis-block'] == 'accordion') {
+                    return (
+                        <Accordion
+                            stayOpen={attribs?.['data-stay-open']}
+                            startOpen={attribs?.['data-start-open']}
+                            title={attribs?.['data-encodedheading'] ? parseHtml(Buffer.from(attribs?.['data-encodedheading'], 'base64').toString()): ''}
+                            classNames={attribs?.class}
+                            content={attribs?.['data-encodedcontent'] ? parseHtml(Buffer.from(attribs?.['data-encodedcontent'], 'base64').toString()): ''}
+                        />
+                    )
+                }
+            }
 
             else if(attribs?.['data-acf-block']) {
                 if(attribs?.['data-acf-block'] == 'conditional') {
@@ -166,6 +182,13 @@ export const parseHtml = (html) => {
                             comparisonValue={attribs?.['data-comparison-value']}
                             isDefault={attribs?.['data-is-default']}
                         >{domToReact(children, options)}</Conditional>
+                    )
+                }
+                if(attribs?.['data-acf-block'] == 'business-details') {
+                    return (
+                        <BusinessDetails
+                            name={attribs?.['data-business-name']}
+                        />
                     )
                 }
             }

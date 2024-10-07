@@ -6,12 +6,22 @@ interface AccordionProps {
   title: string;
   content: string;
   isOpen?: boolean;
+  stayOpen?: string;
+  startOpen?: string;
   id?: string;
+  classNames?: string;
 }
 
-const Accordion: FC<AccordionProps> = ({ title = '', content = '', isOpen = false, id }) => {
+const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = '', isOpen = false, id, stayOpen = 'false', startOpen = 'false'}) => {
 	const [isAccordionOpen, setIsAccordionOpen] = useState(isOpen);
 	const router = useRouter();
+
+  const openHandler = e => {
+    if(stayOpen == 'true') {
+      e.preventDefault();
+      return false;
+    }
+  } 
 
   useEffect(() => {
 		// handle the hash change
@@ -21,6 +31,12 @@ const Accordion: FC<AccordionProps> = ({ title = '', content = '', isOpen = fals
       if (accordionElement && window.location.hash.substring(1) === id) {
         setIsAccordionOpen(true);
       }
+    }
+			
+    if (id && window.location.hash.substring(1) === id) {
+      console.log('HASH DEFAULT')
+      console.log(`${window.location.hash.substring(1)} - ${id}`)
+      setIsAccordionOpen(true);
     }
  
 		// listen for the hash change in the URL
@@ -33,9 +49,9 @@ const Accordion: FC<AccordionProps> = ({ title = '', content = '', isOpen = fals
   }, [router, id])
 	
   return (
-    <div className="cx-accordion__brand">
-      <details open={isAccordionOpen} id={id}>
-        <summary className="gb-accordion-title">{title}</summary>
+    <div className={`cx-accordion__brand ${classNames}`}>
+      <details open={isAccordionOpen || stayOpen == 'true'} id={id}>
+        <summary className="gb-accordion-title" onClick={openHandler}>{title}</summary>
         <div className="gb-accordion-text">{typeof(content) === 'string' ? parseHtml(content) : content}</div>
       </details>
     </div>
