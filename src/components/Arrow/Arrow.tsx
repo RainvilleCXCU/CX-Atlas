@@ -1,4 +1,4 @@
-import { m, Variants } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 export interface Props {
     delay?
@@ -41,10 +41,10 @@ function Arrow({
     }}
   return (
     <div className={`step_arrow step_arrow--${route}`}>
-        <m.svg
+        <motion.svg
             viewBox={route === 'downArrow' ? `0 0 8px 48px` : `0 0 100 20`}
             id="svg1033">
-            <m.path
+            <motion.path
                 initial={{ pathLength: 0 }}
                 animate={!variant ? { pathLength: 1 } : {}}
                 transition={!variant ? {
@@ -70,7 +70,7 @@ function Arrow({
                 d={routes[route]}
                 id="path1155"
             />
-            <m.path id="head" d={route === 'downArrow' ? 'M 0 -4 L 8 0 L 0 4 Z' : 'M 0 -1 L 2 0 L 0 1 Z'}
+            <motion.path id="head" d={route === 'downArrow' ? 'M 0 -4 L 8 0 L 0 4 Z' : 'M 0 -1 L 2 0 L 0 1 Z'}
                 stroke={'#198754'} fill={'#198754'}
                 initial={{opacity: 0}}
                 animate={!variant ? {opacity: 1} : {}}
@@ -93,8 +93,8 @@ function Arrow({
                     fill="freeze"
                     path={routes[route]}>
                 </animateMotion>
-            </m.path>
-        </m.svg>
+            </motion.path>
+        </motion.svg>
     </div>
   );
 }
