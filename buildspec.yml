@@ -1,0 +1,62 @@
+version: 0.2
+
+env:
+  variables:
+    ENVIRONMENT: "develop"
+    EXTERNAL_REPO_NAME: "CX-Atlas"
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14  # Specify the Node.js version you want to use
+    commands:
+      - echo Installing dependencies...
+
+  pre_build:
+    commands:
+      - echo Running pre-build commands...
+      - echo Build Number - $CODEBUILD_BUILD_NUMBER
+      - echo source version $CODEBUILD_SOURCE_VERSION
+
+      - ssh-agent
+
+      - aws secretsmanager get-secret-value --secret-id $secret_arn --query SecretString --output text | jq -r '.WP_ENGINE_PRIVATE_KEY' | base64 -d > ~/.ssh/id_rsa
+      - chmod 0700 ~/.ssh/id_rsa
+
+      # - ssh-keyscan -t rsa git.github.com >> ~/.ssh/known_hosts
+  build:
+    commands:
+      - echo Building the application for $ENVIRONMENT ...
+      
+      - rm -rf ./.git
+      - rm -rf ./.gitignore
+      - git clone git@github.com:RainvilleCXCU/${EXTERNAL_REPO_NAME}.git
+
+      - git config --global user.email "digitalservices@connexuscu.org"
+      - git config --global user.name "Digital Services"
+
+      # - git checkout -b release-aws-build
+
+      #DEVELOP
+      - cd ./${EXTERNAL_REPO_NAME}
+      - git checkout ${ENVIRONMENT}      
+      - cd ../
+      - rsync -r --exclude './${EXTERNAL_REPO_NAME}/*' ./* ./${EXTERNAL_REPO_NAME}
+      - cd ./${EXTERNAL_REPO_NAME}     
+
+      - ls
+
+      - git add --all .
+      - git status
+      - git commit -m 'AWS CodeBuild Updates'
+      - git push -v origin ${ENVIRONMENT}
+
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Running tests...
+
+artifacts:
+  files:
+    - '**/*'  # Include all files in the artifacts
+  base-directory: ${EXTERNAL_REPO_NAME}  # Change to your build output directory if necessary

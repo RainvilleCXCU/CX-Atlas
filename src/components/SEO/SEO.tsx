@@ -8,6 +8,8 @@ interface SEOProps {
 	ogType: string;
 	ogTitle: string;
 	ogDescription: string;
+	metaRobotsNoindex: string;
+	metaRobotsNofollow: string;
 	ogURL: string;
 	breadcrumbs?: any;
 	ogSite_Name: string;
@@ -40,6 +42,8 @@ const SEO = ({
 	ogImageWidth = "801",
 	ogImageHeight = "486",
 	ogImageType = "Image",
+	metaRobotsNoindex = "",
+	metaRobotsNofollow = "",
 	twitter_card = "summary_large_image",
 	twitter_label1 = "Est. reading time",
 	twitter_data1 = "",
@@ -62,6 +66,7 @@ const SEO = ({
 		<Head>
 			<title>{`${title} - ${ogSite_Name}`}</title>
 			<meta name="description" content={metaDesc} />
+			<meta name="robots" content={`${metaRobotsNoindex}, ${metaRobotsNofollow}`} />			
 			<link
 				rel="canonical"
 				href={canonicalURL}
@@ -137,9 +142,11 @@ const SEO = ({
 				content={twitter_data1}
 				className="yoast-seo-meta-tag"
 			></meta>
-			<script type="application/ld+json" className="yoast-schema-graph">
-				{`{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"${canonicalURL}","url":"${canonicalURL}","name":"${title} - ${title}","isPartOf":{"@id":"https://www.connexuscu.org/#website"},"primaryImageOfPage":{"@id":"${canonicalURL}#primaryimage"},"image":{"@id":"${canonicalURL}#primaryimage"},"thumbnailUrl":"${ogImage}","datePublished":"${published_time}","dateModified":"${modified_time}","description":"${metaDesc}","breadcrumb":{"@id":"${canonicalURL}#breadcrumb"},"inLanguage":"${ogLocale}","potentialAction":[{"@type":"ReadAction","target":["${canonicalURL}"]}]},{"@type":"ImageObject","inLanguage":"${ogLocale}","@id":"${canonicalURL}#primaryimage","url":"${ogImage}","contentUrl":"${ogImage}","width":${ogImageWidth},"height":${ogImageHeight}},{"@type":"BreadcrumbList","@id":"${ogURL}#breadcrumb","itemListElement":[${itemListElementArray}]},{"@type":"WebSite","@id":"https://www.connexuscu.org/#website","url":"https://www.connexuscu.org/","name":"Connexus Credit Union","description":"High Yields, Low Rates, Online Services","publisher":{"@id":"https://www.connexuscu.org/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.connexuscu.org/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"${ogLocale}"},{"@type":"Organization","@id":"https://www.connexuscu.org/#organization","name":"Connexus Credit Union","url":"https://www.connexuscu.org/","logo":{"@type":"ImageObject","inLanguage":"${ogLocale}","@id":"https://www.connexuscu.org/#/schema/logo/image/","url":"${logo}","contentUrl":"${logo}","width":145,"height":54,"caption":"Connexus Credit Union"},"image":{"@id":"https://www.connexuscu.org/#/schema/logo/image/"}}]}`}
-			</script>
+			<script type="application/ld+json" className="yoast-schema-graph"
+				dangerouslySetInnerHTML={{
+					__html: `{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"${canonicalURL}","url":"${canonicalURL}","name":"${title} - ${title}","isPartOf":{"@id":"https://www.connexuscu.org/#website"},"primaryImageOfPage":{"@id":"${canonicalURL}#primaryimage"},"image":{"@id":"${canonicalURL}#primaryimage"},"thumbnailUrl":"${ogImage}","datePublished":"${published_time}","dateModified":"${modified_time}","description":"${metaDesc}","breadcrumb":{"@id":"${canonicalURL}#breadcrumb"},"inLanguage":"${ogLocale}","potentialAction":[{"@type":"ReadAction","target":["${canonicalURL}"]}]},{"@type":"ImageObject","inLanguage":"${ogLocale}","@id":"${canonicalURL}#primaryimage","url":"${ogImage}","contentUrl":"${ogImage}","width":${ogImageWidth},"height":${ogImageHeight}},{"@type":"BreadcrumbList","@id":"${ogURL}#breadcrumb","itemListElement":[${itemListElementArray}]},{"@type":"WebSite","@id":"https://www.connexuscu.org/#website","url":"https://www.connexuscu.org/","name":"Connexus Credit Union","description":"High Yields, Low Rates, Online Services","publisher":{"@id":"https://www.connexuscu.org/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.connexuscu.org/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"${ogLocale}"},{"@type":"Organization","@id":"https://www.connexuscu.org/#organization","name":"Connexus Credit Union","url":"https://www.connexuscu.org/","logo":{"@type":"ImageObject","inLanguage":"${ogLocale}","@id":"https://www.connexuscu.org/#/schema/logo/image/","url":"${logo}","contentUrl":"${logo}","width":145,"height":54,"caption":"Connexus Credit Union"},"image":{"@id":"https://www.connexuscu.org/#/schema/logo/image/"}}]}`
+				}} 
+			/>
 		</Head>
 	);
 };

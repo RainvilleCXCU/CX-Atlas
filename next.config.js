@@ -336,6 +336,7 @@ let nextConfig = {
   swcMinify: true,
   experimental: {
     webVitalsAttribution:  process.env.NODE_ENV !== "production" ? ["CLS", "LCP", "FCP"] : [],
+    scrollRestoration: true,
     optimizePackageImports: [
       "@apollo/client",
       "@faustwp/cli",

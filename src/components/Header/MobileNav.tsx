@@ -3,8 +3,10 @@ import UtilityNavLinks from './UtilityNavLinks';
 import MenuNavigation from 'components/Navigation/Navbar';
 import { useEffect } from 'react';
 import { parseHtml } from 'lib/parser';
+import { useCookies } from 'react-cookie';
 
 export default function MobileNav({ links, menuOpen = false, navOpen = false, setNavOpen, headerSettings, showNavigation, children = <></> }) {
+    const [cookies, setCookie ] = useCookies(['ismember']);
     //const [navOpen, setNavOpen] = useState(false);
     useEffect(() => {
         if(navOpen) {
@@ -13,6 +15,13 @@ export default function MobileNav({ links, menuOpen = false, navOpen = false, se
             document.querySelector('html').classList.remove('nav-open');
         }
     },[navOpen])
+    const trackMember = e => {
+      let expires = new Date();
+      expires.setTime(expires.getTime() + (30 * 24 * 60 * 60 * 1000));
+      setCookie('ismember', 'true', {
+          expires
+      });
+    }
 
     useEffect(() => {
         setNavOpen(menuOpen);

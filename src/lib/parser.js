@@ -10,6 +10,9 @@ import Container from "components/Blocks/Container";
 import Vimeo from "components/Video/vimeo";
 import Step from "components/Steps/Step";
 import { getQueryVariable } from "./routing";
+import Conditional from "components/Blocks/Conditional";
+import BusinessDetails from "components/Business/BusinessDetails";
+import Accordion from "components/Accordion/Accordion";
 
 const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
 const ToggleContent = dynamic(() => import("components/ContentToggle/Content"), {ssr: false});
@@ -24,6 +27,8 @@ const Chat = dynamic(() => import ("components/Chat/cisco"), {ssr: false});
 const Calculator = dynamic(() => import("components/Calculator/Calculator"), {ssr: false});
 const CXCalc = dynamic(() => import("components/Calculator/CXCalculator"), {ssr: false});
 const CXCalcResults = dynamic(() => import("components/Calculator/CXCalculatorResults"), {ssr: false});
+const DynamicRateTableInput = dynamic(() => import("components/Calculator/DynamicRateTableInput"), {ssr: false});
+const DynamicRateTable = dynamic(() => import("components/Calculator/DynamicRateTable"), {ssr: false});
 const Scheduler = dynamic(() => import("components/Salesforce/scheduler"), {ssr: false});
 const Tooltip = dynamic(() => import("components/Tooltip/Tooltip"), {ssr: false});
 
@@ -131,7 +136,7 @@ export const parseHtml = (html) => {
                 const title  = domToReact(findChildren(element, 'data-faq-title', '')[0].children, options); 
                 const content = domToReact(findChildren(element, 'data-faq-content', '')[0].children, options);
                 return (
-                    <FAQ id={attribs['data-post_id']} title={title} content={content} />
+                    <FAQ id={`FAQ-${attribs?.['data-post_id']}`} title={title} content={content} />
                 )
             }
             // Step
@@ -152,7 +157,41 @@ export const parseHtml = (html) => {
                     <ToggleContentSelect attribs={attribs}>{domToReact(children, options)}</ToggleContentSelect>
                 )
             }
+            // Content Toggle Link
+            else if(attribs?.['data-genesis-block']) {
+                if(attribs?.['data-genesis-block'] == 'accordion') {
+                    return (
+                        <Accordion
+                            stayOpen={attribs?.['data-stay-open']}
+                            startOpen={attribs?.['data-start-open']}
+                            title={attribs?.['data-encodedheading'] ? parseHtml(Buffer.from(attribs?.['data-encodedheading'], 'base64').toString()): ''}
+                            classNames={attribs?.class}
+                            content={attribs?.['data-encodedcontent'] ? parseHtml(Buffer.from(attribs?.['data-encodedcontent'], 'base64').toString()): ''}
+                        />
+                    )
+                }
+            }
 
+            else if(attribs?.['data-acf-block']) {
+                if(attribs?.['data-acf-block'] == 'conditional') {
+                    return (
+                        <Conditional
+                            condition={attribs?.['data-condition']}
+                            comparison={attribs?.['data-comparison']}
+                            comparisonKey={attribs?.['data-comparison-key']}
+                            comparisonValue={attribs?.['data-comparison-value']}
+                            isDefault={attribs?.['data-is-default']}
+                        >{domToReact(children, options)}</Conditional>
+                    )
+                }
+                if(attribs?.['data-acf-block'] == 'business-details') {
+                    return (
+                        <BusinessDetails
+                            name={attribs?.['data-business-name']}
+                        />
+                    )
+                }
+            }
             // Toggle Content
             else if (attribs?.['data-toggle-content']) {
                 return (
@@ -183,6 +222,20 @@ export const parseHtml = (html) => {
             else if(attribs?.class?.includes('cx-calculator')) {
                 return (
                     <div {...attributesToProps(attribs)}><CXCalc>{children}</CXCalc></div>
+                )
+            }
+            
+            // Dynamic Rate table calculator input
+            else if(attribs?.class?.includes('dynamic-rate-table-input')) {
+                return (
+                    <div {...attributesToProps(attribs)}><DynamicRateTableInput>{children}</DynamicRateTableInput></div>
+                )
+            } 
+
+            // Dynamic Rate table calculator table
+            else if(attribs?.class?.includes('dynamic-rate-table-output')) {
+                return (
+                    <div {...attributesToProps(attribs)}><DynamicRateTable>{children}</DynamicRateTable></div>
                 )
             } 
 

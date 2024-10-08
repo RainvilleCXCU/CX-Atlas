@@ -195,6 +195,8 @@ Page.query = gql`
               opengraphUrl
               title
               opengraphSiteName
+              metaRobotsNofollow
+              metaRobotsNoindex
               opengraphImage {
                 mimeType
                 mediaItemUrl
