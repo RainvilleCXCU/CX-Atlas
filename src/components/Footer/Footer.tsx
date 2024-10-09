@@ -1,5 +1,5 @@
 import Logo from "components/Logo";
-const FooterMenu = dynamic(() => import('./Nav'));
+import FooterMenu from "./Nav";
 import Icons from "./Icons";
 import UtilityNav from "./UtilityNav";
 import Image from "next/image";

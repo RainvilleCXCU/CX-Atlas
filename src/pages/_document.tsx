@@ -9,6 +9,7 @@ class CXDoc extends Document {
       <Html
         lang="en-us">
         <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
           <style>{`body { display: block !important }`}</style>
           <link href='https://www.googletagmanager.com' rel='dns-prefetch' />
           <link href='https://cloud.typography.com' rel='dns-prefetch' />

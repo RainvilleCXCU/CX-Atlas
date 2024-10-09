@@ -13,7 +13,7 @@ const Siteimprove = dynamic(() => import('components/ThirdParty/siteimprove'), {
 const Clarity = dynamic(() => import('components/ThirdParty/clarity'), {ssr:false});
 import Header from 'components/Header/Header';
 // const Footer = dynamic(() => import('components/Footer/Footer'));
-const SEO = dynamic(()=> import('components/SEO/SEO'));
+const SEO = dynamic(()=> import('components/SEO/SEO'), {ssr:true});
 import {
     ApplyStartFragment,
     ApplyNowFragment,
