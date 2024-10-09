@@ -25,8 +25,10 @@ import Footer from 'components/Footer/Footer';
 // const SEO = dynamic(()=> import('components/SEO/SEO'), {ssr:true});
 import SEO from './SEO/SEO';
 import dynamic from 'next/dynamic';
-const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:true});
-const Loading = dynamic(() => import('components/common/loading'), {ssr:true});
+import Alert from 'components/Alerts/Alert';
+import Loading from 'components/common/loading';
+// const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:true});
+// const Loading = dynamic(() => import('components/common/loading'), {ssr:true});
 interface BaseLayoutProps {
     props?
     pageTitle?

@@ -6,7 +6,8 @@ import { NavigationMenuItemFragment } from '../fragments/MenuItems';
 import { parseHtml } from 'lib/parser';
 import { ThirdPartySettingsFragment } from 'fragments/ThirdParty';
 import dynamic from 'next/dynamic';
-const BaseLayout = dynamic(() => import('components/layout'));
+// const BaseLayout = dynamic(() => import('components/layout'));
+import BaseLayout from 'components/layout';
 
 export default function Component(props) {
   const { content } = props?.data?.page ?? { title: '' };

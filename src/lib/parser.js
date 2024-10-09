@@ -14,7 +14,8 @@ import Accordion from "components/Accordion/Accordion";
 
 const Vimeo = dynamic(() => import("components/Video/vimeo"));
 const Step = dynamic(() => import("components/Steps/Step"));
-const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
+// const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
+import ExternalLink from "components/ExternalLinks/links";
 const ToggleContent = dynamic(() => import("components/ContentToggle/Content"), {ssr: true});
 const ToggleContentLink = dynamic(() => import("components/ContentToggle/ContentToggleLink"), {ssr: true});
 const ToggleContentSelect = dynamic(() => import("components/ContentToggle/ContentToggleSelect"), {ssr: true});
