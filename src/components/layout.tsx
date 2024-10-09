@@ -1,11 +1,20 @@
 
-const GTM = dynamic(() => import('components/ThirdParty/gtm'), {ssr:true});
-const Personyze = dynamic(() => import('components/ThirdParty/personyze'), {ssr:true});
-const HotJar = dynamic(() => import('components/ThirdParty/hotjar'), {ssr:true});
-const Qualtrics = dynamic(() => import('components/ThirdParty/qualtrics'), {ssr:true});
-const Spectrum = dynamic(() => import('components/ThirdParty/spectrum'), {ssr:true});
-const Siteimprove = dynamic(() => import('components/ThirdParty/siteimprove'), {ssr:true});
-const Clarity = dynamic(() => import('components/ThirdParty/clarity'), {ssr:true});
+// const GTM = dynamic(() => import('components/ThirdParty/gtm'), {ssr:true});
+// const Personyze = dynamic(() => import('components/ThirdParty/personyze'), {ssr:true});
+// const HotJar = dynamic(() => import('components/ThirdParty/hotjar'), {ssr:true});
+// const Qualtrics = dynamic(() => import('components/ThirdParty/qualtrics'), {ssr:true});
+// const Spectrum = dynamic(() => import('components/ThirdParty/spectrum'), {ssr:true});
+// const Siteimprove = dynamic(() => import('components/ThirdParty/siteimprove'), {ssr:true});
+// const Clarity = dynamic(() => import('components/ThirdParty/clarity'), {ssr:true});
+
+import GTM from 'components/ThirdParty/gtm';
+import Personyze from 'components/ThirdParty/personyze';
+import HotJar from 'components/ThirdParty/hotjar';
+import Qualtrics from 'components/ThirdParty/qualtrics';
+import Spectrum from 'components/ThirdParty/spectrum';
+import Siteimprove from 'components/ThirdParty/siteimprove';
+import Clarity from 'components/ThirdParty/clarity';
+
 // import {
 //   Header,
 //   MenuNavigation,
@@ -13,7 +22,8 @@ const Clarity = dynamic(() => import('components/ThirdParty/clarity'), {ssr:true
 // } from '../components';
 import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
-const SEO = dynamic(()=> import('components/SEO/SEO'), {ssr:true});
+// const SEO = dynamic(()=> import('components/SEO/SEO'), {ssr:true});
+import SEO from './SEO/SEO';
 import dynamic from 'next/dynamic';
 const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:true});
 const Loading = dynamic(() => import('components/common/loading'), {ssr:true});
