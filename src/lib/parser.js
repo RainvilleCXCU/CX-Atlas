@@ -25,11 +25,11 @@ const DataTracComparison = dynamic(() => import("components/Datatrac/Comparison"
 const Disclosure = dynamic(() => import("components/Disclosure/Disclosure"), {ssr: true});
 const LinkLibrary = dynamic(() => import ("components/LinkLibrary/LinkLibrary"), {ssr: false});
 const Chat = dynamic(() => import ("components/Chat/cisco"), {ssr: false});
-const Calculator = dynamic(() => import("components/Calculator/Calculator"), {ssr: true});
-const CXCalc = dynamic(() => import("components/Calculator/CXCalculator"), {ssr: true});
-const CXCalcResults = dynamic(() => import("components/Calculator/CXCalculatorResults"), {ssr: true});
-const DynamicRateTableInput = dynamic(() => import("components/Calculator/DynamicRateTableInput"), {ssr: true});
-const DynamicRateTable = dynamic(() => import("components/Calculator/DynamicRateTable"), {ssr: true});
+const Calculator = dynamic(() => import("components/Calculator/Calculator"), {ssr: false});
+const CXCalc = dynamic(() => import("components/Calculator/CXCalculator"), {ssr: false});
+const CXCalcResults = dynamic(() => import("components/Calculator/CXCalculatorResults"), {ssr: false});
+const DynamicRateTableInput = dynamic(() => import("components/Calculator/DynamicRateTableInput"), {ssr: false});
+const DynamicRateTable = dynamic(() => import("components/Calculator/DynamicRateTable"), {ssr: false});
 const Scheduler = dynamic(() => import("components/Salesforce/scheduler"), {ssr: false});
 const Tooltip = dynamic(() => import("components/Tooltip/Tooltip"), {ssr: true});
 
