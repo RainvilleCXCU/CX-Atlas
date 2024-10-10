@@ -13,6 +13,19 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 let nextConfig = {
   // reactStrictMode: true,
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=63072000; includeSubDomains; preload'
+          }
+        ]
+      }
+    ];
+  },
   async redirects() {
     const wpRedirects = await fetchWordPressRedirects({ type: "url" });
     return [
@@ -412,34 +425,6 @@ let nextConfig = {
                 },
             ],
         },);
-        if (!isServer && process.env.SPLIT_VENDORS && process.env.SPLIT_VENDORS == "true") {
-          config.optimization.splitChunks = {
-            cacheGroups: {
-              // Custom group for React and ReactDOM
-              reactFramework: {
-                test: /[\\/]node_modules[\\/](react|react-dom|next)[\\/]/,
-                name: 'reactNext', // Create a separate chunk for React and Next.js
-                priority: 10, // Ensure this has higher priority than other vendor chunks
-                enforce: true,
-                chunks: 'all',
-              },
-              apolloFramework: {
-                test: /[\\/]node_modules[\\/](@apollo)[\\/]/,
-                name: 'apollo', // Create a separate chunk for React and Next.js
-                priority: 10, // Ensure this has higher priority than other vendor chunks
-                enforce: true,
-                chunks: 'all',
-              },
-              faustFramework: {
-                test: /[\\/]node_modules[\\/](graphql)[\\/]/,
-                name: 'graphql', // Create a separate chunk for React and Next.js
-                priority: 10, // Ensure this has higher priority than other vendor chunks
-                enforce: true,
-                chunks: 'all',
-              },
-            },
-          };
-        }
     return config;
   },
 };
