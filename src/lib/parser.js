@@ -31,7 +31,7 @@ const CXCalcResults = dynamic(() => import("components/Calculator/CXCalculatorRe
 const DynamicRateTableInput = dynamic(() => import("components/Calculator/DynamicRateTableInput"), {ssr: false});
 const DynamicRateTable = dynamic(() => import("components/Calculator/DynamicRateTable"), {ssr: false});
 const Scheduler = dynamic(() => import("components/Salesforce/scheduler"), {ssr: false});
-const Tooltip = dynamic(() => import("components/Tooltip/Tooltip"), {ssr: true});
+const Tooltip = dynamic(() => import("components/Tooltip/Tooltip"), {ssr: false});
 
 const findChildren = (element, att, value) => {
     let children = [];
