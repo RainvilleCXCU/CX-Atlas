@@ -48,11 +48,16 @@ export default function MobileNav({ links, menuOpen = false, navOpen = false, se
                      :
                     <>
                         <li className="nav-item cx-nav__item">
-                            <Link className="nav-link cx-nav__link cx-nav__link--primary" href="/mdr?loc=LStUVVkwNi1DO1c1Tj0nLTYsQGBgCmAK&login=mobile">Log in</Link>
+                            <Link className="nav-link cx-nav__link cx-nav__link--primary" href="/mdr?loc=LStUVVkwNi1DO1c1Tj0nLTYsQGBgCmAK&login=mobile" onClick={trackMember}>Log in</Link>
                         </li>
                         <li className="nav-item cx-nav__item">
                             <Link href="/pay-my-loan/" passHref className="nav-link cx-nav__link cx-nav__link--primary"
                             onClick={() => {
+                                let expires = new Date();
+                                expires.setTime(expires.getTime() + (30 * 24 * 60 * 60 * 1000));
+                                setCookie('ismember', 'true', {
+                                    expires
+                                });
                                 setNavOpen(false);
                             }}>Pay my loan</Link>
                         </li>

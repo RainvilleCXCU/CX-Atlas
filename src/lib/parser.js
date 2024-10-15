@@ -7,14 +7,15 @@ import { useCookies } from "react-cookie";
 
 import EqualHeightContainer  from "components/Blocks/EqualHeight";
 import Container from "components/Blocks/Container";
-import Vimeo from "components/Video/vimeo";
-import Step from "components/Steps/Step";
 import { getQueryVariable } from "./routing";
 import Conditional from "components/Blocks/Conditional";
 import BusinessDetails from "components/Business/BusinessDetails";
 import Accordion from "components/Accordion/Accordion";
 
-const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
+const Vimeo = dynamic(() => import("components/Video/vimeo"));
+const Step = dynamic(() => import("components/Steps/Step"));
+// const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
+import ExternalLink from "components/ExternalLinks/links";
 const ToggleContent = dynamic(() => import("components/ContentToggle/Content"), {ssr: false});
 const ToggleContentLink = dynamic(() => import("components/ContentToggle/ContentToggleLink"), {ssr: false});
 const ToggleContentSelect = dynamic(() => import("components/ContentToggle/ContentToggleSelect"), {ssr: false});

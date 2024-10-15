@@ -2,9 +2,8 @@ import { useState } from 'react';
 import UtilityNav from './UtilityNav';
 import Logo from 'components/Logo';
 import { useRouter } from 'next/router';
-// import Navigation from './Navigation';
+import Navigation from './Navigation';
 import dynamic from 'next/dynamic';
-const Navigation = dynamic(() => import('./Navigation'));
 interface Props {
   title?: string;
   description?: string;

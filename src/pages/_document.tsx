@@ -9,23 +9,37 @@ class CXDoc extends Document {
       <Html
         lang="en-us">
         <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
           <style>{`body { display: block !important }`}</style>
-          <link href='https://www.googletagmanager.com' rel='preconnect' />
           <link href='https://www.googletagmanager.com' rel='dns-prefetch' />
-          <link href='https://cloud.typography.com' rel='preconnect' />
           <link href='https://cloud.typography.com' rel='dns-prefetch' />
-          <link href={process.env.NEXT_PUBLIC_WORDPRESS_URL} rel='preconnect' />
           <link href={process.env.NEXT_PUBLIC_WORDPRESS_URL} rel='dns-prefetch' />
           {/* <link
             rel="stylesheet"
             href={`/856897/9F6C645B2367EC4D3.css`}
           /> */}
           <link
+            rel="preload"
+            href={`https://cloud.typography.com/6914618/${process.env.NEXT_PUBLIC_CLOUD_FONT || '7711232'}/css/fonts.css`}
+            as="style"
+          />
+          <link
             rel="stylesheet"
             href={`https://cloud.typography.com/6914618/${process.env.NEXT_PUBLIC_CLOUD_FONT || '7711232'}/css/fonts.css`}
           />
           
+          <link
+            rel="preload"
+            href="/_next/static/css/styles.css"
+            as="style"
+          />
           <link rel="stylesheet" href="/_next/static/css/styles.css" />
+          <link
+            rel="preload"
+            href={`/wp-content/themes/CXCU/assets/${
+              process.env.NEXT_PUBLIC_styleguideVersion || "latest"}/cxcuatlas.css${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`}
+            as="style"
+          />
           <link rel="stylesheet" href={`/wp-content/themes/CXCU/assets/${
                 process.env.NEXT_PUBLIC_styleguideVersion || "latest"}/cxcuatlas.css${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`} />
         </Head>
