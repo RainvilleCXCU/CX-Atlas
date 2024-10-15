@@ -28,10 +28,20 @@ class CXDoc extends Document {
               />
             </>
           }
-          {/* <link
-            rel="stylesheet"
-            href={`/856897/9F6C645B2367EC4D3.css`}
-          /> */}
+          
+          {process.env.NEXT_PUBLIC_HOSTED_FONTS == 'true' &&
+            <>
+              <link
+                rel="preload"
+                href={`/856897/9F6C645B2367EC4D3.css`}
+                as="style"
+              />
+              <link
+                rel="stylesheet"
+                href={`/856897/9F6C645B2367EC4D3.css`}
+              />
+            </>
+          }
           
           <link
             rel="preload"
