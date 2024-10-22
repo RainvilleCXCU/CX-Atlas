@@ -7,14 +7,15 @@ import { useCookies } from "react-cookie";
 
 import EqualHeightContainer  from "components/Blocks/EqualHeight";
 import Container from "components/Blocks/Container";
-import Vimeo from "components/Video/vimeo";
-import Step from "components/Steps/Step";
 import { getQueryVariable } from "./routing";
 import Conditional from "components/Blocks/Conditional";
 import BusinessDetails from "components/Business/BusinessDetails";
 import Accordion from "components/Accordion/Accordion";
 
-const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
+const Vimeo = dynamic(() => import("components/Video/vimeo"));
+const Step = dynamic(() => import("components/Steps/Step"));
+// const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
+import ExternalLink from "components/ExternalLinks/links";
 const ToggleContent = dynamic(() => import("components/ContentToggle/Content"), {ssr: false});
 const ToggleContentLink = dynamic(() => import("components/ContentToggle/ContentToggleLink"), {ssr: false});
 const ToggleContentSelect = dynamic(() => import("components/ContentToggle/ContentToggleSelect"), {ssr: false});
@@ -45,7 +46,7 @@ const findChildren = (element, att, value) => {
     isChild(element, att, value);
     return children;
 }
-const whitelistRegex = new RegExp(`(.local)|(wpenginepowered.)|(wpengine.com)|(connexuscu.org)|(mortgagewebcenter)|(meridianlink)|(loanspq)|(myworkdayjobs)|(issuu)|(az1.qualtrics)|(docusign)|(billerpayments)|(#)|(tel:)|(mailto:)|(javascript:)`, "i");
+const whitelistRegex = new RegExp(`(.local)|(wpenginepowered.)|(wpengine.com)|(connexuscu.org)|(mortgagewebcenter)|(meridianlink)|(loanspq)|(myworkdayjobs)|(issuu)|(az1.qualtrics)|(docusign)|(billerpayments)|(tel:)|(mailto:)|(javascript:)`, "i");
 
 
 
@@ -87,7 +88,7 @@ export const parseHtml = (html) => {
                     <Chat className={attribs.class}>{domToReact(children, options)}</Chat>
                 )
             }
-            else if(name === 'a' && whitelistRegex.test(attribs?.href) === false && attribs?.href[0] !== '/') {
+            else if(name === 'a' && whitelistRegex.test(attribs?.href) === false && attribs?.href[0] !== '/' && attribs?.href[0] !== '#') {
                 return (
                     <ExternalLink ariaLabel={attribs?.['aria-label']} href={attribs?.href} classNames={attribs?.class}>{domToReact(children, options)}</ExternalLink>
                 )
@@ -128,6 +129,15 @@ export const parseHtml = (html) => {
             else if (attribs?.['data-equal-height']) {
                 return (
                     <EqualHeightContainer tagName={name} name={attribs['data-equal-height']} classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</EqualHeightContainer>
+                )
+            }
+            else if (attribs?.class?.includes("cx-equal-height__")) {
+                const classes = attribs?.class.split(' ');
+                const heightClass = classes.filter(el => el.includes("cx-equal-height__"))[0];
+                const equalName = heightClass.replace("cx-equal-height__", "");
+                console.log(`Equal Height: ${equalName}`);
+                return (
+                    <EqualHeightContainer tagName={name} name={equalName} classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</EqualHeightContainer>
                 )
             }
 
