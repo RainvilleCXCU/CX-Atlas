@@ -24,7 +24,7 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 		}
 		let KJEFile = [{
 			id: 'KJECore',
-			src: `/wp-content/themes/CXCU/vendors/calculators/KJE.js`,
+			src: `/wp-content/themes/CXCU/vendors/calculators/KJE.js${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`,
 			strategy: 'afterInteractive',
 			onload: () => {
 				jsFiles.map(file => {
@@ -34,15 +34,15 @@ const Calculator = ({ calculatorName }: Props): JSX.Element => {
 		}]
 		let jsFiles = [{
 				id: 'KJESiteCore',
-				src: `/wp-content/themes/CXCU/vendors/calculators/KJESiteSpecific.js`,
+				src: `/wp-content/themes/CXCU/vendors/calculators/KJESiteSpecific.js${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`,
 				strategy: 'afterInteractive',
 			},{
 				id: `KJE${calculatorName}Params`,
-				src: `/wp-content/themes/CXCU/vendors/calculators/${calculatorName}.js`,
+				src: `/wp-content/themes/CXCU/vendors/calculators/${calculatorName}.js${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`,
 				strategy: 'afterInteractive'
 			},{
 				id: `KJESite${calculatorName}Params`,
-				src: `/wp-content/themes/CXCU/vendors/calculators/${calculatorName}Params.js`,
+				src: `/wp-content/themes/CXCU/vendors/calculators/${calculatorName}Params.js${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`,
 				strategy: 'afterInteractive',
 				onload: () => {
 					window.KJE.initFired ? window.KJE.initAfterLoad() : window.KJE.init();
