@@ -124,6 +124,13 @@ export default function MobileNav({
                 )}
               </form>
             </div>
+            {/* Search overlay */}
+            {searchIsFocused && (
+              <div
+                className="cx-nav__overlay"
+                onClick={() => setSearchIsFocused(false)}
+              ></div>
+            )}
             {headerSettings?.headerButtonsMobile &&
             headerSettings?.headerButtonsMobile !== "" ? (
               <li
