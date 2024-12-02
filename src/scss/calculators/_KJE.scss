@@ -1,4 +1,4 @@
-/* 10/01/2023 Copyright 2023 KJE Computer Solutions, Inc.  Licensed for use on https://www.ConnexusCU.org */ 
+/* 09/30/2024 Copyright 2024 KJE Computer Solutions, Inc.  Licensed for use on https://www.ConnexusCU.org */ 
 
 @-webkit-keyframes fadeIn {
     from { opacity: 0; }
@@ -430,9 +430,12 @@ button.KJEMenu:hover {
     z-index: 999;
 }
 
-.KJEInset {
+#KJEReport div.KJEInset {
     margin-left: 20px;
     margin-right: 20px;
+}
+#KJEReport div.KJEInset, #KJEReport div.KJEInset * {
+    font-size: 0.8rem;/*font_tiny*/
 }
 
 #KJEReport {
@@ -498,15 +501,15 @@ button.KJECloseButton:focus
 }
 
 button.KJEDefinitionIcon {
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 1.5rem;
+    height: 1.5rem;
     text-align: center;
     padding: 0 0;
     border-radius: 12px;
     border-width: 0;
     cursor:help;
     margin-left: 2px;
-    margin-top: 7px;
+    margin-top: 5px;
     border-width: 1px;
     border-style: solid;
     font-size: 0.9rem;/*font_small*/
@@ -534,8 +537,8 @@ button.KJEDefinitionIconMenu {
 }
 
 button.KJECloseButton {
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
     text-align: center;
     padding: 0;
     border-radius: 2px;
@@ -1604,6 +1607,7 @@ div.KJECalcTableDivLeft, div.KJECalcTableDivRight {
 div.KJECalcTableDivLeft {
     float: left;
     margin-right: 3px;
+    background:#f7f7f7;;
 }
 
 div.KJECalcTableDivLeft::after, div.KJECalcTableDivRight::after {

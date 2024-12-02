@@ -2,11 +2,6 @@
     .gb-accordion-title {
         cursor: pointer;
     }
-    details[open] {
-        > div {
-            padding-bottom: 2rem;
-        }
-    }
     &.cx-product-box__benefits {
         padding-left: .75rem;
     }
