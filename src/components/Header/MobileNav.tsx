@@ -36,6 +36,9 @@ export default function MobileNav({
 
   useEffect(() => {
     setNavOpen(menuOpen);
+    // Clear the search input field after submit
+    setInputValue("");
+    searchInlineRef.current.value = "";
   }, [menuOpen]);
 
   const searchInlineRef = useRef(null);
@@ -112,7 +115,7 @@ export default function MobileNav({
                       }
                     }}
                   />
-                  {inputValue && <span onClick={clearSearch}>Clear</span>}
+                  {inputValue && <span onClick={clearSearch}><button type="button">Clear</button></span>}
                 </div>
                 {searchIsFocused && (
                   <button
