@@ -53,7 +53,7 @@ const MarketingCloudForm = ({ formUrl }) => {
       src={formUrl}
       width="100%"
       height={"200px"}
-      sandbox="allow-top-navigation allow-scripts allow-forms"
+      referrerPolicy="origin-when-cross-origin"
       frameBorder="0"
       scrolling="no"
     />
