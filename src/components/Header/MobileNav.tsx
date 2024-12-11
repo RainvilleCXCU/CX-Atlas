@@ -36,8 +36,11 @@ export default function MobileNav({
 
   useEffect(() => {
     setNavOpen(menuOpen);
+    // Clear the search input field after submit
+    setInputValue("");
+    searchInlineRef.current.value = "";
   }, [menuOpen]);
-    
+
   const searchInlineRef = useRef(null);
   const { push, query } = useRouter();
   const { searchCursor, s = "" } = query;
@@ -53,6 +56,7 @@ export default function MobileNav({
     e.preventDefault();
     push(`/search/?s=${searchInlineRef.current.value}`);
     setInputValue(searchInlineRef.current.value);
+    if(searchInlineRef.current.value === s) setNavOpen(false); // if the search term is repeated then close the navigation
   };
 
   const clearSearch = () => {
@@ -112,7 +116,7 @@ export default function MobileNav({
                       }
                     }}
                   />
-                  {inputValue && <span onClick={clearSearch}>Clear</span>}
+                  {inputValue && <span onClick={clearSearch}><button type="button">Clear</button></span>}
                 </div>
                 {searchIsFocused && (
                   <button

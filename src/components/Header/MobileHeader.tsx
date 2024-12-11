@@ -40,14 +40,7 @@ export default function MobileHeader(props: MobileHeader) {
             type="button"
             aria-controls="offcanvasRight"
             aria-label="Toggle navigation"
-            onClick={() => {
-              if (isSearchExpanded) {
-                setIsSearchExpanded(false);
-                setSearchTerm("");
-              } else {
-                setNavOpen(!navOpen);
-              }
-            }}
+            onClick={() => {setNavOpen(!navOpen)}}
           >
             <span className="navbar-toggler-icon cx-navbar-toggler__line"></span>
           </button>
