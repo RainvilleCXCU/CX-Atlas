@@ -56,6 +56,7 @@ export default function MobileNav({
     e.preventDefault();
     push(`/search/?s=${searchInlineRef.current.value}`);
     setInputValue(searchInlineRef.current.value);
+    if(searchInlineRef.current.value === s) setNavOpen(false); // if the search term is repeated then close the navigation
   };
 
   const clearSearch = () => {
