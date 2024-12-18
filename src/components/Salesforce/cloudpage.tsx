@@ -5,7 +5,15 @@ const MarketingCloudForm = ({ formUrl }) => {
   const [stylesLoaded, setStylesLoaded] = useState(false);
 
   useEffect(() => {
-      const iframe = iframeRef.current;
+        const iframe = iframeRef.current;
+        iframe?.contentWindow?.postMessage({
+            type: 'load_stylesheet',
+            url: `https://cloud.typography.com/6914618/${process.env.NEXT_PUBLIC_CLOUD_FONT || '7711232'}/css/fonts.css`
+        }, '*');
+        iframe?.contentWindow?.postMessage({
+            type: 'load_stylesheet',
+            url: `${process.env.NEXT_PUBLIC_FRONTEND_URL.replace('http://', 'https://')}/wp-content/themes/CXCU/assets/salesforce/${process.env.NEXT_PUBLIC_styleguideVersion}/styles.css${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`
+        }, '*');
 
         // Debounce function to limit resize event frequency
         function debounce(func, wait) {
@@ -24,14 +32,6 @@ const MarketingCloudForm = ({ formUrl }) => {
         function requestIframeHeight() {
             iframe?.contentWindow?.postMessage({
                 type: 'request_height'
-            }, '*');
-            iframe?.contentWindow?.postMessage({
-                type: 'load_stylesheet',
-                url: `https://cloud.typography.com/6914618/${process.env.NEXT_PUBLIC_CLOUD_FONT || '7711232'}/css/fonts.css`
-            }, '*');
-            iframe?.contentWindow?.postMessage({
-                type: 'load_stylesheet',
-                url: `${process.env.NEXT_PUBLIC_FRONTEND_URL.replace('http://', 'https://')}/wp-content/themes/CXCU/assets/salesforce/${process.env.NEXT_PUBLIC_styleguideVersion}/styles.css${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`
             }, '*');
             iframe?.contentWindow ? setStylesLoaded(true) : setStylesLoaded(false);
         }
@@ -54,6 +54,9 @@ const MarketingCloudForm = ({ formUrl }) => {
 
         // Initial height request when iframe loads
         iframe.addEventListener('load', requestIframeHeight);
+        setTimeout(function() {
+            iframe?.contentWindow ? setStylesLoaded(true) : setStylesLoaded(false);
+        }, 1000)
 
   }, [formUrl]);
 
@@ -62,10 +65,10 @@ const MarketingCloudForm = ({ formUrl }) => {
       ref={iframeRef}
       src={formUrl}
       width="100%"
-      height={"200px"}
+      height={"560px"}
       referrerPolicy="origin-when-cross-origin"
       frameBorder="0"
-      className={stylesLoaded ? '' : 'cx-hidden'}
+      className={stylesLoaded ? '' : 'cx-visibility-hidden'}
       scrolling="no"
     />
   );
