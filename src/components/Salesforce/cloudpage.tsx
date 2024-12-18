@@ -1,7 +1,8 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 const MarketingCloudForm = ({ formUrl }) => {
   const iframeRef = useRef(null);
+  const [stylesLoaded, setStylesLoaded] = useState(false);
 
   useEffect(() => {
       const iframe = iframeRef.current;
@@ -21,9 +22,18 @@ const MarketingCloudForm = ({ formUrl }) => {
 
         // Function to request iframe height
         function requestIframeHeight() {
-            iframe.contentWindow.postMessage({
+            iframe?.contentWindow?.postMessage({
                 type: 'request_height'
             }, '*');
+            iframe?.contentWindow?.postMessage({
+                type: 'load_stylesheet',
+                url: `https://cloud.typography.com/6914618/${process.env.NEXT_PUBLIC_CLOUD_FONT || '7711232'}/css/fonts.css`
+            }, '*');
+            iframe?.contentWindow?.postMessage({
+                type: 'load_stylesheet',
+                url: `${process.env.NEXT_PUBLIC_FRONTEND_URL.replace('http://', 'https://')}/wp-content/themes/CXCU/assets/salesforce/${process.env.NEXT_PUBLIC_styleguideVersion}/styles.css${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`
+            }, '*');
+            iframe?.contentWindow ? setStylesLoaded(true) : setStylesLoaded(false);
         }
 
         // Debounced height request
@@ -55,6 +65,7 @@ const MarketingCloudForm = ({ formUrl }) => {
       height={"200px"}
       referrerPolicy="origin-when-cross-origin"
       frameBorder="0"
+      className={stylesLoaded ? '' : 'cx-hidden'}
       scrolling="no"
     />
   );
