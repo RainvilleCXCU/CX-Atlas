@@ -6,14 +6,6 @@ const MarketingCloudForm = ({ formUrl }) => {
 
   useEffect(() => {
         const iframe = iframeRef.current;
-        iframe?.contentWindow?.postMessage({
-            type: 'load_stylesheet',
-            url: `https://cloud.typography.com/6914618/${process.env.NEXT_PUBLIC_CLOUD_FONT || '7711232'}/css/fonts.css`
-        }, '*');
-        iframe?.contentWindow?.postMessage({
-            type: 'load_stylesheet',
-            url: `${process.env.NEXT_PUBLIC_FRONTEND_URL.replace('http://', 'https://')}/wp-content/themes/CXCU/assets/salesforce/${process.env.NEXT_PUBLIC_styleguideVersion}/styles.css${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`
-        }, '*');
 
         // Debounce function to limit resize event frequency
         function debounce(func, wait) {
@@ -30,6 +22,14 @@ const MarketingCloudForm = ({ formUrl }) => {
 
         // Function to request iframe height
         function requestIframeHeight() {
+            iframe?.contentWindow?.postMessage({
+                type: 'load_stylesheet',
+                url: `https://cloud.typography.com/6914618/${process.env.NEXT_PUBLIC_CLOUD_FONT || '7711232'}/css/fonts.css`
+            }, '*');
+            iframe?.contentWindow?.postMessage({
+                type: 'load_stylesheet',
+                url: `${process.env.NEXT_PUBLIC_FRONTEND_URL.replace('http://', 'https://')}/wp-content/themes/CXCU/assets/salesforce/${process.env.NEXT_PUBLIC_styleguideVersion}/styles.css${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`
+            }, '*');
             iframe?.contentWindow?.postMessage({
                 type: 'request_height'
             }, '*');
