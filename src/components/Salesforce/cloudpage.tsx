@@ -33,7 +33,7 @@ const MarketingCloudForm = ({ formUrl }) => {
             iframe?.contentWindow?.postMessage({
                 type: 'request_height'
             }, '*');
-            iframe?.contentWindow ? setStylesLoaded(true) : setStylesLoaded(false);
+            // iframe?.contentWindow ? setStylesLoaded(true) : setStylesLoaded(false);
         }
 
         // Debounced height request
@@ -50,13 +50,14 @@ const MarketingCloudForm = ({ formUrl }) => {
                 // Adjust iframe height
                 iframe.style.height = `${event.data.height}px`;
             }
+            if(event.data.type === 'load_stylesheet_response') {
+                iframe?.contentWindow ? setStylesLoaded(true) : setStylesLoaded(false);
+            }
         }, false);
 
         // Initial height request when iframe loads
         iframe.addEventListener('load', requestIframeHeight);
-        setTimeout(function() {
-            iframe?.contentWindow ? setStylesLoaded(true) : setStylesLoaded(false);
-        }, 1000)
+        
 
   }, [formUrl]);
 
