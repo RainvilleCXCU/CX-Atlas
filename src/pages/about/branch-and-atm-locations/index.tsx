@@ -55,7 +55,7 @@ export default function Page() {
     description: siteDescription,
     logo: siteLogo,
     footerText: footerText,
-    databaseId: databaseId,
+    databaseId = 52
   } = props?.data?.generalSettings;
   const {
     clarityEnabled,
@@ -94,7 +94,6 @@ export default function Page() {
 
   return (
     <>
-      
       <Head>
         <title>{`Locations - ${siteTitle}`}</title>
       </Head>
@@ -270,10 +269,8 @@ Page.query = gql`
     }
 
     cxAlerts: cXAlerts {
-      edges {
-        node {
-          ...AlertsFragment
-        }
+      nodes {
+        ...AlertsFragment
       }
     }
     footerMenuItems: menuItems(
