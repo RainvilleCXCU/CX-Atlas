@@ -251,7 +251,7 @@ export const parseHtml = (html) => {
             } 
 
             // Datatrac
-            else if (attribs?.['data-datatrac-perform']) {
+            else if (attribs?.['datatrac-wrapper']) {
                 return ( 
                     <DataTracComparison performs={attribs?.['data-datatrac-perform']}>{domToReact(children, options)}</DataTracComparison>
                 );
