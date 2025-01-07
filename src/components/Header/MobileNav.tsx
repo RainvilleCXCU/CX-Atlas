@@ -37,8 +37,10 @@ export default function MobileNav({
   useEffect(() => {
     setNavOpen(menuOpen);
     // Clear the search input field after submit
-    setInputValue("");
-    searchInlineRef.current.value = "";
+    if(showNavigation) {
+      setInputValue("");
+      searchInlineRef.current.value = "";
+    }
   }, [menuOpen]);
 
   const searchInlineRef = useRef(null);
@@ -66,7 +68,9 @@ export default function MobileNav({
   };
 
   useEffect(() => {
-    searchInlineRef.current.value = s;
+    if(showNavigation) {
+      searchInlineRef.current.value = s;
+    }
   }, [s]);
 
   return (
