@@ -16,6 +16,7 @@ const Vimeo = dynamic(() => import("components/Video/vimeo"));
 const Step = dynamic(() => import("components/Steps/Step"));
 // const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
 import ExternalLink from "components/ExternalLinks/links";
+import MarketingCloudForm from "components/Salesforce/cloudpage";
 const ToggleContent = dynamic(() => import("components/ContentToggle/Content"), {ssr: false});
 const ToggleContentLink = dynamic(() => import("components/ContentToggle/ContentToggleLink"), {ssr: false});
 const ToggleContentSelect = dynamic(() => import("components/ContentToggle/ContentToggleSelect"), {ssr: false});
@@ -250,7 +251,7 @@ export const parseHtml = (html) => {
             } 
 
             // Datatrac
-            else if (attribs?.['data-datatrac-perform']) {
+            else if (attribs?.['datatrac-wrapper']) {
                 return ( 
                     <DataTracComparison performs={attribs?.['data-datatrac-perform']}>{domToReact(children, options)}</DataTracComparison>
                 );
@@ -293,6 +294,11 @@ export const parseHtml = (html) => {
                     >{children}</Scheduler></span>
                 )
             } 
+            else if(attribs?.class?.includes('cx-saleforce-cp')) {
+                return (
+                    <MarketingCloudForm formUrl={attribs['data-page-url']} {...attributesToProps(attribs)} />
+                )
+            }
 
             // Tooltip
             else if(attribs?.class?.includes('tooltip')) {
