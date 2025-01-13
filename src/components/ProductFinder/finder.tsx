@@ -24,7 +24,7 @@ const selectRef = useRef(null);
   return (
     <div className='cx-product-finder'>
         <div className="cx-product-finder__select-wrapper select-wrapper__underlined">
-            <select ref={selectRef} className="cx-product-finder__select">        
+            <select ref={selectRef} className="cx-product-finder__select cx-h3">        
                 <option value="">Select a product</option>
                 {products.map((product, index) => {
                     return (
