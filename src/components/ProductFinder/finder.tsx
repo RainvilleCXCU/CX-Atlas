@@ -5,12 +5,14 @@ export interface Props {
     classNames?
     productData?
     submitText?
+    selectText?
 }
 
 function ProductFinder({
     classNames,
     productData,
-    submitText
+    submitText,
+    selectText
 }: Props): JSX.Element {
         
 const products = JSON.parse(atob(productData));
@@ -25,7 +27,9 @@ const selectRef = useRef(null);
     <div className='cx-product-finder'>
         <div className="cx-product-finder__select-wrapper select-wrapper__underlined">
             <select ref={selectRef} className="cx-product-finder__select cx-h3">        
-                <option value="">Select a product</option>
+                { selectText &&
+                    <option value="">{selectText}</option>
+                }
                 {products.map((product, index) => {
                     return (
                         <option key={`product-${index}`} value={product.productPageURL}>{product.displayName}</option>

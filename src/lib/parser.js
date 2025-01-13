@@ -186,7 +186,7 @@ export const parseHtml = (html) => {
             // Product Finder
             else if(attribs?.['data-acf-block'] && attribs?.['data-acf-block'] === 'product-finder') {
                 return (
-                    <ProductFinder productData={attribs?.['data-product-data']} submitText={attribs?.['data-submit-text']} attribs={attribs}>{domToReact(children, options)}</ProductFinder>
+                    <ProductFinder productData={attribs?.['data-product-data']} submitText={attribs?.['data-submit-text']} selectText={attribs?.['data-select-text']} attribs={attribs}>{domToReact(children, options)}</ProductFinder>
                 )
             }
             // Content Toggle Link
