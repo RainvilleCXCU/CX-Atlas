@@ -18,6 +18,7 @@ const Step = dynamic(() => import("components/Steps/Step"));
 import ExternalLink from "components/ExternalLinks/links";
 import MarketingCloudForm from "components/Salesforce/cloudpage";
 import SwiperContainer from "components/Blocks/MobileScroll";
+import ProductFinder from "components/ProductFinder/finder";
 const ToggleContent = dynamic(() => import("components/ContentToggle/Content"), {ssr: false});
 const ToggleContentLink = dynamic(() => import("components/ContentToggle/ContentToggleLink"), {ssr: false});
 const ToggleContentSelect = dynamic(() => import("components/ContentToggle/ContentToggleSelect"), {ssr: false});
@@ -180,6 +181,12 @@ export const parseHtml = (html) => {
             else if(attribs?.class?.includes('cx-toggle-content__select')) {
                 return (
                     <ToggleContentSelect attribs={attribs}>{domToReact(children, options)}</ToggleContentSelect>
+                )
+            }
+            // Product Finder
+            else if(attribs?.['data-acf-block'] && attribs?.['data-acf-block'] === 'product-finder') {
+                return (
+                    <ProductFinder productData={attribs?.['data-product-data']} submitText={attribs?.['data-submit-text']} attribs={attribs}>{domToReact(children, options)}</ProductFinder>
                 )
             }
             // Content Toggle Link
