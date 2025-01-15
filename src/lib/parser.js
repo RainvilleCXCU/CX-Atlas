@@ -19,6 +19,7 @@ import ExternalLink from "components/ExternalLinks/links";
 import MarketingCloudForm from "components/Salesforce/cloudpage";
 import SwiperContainer from "components/Blocks/MobileScroll";
 import ProductFinder from "components/ProductFinder/finder";
+import AppLinks from "components/Device/AppLinks";
 const ToggleContent = dynamic(() => import("components/ContentToggle/Content"), {ssr: false});
 const ToggleContentLink = dynamic(() => import("components/ContentToggle/ContentToggleLink"), {ssr: false});
 const ToggleContentSelect = dynamic(() => import("components/ContentToggle/ContentToggleSelect"), {ssr: false});
@@ -221,6 +222,11 @@ export const parseHtml = (html) => {
                         <BusinessDetails
                             name={attribs?.['data-business-name']}
                         />
+                    )
+                }
+                if(attribs?.['data-acf-block'] == 'app-links') {
+                    return (
+                        <AppLinks />
                     )
                 }
             }
