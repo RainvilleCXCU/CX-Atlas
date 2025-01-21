@@ -17,6 +17,9 @@ const Step = dynamic(() => import("components/Steps/Step"));
 // const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
 import ExternalLink from "components/ExternalLinks/links";
 import MarketingCloudForm from "components/Salesforce/cloudpage";
+import SwiperContainer from "components/Blocks/MobileScroll";
+import ProductFinder from "components/ProductFinder/finder";
+import AppLinks from "components/Device/AppLinks";
 const ToggleContent = dynamic(() => import("components/ContentToggle/Content"), {ssr: false});
 const ToggleContentLink = dynamic(() => import("components/ContentToggle/ContentToggleLink"), {ssr: false});
 const ToggleContentSelect = dynamic(() => import("components/ContentToggle/ContentToggleSelect"), {ssr: false});
@@ -37,7 +40,7 @@ const Tooltip = dynamic(() => import("components/Tooltip/Tooltip"), {ssr: false}
 const findChildren = (element, att, value) => {
     let children = [];
     const isChild = (child, att, value) => {
-        if(child?.attribs?.[att] !== undefined) {
+        if(child?.attribs?.[att] !== undefined && value === '' || child?.attribs?.[att] !== undefined && child?.attribs?.[att].includes(value)) {
             children.push(child);
         } 
         child.children && child.children.forEach(el => {
@@ -122,7 +125,20 @@ export const parseHtml = (html) => {
                 // console.log('Styles');
                 // console.log(attribs)
                 return (
-                    <Container classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</Container>
+                    <Container classNames={attribs.class} {...attributesToProps(attribs)}>
+                        {domToReact(children, options)}
+                    </Container>
+                )
+            }
+
+            // Block Container 
+            else if (attribs?.["data-acf-block"] && attribs?.["data-acf-block"] === 'cx-mobile-swiper') {
+                // console.log('Styles');
+                // console.log(attribs)
+                return (
+                    <SwiperContainer classNames={attribs.class} columns={findChildren(element, 'class', 'wp-block-column ').length} {...attributesToProps(attribs)}>
+                        {domToReact(children, options)}
+                    </SwiperContainer>
                 )
             }
 
@@ -168,6 +184,12 @@ export const parseHtml = (html) => {
                     <ToggleContentSelect attribs={attribs}>{domToReact(children, options)}</ToggleContentSelect>
                 )
             }
+            // Product Finder
+            else if(attribs?.['data-acf-block'] && attribs?.['data-acf-block'] === 'product-finder') {
+                return (
+                    <ProductFinder productData={attribs?.['data-product-data']} submitText={attribs?.['data-submit-text']} selectText={attribs?.['data-select-text']} attribs={attribs}>{domToReact(children, options)}</ProductFinder>
+                )
+            }
             // Content Toggle Link
             else if(attribs?.['data-genesis-block']) {
                 if(attribs?.['data-genesis-block'] == 'accordion') {
@@ -200,6 +222,11 @@ export const parseHtml = (html) => {
                         <BusinessDetails
                             name={attribs?.['data-business-name']}
                         />
+                    )
+                }
+                if(attribs?.['data-acf-block'] == 'app-links') {
+                    return (
+                        <AppLinks />
                     )
                 }
             }

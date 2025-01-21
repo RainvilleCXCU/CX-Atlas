@@ -96,8 +96,8 @@ export default function Component(props) {
           <Modal />
         }
             {
-              activeAlerts.length > 0 &&
-              <Alert alerts={activeAlerts} />
+                activeAlerts.length > 0 &&
+                    <Alert alerts={activeAlerts} />
             }
 			<Loading /> 
             <span id='cx-bridge'>
@@ -347,6 +347,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         console.log('NO ELSE');
         
     }
+
     return getNextServerSideProps(context, {
         Page: Component,
         props: {
