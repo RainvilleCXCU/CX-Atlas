@@ -1,0 +1,17 @@
+@media only screen and (max-width: 991px) {
+    .cx-header__wrapper {
+        .cx-inner-wrapper {
+            padding: 0 .5rem;
+        }
+        .cx-nav__logo {
+            display: flex;
+            max-height:none;
+        }
+        .navbar-brand {
+            margin-right: .5rem
+        }
+        .cx-nav .cx-button:not(:last-child) {
+            margin-right: .5rem;
+        }
+    }
+}
