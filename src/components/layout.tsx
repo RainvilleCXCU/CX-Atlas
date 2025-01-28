@@ -36,10 +36,11 @@ interface BaseLayoutProps {
 }
 
 const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle }) => {
-    const { description: siteDescription = '', logo: siteLogo = '', footerText: footerText = '' } = props?.data?.generalSettings ?? {
+    const { description: siteDescription = '', logo: siteLogo = '', logoTitleText: siteLogoText = '', footerText: footerText = '' } = props?.data?.generalSettings ?? {
         description: '',
         logo: '',
-        footerText: ''
+        footerText: '',
+        logoTitleText: ''
     };
     const { clarityId, clarityEnabled, gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
     const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
@@ -105,12 +106,13 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTi
                         title={title}
                         description={siteDescription}
                         logo={siteLogo}
+                        logoText={siteLogoText}
                 menuItems={primaryMenu}
                 headerSettings={headerSettings}
                     />
                     {children}
             {footerMenu &&
-                    <Footer copyrightHolder={footerText} menuItems={footerMenu} logo={siteLogo} footerUtilities={footerUtilities} footerAppIcons={footerAppIcons} footerSocialIcons={footerSocialIcons} />
+                    <Footer copyrightHolder={footerText} menuItems={footerMenu} logo={siteLogo} logoText={siteLogoText} footerUtilities={footerUtilities} footerAppIcons={footerAppIcons} footerSocialIcons={footerSocialIcons} />
             }
             {qualtricsEnabled &&
                     <Qualtrics

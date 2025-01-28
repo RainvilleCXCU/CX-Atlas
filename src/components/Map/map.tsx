@@ -250,8 +250,8 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null, markers 
             url = `/wp-content/plugins/wp-store-locator/img/markers/${locationSettings.startMarker}`;
         } else if ( typeof infoWindowData.alternateMarkerUrl !== "undefined" && infoWindowData.alternateMarkerUrl ) {
             url = infoWindowData.alternateMarkerUrl;
-        } else if ( typeof infoWindowData.categoryMarkerUrl !== "undefined" && infoWindowData.categoryMarkerUrl ) {
-            url = infoWindowData.categoryMarkerUrl;
+        // } else if ( typeof infoWindowData.categoryMarkerUrl !== "undefined" && infoWindowData.categoryMarkerUrl ) {
+        //     url = infoWindowData.categoryMarkerUrl;
         } else {
             url = `/wp-content/plugins/wp-store-locator/img/markers/${locationSettings.storeMarker}`;
         }
@@ -311,6 +311,7 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null, markers 
                     special_message_type: infoWindowData.special_message_type,
                     special_message_title: infoWindowData.special_message_title,
                     special_message: infoWindowData.special_message,
+                    categoryMarkerUrl: infoWindowData.categoryMarkerUrl
                 });
             };
         }( map ) ) );

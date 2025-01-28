@@ -5,6 +5,7 @@ export const BlogInfoFragment = gql`
     title
     description
     logo
+    logoTitleText
     footerText
   }
 `;

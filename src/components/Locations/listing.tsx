@@ -25,6 +25,7 @@ export interface Props {
 		special_message_type?: string;
 		special_message_title?: string;
 		special_message?: string;
+		categoryMarkerUrl?: string
 	}
 	unit?: string;
 	logo?: string;
@@ -51,7 +52,8 @@ function LocationListing({listing, unit = 'km', logo = ''}: Props): JSX.Element 
 		phone,
 		special_message_type,
 		special_message_title,
-		special_message
+		special_message,
+		categoryMarkerUrl
 	} = listing;
 
 	const handleClick = (e) => {
@@ -71,6 +73,7 @@ function LocationListing({listing, unit = 'km', logo = ''}: Props): JSX.Element 
 			special_message_type: special_message_type,
 			special_message_title: special_message_title,
 			special_message: special_message,
+			categoryMarkerUrl: listing.categoryMarkerUrl,
 			position: `${lat},${lng}`
 		});
 	};
@@ -100,7 +103,7 @@ function LocationListing({listing, unit = 'km', logo = ''}: Props): JSX.Element 
 					</div>
 					<div className="cx-location-listing__item--icon">
 						<Image
-							src={logo}
+							src={categoryMarkerUrl}
 							width="145"
 							height="54"
 							alt="Connexus Credit Union"

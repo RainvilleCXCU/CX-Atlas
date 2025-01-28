@@ -6,6 +6,7 @@ interface MobileHeader {
   setIsSearchExpanded?;
   setSearchTerm?;
   logo?;
+  logoText?;
   showNav?;
 }
 
@@ -13,6 +14,7 @@ export default function MobileHeader(props: MobileHeader) {
   const {
     isSearchExpanded,
     logo,
+    logoText,
     setNavOpen,
     navOpen,
     setIsSearchExpanded,
@@ -22,7 +24,7 @@ export default function MobileHeader(props: MobileHeader) {
 
   return (
     <div className="cx-inner-wrapper">
-      <Logo logo={logo} />
+      <Logo logo={logo} title={logoText} />
       {showNav && (
         <div className="cx-nav__mobile-buttons">
           {!navOpen && (

@@ -9,6 +9,7 @@ interface SearchBarProps {
 	setNavOpen?
 	showSearch?: boolean
 	logo?
+	logoText?
 	showNavigation?: boolean
 }
 
@@ -73,7 +74,7 @@ function DesktopSearchBar(props: SearchBarProps) {
 function MobileSearchBar(props: SearchBarProps) {
 	const [isSearchExpanded, setIsSearchExpanded] = useState(false);
 	const [searchTerm, setSearchTerm] = useState('');
-	const {navOpen, setNavOpen, logo, showSearch } = props;
+	const {navOpen, setNavOpen, logo, logoText, showSearch } = props;
     const [state, setState] = useContext(Store);
 
 	useEffect(() => {
@@ -101,14 +102,14 @@ function MobileSearchBar(props: SearchBarProps) {
 	}, [isSearchExpanded])
 
 	return (
-			<MobileHeader logo={logo} setSearchTerm={setSearchTerm} showNav={showSearch} isSearchExpanded={isSearchExpanded} setIsSearchExpanded={setIsSearchExpanded} navOpen={navOpen} setNavOpen={setNavOpen} />
+			<MobileHeader logo={logo} logoText={logoText} setSearchTerm={setSearchTerm} showNav={showSearch} isSearchExpanded={isSearchExpanded} setIsSearchExpanded={setIsSearchExpanded} navOpen={navOpen} setNavOpen={setNavOpen} />
 	);
 }
 
-export default function SearchBar({ device, navOpen, setNavOpen, logo, showSearch, showNavigation = true, children = <></> }) {
+export default function SearchBar({ device, navOpen, setNavOpen, logo, logoText, showSearch, showNavigation = true, children = <></> }) {
 	if (device.toLowerCase() === 'mobile') {
 		return (
-			<MobileSearchBar logo={logo} navOpen={navOpen} setNavOpen={setNavOpen} showNavigation={showNavigation} showSearch={showSearch} />
+			<MobileSearchBar logo={logo} logoText={logoText} navOpen={navOpen} setNavOpen={setNavOpen} showNavigation={showNavigation} showSearch={showSearch} />
 		);
 	}
 	return (
