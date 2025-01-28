@@ -54,6 +54,7 @@ export default function Page() {
     title: siteTitle,
     description: siteDescription,
     logo: siteLogo,
+    logoTitleText: siteLogoText,
     footerText: footerText,
     databaseId = 52
   } = props?.data?.generalSettings;
@@ -151,6 +152,7 @@ export default function Page() {
         title={siteTitle}
         description={siteDescription}
         logo={siteLogo}
+        logoText={siteLogoText}
         menuItems={primaryMenu}
         headerSettings={headerSettings}
       />
@@ -186,6 +188,7 @@ export default function Page() {
         copyrightHolder={footerText}
         menuItems={footerMenu}
         logo={siteLogo}
+        logoText={siteLogoText}
         footerUtilities={footerUtilities}
         footerAppIcons={footerAppIcons}
         footerSocialIcons={footerSocialIcons}

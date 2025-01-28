@@ -10,13 +10,14 @@ interface Props {
 	copyrightHolder?: string;
 	title?: string;
 	logo?: string;
+	logoText?: string;
 	menuItems?;
 	footerUtilities?;
 	footerAppIcons?;
 	footerSocialIcons?;
 }
 
-function Footer({ copyrightHolder = "", title, logo, menuItems, footerUtilities, footerAppIcons, footerSocialIcons }: Props): JSX.Element {
+function Footer({ copyrightHolder = "", title, logo, logoText, menuItems, footerUtilities, footerAppIcons, footerSocialIcons }: Props): JSX.Element {
 	const year = new Date().getFullYear();
 
 	// copies the routing number to the clipboard
@@ -47,7 +48,7 @@ function Footer({ copyrightHolder = "", title, logo, menuItems, footerUtilities,
 		<footer className="cx-footer">
 			<section className="cx-footer__header">
 				<div className="cx-footer__wrapper">
-					<Logo title={title} logo={logo} />
+					<Logo title={logoText} logo={logo} />
 				</div>
 			</section>
 			<section className="cx-footer__main-nav">

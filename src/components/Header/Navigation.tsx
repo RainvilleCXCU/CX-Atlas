@@ -10,13 +10,14 @@ interface NavigationProps {
     headerSettings?,
     showButtons?
     logo?
+    logoText,
     showNavigation?
     showSearch?
 }
 
 export default function Navigation(props: NavigationProps) {
     const [cookies, setCookie ] = useCookies(['ismember']);
-    const { showNavigation, showButtons, logo, setNavOpen, navOpen, headerSettings, menuItems, showSearch } = props;
+    const { showNavigation, showButtons, logo, logoText, setNavOpen, navOpen, headerSettings, menuItems, showSearch } = props;
     const trackMember = e => {
       let expires = new Date();
       expires.setTime(expires.getTime() + (30 * 24 * 60 * 60 * 1000));
@@ -27,7 +28,7 @@ export default function Navigation(props: NavigationProps) {
     return (
         <>
         <nav className="navbar navbar-expand-lg navbar-default cx-nav cx-header__mobile">
-                <SearchBar showNavigation={showNavigation} logo={logo} device="mobile" setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} />
+                <SearchBar showNavigation={showNavigation} logoText={logoText} logo={logo} device="mobile" setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} />
               
                 <MobileNav showNavigation={showNavigation} headerSettings={headerSettings} links={menuItems} menuOpen={navOpen} navOpen={navOpen} setNavOpen={setNavOpen} />
               
