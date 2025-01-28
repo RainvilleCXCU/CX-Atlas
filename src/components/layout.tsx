@@ -36,9 +36,11 @@ interface BaseLayoutProps {
 }
 
 const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle }) => {
-    const { description: siteDescription = '', logo: siteLogo = '', logoTitleText: siteLogoText = '', footerText: footerText = '' } = props?.data?.generalSettings ?? {
+    const { description: siteDescription = '', logo: siteLogo = '', desktopLogo: siteDesktopLogo = '', mobileLogo: siteMobileLogo = '', logoTitleText: siteLogoText = '', footerText: footerText = '' } = props?.data?.generalSettings ?? {
         description: '',
         logo: '',
+        mobileLogo: '',
+        desktopLogo: '',
         footerText: '',
         logoTitleText: ''
     };
@@ -107,6 +109,8 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTi
                         description={siteDescription}
                         logo={siteLogo}
                         logoText={siteLogoText}
+                        desktopLogo={siteDesktopLogo}
+                        mobileLogo={siteMobileLogo}
                 menuItems={primaryMenu}
                 headerSettings={headerSettings}
                     />

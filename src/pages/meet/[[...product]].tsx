@@ -33,6 +33,8 @@ export default function Component(props) {
     title: siteTitle,
     description: siteDescription,
     logo: siteLogo,
+    desktopLogo: siteDesktopLogo,
+    mobileLogo: siteMobileLogo,
     logoTitleText: siteLogoText,
     footerText: footerText,
     databaseId: databaseId,
@@ -106,6 +108,8 @@ export default function Component(props) {
         title={title}
         description={siteDescription}
         logo={siteLogo}
+        desktopLogo={siteDesktopLogo}
+        mobileLogo={siteMobileLogo}
         logoText={siteLogoText}
         menuItems={primaryMenu}
         headerSettings={headerSettings}

@@ -3,15 +3,30 @@
         .cx-inner-wrapper {
             padding: 0 .5rem;
         }
-        .cx-nav__logo {
-            display: flex;
-            max-height:none;
-        }
         .navbar-brand {
             margin-right: .5rem
         }
+        .cx-nav__logo {
+            display: flex;
+            max-height:80px;
+        }
         .cx-nav .cx-button:not(:last-child) {
             margin-right: .5rem;
+        }
+        
+    }
+}
+@media only screen and (min-width: 992px) {
+    .cx-header__wrapper {
+        .cx-nav__logo {
+            padding-top: 1rem;
+        }
+        .cx-nav__logo {
+            display: flex;
+            max-height: 100%;
+            h1 {
+                display: flex;
+            }
         }
     }
 }

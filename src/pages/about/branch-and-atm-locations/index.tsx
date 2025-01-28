@@ -54,6 +54,8 @@ export default function Page() {
     title: siteTitle,
     description: siteDescription,
     logo: siteLogo,
+    desktopLogo: siteDesktopLogo,
+    mobileLogo: siteMobileLogo,
     logoTitleText: siteLogoText,
     footerText: footerText,
     databaseId = 52
@@ -152,6 +154,8 @@ export default function Page() {
         title={siteTitle}
         description={siteDescription}
         logo={siteLogo}
+        desktopLogo={siteDesktopLogo}
+        mobileLogo={siteMobileLogo}
         logoText={siteLogoText}
         menuItems={primaryMenu}
         headerSettings={headerSettings}
