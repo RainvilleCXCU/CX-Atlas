@@ -7,7 +7,9 @@ interface MobileHeader {
   setSearchTerm?;
   logo?;
   desktopLogo?;
+  desktopLogoWidth?;
   mobileLogo?;
+  mobileLogoWidth?;
   logoText?;
   showNav?;
 }
@@ -17,7 +19,9 @@ export default function MobileHeader(props: MobileHeader) {
     isSearchExpanded,
     logo,
     desktopLogo,
+    desktopLogoWidth,
     mobileLogo,
+    mobileLogoWidth,
     logoText,
     setNavOpen,
     navOpen,
@@ -28,7 +32,7 @@ export default function MobileHeader(props: MobileHeader) {
 
   return (
     <div className="cx-inner-wrapper">
-      <Logo logo={logo} title={logoText} desktopLogo={desktopLogo} mobileLogo={mobileLogo} />
+      <Logo logo={logo} title={logoText} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} />
       {showNav && (
         <div className="cx-nav__mobile-buttons">
           {!navOpen && (

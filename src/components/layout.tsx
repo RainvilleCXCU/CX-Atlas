@@ -27,6 +27,7 @@ import SEO from './SEO/SEO';
 import dynamic from 'next/dynamic';
 import Alert from 'components/Alerts/Alert';
 import Loading from 'components/common/loading';
+import { m } from 'framer-motion';
 // const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:true});
 // const Loading = dynamic(() => import('components/common/loading'), {ssr:true});
 interface BaseLayoutProps {
@@ -36,11 +37,13 @@ interface BaseLayoutProps {
 }
 
 const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle }) => {
-    const { description: siteDescription = '', logo: siteLogo = '', desktopLogo: siteDesktopLogo = '', mobileLogo: siteMobileLogo = '', logoTitleText: siteLogoText = '', footerText: footerText = '' } = props?.data?.generalSettings ?? {
+    const { description: siteDescription = '', logo: siteLogo = '', desktopLogo: siteDesktopLogo = '', mobileLogo: siteMobileLogo = '', desktopLogoWidth: siteDesktopLogoWidth = '', mobileLogoWidth: siteMobileLogoWidth = '', logoTitleText: siteLogoText = '', footerText: footerText = '' } = props?.data?.generalSettings ?? {
         description: '',
         logo: '',
-        mobileLogo: '',
         desktopLogo: '',
+        desktopLogoWidth: '',
+        mobileLogo: '',
+        mobileLogoWidth: '',
         footerText: '',
         logoTitleText: ''
     };
@@ -110,9 +113,11 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTi
                         logo={siteLogo}
                         logoText={siteLogoText}
                         desktopLogo={siteDesktopLogo}
+                        desktopLogoWidth={siteDesktopLogoWidth}
                         mobileLogo={siteMobileLogo}
-                menuItems={primaryMenu}
-                headerSettings={headerSettings}
+                        mobileLogoWidth={siteMobileLogoWidth}
+                        menuItems={primaryMenu}
+                        headerSettings={headerSettings}
                     />
                     {children}
             {footerMenu &&

@@ -11,7 +11,9 @@ interface Props {
 	title?: string;
 	logo?: string;
 	desktopLogo?: string;
+	desktopLogoWidth?: string;
 	mobileLogo?: string;
+	mobileLogoWidth?: string;
 	logoText?: string;
 	menuItems?;
 	footerUtilities?;
@@ -19,7 +21,7 @@ interface Props {
 	footerSocialIcons?;
 }
 
-function Footer({ copyrightHolder = "", title, logo, desktopLogo, mobileLogo, logoText, menuItems, footerUtilities, footerAppIcons, footerSocialIcons }: Props): JSX.Element {
+function Footer({ copyrightHolder = "", title, logo, desktopLogo, mobileLogo, desktopLogoWidth, mobileLogoWidth, logoText, menuItems, footerUtilities, footerAppIcons, footerSocialIcons }: Props): JSX.Element {
 	const year = new Date().getFullYear();
 
 	// copies the routing number to the clipboard
@@ -50,7 +52,7 @@ function Footer({ copyrightHolder = "", title, logo, desktopLogo, mobileLogo, lo
 		<footer className="cx-footer">
 			<section className="cx-footer__header">
 				<div className="cx-footer__wrapper">
-					<Logo title={logoText} logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} width={240} />
+					<Logo title={logoText} logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} width={240} />
 				</div>
 			</section>
 			<section className="cx-footer__main-nav">

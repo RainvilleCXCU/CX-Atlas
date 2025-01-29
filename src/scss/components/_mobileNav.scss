@@ -7,7 +7,7 @@
     .cx-nav__collapse {
         &.offcanvas {
             visibility: visible;
-            top: 90px;
+            top: 80px;
             position: absolute;
             height: 100vh;
         }
@@ -23,14 +23,14 @@
             .cx-inner-wrapper {
                 z-index: 100001;
                 background: #fbfaf8;
-                min-height: 90px;
+                height: 80px;
             }
             .cx-nav__navbar {
                 background-color: #FFF;
             }
         }
         .cx-search-mobile {
-            top: 90px;
+            top: 80px;
         }
     }
     #searchModal {
