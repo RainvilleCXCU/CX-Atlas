@@ -52,7 +52,8 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTi
     };
     const headerSettings = props?.data?.headerSettings; 
     const { footerUtilities, footerAppIcons, footerSocialIcons } = props?.data?.footerSettings;
-    const activeAlerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
+    const Alerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
+    const activeAlerts = Alerts.filter(alert => alert.active == true);
     title = pageTitle ? pageTitle : title;
 	return (
         <>

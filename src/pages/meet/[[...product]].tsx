@@ -60,8 +60,8 @@ export default function Component(props) {
     props?.data?.footerSettings;
 
   const { scheduler } = props?.data?.widgetSettings;
-  const activeAlerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
-
+  const Alerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
+  const activeAlerts = Alerts.filter(alert => alert.active == true);
     // const productName = product && product !== ':path*' ? product.charAt(0).toUpperCase() + product.slice(1) : '';
     const productName = props.product && props.product !== ':path*' ? props.product.split('-').map(word => { 
         return word.charAt(0).toUpperCase() + word.slice(1)
