@@ -1,5 +1,8 @@
 @media only screen and (max-width: 991px) {
-    .cx-header__wrapper {
+    #cx-bridge header .cx-inner-wrapper .navbar-brand {
+        margin: 0;
+    }
+    .cx-header__wrapper, .cx-inner-wrapper {
         // .cx-inner-wrapper {
         //     padding: 0 .5rem;
         // }
@@ -17,7 +20,7 @@
     }
 }
 @media only screen and (min-width: 992px) {
-    .cx-header__wrapper {
+    .cx-header__wrapper, .cx-inner-wrapper {
         .cx-nav__logo {
             padding-top: 1rem;
         }
