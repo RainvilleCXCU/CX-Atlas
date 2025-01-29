@@ -48,7 +48,7 @@ class CXDoc extends Document {
             href="/_next/static/css/styles.css"
             as="style"
           />
-          <link rel="stylesheet" href="/_next/static/css/styles.css" />
+          <link rel="stylesheet" href={`/_next/static/css/styles.css${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`} />
           {process.env.NEXT_PUBLIC_DISABLE_STYLEGUIDE !== 'true' &&
             <>
               <link
