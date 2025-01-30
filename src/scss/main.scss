@@ -13,6 +13,7 @@
 
 
 @import './vendors/wordpress/block-library/style';
+@import './vendors/wordpress/block-library/override';
 @import './vendors/wordpress/genesis/blocks';
 @import './vendors/wordpress/genesis/style-blocks';
 @import './vendors/wordpress/genesis/style';
@@ -27,6 +28,7 @@
 // @import "./components/steps";
 @import "./components/links";
 @import "./components/modal";
+@import "./components/header";
 @import "./components/mobileNav";
 @import "./components/mobileSearch";
 @import "./components/equalHeight";
@@ -35,5 +37,6 @@
 @import "./components/alerts";
 @import "./components/chat";
 @import "./components/linkLibrary";
+@import "./components/logos";
 @import "./calculators/KJE";
 @import "./calculators/KJESiteSpecific";

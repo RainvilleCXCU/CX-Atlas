@@ -127,7 +127,7 @@ function LocationDetails(): JSX.Element {
 						</div>
 						<div className="cx-location-listing__item--icon">
 							<Image
-								src="https://www.connexuscu.org/wp-content/uploads/2022/02/LogoConnexus.svg"
+								src={selectedLocation?.categoryMarkerUrl}
 								width="145"
 								height="54"
 								alt="Connexus Credit Union"

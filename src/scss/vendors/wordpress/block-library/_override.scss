@@ -1,0 +1,8 @@
+@media (max-width:991px){
+    .wp-block-columns.stacked-on-tablet{
+        flex-wrap: wrap !important;
+        >.wp-block-column{
+        flex-basis:100% !important;
+        }
+    }
+  }
