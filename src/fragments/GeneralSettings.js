@@ -7,6 +7,10 @@ export const BlogInfoFragment = gql`
     logo
     logoTitleText
     footerText
+    desktopLogo
+    desktopLogoWidth
+    mobileLogo
+    mobileLogoWidth
   }
 `;
 
