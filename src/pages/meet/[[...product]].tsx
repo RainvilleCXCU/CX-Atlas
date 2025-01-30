@@ -33,6 +33,11 @@ export default function Component(props) {
     title: siteTitle,
     description: siteDescription,
     logo: siteLogo,
+    desktopLogo: siteDesktopLogo,
+    desktopLogoWidth: siteDesktopLogoWidth,
+    mobileLogo: siteMobileLogo,
+    mobileLogoWidth: siteMobileLogoWidth,
+    logoTitleText: siteLogoText,
     footerText: footerText,
     databaseId: databaseId,
   } = props?.data?.generalSettings;
@@ -105,6 +110,11 @@ export default function Component(props) {
         title={title}
         description={siteDescription}
         logo={siteLogo}
+        desktopLogo={siteDesktopLogo}
+        desktopLogoWidth={siteDesktopLogoWidth}
+        mobileLogo={siteMobileLogo}
+        mobileLogoWidth={siteMobileLogoWidth}
+        logoText={siteLogoText}
         menuItems={primaryMenu}
         headerSettings={headerSettings}
         showButtons={false}
@@ -125,6 +135,11 @@ export default function Component(props) {
         copyrightHolder={footerText}
         menuItems={footerMenu}
         logo={siteLogo}
+        desktopLogo={siteDesktopLogo}
+        mobileLogo={siteMobileLogo}
+        desktopLogoWidth={siteDesktopLogoWidth}
+        mobileLogoWidth={siteMobileLogoWidth}
+        logoText={siteLogoText}
         footerUtilities={footerUtilities}
         footerAppIcons={footerAppIcons}
         footerSocialIcons={footerSocialIcons}

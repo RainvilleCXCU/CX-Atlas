@@ -8,6 +8,11 @@ interface Props {
   title?: string;
   description?: string;
   logo?: string;
+  desktopLogo?: string;
+  desktopLogoWidth?: string;
+  mobileLogo?: string;
+  mobileLogoWidth?: string;
+  logoText?: string;
   showNavigation?: boolean;
   showUtilityNav?: boolean;
   showSearch?: boolean;
@@ -21,6 +26,11 @@ function Header({
   title = '',
   description,
   logo,
+  desktopLogo,
+  desktopLogoWidth,
+  mobileLogo,
+  mobileLogoWidth,
+  logoText,
   showNavigation = true,
   showUtilityNav = true,
   showButtons = true,
@@ -42,20 +52,20 @@ function Header({
         <section className="cx-header__util-nav cx-header__desktop">
           <div className="cx-header__wrapper">
             {showLogo &&
-              <Logo isH1={asPath === '/'} title={title} logo={logo} />
+              <Logo isH1={asPath === '/'} title={logoText} logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} />
             }
             {showUtilityNav &&
-              <UtilityNav logo={logo} headerUtilities={headerSettings.headerUtilities} />
+              <UtilityNav logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} logoText={logoText} headerUtilities={headerSettings.headerUtilities} />
             }
           </div>
         </section>
       } 
         {!showNavigation ?
-              <Navigation showNavigation={showNavigation} showButtons={showButtons} logo={logo} setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} headerSettings={headerSettings} menuItems={menuItems} />
+              <Navigation showNavigation={showNavigation} showButtons={showButtons} logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} logoText={logoText} setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} headerSettings={headerSettings} menuItems={menuItems} />
              :
           <section className="cx-header__main-nav">
             <div className="cx-header__wrapper">
-              <Navigation showNavigation={showNavigation} logo={logo} showButtons={showButtons} setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} headerSettings={headerSettings} menuItems={menuItems} />
+              <Navigation showNavigation={showNavigation} logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} logoText={logoText} showButtons={showButtons} setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} headerSettings={headerSettings} menuItems={menuItems} />
             </div>
           </section >
         }

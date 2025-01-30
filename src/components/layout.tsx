@@ -27,6 +27,7 @@ import SEO from './SEO/SEO';
 import dynamic from 'next/dynamic';
 import Alert from 'components/Alerts/Alert';
 import Loading from 'components/common/loading';
+import { m } from 'framer-motion';
 // const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:true});
 // const Loading = dynamic(() => import('components/common/loading'), {ssr:true});
 interface BaseLayoutProps {
@@ -36,10 +37,15 @@ interface BaseLayoutProps {
 }
 
 const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle }) => {
-    const { description: siteDescription = '', logo: siteLogo = '', footerText: footerText = '' } = props?.data?.generalSettings ?? {
+    const { description: siteDescription = '', logo: siteLogo = '', desktopLogo: siteDesktopLogo = '', mobileLogo: siteMobileLogo = '', desktopLogoWidth: siteDesktopLogoWidth = '', mobileLogoWidth: siteMobileLogoWidth = '', logoTitleText: siteLogoText = '', footerText: footerText = '' } = props?.data?.generalSettings ?? {
         description: '',
         logo: '',
-        footerText: ''
+        desktopLogo: '',
+        desktopLogoWidth: '',
+        mobileLogo: '',
+        mobileLogoWidth: '',
+        footerText: '',
+        logoTitleText: ''
     };
     const { clarityId, clarityEnabled, gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
     const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
@@ -106,12 +112,17 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTi
                         title={title}
                         description={siteDescription}
                         logo={siteLogo}
-                menuItems={primaryMenu}
-                headerSettings={headerSettings}
+                        logoText={siteLogoText}
+                        desktopLogo={siteDesktopLogo}
+                        desktopLogoWidth={siteDesktopLogoWidth}
+                        mobileLogo={siteMobileLogo}
+                        mobileLogoWidth={siteMobileLogoWidth}
+                        menuItems={primaryMenu}
+                        headerSettings={headerSettings}
                     />
                     {children}
             {footerMenu &&
-                    <Footer copyrightHolder={footerText} menuItems={footerMenu} logo={siteLogo} footerUtilities={footerUtilities} footerAppIcons={footerAppIcons} footerSocialIcons={footerSocialIcons} />
+                    <Footer copyrightHolder={footerText} menuItems={footerMenu} logo={siteLogo} logoText={siteLogoText} footerUtilities={footerUtilities} footerAppIcons={footerAppIcons} footerSocialIcons={footerSocialIcons} />
             }
             {qualtricsEnabled &&
                     <Qualtrics

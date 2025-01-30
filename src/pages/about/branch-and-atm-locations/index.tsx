@@ -54,6 +54,11 @@ export default function Page() {
     title: siteTitle,
     description: siteDescription,
     logo: siteLogo,
+    desktopLogo: siteDesktopLogo,
+    desktopLogoWidth: siteDesktopLogoWidth,
+    mobileLogo: siteMobileLogo,
+    mobileLogoWidth: siteMobileLogoWidth,
+    logoTitleText: siteLogoText,
     footerText: footerText,
     databaseId = 52
   } = props?.data?.generalSettings;
@@ -152,6 +157,11 @@ export default function Page() {
         title={siteTitle}
         description={siteDescription}
         logo={siteLogo}
+        desktopLogo={siteDesktopLogo}
+        desktopLogoWidth={siteDesktopLogoWidth}
+        mobileLogo={siteMobileLogo}
+        mobileLogoWidth={siteMobileLogoWidth}
+        logoText={siteLogoText}
         menuItems={primaryMenu}
         headerSettings={headerSettings}
       />
@@ -187,6 +197,8 @@ export default function Page() {
         copyrightHolder={footerText}
         menuItems={footerMenu}
         logo={siteLogo}
+        desktopLogoWidth={siteDesktopLogoWidth}
+        logoText={siteLogoText}
         footerUtilities={footerUtilities}
         footerAppIcons={footerAppIcons}
         footerSocialIcons={footerSocialIcons}

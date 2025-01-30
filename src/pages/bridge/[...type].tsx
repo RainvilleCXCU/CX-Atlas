@@ -34,7 +34,7 @@ import { useState } from 'react';
 export default function Component(props) {
 
     const { product, type, minor, member, widget } = props;
-    const { title: siteTitle, description: siteDescription, logo: siteLogo, footerText: footerText, databaseId: databaseId } =
+    const { title: siteTitle, description: siteDescription, logo: siteLogo, desktopLogo: siteDesktopLogo, mobileLogo: siteMobileLogo, desktopLogoWidth: siteDesktopLogoWidth, mobileLogoWidth: siteMobileLogoWidth, logoTitleText: siteLogoText, footerText: footerText, databaseId: databaseId } =
       props?.data?.generalSettings;
     const { clarityEnabled, clarityId, gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
     // const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
@@ -106,6 +106,11 @@ export default function Component(props) {
                     title={title}
                     description={siteDescription}
                     logo={siteLogo}
+                    desktopLogo={siteDesktopLogo}
+                    desktopLogoWidth={siteDesktopLogoWidth}
+                    mobileLogo={siteMobileLogo}
+                    mobileLogoWidth={siteMobileLogoWidth}
+                    logoText={siteLogoText}
                     headerSettings={headerSettings}
                     showButtons={false}
                     showNavigation={false}
