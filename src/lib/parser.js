@@ -225,8 +225,11 @@ export const parseHtml = (html) => {
                     )
                 }
                 if(attribs?.['data-acf-block'] == 'app-links') {
+                    const props = {
+                        ...(attribs?.['data-apps-opening-text'] !== '' && {appOpeningText: attribs?.['data-apps-opening-text']}),
+                    }
                     return (
-                        <AppLinks />
+                        <AppLinks {...props} />
                     )
                 }
             }
