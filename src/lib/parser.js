@@ -11,6 +11,7 @@ import { getQueryVariable } from "./routing";
 import Conditional from "components/Blocks/Conditional";
 import BusinessDetails from "components/Business/BusinessDetails";
 import Accordion from "components/Accordion/Accordion";
+import { trackMember } from "utils/tracking";
 
 const Vimeo = dynamic(() => import("components/Video/vimeo"));
 const Step = dynamic(() => import("components/Steps/Step"));
@@ -52,8 +53,6 @@ const findChildren = (element, att, value) => {
 }
 const whitelistRegex = new RegExp(`(.local)|(wpenginepowered.)|(wpengine.com)|(connexuscu.org)|(mortgagewebcenter)|(meridianlink)|(loanspq)|(myworkdayjobs)|(issuu)|(az1.qualtrics)|(docusign)|(billerpayments)|(tel:)|(mailto:)|(javascript:)`, "i");
 
-
-
 export const parseHtml = (html) => {
         const options = {
         trim: false,
@@ -63,6 +62,7 @@ export const parseHtml = (html) => {
         // library: require('preact'),
         replace: (element) => {
             const [cookies, setCookie ] = useCookies(['referralsource']);
+            
             // return;
             let { name, attribs, children } = element;
             if(attribs?.style) {
@@ -106,7 +106,7 @@ export const parseHtml = (html) => {
             // Internal Link
             else if (name === "a") {                
                 return (
-                    <Link {...attributesToProps(attribs)}>{domToReact(children, options)}</Link>
+                    <Link {...attributesToProps(attribs)} onClick={ attribs?.class?.includes('track-member') && trackMember}>{domToReact(children, options)}</Link>
                 );
             }
             else if (name === 'img') {
