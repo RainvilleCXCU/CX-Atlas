@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { parseHtml } from "lib/parser";
 import { useCookies } from "react-cookie";
+import { trackMember } from "utils/tracking";
 import SearchBar from "components/Search/SearchBar";
 import { clear } from "console";
 
@@ -26,14 +27,6 @@ export default function MobileNav({
       document.querySelector("html").classList.remove("nav-open");
     }
   }, [navOpen]);
-  const trackMember = (e) => {
-    let expires = new Date();
-    expires.setTime(expires.getTime() + 30 * 24 * 60 * 60 * 1000);
-    setCookie("ismember", "true", {
-      expires,
-    });
-  };
-
   useEffect(() => {
     setNavOpen(menuOpen);
     // Clear the search input field after submit
@@ -163,20 +156,11 @@ export default function MobileNav({
                 <li className="nav-item cx-nav__item">
                   <Link
                     href="/pay-my-loan/"
-                    passHref
+                    // passHref
                     className="nav-link cx-nav__link cx-nav__link--primary"
-                    onClick={() => {
-                      let expires = new Date();
-                      expires.setTime(
-                        expires.getTime() + 30 * 24 * 60 * 60 * 1000
-                      );
-                      setCookie("ismember", "true", {
-                        expires,
-                      });
-                      setNavOpen(false);
-                    }}
+                    onClick={trackMember}
                   >
-                    Pay my loan
+                    Pay my loan Member
                   </Link>
                 </li>
               </>
