@@ -1,5 +1,5 @@
 @media (max-width: $bp-mobile) {
-    .equal-height-JlocK {
+    .equal-height-JlocK:not(.mobile-equal-height *) {
         height: initial !important;
     }
 }
