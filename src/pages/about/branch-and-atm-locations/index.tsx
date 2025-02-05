@@ -25,6 +25,7 @@ import { useState, useContext } from "react";
 import {
   showDetailsContext,
   selectedLocationContext,
+  locationSettingsContext,
 } from "components/Locations/locationsContext";
 import { gql, useQuery } from "@apollo/client";
 import PageTitle from "components/Blocks/PageTitle";
@@ -97,6 +98,8 @@ export default function Page() {
   const activeAlerts = Alerts.filter(alert => alert.active == true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  const { setLocationSettings } = useContext(locationSettingsContext);
+  setLocationSettings(props?.data?.locationSettings);
 
   return (
     <>

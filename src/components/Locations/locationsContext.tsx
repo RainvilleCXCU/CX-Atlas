@@ -2,6 +2,38 @@
 import { Dispatch, SetStateAction, createContext } from "react";
 
 /**
+ *  Location Details 
+ */
+interface LocationSettings {
+  autoLocate?;
+  startLatlng?;
+  startPoint?;
+  searchRadius?;
+  apiBrowserKey?;
+  autoZoomLevel?;
+  mapType?;
+  distanceUnit?;
+  zoomLevel?;
+  urlLabel?;
+  streetview?;
+  typeControl?;
+  scrollwheel?;
+  controlPosition?;
+  markerIconProps?;
+  startMarker?;
+  storeMarker?;
+}
+interface ILocationSettingsContext {
+  locationSettings: LocationSettings;
+  setLocationSettings: Dispatch<SetStateAction<LocationSettings>>;
+}
+export const locationSettingsDefaultValue: ILocationSettingsContext = {
+  locationSettings: {},
+  setLocationSettings: () => {}
+}
+export const locationSettingsContext = createContext<ILocationSettingsContext>(locationSettingsDefaultValue);
+
+/**
  *  Show Details 
  */
 interface IShowDetailsContext {
