@@ -33,6 +33,7 @@ export function getStaticProps(ctx) {
     extra: {
       query: {
         page: getPageNum(ctx.params.wordpressNode),
+        uri: ctx.params.wordpressNode,
       },
     },
   });

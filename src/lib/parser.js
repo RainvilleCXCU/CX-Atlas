@@ -21,6 +21,7 @@ import MarketingCloudForm from "components/Salesforce/cloudpage";
 import SwiperContainer from "components/Blocks/MobileScroll";
 import ProductFinder from "components/ProductFinder/finder";
 import AppLinks from "components/Device/AppLinks";
+import Address from "components/Map/address";
 const ToggleContent = dynamic(() => import("components/ContentToggle/Content"), {ssr: false});
 const ToggleContentLink = dynamic(() => import("components/ContentToggle/ContentToggleLink"), {ssr: false});
 const ToggleContentSelect = dynamic(() => import("components/ContentToggle/ContentToggleSelect"), {ssr: false});
@@ -230,6 +231,11 @@ export const parseHtml = (html) => {
                     }
                     return (
                         <AppLinks {...props} />
+                    )
+                }
+                if(attribs?.['data-acf-block'] == 'map') {
+                    return (
+                        <Address locationData={attribs?.['data-location-data']} />
                     )
                 }
             }

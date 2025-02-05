@@ -11,5 +11,11 @@ export default setConfig({
   templates,
   plugins: [],
   possibleTypes,
+  postTypes: [
+    {
+      type: 'location',
+      endpoints: ['single']
+    }
+  ],
   usePersistedQueries: process.env.USE_PERSISTED_QUERIES || true,
 });

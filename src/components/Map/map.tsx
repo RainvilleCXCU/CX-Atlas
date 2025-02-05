@@ -5,6 +5,7 @@ import { Store } from "context/store";
 import { selectedLocationContext, showDetailsContext } from "components/Locations/locationsContext";
 
 interface MapProps {
+    id?: string,
 	title?: string,
     lat: number,
     lng: number,
@@ -12,7 +13,7 @@ interface MapProps {
     locationSettings
 }
 
-function Map({ title = 'Categories', lat, lng, locationSettings = null, markers }: MapProps): JSX.Element {
+function Map({ id="wpsl-gmap", title = 'Categories', lat, lng, locationSettings = null, markers }: MapProps): JSX.Element {
 
 	const [state, setState] = useContext(Store);
 
@@ -53,7 +54,7 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null, markers 
                 console.log('Load Maps')
                 clearInterval( mapsLoaded.current );
     
-                initMap( 'wpsl-gmap', 1);
+                initMap( id, 1);
             }
         }, 500 );
     }, []);
@@ -319,7 +320,7 @@ function Map({ title = 'Categories', lat, lng, locationSettings = null, markers 
     }
 
 	return (
-        <div id="wpsl-gmap" className="wpsl-wrap wpsl-store-below wpsl-default-filters"></div>
+        <div id={id} className="wpsl-wrap wpsl-store-below wpsl-default-filters"></div>
 	);
 };
 

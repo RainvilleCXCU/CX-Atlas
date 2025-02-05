@@ -5,6 +5,7 @@ import single from './single';
 import archive from './archive';
 import preview from './page-ppp';
 import postpreview from './post-ppp';
+import location from './location';
 const templates = {
   category: category,
   'front-page': frontPage,
@@ -13,7 +14,8 @@ const templates = {
   archive: archive,
   home: archive,
   'page-ppp': preview,
-  'page-postppp': postpreview
+  'page-postppp': postpreview,
+  'index': location
 };
 
 export default templates;
