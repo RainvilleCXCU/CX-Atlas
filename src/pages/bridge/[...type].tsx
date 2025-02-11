@@ -43,7 +43,8 @@ export default function Component(props) {
     // const { footerUtilities, footerAppIcons, footerSocialIcons } = props?.data?.footerSettings;
     
     widget ? widget?.replace(/account=none/gi, `account=${product.title.replace(' ', '-').toLowerCase()}`) : '';
-    const activeAlerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
+    const Alerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
+    const activeAlerts = Alerts.filter(alert => alert.active == true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalContent, setModalContent] = useState(null);    
 

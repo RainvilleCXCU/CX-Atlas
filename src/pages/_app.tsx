@@ -5,7 +5,7 @@ import Provider from '../provider/store';
 import { useRouter } from 'next/router'
 import type { AppProps } from 'next/app';
 import { pageview } from '../lib/routing';
-import { LazyMotion, domAnimation } from "framer-motion"
+import { LazyMotion, domAnimation } from "framer-motion";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
 
