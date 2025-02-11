@@ -306,6 +306,36 @@ let nextConfig = {
                   key: "_ppp",
                 },
               ],
+              missing: [
+                {
+                  type: "query",
+                  key: "post_type",
+                  value: "wpsl_stores",
+                }
+              ]
+        },
+        {
+          source: "/:path*",
+          destination: "/dynamic/branchppp/:path*",
+          has: [
+                {
+                  type: "query",
+                  key: "preview",
+                },
+                {
+                  type: "query",
+                  key: "p",
+                },
+                {
+                  type: "query",
+                  key: "_ppp",
+                },
+                {
+                  type: "query",
+                  key: "post_type",
+                  value: "wpsl_stores",
+                },
+              ],
         },
 
 

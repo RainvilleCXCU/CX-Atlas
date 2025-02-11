@@ -64,6 +64,7 @@ export const parseHtml = (html) => {
         replace: (element) => {
             const [cookies, setCookie ] = useCookies(['referralsource']);
             
+            
             // return;
             let { name, attribs, children } = element;
             if(attribs?.style) {
@@ -235,7 +236,7 @@ export const parseHtml = (html) => {
                 }
                 if(attribs?.['data-acf-block'] == 'map') {
                     return (
-                        <Address locationData={attribs?.['data-location-data']} />
+                        <Address locationData={attribs?.['data-location-data']} getDirectionsText={attribs?.['data-directions-button-text']} showDirectionsButton={JSON.parse(attribs?.['data-show-button'])} />
                     )
                 }
             }

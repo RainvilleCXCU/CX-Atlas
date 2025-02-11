@@ -12,7 +12,7 @@ const BaseLayout = dynamic(() => import('components/layout'));
 // import BaseLayout from 'components/layout';
 
 export default function Component(props) {
-  const { content } = props?.data?.location ?? { title: '' };
+  const { content } = props?.data?.locationsPreview ?? { title: '' };
 	// const { locationSettings, setLocationSettings } = useContext(locationSettingsContext);
   const [locationSettings, setLocationSettings] = useState(props?.data?.locationSettings);
   // if (!locationSettings) {
@@ -27,7 +27,7 @@ export default function Component(props) {
             <locationSettingsContext.Provider
               value={{ locationSettings, setLocationSettings }}
             >
-              {parseHtml(content ?? "")}
+              {parseHtml(content ?? "")} 
             </locationSettingsContext.Provider>
 					</article>
 				</main>
@@ -36,31 +36,30 @@ export default function Component(props) {
     </>
   );
 }
-
 Component.variables = (seedQuery, ctx, extra) => {
   const {databaseId, uri} = seedQuery;
   console.log('Variables');
-  console.log(JSON.stringify(ctx))
+  console.log(extra?.query?.query?.p);
   return {
-    uri: `${extra?.query?.uri.join('/')}${extra?.query?.params ? `?${JSON.stringify(extra?.query?.params)}`: ''}`,
+    // uri: `${uri}${extra?.query?.params ? `?${JSON.stringify(extra?.query?.params)}`: ''}`,
+    cache: new Date().getSeconds().toString(),
+    pageId: extra?.query?.query?.p,
     headerLocation: MENUS.PRIMARY_LOCATION,
-    footerLocation: MENUS.FOOTER_LOCATION,
-    asPreview: ctx?.asPreview,
+    footerLocation: MENUS.FOOTER_LOCATION
   };
 };
-
 Component.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenuItemFragment}
   ${ThirdPartySettingsFragment}
   ${AlertFragment}
-  query GetPageData(
-    $uri: ID!
+  query GetLocationsData(
+    $pageId: String
+    $cache: String
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
-    $asPreview: Boolean = false
   ) {
-    location(id: $uri, idType: URI, asPreview: $asPreview) {
+    locationsPreview(pageId: $pageId, cache: $cache) {
       title
       content
       databaseId
