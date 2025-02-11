@@ -23,18 +23,16 @@ export default function Page(props) {
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const { query } = ctx;
-  console.log('ServerSide ')
-  console.log(query);
   ctx.resolvedUrl = ctx.resolvedUrl.replace('/dynamic','');
+  ctx.resolvedUrl = ctx.resolvedUrl.replace('&post_type=wpsl_stores','');
   let paramString = '';
+
 
   Object.keys(query).map(k => {
     if(k !== 'wordpressNode') {
       paramString += `${k}=${query[k]}`
     }
   })
-
-  console.log(query)
   return getWordPressProps({
     ctx,
     revalidate: 1,

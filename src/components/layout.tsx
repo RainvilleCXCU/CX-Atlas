@@ -50,7 +50,7 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTi
     const { clarityId, clarityEnabled, gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
     const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
     const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
-    let { title = '', content, seo = {}, link = '', featuredImage, databaseId = '' } = props?.data?.page ?? props?.data?.post ?? {
+    let { title = '', content, seo = {}, link = '', featuredImage, databaseId = '', details } = props?.data?.page ?? props?.data?.post ?? props?.data?.location ?? {
         title: '',
         seo: {},
         link: '',
@@ -84,6 +84,7 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTi
             twitter_card={"summary_large_image"} // Not sure where this is in the page object
             twitter_label1={"Est. reading time"} // Not sure where this is in the page object
             twitter_data1={seo?.readingTime + " minutes"}
+            locationDetails={props?.data?.location?.details ? props?.data?.location?.details : null}
         />
         <GTM
             id={gtmId}
