@@ -4,6 +4,7 @@ export interface Props {
     align?,
     children?
     classNames?
+    indicatorLabel?
     style?
     columns?
     mobileSwipe?
@@ -13,6 +14,7 @@ function SwiperContainer({
     align = '',
     style = {},
     children = <></>,
+    indicatorLabel = 'Promo',
     classNames,
     columns = 1,
     mobileSwipe = true
@@ -23,6 +25,16 @@ function SwiperContainer({
     const lowerEnd = (index / (columns - 1)) * 100;
     return scrollPercentage >= lowerEnd - 5 && scrollPercentage <= lowerEnd + 5
   }
+
+  const scrollTo = (index) => {
+    const container = divElement.current;
+    const scroller = container.querySelector('.wp-block-columns');
+    scroller.scrollTo({
+      left: index * scroller.clientWidth,
+      behavior: 'smooth', // This enables smooth scrolling
+    });
+  }
+
   useEffect(() => {
     const container = divElement.current;
     const scroller = container.querySelector('.wp-block-columns');
@@ -41,7 +53,7 @@ function SwiperContainer({
         {children}
           <div className="dot-indicator">
             { Array.from({ length: columns }).map((_, index) => (
-                  <div key={index} className={`dot${isActive(index) ? ' active' : ''}`}></div>
+                  <a key={index} className={`dot${isActive(index) ? ' active' : ''}`} title={`${indicatorLabel} ${index + 1}`} onClick={scrollTo.bind(null, index)}></a>
               ))}
           </div>
     </div>

@@ -11,6 +11,7 @@ import { getQueryVariable } from "./routing";
 import Conditional from "components/Blocks/Conditional";
 import BusinessDetails from "components/Business/BusinessDetails";
 import Accordion from "components/Accordion/Accordion";
+import { trackMember } from "utils/tracking";
 
 const Vimeo = dynamic(() => import("components/Video/vimeo"));
 const Step = dynamic(() => import("components/Steps/Step"));
@@ -20,6 +21,7 @@ import MarketingCloudForm from "components/Salesforce/cloudpage";
 import SwiperContainer from "components/Blocks/MobileScroll";
 import ProductFinder from "components/ProductFinder/finder";
 import AppLinks from "components/Device/AppLinks";
+import Address from "components/Map/address";
 const ToggleContent = dynamic(() => import("components/ContentToggle/Content"), {ssr: false});
 const ToggleContentLink = dynamic(() => import("components/ContentToggle/ContentToggleLink"), {ssr: false});
 const ToggleContentSelect = dynamic(() => import("components/ContentToggle/ContentToggleSelect"), {ssr: false});
@@ -52,8 +54,6 @@ const findChildren = (element, att, value) => {
 }
 const whitelistRegex = new RegExp(`(.local)|(wpenginepowered.)|(wpengine.com)|(connexuscu.org)|(mortgagewebcenter)|(meridianlink)|(loanspq)|(myworkdayjobs)|(issuu)|(az1.qualtrics)|(docusign)|(billerpayments)|(tel:)|(mailto:)|(javascript:)`, "i");
 
-
-
 export const parseHtml = (html) => {
         const options = {
         trim: false,
@@ -63,6 +63,8 @@ export const parseHtml = (html) => {
         // library: require('preact'),
         replace: (element) => {
             const [cookies, setCookie ] = useCookies(['referralsource']);
+            
+            
             // return;
             let { name, attribs, children } = element;
             if(attribs?.style) {
@@ -106,7 +108,7 @@ export const parseHtml = (html) => {
             // Internal Link
             else if (name === "a") {                
                 return (
-                    <Link {...attributesToProps(attribs)}>{domToReact(children, options)}</Link>
+                    <Link {...attributesToProps(attribs)} onClick={ attribs?.class?.includes('track-member') && trackMember}>{domToReact(children, options)}</Link>
                 );
             }
             else if (name === 'img') {
@@ -225,8 +227,16 @@ export const parseHtml = (html) => {
                     )
                 }
                 if(attribs?.['data-acf-block'] == 'app-links') {
+                    const props = {
+                        ...(attribs?.['data-apps-opening-text'] !== '' && {appOpeningText: attribs?.['data-apps-opening-text']}),
+                    }
                     return (
-                        <AppLinks />
+                        <AppLinks {...props} />
+                    )
+                }
+                if(attribs?.['data-acf-block'] == 'map') {
+                    return (
+                        <Address locationData={attribs?.['data-location-data']} getDirectionsText={attribs?.['data-directions-button-text']} showDirectionsButton={JSON.parse(attribs?.['data-show-button'])} />
                     )
                 }
             }
