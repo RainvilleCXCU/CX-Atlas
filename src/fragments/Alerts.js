@@ -9,5 +9,7 @@ export const AlertFragment = gql`
         ctaButtonUrl
         name
         message
+        startDate
+        endDate
 	  }
 `;

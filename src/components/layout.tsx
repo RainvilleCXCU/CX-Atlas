@@ -1,4 +1,3 @@
-
 // const GTM = dynamic(() => import('components/ThirdParty/gtm'), {ssr:true});
 // const Personyze = dynamic(() => import('components/ThirdParty/personyze'), {ssr:true});
 // const HotJar = dynamic(() => import('components/ThirdParty/hotjar'), {ssr:true});
@@ -58,8 +57,30 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTi
     };
     const headerSettings = props?.data?.headerSettings; 
     const { footerUtilities, footerAppIcons, footerSocialIcons } = props?.data?.footerSettings;
-    const Alerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
-    const activeAlerts = Alerts.filter(alert => alert.active == true);
+
+    const getActiveAlerts = () => {
+        const now = new Date();
+        // Get alerts for the current page
+        const pageAlerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
+        // Get alerts that have "active" selected
+        const activeAlerts = pageAlerts.filter(alert => alert.active == true);
+        // Get alerts that are within the start and end date
+        const alertsWithinDates = activeAlerts.filter(alert => {
+            // Replace space with T to make it a valid date string
+            const formattedStart = alert.startDate.replace(" ", "T");
+            const formattedEnd = alert.endDate.replace(" ", "T");
+            // Convert to Date object
+            const startDate = new Date(formattedStart);
+            const endDate = new Date(formattedEnd);
+            // Check if current date is within the start and end date
+            if (startDate < now && endDate > now) {
+                return alert;
+            }
+        });
+        return alertsWithinDates;
+    };
+    const activeAlerts = getActiveAlerts();
+    
     title = pageTitle ? pageTitle : title;
 	return (
         <>
