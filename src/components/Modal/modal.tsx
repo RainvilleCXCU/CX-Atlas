@@ -61,6 +61,7 @@ function Modal({
                 {continueLink && (
                   <a
                     href={continueLink}
+                    onClick={closeModal}
                     target="_blank"
                     className="cx-button cx-button--compact cx-button--fullwidth"
                   >
