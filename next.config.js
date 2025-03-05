@@ -40,6 +40,36 @@ let nextConfig = {
         ],
         permanent: false,
       },
+      {
+        source: '/mobileapp:path*',
+        has: [
+          {
+            type: 'header',
+            key: 'user-agent',
+            value: '(.*Android.*|.*android.*)',
+          },
+        ],
+        permanent: false,
+        destination: 'https://play.google.com/store/apps/details?id=com.alkamitech.connexus',
+      },
+      {
+        source: '/mobileapp:path*',
+        has: [
+          {
+            type: 'header',
+            key: 'user-agent',
+            // This regex matches common iOS user agents (iPhone, iPad, iPod)
+            value: '(.*iPhone.*|.*iPad.*|.*iPod.*)',
+          },
+        ],
+        permanent: false,
+        destination: 'https://apple.co/3qSq3u6',
+      },
+      {
+        source: '/mobileapp:path*',
+        permanent: false,
+        destination: '/services/digital-banking',
+      },
       // {
       //   source: "/:path*",
       //   destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/:path*`,
