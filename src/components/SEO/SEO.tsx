@@ -49,7 +49,7 @@ const SEO = ({
 	twitter_card = "summary_large_image",
 	twitter_label1 = "Est. reading time",
 	twitter_data1 = "",
-	locationDetails = {}
+	locationDetails = null
 }:SEOProps) => {
 
 	//logic for the URL breadcrumbs in the Yoast <script> tag
@@ -169,6 +169,7 @@ const SEO = ({
 				}} 
 			/>
 		</Head>
+		
 	);
 };
 
