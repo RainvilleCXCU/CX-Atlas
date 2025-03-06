@@ -6,13 +6,15 @@ export interface Props {
     productData?
     submitText?
     selectText?
+    attribs?
 }
 
 function ProductFinder({
     classNames,
     productData,
     submitText,
-    selectText
+    selectText,
+    attribs
 }: Props): JSX.Element {
         
 const products = JSON.parse(atob(productData));
@@ -38,7 +40,7 @@ const selectRef = useRef(null);
             </select>
         </div>
         <div className="cx-product-finder__input-wrapper">
-            <button className="cx-product-finder__submit cx-button cx-button--compact cx-button--color-positive" onClick={handleGo}>
+            <button className="cx-product-finder__submit cx-button cx-button--compact cx-button--color-positive" data-gtm-target={attribs['data-gtm-target']} data-gtm-value={attribs['data-gtm-value']} onClick={handleGo}>
                 {submitText ? submitText : 'Go'}
             </button>
         </div>
