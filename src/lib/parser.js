@@ -116,7 +116,7 @@ export const parseHtml = (html) => {
                     let href = `#${attribs?.href.split('#')[1]}`;
                     delete attribs?.href;
                     return (
-                        <a href={href} {...attribs} onClick={ attribs?.class?.includes('track-member') && trackMember} scroll={false}>{domToReact(children, options)} Hash Link</a>
+                        <a href={href} {...attribs} onClick={ attribs?.class?.includes('track-member') && trackMember} scroll={false}>{domToReact(children, options)}</a>
                     );
                 }  
                 return (
