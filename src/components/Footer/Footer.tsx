@@ -5,6 +5,7 @@ import UtilityNav from "./UtilityNav";
 import Image from "next/image";
 import { gql } from "@apollo/client";
 import dynamic from "next/dynamic";
+import React from "react";
 
 interface Props {
 	copyrightHolder?: string;
@@ -21,7 +22,7 @@ interface Props {
 	footerSocialIcons?;
 }
 
-function Footer({ copyrightHolder = "", title, logo, desktopLogo, mobileLogo, desktopLogoWidth, mobileLogoWidth, logoText, menuItems, footerUtilities, footerAppIcons, footerSocialIcons }: Props): JSX.Element {
+const Footer = ({ copyrightHolder = "", title, logo, desktopLogo, mobileLogo, desktopLogoWidth, mobileLogoWidth, logoText, menuItems, footerUtilities, footerAppIcons, footerSocialIcons }: Props): JSX.Element => {
 	const year = new Date().getFullYear();
 
 	// copies the routing number to the clipboard
@@ -125,4 +126,7 @@ Footer.fragments = {
     `,
   };
 
-export default Footer;
+// export { Footer };
+
+const MemoizedFooter = React.memo(Footer);
+export default MemoizedFooter;
