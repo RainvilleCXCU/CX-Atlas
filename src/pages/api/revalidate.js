@@ -18,7 +18,7 @@ export default async function handler(req, res) {
     console.log('Revalidate');
     console.log(path);
     await res.revalidate(path);
-    await purgePaths(path);
+    await purgePaths([path]);
     return res.json({ revalidated: true });
   } catch (err) {
     return res.status(500).json({ message: 'Error revalidating', error: err.message });
