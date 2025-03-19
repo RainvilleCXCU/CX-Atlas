@@ -112,11 +112,11 @@ export const parseHtml = (html) => {
             // Internal Link
             else if (name === "a") {    
                 const pathname = usePathname();
-                if(attribs?.href.includes('#') && attribs?.href.includes(pathname) || attribs?.href.startsWith('#')) {
+                if((attribs?.href.includes('#') && attribs?.href.split('#')[0] == pathname) || attribs?.href.startsWith('#')) {
                     let href = `#${attribs?.href.split('#')[1]}`;
                     delete attribs?.href;
                     return (
-                        <a href={href} {...attribs} onClick={ attribs?.class?.includes('track-member') && trackMember} scroll={false}>{domToReact(children, options)}</a>
+                        <a href={href} {...attribs} onClick={ attribs?.class?.includes('track-member') && trackMember}>{domToReact(children, options)}</a>
                     );
                 }  
                 return (

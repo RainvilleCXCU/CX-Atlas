@@ -24,29 +24,42 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
   } 
 
   useEffect(() => {
-		// handle the hash change
-    const handleHashChange = (url, { shallow }) => {
+
+    // Router detect hash match
+    if (router.asPath.includes('#')) {
+      const elementid = router.asPath.split('#')[1];
+      const element = document.getElementById(elementid);
+      if (element) {
+        element.scrollIntoView();
+      }
+
+      if(id === elementid) {
+        setIsAccordionOpen(true);
+      } else {
+        // setIsAccordionOpen(false);
+      }
+    }
+  }, [router.asPath]);
+
+  useEffect(() => {
+    
+    // Handle same page hash change
+    const handleHashChange = (e) => {
       const accordionElement = document.getElementById(id);
 			
       if (accordionElement && window.location.hash.substring(1) === id) {
         setIsAccordionOpen(true);
+      } else {
+        // setIsAccordionOpen(false);
       }
     }
-			
-    if (id && window.location.hash.substring(1) === id) {
-      console.log('HASH DEFAULT')
-      console.log(`${window.location.hash.substring(1)} - ${id}`)
-      setIsAccordionOpen(true);
-    }
- 
-		// listen for the hash change in the URL
-    router.events.on('hashChangeComplete', handleHashChange)
- 
-    //unsubscribe from the event with the `off` method:
+    window.addEventListener('hashchange', handleHashChange);
+    
     return () => {
-      router.events.off('hashChangeComplete', handleHashChange)
-    }
-  }, [router, id])
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+
+  }, [])
 	
   return (
     <div className={`cx-accordion__brand ${classNames}`}>
