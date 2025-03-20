@@ -285,10 +285,15 @@ const Scheduler = ({
                         );
                     }, appUrl,
                     function(error) {
-                        // Custom error handling
-                        const errorContainer = document.getElementById('lightning-errors');
-                        errorContainer.innerHTML = `<div class="error-message">${error.message}</div>`;
-                        errorContainer.style.display = 'block';
+                       // Prevent default behavior
+                        // You can optionally log the error or display it in your own UI
+                        console.error("Lightning error:", error);
+                        
+                        // Find and remove any auraErrorMessage elements that were added
+                        setTimeout(() => {
+                        const errorElements = document.querySelectorAll('.auraErrorMessage');
+                        errorElements.forEach(el => el.remove());
+                        }, 0);
                     }  // Site endpoint
                 );
             }
