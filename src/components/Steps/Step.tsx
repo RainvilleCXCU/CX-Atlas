@@ -76,7 +76,7 @@ function Step({
             </m.p>
             {!lastStep && 
                 <>
-                    <span className="cx-hidden__desktop"><Arrow delay={arrowDelay} route={'downArrow'} duration={duration/3} variant={'onscreen'} /></span>
+                    <span className="cx-hidden__desktop cx-hidden__tablet"><Arrow delay={arrowDelay} route={'downArrow'} duration={duration/3} variant={'onscreen'} /></span>
                 </>
             }
     </m.div>
