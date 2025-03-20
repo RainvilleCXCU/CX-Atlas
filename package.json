@@ -12,6 +12,8 @@
     "lint": "faust lint",
     "test": "jest",
     "test:watch": "jest --watch",
+    "wpe-build:dev": "NODE_ENV=development faust build",
+    "wpe-build:staging": "NODE_ENV=staging faust build",
     "wpe-build": "faust build"
   },
   "dependencies": {
