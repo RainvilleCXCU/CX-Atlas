@@ -404,7 +404,7 @@ let nextConfig = {
     };
   },
   compiler: {
-    removeConsole: process.env.NODE_ENV === "production",
+    removeConsole: process.env.NODE_ENV === "production" && process.env.REMOVE_CONSOLE !== 'false',
   },
   swcMinify: true,
   experimental: {
