@@ -283,7 +283,13 @@ const Scheduler = ({
                                 component.startFlow(flowId);
                             }
                         );
-                    }, appUrl  // Site endpoint
+                    }, appUrl,
+                    function(error) {
+                        // Custom error handling
+                        const errorContainer = document.getElementById('lightning-errors');
+                        errorContainer.innerHTML = `<div class="error-message">${error.message}</div>`;
+                        errorContainer.style.display = 'block';
+                    }  // Site endpoint
                 );
             }
         }];
@@ -313,6 +319,7 @@ const Scheduler = ({
                     </a>
                 </div>
             }
+            <div id="lightning-errors"></div>
         </>
     );
 
