@@ -213,6 +213,7 @@ export const parseHtml = (html) => {
                             startOpen={attribs?.['data-start-open']}
                             title={attribs?.['data-encodedheading'] ? parseHtml(Buffer.from(attribs?.['data-encodedheading'], 'base64').toString()): ''}
                             classNames={attribs?.class}
+                            id={attribs?.['data-accordion-id']}
                             content={attribs?.['data-encodedcontent'] ? parseHtml(Buffer.from(attribs?.['data-encodedcontent'], 'base64').toString()): ''}
                         />
                     )

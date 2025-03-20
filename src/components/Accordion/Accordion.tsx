@@ -20,6 +20,11 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
     if(stayOpen == 'true') {
       e.preventDefault();
       return false;
+    } else {
+      e.preventDefault();
+      setIsAccordionOpen(!isAccordionOpen);
+      window.history.replaceState(null, document.title, window.location.pathname + window.location.search);
+      return false;
     }
   } 
 
@@ -33,7 +38,7 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
         element.scrollIntoView();
       }
 
-      if(id === elementid) {
+      if(id === elementid && !isAccordionOpen) {
         setIsAccordionOpen(true);
       } else {
         // setIsAccordionOpen(false);
@@ -47,16 +52,18 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
     const handleHashChange = (e) => {
       const accordionElement = document.getElementById(id);
 			
-      if (accordionElement && window.location.hash.substring(1) === id) {
+      if (accordionElement && window.location.hash.substring(1) === id && !isAccordionOpen) {
         setIsAccordionOpen(true);
       } else {
         // setIsAccordionOpen(false);
       }
     }
     window.addEventListener('hashchange', handleHashChange);
+    window.addEventListener('click', handleHashChange);
     
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener('click', handleHashChange);
     };
 
   }, [])
