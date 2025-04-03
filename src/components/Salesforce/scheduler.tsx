@@ -254,6 +254,7 @@ const Scheduler = ({
             onload: () => {
                 window.$Lightning.use("runtime_appointmentbooking:lightningOutGuest",
                     function () {                  // Callback once framework and app load
+                        console.log('App Loaded')
                         window.$Lightning.createComponent(
                             "lightning:flow",    // top-level component of your app
                             {
@@ -279,11 +280,26 @@ const Scheduler = ({
                                 }
                             },    // attributes to set on the component when created
                             "lightningLocator",    // the DOM location to insert the component
-                            function (component) {            // API name of the Flow
-                                component.startFlow(flowId);
+                            function (component, status, errorMessage) { 
+                                if (status === "SUCCESS") {          // API name of the Flow
+                                    component.startFlow(flowId);
+                                } else if (status === 'ERROR') {
+                                    console.error(errorMessage);
+                                }
                             }
                         );
-                    }, appUrl  // Site endpoint
+                    }, appUrl,
+                    function(error) {
+                       // Prevent default behavior
+                        // You can optionally log the error or display it in your own UI
+                        console.error("Lightning error:", error);
+                        
+                        // Find and remove any auraErrorMessage elements that were added
+                        setTimeout(() => {
+                        const errorElements = document.querySelectorAll('.auraErrorMessage');
+                        errorElements.forEach(el => el.remove());
+                        }, 0);
+                    }  // Site endpoint
                 );
             }
         }];
@@ -313,6 +329,7 @@ const Scheduler = ({
                     </a>
                 </div>
             }
+            <div id="lightning-errors"></div>
         </>
     );
 

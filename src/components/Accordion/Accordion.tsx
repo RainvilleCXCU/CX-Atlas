@@ -20,33 +20,53 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
     if(stayOpen == 'true') {
       e.preventDefault();
       return false;
+    } else {
+      e.preventDefault();
+      setIsAccordionOpen(!isAccordionOpen);
+      window.history.replaceState(null, document.title, window.location.pathname + window.location.search);
+      return false;
     }
   } 
 
   useEffect(() => {
-		// handle the hash change
-    const handleHashChange = (url, { shallow }) => {
-      const accordionElement = document.getElementById(id);
-			
-      if (accordionElement && window.location.hash.substring(1) === id) {
+
+    // Router detect hash match
+    if (router.asPath.includes('#')) {
+      const elementid = router.asPath.split('#')[1];
+      const element = document.getElementById(elementid);
+      if (element) {
+        element.scrollIntoView();
+      }
+
+      if(id === elementid && !isAccordionOpen) {
         setIsAccordionOpen(true);
+      } else {
+        // setIsAccordionOpen(false);
       }
     }
+  }, [router.asPath]);
+
+  useEffect(() => {
+    
+    // Handle same page hash change
+    const handleHashChange = (e) => {
+      const accordionElement = document.getElementById(id);
 			
-    if (id && window.location.hash.substring(1) === id) {
-      console.log('HASH DEFAULT')
-      console.log(`${window.location.hash.substring(1)} - ${id}`)
-      setIsAccordionOpen(true);
+      if (accordionElement && window.location.hash.substring(1) === id && !isAccordionOpen) {
+        setIsAccordionOpen(true);
+      } else {
+        // setIsAccordionOpen(false);
+      }
     }
- 
-		// listen for the hash change in the URL
-    router.events.on('hashChangeComplete', handleHashChange)
- 
-    //unsubscribe from the event with the `off` method:
+    window.addEventListener('hashchange', handleHashChange);
+    window.addEventListener('click', handleHashChange);
+    
     return () => {
-      router.events.off('hashChangeComplete', handleHashChange)
-    }
-  }, [router, id])
+      window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener('click', handleHashChange);
+    };
+
+  }, [])
 	
   return (
     <div className={`cx-accordion__brand ${classNames}`}>
