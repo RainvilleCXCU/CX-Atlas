@@ -42,7 +42,7 @@ function Arrow({
   return (
     <div className={`step_arrow step_arrow--${route}`}>
         <m.svg
-            viewBox={route === 'downArrow' ? `0 0 8px 48px` : `0 0 100 20`}
+            viewBox={route === 'downArrow' ? `0 0 8 48` : `0 0 100 20`}
             id="svg1033">
             <m.path
                 initial={{ pathLength: 0 }}
