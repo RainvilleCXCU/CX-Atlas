@@ -120,7 +120,7 @@ export const parseHtml = (html) => {
                     );
                 }  
                 return (
-                    <Link {...attributesToProps(attribs)} onClick={ attribs?.class?.includes('track-member') && trackMember} scroll={false}>{domToReact(children, options)}</Link>
+                    <Link {...attributesToProps(attribs)} onClick={ attribs?.class?.includes('track-member') && trackMember}>{domToReact(children, options)}</Link>
                 );
             }
             else if (name === 'img') {
