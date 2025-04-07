@@ -102,7 +102,7 @@ function LocationDetails(): JSX.Element {
 				</div>{" "}
 				<div className="cx-location-details__content">
 					{/* render the special message section if a special message exists on the location */}
-					{selectedLocation?.special_message_type !== "" && selectedLocation?.special_message  && (
+					{selectedLocation?.special_message_type && selectedLocation?.special_message_type !== "none" && selectedLocation?.special_message  && (
 						<div
 							className={`cx-location-details__content--message cx-location-details__content--message-${selectedLocation?.special_message_type}`}
 						>

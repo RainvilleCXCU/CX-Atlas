@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import UtilityNav from './UtilityNav';
 import Logo from 'components/Logo';
 import { useRouter } from 'next/router';
@@ -22,7 +22,7 @@ interface Props {
   headerSettings?;
 }
 
-function Header({
+const Header = ({
   title = '',
   description,
   logo,
@@ -38,7 +38,7 @@ function Header({
   showLogo = true,
   menuItems,
   headerSettings
-}: Props): JSX.Element {
+}: Props): JSX.Element => {
 
   const { asPath } = useRouter();
 
@@ -73,4 +73,8 @@ function Header({
   );
 }
 
-export default Header;
+// export { Header };
+
+const MemoizedHeader = React.memo(Header);
+
+export default MemoizedHeader;

@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import parse, { domToReact, attributesToProps } from "html-react-parser";
+import { usePathname } from 'next/navigation';
 import Link from "next/link";
 import { css } from '@emotion/css';
 import Image from 'next/image';
@@ -22,9 +23,12 @@ import SwiperContainer from "components/Blocks/MobileScroll";
 import ProductFinder from "components/ProductFinder/finder";
 import AppLinks from "components/Device/AppLinks";
 import Address from "components/Map/address";
-const ToggleContent = dynamic(() => import("components/ContentToggle/Content"), {ssr: false});
-const ToggleContentLink = dynamic(() => import("components/ContentToggle/ContentToggleLink"), {ssr: false});
-const ToggleContentSelect = dynamic(() => import("components/ContentToggle/ContentToggleSelect"), {ssr: false});
+// import ToggleContent from "components/ContentToggle/Content";
+// import ToggleContentLink from "components/ContentToggle/ContentToggleLink";
+// import ToggleContentSelect from "components/ContentToggle/ContentToggleSelect";
+const ToggleContent = dynamic(() => import("components/ContentToggle/Content"), {ssr: true});
+const ToggleContentLink = dynamic(() => import("components/ContentToggle/ContentToggleLink"), {ssr: true});
+const ToggleContentSelect = dynamic(() => import("components/ContentToggle/ContentToggleSelect"), {ssr: true});
 const FAQ = dynamic(() => import("components/FAQs/faq"));
 const Form = dynamic(() => import("components/Forms/Form"));
 const DataTracComparison = dynamic(() => import("components/Datatrac/Comparison"));
@@ -106,7 +110,15 @@ export const parseHtml = (html) => {
                 )
             }
             // Internal Link
-            else if (name === "a") {                
+            else if (name === "a") {    
+                const pathname = usePathname();
+                if((attribs?.href.includes('#') && attribs?.href.split('#')[0] == pathname) || attribs?.href.startsWith('#')) {
+                    let href = `#${attribs?.href.split('#')[1]}`;
+                    delete attribs?.href;
+                    return (
+                        <a href={href} {...attribs} onClick={ attribs?.class?.includes('track-member') && trackMember}>{domToReact(children, options)}</a>
+                    );
+                }  
                 return (
                     <Link {...attributesToProps(attribs)} onClick={ attribs?.class?.includes('track-member') && trackMember}>{domToReact(children, options)}</Link>
                 );
@@ -201,6 +213,7 @@ export const parseHtml = (html) => {
                             startOpen={attribs?.['data-start-open']}
                             title={attribs?.['data-encodedheading'] ? parseHtml(Buffer.from(attribs?.['data-encodedheading'], 'base64').toString()): ''}
                             classNames={attribs?.class}
+                            id={attribs?.['data-accordion-id']}
                             content={attribs?.['data-encodedcontent'] ? parseHtml(Buffer.from(attribs?.['data-encodedcontent'], 'base64').toString()): ''}
                         />
                     )
