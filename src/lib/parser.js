@@ -36,6 +36,7 @@ const DataTracComparison = dynamic(() => import("components/Datatrac/Comparison"
 const Disclosure = dynamic(() => import("components/Disclosure/Disclosure"), {ssr: false});
 const LinkLibrary = dynamic(() => import ("components/LinkLibrary/LinkLibrary"), {ssr: false});
 const Chat = dynamic(() => import ("components/Chat/cisco"), {ssr: false});
+const NiceChat = dynamic(() => import ("components/Chat/nice"), {ssr: false});
 const Calculator = dynamic(() => import("components/Calculator/Calculator"), {ssr: false});
 const CXCalc = dynamic(() => import("components/Calculator/CXCalculator"), {ssr: false});
 const CXCalcResults = dynamic(() => import("components/Calculator/CXCalculatorResults"), {ssr: false});
@@ -97,6 +98,11 @@ export const parseHtml = (html) => {
             else if(name === 'a' && attribs?.class?.includes('chat_bubble')) {
                 return (
                     <Chat className={attribs.class}>{domToReact(children, options)}</Chat>
+                )
+            }
+            else if(name === 'a' && attribs?.class?.includes('nice_chat')) {
+                return (
+                    <NiceChat className={attribs.class}>{domToReact(children, options)}</NiceChat>
                 )
             }
             else if(name === 'a' && whitelistRegex.test(attribs?.href) === false && attribs?.href[0] !== '/' && attribs?.href[0] !== '#') {
