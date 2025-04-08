@@ -1,5 +1,5 @@
 import { parseHtml } from "lib/parser";
-import { useState, useEffect, FC } from "react";
+import { useState, useEffect, useRef, FC } from "react";
 import { useRouter } from 'next/router';
 
 interface AccordionProps {
@@ -13,8 +13,10 @@ interface AccordionProps {
 }
 
 const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = '', isOpen = false, id, stayOpen = 'false', startOpen = 'false'}) => {
-	const [isAccordionOpen, setIsAccordionOpen] = useState(isOpen);
-	const router = useRouter();
+    const [isAccordionOpen, setIsAccordionOpen] = useState(isOpen);
+    const [contentHeight, setContentHeight] = useState(0);
+    const contentRef = useRef<HTMLDivElement>(null);
+    const router = useRouter();
 
   const openHandler = e => {
     if(stayOpen == 'true') {
@@ -26,11 +28,15 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
       window.history.replaceState(null, document.title, window.location.pathname + window.location.search);
       return false;
     }
-  } 
+  };
 
   useEffect(() => {
+    if (contentRef.current) {
+      setContentHeight(isAccordionOpen ? contentRef.current.scrollHeight : 0);
+    }
+  }, [isAccordionOpen]);
 
-    // Router detect hash match
+  useEffect(() => {
     if (router.asPath.includes('#')) {
       const elementid = router.asPath.split('#')[1];
       const element = document.getElementById(elementid);
@@ -47,9 +53,7 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
   }, [router.asPath]);
 
   useEffect(() => {
-    
-    // Handle same page hash change
-    const handleHashChange = (e) => {
+    const handleHashChange = () => {
       const accordionElement = document.getElementById(id);
 			
       if (accordionElement && window.location.hash.substring(1) === id && !isAccordionOpen) {
@@ -57,7 +61,7 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
       } else {
         // setIsAccordionOpen(false);
       }
-    }
+    };
     window.addEventListener('hashchange', handleHashChange);
     window.addEventListener('click', handleHashChange);
     
@@ -65,15 +69,26 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
       window.removeEventListener('hashchange', handleHashChange);
       window.removeEventListener('click', handleHashChange);
     };
+  }, []);
 
-  }, [])
-	
   return (
     <div className={`cx-accordion__brand ${classNames}`}>
-      <details open={isAccordionOpen || stayOpen == 'true'} id={id}>
-        <summary className="gb-accordion-title" onClick={openHandler}>{title}</summary>
-        <div className="gb-accordion-text">{typeof(content) === 'string' ? parseHtml(content) : content}</div>
-      </details>
+      <div className="accordion-header" onClick={openHandler}>
+        <summary className={`gb-accordion-title${isAccordionOpen ? ' is-open' : ''}`}>{title}</summary>
+      </div>
+      <div
+        className="accordion-content"
+        ref={contentRef}
+        style={{
+          height: `${contentHeight}px`,
+          overflow: 'hidden',
+          transition: 'height 0.3s ease',
+        }}
+      >
+        <div className="gb-accordion-text">
+          {typeof(content) === 'string' ? parseHtml(content) : content}
+        </div>
+      </div>
     </div>
   );
 };
