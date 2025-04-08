@@ -23,6 +23,7 @@ import SwiperContainer from "components/Blocks/MobileScroll";
 import ProductFinder from "components/ProductFinder/finder";
 import AppLinks from "components/Device/AppLinks";
 import Address from "components/Map/address";
+import MBHIPRO from "components/Hours/MBHIPRO";
 // import ToggleContent from "components/ContentToggle/Content";
 // import ToggleContentLink from "components/ContentToggle/ContentToggleLink";
 // import ToggleContentSelect from "components/ContentToggle/ContentToggleSelect";
@@ -204,6 +205,14 @@ export const parseHtml = (html) => {
                     <ProductFinder productData={attribs?.['data-product-data']} submitText={attribs?.['data-submit-text']} selectText={attribs?.['data-select-text']} attribs={attribs}>{domToReact(children, options)}</ProductFinder>
                 )
             }
+
+            // Hours Toggle
+            else if(attribs?.class?.includes?.('mbhi-if-wrapper')) {
+                return (
+                    <MBHIPRO locationId={attribs?.['data-loc']} classNames={attribs?.class} code={attribs?.['data-code']}>{domToReact(children, options)}</MBHIPRO>
+                )
+            }
+            
             // Content Toggle Link
             else if(attribs?.['data-genesis-block']) {
                 if(attribs?.['data-genesis-block'] == 'accordion') {

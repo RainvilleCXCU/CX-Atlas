@@ -17,5 +17,5 @@ export default setConfig({
       endpoints: ['single']
     }
   ],
-  usePersistedQueries: process.env.USE_PERSISTED_QUERIES || true,
+  usePersistedQueries: process.env.USE_PERSISTED_QUERIES !== 'false' ? true : false,
 });
