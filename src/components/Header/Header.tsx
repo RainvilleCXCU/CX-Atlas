@@ -69,11 +69,24 @@ const Header = ({
 
       lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
     };
-    window.addEventListener('scroll', handleScroll);
+
+    // if the window is resized to a width greater than 992px, reset the inline styles
+    const handleResize = () => {
+      if (window.innerWidth >= 992) {
+        header.style.cssText = ''; 
+        if (pageContent.style.paddingTop === '80px') {
+          pageContent.style.cssText = ''; 
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll); // add scroll event listener
+    window.addEventListener('resize', handleResize); // add window resize event listener
 
     //cleanup
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
   
