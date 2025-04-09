@@ -23,6 +23,9 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
       e.preventDefault();
       return false;
     } else {
+      if (e.target.tagName.toLowerCase() === 'a') { // Prevent open/close if accordion title has a link (ex: <sup>)
+        return;
+      }
       e.preventDefault();
       setIsAccordionOpen(!isAccordionOpen);
       window.history.replaceState(null, document.title, window.location.pathname + window.location.search);
@@ -30,6 +33,7 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
     }
   };
 
+  // Animate the open/close of the accordion
   useEffect(() => {
     if (contentRef.current) {
       setContentHeight(isAccordionOpen ? contentRef.current.scrollHeight : 0);

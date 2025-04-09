@@ -187,6 +187,14 @@ export const parseHtml = (html) => {
                     <FAQ id={`FAQ-${attribs?.['data-post_id']}`} title={title} content={content} />
                 )
             }
+            // GB Accordion
+            else if(attribs?.class?.includes("gb-block-accordion")) {
+                const title  = domToReact(findChildren(element, 'class', 'gb-accordion-title')[0].children);
+                const content = domToReact(findChildren(element, 'class', 'gb-accordion-text')[0].children);
+                return (
+                    <Accordion title={title} content={content} />
+                )
+            }
             // Step
             else if (attribs?.['data-acf-block'] && attribs?.['data-acf-block'] === 'step') {
                 return (
