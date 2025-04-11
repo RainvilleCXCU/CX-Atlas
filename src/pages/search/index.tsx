@@ -30,7 +30,7 @@ export default function Component(props) {
     results = props.data.contentNodes.nodes;
     total = props.data.contentNodes.pageInfo.offsetPagination.total;
   }
-  const currentPage = query?.page?.[0] ? parseInt(query.page[0]) : 1;
+  const currentPage = query?.page ? parseInt(query?.page.toString()) : 1;
   const search = query.s;
   const categories = props?.data?.categories;
 
@@ -47,7 +47,8 @@ export default function Component(props) {
                   id={`post-${post.id}`}
                   title={post.title}
                   url={post.uri}
-                  content={post.excerpt}
+                  type={post.contentTypeName ? post.contentTypeName : null}
+                  content={post.excerpt !== '' ? post.excerpt : ''}
                   categories={post.categories?.nodes}
                   featuredImage={post.featuredImage} />
               ))}
@@ -183,7 +184,7 @@ export default function Component(props) {
 // }
 
 Component.variables = (params, ctx) => {
-  let offset: string | number = params.query.page ? (POSTS_PER_PAGE * parseInt(params.query.page)).toString() : '0';
+  let offset: string | number = params.query.page ? (POSTS_PER_PAGE * parseInt(params.query.page) - 1).toString() : '0';
   let postsPerPage: string | number = POSTS_PER_PAGE.toString();
 
   if(process.env.NEXT_PUBLIC_SEARCH_APPLIANCE === 'smartsearch') {
@@ -231,6 +232,7 @@ Component.query = gql`
               }
             }
           }
+          contentTypeName
         }
         ... on Post {
           id
@@ -254,6 +256,19 @@ Component.query = gql`
               }
             }
           }
+          contentTypeName
+        }
+        ... on Location {
+          id
+          excerpt
+          featuredImage {
+            node {
+              id
+            }
+          }
+          title(format: RENDERED)
+          uri
+          contentTypeName
         }
       }
       pageInfo {
@@ -346,6 +361,7 @@ if(process.env.NEXT_PUBLIC_SEARCH_APPLIANCE === 'searchwp' || !process.env.NEXT_
             }
           }
         }
+        contentTypeName
       }
       total
     }
