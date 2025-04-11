@@ -48,7 +48,7 @@ export default function Component(props) {
                   title={post.title}
                   url={post.uri}
                   type={post.contentTypeName ? post.contentTypeName : null}
-                  content={post.excerpt !== '' ? post.excerpt : 'test'}
+                  content={post.excerpt !== '' ? post.excerpt : ''}
                   categories={post.categories?.nodes}
                   featuredImage={post.featuredImage} />
               ))}
