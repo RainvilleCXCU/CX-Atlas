@@ -30,7 +30,7 @@ export default function Component(props) {
     results = props.data.contentNodes.nodes;
     total = props.data.contentNodes.pageInfo.offsetPagination.total;
   }
-  const currentPage = query?.page?.[0] ? parseInt(query.page[0]) : 1;
+  const currentPage = query?.page ? parseInt(query?.page.toString()) : 1;
   const search = query.s;
   const categories = props?.data?.categories;
 
@@ -184,7 +184,7 @@ export default function Component(props) {
 // }
 
 Component.variables = (params, ctx) => {
-  let offset: string | number = params.query.page ? (POSTS_PER_PAGE * parseInt(params.query.page)).toString() : '0';
+  let offset: string | number = params.query.page ? (POSTS_PER_PAGE * parseInt(params.query.page) - 1).toString() : '0';
   let postsPerPage: string | number = POSTS_PER_PAGE.toString();
 
   if(process.env.NEXT_PUBLIC_SEARCH_APPLIANCE === 'smartsearch') {
