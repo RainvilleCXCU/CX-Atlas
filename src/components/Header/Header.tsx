@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import UtilityNav from './UtilityNav';
 import Logo from 'components/Logo';
 import { useRouter } from 'next/router';
@@ -44,6 +44,51 @@ const Header = ({
 
   const [navOpen, setNavOpen] = useState(false);
 
+  // hide/show the mobile header on scroll
+  useEffect(() => {
+    let lastScrollTop = 0;
+    const header = document.querySelector('.cx-header');
+    const pageContent = document.querySelector('#page') ? document.querySelector('#page') : document.querySelector('#main');
+
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+      if (window.innerWidth < 992) {
+        if (scrollTop > lastScrollTop) { // scrolling down
+          if (scrollTop > 80) {
+            header.style.transform = 'translateY(-100%)';
+            header.style.opacity = '0';
+          }
+        } else { // scrolling up          
+          header.style.transform = 'translateY(0)';
+          header.style.opacity = '1';
+          header.style.position = 'fixed';
+          pageContent.style.paddingTop = '80px';
+        }
+      }
+
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    };
+
+    // if the window is resized to a width greater than 992px, reset the inline styles
+    const handleResize = () => {
+      if (window.innerWidth >= 992) {
+        header.style.cssText = ''; 
+        if (pageContent.style.paddingTop === '80px') {
+          pageContent.style.cssText = ''; 
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll); // add scroll event listener
+    window.addEventListener('resize', handleResize); // add window resize event listener
+
+    //cleanup
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   
 
   return (

@@ -12,7 +12,8 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 const BaseLayout = dynamic(() => import('components/layout'));
 export default function Component(props) {
-  const { title, content, databaseId, featuredImage, categories, relatedPosts } = props?.data?.post ?? { title: '' };
+  const { title, content, databaseId, featuredImage, categories } = props?.data?.post ?? { title: '' };
+  const relatedPosts = props?.data?.relatedPosts;
   const { blogtop, blogSidebar } = props?.data?.widgetSettings;
 
   return (
@@ -20,12 +21,11 @@ export default function Component(props) {
     <BaseLayout props={props}>
       <div id="page" className="container site">
         <main className="content single-post">
-          <article id={`post-${databaseId}`} className="post post-content">
-        
+          <article id={`post-${databaseId}`} className="post post-content">        
             <aside className="sidebar">
-              {databaseId &&
+              {/* {databaseId &&
                 <RelatedPosts relatedPosts={relatedPosts} />
-              }
+              } */}
               {blogSidebar &&
                 parseHtml(blogSidebar)
               }
@@ -72,6 +72,7 @@ Component.query = gql`
   query GetPost(
     $databaseId: ID!
     $id: String
+    $searchEngine: String
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
     $asPreview: Boolean = false
@@ -131,7 +132,7 @@ Component.query = gql`
         }
       }
     }
-    relatedPosts(postId: $id) {
+    relatedPosts(postId: $id, searchEngine: $searchEngine) {
       title
       uri
     }
@@ -181,6 +182,7 @@ Component.variables = ({ databaseId }, ctx) => {
   return {
     id: String(databaseId),
     databaseId,
+    searchEngine: process.env.NEXT_PUBLIC_SEARCH_APPLIANCE ? process.env.NEXT_PUBLIC_SEARCH_APPLIANCE : '',
     headerLocation: MENUS.PRIMARY_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION,
     asPreview: ctx?.asPreview,

@@ -70,7 +70,7 @@ export default function Pagination({ totalResults, currentPage = 1, basePath, pe
       if (p === currentPage) {
         links.push(<span className='page-numbers current' key={`pagination-${p}`}>{p}</span>)
       } else {
-        links.push(<Link href={p > 1 ? `${basePath}/page/${p}/${querys && querys}` : basePath} className='page-numbers' key={`pagination-${p}`} prefetch={false} shallow={useShallow} onClick={() => {
+        links.push(<Link href={p > 1 ? `${basePath}/page/${p}/${querys && querys}` : `${basePath}${querys && querys}`} className='page-numbers' key={`pagination-${p}`} prefetch={false} shallow={useShallow} onClick={() => {
           clickHandler && clickHandler(p);
         }}>{p}</Link>);
       }

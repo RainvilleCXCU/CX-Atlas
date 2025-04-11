@@ -102,3 +102,23 @@
 .minimized_chat {
     height: 56px;
 }
+
+
+
+
+
+/** NICE Chat **/
+
+#cxone-guide-container {
+    .pcontainer, .content {
+        font-family: 'Gotham' !important;
+        button { 
+            font-family: 'Gotham' !important;
+        }
+    }
+    .entrypoint.simpleMode {
+        button[data-selector="GUIDE_CHANNEL_BUTTON"] {
+            display: none;
+        }
+    }
+}

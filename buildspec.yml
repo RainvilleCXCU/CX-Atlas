@@ -8,15 +8,17 @@ env:
 phases:
   install:
     runtime-versions:
-      nodejs: 14  # Specify the Node.js version you want to use
+      nodejs: 22.4.1  # Specify the Node.js version you want to use
     commands:
       - echo Installing dependencies...
+      - npm install
 
   pre_build:
     commands:
       - echo Running pre-build commands...
       - echo Build Number - $CODEBUILD_BUILD_NUMBER
       - echo source version $CODEBUILD_SOURCE_VERSION
+      - npm run test
 
       - ssh-agent
 
@@ -25,6 +27,7 @@ phases:
 
       # - ssh-keyscan -t rsa git.github.com >> ~/.ssh/known_hosts
   build:
+    on-failure: ABORT
     commands:
       - echo Building the application for $ENVIRONMENT ...
       

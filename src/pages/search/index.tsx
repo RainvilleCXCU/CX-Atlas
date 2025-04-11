@@ -6,8 +6,8 @@ import { ThirdPartySettingsFragment } from 'fragments/ThirdParty';
 const Pagination = dynamic(() => import('components/Pagination'));
 const SearchBar = dynamic(() => import('components/Search/SearchBar'));
 import SearchListing from 'components/Search/Listing';
-import { getNextServerSideProps } from '@faustwp/core';
-import { GetServerSidePropsContext } from 'next';
+import { getNextServerSideProps, getNextStaticProps } from '@faustwp/core';
+import { GetServerSidePropsContext, GetStaticPropsContext } from 'next';
 
 import { gql } from '@apollo/client';
 import { useRouter } from 'next/router';
@@ -21,7 +21,15 @@ const POSTS_PER_PAGE = 5;
 export default function Component(props) {
   const { query = {} } = useRouter();
   const { title, content, seo, link, featuredImage } = props?.data?.page ?? { title: '' };
-  const { results, total } = props.data.searchwp;
+  let results, total ;
+  if(process.env.NEXT_PUBLIC_SEARCH_APPLIANCE === 'searchwp' || !process.env.NEXT_PUBLIC_SEARCH_APPLIANCE) {
+    results = props.data.searchwp.results;
+    total = props.data.searchwp.total;
+  }
+  if(process.env.NEXT_PUBLIC_SEARCH_APPLIANCE === 'smartsearch') {
+    results = props.data.contentNodes.nodes;
+    total = props.data.contentNodes.pageInfo.offsetPagination.total;
+  }
   const currentPage = query?.page?.[0] ? parseInt(query.page[0]) : 1;
   const search = query.s;
   const categories = props?.data?.categories;
@@ -35,15 +43,15 @@ export default function Component(props) {
               <SearchBar />
               {results && results.map((post) => (
               <SearchListing
-                  key={`post-listing=${post.id}` ?? ''}
+                  key={post.id ? `post-listing=${post.id}` : ''}
                   id={`post-${post.id}`}
                   title={post.title}
                   url={post.uri}
-                  content={post.excerpt}
+                  type={post.contentTypeName ? post.contentTypeName : null}
+                  content={post.excerpt !== '' ? post.excerpt : 'test'}
                   categories={post.categories?.nodes}
                   featuredImage={post.featuredImage} />
               ))}
-
               <Pagination currentPage={currentPage} totalResults={parseInt(total)} basePath={`/search`} perPage={POSTS_PER_PAGE} querys={`?s=${search}`} />
           </div>
 
@@ -175,17 +183,150 @@ export default function Component(props) {
 //   );
 // }
 
-Component.variables = (params) => {
+Component.variables = (params, ctx) => {
+  let offset: string | number = params.query.page ? (POSTS_PER_PAGE * parseInt(params.query.page)).toString() : '0';
+  let postsPerPage: string | number = POSTS_PER_PAGE.toString();
+
+  if(process.env.NEXT_PUBLIC_SEARCH_APPLIANCE === 'smartsearch') {
+    offset = params.query.page ? (POSTS_PER_PAGE * (parseInt(params.query.page) - 1)) : 0;
+    postsPerPage = POSTS_PER_PAGE;
+  }
   return {
     searchTerm: params.query.s || '',
-    offset: params.query.page ? (POSTS_PER_PAGE * parseInt(params.query.page)).toString() : '0',
-    postsPerPage: POSTS_PER_PAGE.toString(),
+    offset: offset,
+    postsPerPage: postsPerPage,
     headerLocation: MENUS.PRIMARY_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION
   };
 };
 
+if(process.env.NEXT_PUBLIC_SEARCH_APPLIANCE === 'smartsearch') {
 Component.query = gql`
+  ${BlogInfoFragment}
+  ${NavigationMenuItemFragment}
+  ${ThirdPartySettingsFragment}
+  ${AlertFragment}
+  query GetSearchData(
+    $searchTerm: String!
+    $offset: Int!
+    $postsPerPage: Int!
+    $headerLocation: MenuLocationEnum
+    $footerLocation: MenuLocationEnum
+  ) {
+    # contentNodes(offset: $offset, postsPerPage: $postsPerPage, terms: $searchTerm) {
+    contentNodes(where: {search: $searchTerm, offsetPagination: {offset: $offset, size: $postsPerPage}}) {
+      nodes {
+        ... on Page {
+          id
+          title
+          uri
+          excerpt(format: RENDERED)
+          featuredImage {
+            node {
+              id
+              sourceUrl
+              altText
+              mediaDetails {
+                width
+                height
+              }
+            }
+          }
+          contentTypeName
+        }
+        ... on Post {
+          id
+          title
+          uri
+          excerpt(format: RENDERED)
+          categories {
+            nodes {
+              name
+              uri
+            }
+          }
+          featuredImage {
+            node {
+              id
+              sourceUrl
+              altText
+              mediaDetails {
+                width
+                height
+              }
+            }
+          }
+          contentTypeName
+        }
+        ... on Location {
+          id
+          excerpt
+          featuredImage {
+            node {
+              id
+            }
+          }
+          title(format: RENDERED)
+          uri
+          contentTypeName
+        }
+      }
+      pageInfo {
+        offsetPagination {
+          total
+        }
+      }
+    }
+    generalSettings {
+      ...BlogInfoFragment
+    }
+    headerSettings {
+      headerUtilities
+      headerUtilitiesMobile
+      headerButtons
+      headerButtonsMobile
+    }
+    footerSettings {
+      footerUtilities
+      footerAppIcons
+      footerSocialIcons
+    }
+    thirdPartySettings {
+      ...ThirdPartySettingsFragment
+    }
+    categories {
+      nodes {
+        name
+        uri
+        count
+      }
+    }
+
+    cxAlerts: cXAlerts {
+        edges {
+          node{
+            ...AlertsFragment
+          }
+        }
+    }
+    footerMenuItems: menuItems(where: { location: $footerLocation }, first: 255) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
+    headerMenuItems: menuItems(where: { location: $headerLocation }, first: 255) {
+      nodes {
+        ...NavigationMenuItemFragment
+      }
+    }
+  }
+`;
+}
+
+
+
+if(process.env.NEXT_PUBLIC_SEARCH_APPLIANCE === 'searchwp' || !process.env.NEXT_PUBLIC_SEARCH_APPLIANCE) {
+  Component.query = gql`
   ${BlogInfoFragment}
   ${NavigationMenuItemFragment}
   ${ThirdPartySettingsFragment}
@@ -220,6 +361,7 @@ Component.query = gql`
             }
           }
         }
+        contentTypeName
       }
       total
     }
@@ -267,6 +409,8 @@ Component.query = gql`
     }
   }
 `;
+
+}
 
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
