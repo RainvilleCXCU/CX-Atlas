@@ -57,11 +57,9 @@ const Header = ({
         if (scrollTop > lastScrollTop) { // scrolling down
           if (scrollTop > 80) {
             header.style.transform = 'translateY(-100%)';
-            header.style.opacity = '0';
           }
         } else { // scrolling up          
           header.style.transform = 'translateY(0)';
-          header.style.opacity = '1';
           header.style.position = 'fixed';
           pageContent.style.paddingTop = '80px';
         }
