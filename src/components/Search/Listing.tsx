@@ -6,6 +6,7 @@ import { Fragment } from "react";
 
 export interface Props {
     id: string;
+    type?: string;
     title: string;
     content: string;
     url: string;
@@ -13,10 +14,18 @@ export interface Props {
     categories?;
 }
 
-function SearchListing({ id, title, content, url = '', featuredImage, categories }: Props): JSX.Element {
+function SearchListing({ id, title, content, url = '', featuredImage, categories, type }: Props): JSX.Element {
+    const typeLabels = {
+        'page': 'Page',
+        'post': 'Blog Post',
+        'wpsl_stores': 'Branch Location'
+    }
     return (
-
         <article id={`post-${id}`} className="post" aria-label={title}>
+            {/* {
+                type &&
+                <div className="content-type cx-h5 no-margin--vertical-bottom">{typeLabels[type]}</div>
+            } */}
             <div className="post-content">
 
                 {featuredImage && featuredImage.node?.sourceUrl &&
