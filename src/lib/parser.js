@@ -189,8 +189,9 @@ export const parseHtml = (html) => {
             }
             // GB Accordion
             else if(attribs?.class?.includes("gb-block-accordion") && !attribs?.['data-genesis-block']) {
-                const title  = domToReact(findChildren(element, 'class', 'gb-accordion-title')[0].children);
-                const content = domToReact(findChildren(element, 'class', 'gb-accordion-text')[0].children);
+                const contentChildren = findChildren(element, 'class', 'gb-accordion-text')[0]?.children;
+                const title  = domToReact(findChildren(element, 'class', 'gb-accordion-title')[0].children, options);
+                const content = contentChildren ? domToReact(contentChildren, options) : <></>;
                 return (
                     <Accordion 
                         stayOpen={attribs?.['data-stay-open']}
