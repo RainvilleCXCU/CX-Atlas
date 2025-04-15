@@ -36,6 +36,9 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
   // Animate the open/close of the accordion
   useEffect(() => {
     if (contentRef.current) {
+      if (stayOpen == 'true') {
+        setIsAccordionOpen(true);
+      }
       setContentHeight(isAccordionOpen ? contentRef.current.scrollHeight : 0);
     }
   }, [isAccordionOpen]);
