@@ -7,6 +7,7 @@ declare global {
     KJE: any;
     CXCalc: any;
     $Lightning: any;
+    CXoneDfo: any;
   }
   interface Element {
     style: CSSStyleDeclaration

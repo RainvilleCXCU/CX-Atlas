@@ -23,6 +23,7 @@ import SwiperContainer from "components/Blocks/MobileScroll";
 import ProductFinder from "components/ProductFinder/finder";
 import AppLinks from "components/Device/AppLinks";
 import Address from "components/Map/address";
+import MBHIPRO from "components/Hours/MBHIPRO";
 // import ToggleContent from "components/ContentToggle/Content";
 // import ToggleContentLink from "components/ContentToggle/ContentToggleLink";
 // import ToggleContentSelect from "components/ContentToggle/ContentToggleSelect";
@@ -35,6 +36,7 @@ const DataTracComparison = dynamic(() => import("components/Datatrac/Comparison"
 const Disclosure = dynamic(() => import("components/Disclosure/Disclosure"), {ssr: false});
 const LinkLibrary = dynamic(() => import ("components/LinkLibrary/LinkLibrary"), {ssr: false});
 const Chat = dynamic(() => import ("components/Chat/cisco"), {ssr: false});
+const NiceChat = dynamic(() => import ("components/Chat/nice"), {ssr: false});
 const Calculator = dynamic(() => import("components/Calculator/Calculator"), {ssr: false});
 const CXCalc = dynamic(() => import("components/Calculator/CXCalculator"), {ssr: false});
 const CXCalcResults = dynamic(() => import("components/Calculator/CXCalculatorResults"), {ssr: false});
@@ -96,6 +98,11 @@ export const parseHtml = (html) => {
             else if(name === 'a' && attribs?.class?.includes('chat_bubble')) {
                 return (
                     <Chat className={attribs.class}>{domToReact(children, options)}</Chat>
+                )
+            }
+            else if(name === 'a' && attribs?.class?.includes('nice_chat')) {
+                return (
+                    <NiceChat className={attribs.class}>{domToReact(children, options)}</NiceChat>
                 )
             }
             else if(name === 'a' && whitelistRegex.test(attribs?.href) === false && attribs?.href[0] !== '/' && attribs?.href[0] !== '#') {
@@ -180,6 +187,14 @@ export const parseHtml = (html) => {
                     <FAQ id={`FAQ-${attribs?.['data-post_id']}`} title={title} content={content} />
                 )
             }
+            // GB Accordion
+            else if(attribs?.class?.includes("gb-block-accordion")) {
+                const title  = domToReact(findChildren(element, 'class', 'gb-accordion-title')[0].children);
+                const content = domToReact(findChildren(element, 'class', 'gb-accordion-text')[0].children);
+                return (
+                    <Accordion title={title} content={content} />
+                )
+            }
             // Step
             else if (attribs?.['data-acf-block'] && attribs?.['data-acf-block'] === 'step') {
                 return (
@@ -204,6 +219,14 @@ export const parseHtml = (html) => {
                     <ProductFinder productData={attribs?.['data-product-data']} submitText={attribs?.['data-submit-text']} selectText={attribs?.['data-select-text']} attribs={attribs}>{domToReact(children, options)}</ProductFinder>
                 )
             }
+
+            // Hours Toggle
+            else if(attribs?.class?.includes?.('mbhi-if-wrapper')) {
+                return (
+                    <MBHIPRO locationId={attribs?.['data-loc']} classNames={attribs?.class} code={attribs?.['data-code']}>{domToReact(children, options)}</MBHIPRO>
+                )
+            }
+            
             // Content Toggle Link
             else if(attribs?.['data-genesis-block']) {
                 if(attribs?.['data-genesis-block'] == 'accordion') {
