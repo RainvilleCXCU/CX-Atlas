@@ -80,7 +80,7 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
 
   return (
     <div className={`cx-accordion__brand ${classNames}`}>
-      <div className="accordion-header" onClick={openHandler}>
+      <div className="accordion-header" onClick={openHandler} id={id}>
         <summary className={`gb-accordion-title${isAccordionOpen ? ' is-open' : ''}`}>{title}</summary>
       </div>
       <div
