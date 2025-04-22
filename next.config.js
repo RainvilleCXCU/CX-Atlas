@@ -23,6 +23,15 @@ let nextConfig = {
             value: 'max-age=63072000; includeSubDomains; preload'
           }
         ]
+      },
+      {
+        source: '/mdr:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-cache'
+          }
+        ]
       }
     ];
   },
@@ -146,12 +155,12 @@ let nextConfig = {
         //   permanent: false,
         // },
         {
-          source: "/mdr/:path*/",
+          source: "/mdr/:path*",
           destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/mdr/:path*/`,
         },
         {
-          source: "/mdr/:path*",
-          destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/mdr/:path*`,
+          source: "/mdr:path*",
+          destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/mdr/:path*/`,
         },
         {
           source: "/graphql/:path*",
