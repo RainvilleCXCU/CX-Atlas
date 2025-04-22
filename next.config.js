@@ -29,9 +29,17 @@ let nextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'no-cache'
-          }
-        ]
+            value: 'no-store, no-cache, must-revalidate, proxy-revalidate',
+          },
+          {
+            key: 'Pragma',
+            value: 'no-cache',
+          },
+          {
+            key: 'Expires',
+            value: '0',
+          },
+        ],
       }
     ];
   },
@@ -155,8 +163,19 @@ let nextConfig = {
         //   permanent: false,
         // },
         {
-          source: "/mdr/:path*",
-          destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/mdr/:path*/`,
+          source: "/:path*",
+          destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/mdr/:path*`,
+          has: [
+            {
+              type: "header",
+              key: "Referer",
+              value: ".*/mdr.*" // Only apply this rewrite for requests originating from MDR pages
+            }
+          ]
+        },
+        {
+          source: "/mdr/create:path*",
+          destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/mdr/create/:path*/`,
         },
         {
           source: "/mdr:path*",
