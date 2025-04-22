@@ -163,8 +163,8 @@ let nextConfig = {
         //   permanent: false,
         // },
         {
-          source: "/:path*",
-          destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/mdr/:path*`,
+          source: "/css/:path*",
+          destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/mdr/css/:path*`,
           has: [
             {
               type: "header",

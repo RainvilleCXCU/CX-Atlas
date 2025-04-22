@@ -4,8 +4,30 @@ const { fetchWordPressRedirects } = require("./utils/redirects");
 const { fetchVanityByPath } = require("./utils/vanity");
  
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname, search } = request.nextUrl;
   const vanityPathMatch = process.env.NEXT_PUBLIC_VANITY_PATH_MATCH ? new RegExp(process.env.NEXT_PUBLIC_VANITY_PATH_MATCH) : new RegExp('/(disclosures/.*)');
+
+
+  if (pathname.startsWith('/mdr')) {
+    // Clone the response so we can modify it
+    const response = NextResponse.next();
+    
+    // Set no-cache headers
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+
+    const rewriteUrl = new URL(process.env.NEXT_PUBLIC_WORDPRESS_URL);
+    rewriteUrl.pathname = pathname[pathname.length - 1] !== '/' ? pathname + '/' : pathname;
+    rewriteUrl.search = search ? 
+      `${search}&_nocache=${Date.now()}` : 
+      `?_nocache=${Date.now()}`;
+      
+    
+     return NextResponse.rewrite(rewriteUrl);
+
+    // return NextResponse.next();
+  }
 
   console.log('MIDDLEWARE');
   console.log(pathname);
