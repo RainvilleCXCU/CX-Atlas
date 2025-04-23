@@ -4,8 +4,32 @@ const { fetchWordPressRedirects } = require("./utils/redirects");
 const { fetchVanityByPath } = require("./utils/vanity");
  
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname, search } = request.nextUrl;
   const vanityPathMatch = process.env.NEXT_PUBLIC_VANITY_PATH_MATCH ? new RegExp(process.env.NEXT_PUBLIC_VANITY_PATH_MATCH) : new RegExp('/(disclosures/.*)');
+
+
+  if (pathname.startsWith('/mdr')) {   
+
+    const rewriteUrl = new URL(process.env.NEXT_PUBLIC_WORDPRESS_URL);
+    rewriteUrl.pathname = pathname[pathname.length - 1] !== '/' ? pathname + '/' : pathname;
+    rewriteUrl.search = search ? 
+      `${search}&_nocache=${Date.now()}` : 
+      `?_nocache=${Date.now()}`;
+      
+    const response = NextResponse.rewrite(rewriteUrl);
+    
+    // Add ALL the cache-busting headers
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    response.headers.set('Surrogate-Control', 'no-store');
+    response.headers.set('CDN-Cache-Control', 'no-cache, no-store');
+    response.headers.set('Cloudflare-CDN-Cache-Control', 'no-cache, no-store');
+    
+     return response;
+
+    // return NextResponse.next();
+  }
 
   console.log('MIDDLEWARE');
   console.log(pathname);
