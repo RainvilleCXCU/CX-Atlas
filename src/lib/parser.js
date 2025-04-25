@@ -273,6 +273,9 @@ export const parseHtml = (html) => {
                 if(attribs?.['data-acf-block'] == 'app-links') {
                     const props = {
                         ...(attribs?.['data-apps-opening-text'] !== '' && {appOpeningText: attribs?.['data-apps-opening-text']}),
+                        ...(attribs?.['data-show-qr-code'] && attribs?.['data-show-qr-code'] === 'true' ? {showQRCode: true} : {showQRCode: false}),
+                        ...(attribs?.['data-qr-code-image'] && attribs?.['data-qr-code-image'] !== '' && {qrCode: attribs?.['data-qr-code-image']})
+
                     }
                     return (
                         <AppLinks {...props} />
