@@ -1,4 +1,4 @@
-/* 09/30/2024 Copyright 2024 KJE Computer Solutions, Inc.  Licensed for use on https://www.ConnexusCU.org */ 
+/* 04/08/2025 Copyright 2025 KJE Computer Solutions, Inc.  Licensed for use on https://www.ConnexusCU.org */ 
 
 @-webkit-keyframes fadeIn {
     from { opacity: 0; }
@@ -230,7 +230,7 @@ div.KJECalculatorReportTable
 }
 
 .KJECalculator p {
-    font: normal 1em Arial, Helvetica, sans-serif;
+    font: normal 1em Arial,Helvetica,sans-serif;
 }
 
 #KJETitle     {
@@ -289,7 +289,7 @@ div.KJEButtonIsFixed {
 }
 
 .KJECommandButton, .KJEMoreButton, #KJEAllContent input.KJEMenuButton[type=button] {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial,Helvetica,sans-serif;
     -webkit-appearance: none;
     padding: 5px 3px;
     margin: 4px 2px 7px 2px;
@@ -334,7 +334,7 @@ button.KJEMoreButton {
     overflow: hidden;
 }
 
-#KJEMenuWindowTitle, #KJEMenuSavedTitle {
+#KJEMenuItemsTitle, #KJEMenuSavedTitle {
     display: block;
     height: inherit;
     text-align: center;
@@ -1397,7 +1397,7 @@ table.KJEReportTable .KJEHeading,  table.KJECalcTable .KJEHeading{
     font-size:1.05em;
     font-weight:bold;
     line-height:1.2em;
-    padding: 10px 8px;
+    padding: 8px 8px;
 }
 
 table.KJEReportTable .KJEHeadingUnderline,  table.KJECalcTable .KJEHeadingUnderline {
@@ -1408,14 +1408,14 @@ table.KJEReportTable .KJEHeadingRight,  table.KJECalcTable .KJEHeadingRight{
 }
 
 table.KJEReportTable td.KJECell,table.KJEReportTable th.KJECell, table.KJECalcTable td.KJECell{
-    padding:10px 8px;
+    padding:8px 8px;
     vertical-align:text-top;
     border: none;
 }
 
 table.KJEReportTable td.KJELabel, table.KJEReportTable th.KJELabel, table.KJECalcTable td.KJELabel, table.KJECalcTable th.KJELabel,
 table.KJECalcTable th.KJEHeading, table.KJEReportTable th.KJEHeading {
-    padding:10px 8px;
+    padding:8px 8px;
     font-weight:bold;
     vertical-align:text-top;
     border: none;
@@ -1433,15 +1433,15 @@ table.KJEReportTable th.KJELabel, table.KJECalcTable th.KJELabel{
 }
 
 table.KJEReportTable td.KJELabelPad, th.KJELabelPad, table.KJECalcTable td.KJELabelPad {
-    padding-right:10px;
-    padding-top:10px;
-    padding-bottom:10px;
-    padding-left:10px;
+    padding-right:8px;
+    padding-top:8px;
+    padding-bottom:8px;
+    padding-left:8px;
     border: none;
 }
 
 table.KJEReportTable td.KJECellStrong,table.KJEReportTable th.KJECellStrong, table.KJECalcTable td.KJECellStrong, table.KJECalcTable th.KJECellStrong{
-    padding:10px 8px;
+    padding:8px 8px;
     font-weight:bold;
     vertical-align:text-top;
     border: none;
@@ -1487,7 +1487,7 @@ div.KJERightMargin {
 
 .KJELeftPad, table.KJEReportTable th.KJELeftPad, table.KJECalcTable th.KJELeftPad  {
     text-align: left;
-    padding-left: 10px;
+    padding-left: 8px;
 }
 .KJECenter, table.KJEReportTable th.KJECenter, table.KJECalcTable th.KJECenter {
     text-align: center;
@@ -1687,7 +1687,7 @@ table.KJEScheduleTable tr.KJEScheduleFooterRow {
 }
 
 table.KJEScheduleTable th.KJEScheduleHeading {
-    padding: 10px 8px;
+    padding: 8px 8px;
     border: none;
 }
 
@@ -1711,7 +1711,7 @@ table.KJEScheduleTable th.KJEScheduleHeadingRightBorder {
 table.KJEScheduleTable td.KJEScheduleCell,
 table.KJEScheduleTable th.KJEScheduleCell,
 table.KJEScheduleTable td.KJEScheduleCellStrong {
-    padding: 10px 8px;
+    padding: 8px 8px;
     vertical-align: text-top;
     border: none;
 }
@@ -2225,7 +2225,7 @@ a.KJEAccessibleSkip:hover {
 }
 
 
-#KJEMenuWindow {
+#KJEMenuItems {
     left: auto;
     right: 8px;
     top: 50px;
@@ -2244,7 +2244,7 @@ a.KJEAccessibleSkip:hover {
     -moz-box-shadow: 3px 3px 3px #333;
 }
 
-#KJEMenuWindow:before {
+#KJEMenuItems:before {
     content:"";
     position:absolute;
     top:-10px; /* value = - border-top-width - border-bottom-width */
@@ -2259,7 +2259,7 @@ a.KJEAccessibleSkip:hover {
 }
 
 /* creates the smaller  triangle */
-#KJEMenuWindow:after {
+#KJEMenuItems:after {
     content:"";
     position:absolute;
     top:-8px; /* value = - border-top-width - border-bottom-width */
@@ -2459,7 +2459,7 @@ div.KJEError {
 
 /* pop ups*/
 #KJEGuiDataPoint,
-#KJEMenuWindow,
+#KJEMenuItems,
 div.KJEGuiDefnPopup,
 span.KJEGuiErrorPopup,
 span.KJERequired:hover span.KJERequiredShowHover {
@@ -2469,7 +2469,7 @@ span.KJERequired:hover span.KJERequiredShowHover {
 }
 
 #KJEGuiDataPoint:before,
-#KJEMenuWindow:before,
+#KJEMenuItems:before,
 div.KJEGuiDefnPopup:before,
 span.KJEGuiErrorPopup:before,
 span.KJERequired:hover span.KJERequiredShowHover:before {
@@ -2477,7 +2477,7 @@ span.KJERequired:hover span.KJERequiredShowHover:before {
 }
 
 #KJEGuiDataPoint:after,
-#KJEMenuWindow:after,
+#KJEMenuItems:after,
 div.KJEGuiDefnPopup:after,
 span.KJEGuiErrorPopup:after,
 span.KJERequired:hover span.KJERequiredShowHover:after {

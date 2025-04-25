@@ -23,6 +23,23 @@ let nextConfig = {
             value: 'max-age=63072000; includeSubDomains; preload'
           }
         ]
+      },
+      {
+        source: '/mdr:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, no-cache, must-revalidate, proxy-revalidate',
+          },
+          {
+            key: 'Pragma',
+            value: 'no-cache',
+          },
+          {
+            key: 'Expires',
+            value: '0',
+          },
+        ],
       }
     ];
   },
@@ -146,12 +163,23 @@ let nextConfig = {
         //   permanent: false,
         // },
         {
-          source: "/mdr/:path*/",
-          destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/mdr/:path*/`,
+          source: "/css/:path*",
+          destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/mdr/css/:path*`,
+          has: [
+            {
+              type: "header",
+              key: "Referer",
+              value: ".*/mdr.*" // Only apply this rewrite for requests originating from MDR pages
+            }
+          ]
         },
         {
-          source: "/mdr/:path*",
-          destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/mdr/:path*`,
+          source: "/mdr/create:path*",
+          destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/mdr/create/:path*/`,
+        },
+        {
+          source: "/mdr:path*",
+          destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/mdr/:path*/`,
         },
         {
           source: "/graphql/:path*",

@@ -6,6 +6,7 @@ export interface Props {
     iosLogo?
     androidLogo?
     qrCode?
+    showQRCode?
     appOpeningText?
     androidAppLink?
     iosAppLink?
@@ -19,6 +20,7 @@ function AppLinks({
     androidLogo = '/images/logos/android-logo.svg',
     androidAppLink = 'https://play.google.com/store/apps/details?id=com.alkamitech.connexus',
     iosAppLink = 'https://apple.co/3qSq3u6',
+    showQRCode = true,
     qrCode ='/images/appsQRCode.svg',
     appOpeningText = 'App is available on the ',
     attribs,
@@ -39,7 +41,9 @@ function AppLinks({
             <div className='cx-text--small'>
                 {appOpeningText}
                 <img src={iosLogo} height={24} width={20} alt='iOS' /> and <img src={androidLogo} height={24} width={24} alt='Android' />
-                <img src={qrCode ? qrCode : siteSettings?.appQRCode} className='cx-margin--horizontal' />
+                {showQRCode && 
+                    <>or <img src={qrCode ? qrCode : siteSettings?.appQRCode} className='cx-margin--horizontal' /></>
+                }
             </div>
         }
 
