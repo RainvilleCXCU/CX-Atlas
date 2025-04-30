@@ -44,6 +44,7 @@ const DynamicRateTableInput = dynamic(() => import("components/Calculator/Dynami
 const DynamicRateTable = dynamic(() => import("components/Calculator/DynamicRateTable"), {ssr: false});
 const Scheduler = dynamic(() => import("components/Salesforce/scheduler"), {ssr: false});
 const Tooltip = dynamic(() => import("components/Tooltip/Tooltip"), {ssr: false});
+const CXBio = dynamic(() => import("components/CXBio/Bio"), {ssr: false});
 
 const findChildren = (element, att, value) => {
     let children = [];
@@ -390,6 +391,12 @@ export const parseHtml = (html) => {
                     <Tooltip attribs={attributesToProps(attribs)}>{domToReact(children, options)}</Tooltip>
                 )
             } 
+            // CX Bio
+            else if(attribs?.class?.includes('cx-bio')) {
+                return (
+                    <CXBio>{domToReact(children, options)}</CXBio>
+                )
+            }
 
             else {
                 return;
