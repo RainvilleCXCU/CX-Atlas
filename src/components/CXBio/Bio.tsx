@@ -28,6 +28,7 @@ const CXBio = ({ children }) => {
     window.addEventListener("resize", handleResize)
     if (window.innerWidth >= 800) {
       bioTextRef.current.style.maskImage = "unset";
+      bioTextRef.current.style.maxHeight = "none"
     }
     return () => {
       window.removeEventListener("resize", handleResize)
