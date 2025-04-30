@@ -26,6 +26,7 @@ const CXBio = ({ children }) => {
 
   useEffect(() => {
     window.addEventListener("resize", handleResize)
+    bioTextRef.current.style.maskImage = "unset";
     return () => {
       window.removeEventListener("resize", handleResize)
     }
