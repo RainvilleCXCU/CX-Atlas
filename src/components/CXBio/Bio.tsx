@@ -20,7 +20,7 @@ const CXBio = ({ children }) => {
     if (window.innerWidth >= 800) {
       bioTextRef.current.style.maskImage = "unset";
       bioTextRef.current.style.maxHeight = "none"
-    } else {
+    } else if (window.innerWidth < 800 && !bioExpanded) {
       bioTextRef.current.style.maskImage = "linear-gradient(to bottom, black, transparent)";
       bioTextRef.current.style.maxHeight = "126px"
     }
