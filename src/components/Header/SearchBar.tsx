@@ -17,6 +17,7 @@ interface SearchBarProps {
 	showNavigation?: boolean
 	template?: string
 	ctas?
+	children?
 }
 
 function DesktopSearchBar(props: SearchBarProps) {
@@ -112,7 +113,7 @@ function MobileSearchBar(props: SearchBarProps) {
 	);
 }
 
-export default function SearchBar({ device, navOpen, setNavOpen, logo, desktopLogo, mobileLogo, desktopLogoWidth, mobileLogoWidth, logoText, showSearch, showNavigation = true, template, ctas, children = <></> }) {
+export default function SearchBar({ device, navOpen, setNavOpen, logo, desktopLogo, mobileLogo, desktopLogoWidth, mobileLogoWidth, logoText, showSearch, showNavigation = true, template, ctas, children = <></> }:SearchBarProps) {
 	if (device.toLowerCase() === 'mobile') {
 		return (
 			<MobileSearchBar logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} logoText={logoText} navOpen={navOpen} setNavOpen={setNavOpen} showNavigation={showNavigation} showSearch={showSearch} template={template} ctas={ctas} />
