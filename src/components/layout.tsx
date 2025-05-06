@@ -49,6 +49,10 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTi
     const { clarityId, clarityEnabled, gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
     const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
     const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
+    const template = props?.data?.page?.template?.templateName;
+    const ctaInfo = props?.data?.page?.ctaPage ?? null;
+
+
     let { title = '', content, seo = {}, link = '', featuredImage, databaseId = '', details } = props?.data?.page ?? props?.data?.post ?? props?.data?.location ?? props?.data?.category ?? {
         title: '',
         seo: {},
@@ -129,19 +133,29 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTi
                 activeAlerts.length > 0 &&
                 <Alert alerts={activeAlerts} />
             }
-                    <Loading /> 
-                    <Header
-                        title={title}
-                        description={siteDescription}
-                        logo={siteLogo}
-                        logoText={siteLogoText}
-                        desktopLogo={siteDesktopLogo}
-                        desktopLogoWidth={siteDesktopLogoWidth}
-                        mobileLogo={siteMobileLogo}
-                        mobileLogoWidth={siteMobileLogoWidth}
-                        menuItems={primaryMenu}
-                        headerSettings={headerSettings}
-                    />
+                    <Loading />
+                    {template && template.toLowerCase() !== 'no header' &&
+                        <Header
+                            title={title}
+                            description={siteDescription}
+                            logo={siteLogo}
+                            logoText={siteLogoText}
+                            desktopLogo={siteDesktopLogo}
+                            desktopLogoWidth={siteDesktopLogoWidth}
+                            mobileLogo={siteMobileLogo}
+                            mobileLogoWidth={siteMobileLogoWidth}
+                            menuItems={primaryMenu}
+                            headerSettings={headerSettings}
+
+                            showButtons={template.toLowerCase() === 'full width' || template.toLowerCase() === 'default'}
+                            showNavigation={template.toLowerCase() === 'full width' || template.toLowerCase() === 'default'}
+                            showSearch={template.toLowerCase() === 'full width' || template.toLowerCase() === 'default'}
+                            showUtilityNav={template.toLowerCase() === 'full width' || template.toLowerCase() === 'default'}
+
+                            template={template}
+                            ctas={ctaInfo?.ctas ? ctaInfo.ctas : false}
+                        />
+                    }
                     {children}
             {footerMenu &&
                     <Footer copyrightHolder={footerText} menuItems={footerMenu} logo={siteLogo} logoText={siteLogoText} footerUtilities={footerUtilities} footerAppIcons={footerAppIcons} footerSocialIcons={footerSocialIcons} />

@@ -137,6 +137,9 @@ Component.query = gql`
             }
         }
       }
+      template {
+        templateName
+      }
     }
     relatedPosts(postId: $pageId) {
       title

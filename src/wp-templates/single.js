@@ -84,6 +84,9 @@ Component.query = gql`
       content
       date
       link
+      template {
+        templateName
+      }
       seo {
           canonical
           metaDesc
