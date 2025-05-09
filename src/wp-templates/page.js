@@ -6,6 +6,7 @@ import { NavigationMenuItemFragment } from '../fragments/MenuItems';
 import { parseHtml } from 'lib/parser';
 import { ThirdPartySettingsFragment } from 'fragments/ThirdParty';
 import dynamic from 'next/dynamic';
+
 const BaseLayout = dynamic(() => import('components/layout'));
 // import BaseLayout from 'components/layout';
 
@@ -78,6 +79,18 @@ Component.query = gql`
           }
         }
       link
+      template {
+        templateName
+      }
+      ctaPage {
+        ctas {
+          buttonColor
+          ctaButtonType
+          ctaLink
+          ctaText
+          compact
+        }
+      }
     }
     generalSettings {
       ...BlogInfoFragment

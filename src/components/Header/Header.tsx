@@ -4,6 +4,14 @@ import Logo from 'components/Logo';
 import { useRouter } from 'next/router';
 import Navigation from './Navigation';
 import dynamic from 'next/dynamic';
+
+interface CTAProps {
+  buttonColor: string;
+  ctaButtonType: string;
+  ctaLink: string;
+  ctaText: string;
+  compact: boolean;
+}
 interface Props {
   title?: string;
   description?: string;
@@ -20,6 +28,8 @@ interface Props {
   showLogo?: boolean;
   menuItems?;
   headerSettings?;
+  template?: string;
+  ctas?: Array<CTAProps>;
 }
 
 const Header = ({
@@ -37,7 +47,9 @@ const Header = ({
   showSearch = true,
   showLogo = true,
   menuItems,
-  headerSettings
+  headerSettings,
+  template,
+  ctas
 }: Props): JSX.Element => {
 
   const { asPath } = useRouter();
@@ -100,15 +112,24 @@ const Header = ({
             {showUtilityNav &&
               <UtilityNav logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} logoText={logoText} headerUtilities={headerSettings.headerUtilities} />
             }
+
+            {
+              template && template.toLowerCase() === 'cta header' && 
+                <section className='cx-header__cta'>
+                  {ctas.map((cta, index) => (
+                    <a href={cta.ctaLink} className={`cx-button cx-button--${cta.ctaButtonType}${cta.buttonColor}${cta.compact ? ' cx-button--compact' : ''} ${index !== 0 ? ' slim-margin--horizontal-left' : ''}`}>{cta.ctaText}</a>
+                  ))}
+                </section>
+            }
           </div>
         </section>
       } 
         {!showNavigation ?
-              <Navigation showNavigation={showNavigation} showButtons={showButtons} logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} logoText={logoText} setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} headerSettings={headerSettings} menuItems={menuItems} />
+              <Navigation template={template} ctas={ctas} showNavigation={showNavigation} showButtons={showButtons} logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} logoText={logoText} setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} headerSettings={headerSettings} menuItems={menuItems} />
              :
           <section className="cx-header__main-nav">
             <div className="cx-header__wrapper">
-              <Navigation showNavigation={showNavigation} logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} logoText={logoText} showButtons={showButtons} setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} headerSettings={headerSettings} menuItems={menuItems} />
+              <Navigation template={template} ctas={ctas} showNavigation={showNavigation} logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} logoText={logoText} showButtons={showButtons} setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} headerSettings={headerSettings} menuItems={menuItems} />
             </div>
           </section >
         }

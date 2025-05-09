@@ -76,6 +76,18 @@ Component.query = gql`
           }
         }
       link
+      template {
+        templateName
+      }
+      ctaPage {
+        ctas {
+          buttonColor
+          ctaButtonType
+          ctaLink
+          ctaText
+          compact
+        }
+      }
     }
     generalSettings {
       ...BlogInfoFragment
