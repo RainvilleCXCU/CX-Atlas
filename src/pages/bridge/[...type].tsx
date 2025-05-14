@@ -18,7 +18,8 @@ import {
     ApplyStartFragment,
     ApplyNowFragment,
     ApplyNowMinorFragment,
-    ApplyNowMemberFragment
+    ApplyNowMemberFragment,
+    ApplyNowMemberLimitFragment
 } from '../../fragments/ApplyWidgets';
 import { parseHtml } from 'lib/parser';
 const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});
@@ -224,8 +225,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const type = query.type[0] || '';
     const minor = query.minor || '';
     const member = query.member || '';
-    
-    
+    const productcode = query.productcode || '';
+    const atLimit = query.atLimit || '';
 
     const { data } = await apolloClient.query({
         query: gql`
@@ -243,6 +244,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                     minorNonMemberApplyNowURL
                     nonMemberApplyNowURL
                     productPageURL
+                    limitedProductCodes                    
                 }
               }
             }
@@ -253,8 +255,15 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const product = data.products.edges[0]?.node;
     const productInfo = { 
         account: product?.title,
-        minor
+        minor,
+        productcode,
+        atLimit,
+        member
     };
+
+
+    const productLimit = productcode !== '' && product.limitedProductCodes.includes(productcode);
+
     let widgetData;
     let widgetHtml = '';
 
@@ -276,7 +285,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyStartFragment}
-            query getApplyStart($account: String, $minor: String){
+            query getApplyStart($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String) {
                 widgetSettings {
                     ...ApplyStartFragment
                 }
@@ -289,31 +298,43 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowMinorFragment}
-            query getApplyNowMinor($account: String, $minor: String){
+            query getApplyNowMinor($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String) {
                 widgetSettings {
                     ...ApplyNowMinorFragment
                 }
             }`,variables: productInfo
             });
             widgetHtml = widgetData.data.widgetSettings.applyNowMinor
-    } else if(member) {
+    } else if(member && !productLimit) {
         console.log('Member')
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowMemberFragment}
-            query ApplyNowMember($account: String, $minor: String) {
+            query ApplyNowMember($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String) {
                 widgetSettings {
                     ...ApplyNowMemberFragment
                 }
             }`, variables: productInfo
             });
             widgetHtml = widgetData.data.widgetSettings.applyNowMember
+    } else if(member && productLimit && atLimit == '') {
+        console.log('Member Limit')
+        widgetData = await apolloClient.query({
+            query: gql`
+            ${ApplyNowMemberLimitFragment}
+            query ApplyNowMemberLimit($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String) {
+                widgetSettings {
+                    ...ApplyNowMemberLimitFragment
+                }
+            }`, variables: productInfo
+            });
+            widgetHtml = widgetData.data.widgetSettings.applyNowMemberLimit
     } else {
         console.log('DATA');
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowFragment}
-            query getApplyNow($account: String, $minor: String) {
+            query getApplyNow($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String) {
                 widgetSettings {
                     ...ApplyNowFragment
                 }
