@@ -33,6 +33,7 @@ const ToggleContentSelect = dynamic(() => import("components/ContentToggle/Conte
 const FAQ = dynamic(() => import("components/FAQs/faq"));
 const Form = dynamic(() => import("components/Forms/Form"));
 const DataTracComparison = dynamic(() => import("components/Datatrac/Comparison"));
+const DataTracBarComparison = dynamic(() => import("components/Datatrac/BarComparison"));
 const Disclosure = dynamic(() => import("components/Disclosure/Disclosure"), {ssr: false});
 const LinkLibrary = dynamic(() => import ("components/LinkLibrary/LinkLibrary"), {ssr: false});
 const Chat = dynamic(() => import ("components/Chat/cisco"), {ssr: false});
@@ -340,6 +341,12 @@ export const parseHtml = (html) => {
                 return ( 
                     <DataTracComparison performs={attribs?.['data-datatrac-perform']}>{domToReact(children, options)}</DataTracComparison>
                 );
+            }
+            // Datatrac Bar Comparison
+            else if(attribs?.class?.includes('rate_info__rate--bar')) {
+                return (
+                    <DataTracBarComparison {...attributesToProps(attribs)}>{domToReact(children, options)}</DataTracBarComparison>
+                )
             }
 
             // Link Library
