@@ -13,7 +13,7 @@ interface AccordionProps {
 }
 
 const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = '', isOpen = false, id, stayOpen = 'false', startOpen = 'false'}) => {
-    const [isAccordionOpen, setIsAccordionOpen] = useState(isOpen);
+    const [isAccordionOpen, setIsAccordionOpen] = useState(startOpen === 'true');
     const [contentHeight, setContentHeight] = useState(0);
     const contentRef = useRef<HTMLDivElement>(null);
     const router = useRouter();

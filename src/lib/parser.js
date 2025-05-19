@@ -198,7 +198,7 @@ export const parseHtml = (html) => {
                     <Accordion 
                         stayOpen={attribs?.['data-stay-open']}
                         startOpen={attribs?.['data-start-open']}
-                        isOpenpen={attribs?.['data-isopen']}
+                        isOpen={attribs?.['data-isopen']}
                         title={title} 
                         content={content}
                         classNames={attribs?.class}
