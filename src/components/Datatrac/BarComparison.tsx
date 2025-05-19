@@ -20,7 +20,7 @@ function DataTracBarComparison({...attribs}) {
   }, []);
   
 
-  return <div {...attribs}></div>;
+  return <div {...attribs}>{attribs?.children}</div>;
 }
 
 export default DataTracBarComparison;

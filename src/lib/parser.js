@@ -46,6 +46,7 @@ const DynamicRateTable = dynamic(() => import("components/Calculator/DynamicRate
 const Scheduler = dynamic(() => import("components/Salesforce/scheduler"), {ssr: false});
 const Tooltip = dynamic(() => import("components/Tooltip/Tooltip"), {ssr: false});
 const CXBio = dynamic(() => import("components/CXBio/Bio"), {ssr: false});
+const Confetti = dynamic(() => import("components/Confetti/Confetti"), {ssr: false});
 
 const findChildren = (element, att, value) => {
     let children = [];
@@ -198,7 +199,7 @@ export const parseHtml = (html) => {
                     <Accordion 
                         stayOpen={attribs?.['data-stay-open']}
                         startOpen={attribs?.['data-start-open']}
-                        isOpenpen={attribs?.['data-isopen']}
+                        isOpen={attribs?.['data-isopen']}
                         title={title} 
                         content={content}
                         classNames={attribs?.class}
@@ -345,7 +346,7 @@ export const parseHtml = (html) => {
             // Datatrac Bar Comparison
             else if(attribs?.class?.includes('rate_info__rate--bar')) {
                 return (
-                    <DataTracBarComparison {...attributesToProps(attribs)}></DataTracBarComparison>
+                    <DataTracBarComparison {...attributesToProps(attribs)}>{domToReact(children, options)}</DataTracBarComparison>
                 )
             }
 
@@ -398,10 +399,10 @@ export const parseHtml = (html) => {
                     <Tooltip attribs={attributesToProps(attribs)}>{domToReact(children, options)}</Tooltip>
                 )
             } 
-            // CX Bio
-            else if(attribs?.class?.includes('cx-bio')) {
+            // Confetti
+            else if(attribs?.class?.includes('confetti')) {
                 return (
-                    <CXBio>{domToReact(children, options)}</CXBio>
+                    <Confetti attribs={attributesToProps(attribs)}/>
                 )
             }
 
