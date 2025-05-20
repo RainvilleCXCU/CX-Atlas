@@ -88,7 +88,7 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
         ref={contentRef}
         style={{
           display: 'grid',
-          gridTemplateRows: `${contentHeight}fr`,
+          gridTemplateRows: `${contentHeight}${contentHeight == 0 ? '' : 'fr'}`,
           overflow: 'hidden',
           transition: 'grid-template-rows 0.3s ease',
         }}
