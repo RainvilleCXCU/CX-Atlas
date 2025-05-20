@@ -103,6 +103,9 @@ Component.query = gql`
         services
       }
       link
+      template {
+        templateName
+      }
     }
 
     locationSettings {

@@ -18,16 +18,18 @@ interface NavigationProps {
     logoText,
     showNavigation?
     showSearch?
+    template?
+    ctas?
 }
 
 export default function Navigation(props: NavigationProps) {
     const [cookies, setCookie ] = useCookies(['ismember']);
-    const { showNavigation, showButtons, logo, desktopLogo, mobileLogo, desktopLogoWidth, mobileLogoWidth, logoText, setNavOpen, navOpen, headerSettings, menuItems, showSearch } = props;
+    const { showNavigation, showButtons, logo, desktopLogo, mobileLogo, desktopLogoWidth, mobileLogoWidth, logoText, setNavOpen, navOpen, headerSettings, menuItems, showSearch, template, ctas } = props;
 
     return (
         <>
         <nav className="navbar navbar-expand-lg navbar-default cx-nav cx-header__mobile">
-                <SearchBar showNavigation={showNavigation} logoText={logoText} logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} device="mobile" setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} />
+                <SearchBar template={template} ctas={ctas} showNavigation={showNavigation} logoText={logoText} logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} device="mobile" setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} />
               
                 <MobileNav showNavigation={showNavigation} headerSettings={headerSettings} links={menuItems} menuOpen={navOpen} navOpen={navOpen} setNavOpen={setNavOpen} />
               

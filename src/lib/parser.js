@@ -33,6 +33,7 @@ const ToggleContentSelect = dynamic(() => import("components/ContentToggle/Conte
 const FAQ = dynamic(() => import("components/FAQs/faq"));
 const Form = dynamic(() => import("components/Forms/Form"));
 const DataTracComparison = dynamic(() => import("components/Datatrac/Comparison"));
+const DataTracBarComparison = dynamic(() => import("components/Datatrac/BarComparison"));
 const Disclosure = dynamic(() => import("components/Disclosure/Disclosure"), {ssr: false});
 const LinkLibrary = dynamic(() => import ("components/LinkLibrary/LinkLibrary"), {ssr: false});
 const Chat = dynamic(() => import ("components/Chat/cisco"), {ssr: false});
@@ -44,6 +45,8 @@ const DynamicRateTableInput = dynamic(() => import("components/Calculator/Dynami
 const DynamicRateTable = dynamic(() => import("components/Calculator/DynamicRateTable"), {ssr: false});
 const Scheduler = dynamic(() => import("components/Salesforce/scheduler"), {ssr: false});
 const Tooltip = dynamic(() => import("components/Tooltip/Tooltip"), {ssr: false});
+const CXBio = dynamic(() => import("components/CXBio/Bio"), {ssr: false});
+const Confetti = dynamic(() => import("components/Confetti/Confetti"), {ssr: false});
 
 const findChildren = (element, att, value) => {
     let children = [];
@@ -196,7 +199,7 @@ export const parseHtml = (html) => {
                     <Accordion 
                         stayOpen={attribs?.['data-stay-open']}
                         startOpen={attribs?.['data-start-open']}
-                        isOpenpen={attribs?.['data-isopen']}
+                        isOpen={attribs?.['data-isopen']}
                         title={title} 
                         content={content}
                         classNames={attribs?.class}
@@ -340,6 +343,12 @@ export const parseHtml = (html) => {
                     <DataTracComparison performs={attribs?.['data-datatrac-perform']}>{domToReact(children, options)}</DataTracComparison>
                 );
             }
+            // Datatrac Bar Comparison
+            else if(attribs?.class?.includes('rate_info__rate--bar')) {
+                return (
+                    <DataTracBarComparison {...attributesToProps(attribs)}>{domToReact(children, options)}</DataTracBarComparison>
+                )
+            }
 
             // Link Library
             else if(attribs?.['data-link-library-cats']) {
@@ -390,6 +399,12 @@ export const parseHtml = (html) => {
                     <Tooltip attribs={attributesToProps(attribs)}>{domToReact(children, options)}</Tooltip>
                 )
             } 
+            // Confetti
+            else if(attribs?.class?.includes('confetti')) {
+                return (
+                    <Confetti attribs={attributesToProps(attribs)}/>
+                )
+            }
 
             else {
                 return;

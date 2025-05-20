@@ -223,6 +223,9 @@ Page.query = gql`
                     }
                 }
             }
+            template {
+              templateName
+            }
         }
     }
     generalSettings {

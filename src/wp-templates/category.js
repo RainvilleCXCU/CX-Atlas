@@ -97,6 +97,9 @@ Component.query = gql`
             }
           }
         }
+        template {
+          templateName
+        }
       }
     }
     posts(where: {offsetPagination: {offset: $page, size: 5}, categoryName: $categoryName}) {
