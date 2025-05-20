@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Realistic from "react-canvas-confetti/dist/presets/realistic";
 import confetti from "canvas-confetti";
 
@@ -18,8 +18,19 @@ const Confetti = ({ ...attribs }) => {
     size,
     zIndex,
     decay,
-    // svgPaths 
-  } = attribs.attribs; // Destructure the attribs object
+    delay,
+    // <- potential for admin driven svgPaths here
+  } = attribs.attribs;
+
+  const [shouldRun, setShouldRun] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShouldRun(true); // Trigger the animation after the delay
+    }, delay * 1000);
+
+    return () => clearTimeout(timer); // Cleanup the timer on unmount
+  }, [delay]);
 
   const colorsArr = colors.split(",").map((color) => color.trim()); // Split the colors string into an array and trim whitespace
 
@@ -59,12 +70,12 @@ const Confetti = ({ ...attribs }) => {
     };
   };
 
-  return (
+  return shouldRun ? (
     <Realistic
       autorun={{ speed: 1, duration: 1 }}
       decorateOptions={decorateOptions}
     />
-  );
+  ) : null; // Render nothing until the delay has passed
 };
 
 export default Confetti;
