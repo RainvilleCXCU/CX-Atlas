@@ -28,7 +28,14 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
       }
       e.preventDefault();
       setIsAccordionOpen(!isAccordionOpen);
-      window.history.replaceState(null, document.title, window.location.pathname + window.location.search);
+      
+      if (window.location.hash) {
+        // Get current path without the hash
+        const pathWithoutHash = window.location.pathname + window.location.search;
+        
+        // Replace current URL without the hash
+        router.replace(pathWithoutHash, undefined, { shallow: true });
+      }
       return false;
     }
   };
@@ -49,8 +56,7 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
       const element = document.getElementById(elementid);
       if (element) {
         element.scrollIntoView();
-      }
-
+      }      
       if(id === elementid && !isAccordionOpen) {
         setIsAccordionOpen(true);
       } else {
@@ -88,7 +94,7 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
         ref={contentRef}
         style={{
           display: 'grid',
-          gridTemplateRows: `${contentHeight}${contentHeight == 0 ? '' : 'fr'}`,
+          gridTemplateRows: `${contentHeight}fr`,
           overflow: 'hidden',
           transition: 'grid-template-rows 0.3s ease',
         }}
