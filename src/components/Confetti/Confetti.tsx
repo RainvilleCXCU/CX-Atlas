@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Realistic from "react-canvas-confetti/dist/presets/realistic";
 import confetti from "canvas-confetti";
 
@@ -18,10 +18,39 @@ const Confetti = ({ ...attribs }) => {
     size,
     zIndex,
     decay,
-    // svgPaths 
-  } = attribs.attribs; // Destructure the attribs object
+    delay,
+    // <- potential for admin driven svgPaths here
+  } = attribs.attribs;
 
-  const colorsArr = colors.split(",").map((color) => color.trim()); // Split the colors string into an array and trim whitespace
+  const [shouldRun, setShouldRun] = useState(false);
+  const [xOrigin, setXOrigin] = useState(x_origin);
+
+  useEffect(() => {
+    // Set xOrigin to 0.5 if screen width < 992, else use provided x_origin
+    const handleResize = () => {
+      if (window.innerWidth < 992) {
+        setXOrigin(0.5);
+      } else {
+        setXOrigin(x_origin);
+      }
+    };
+
+    handleResize(); // Initial check
+    window.addEventListener("resize", handleResize);
+
+    // Trigger the animation after the delay
+    const timer = setTimeout(() => {
+      setShouldRun(true);
+    }, delay * 1000);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [delay, x_origin]);
+
+  // Split the colors string into an array and trim whitespace
+  const colorsArr = colors.split(",").map((color) => color.trim());
 
   // Confetti shapes
   const svgPaths = [
@@ -42,7 +71,7 @@ const Confetti = ({ ...attribs }) => {
   const decorateOptions = (defaultOptions) => {
     return {
       ...defaultOptions,
-      origin: { x: x_origin, y: y_origin },
+      origin: { x: xOrigin, y: y_origin },
       angle: angle,
       spread: spread,
       particleCount: particle_count,
@@ -59,12 +88,12 @@ const Confetti = ({ ...attribs }) => {
     };
   };
 
-  return (
+  return shouldRun ? (
     <Realistic
       autorun={{ speed: 1, duration: 1 }}
       decorateOptions={decorateOptions}
     />
-  );
+  ) : null; // Render nothing until the delay has passed
 };
 
 export default Confetti;
