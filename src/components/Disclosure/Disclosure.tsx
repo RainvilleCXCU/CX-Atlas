@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 function Disclosure({ attribs, children }) {
 	let disclosureWrapper = useRef(null);
 	useEffect(() => {
-		if(document.querySelectorAll('.datatrac-wrapper:not(.datatrac-wrapper__disclosure').length === 0) {
+		if(document.querySelectorAll('.datatrac-wrapper:not(.datatrac-wrapper__disclosure').length === 0 && document.querySelectorAll('.cx-datatrac-bar-comparison').length === 0) {
 			removeDatatrac();
 		}
 		let clickedReference = null;

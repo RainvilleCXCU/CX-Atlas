@@ -338,7 +338,7 @@ export const parseHtml = (html) => {
             } 
 
             // Datatrac
-            else if (attribs?.['datatrac-wrapper']) {
+            else if (attribs?.['datatrac-wrapper'] || attribs?.class?.includes('datatrac-bar-wrapper')) {
                 return ( 
                     <DataTracComparison performs={attribs?.['data-datatrac-perform']}>{domToReact(children, options)}</DataTracComparison>
                 );
