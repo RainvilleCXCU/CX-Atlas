@@ -79,6 +79,10 @@ Component.query = gql`
       template {
         templateName
       }
+      pageContent {
+        bodyTop
+        bodyBottom
+      }
       ctaPage {
         ctas {
           buttonColor

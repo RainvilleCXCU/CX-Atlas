@@ -137,6 +137,10 @@ Component.query = gql`
             }
         }
       }
+      pageContent {
+        bodyTop
+        bodyBottom
+      }
       template {
         templateName
       }
