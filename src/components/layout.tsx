@@ -13,7 +13,7 @@ import Qualtrics from 'components/ThirdParty/qualtrics';
 import Spectrum from 'components/ThirdParty/spectrum';
 import Siteimprove from 'components/ThirdParty/siteimprove';
 import Clarity from 'components/ThirdParty/clarity';
-
+import Q1Tracking from './ThirdParty/q1tracking';
 // import {
 //   Header,
 //   MenuNavigation,
@@ -27,6 +27,7 @@ import dynamic from 'next/dynamic';
 import Alert from 'components/Alerts/Alert';
 import Loading from 'components/common/loading';
 import { m } from 'framer-motion';
+import { parseHtml } from 'lib/parser';
 // const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:true});
 // const Loading = dynamic(() => import('components/common/loading'), {ssr:true});
 interface BaseLayoutProps {
@@ -46,11 +47,12 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTi
         footerText: '',
         logoTitleText: ''
     };
-    const { clarityId, clarityEnabled, gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
+    const { q1TrackingId, q1TrackingEnabled, clarityId, clarityEnabled, gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
     const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
     const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
-    const template = props?.data?.page?.template?.templateName ?? 'default';
-    const ctaInfo = props?.data?.page?.ctaPage ?? null;
+    const bodyTop = props?.data?.page?.pageContent?.bodyTop ?? props?.data?.postPreview?.pageContent?.bodyTop ?? '';
+    const template = props?.data?.page?.template?.templateName ?? props?.data?.postPreview?.template?.templateName ?? 'default';
+    const ctaInfo = props?.data?.page?.ctaPage ?? props?.data?.postPreview?.ctaPage ?? null;
 
 
     let { title = '', content, seo = {}, link = '', featuredImage, databaseId = '', details } = props?.data?.page ?? props?.data?.post ?? props?.data?.location ?? props?.data?.category ?? {
@@ -134,6 +136,9 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTi
                 <Alert alerts={activeAlerts} />
             }
                     <Loading />
+                    {
+                        parseHtml(bodyTop)
+                    }
                     {template && template.toLowerCase() !== 'no header' &&
                         <Header
                             title={title}
@@ -159,6 +164,12 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTi
                     {children}
             {footerMenu &&
                     <Footer copyrightHolder={footerText} menuItems={footerMenu} logo={siteLogo} logoText={siteLogoText} footerUtilities={footerUtilities} footerAppIcons={footerAppIcons} footerSocialIcons={footerSocialIcons} />
+            }
+
+            {q1TrackingEnabled &&
+            <Q1Tracking
+                id={q1TrackingId}
+                enabled={q1TrackingEnabled} />
             }
             {qualtricsEnabled &&
                     <Qualtrics
