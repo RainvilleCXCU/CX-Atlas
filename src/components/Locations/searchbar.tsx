@@ -108,6 +108,9 @@ const AddressBar = ({clearCB = () => {}}:AddressBarProps) => {
     }
 
     const clearInput = e => {
+        if(addressRef.current.value !== '') {
+            clearCB();
+        }
         setAddress('');
         const newLocation = state?.location;
         delete newLocation.search;
@@ -127,7 +130,6 @@ const AddressBar = ({clearCB = () => {}}:AddressBarProps) => {
                 ...newLocation
             }
         })
-        clearCB();
     }
 
     const formatSearch = (address) => {
