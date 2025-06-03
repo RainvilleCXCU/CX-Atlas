@@ -12,6 +12,7 @@ import {
   getLocationByLatLng,
 } from "lib/location/geocode";
 import { useRouter } from "next/router";
+import Loading from "components/common/loading";
 
 export interface Props {
     siteLogo?
@@ -46,14 +47,47 @@ function Locations({ locationSettings, siteLogo, location }: Props): JSX.Element
     const [isLoading, setLoading] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
     const [selectedLocation, setSelectedLocation] = useState(null);
+    const [latitude, setLatitude] = useState(44.9);
+    const [longitude, setLongitude] = useState(-89);
     useEffect(() => {
         setLoading(true);
-        if (state?.location?.search) {
+        if (location && location !== selectedLocation) {
+          setSelectedLocation(location);
+          getLatLngByLocation({ address: location })
+            .then((response) => {
+              const { location, bounds } = response[0].geometry;
+              const { types } = response[0];
+              console.log("Second GetLatLngByLoc");
+              setLatitude(location.lat());
+              setLongitude(location.lng());
+              fetchLocations({
+                lat: location.lat(),
+                lng: location.lng(),
+                bounds: types.includes("administrative_area_level_1")
+                  ? bounds
+                  : null,
+              });
+              data &&
+                push(
+                  `/about/branch-and-atm-locations/find-location/${location}/`,
+                  undefined,
+                  { shallow: true }
+                );
+            })
+            .catch((e) => {
+              console.log("NO LOCATION");
+              setData([]);
+              setLength(0);
+            });
+        }
+       else if (state?.location?.search) {
           getLatLngByLocation({ address: state?.location?.search })
             .then((response) => {
               const { location, bounds } = response[0].geometry;
               const { types } = response[0];
               console.log("Second GetLatLngByLoc");
+              setLatitude(location.lat());
+              setLongitude(location.lng());
               fetchLocations({
                 lat: location.lat(),
                 lng: location.lng(),
@@ -76,6 +110,8 @@ function Locations({ locationSettings, siteLogo, location }: Props): JSX.Element
         } else if (locationSettings.autoLocate !== 0) {
           getGeoLocation()
             .then((location) => {
+              setLatitude(location.coords.latitude);
+              setLongitude(location.coords.longitude);
               getLocationByLatLng({
                 lat: location.coords.latitude,
                 lng: location.coords.longitude,
@@ -97,6 +133,12 @@ function Locations({ locationSettings, siteLogo, location }: Props): JSX.Element
             })
             .catch((err) => {
               console.log(`Err: ${err}`);
+              setLatitude(locationSettings.startLatlng?.split[","]
+                ? locationSettings.startLatlng?.split[","][0]
+                : locationSettings.startLatlng?.split[","]
+                ? locationSettings.startLatlng?.split[","][1]
+                : 0);
+              setLongitude(location.coords.longitude);
               fetchLocations({
                 lat: locationSettings.startLatlng?.split[","]
                   ? locationSettings.startLatlng?.split[","][0]
@@ -109,7 +151,7 @@ function Locations({ locationSettings, siteLogo, location }: Props): JSX.Element
             });
         } else if (!location) {
           console.log("FETCH DEFAULT NO SEARCH");
-          fetchLocations({ lat: 45, lng: -89, autoload: 1 });
+          fetchLocations({ lat: locationSettings.startLatlng.split('')[0], lng: locationSettings.startLatlng.split('')[1], autoload: 1 });
         }
         return () => {
           console.log("Cleanup location search");
@@ -145,8 +187,9 @@ function Locations({ locationSettings, siteLogo, location }: Props): JSX.Element
     
       const resetSearchResults = () => {
         setShowDetails(false);
-        setLength(0);
-        setData([]);
+        setLength(null);
+        setLoading(true);
+        setData(null);
       };
     
       const defaultRadius = () => {
@@ -155,7 +198,7 @@ function Locations({ locationSettings, siteLogo, location }: Props): JSX.Element
       };
     
       const fetchLocations = ({ lat, lng, autoload = 0, bounds = null }) => {
-        // resetSearchResults();
+        resetSearchResults();
     
         const boundsRad = bounds
           ? distance(
@@ -211,14 +254,16 @@ function Locations({ locationSettings, siteLogo, location }: Props): JSX.Element
             className="wpsl-wrap wpsl-store-below wpsl-default-filters"
         >
             <div className="wpsl-search wpsl-clearfix wpsl-checkboxes-enabled wpsl-geolocation-run">
-            <AddressBar />
+            <AddressBar clearCB={resetSearchResults} />
             </div>
-            <Map
-            lat={45}
-            lng={-89}
-            locationSettings={locationSettings}
-            markers={data}
-            />
+            {data || data === '' ? 
+              <Map
+              lat={latitude ? latitude : locationSettings.startLatlng.split('')[0]}
+              lng={longitude ? longitude : locationSettings.startLatlng.split('')[1]}
+              locationSettings={locationSettings}
+              markers={data}
+              /> : <></>
+            }
             <div id="wpsl-result-list">
             <div id="wpsl-stores">
                 <div className="cx-location-listing__title wpsl-location--section">
@@ -229,17 +274,20 @@ function Locations({ locationSettings, siteLogo, location }: Props): JSX.Element
                     </small>
                 </em>
                 </div>
-                {(data && (
+                {(data && data.length > 0) ? (
                 <LocationListings
                     data={data}
                     distanceUnit={locationSettings.distanceUnit}
                     logo={siteLogo}
                 />
-                )) || (
+                ) : data == '' ? (
                 <div className="wpsl-no-results-msg">
                     No results found
                 </div>
-                )}
+                ) : (
+                <div className="wpsl-no-results-msg">
+                  Searching for locations
+                </div>)}
             </div>
             </div>
             <LocationDetails />

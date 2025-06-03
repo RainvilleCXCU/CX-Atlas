@@ -4,7 +4,11 @@ import { getGeoLocation } from "lib/location/geolocation";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useRef, useState } from "react";
 
-const AddressBar = () => {
+interface AddressBarProps {
+    clearCB?
+}
+
+const AddressBar = ({clearCB = () => {}}:AddressBarProps) => {
 	const { query = {}, push } = useRouter();
 
     const [autoCompleteLoaded, setAutoCompleteLoaded] = useState(false);
@@ -30,7 +34,7 @@ const AddressBar = () => {
 
             })
             .catch(err => {
-                push(`/about/branch-and-atm-locations/`, undefined, { shallow: true });
+                push(`/about/branch-and-atm-locations`, undefined, { shallow: true });
             })
     }
 
@@ -66,6 +70,7 @@ const AddressBar = () => {
                         search: formatSearch(searchAddress)
                     }
                 })
+                clearCB();
                 // router.push(`/about/branch-and-atm-locations/find-location/${formatSearch(formatted_address)}/`, undefined, { shallow: true });
             });
             setAutoCompleteLoaded(true);
@@ -106,7 +111,7 @@ const AddressBar = () => {
         setAddress('');
         const newLocation = state?.location;
         delete newLocation.search;
-        push(`/about/branch-and-atm-locations/`, undefined, { shallow: false });
+        push(`/about/branch-and-atm-locations`, undefined, { shallow: false });
         // .then(() => {
         //     setState({
         //         ...state,
@@ -122,6 +127,7 @@ const AddressBar = () => {
                 ...newLocation
             }
         })
+        clearCB();
     }
 
     const formatSearch = (address) => {

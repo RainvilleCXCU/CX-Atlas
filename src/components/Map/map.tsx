@@ -76,8 +76,10 @@ function Map({ id="wpsl-gmap", title = 'Categories', lat, lng, locationSettings 
     }, [map, markers, markerIconProps]);
 
     useEffect(() => {
-        if(map && markersArray) {
+        if(map && markersArray && Object.keys(markersArray).length > 0) {
             fitBounds();
+        } else {
+            map?.setCenter( {lng:lng, lat:lat} );
         }
     }, [map, markersArray]);
 
@@ -172,6 +174,8 @@ function Map({ id="wpsl-gmap", title = 'Categories', lat, lng, locationSettings 
         // attachBoundsChangedListener(map, maxZoom);
 
 		map?.fitBounds( bounds );
+        console.log('LAT LONG');
+        console.log(`${lat} - ${lng}`);
 	}
     const attachBoundsChangedListener = ( map, maxZoom )  => {
         console.log(google)
