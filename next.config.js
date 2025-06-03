@@ -40,6 +40,22 @@ let nextConfig = {
             value: '0',
           },
         ],
+      },
+      {
+        source: '/wp-admin/admin-ajax.php',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'max-age=3600',
+          }
+        ],
+        has: [
+          {
+            type: "query",
+            key: "action",
+            value: "store_search",
+          },
+        ]
       }
     ];
   },

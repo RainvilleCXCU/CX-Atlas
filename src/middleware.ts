@@ -31,6 +31,13 @@ export async function middleware(request: NextRequest) {
     // return NextResponse.next();
   }
 
+  if(pathname.startsWith('/wp-admin/admin-ajax.php') && search.includes('store_search')){
+    console.log('CACHE LOCATIONS API');
+    const response = NextResponse.next();
+    response.headers.set('Cache-Control', 'max-age=3600, stale-while-revalidate');
+    return response;
+  }
+
   console.log('MIDDLEWARE');
   console.log(pathname);
   console.log(vanityPathMatch);

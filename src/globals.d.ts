@@ -8,6 +8,8 @@ declare global {
     CXCalc: any;
     $Lightning: any;
     CXoneDfo: any;
+    ttd_dom_ready: any;
+    TTDUniversalPixelApi: function;
   }
   interface Element {
     style: CSSStyleDeclaration
