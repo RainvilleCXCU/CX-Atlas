@@ -130,7 +130,12 @@ export const parseHtml = (html) => {
                     );
                 }  
                 return (
-                    <Link {...attributesToProps(attribs)} onClick={ attribs?.class?.includes('track-member') && trackMember}>{domToReact(children, options)}</Link>
+                    <Link {...attributesToProps(attribs)} prefetch={process.env.NEXT_PUBLIC_DISABLE_PREFETCH !== 'true'} onClick={ attribs?.class?.includes('track-member') && trackMember}
+                        onMouseOver={e => {
+                            if(process.env.NEXT_PUBLIC_DISABLE_PREFETCH === 'true') {
+                                e.stopPropagation();
+                            }
+                        }}>{domToReact(children, options)}</Link>
                 );
             }
             else if (name === 'img') {

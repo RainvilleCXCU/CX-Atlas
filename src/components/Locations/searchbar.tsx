@@ -61,6 +61,9 @@ const AddressBar = ({clearCB = () => {}}:AddressBarProps) => {
                     setAddress(formatted_address);           
 		            searchRadius = distance(geometry.viewport.getNorthEast().lng(), geometry.viewport.getNorthEast().lat(), geometry.viewport.getSouthWest().lng(), geometry.viewport.getSouthWest().lat()) / 2;
                     searchAddress = formatted_address;
+                    push(`/about/branch-and-atm-locations/find-location/${formatSearch(searchAddress)}`, undefined, { shallow: true });
+                } else if(places.name) {
+                    push(`/about/branch-and-atm-locations/find-location/${formatSearch(places.name)}`, undefined, { shallow: true });
                 }
                 setState({
                     ...state,
@@ -70,8 +73,9 @@ const AddressBar = ({clearCB = () => {}}:AddressBarProps) => {
                         search: formatSearch(searchAddress)
                     }
                 })
+
                 clearCB();
-                // router.push(`/about/branch-and-atm-locations/find-location/${formatSearch(formatted_address)}/`, undefined, { shallow: true });
+                // push(`/about/branch-and-atm-locations/find-location/${formatSearch(formatted_address)}/`, undefined, { shallow: true });
             });
             setAutoCompleteLoaded(true);
         }    
@@ -92,7 +96,9 @@ const AddressBar = ({clearCB = () => {}}:AddressBarProps) => {
     };
 
     const submitSearch = e => {
+        console.log('SUBMIT SEARCH!!!');
         const address = formatSearch(addressRef.current.value);
+        push(`/about/branch-and-atm-locations/find-location/${address}`, undefined, { shallow: true });
         setState({
             ...state,
             location: {

@@ -58,7 +58,8 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                                                             onClick={() => {
                                                                                 setIsNavExpanded(!isNavExpanded);
                                                                                 setNavSelected('');
-                                                                            }}>{parseHtml(navLink.label ?? "")}
+                                                                            }}
+                                                                            >{parseHtml(navLink.label ?? "")}
                                                                         </Link>
                                                                     </li>
                                                                 );
@@ -87,6 +88,12 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                                                         onClick={() => {
                                                                             setIsNavExpanded(!isNavExpanded);
                                                                             setNavSelected('');
+                                                                        }}
+                                                                        
+                                                                        onMouseOver={e => {
+                                                                            if(process.env.NEXT_PUBLIC_DISABLE_PREFETCH === 'true') {
+                                                                                e.stopPropagation();
+                                                                            }
                                                                         }}>{parseHtml(navLink.label ?? "")}
                                                                     </Link>
                                                                 </li>
