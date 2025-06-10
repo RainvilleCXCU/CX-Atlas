@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Fragment, useState } from 'react';
 import { parseHtml } from 'lib/parser';
+import OptimalNoPrefetchLink from 'components/Link/link';
 interface HeaderNavigationProps {
     device: string;
     menuItems?;
@@ -54,13 +55,13 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                                             {title?.childItems?.nodes?.map((navLink, index) => {
                                                                 return (
                                                                     <li key={`${index}-${navLink.databaseId}`}>
-                                                                        <Link href={navLink.uri || ''} prefetch={false} passHref className='dropdown-item cx-nav__dropdown-item'
+                                                                        <OptimalNoPrefetchLink href={navLink.uri || ''} prefetch={false} passHref className='dropdown-item cx-nav__dropdown-item'
                                                                             onClick={() => {
                                                                                 setIsNavExpanded(!isNavExpanded);
                                                                                 setNavSelected('');
                                                                             }}
                                                                             >{parseHtml(navLink.label ?? "")}
-                                                                        </Link>
+                                                                        </OptimalNoPrefetchLink>
                                                                     </li>
                                                                 );
                                                             })}
@@ -84,18 +85,12 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                                         {title?.childItems?.nodes?.map((navLink, index) => {
                                                             return (
                                                                 <li key={`item-${index}-${navLink.databaseId}`}>
-                                                                    <Link href={navLink.uri || ''} passHref prefetch={false} className='dropdown-item cx-nav__dropdown-item'
+                                                                    <OptimalNoPrefetchLink href={navLink.uri || ''} passHref prefetch={false} className='dropdown-item cx-nav__dropdown-item'
                                                                         onClick={() => {
                                                                             setIsNavExpanded(!isNavExpanded);
                                                                             setNavSelected('');
-                                                                        }}
-                                                                        
-                                                                        onMouseOver={e => {
-                                                                            if(process.env.NEXT_PUBLIC_DISABLE_PREFETCH === 'true') {
-                                                                                e.stopPropagation();
-                                                                            }
                                                                         }}>{parseHtml(navLink.label ?? "")}
-                                                                    </Link>
+                                                                    </OptimalNoPrefetchLink>
                                                                 </li>
                                                             );
                                                         })}
