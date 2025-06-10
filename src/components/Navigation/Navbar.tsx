@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Fragment, useState } from 'react';
 import { parseHtml } from 'lib/parser';
-import OptimalNoPrefetchLink from 'components/Link/link';
+import OptimalNoPrefetchLink from 'components/Link/Link';
 interface HeaderNavigationProps {
     device: string;
     menuItems?;
