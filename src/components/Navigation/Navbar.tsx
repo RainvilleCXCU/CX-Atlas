@@ -58,7 +58,8 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                                                             onClick={() => {
                                                                                 setIsNavExpanded(!isNavExpanded);
                                                                                 setNavSelected('');
-                                                                            }}>{parseHtml(navLink.label ?? "")}
+                                                                            }}
+                                                                            >{parseHtml(navLink.label ?? "")}
                                                                         </Link>
                                                                     </li>
                                                                 );

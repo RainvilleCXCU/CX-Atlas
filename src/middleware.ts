@@ -31,6 +31,7 @@ export async function middleware(request: NextRequest) {
     // return NextResponse.next();
   }
 
+
   console.log('MIDDLEWARE');
   console.log(pathname);
   console.log(vanityPathMatch);
