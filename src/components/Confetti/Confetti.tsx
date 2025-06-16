@@ -3,7 +3,6 @@ import Realistic from "react-canvas-confetti/dist/presets/realistic";
 import confetti from "canvas-confetti";
 
 const Confetti = ({ ...attribs }) => {
-  console.log("attribs", attribs.attribs);
   const {
     x_origin,
     y_origin,
@@ -22,7 +21,8 @@ const Confetti = ({ ...attribs }) => {
     // <- potential for admin driven svgPaths here
   } = attribs.attribs;
 
-  const [shouldRun, setShouldRun] = useState(false);
+  const [delayComplete, setDelayComplete] = useState(false);
+  const [confettiFired, setConfettiFired] = useState(false);
   const [xOrigin, setXOrigin] = useState(x_origin);
 
   useEffect(() => {
@@ -34,13 +34,20 @@ const Confetti = ({ ...attribs }) => {
         setXOrigin(x_origin);
       }
     };
-
     handleResize(); // Initial check
     window.addEventListener("resize", handleResize);
 
+    // Only run the confetti once per session
+    const hasRenderedConfetti = sessionStorage.getItem("hasRenderedConfetti");
+    if (hasRenderedConfetti) {
+      setConfettiFired(true);
+    } else {
+      sessionStorage.setItem("hasRenderedConfetti", "true");
+    }
+
     // Trigger the animation after the delay
     const timer = setTimeout(() => {
-      setShouldRun(true);
+      setDelayComplete(true);
     }, delay * 1000);
 
     return () => {
@@ -88,12 +95,12 @@ const Confetti = ({ ...attribs }) => {
     };
   };
 
-  return shouldRun ? (
+  return (delayComplete && !confettiFired) ? (
     <Realistic
       autorun={{ speed: 1, duration: 1 }}
       decorateOptions={decorateOptions}
     />
-  ) : null; // Render nothing until the delay has passed
+  ) : null; // Render nothing until the delay has passed and only if confetti hasn't been fired yet in this session
 };
 
 export default Confetti;
