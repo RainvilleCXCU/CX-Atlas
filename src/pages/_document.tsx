@@ -45,7 +45,7 @@ class CXDoc extends Document {
           
           <link
             rel="preload"
-            href="/_next/static/css/styles.css"
+            href={`/_next/static/css/styles.css${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`}
             as="style"
           />
           <link rel="stylesheet" href={`/_next/static/css/styles.css${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`} />
