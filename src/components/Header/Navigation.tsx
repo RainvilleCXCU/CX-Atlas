@@ -2,7 +2,6 @@ import SearchBar from './SearchBar';
 import MobileNav from './MobileNav';
 import MenuNavigation from 'components/Navigation/Navbar';
 import Link from 'next/link';
-import { useCookies } from 'react-cookie';
 import { trackMember } from 'utils/tracking';
 interface NavigationProps {
     navOpen?: boolean,
@@ -23,7 +22,6 @@ interface NavigationProps {
 }
 
 export default function Navigation(props: NavigationProps) {
-    const [cookies, setCookie ] = useCookies(['ismember']);
     const { showNavigation, showButtons, logo, desktopLogo, mobileLogo, desktopLogoWidth, mobileLogoWidth, logoText, setNavOpen, navOpen, headerSettings, menuItems, showSearch, template, ctas } = props;
 
     return (
