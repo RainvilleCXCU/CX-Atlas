@@ -55,10 +55,10 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                                                 return (
                                                                     <li key={`${index}-${navLink.databaseId}`}>
                                                                         <Link href={navLink.uri || ''} prefetch={false} passHref className='dropdown-item cx-nav__dropdown-item'
-                                                                            onClick={() => {
-                                                                                setIsNavExpanded(!isNavExpanded);
-                                                                                setNavSelected('');
-                                                                            }}
+                                                                            // onClick={() => {
+                                                                            //     setIsNavExpanded(!isNavExpanded);
+                                                                            //     setNavSelected('');
+                                                                            // }}
                                                                             >{parseHtml(navLink.label ?? "")}
                                                                         </Link>
                                                                     </li>
@@ -85,10 +85,11 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                                                             return (
                                                                 <li key={`item-${index}-${navLink.databaseId}`}>
                                                                     <Link href={navLink.uri || ''} passHref prefetch={false} className='dropdown-item cx-nav__dropdown-item'
-                                                                        onClick={() => {
-                                                                            setIsNavExpanded(!isNavExpanded);
-                                                                            setNavSelected('');
-                                                                        }}>{parseHtml(navLink.label ?? "")}
+                                                                        // onClick={() => {
+                                                                        //     setIsNavExpanded(!isNavExpanded);
+                                                                        //     setNavSelected('');
+                                                                        // }}
+                                                                        >{parseHtml(navLink.label ?? "")}
                                                                     </Link>
                                                                 </li>
                                                             );
