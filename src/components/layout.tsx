@@ -29,6 +29,7 @@ import Loading from 'components/common/loading';
 import { m } from 'framer-motion';
 import { parseHtml } from 'lib/parser';
 import Head from 'next/head';
+import { Suspense } from 'react';
 // const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:true});
 // const Loading = dynamic(() => import('components/common/loading'), {ssr:true});
 interface BaseLayoutProps {
@@ -91,9 +92,6 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTi
     title = pageTitle ? pageTitle : title;
 	return (
         <>
-        <Head>
-          <meta name="apple-itunes-app" content="app-id=895555570"></meta>
-        </Head>
         <SEO
             title={title}
             metaDesc={seo?.metaDesc}
@@ -165,7 +163,10 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTi
                             ctas={ctaInfo?.ctas ? ctaInfo.ctas : false}
                         />
                     }
-                    {children}
+
+                    <Suspense fallback={<Loading />}>
+                        {children}
+                    </Suspense>
             {footerMenu &&
                     <Footer copyrightHolder={footerText} menuItems={footerMenu} logo={siteLogo} logoText={siteLogoText} footerUtilities={footerUtilities} footerAppIcons={footerAppIcons} footerSocialIcons={footerSocialIcons} />
             }

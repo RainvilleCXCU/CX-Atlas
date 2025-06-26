@@ -436,7 +436,7 @@ let nextConfig = {
   },
   swcMinify: true,
   experimental: {
-    webVitalsAttribution:  process.env.NODE_ENV !== "production" ? ["CLS", "LCP", "FCP"] : [],
+    // webVitalsAttribution:  process.env.NODE_ENV !== "production" ? ["CLS", "LCP", "FCP"] : [],
     scrollRestoration: true,
     optimizePackageImports: [
       "@apollo/client",
@@ -455,12 +455,14 @@ let nextConfig = {
     outputStyle: "compressed",
   },
   webpack: (config, { dev, isServer }) => {
-    Object.assign(config.resolve.alias, {
-      "react/jsx-runtime.js": "preact/compat/jsx-runtime",
-      react: "preact/compat",
-      "react-dom/test-utils": "preact/test-utils",
-      "react-dom": "preact/compat",
-    });
+    // if (!dev && !isServer && !process.env.DEBUG_RENDERS) {
+      Object.assign(config.resolve.alias, {
+        "react/jsx-runtime.js": "preact/compat/jsx-runtime",
+        react: "preact/compat",
+        "react-dom/test-utils": "preact/test-utils",
+        "react-dom": "preact/compat",
+      });
+    // }
     const originalEntry = config.entry;
     config.entry = async () => {
       const entries = await originalEntry();
