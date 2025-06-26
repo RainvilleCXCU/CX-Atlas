@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { memo, useState, useEffect } from 'react';
 import UtilityNav from './UtilityNav';
 import Logo from 'components/Logo';
 import { useRouter } from 'next/router';
@@ -139,6 +139,6 @@ const Header = ({
 
 // export { Header };
 
-const MemoizedHeader = React.memo(Header);
+const MemoizedHeader = memo(Header);
 
 export default MemoizedHeader;

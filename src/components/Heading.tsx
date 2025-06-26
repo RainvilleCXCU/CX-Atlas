@@ -1,7 +1,7 @@
-import { createElement } from 'react';
+import { createElement, HTMLAttributes } from 'react';
 
 // HeadingProps constrains headings to levels h1-h6.
-interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
+interface HeadingProps extends HTMLAttributes<HTMLHeadingElement> {
   level: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 }
 
@@ -11,7 +11,7 @@ function Heading({
   children,
   className,
 }: HeadingProps): JSX.Element {
-  const H = ({ ...props }: React.HTMLAttributes<HTMLHeadingElement>) =>
+  const H = ({ ...props }: HTMLAttributes<HTMLHeadingElement>) =>
     createElement(level, props, children);
 
   return <H className={className}>{children}</H>;

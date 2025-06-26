@@ -29,7 +29,7 @@ import Loading from 'components/common/loading';
 import { m } from 'framer-motion';
 import { parseHtml } from 'lib/parser';
 import Head from 'next/head';
-import { Suspense } from 'react';
+import { Suspense, FC } from 'react';
 // const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:true});
 // const Loading = dynamic(() => import('components/common/loading'), {ssr:true});
 interface BaseLayoutProps {
@@ -38,7 +38,7 @@ interface BaseLayoutProps {
     children
 }
 
-const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle }) => {
+const BaseLayout: FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle }) => {
     const { description: siteDescription = '', logo: siteLogo = '', desktopLogo: siteDesktopLogo = '', mobileLogo: siteMobileLogo = '', desktopLogoWidth: siteDesktopLogoWidth = '', mobileLogoWidth: siteMobileLogoWidth = '', logoTitleText: siteLogoText = '', footerText: footerText = '' } = props?.data?.generalSettings ?? {
         description: '',
         logo: '',
