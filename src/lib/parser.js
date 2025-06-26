@@ -312,28 +312,28 @@ export const parseHtml = (html) => {
             // CX Calculator Results
             else if(attribs?.class?.includes('cx-calculator-results')) {
                 return (
-                    <div {...attributesToProps(attribs)}><CXCalcResults>{children}</CXCalcResults></div>
+                    <div {...attributesToProps(attribs)}><CXCalcResults>{domToReact(children, options)}</CXCalcResults></div>
                 )
             } 
 
             // CX Calculator
             else if(attribs?.class?.includes('cx-calculator')) {
                 return (
-                    <div {...attributesToProps(attribs)}><CXCalc>{children}</CXCalc></div>
+                    <div {...attributesToProps(attribs)}><CXCalc>{domToReact(children, options)}</CXCalc></div>
                 )
             }
             
             // Dynamic Rate table calculator input
             else if(attribs?.class?.includes('dynamic-rate-table-input')) {
                 return (
-                    <div {...attributesToProps(attribs)}><DynamicRateTableInput>{children}</DynamicRateTableInput></div>
+                    <div {...attributesToProps(attribs)}><DynamicRateTableInput>{domToReact(children, options)}</DynamicRateTableInput></div>
                 )
             } 
 
             // Dynamic Rate table calculator table
             else if(attribs?.class?.includes('dynamic-rate-table-output')) {
                 return (
-                    <div {...attributesToProps(attribs)}><DynamicRateTable>{children}</DynamicRateTable></div>
+                    <div {...attributesToProps(attribs)}><DynamicRateTable>{domToReact(children, options)}</DynamicRateTable></div>
                 )
             } 
 
