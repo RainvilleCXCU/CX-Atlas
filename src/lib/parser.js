@@ -392,7 +392,12 @@ export const parseHtml = (html) => {
                     <MarketingCloudForm formUrl={attribs['data-page-url']} {...attributesToProps(attribs)} />
                 )
             }
-
+            // CX Bio
+            else if(attribs?.class?.includes('cx-bio')) {
+                return (
+                    <CXBio>{domToReact(children, options)}</CXBio>
+                )
+            }
             // Tooltip
             else if(attribs?.class?.includes('tooltip')) {
                 return (

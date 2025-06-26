@@ -455,14 +455,14 @@ let nextConfig = {
     outputStyle: "compressed",
   },
   webpack: (config, { dev, isServer }) => {
-    // if (!dev && !isServer && !process.env.DEBUG_RENDERS) {
+    if (!process.env.USE_REACT) {
       Object.assign(config.resolve.alias, {
         "react/jsx-runtime.js": "preact/compat/jsx-runtime",
         react: "preact/compat",
         "react-dom/test-utils": "preact/test-utils",
         "react-dom": "preact/compat",
       });
-    // }
+    }
     const originalEntry = config.entry;
     config.entry = async () => {
       const entries = await originalEntry();
