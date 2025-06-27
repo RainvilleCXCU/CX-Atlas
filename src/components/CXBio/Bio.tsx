@@ -14,6 +14,10 @@ const CXBio = ({ children }) => {
     setBioExpanded(!bioExpanded);
     readMoreButtonRef.current.innerText = bioExpanded ? "Read more" : "Read less";
     readMoreButtonRef.current.classList.toggle("expanded");
+    if (!bioExpanded) { // smooth scroll to the nearest image
+      const img = readMoreButtonRef.current.closest(".cx-bio")?.querySelector("img");
+      img.scrollIntoView({behavior: "smooth"});
+    }
   };
 
   const handleResize = () => {
