@@ -14,8 +14,8 @@ import BusinessDetails from "components/Business/BusinessDetails";
 import Accordion from "components/Accordion/Accordion";
 import { trackMember } from "utils/tracking";
 
-const Vimeo = dynamic(() => import("components/Video/vimeo"));
-const Step = dynamic(() => import("components/Steps/Step"));
+const Vimeo = dynamic(() => import("components/Video/vimeo"), {ssr: false});
+const Step = dynamic(() => import("components/Steps/Step"), {ssr: false});
 // const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
 import ExternalLink from "components/ExternalLinks/links";
 import MarketingCloudForm from "components/Salesforce/cloudpage";
