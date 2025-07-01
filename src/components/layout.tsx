@@ -23,13 +23,11 @@ import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
 // const SEO = dynamic(()=> import('components/SEO/SEO'), {ssr:true});
 import SEO from './SEO/SEO';
-import dynamic from 'next/dynamic';
 import Alert from 'components/Alerts/Alert';
 import Loading from 'components/common/loading';
-import { m } from 'framer-motion';
 import { parseHtml } from 'lib/parser';
-import Head from 'next/head';
-import { Suspense, FC } from 'react';
+
+import { FC } from 'react';
 // const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:true});
 // const Loading = dynamic(() => import('components/common/loading'), {ssr:true});
 interface BaseLayoutProps {
@@ -163,10 +161,7 @@ const BaseLayout: FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle })
                             ctas={ctaInfo?.ctas ? ctaInfo.ctas : false}
                         />
                     }
-
-                    <Suspense fallback={<Loading />}>
-                        {children}
-                    </Suspense>
+                    {children}
             {footerMenu &&
                     <Footer copyrightHolder={footerText} menuItems={footerMenu} logo={siteLogo} logoText={siteLogoText} footerUtilities={footerUtilities} footerAppIcons={footerAppIcons} footerSocialIcons={footerSocialIcons} />
             }
