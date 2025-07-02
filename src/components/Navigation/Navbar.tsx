@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Fragment, useState } from 'react';
+import { Fragment, useCallback, useMemo, useState } from 'react';
 import { parseHtml } from 'lib/parser';
 interface HeaderNavigationProps {
     device: string;
@@ -9,9 +9,24 @@ interface HeaderNavigationProps {
 }
 
 function DesktopHeaderNavigation(props: HeaderNavigationProps) {
-    const [isNavExpanded, setIsNavExpanded] = useState(false);
-    const [navSelected, setNavSelected] = useState('');
-    const resourcesRegEx = new RegExp(/resources/, 'i');
+    const [navState, setNavState] = useState({ 
+        isExpanded: false, 
+        selected: '' 
+    });
+    const resourcesRegEx = useMemo(() => new RegExp(/resources/, 'i'), []);
+    
+    const handleMouseEnter = useCallback((label: string) => {
+        // Single state update - more efficient
+        setNavState({ isExpanded: true, selected: label });
+    }, []);
+    
+    const handleMouseLeave = useCallback(() => {
+        setNavState({ isExpanded: false, selected: '' });
+    }, []);
+    
+    const handleLinkClick = useCallback(() => {
+        setNavState({ isExpanded: false, selected: '' });
+    }, []);
     return (
         <ul className="navbar-nav me-auto mb-2 mb-lg-0 cx-nav__navbar">
             {props.menuItems?.map((link, index) => {
@@ -20,25 +35,15 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
                 } else {
                     return (
                         <li className={`menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children dropdown nav-item dropdown cx-nav__item cx-nav__dropdown nav-item-${index}`} key={`${link.label}$-menu${index}`}>
-                            <a className={`nav-link dropdown-toggle cx-nav__link cx-dropdown-toggle cx-dropdown-toggle__main-dropdown${navSelected === link.label ? ' show' : ''}`} aria-expanded={navSelected === link.label ? true : false} data-bs-toggle="dropdown" href={link.uri}
-                                onMouseOver={() => {
-                                    setIsNavExpanded(!isNavExpanded);
-                                    setNavSelected(link.label);
-                                }}
-                                onMouseOut={() => {
-                                    setIsNavExpanded(!isNavExpanded);
-                                    setNavSelected('');
-                                }}
+                            <a className={`nav-link dropdown-toggle cx-nav__link cx-dropdown-toggle cx-dropdown-toggle__main-dropdown${navState.selected === link.label ? ' show' : ''}`} aria-expanded={navState.selected === link.label ? true : false} data-bs-toggle="dropdown" href={link.uri}
+                                
+                                onMouseEnter={() => handleMouseEnter(link.label)}
+                                onMouseLeave={handleMouseLeave}
                             >{link.label}</a>
-                            <ul className={`dropdown-menu cx-nav__dropdown-menu depth_0${navSelected === link.label ? ' show' : ''}`} aria-labelledby="navbadropdown"
-                                onMouseOver={() => {
-                                    setIsNavExpanded(!isNavExpanded);
-                                    setNavSelected(link?.label);
-                                }}
-                                onMouseOut={() => {
-                                    setIsNavExpanded(!isNavExpanded);
-                                    setNavSelected('');
-                                }}>
+                            <ul className={`dropdown-menu cx-nav__dropdown-menu depth_0${navState.selected === link.label ? ' show' : ''}`} aria-labelledby="navbadropdown"
+                                onMouseEnter={() => handleMouseEnter(link.label)}
+                                onMouseLeave={handleMouseLeave}
+                            >
                                 <div className="cx-nav__dropdown-menu-container">
                                     <div className='cx-nav__dropdown-menu-container__menu-items'>
                                         {link?.childItems?.nodes?.map((title, index) => {
@@ -113,7 +118,7 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
 function MobileHeaderNavigation(props: HeaderNavigationProps) {
 
     const [navsSelected, setNavsSelected] = useState([]);
-    const toggleSelected = (menuItem) => {
+    const toggleSelected = useCallback((menuItem) => {
         if (navsSelected.includes(menuItem)) {
             setNavsSelected(navsSelected.filter(item => item !== menuItem));
         } else {
@@ -122,7 +127,7 @@ function MobileHeaderNavigation(props: HeaderNavigationProps) {
                 menuItem
             ]);
         }
-    }
+    }, []);
     return (
         <div className="accordion accordion-flush" id="cxNavAccordion">
             {props.menuItems?.map((link, index) => {
@@ -133,9 +138,8 @@ function MobileHeaderNavigation(props: HeaderNavigationProps) {
                         <li className='accordion-item cx-nav__item cx-accordion__item' key={`navItem-${index}`}>
                             <h2 className="accordion-header cx-accordion__header" id={`cx-acc-heading${link.label}`}>
                                 <button className="accordion-button collapsed cx-accordion__button" type="button" data-bs-toggle="collapse" data-bs-target={`#cx-acc-collapse${link.label}`} aria-expanded="false" aria-controls={`cx-acc-collapse${link.label}`}
-                                    onClick={() => {
-                                        toggleSelected(link.label?.replace(' ', '_'));
-                                    }} >
+                                    onClick={() => toggleSelected(link.label?.replace(' ', '_'))} 
+                                >
                                     {link.label}
                                 </button>
                             </h2>
@@ -155,9 +159,8 @@ function MobileHeaderNavigation(props: HeaderNavigationProps) {
                                                                     return (
                                                                         <li id={`menu-item-${navLink.databaseId}`} key={`${index}-${navLink.databaseId}`}>
                                                                             <Link href={navLink.uri || ''} passHref className='accordion-item cx-nav__accordion-item-link'
-                                                                            onClick={() => {
-                                                                                props.setNavOpen(false);
-                                                                            }}>{parseHtml(navLink.label ?? "")}
+                                                                                onClick={() => props.setNavOpen(false)}
+                                                                            >{parseHtml(navLink.label ?? "")}
                                                                             </Link>
                                                                         </li>
                                                                     )
