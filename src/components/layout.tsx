@@ -26,8 +26,7 @@ import SEO from './SEO/SEO';
 import Alert from 'components/Alerts/Alert';
 import Loading from 'components/common/loading';
 import { parseHtml } from 'lib/parser';
-
-import { FC } from 'react';
+import { Suspense, FC } from 'react';
 // const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:true});
 // const Loading = dynamic(() => import('components/common/loading'), {ssr:true});
 interface BaseLayoutProps {
@@ -161,7 +160,10 @@ const BaseLayout: FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle })
                             ctas={ctaInfo?.ctas ? ctaInfo.ctas : false}
                         />
                     }
-                    {children}
+
+                    <Suspense fallback={<Loading />}>
+                        {children}
+                    </Suspense>
             {footerMenu &&
                     <Footer copyrightHolder={footerText} menuItems={footerMenu} logo={siteLogo} logoText={siteLogoText} footerUtilities={footerUtilities} footerAppIcons={footerAppIcons} footerSocialIcons={footerSocialIcons} />
             }
