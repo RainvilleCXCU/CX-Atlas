@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { memo, useState, useEffect } from 'react';
 import UtilityNav from './UtilityNav';
 import Logo from 'components/Logo';
 import { useRouter } from 'next/router';
 import Navigation from './Navigation';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 
 interface CTAProps {
   buttonColor: string;
@@ -117,7 +118,7 @@ const Header = ({
               template && template.toLowerCase() === 'cta header' && 
                 <section className='cx-header__cta'>
                   {ctas.map((cta, index) => (
-                    <a href={cta.ctaLink} className={`cx-button cx-button--${cta.ctaButtonType}${cta.buttonColor}${cta.compact ? ' cx-button--compact' : ''} ${index !== 0 ? ' slim-margin--horizontal-left' : ''}`}>{cta.ctaText}</a>
+                    <Link href={cta.ctaLink} key={`header-cta-${index}`} className={`cx-button cx-button--${cta.ctaButtonType}${cta.buttonColor}${cta.compact ? ' cx-button--compact' : ''} ${index !== 0 ? ' slim-margin--horizontal-left' : ''}`}>{cta.ctaText}</Link>
                   ))}
                 </section>
             }
@@ -139,6 +140,6 @@ const Header = ({
 
 // export { Header };
 
-const MemoizedHeader = React.memo(Header);
+const MemoizedHeader = memo(Header);
 
 export default MemoizedHeader;

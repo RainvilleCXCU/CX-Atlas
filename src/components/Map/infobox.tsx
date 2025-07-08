@@ -13,30 +13,28 @@ export interface Props {
     emailLabel?: string;
 }
 
-const InfoBox = ({ id, name, address, address2, city, state, zip, phoneLabel, phone, fax, email, emailLabel }: Props): JSX.Element   => {
+const InfoBox = ({ id, name, address, address2, city, state, zip, phoneLabel, phone, fax, email, emailLabel }: Props) => {
 
-    return (
-        <div data-store-id={id} className="wpsl-info-window">
+    return `
+        <div data-store-id="${id}" class="wpsl-info-window">
             <p>
-                <strong>{name}</strong>
-                <span>{address}</span>
-                { address2 && 
-                    <span>{address2}</span>
+                <strong>${name}</strong>
+                <span>${address}</span>
+                ${ address2 ?
+                    `<span>${address2}</span>` : ``
                 }
-                <span>{city} {state}, {zip}</span>
+                <span>${city} ${state}, ${zip}</span>
             </p>
-                { phone && 
-                    
-                    <span><strong>{phoneLabel}</strong>: {phone}</span>
+                ${ phone ? 
+                    `<span><strong>${phoneLabel ? phoneLabel : 'Phone'}</strong>: ${phone}</span>` : ``
                 }
-                { fax && 
-                    <span><strong>{fax}</strong></span>
+                ${ fax ?
+                    `<span><strong>${fax}</strong></span>` : ``
                 }
-                { email && 
-                    <span><strong>{emailLabel}</strong>: {email}</span>
+                ${ email ? 
+                    `<span><strong>${emailLabel}</strong>: ${email}</span>` : ``
                 }
-        </div>
-    );
+        </div>`
 }
 
 export default InfoBox;
