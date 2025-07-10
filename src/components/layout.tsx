@@ -23,11 +23,10 @@ import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
 // const SEO = dynamic(()=> import('components/SEO/SEO'), {ssr:true});
 import SEO from './SEO/SEO';
-import dynamic from 'next/dynamic';
 import Alert from 'components/Alerts/Alert';
 import Loading from 'components/common/loading';
-import { m } from 'framer-motion';
 import { parseHtml } from 'lib/parser';
+import { Suspense, FC } from 'react';
 // const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:true});
 // const Loading = dynamic(() => import('components/common/loading'), {ssr:true});
 interface BaseLayoutProps {
@@ -36,7 +35,7 @@ interface BaseLayoutProps {
     children
 }
 
-const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle }) => {
+const BaseLayout: FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle }) => {
     const { description: siteDescription = '', logo: siteLogo = '', desktopLogo: siteDesktopLogo = '', mobileLogo: siteMobileLogo = '', desktopLogoWidth: siteDesktopLogoWidth = '', mobileLogoWidth: siteMobileLogoWidth = '', logoTitleText: siteLogoText = '', footerText: footerText = '' } = props?.data?.generalSettings ?? {
         description: '',
         logo: '',
@@ -161,7 +160,10 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTi
                             ctas={ctaInfo?.ctas ? ctaInfo.ctas : false}
                         />
                     }
-                    {children}
+
+                    <Suspense fallback={<Loading />}>
+                        {children}
+                    </Suspense>
             {footerMenu &&
                     <Footer copyrightHolder={footerText} menuItems={footerMenu} logo={siteLogo} logoText={siteLogoText} footerUtilities={footerUtilities} footerAppIcons={footerAppIcons} footerSocialIcons={footerSocialIcons} />
             }

@@ -5,7 +5,6 @@ import Provider from '../provider/store';
 import { useRouter } from 'next/router'
 import type { AppProps } from 'next/app';
 import { pageview } from '../lib/routing';
-import { LazyMotion, domAnimation } from "framer-motion";
 import { osName, browserName, isMacOs, isWindows, isAndroid, isIOS } from 'mobile-device-detect';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
@@ -45,9 +44,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <FaustProvider pageProps={pageProps}>
       <Provider>
-        <LazyMotion features={domAnimation}>
-          <Component {...pageProps} key={router.asPath} />
-        </LazyMotion>
+        <Component {...pageProps} key={router.asPath} />
       </Provider>
     </FaustProvider>
   );

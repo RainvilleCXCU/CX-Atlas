@@ -5,7 +5,7 @@ import UtilityNav from "./UtilityNav";
 import Image from "next/image";
 import { gql } from "@apollo/client";
 import dynamic from "next/dynamic";
-import React from "react";
+import { memo } from 'react';
 
 interface Props {
 	copyrightHolder?: string;
@@ -128,5 +128,5 @@ Footer.fragments = {
 
 // export { Footer };
 
-const MemoizedFooter = React.memo(Footer);
+const MemoizedFooter = memo(Footer);
 export default MemoizedFooter;

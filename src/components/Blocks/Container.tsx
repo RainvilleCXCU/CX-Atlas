@@ -1,5 +1,3 @@
-import { parseHtml } from 'lib/parser';
-import { useEffect, useRef, useState } from 'react';
 import { EqualHeight } from 'react-equal-height/clean';
 
 export interface Props {

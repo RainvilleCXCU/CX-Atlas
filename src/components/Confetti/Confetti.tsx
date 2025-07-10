@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Realistic from "react-canvas-confetti/dist/presets/realistic";
 import confetti from "canvas-confetti";
 

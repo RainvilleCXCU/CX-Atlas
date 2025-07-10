@@ -33,7 +33,11 @@ function EqualHeightContainer({
 
     const element = createElement(tagName, { ...props, className: classNames }, children);
     return (
-        <EqualHeightElement name={name} disable={!isDesktopOrLaptop && !isSSR}>{element}</EqualHeightElement>
+        <>
+        { !isSSR &&
+            <EqualHeightElement name={name} disable={!isDesktopOrLaptop && !isSSR}>{element}</EqualHeightElement>
+        }
+        </>
     );
 }
 

@@ -21,7 +21,7 @@ const CXBio = ({ children }) => {
       bioTextRef.current.style.maskImage = "unset";
       bioTextRef.current.style.maxHeight = "none"
     } else if (window.innerWidth < 800 && !bioExpanded) {
-      bioTextRef.current.style.maskImage = "linear-gradient(to bottom, black, transparent)";
+      bioTextRef.current.style.maskImage = "linear-gradient(to bottom, black, black, transparent)";
       bioTextRef.current.style.maxHeight = "126px"
     }
   }
@@ -47,7 +47,7 @@ const CXBio = ({ children }) => {
           ref={bioTextRef}
           style={{
             maxHeight: bioExpanded ? `${bioTextRef.current.scrollHeight}px` : "126px",
-            maskImage: bioExpanded ? "unset" : "linear-gradient(to bottom, black, transparent)",
+            maskImage: bioExpanded ? "unset" : "linear-gradient(to bottom, black, black, transparent)",
           }}
         >
           {bioText}

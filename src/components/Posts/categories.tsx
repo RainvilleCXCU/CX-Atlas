@@ -1,13 +1,13 @@
 import Heading from "components/Heading";
 import Link from "next/link";
-import { Fragment } from "react";
+import { Fragment, FC } from "react";
 
 interface CategoriesProps {
 	title?: string;
     categories?;
 }
 
-const Categories: React.FC<CategoriesProps> = ({ title = 'Categories', categories }) => {
+const Categories: FC<CategoriesProps> = ({ title = 'Categories', categories }) => {
 	return (
         <>
             <Heading level="h3">{ title }</Heading>
