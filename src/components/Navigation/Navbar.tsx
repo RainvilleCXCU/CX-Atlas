@@ -118,7 +118,7 @@ function DesktopHeaderNavigation(props: HeaderNavigationProps) {
 function MobileHeaderNavigation(props: HeaderNavigationProps) {
 
     const [navsSelected, setNavsSelected] = useState([]);
-    const toggleSelected = useCallback((menuItem) => {
+    const toggleSelected = (menuItem) => {
         if (navsSelected.includes(menuItem)) {
             setNavsSelected(navsSelected.filter(item => item !== menuItem));
         } else {
@@ -127,7 +127,7 @@ function MobileHeaderNavigation(props: HeaderNavigationProps) {
                 menuItem
             ]);
         }
-    }, []);
+    };
     return (
         <div className="accordion accordion-flush" id="cxNavAccordion">
             {props.menuItems?.map((link, index) => {
