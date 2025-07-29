@@ -1,4 +1,5 @@
 import Logo from "components/Logo";
+import Link from "next/link";
 
 interface CTAProps {
   buttonColor: string;
@@ -48,12 +49,12 @@ export default function MobileHeader(props: MobileHeader) {
       {showNav && (
         <div className="cx-nav__mobile-buttons">
           {!navOpen && (
-            <a
+            <Link
               href="/mdr?loc=LStUVVkwNi1DO1c1Tj0nLTYsQGBgCmAK&login=mobile"
               className="cx-button cx-button--compact cx-button--color-positive"
             >
               Log in
-            </a>
+            </Link>
           )}
           <button
             className={`cx-navbar-toggler${
