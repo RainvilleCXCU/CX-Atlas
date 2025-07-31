@@ -227,6 +227,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const member = query.member || '';
     const productcode = query.productcode || '';
     const atLimit = query.atLimit || '';
+    const scenario = query.scenario || '';
 
     const { data } = await apolloClient.query({
         query: gql`
@@ -258,7 +259,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         minor,
         productcode,
         atLimit,
-        member
+        member,
+        scenario
     };
 
 
@@ -285,7 +287,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyStartFragment}
-            query getApplyStart($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String) {
+            query getApplyStart($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String) {
                 widgetSettings {
                     ...ApplyStartFragment
                 }
@@ -298,7 +300,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowMinorFragment}
-            query getApplyNowMinor($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String) {
+            query getApplyNowMinor($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String) {
                 widgetSettings {
                     ...ApplyNowMinorFragment
                 }
@@ -310,7 +312,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowMemberFragment}
-            query ApplyNowMember($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String) {
+            query ApplyNowMember($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String) {
                 widgetSettings {
                     ...ApplyNowMemberFragment
                 }
@@ -322,7 +324,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowMemberLimitFragment}
-            query ApplyNowMemberLimit($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String) {
+            query ApplyNowMemberLimit($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String) {
                 widgetSettings {
                     ...ApplyNowMemberLimitFragment
                 }
@@ -334,7 +336,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowFragment}
-            query getApplyNow($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String) {
+            query getApplyNow($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String) {
                 widgetSettings {
                     ...ApplyNowFragment
                 }
