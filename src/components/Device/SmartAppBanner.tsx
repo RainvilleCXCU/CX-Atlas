@@ -118,33 +118,25 @@ const SmartBannerComponent = ({
         bannerElement.innerHTML = bannerHTML;
         const banner = bannerElement.firstElementChild;
         // Push body content down when banner is at top
-        if(!isSafari) {
-          if (position === 'top') {
-            document.body.classList.add('smartbanner-push-body');
+        if (position === 'top') {
+          document.body.classList.add('smartbanner-push-body');
+        }
+
+        // Close functionality
+        window.closeBanner = function() {
+          banner.remove();
+          document.body.classList.remove('smartbanner-push-body');
+          cookie.set('sb-closed', 'true', daysHidden);
+        };
+
+        // Add click tracking
+        banner.querySelector('.smartbanner-button').addEventListener('click', function() {
+          if (hideOnInstall) {
+            cookie.set('sb-installed', 'true', daysReminder);
           }
+        });
 
-          // Close functionality
-          window.closeBanner = function() {
-            banner.remove();
-            document.body.classList.remove('smartbanner-push-body');
-            cookie.set('sb-closed', 'true', daysHidden);
-          };
-
-          // Add click tracking
-          banner.querySelector('.smartbanner-button').addEventListener('click', function() {
-            if (hideOnInstall) {
-              cookie.set('sb-installed', 'true', daysReminder);
-            }
-          });
-
-          document.body.insertBefore(banner, document.body.firstChild);
-        }
-        if(isIOS && isSafari) {
-          let metaElement = document.createElement("meta");
-          metaElement.name = "apple-itunes-app";
-          metaElement.content = "app-id=895555570";
-          document.head.appendChild(metaElement);
-        }
+        document.body.insertBefore(banner, document.body.firstChild);
       }
     };
 
