@@ -9,7 +9,9 @@ declare global {
     $Lightning: any;
     CXoneDfo: any;
     ttd_dom_ready: any;
+    MSStream: any;
     TTDUniversalPixelApi: function;
+    closeBanner;
   }
   interface Element {
     style: CSSStyleDeclaration

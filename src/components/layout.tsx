@@ -27,6 +27,7 @@ import Alert from 'components/Alerts/Alert';
 import Loading from 'components/common/loading';
 import { parseHtml } from 'lib/parser';
 import { Suspense, FC } from 'react';
+import SmartBannerComponent from './Device/SmartAppBanner';
 // const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:true});
 // const Loading = dynamic(() => import('components/common/loading'), {ssr:true});
 interface BaseLayoutProps {
@@ -137,6 +138,9 @@ const BaseLayout: FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle })
                     <Loading />
                     {
                         parseHtml(bodyTop)
+                    }
+                    {process.env.NEXT_PUBLIC_DISABLED_APP_BANNER !== 'true' &&
+                        <SmartBannerComponent />
                     }
                     {template && template.toLowerCase() !== 'no header' &&
                         <Header

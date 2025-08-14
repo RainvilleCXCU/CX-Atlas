@@ -1,6 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import { files } from "../lib/externalFiles";
-import { addCSSAsset, addJSAsset } from "lib/enqueuedFiles";
+import { addJSAsset } from "lib/enqueuedFiles";
 
 
 class CXDoc extends Document {
@@ -13,6 +13,16 @@ class CXDoc extends Document {
           <style>{`body { display: block !important }`}</style>
           <link href='https://www.googletagmanager.com' rel='dns-prefetch' />
           <link href={process.env.NEXT_PUBLIC_WORDPRESS_URL} rel='dns-prefetch' />
+
+          <meta name="smartbanner:title" content="My App" />
+          <meta name="smartbanner:author" content="My Company" />
+          <meta name="smartbanner:ios:url" content="https://apps.apple.com/us/app/connexus-cu-mobile-app/id895555570" />
+          <meta name="smartbanner:android:url" content="https://play.google.com/store/apps/details?id=com.alkamitech.connexus" />
+          <meta name="smartbanner:button-url-apple" content="https://ios/application-url"/>
+          <meta name="smartbanner:button-url-google" content="https://android/application-url"/>
+          <meta name="smartbanner:enabled-platforms" content="android,ios" />
+
+          
 
           {process.env.NEXT_PUBLIC_NOFONTS !== 'true' && 
             <>
