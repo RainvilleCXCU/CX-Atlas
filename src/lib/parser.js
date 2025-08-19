@@ -44,6 +44,8 @@ const CXCalc = dynamic(() => import("components/Calculator/CXCalculator"), {ssr:
 const CXCalcResults = dynamic(() => import("components/Calculator/CXCalculatorResults"), {ssr: false});
 const DynamicRateTableInput = dynamic(() => import("components/Calculator/DynamicRateTableInput"), {ssr: false});
 const DynamicRateTable = dynamic(() => import("components/Calculator/DynamicRateTable"), {ssr: false});
+const DynamicProductCalculatorInput = dynamic(() => import("components/Dynamic Product Calculator Input/DynamicProductCalculatorInput"), {ssr: false});
+const DynamicProductCalculatorOutput = dynamic(() => import("components/Dynamic Product Calculator Output/DynamicProductCalculatorOutput"), {ssr: false});
 const Scheduler = dynamic(() => import("components/Salesforce/scheduler"), {ssr: false});
 const Tooltip = dynamic(() => import("components/Tooltip/Tooltip"), {ssr: false});
 const CXBio = dynamic(() => import("components/CXBio/Bio"), {ssr: false});
@@ -335,6 +337,18 @@ export const parseHtml = (html) => {
             else if(attribs?.class?.includes('dynamic-rate-table-output')) {
                 return (
                     <div {...attributesToProps(attribs)}><DynamicRateTable>{domToReact(children, options)}</DynamicRateTable></div>
+                )
+            }
+            // Dynamic Product Calculator Input
+            else if(attribs?.id?.includes('dynamic-product-calculator-input__checking')) {
+                return (
+                    <div {...attributesToProps(attribs)}><DynamicProductCalculatorInput>{domToReact(children, options)}</DynamicProductCalculatorInput></div>
+                )
+            } 
+            // Dynamic Product Calculator Output
+            else if(attribs?.id?.includes('dynamic-product-calculator-output__checking')) {
+                return (
+                    <div {...attributesToProps(attribs)}><DynamicProductCalculatorOutput>{domToReact(children, options)}</DynamicProductCalculatorOutput></div>
                 )
             } 
 
