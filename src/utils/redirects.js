@@ -27,6 +27,22 @@ const fetchWordPressRedirects = async ({type = 'url'}) => {
             } else {
                 redirectObj.destination = redirectObj.destination;
             }
+
+            // Check for URL Params
+            const params = new URLSearchParams(redirect.url.split('?')[1]);
+            if(redirect.match_type == 'url' && redirect.url.includes('?') && redirect.regex == '0' && params.size > 0) {
+                redirectObj.has = [];
+                params.forEach((value, key) => {
+                    redirectObj.has.push({
+                        type: 'query',
+                        key: key,
+                        value: value
+                    });
+                });
+                console.log(JSON.stringify(params));
+                redirectObj.source = redirect.match_url;
+            }
+            
             return redirectObj;
         });
 }
