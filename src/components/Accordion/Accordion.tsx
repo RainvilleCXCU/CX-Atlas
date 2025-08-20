@@ -99,8 +99,10 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
           transition: 'grid-template-rows 0.3s ease',
         }}
       >
-        <div className="gb-accordion-text">
-          {typeof(content) === 'string' ? parseHtml(content) : content}
+        <div className="gb-accordion-content-wrapper" style={{overflow: "hidden"}}>
+          <div className="gb-accordion-text">
+            {typeof(content) === 'string' ? parseHtml(content) : content}
+          </div>
         </div>
       </div>
     </div>
