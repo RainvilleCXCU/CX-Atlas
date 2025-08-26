@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { isIOS, isAndroid, isSafari } from 'mobile-device-detect';
+import { AppRatingService, type BothRatingsResult } from 'utils/appServices';
 
 // SmartBanner React Component
 const SmartBannerComponent = ({ 
@@ -28,10 +29,25 @@ const SmartBannerComponent = ({
   position = "top"
 }) => {
   const bannerRef = useRef(null);
+    const service = new AppRatingService({
+      cacheTime: 1800000, // 30 minutes
+    });
 
   const [cookies, setCookie ] = useCookies(['ismember']);
+  const [data, setData] = useState<BothRatingsResult>({});
   useEffect(() => {
     // SmartBanner implementation
+    (async () => {
+      try {
+        const data = await service.fetchBothRatings(
+          '895555570', // Apple App ID
+          'com.alkamitech.connexus' // Google Play package name
+        );
+        setData(data);
+      } catch (error) {
+      }
+    })();
+
     const SmartBanner = function() {
       const cookie = {
         set: function(name, value, days) {
@@ -76,7 +92,8 @@ const SmartBannerComponent = ({
       if (!meta && !url) return;
 
       const link = meta ? meta.getAttribute('content') : url;
-      
+      console.log('RATING DATA');
+      console.log(JSON.stringify(data));
       // Create banner HTML
       const bannerHTML = `
         <div class="smartbanner smartbanner-${platform} smartbanner-${position}">
@@ -120,12 +137,14 @@ const SmartBannerComponent = ({
         // Push body content down when banner is at top
         if (position === 'top') {
           document.body.classList.add('smartbanner-push-body');
+          document.querySelector('.cx-header').classList.add('smartbanner-push-body');
         }
 
         // Close functionality
         window.closeBanner = function() {
           banner.remove();
           document.body.classList.remove('smartbanner-push-body');
+          document.querySelector('.cx-header').classList.remove('smartbanner-push-body');
           cookie.set('sb-closed', 'true', daysHidden);
         };
 
@@ -136,7 +155,7 @@ const SmartBannerComponent = ({
           }
         });
 
-        document.body.insertBefore(banner, document.body.firstChild);
+        document.querySelector('.cx-header').insertBefore(banner, document.querySelector('.cx-header').firstChild);
       }
     };
 
