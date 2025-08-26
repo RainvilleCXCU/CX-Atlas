@@ -31,7 +31,7 @@ const SmartBannerComponent = ({
 
   const [cookies, setCookie ] = useCookies(['ismember']);
   useEffect(() => {
-    // SmartBanner implementation
+
     const SmartBanner = function() {
       const cookie = {
         set: function(name, value, days) {
@@ -120,12 +120,14 @@ const SmartBannerComponent = ({
         // Push body content down when banner is at top
         if (position === 'top') {
           document.body.classList.add('smartbanner-push-body');
+          document.querySelector('.cx-header').classList.add('smartbanner-push-body');
         }
 
         // Close functionality
         window.closeBanner = function() {
           banner.remove();
           document.body.classList.remove('smartbanner-push-body');
+          document.querySelector('.cx-header').classList.remove('smartbanner-push-body');
           cookie.set('sb-closed', 'true', daysHidden);
         };
 
@@ -136,7 +138,7 @@ const SmartBannerComponent = ({
           }
         });
 
-        document.body.insertBefore(banner, document.body.firstChild);
+        document.querySelector('.cx-header').insertBefore(banner, document.querySelector('.cx-header').firstChild);
       }
     };
 
