@@ -111,7 +111,7 @@ const SmartBannerComponent = ({
         }
       }
 
-      if(cookies.ismember === 'true') {
+      if(cookies.ismember === 'true' && !(isIOS && isSafari)) {
 
         // Add banner to body
         const bannerElement = document.createElement('div');
