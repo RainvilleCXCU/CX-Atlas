@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { isIOS, isAndroid, isSafari } from 'mobile-device-detect';
-import { AppRatingService, type BothRatingsResult } from 'utils/appServices';
 
 // SmartBanner React Component
 const SmartBannerComponent = ({ 
@@ -29,24 +28,9 @@ const SmartBannerComponent = ({
   position = "top"
 }) => {
   const bannerRef = useRef(null);
-    const service = new AppRatingService({
-      cacheTime: 1800000, // 30 minutes
-    });
 
   const [cookies, setCookie ] = useCookies(['ismember']);
-  const [data, setData] = useState<BothRatingsResult>({});
   useEffect(() => {
-    // SmartBanner implementation
-    (async () => {
-      try {
-        const data = await service.fetchBothRatings(
-          '895555570', // Apple App ID
-          'com.alkamitech.connexus' // Google Play package name
-        );
-        setData(data);
-      } catch (error) {
-      }
-    })();
 
     const SmartBanner = function() {
       const cookie = {
@@ -92,8 +76,7 @@ const SmartBannerComponent = ({
       if (!meta && !url) return;
 
       const link = meta ? meta.getAttribute('content') : url;
-      console.log('RATING DATA');
-      console.log(JSON.stringify(data));
+      
       // Create banner HTML
       const bannerHTML = `
         <div class="smartbanner smartbanner-${platform} smartbanner-${position}">
