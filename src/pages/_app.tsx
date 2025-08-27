@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import type { AppProps } from 'next/app';
 import { pageview } from '../lib/routing';
 import { osName, browserName, isMacOs, isWindows, isAndroid, isIOS } from 'mobile-device-detect';
+import { CookiesProvider } from 'react-cookie';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
 
@@ -44,7 +45,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <FaustProvider pageProps={pageProps}>
       <Provider>
-        <Component {...pageProps} key={router.asPath} />
+        <CookiesProvider>
+          <Component {...pageProps} key={router.asPath} />
+        </CookiesProvider>
       </Provider>
     </FaustProvider>
   );
