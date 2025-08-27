@@ -1,6 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import { files } from "../lib/externalFiles";
-import { addCSSAsset, addJSAsset } from "lib/enqueuedFiles";
+import { addJSAsset } from "lib/enqueuedFiles";
 
 
 class CXDoc extends Document {
@@ -13,6 +13,21 @@ class CXDoc extends Document {
           <style>{`body { display: block !important }`}</style>
           <link href='https://www.googletagmanager.com' rel='dns-prefetch' />
           <link href={process.env.NEXT_PUBLIC_WORDPRESS_URL} rel='dns-prefetch' />
+          {
+            process.env.NEXT_PUBLIC_DISABLED_APP_BANNER !== 'true' &&
+            <>
+              <meta name="smartbanner:title" content="Connexus CU Mobile" />
+              <meta name="smartbanner:author" content="Connexus Credit Union" />
+              <meta name="smartbanner:ios:url" content="https://apps.apple.com/us/app/connexus-cu-mobile-app/id895555570" />
+              <meta name="smartbanner:android:url" content="https://play.google.com/store/apps/details?id=com.alkamitech.connexus" />
+              <meta name="smartbanner:button-url-apple" content="https://ios/application-url"/>
+              <meta name="smartbanner:button-url-google" content="https://android/application-url"/>
+              <meta name="smartbanner:enabled-platforms" content="android,ios" />
+              <meta name="apple-itunes-app" content="app-id=895555570"></meta>
+            </>
+          }
+
+          
 
           {process.env.NEXT_PUBLIC_NOFONTS !== 'true' && 
             <>

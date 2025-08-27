@@ -27,15 +27,24 @@ import Alert from 'components/Alerts/Alert';
 import Loading from 'components/common/loading';
 import { parseHtml } from 'lib/parser';
 import { Suspense, FC } from 'react';
+import SmartBannerComponent from './Device/SmartAppBanner';
 // const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:true});
 // const Loading = dynamic(() => import('components/common/loading'), {ssr:true});
 interface BaseLayoutProps {
     props?
+    templateName?
     pageTitle?
     children
 }
 
-const BaseLayout: FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle }) => {
+const BaseLayout: FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle, templateName }) => {
+
+    const activeTemplates = [
+        'cta_header',
+        'no_header',
+        'slim_header',
+        'default'
+    ];
     const { description: siteDescription = '', logo: siteLogo = '', desktopLogo: siteDesktopLogo = '', mobileLogo: siteMobileLogo = '', desktopLogoWidth: siteDesktopLogoWidth = '', mobileLogoWidth: siteMobileLogoWidth = '', logoTitleText: siteLogoText = '', footerText: footerText = '' } = props?.data?.generalSettings ?? {
         description: '',
         logo: '',
@@ -50,7 +59,7 @@ const BaseLayout: FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle })
     const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
     const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
     const bodyTop = props?.data?.page?.pageContent?.bodyTop ?? props?.data?.postPreview?.pageContent?.bodyTop ?? '';
-    const template = props?.data?.page?.template?.templateName ?? props?.data?.postPreview?.template?.templateName ?? 'default';
+    const template = props?.query?.template && activeTemplates.includes(props?.query?.template) ? props?.query?.template.replace('_', ' ', "gi") : props?.data?.page?.template?.templateName ?? props?.data?.postPreview?.template?.templateName ?? 'default';
     const ctaInfo = props?.data?.page?.ctaPage ?? props?.data?.postPreview?.ctaPage ?? null;
 
 
@@ -137,6 +146,9 @@ const BaseLayout: FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle })
                     <Loading />
                     {
                         parseHtml(bodyTop)
+                    }
+                    {process.env.NEXT_PUBLIC_DISABLED_APP_BANNER !== 'true' &&
+                        <SmartBannerComponent />
                     }
                     {template && template.toLowerCase() !== 'no header' &&
                         <Header

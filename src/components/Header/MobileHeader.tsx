@@ -73,7 +73,7 @@ export default function MobileHeader(props: MobileHeader) {
       
 
       {
-          template && template.toLowerCase() === 'cta header' && 
+          ctas && template && template.toLowerCase() === 'cta header' && 
             <section className='cx-header__cta'>
               {ctas.map((cta, index) => (
                 <a href={cta.ctaLink} key={`header-mobile-cta-${index}`} className={`cx-button cx-button--${cta.ctaButtonType}${cta.buttonColor}${cta.compact ? ' cx-button--compact' : ''}`}>{cta.ctaText}</a>

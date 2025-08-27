@@ -62,19 +62,20 @@ const Header = ({
     let lastScrollTop = 0;
     const header = document.querySelector('.cx-header');
     const pageContent = document.querySelector('#page') ? document.querySelector('#page') : document.querySelector('#main');
+    
 
     const handleScroll = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
+      const scrollThreshold = header.classList.contains('smartbanner-push-body') ? 160 : 80;
       if (window.innerWidth < 992) {
         if (scrollTop > lastScrollTop) { // scrolling down
-          if (scrollTop > 80) {
+          if (scrollTop > scrollThreshold) {
             header.style.transform = 'translateY(-100%)';
           }
         } else { // scrolling up          
           header.style.transform = 'translateY(0)';
           header.style.position = 'fixed';
-          pageContent.style.paddingTop = '80px';
+          pageContent.style.paddingTop = document.querySelector('.cx-header').classList.contains('smartbanner-push-body') ? '160px' : '80px';
         }
       }
 
@@ -115,7 +116,7 @@ const Header = ({
             }
 
             {
-              template && template.toLowerCase() === 'cta header' && 
+              ctas && template && template.toLowerCase() === 'cta header' && 
                 <section className='cx-header__cta'>
                   {ctas.map((cta, index) => (
                     <Link href={cta.ctaLink} key={`header-cta-${index}`} className={`cx-button cx-button--${cta.ctaButtonType}${cta.buttonColor}${cta.compact ? ' cx-button--compact' : ''} ${index !== 0 ? ' slim-margin--horizontal-left' : ''}`}>{cta.ctaText}</Link>

@@ -325,6 +325,17 @@ let nextConfig = {
           has: [
             {
               type: "query",
+              key: "template",
+              value: "(cta_header|no_header|slim_header)"
+            },
+          ],
+        },
+        {
+          source: "/:path*",
+          destination: "/dynamic/:path*",
+          has: [
+            {
+              type: "query",
               key: "goal",
             },
           ],
