@@ -5,7 +5,7 @@ import Provider from '../provider/store';
 import { useRouter } from 'next/router'
 import type { AppProps } from 'next/app';
 import { pageview } from '../lib/routing';
-import { osName, browserName, isMacOs, isWindows, isAndroid, isIOS } from 'mobile-device-detect';
+import Bowser from "bowser";
 import { CookiesProvider } from 'react-cookie';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
@@ -20,16 +20,17 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   
   useEffect(() => {
     // Add attributes to html tag
-    document.documentElement.setAttribute('data-os-name', osName.replaceAll(' ', ''));
-    document.documentElement.setAttribute('data-browser-name', browserName.replaceAll(' ', ''));
-    document.documentElement.setAttribute('data-is-mac', isMacOs.toString());
-    document.documentElement.setAttribute('data-is-windows', isWindows.toString());
-    document.documentElement.setAttribute('data-is-android', isAndroid.toString());
-    document.documentElement.setAttribute('data-is-ios', isIOS.toString());
+    const browser = Bowser.getParser(window.navigator.userAgent);
+    document.documentElement.setAttribute('data-os-name', browser.getOSName().replaceAll(' ', ''));
+    document.documentElement.setAttribute('data-browser-name', browser.getBrowserName().replaceAll(' ', ''));
+    document.documentElement.setAttribute('data-is-mac', browser.getOSName().toLowerCase().includes('mac').toString());
+    document.documentElement.setAttribute('data-is-windows', browser.getOSName().toLowerCase().includes('window').toString());
+    document.documentElement.setAttribute('data-is-android', browser.getOSName().toLowerCase().includes('android').toString());
+    document.documentElement.setAttribute('data-is-ios', browser.getOSName().toLowerCase().includes('ios').toString());
     
     // Or add multiple classes
     // document.documentElement.classList.add(osName, browserName);
-    document.documentElement.className = `os-${osName.replaceAll(' ', '')} browser-${browserName.replaceAll(' ', '')}`
+    document.documentElement.className = `os-${browser.getOSName().replaceAll(' ', '')} browser-${browser.getBrowserName().replaceAll(' ', '')}`
     
     // Cleanup function (optional)
     return () => {

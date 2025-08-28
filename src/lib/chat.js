@@ -1,5 +1,10 @@
 // To detect if the chat is being launched on mobile device
-import { isMobile } from 'mobile-device-detect';
+import Bowser from 'bowser';
+
+function isMobile() {
+  const browser = Bowser.getParser(window.navigator.userAgent);
+  return browser.getPlatformType() === 'mobile';
+}
 
 export const ciscoBubbleChat = () => {
     var smHost = 'cu-socialminer.connexuscu.org';
@@ -20,7 +25,7 @@ export const ciscoBubbleChat = () => {
     var msgCloseButtonLabel = 'Close';
 
     var appId = 'cisco_bubble_chat';
-    var appClass = isMobile ? 'mobile_bubble_chat' : 'desktop_bubble_chat';
+    var appClass = isMobile() ? 'mobile_bubble_chat' : 'desktop_bubble_chat';
     var appMargin = 15;
     var scheme = 'https://';
     var appUrl = scheme + smHost + '/ccp/ui/BubbleChat.html?host=' + smHost + '&wid=' + widgetId;
@@ -111,7 +116,7 @@ export const ciscoBubbleChat = () => {
             frameDoc.open();
             frameDoc.close();
             
-            if(isMobile) {
+            if(isMobile()) {
                 frameDoc.body.style = 'margin:0;padding:0;';
             } else {
                 frameDoc.body.style = 'margin:0;padding:4;box-sizing:border-box;';

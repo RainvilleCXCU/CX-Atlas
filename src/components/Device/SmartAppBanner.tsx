@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { isIOS, isAndroid, isSafari } from 'mobile-device-detect';
+import Bowser from "bowser";
 
 // SmartBanner React Component
 const SmartBannerComponent = ({ 
@@ -62,6 +62,11 @@ const SmartBannerComponent = ({
       // const isIOS = /iPhone|iPad|iPod/i.test(ua);
       // const isAndroid = /Android/i.test(ua);
 
+      const browser = Bowser.getParser(window.navigator.userAgent);
+      const isIOS = browser.getOSName().toLowerCase().includes('ios');
+      const isAndroid = browser.getOSName().toLowerCase().includes('android');
+      const isSafari = browser.getBrowserName().toLowerCase().includes('safari');
+
       if (cookie.get('sb-closed') || cookie.get('sb-installed')) {
         return;
       }
@@ -77,6 +82,12 @@ const SmartBannerComponent = ({
 
       const link = meta ? meta.getAttribute('content') : url;
       
+      console.log('MOBILE BANNER DATA: ');
+      console.log(platform);
+      console.log(`Is IOS: ${isIOS}`)
+      console.log(`Is Android: ${isAndroid}`)
+      console.log(`Is Member: ${typeof(cookies.ismember)}`)
+
       // Create banner HTML
       const bannerHTML = `
         <div class="smartbanner smartbanner-${platform} smartbanner-${position}">
@@ -111,8 +122,7 @@ const SmartBannerComponent = ({
         }
       }
 
-      if(cookies.ismember === 'true' && !(isIOS && isSafari)) {
-
+      if(cookies.ismember && !(isIOS && isSafari)) {
         // Add banner to body
         const bannerElement = document.createElement('div');
         bannerElement.innerHTML = bannerHTML;
