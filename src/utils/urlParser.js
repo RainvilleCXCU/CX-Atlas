@@ -12,3 +12,5 @@ export const getDynamicQueryVal = ({urlObj, key}) => {
   const index = urlObj.indexOf(key);
   return index !== -1 && urlObj.length >= index ? urlObj[index+1] : '';
 }
+
+export const whitelistRegex = new RegExp(`(.local)|(wpenginepowered.)|(wpengine.com)|(connexuscu.org)|(mortgagewebcenter)|(meridianlink)|(loanspq)|(myworkdayjobs)|(issuu)|(az1.qualtrics)|(docusign)|(billerpayments)|(tel:)|(mailto:)|(javascript:)`, "i");
