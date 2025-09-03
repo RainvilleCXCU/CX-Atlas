@@ -7,3 +7,12 @@
         visibility: visible;
     }
 }
+.cx-container-modal {
+    &--bodytakeover {
+        max-width: 100%;
+        max-height: 100%;
+        width: 100%;
+        height: 100vh;
+        top: 100px;
+    }
+}

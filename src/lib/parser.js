@@ -25,6 +25,7 @@ const AppLinks = dynamic(() => import("components/Device/AppLinks"), {ssr: false
 // import AppLinks from "components/Device/AppLinks";
 import Address from "components/Map/address";
 import MBHIPRO from "components/Hours/MBHIPRO";
+import MLButton from "components/Buttons/ML";
 // import ToggleContent from "components/ContentToggle/Content";
 // import ToggleContentLink from "components/ContentToggle/ContentToggleLink";
 // import ToggleContentSelect from "components/ContentToggle/ContentToggleSelect";
@@ -90,14 +91,16 @@ export const parseHtml = (html) => {
                 return;
             }
             // ML Referral Source
-            else if(name === 'a' && cookies?.referralsource && cookies?.referralsource !== '' && (attribs?.href?.includes('loanspq') || attribs?.href?.includes('meridianlink'))) {
-                const currDestReferral = getQueryVariable('referralsource', attribs?.href);
+            else if(name === 'a' && !attribs?.class?.includes('cx-mlskip') && (attribs?.href?.includes('loanspq') || attribs?.href?.includes('meridianlink'))) {
                 let href = attribs.href;
-                if (currDestReferral) {
-                    href = attribs?.href.replace(currDestReferral, cookies?.referralsource);
+                if(cookies?.referralsource && cookies?.referralsource !== ''){
+                    const currDestReferral = getQueryVariable('referralsource', attribs?.href);
+                    if (currDestReferral) {
+                        href = attribs?.href.replace(currDestReferral, cookies?.referralsource);
+                    }
                 }
                 return (
-                    <a href={href} className={attribs?.class} target={attribs?.targets}>{domToReact(children, options)}</a>
+                    <MLButton href={href} classNames={attribs?.class} target={attribs?.targets}>{domToReact(children, options)}</MLButton>
                 )
             }
             // Cisco Chat Button
