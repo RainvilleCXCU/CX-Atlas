@@ -1,6 +1,6 @@
 import { siteSettingsContext } from 'context/siteSettings';
-import { isAndroid, isIOS } from 'mobile-device-detect';
 import { useContext, useState } from 'react';
+import Bowser from "bowser";
 
 export interface Props {
     iosLogo?
@@ -29,6 +29,12 @@ function AppLinks({
 }: Props): JSX.Element {
 
     const { siteSettings } = useContext(siteSettingsContext);
+    
+    const browser = Bowser.getParser(window.navigator.userAgent);
+    const isIOS = browser.getOSName().toLowerCase().includes('ios');
+    const isAndroid = browser.getOSName().toLowerCase().includes('android');
+
+
     const appLink = isIOS ? siteSettings.iosAppLink ? siteSettings.iosAppLink : iosAppLink : isAndroid ? androidAppLink ? androidAppLink : siteSettings.androidAppLink : '';
     
   return (

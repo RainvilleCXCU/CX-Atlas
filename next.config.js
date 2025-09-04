@@ -454,7 +454,6 @@ let nextConfig = {
       "@faustwp/cli",
       "@faustwp/core",
       "dateformat",
-      "mobile-device-detect",
       "preact",
       "preact-render-to-string",
       "react-cookie",
