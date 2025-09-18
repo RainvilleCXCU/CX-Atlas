@@ -30,7 +30,7 @@ function SearchListing({ id, title, content, url = '', featuredImage, categories
 
                 {featuredImage && featuredImage.node?.sourceUrl &&
                     <div className="cx-search__thumbnail">
-                        <Image src={featuredImage.node?.sourceUrl?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={featuredImage.node.mediaDetails.width || '100'} height={featuredImage.node?.mediaDetails.height || '100'} priority={true} />
+                        <img src={featuredImage.node?.sourceUrl?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={featuredImage.node.mediaDetails.width || '100'} height={featuredImage.node?.mediaDetails.height || '100'} />
                     </div>
                 }
                 <div className="cx-search__content">
