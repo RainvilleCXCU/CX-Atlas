@@ -77,9 +77,10 @@ const Footer = ({ copyrightHolder = "", title, logo, desktopLogo, mobileLogo, de
 
 								<Image
 									src="/wp-content/themes/CXCU/images/equal-housing.svg"
+									className="slim-margin--horizontal-left"
 									width="50"
 									height="53"
-									alt="NCUA"
+									alt="equal housing opportunity"
 								/>
 							</div>
 						</li>
