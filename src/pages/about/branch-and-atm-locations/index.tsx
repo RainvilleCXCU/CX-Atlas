@@ -206,7 +206,7 @@ export default function Page() {
                 <Container align="full">
                   <Columns classNames={`no-margin`}>
                     <Column>
-                      <Locations location={location} locationSettings={locationSettings} siteLogo={siteLogo} />
+                      <Locations location={location} noResults={widgetSettings?.locationsNoResults} locationSettings={locationSettings} siteLogo={siteLogo} />
                     </Column>
                   </Columns>
                 </Container>
@@ -288,6 +288,8 @@ Page.query = gql`
       searchRadius
       apiBrowserKey
       autoZoomLevel
+      noResultsLabel
+      preloaderLabel
       mapType
       distanceUnit
       zoomLevel
@@ -303,6 +305,7 @@ Page.query = gql`
     }
     widgetSettings {
       locationsSearch
+      locationsNoResults
     }
 
     cxAlerts: cXAlerts {

@@ -1,10 +1,8 @@
 import dynamic from "next/dynamic";
 import parse, { domToReact, attributesToProps } from "html-react-parser";
-import { usePathname } from 'next/navigation';
 import Link from "next/link";
 import { css } from '@emotion/css';
 import Image from 'next/image';
-import { useCookies } from "react-cookie";
 
 import EqualHeightContainer  from "components/Blocks/EqualHeight";
 import Container from "components/Blocks/Container";
@@ -75,7 +73,7 @@ export const parseHtml = (html) => {
         },
         // library: require('preact'),
         replace: (element) => {
-            const [cookies, setCookie ] = useCookies(['referralsource']);
+            const cookies = { referralsource: typeof document !== 'undefined' ? document.cookie.split('; ').find(row => row.startsWith('referralsource='))?.split('=')[1] || '' : '' };
             
             
             // return;
@@ -127,7 +125,7 @@ export const parseHtml = (html) => {
             }
             // Internal Link
             else if (name === "a") {    
-                const pathname = usePathname();
+                const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
                 if((attribs?.href.includes('#') && attribs?.href.split('#')[0] == pathname) || attribs?.href.startsWith('#')) {
                     let href = `#${attribs?.href.split('#')[1]}`;
                     delete attribs?.href;

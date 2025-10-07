@@ -13,10 +13,12 @@ import {
 } from "lib/location/geocode";
 import { useRouter } from "next/router";
 import Loading from "components/common/loading";
+import { parseHtml } from "lib/parser";
 
 export interface Props {
     siteLogo?
     location?
+    noResults?
     locationSettings?: {
       autoLocate
       startLatlng
@@ -26,6 +28,7 @@ export interface Props {
       distanceUnit
       zoomLevel
       urlLabel
+      preloaderLabel
       streetview
       typeControl
       scrollwheel
@@ -33,10 +36,11 @@ export interface Props {
       markerIconProps
       startMarker
       storeMarker
+      noResultsLabel
     }
 }
 
-function Locations({ locationSettings, siteLogo, location }: Props): JSX.Element {
+function Locations({ locationSettings, siteLogo, location, noResults }: Props): JSX.Element {
     const { push, isReady } = useRouter();
 
 
@@ -49,8 +53,11 @@ function Locations({ locationSettings, siteLogo, location }: Props): JSX.Element
     const [selectedLocation, setSelectedLocation] = useState(null);
     const [latitude, setLatitude] = useState(44.9);
     const [longitude, setLongitude] = useState(-89);
+    const noResultsHTML = parseHtml(noResults);
     useEffect(() => {
         setLoading(true);
+        console.log('NO RESULTS HTML');
+        console.log(parseHtml(noResults))
         if (location && location !== selectedLocation) {
           setSelectedLocation(location);
           getLatLngByLocation({ address: location })
@@ -266,27 +273,37 @@ function Locations({ locationSettings, siteLogo, location }: Props): JSX.Element
             }
             <div id="wpsl-result-list">
             <div id="wpsl-stores">
-                <div className="cx-location-listing__title wpsl-location--section">
-                <em>
-                    <small>
-                    <span id="store-count">{length}</span>
-                    &nbsp;results
-                    </small>
-                </em>
-                </div>
                 {(data && data.length > 0) ? (
-                <LocationListings
-                    data={data}
-                    distanceUnit={locationSettings.distanceUnit}
-                    logo={siteLogo}
-                />
+                  <>
+                    <div className="cx-location-listing__title wpsl-location--section">
+                    <em>
+                        <small>
+                        <span id="store-count">{length}</span>
+                        &nbsp;results
+                        </small>
+                    </em>
+                    </div>
+                    <LocationListings
+                        data={data}
+                        distanceUnit={locationSettings.distanceUnit}
+                        logo={siteLogo}
+                    />
+                  </>
                 ) : data == '' ? (
-                <div className="wpsl-no-results-msg">
-                    No results found
-                </div>
+                <>
+                  <div className="wpsl-no-results-msg cx-text--weight-md slim-margin--vertical">
+                      {locationSettings?.noResultsLabel !== '' ? parseHtml(locationSettings?.noResultsLabel) : 'No Results'}
+                  </div>
+
+										<div className="wpsl-no-results-msg"
+											dangerouslySetInnerHTML={{
+												__html: noResults
+											}}
+										/>
+                </>
                 ) : (
                 <div className="wpsl-no-results-msg">
-                  Searching for locations
+                  {locationSettings?.preloaderLabel !== '' ? parseHtml(locationSettings?.preloaderLabel) :  "Searching for locations"}
                 </div>)}
             </div>
             </div>
