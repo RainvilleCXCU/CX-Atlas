@@ -291,8 +291,8 @@ function Locations({ locationSettings, siteLogo, location, noResults }: Props): 
                   </>
                 ) : data == '' ? (
                 <>
-                  <div className="wpsl-no-results-msg cx-text--weight-md slim-margin--vertical">
-                      {locationSettings?.noResultsLabel !== '' ? parseHtml(locationSettings?.noResultsLabel) : 'No Results'}
+                  <div className="wpsl-no-results-msg cx-text--md cx-text--weight-md no-margin--vertical-bottom slim-margin--vertical-top no-padding--vertical">
+                    {locationSettings?.noResultsLabel !== '' ? parseHtml(locationSettings?.noResultsLabel) : 'No Results'}
                   </div>
 
 										<div className="wpsl-no-results-msg"
