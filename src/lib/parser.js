@@ -33,8 +33,8 @@ const ToggleContentSelect = dynamic(() => import("components/ContentToggle/Conte
 const FAQ = dynamic(() => import("components/FAQs/faq"));
 const Form = dynamic(() => import("components/Forms/Form"));
 const DataTracComparison = dynamic(() => import("components/Datatrac/Comparison"));
-const DataTracBarComparison = dynamic(() => import("components/Datatrac/BarComparison"));
-const Disclosure = dynamic(() => import("components/Disclosure/Disclosure"), {ssr: false});
+const DataTracBarComparison = dynamic(() => import("components/Datatrac/BarComparison"), {ssr: true});
+const Disclosure = dynamic(() => import("components/Disclosure/Disclosure"), {ssr: true});
 const LinkLibrary = dynamic(() => import ("components/LinkLibrary/LinkLibrary"), {ssr: false});
 const Chat = dynamic(() => import ("components/Chat/cisco"), {ssr: false});
 const NiceChat = dynamic(() => import ("components/Chat/nice"), {ssr: false});
@@ -44,7 +44,7 @@ const CXCalcResults = dynamic(() => import("components/Calculator/CXCalculatorRe
 const DynamicRateTableInput = dynamic(() => import("components/Calculator/DynamicRateTableInput"), {ssr: false});
 const DynamicRateTable = dynamic(() => import("components/Calculator/DynamicRateTable"), {ssr: false});
 const DynamicProductCalculatorInput = dynamic(() => import("components/Dynamic Product Calculator Input/DynamicProductCalculatorInput"), {ssr: false});
-const DynamicProductCalculatorOutput = dynamic(() => import("components/Dynamic Product Calculator Output/DynamicProductCalculatorOutput"), {ssr: false});
+const DynamicProductCalculatorOutput = dynamic(() => import("components/Dynamic Product Calculator Output/DynamicProductCalculatorOutput"), {ssr: true});
 const Scheduler = dynamic(() => import("components/Salesforce/scheduler"), {ssr: false});
 const Tooltip = dynamic(() => import("components/Tooltip/Tooltip"), {ssr: false});
 const CXBio = dynamic(() => import("components/CXBio/Bio"), {ssr: false});
@@ -354,7 +354,7 @@ export const parseHtml = (html) => {
             } 
 
             // Datatrac
-            else if (attribs?.['datatrac-wrapper'] || attribs?.class?.includes('datatrac-bar-wrapper')) {
+            else if (attribs?.['datatrac-wrapper']) {
                 return ( 
                     <DataTracComparison performs={attribs?.['data-datatrac-perform']}>{domToReact(children, options)}</DataTracComparison>
                 );
