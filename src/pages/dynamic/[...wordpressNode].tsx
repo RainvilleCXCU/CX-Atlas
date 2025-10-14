@@ -41,6 +41,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
       query
     },
     extra: {
+      isDynamic: true,
       query: {
         page: getPageNum(ctx.params.wordpressNode),
         params: paramString,
