@@ -254,6 +254,7 @@ export const ciscoBubbleChat = () => {
 export const niceChat = () => {
     return {
         initChat: function () {
+            console.log(cxone);
             cxone('init', process.env.NEXT_PUBLIC_NICE_BRAND_ID);
             cxone('guide','init');
             // cxone('chat', 'setCustomCss', '[data-selector="GUIDE_CHANNEL_BUTTON"] {display: none;}');
