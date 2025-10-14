@@ -8,7 +8,7 @@ interface NiceChatProps {
 const NiceChat: FC<NiceChatProps> = ({ className = '', children = <></> }) => {
     const [chatLoaded, setChatLoaded] = useState(false);
     useEffect(() => {
-        if(!chatLoaded) {
+        if(!chatLoaded && window.CXoneDfo == undefined) {
             (function(n,u){
                 let e;
                 window.CXoneDfo=n,
