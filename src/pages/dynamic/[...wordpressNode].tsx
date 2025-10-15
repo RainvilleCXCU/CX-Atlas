@@ -23,13 +23,18 @@ export default function Page(props) {
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const { query } = ctx;
-  ctx.res.setHeader(
-    'Cache-Control',
-    'no-store, no-cache, must-revalidate, proxy-revalidate'
-  );
+  
+  // Set multiple cache headers for Atlas/Cloudflare
+  ctx.res.setHeader('Cache-Control', 'private, no-cache, no-store, max-age=0, must-revalidate');
+  ctx.res.setHeader('CDN-Cache-Control', 'no-store');
+  ctx.res.setHeader('Cloudflare-CDN-Cache-Control', 'no-store');
+  ctx.res.setHeader('Surrogate-Control', 'no-store');
   ctx.res.setHeader('Pragma', 'no-cache');
   ctx.res.setHeader('Expires', '0');
   
+  // Vary header is CRITICAL for Atlas
+  ctx.res.setHeader('Vary', 'Accept-Encoding');
+
   ctx.resolvedUrl = ctx.resolvedUrl.replace('/dynamic','');
   ctx.resolvedUrl = ctx.resolvedUrl.replace('&post_type=wpsl_stores','');
   let paramString = '';
