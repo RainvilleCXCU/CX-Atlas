@@ -319,17 +319,17 @@ let nextConfig = {
             },
           ],
         },
-        // {
-        //   source: "/:path*",
-        //   destination: "/dynamic/:path*",
-        //   has: [
-        //     {
-        //       type: "query",
-        //       key: "utm_campaign",
-        //       value: "(fall|sticky|staticbold|staticcomp)"
-        //     },
-        //   ],
-        // },
+        {
+          source: "/:path*",
+          destination: "/dynamic/:path*",
+          has: [
+            {
+              type: "query",
+              key: "utm_campaign",
+              value: "(fall|sticky|staticbold|staticcomp)"
+            },
+          ],
+        },
         {
           source: "/:path*",
           destination: "/dynamic/:path*",
