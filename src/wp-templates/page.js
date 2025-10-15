@@ -35,7 +35,6 @@ Component.variables = (seedQuery, ctx, extra) => {
     headerLocation: MENUS.PRIMARY_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION,
     asPreview: ctx?.asPreview,
-    isDynamic: extra?.isDynamic || false,
   };
 };
 
@@ -49,7 +48,6 @@ Component.query = gql`
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
     $asPreview: Boolean = false
-    $isDynamic: Boolean = false
   ) {
     page(id: $uri, idType: URI, asPreview: $asPreview) {
       title
@@ -131,7 +129,5 @@ Component.query = gql`
         ...NavigationMenuItemFragment
       }
     }
-    # Use isDynamic to make query unique for caching
-    __typename @skip(if: $isDynamic)
   }
 `;

@@ -23,6 +23,13 @@ export default function Page(props) {
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const { query } = ctx;
+  ctx.res.setHeader(
+    'Cache-Control',
+    'no-store, no-cache, must-revalidate, proxy-revalidate'
+  );
+  ctx.res.setHeader('Pragma', 'no-cache');
+  ctx.res.setHeader('Expires', '0');
+  
   ctx.resolvedUrl = ctx.resolvedUrl.replace('/dynamic','');
   ctx.resolvedUrl = ctx.resolvedUrl.replace('&post_type=wpsl_stores','');
   let paramString = '';
@@ -36,7 +43,6 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   
   return getWordPressProps({
     ctx,
-    revalidate: 1,
     props: {
       query
     },
