@@ -31,7 +31,7 @@ export default function Component(props) {
 Component.variables = (seedQuery, ctx, extra) => {
   const {databaseId, uri} = seedQuery;
   return {
-    uri: `${uri}${extra?.query?.params ? `?${JSON.stringify(extra?.query?.params)}`: ''}`,
+    uri: `${uri}${extra?.query?.params ? `?isDynamic=${extra?.isDynamic ? 'dynamic' : 'static'} & ${JSON.stringify(extra?.query?.params)}`: ''}`,
     headerLocation: MENUS.PRIMARY_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION,
     asPreview: ctx?.asPreview,
