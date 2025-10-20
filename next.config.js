@@ -12,7 +12,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
  **/
 
 let nextConfig = {
-  // reactStrictMode: true,
+  reactStrictMode: false,
   async headers() {
     return [
       {
@@ -325,6 +325,17 @@ let nextConfig = {
           has: [
             {
               type: "query",
+              key: "template",
+              value: "(cta_header|no_header|slim_header)"
+            },
+          ],
+        },
+        {
+          source: "/:path*",
+          destination: "/dynamic/:path*",
+          has: [
+            {
+              type: "query",
               key: "goal",
             },
           ],
@@ -436,14 +447,13 @@ let nextConfig = {
   },
   swcMinify: true,
   experimental: {
-    webVitalsAttribution:  process.env.NODE_ENV !== "production" ? ["CLS", "LCP", "FCP"] : [],
+    // webVitalsAttribution:  process.env.NODE_ENV !== "production" ? ["CLS", "LCP", "FCP"] : [],
     scrollRestoration: true,
     optimizePackageImports: [
       "@apollo/client",
       "@faustwp/cli",
       "@faustwp/core",
       "dateformat",
-      "mobile-device-detect",
       "preact",
       "preact-render-to-string",
       "react-cookie",
@@ -455,12 +465,14 @@ let nextConfig = {
     outputStyle: "compressed",
   },
   webpack: (config, { dev, isServer }) => {
-    Object.assign(config.resolve.alias, {
-      "react/jsx-runtime.js": "preact/compat/jsx-runtime",
-      react: "preact/compat",
-      "react-dom/test-utils": "preact/test-utils",
-      "react-dom": "preact/compat",
-    });
+    if (!process.env.USE_REACT) {
+      Object.assign(config.resolve.alias, {
+        "react/jsx-runtime.js": "preact/compat/jsx-runtime",
+        react: "preact/compat",
+        "react-dom/test-utils": "preact/test-utils",
+        "react-dom": "preact/compat",
+      });
+    }
     const originalEntry = config.entry;
     config.entry = async () => {
       const entries = await originalEntry();
@@ -513,6 +525,52 @@ let nextConfig = {
                 },
             ],
         },);
+
+    /** Chunking */
+if (!isServer && !process.env.PREVENT_SPLIT_CHUNK) {
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        minSize: 20000,
+        minRemainingSize: 0,
+        minChunks: 1,
+        maxAsyncRequests: 30,
+        maxInitialRequests: 30,
+        enforceSizeThreshold: 50000,
+        cacheGroups: {
+          default: {
+            minChunks: 2,
+            priority: -20,
+            reuseExistingChunk: true,
+          },
+          defaultVendors: {
+            test: /[\\/]node_modules[\\/]/,
+            priority: -10,
+            reuseExistingChunk: true,
+          },
+          next: {
+            test: /[\\/]node_modules[\\/](next)/,
+            priority: -10,
+            name: 'next',
+            enforce: true,
+          },
+          // GraphQL and Apollo
+          graphql: {
+            test: /[\\/]node_modules[\\/](@apollo|graphql|@graphql-tools)[\\/]/,
+            name: 'graphql',
+            priority: 25,
+            enforce: true,
+          },
+          // FaustWP specific
+          faust: {
+            test: /[\\/]node_modules[\\/]@faustwp[\\/]/,
+            name: 'faust',
+            priority: 25,
+            enforce: true,
+          },
+        },
+      };
+    }
+
     return config;
   },
 };

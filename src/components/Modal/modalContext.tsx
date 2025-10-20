@@ -19,10 +19,14 @@ export const isModalOpenContext = createContext<IisModalOpenContext>(isModalOpen
 interface ModalContent {
     title?;
     copy?;
+    bodyTakeover?;
     continueLink?;
     continueText?;
     cancelText?;
+    cancelUrl?;
     forceAction?;
+    html?;
+    target?;
     children?;
     classNames?;
   }

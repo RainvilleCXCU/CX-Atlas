@@ -14,7 +14,8 @@ import Link from 'next/link';
 const BaseLayout = dynamic(() => import('components/layout'));
 
 export default function Component(props) {
-  const { title, content, databaseId, featuredImage, categories, relatedPosts  } = props?.data?.postPreview ?? { title: '' };
+  const { title, content, databaseId, featuredImage, categories  } = props?.data?.postPreview ?? { title: '' };
+  const relatedPosts = props?.data?.relatedPosts;
   const { blogtop, blogSidebar } = props?.data?.widgetSettings;
 
   return (
@@ -136,6 +137,13 @@ Component.query = gql`
                 height
             }
         }
+      }
+      pageContent {
+        bodyTop
+        bodyBottom
+      }
+      template {
+        templateName
       }
     }
     relatedPosts(postId: $pageId) {

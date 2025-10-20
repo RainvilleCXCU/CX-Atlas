@@ -13,7 +13,7 @@ import Qualtrics from 'components/ThirdParty/qualtrics';
 import Spectrum from 'components/ThirdParty/spectrum';
 import Siteimprove from 'components/ThirdParty/siteimprove';
 import Clarity from 'components/ThirdParty/clarity';
-
+import Q1Tracking from './ThirdParty/q1tracking';
 // import {
 //   Header,
 //   MenuNavigation,
@@ -23,19 +23,28 @@ import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
 // const SEO = dynamic(()=> import('components/SEO/SEO'), {ssr:true});
 import SEO from './SEO/SEO';
-import dynamic from 'next/dynamic';
 import Alert from 'components/Alerts/Alert';
 import Loading from 'components/common/loading';
-import { m } from 'framer-motion';
+import { parseHtml } from 'lib/parser';
+import { Suspense, FC } from 'react';
+import SmartBannerComponent from './Device/SmartAppBanner';
 // const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:true});
 // const Loading = dynamic(() => import('components/common/loading'), {ssr:true});
 interface BaseLayoutProps {
     props?
+    templateName?
     pageTitle?
     children
 }
 
-const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle }) => {
+const BaseLayout: FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle, templateName }) => {
+
+    const activeTemplates = [
+        'cta_header',
+        'no_header',
+        'slim_header',
+        'default'
+    ];
     const { description: siteDescription = '', logo: siteLogo = '', desktopLogo: siteDesktopLogo = '', mobileLogo: siteMobileLogo = '', desktopLogoWidth: siteDesktopLogoWidth = '', mobileLogoWidth: siteMobileLogoWidth = '', logoTitleText: siteLogoText = '', footerText: footerText = '' } = props?.data?.generalSettings ?? {
         description: '',
         logo: '',
@@ -46,10 +55,15 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTi
         footerText: '',
         logoTitleText: ''
     };
-    const { clarityId, clarityEnabled, gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
+    const { q1TrackingId, q1TrackingEnabled, clarityId, clarityEnabled, gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
     const primaryMenu = props?.data?.headerMenuItems?.nodes ?? [];
     const footerMenu = props?.data?.footerMenuItems?.nodes ?? [];
-    let { title = '', content, seo = {}, link = '', featuredImage, databaseId = '', details } = props?.data?.page ?? props?.data?.post ?? props?.data?.location ?? {
+    const bodyTop = props?.data?.page?.pageContent?.bodyTop ?? props?.data?.postPreview?.pageContent?.bodyTop ?? '';
+    const template = props?.query?.template && activeTemplates.includes(props?.query?.template) ? props?.query?.template.replace('_', ' ', "gi") : props?.data?.page?.template?.templateName ?? props?.data?.postPreview?.template?.templateName ?? 'default';
+    const ctaInfo = props?.data?.page?.ctaPage ?? props?.data?.postPreview?.ctaPage ?? null;
+
+
+    let { title = '', content, seo = {}, link = '', featuredImage, databaseId = '', details } = props?.data?.page ?? props?.data?.post ?? props?.data?.location ?? props?.data?.category ?? {
         title: '',
         seo: {},
         link: '',
@@ -129,22 +143,47 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({ props, children = <></>, pageTi
                 activeAlerts.length > 0 &&
                 <Alert alerts={activeAlerts} />
             }
-                    <Loading /> 
-                    <Header
-                        title={title}
-                        description={siteDescription}
-                        logo={siteLogo}
-                        logoText={siteLogoText}
-                        desktopLogo={siteDesktopLogo}
-                        desktopLogoWidth={siteDesktopLogoWidth}
-                        mobileLogo={siteMobileLogo}
-                        mobileLogoWidth={siteMobileLogoWidth}
-                        menuItems={primaryMenu}
-                        headerSettings={headerSettings}
-                    />
-                    {children}
+                    <Loading />
+                    {
+                        parseHtml(bodyTop)
+                    }
+                    {process.env.NEXT_PUBLIC_DISABLED_APP_BANNER !== 'true' &&
+                        <SmartBannerComponent />
+                    }
+                    {template && template.toLowerCase() !== 'no header' &&
+                        <Header
+                            title={title}
+                            description={siteDescription}
+                            logo={siteLogo}
+                            logoText={siteLogoText}
+                            desktopLogo={siteDesktopLogo}
+                            desktopLogoWidth={siteDesktopLogoWidth}
+                            mobileLogo={siteMobileLogo}
+                            mobileLogoWidth={siteMobileLogoWidth}
+                            menuItems={primaryMenu}
+                            headerSettings={headerSettings}
+
+                            showButtons={template.toLowerCase() === 'full width' || template.toLowerCase() === 'default'}
+                            showNavigation={template.toLowerCase() === 'full width' || template.toLowerCase() === 'default'}
+                            showSearch={template.toLowerCase() === 'full width' || template.toLowerCase() === 'default'}
+                            showUtilityNav={template.toLowerCase() === 'full width' || template.toLowerCase() === 'default'}
+
+                            template={template}
+                            ctas={ctaInfo?.ctas ? ctaInfo.ctas : false}
+                        />
+                    }
+
+                    <Suspense fallback={<Loading />}>
+                        {children}
+                    </Suspense>
             {footerMenu &&
                     <Footer copyrightHolder={footerText} menuItems={footerMenu} logo={siteLogo} logoText={siteLogoText} footerUtilities={footerUtilities} footerAppIcons={footerAppIcons} footerSocialIcons={footerSocialIcons} />
+            }
+
+            {q1TrackingEnabled &&
+            <Q1Tracking
+                id={q1TrackingId}
+                enabled={q1TrackingEnabled} />
             }
             {qualtricsEnabled &&
                     <Qualtrics

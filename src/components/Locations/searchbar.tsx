@@ -4,7 +4,11 @@ import { getGeoLocation } from "lib/location/geolocation";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useRef, useState } from "react";
 
-const AddressBar = () => {
+interface AddressBarProps {
+    clearCB?
+}
+
+const AddressBar = ({clearCB = () => {}}:AddressBarProps) => {
 	const { query = {}, push } = useRouter();
 
     const [autoCompleteLoaded, setAutoCompleteLoaded] = useState(false);
@@ -30,7 +34,7 @@ const AddressBar = () => {
 
             })
             .catch(err => {
-                push(`/about/branch-and-atm-locations/`, undefined, { shallow: true });
+                push(`/about/branch-and-atm-locations`, undefined, { shallow: true });
             })
     }
 
@@ -57,6 +61,9 @@ const AddressBar = () => {
                     setAddress(formatted_address);           
 		            searchRadius = distance(geometry.viewport.getNorthEast().lng(), geometry.viewport.getNorthEast().lat(), geometry.viewport.getSouthWest().lng(), geometry.viewport.getSouthWest().lat()) / 2;
                     searchAddress = formatted_address;
+                    push(`/about/branch-and-atm-locations/find-location/${formatSearch(searchAddress)}`, undefined, { shallow: true });
+                } else if(places.name) {
+                    push(`/about/branch-and-atm-locations/find-location/${formatSearch(places.name)}`, undefined, { shallow: true });
                 }
                 setState({
                     ...state,
@@ -66,7 +73,9 @@ const AddressBar = () => {
                         search: formatSearch(searchAddress)
                     }
                 })
-                // router.push(`/about/branch-and-atm-locations/find-location/${formatSearch(formatted_address)}/`, undefined, { shallow: true });
+
+                clearCB();
+                // push(`/about/branch-and-atm-locations/find-location/${formatSearch(formatted_address)}/`, undefined, { shallow: true });
             });
             setAutoCompleteLoaded(true);
         }    
@@ -87,7 +96,9 @@ const AddressBar = () => {
     };
 
     const submitSearch = e => {
+        console.log('SUBMIT SEARCH!!!');
         const address = formatSearch(addressRef.current.value);
+        push(`/about/branch-and-atm-locations/find-location/${address}`, undefined, { shallow: true });
         setState({
             ...state,
             location: {
@@ -103,10 +114,13 @@ const AddressBar = () => {
     }
 
     const clearInput = e => {
+        if(addressRef.current.value !== '') {
+            clearCB();
+        }
         setAddress('');
         const newLocation = state?.location;
         delete newLocation.search;
-        push(`/about/branch-and-atm-locations/`, undefined, { shallow: false });
+        push(`/about/branch-and-atm-locations`, undefined, { shallow: false });
         // .then(() => {
         //     setState({
         //         ...state,

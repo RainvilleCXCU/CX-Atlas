@@ -76,6 +76,13 @@ Component.query = gql`
           }
         }
       link
+      pageContent {
+        bodyTop
+        bodyBottom
+      }
+      template {
+        templateName
+      }
     }
     generalSettings {
       ...BlogInfoFragment

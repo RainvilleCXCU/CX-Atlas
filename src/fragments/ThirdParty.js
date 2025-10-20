@@ -25,5 +25,7 @@ export const ThirdPartySettingsFragment = gql`
     wpengineAccountId
     wpengineEnvId
     wpengineToken
+    q1TrackingId
+    q1TrackingEnabled
   }
 `;

@@ -1,10 +1,8 @@
 import dynamic from "next/dynamic";
 import parse, { domToReact, attributesToProps } from "html-react-parser";
-import { usePathname } from 'next/navigation';
 import Link from "next/link";
 import { css } from '@emotion/css';
 import Image from 'next/image';
-import { useCookies } from "react-cookie";
 
 import EqualHeightContainer  from "components/Blocks/EqualHeight";
 import Container from "components/Blocks/Container";
@@ -14,16 +12,18 @@ import BusinessDetails from "components/Business/BusinessDetails";
 import Accordion from "components/Accordion/Accordion";
 import { trackMember } from "utils/tracking";
 
-const Vimeo = dynamic(() => import("components/Video/vimeo"));
-const Step = dynamic(() => import("components/Steps/Step"));
+const Vimeo = dynamic(() => import("components/Video/vimeo"), {ssr: false});
+const Step = dynamic(() => import("components/Steps/Step"), {ssr: false});
 // const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
 import ExternalLink from "components/ExternalLinks/links";
 import MarketingCloudForm from "components/Salesforce/cloudpage";
 import SwiperContainer from "components/Blocks/MobileScroll";
 import ProductFinder from "components/ProductFinder/finder";
-import AppLinks from "components/Device/AppLinks";
+const AppLinks = dynamic(() => import("components/Device/AppLinks"), {ssr: false});
+// import AppLinks from "components/Device/AppLinks";
 import Address from "components/Map/address";
 import MBHIPRO from "components/Hours/MBHIPRO";
+import MLButton from "components/Buttons/ML";
 // import ToggleContent from "components/ContentToggle/Content";
 // import ToggleContentLink from "components/ContentToggle/ContentToggleLink";
 // import ToggleContentSelect from "components/ContentToggle/ContentToggleSelect";
@@ -33,7 +33,8 @@ const ToggleContentSelect = dynamic(() => import("components/ContentToggle/Conte
 const FAQ = dynamic(() => import("components/FAQs/faq"));
 const Form = dynamic(() => import("components/Forms/Form"));
 const DataTracComparison = dynamic(() => import("components/Datatrac/Comparison"));
-const Disclosure = dynamic(() => import("components/Disclosure/Disclosure"), {ssr: false});
+const DataTracBarComparison = dynamic(() => import("components/Datatrac/BarComparison"), {ssr: true});
+const Disclosure = dynamic(() => import("components/Disclosure/Disclosure"), {ssr: true});
 const LinkLibrary = dynamic(() => import ("components/LinkLibrary/LinkLibrary"), {ssr: false});
 const Chat = dynamic(() => import ("components/Chat/cisco"), {ssr: false});
 const NiceChat = dynamic(() => import ("components/Chat/nice"), {ssr: false});
@@ -42,8 +43,12 @@ const CXCalc = dynamic(() => import("components/Calculator/CXCalculator"), {ssr:
 const CXCalcResults = dynamic(() => import("components/Calculator/CXCalculatorResults"), {ssr: false});
 const DynamicRateTableInput = dynamic(() => import("components/Calculator/DynamicRateTableInput"), {ssr: false});
 const DynamicRateTable = dynamic(() => import("components/Calculator/DynamicRateTable"), {ssr: false});
+const DynamicProductCalculatorInput = dynamic(() => import("components/Dynamic Product Calculator Input/DynamicProductCalculatorInput"), {ssr: false});
+const DynamicProductCalculatorOutput = dynamic(() => import("components/Dynamic Product Calculator Output/DynamicProductCalculatorOutput"), {ssr: true});
 const Scheduler = dynamic(() => import("components/Salesforce/scheduler"), {ssr: false});
 const Tooltip = dynamic(() => import("components/Tooltip/Tooltip"), {ssr: false});
+const CXBio = dynamic(() => import("components/CXBio/Bio"), {ssr: false});
+const Confetti = dynamic(() => import("components/Confetti/Confetti"), {ssr: false});
 
 const findChildren = (element, att, value) => {
     let children = [];
@@ -68,7 +73,7 @@ export const parseHtml = (html) => {
         },
         // library: require('preact'),
         replace: (element) => {
-            const [cookies, setCookie ] = useCookies(['referralsource']);
+            const cookies = { referralsource: typeof document !== 'undefined' ? document.cookie.split('; ').find(row => row.startsWith('referralsource='))?.split('=')[1] || '' : '' };
             
             
             // return;
@@ -84,14 +89,16 @@ export const parseHtml = (html) => {
                 return;
             }
             // ML Referral Source
-            else if(name === 'a' && cookies?.referralsource && cookies?.referralsource !== '' && (attribs?.href?.includes('loanspq') || attribs?.href?.includes('meridianlink'))) {
-                const currDestReferral = getQueryVariable('referralsource', attribs?.href);
+            else if(name === 'a' && !attribs?.class?.includes('cx-mlskip') && (attribs?.href?.includes('loanspq') || attribs?.href?.includes('meridianlink'))) {
                 let href = attribs.href;
-                if (currDestReferral) {
-                    href = attribs?.href.replace(currDestReferral, cookies?.referralsource);
+                if(cookies?.referralsource && cookies?.referralsource !== ''){
+                    const currDestReferral = getQueryVariable('referralsource', attribs?.href);
+                    if (currDestReferral) {
+                        href = attribs?.href.replace(currDestReferral, cookies?.referralsource);
+                    }
                 }
                 return (
-                    <a href={href} className={attribs?.class} target={attribs?.targets}>{domToReact(children, options)}</a>
+                    <MLButton href={href} classNames={attribs?.class} target={attribs?.targets}>{domToReact(children, options)}</MLButton>
                 )
             }
             // Cisco Chat Button
@@ -118,7 +125,7 @@ export const parseHtml = (html) => {
             }
             // Internal Link
             else if (name === "a") {    
-                const pathname = usePathname();
+                const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
                 if((attribs?.href.includes('#') && attribs?.href.split('#')[0] == pathname) || attribs?.href.startsWith('#')) {
                     let href = `#${attribs?.href.split('#')[1]}`;
                     delete attribs?.href;
@@ -196,7 +203,7 @@ export const parseHtml = (html) => {
                     <Accordion 
                         stayOpen={attribs?.['data-stay-open']}
                         startOpen={attribs?.['data-start-open']}
-                        isOpenpen={attribs?.['data-isopen']}
+                        isOpen={attribs?.['data-isopen']}
                         title={title} 
                         content={content}
                         classNames={attribs?.class}
@@ -309,28 +316,40 @@ export const parseHtml = (html) => {
             // CX Calculator Results
             else if(attribs?.class?.includes('cx-calculator-results')) {
                 return (
-                    <div {...attributesToProps(attribs)}><CXCalcResults>{children}</CXCalcResults></div>
+                    <div {...attributesToProps(attribs)}><CXCalcResults>{domToReact(children, options)}</CXCalcResults></div>
                 )
             } 
 
             // CX Calculator
             else if(attribs?.class?.includes('cx-calculator')) {
                 return (
-                    <div {...attributesToProps(attribs)}><CXCalc>{children}</CXCalc></div>
+                    <div {...attributesToProps(attribs)}><CXCalc>{domToReact(children, options)}</CXCalc></div>
                 )
             }
             
             // Dynamic Rate table calculator input
             else if(attribs?.class?.includes('dynamic-rate-table-input')) {
                 return (
-                    <div {...attributesToProps(attribs)}><DynamicRateTableInput>{children}</DynamicRateTableInput></div>
+                    <div {...attributesToProps(attribs)}><DynamicRateTableInput>{domToReact(children, options)}</DynamicRateTableInput></div>
                 )
             } 
 
             // Dynamic Rate table calculator table
             else if(attribs?.class?.includes('dynamic-rate-table-output')) {
                 return (
-                    <div {...attributesToProps(attribs)}><DynamicRateTable>{children}</DynamicRateTable></div>
+                    <div {...attributesToProps(attribs)}><DynamicRateTable>{domToReact(children, options)}</DynamicRateTable></div>
+                )
+            }
+            // Dynamic Product Calculator Input
+            else if(attribs?.id?.includes('dynamic-product-calculator-input__checking')) {
+                return (
+                    <div {...attributesToProps(attribs)}><DynamicProductCalculatorInput>{domToReact(children, options)}</DynamicProductCalculatorInput></div>
+                )
+            } 
+            // Dynamic Product Calculator Output
+            else if(attribs?.id?.includes('dynamic-product-calculator-output__checking')) {
+                return (
+                    <div {...attributesToProps(attribs)}><DynamicProductCalculatorOutput>{domToReact(children, options)}</DynamicProductCalculatorOutput></div>
                 )
             } 
 
@@ -339,6 +358,12 @@ export const parseHtml = (html) => {
                 return ( 
                     <DataTracComparison performs={attribs?.['data-datatrac-perform']}>{domToReact(children, options)}</DataTracComparison>
                 );
+            }
+            // Datatrac Bar Comparison
+            else if(attribs?.class?.includes('rate_info__rate--bar')) {
+                return (
+                    <DataTracBarComparison {...attributesToProps(attribs)}>{domToReact(children, options)}</DataTracBarComparison>
+                )
             }
 
             // Link Library
@@ -383,13 +408,24 @@ export const parseHtml = (html) => {
                     <MarketingCloudForm formUrl={attribs['data-page-url']} {...attributesToProps(attribs)} />
                 )
             }
-
+            // CX Bio
+            else if(attribs?.class?.includes('cx-bio')) {
+                return (
+                    <CXBio>{domToReact(children, options)}</CXBio>
+                )
+            }
             // Tooltip
             else if(attribs?.class?.includes('tooltip')) {
                 return (
                     <Tooltip attribs={attributesToProps(attribs)}>{domToReact(children, options)}</Tooltip>
                 )
             } 
+            // Confetti
+            else if(attribs?.class?.includes('confetti')) {
+                return (
+                    <Confetti attribs={attributesToProps(attribs)}/>
+                )
+            }
 
             else {
                 return;

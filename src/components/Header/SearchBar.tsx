@@ -15,6 +15,9 @@ interface SearchBarProps {
 	mobileLogoWidth?
 	logoText?
 	showNavigation?: boolean
+	template?: string
+	ctas?
+	children?
 }
 
 function DesktopSearchBar(props: SearchBarProps) {
@@ -78,7 +81,7 @@ function DesktopSearchBar(props: SearchBarProps) {
 function MobileSearchBar(props: SearchBarProps) {
 	const [isSearchExpanded, setIsSearchExpanded] = useState(false);
 	const [searchTerm, setSearchTerm] = useState('');
-	const {navOpen, setNavOpen, logo, desktopLogo, mobileLogo, desktopLogoWidth, mobileLogoWidth, logoText, showSearch } = props;
+	const {navOpen, setNavOpen, logo, desktopLogo, mobileLogo, desktopLogoWidth, mobileLogoWidth, logoText, showSearch, template, ctas } = props;
     const [state, setState] = useContext(Store);
 
 	useEffect(() => {
@@ -106,14 +109,14 @@ function MobileSearchBar(props: SearchBarProps) {
 	}, [isSearchExpanded])
 
 	return (
-			<MobileHeader logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} logoText={logoText} setSearchTerm={setSearchTerm} showNav={showSearch} isSearchExpanded={isSearchExpanded} setIsSearchExpanded={setIsSearchExpanded} navOpen={navOpen} setNavOpen={setNavOpen} />
+			<MobileHeader logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} logoText={logoText} setSearchTerm={setSearchTerm} showNav={showSearch} isSearchExpanded={isSearchExpanded} setIsSearchExpanded={setIsSearchExpanded} navOpen={navOpen} setNavOpen={setNavOpen} template={template} ctas={ctas} />
 	);
 }
 
-export default function SearchBar({ device, navOpen, setNavOpen, logo, desktopLogo, mobileLogo, desktopLogoWidth, mobileLogoWidth, logoText, showSearch, showNavigation = true, children = <></> }) {
-	if (device.toLowerCase() === 'mobile') {
+export default function SearchBar({ device, navOpen, setNavOpen, logo, desktopLogo, mobileLogo, desktopLogoWidth, mobileLogoWidth, logoText, showSearch, showNavigation = true, template, ctas, children = <></> }:SearchBarProps) {
+	if (device?.toLowerCase() === 'mobile') {
 		return (
-			<MobileSearchBar logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} logoText={logoText} navOpen={navOpen} setNavOpen={setNavOpen} showNavigation={showNavigation} showSearch={showSearch} />
+			<MobileSearchBar logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} logoText={logoText} navOpen={navOpen} setNavOpen={setNavOpen} showNavigation={showNavigation} showSearch={showSearch} template={template} ctas={ctas} />
 		);
 	}
 	return (

@@ -5,7 +5,7 @@ import UtilityNav from "./UtilityNav";
 import Image from "next/image";
 import { gql } from "@apollo/client";
 import dynamic from "next/dynamic";
-import React from "react";
+import { memo } from 'react';
 
 interface Props {
 	copyrightHolder?: string;
@@ -77,9 +77,10 @@ const Footer = ({ copyrightHolder = "", title, logo, desktopLogo, mobileLogo, de
 
 								<Image
 									src="/wp-content/themes/CXCU/images/equal-housing.svg"
+									className="slim-margin--horizontal-left"
 									width="50"
 									height="53"
-									alt="NCUA"
+									alt="equal housing opportunity"
 								/>
 							</div>
 						</li>
@@ -128,5 +129,5 @@ Footer.fragments = {
 
 // export { Footer };
 
-const MemoizedFooter = React.memo(Footer);
+const MemoizedFooter = memo(Footer);
 export default MemoizedFooter;

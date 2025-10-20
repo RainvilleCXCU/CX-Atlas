@@ -1,5 +1,4 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import ReactDOMServer from 'react-dom/server';
 import InfoBox from "./infobox";
 import { Store } from "context/store";
 import { selectedLocationContext, showDetailsContext } from "components/Locations/locationsContext";
@@ -76,8 +75,10 @@ function Map({ id="wpsl-gmap", title = 'Categories', lat, lng, locationSettings 
     }, [map, markers, markerIconProps]);
 
     useEffect(() => {
-        if(map && markersArray) {
+        if(map && markersArray && Object.keys(markersArray).length > 0) {
             fitBounds();
+        } else {
+            map?.setCenter( {lng:lng, lat:lat} );
         }
     }, [map, markersArray]);
 
@@ -172,6 +173,8 @@ function Map({ id="wpsl-gmap", title = 'Categories', lat, lng, locationSettings 
         // attachBoundsChangedListener(map, maxZoom);
 
 		map?.fitBounds( bounds );
+        console.log('LAT LONG');
+        console.log(`${lat} - ${lng}`);
 	}
     const attachBoundsChangedListener = ( map, maxZoom )  => {
         console.log(google)
@@ -284,7 +287,17 @@ function Map({ id="wpsl-gmap", title = 'Categories', lat, lng, locationSettings 
                     // } else {
                     //     setInfoWindowContent( marker, createInfoWindowHtml( infoWindowData ), infoWindow, currentMap );
                     // }
-                    const domNode = ReactDOMServer.renderToString(<InfoBox id={storeId} name={infoWindowData.store} address={infoWindowData.address} address2={infoWindowData.address2 !== '' ? infoWindowData.address2 : null} city={infoWindowData.city} state={infoWindowData.state} zip={infoWindowData.zip} phoneLabel={state?.location?.settings?.phoneLabel !== '' ? state?.location?.settings?.phoneLabel : null} phone={infoWindowData.phone !== '' ? infoWindowData.phone : null} />)
+                    const domNode = InfoBox({
+                        id:storeId,
+                        name:infoWindowData.store,
+                        address:infoWindowData.address,
+                        address2:infoWindowData.address2 !== '' ? infoWindowData.address2 : null,
+                        city:infoWindowData.city,
+                        state:infoWindowData.state,
+                        zip:infoWindowData.zip,
+                        phoneLabel:state?.location?.settings?.phoneLabel !== '' ? state?.location?.settings?.phoneLabel : null,
+                        phone:infoWindowData.phone !== '' ? infoWindowData.phone : null
+                    });
                     setInfoWindowContent( marker, domNode, infoWindow, currentMap );
 
                 } else {

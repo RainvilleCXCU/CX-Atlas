@@ -2,7 +2,6 @@ import SearchBar from './SearchBar';
 import MobileNav from './MobileNav';
 import MenuNavigation from 'components/Navigation/Navbar';
 import Link from 'next/link';
-import { useCookies } from 'react-cookie';
 import { trackMember } from 'utils/tracking';
 interface NavigationProps {
     navOpen?: boolean,
@@ -18,16 +17,17 @@ interface NavigationProps {
     logoText,
     showNavigation?
     showSearch?
+    template?
+    ctas?
 }
 
 export default function Navigation(props: NavigationProps) {
-    const [cookies, setCookie ] = useCookies(['ismember']);
-    const { showNavigation, showButtons, logo, desktopLogo, mobileLogo, desktopLogoWidth, mobileLogoWidth, logoText, setNavOpen, navOpen, headerSettings, menuItems, showSearch } = props;
+    const { showNavigation, showButtons, logo, desktopLogo, mobileLogo, desktopLogoWidth, mobileLogoWidth, logoText, setNavOpen, navOpen, headerSettings, menuItems, showSearch, template, ctas } = props;
 
     return (
         <>
         <nav className="navbar navbar-expand-lg navbar-default cx-nav cx-header__mobile">
-                <SearchBar showNavigation={showNavigation} logoText={logoText} logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} device="mobile" setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} />
+                <SearchBar template={template} ctas={ctas} showNavigation={showNavigation} logoText={logoText} logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} device="mobile" setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} />
               
                 <MobileNav showNavigation={showNavigation} headerSettings={headerSettings} links={menuItems} menuOpen={navOpen} navOpen={navOpen} setNavOpen={setNavOpen} />
               
@@ -42,9 +42,9 @@ export default function Navigation(props: NavigationProps) {
                   }
                   {showButtons &&
                     <div>
-                      <Link href="/pay-my-loan/" passHref className="cx-button cx-button--compact cx-button--text cx-button--outlined-positive" type="button" onClick={trackMember}>Pay my loan
+                      <Link href="/pay-my-loan/" prefetch={false} className="cx-button cx-button--compact cx-button--text cx-button--outlined-positive" type="button" onClick={trackMember}>Pay my loan
                       </Link>
-                      <Link href="/mdr?loc=LStUVVkwNi1DO1c1Tj0nLTYsQGBgCmAK&login=desktop" className="cx-button cx-button--compact cx-button--color-positive" onClick={trackMember}>Log in</Link>
+                      <Link href="/mdr?loc=LStUVVkwNi1DO1c1Tj0nLTYsQGBgCmAK&login=desktop" prefetch={false} className="cx-button cx-button--compact cx-button--color-positive" onClick={trackMember}>Log in</Link>
                     </div>
                   }
                 </div>

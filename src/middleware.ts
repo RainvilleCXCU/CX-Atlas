@@ -6,8 +6,7 @@ const { fetchVanityByPath } = require("./utils/vanity");
 export async function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
   const vanityPathMatch = process.env.NEXT_PUBLIC_VANITY_PATH_MATCH ? new RegExp(process.env.NEXT_PUBLIC_VANITY_PATH_MATCH) : new RegExp('/(disclosures/.*)');
-
-
+  
   if (pathname.startsWith('/mdr')) {   
 
     const rewriteUrl = new URL(process.env.NEXT_PUBLIC_WORDPRESS_URL);

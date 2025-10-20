@@ -34,7 +34,7 @@ export default function Component(props) {
               <header className='entry-header'>
                 {featuredImage && featuredImage?.node?.sourceUrl && 
                   <div className='featured-image'>
-                    <Image src={featuredImage?.node.sourceUrl?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={featuredImage.node.mediaDetails.width} height={featuredImage.node.mediaDetails.height} />
+                    <img src={featuredImage?.node.sourceUrl?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={featuredImage.node.mediaDetails.width} height={featuredImage.node.mediaDetails.height} />
                   </div>
                 }
                 <h1>{title}</h1>
@@ -84,6 +84,9 @@ Component.query = gql`
       content
       date
       link
+      template {
+        templateName
+      }
       seo {
           canonical
           metaDesc

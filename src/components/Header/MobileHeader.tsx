@@ -1,4 +1,13 @@
 import Logo from "components/Logo";
+import Link from "next/link";
+
+interface CTAProps {
+  buttonColor: string;
+  ctaButtonType: string;
+  ctaLink: string;
+  ctaText: string;
+  compact: boolean;
+}
 interface MobileHeader {
   navOpen?: boolean;
   setNavOpen;
@@ -12,6 +21,8 @@ interface MobileHeader {
   mobileLogoWidth?;
   logoText?;
   showNav?;
+  template?: string;
+  ctas?: Array<CTAProps>
 }
 
 export default function MobileHeader(props: MobileHeader) {
@@ -28,6 +39,8 @@ export default function MobileHeader(props: MobileHeader) {
     setIsSearchExpanded,
     setSearchTerm,
     showNav = true,
+    template,
+    ctas
   } = props;
 
   return (
@@ -36,12 +49,12 @@ export default function MobileHeader(props: MobileHeader) {
       {showNav && (
         <div className="cx-nav__mobile-buttons">
           {!navOpen && (
-            <a
+            <Link
               href="/mdr?loc=LStUVVkwNi1DO1c1Tj0nLTYsQGBgCmAK&login=mobile"
               className="cx-button cx-button--compact cx-button--color-positive"
             >
               Log in
-            </a>
+            </Link>
           )}
           <button
             className={`cx-navbar-toggler${
@@ -55,7 +68,18 @@ export default function MobileHeader(props: MobileHeader) {
             <span className="navbar-toggler-icon cx-navbar-toggler__line"></span>
           </button>
         </div>
-      )}
+      )}   
+
+      
+
+      {
+          ctas && template && template.toLowerCase() === 'cta header' && 
+            <section className='cx-header__cta'>
+              {ctas.map((cta, index) => (
+                <a href={cta.ctaLink} key={`header-mobile-cta-${index}`} className={`cx-button cx-button--${cta.ctaButtonType}${cta.buttonColor}${cta.compact ? ' cx-button--compact' : ''}`}>{cta.ctaText}</a>
+              ))}
+            </section>
+        }
     </div>
   );
 }

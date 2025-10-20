@@ -1,9 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import { memo, useState, useEffect } from 'react';
 import UtilityNav from './UtilityNav';
 import Logo from 'components/Logo';
 import { useRouter } from 'next/router';
 import Navigation from './Navigation';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
+
+interface CTAProps {
+  buttonColor: string;
+  ctaButtonType: string;
+  ctaLink: string;
+  ctaText: string;
+  compact: boolean;
+}
 interface Props {
   title?: string;
   description?: string;
@@ -20,6 +29,8 @@ interface Props {
   showLogo?: boolean;
   menuItems?;
   headerSettings?;
+  template?: string;
+  ctas?: Array<CTAProps>;
 }
 
 const Header = ({
@@ -37,7 +48,9 @@ const Header = ({
   showSearch = true,
   showLogo = true,
   menuItems,
-  headerSettings
+  headerSettings,
+  template,
+  ctas
 }: Props): JSX.Element => {
 
   const { asPath } = useRouter();
@@ -49,19 +62,20 @@ const Header = ({
     let lastScrollTop = 0;
     const header = document.querySelector('.cx-header');
     const pageContent = document.querySelector('#page') ? document.querySelector('#page') : document.querySelector('#main');
+    
 
     const handleScroll = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
+      const scrollThreshold = header.classList.contains('smartbanner-push-body') ? 160 : 80;
       if (window.innerWidth < 992) {
         if (scrollTop > lastScrollTop) { // scrolling down
-          if (scrollTop > 80) {
+          if (scrollTop > scrollThreshold) {
             header.style.transform = 'translateY(-100%)';
           }
         } else { // scrolling up          
           header.style.transform = 'translateY(0)';
           header.style.position = 'fixed';
-          pageContent.style.paddingTop = '80px';
+          pageContent.style.paddingTop = document.querySelector('.cx-header').classList.contains('smartbanner-push-body') ? '160px' : '80px';
         }
       }
 
@@ -100,15 +114,24 @@ const Header = ({
             {showUtilityNav &&
               <UtilityNav logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} logoText={logoText} headerUtilities={headerSettings.headerUtilities} />
             }
+
+            {
+              ctas && template && template.toLowerCase() === 'cta header' && 
+                <section className='cx-header__cta'>
+                  {ctas.map((cta, index) => (
+                    <Link href={cta.ctaLink} key={`header-cta-${index}`} className={`cx-button cx-button--${cta.ctaButtonType}${cta.buttonColor}${cta.compact ? ' cx-button--compact' : ''} ${index !== 0 ? ' slim-margin--horizontal-left' : ''}`}>{cta.ctaText}</Link>
+                  ))}
+                </section>
+            }
           </div>
         </section>
       } 
         {!showNavigation ?
-              <Navigation showNavigation={showNavigation} showButtons={showButtons} logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} logoText={logoText} setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} headerSettings={headerSettings} menuItems={menuItems} />
+              <Navigation template={template} ctas={ctas} showNavigation={showNavigation} showButtons={showButtons} logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} logoText={logoText} setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} headerSettings={headerSettings} menuItems={menuItems} />
              :
           <section className="cx-header__main-nav">
             <div className="cx-header__wrapper">
-              <Navigation showNavigation={showNavigation} logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} logoText={logoText} showButtons={showButtons} setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} headerSettings={headerSettings} menuItems={menuItems} />
+              <Navigation template={template} ctas={ctas} showNavigation={showNavigation} logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} logoText={logoText} showButtons={showButtons} setNavOpen={setNavOpen} navOpen={navOpen} showSearch={showSearch} headerSettings={headerSettings} menuItems={menuItems} />
             </div>
           </section >
         }
@@ -118,6 +141,6 @@ const Header = ({
 
 // export { Header };
 
-const MemoizedHeader = React.memo(Header);
+const MemoizedHeader = memo(Header);
 
 export default MemoizedHeader;

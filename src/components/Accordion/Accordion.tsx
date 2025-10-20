@@ -13,7 +13,7 @@ interface AccordionProps {
 }
 
 const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = '', isOpen = false, id, stayOpen = 'false', startOpen = 'false'}) => {
-    const [isAccordionOpen, setIsAccordionOpen] = useState(isOpen);
+    const [isAccordionOpen, setIsAccordionOpen] = useState(startOpen === 'true');
     const [contentHeight, setContentHeight] = useState(0);
     const contentRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
@@ -28,7 +28,14 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
       }
       e.preventDefault();
       setIsAccordionOpen(!isAccordionOpen);
-      window.history.replaceState(null, document.title, window.location.pathname + window.location.search);
+      
+      if (window.location.hash) {
+        // Get current path without the hash
+        const pathWithoutHash = window.location.pathname + window.location.search;
+        
+        // Replace current URL without the hash
+        router.replace(pathWithoutHash, undefined, { shallow: true });
+      }
       return false;
     }
   };
@@ -39,7 +46,7 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
       if (stayOpen == 'true') {
         setIsAccordionOpen(true);
       }
-      setContentHeight(isAccordionOpen ? contentRef.current.scrollHeight : 0);
+      setContentHeight(isAccordionOpen ? 1 : 0);
     }
   }, [isAccordionOpen]);
 
@@ -49,8 +56,7 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
       const element = document.getElementById(elementid);
       if (element) {
         element.scrollIntoView();
-      }
-
+      }      
       if(id === elementid && !isAccordionOpen) {
         setIsAccordionOpen(true);
       } else {
@@ -79,7 +85,7 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
   }, []);
 
   return (
-    <div className={`cx-accordion__brand ${classNames}`}>
+    <div className={`cx-accordion__brand ${classNames}${isAccordionOpen ? ' is-open' : ''}`}>
       <div className="accordion-header" onClick={openHandler} id={id}>
         <summary className={`gb-accordion-title${isAccordionOpen ? ' is-open' : ''}`}>{title}</summary>
       </div>
@@ -87,13 +93,16 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
         className="accordion-content"
         ref={contentRef}
         style={{
-          height: `${contentHeight}px`,
+          display: 'grid',
+          gridTemplateRows: `${contentHeight}fr`,
           overflow: 'hidden',
-          transition: 'height 0.3s ease',
+          transition: 'grid-template-rows 0.3s ease',
         }}
       >
-        <div className="gb-accordion-text">
-          {typeof(content) === 'string' ? parseHtml(content) : content}
+        <div className="gb-accordion-content-wrapper" style={{overflow: "hidden"}}>
+          <div className="gb-accordion-text">
+            {typeof(content) === 'string' ? parseHtml(content) : content}
+          </div>
         </div>
       </div>
     </div>

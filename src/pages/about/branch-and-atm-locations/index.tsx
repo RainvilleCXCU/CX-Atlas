@@ -34,9 +34,10 @@ import Columns from "components/Blocks/Columns";
 import Column from "components/Blocks/Column";
 import { Store } from "context/store";
 import { useRouter } from "next/router";
-import { getNextStaticProps } from "@faustwp/core";
+import { getNextServerSideProps, getNextStaticProps } from "@faustwp/core";
 import dynamic from "next/dynamic";
 import Locations from "components/Locations/view";
+import { GetServerSidePropsContext } from "next";
 export default function Page() {
   const props = useQuery(Page.query, {
     variables: Page.variables(),
@@ -198,14 +199,14 @@ export default function Page() {
                 <Container align="full" classNames={`no-margin`}>
                   <Columns classNames={`no-margin`}>
                     <Column>
-                      <PageTitle heading="Locations & ATMs" color="green-gradient"/>
+                      <PageTitle heading="Locations & ATMs" color="solid-green"/>
                     </Column>
                   </Columns>
                 </Container>
                 <Container align="full">
                   <Columns classNames={`no-margin`}>
                     <Column>
-                      <Locations location={location} locationSettings={locationSettings} siteLogo={siteLogo} />
+                      <Locations location={location} noResults={widgetSettings?.locationsNoResults} locationSettings={locationSettings} siteLogo={siteLogo} />
                     </Column>
                   </Columns>
                 </Container>
@@ -287,6 +288,8 @@ Page.query = gql`
       searchRadius
       apiBrowserKey
       autoZoomLevel
+      noResultsLabel
+      preloaderLabel
       mapType
       distanceUnit
       zoomLevel
@@ -302,6 +305,7 @@ Page.query = gql`
     }
     widgetSettings {
       locationsSearch
+      locationsNoResults
     }
 
     cxAlerts: cXAlerts {
@@ -328,11 +332,24 @@ Page.query = gql`
   }
 `;
 
-export function getStaticProps(ctx) {
-  return getNextStaticProps(ctx, {
-    Page,
-    revalidate: process.env.NEXT_PUBLIC_PAGE_REVALIDATION
-      ? parseInt(process.env.NEXT_PUBLIC_PAGE_REVALIDATION)
-      : null,
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { query } = context;
+  const location = query.location ?? '';
+
+  return getNextServerSideProps(context, {
+      Page: Page,
+      props: {
+          location,
+      }
   });
 }
+
+
+// export function getStaticProps(ctx) {
+//   return getNextStaticProps(ctx, {
+//     Page,
+//     revalidate: process.env.NEXT_PUBLIC_PAGE_REVALIDATION
+//       ? parseInt(process.env.NEXT_PUBLIC_PAGE_REVALIDATION)
+//       : null,
+//   });
+// }

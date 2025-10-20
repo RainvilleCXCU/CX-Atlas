@@ -4,8 +4,11 @@ import { useEffect, useRef } from "react";
 function Disclosure({ attribs, children }) {
 	let disclosureWrapper = useRef(null);
 	useEffect(() => {
-		if(document.querySelectorAll('.datatrac-wrapper:not(.datatrac-wrapper__disclosure').length === 0) {
-			removeDatatrac();
+		if(document.querySelectorAll('.datatrac-wrapper:not(.datatrac-wrapper__disclosure').length === 0 && document.querySelectorAll('.cx-datatrac-bar-comparison').length === 0) {
+			removeComparison('datatrac');
+		}
+		if(document.querySelectorAll('.internal-average-wrapper:not(.internal-average-wrapper__disclosure').length === 0 && document.querySelectorAll('.cx-internal-average-bar-comparison').length === 0) {
+			removeComparison('internal-average');
 		}
 		let clickedReference = null;
 		let clickedReferenceLast = null;
@@ -71,11 +74,11 @@ function Disclosure({ attribs, children }) {
 			container.classList.toggle("expanded");
 			expandButton.innerHTML = expandButton.innerHTML === "+ Expand" ? "- Collapse" : "+ Expand";
 		}
-		function removeDatatrac () {
-			Array.prototype.forEach.call(document.querySelectorAll('.datatrac-wrapper:not(.datatrac-wrapper__disclosure'), function(element) {
+		function removeComparison (source) {
+			Array.prototype.forEach.call(document.querySelectorAll(`.${source}-wrapper:not(.${source}-wrapper__disclosure`), function(element) {
 				element.closest('.cx-section').remove();
 			});
-			Array.prototype.forEach.call(document.querySelectorAll('.datatrac-wrapper__disclosure'), function(element) {
+			Array.prototype.forEach.call(document.querySelectorAll(`.${source}-wrapper__disclosure`), function(element) {
 				element.remove();
 			});
 		}
@@ -83,7 +86,7 @@ function Disclosure({ attribs, children }) {
 
 	// handle the anchor linking issue
 	const scrolledRef = useRef(false);
-	const hash = window.location.hash.substring(1);
+	const hash = typeof window !== 'undefined' ? window.location.hash.substring(1) : false;
 	const hashRef = useRef(hash);
 
 	useEffect(() => {
