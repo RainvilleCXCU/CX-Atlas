@@ -28,6 +28,7 @@ function ExternalLink({
                 cancelText: 'Stay here',
                 continueText: 'Continue',
                 continueLink: linkRef.current.href,
+                target: '_blank'
             })
             setIsModalOpen(true);
       }
