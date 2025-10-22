@@ -325,6 +325,17 @@ let nextConfig = {
           has: [
             {
               type: "query",
+              key: "utm_campaign",
+              value: "(fall|sticky|staticbold|staticcomp)"
+            },
+          ],
+        },
+        {
+          source: "/:path*",
+          destination: "/dynamic/:path*",
+          has: [
+            {
+              type: "query",
               key: "template",
               value: "(cta_header|no_header|slim_header)"
             },
@@ -406,8 +417,6 @@ let nextConfig = {
                 },
               ],
         },
-
-
         
         // {
         //     source: '/meet/loans:path*',
