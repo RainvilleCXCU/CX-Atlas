@@ -23,7 +23,7 @@ interface CacheEntry {
 
 class WidgetCache {
     private cache: Map<string, CacheEntry> = new Map();
-    private ttl: number = 5 * 60 * 1000; // 5 minutes TTL
+    private ttl: number = 60 * 60 * 1000; // 60 minutes TTL
     private maxSize: number = 100; // Maximum cache entries
 
     /**

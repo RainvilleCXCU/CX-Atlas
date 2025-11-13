@@ -26,7 +26,7 @@ interface ProductCacheEntry {
 
 class ProductCache {
     private cache: Map<string, ProductCacheEntry> = new Map();
-    private ttl: number = 15 * 60 * 1000; // 15 minutes TTL (products change less frequently)
+    private ttl: number = 60 * 60 * 1000; // 60 minutes TTL (products change less frequently)
     private maxSize: number = 50; // Maximum product entries
 
     /**
