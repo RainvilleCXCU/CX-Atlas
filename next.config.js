@@ -217,6 +217,10 @@ let nextConfig = {
           source: "/meet/:path*",
           destination: "/meet/?productType=:path*",
         },
+        {
+          source: "/robots.txt",
+          destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/robots.txt`,
+        },
         // {
         //     source: '/about/media-center/:catId{/}?',
         //     destination: '/about/media-center/?catId=:catId',
