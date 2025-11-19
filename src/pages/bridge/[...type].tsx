@@ -23,6 +23,8 @@ import {
     ApplyNowProductFragment
 } from '../../fragments/ApplyWidgets';
 import { parseHtml } from 'lib/parser';
+import productCache from '../../utils/productCache';
+import widgetCache from '../../utils/widgetCache';
 const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});
 const Modal = dynamic(() => import("components/Modal/modal"));
 import {isModalOpenContext, modalContentContext} from 'components/Modal/modalContext';
@@ -232,12 +234,16 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const productQuestion = query.productQuestion || '';
     const loanPurpose = query.loanPurpose || '';
 
-    const { data } = await apolloClient.query({
-        query: gql`
-        query Products {
-            products(where: {title: "${$account}"}) {
-              edges {
-                node {
+    
+    // Check product cache first
+    let product = productCache.get($account);
+    
+    if (!product) {
+        const { data } = await apolloClient.query({
+            query: gql`
+            query ProductByTitle($title: String!) {
+                products(where: {title: $title}, first: 1) {
+                  nodes {
                     id
                     title
                     displayName
@@ -250,14 +256,21 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                     hasProductQuestion
                     productPageURL
                     limitedProductCodes                    
+                  }
                 }
               }
-            }
-          }
-      `,
-    });
+          `,
+            variables: { title: $account }
+        });
+        
+        product = data.products.nodes[0];
+        if (product) {
+            productCache.set($account, product);
+        }
+    } else {
+        console.log('PRODUCT CACHED!');
+    }
 
-    const product = data.products.edges[0]?.node;
     const productInfo = { 
         account: product?.title,
         minor,
@@ -270,12 +283,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
 
 
-    const productLimit = productcode !== '' && product.limitedProductCodes.includes(productcode);
+    const productLimit = productcode !== '' && product.limitedProductCodes.includes(String(productcode));
 
     let widgetData;
     let widgetHtml = '';
 
-    if (data.products.edges.length == 0) {
+    if (!product) {
         console.log('No Product');
         return getNextServerSideProps(context, {
             Page: Component,
@@ -286,9 +299,15 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         });
     }
     
+    console.time('WIDGET LOGIC');
 
-    // GET WIDGET
-    if(type && type == 'start' && (!minor || minor == '')) {
+    // GET WIDGET - Check cache first
+    let cachedWidget = widgetCache.get(productInfo);
+    
+    if (cachedWidget) {
+        console.log('WIDGET CACHED!');
+        widgetHtml = cachedWidget;
+    } else if(type && type == 'start' && (!minor || minor == '')) {
         console.log(`Start ${JSON.stringify(productInfo)}`)
         widgetData = await apolloClient.query({
             query: gql`
@@ -300,7 +319,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             }`, 
                 variables: productInfo
             });
-        widgetHtml = widgetData.data.widgetSettings.applyStart
+        widgetHtml = widgetData.data.widgetSettings.applyStart;
+        widgetCache.set(productInfo, widgetHtml);
     } else if(minor == 'yes') {
         console.log('YES')
         widgetData = await apolloClient.query({
@@ -312,7 +332,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                 }
             }`,variables: productInfo
             });
-            widgetHtml = widgetData.data.widgetSettings.applyNowMinor
+            widgetHtml = widgetData.data.widgetSettings.applyNowMinor;
+            widgetCache.set(productInfo, widgetHtml);
     } else if(productQuestion && product?.hasProductQuestion) {
         widgetData = await apolloClient.query({
             query: gql`
@@ -323,7 +344,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                 }
             }`, variables: productInfo
             });
-            widgetHtml = widgetData.data.widgetSettings.applyNowProductQuestion
+            widgetHtml = widgetData.data.widgetSettings.applyNowProductQuestion;
+            widgetCache.set(productInfo, widgetHtml);
     } else if(member && !productLimit) {
         console.log('Member')
         widgetData = await apolloClient.query({
@@ -335,7 +357,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                 }
             }`, variables: productInfo
             });
-            widgetHtml = widgetData.data.widgetSettings.applyNowMember
+            widgetHtml = widgetData.data.widgetSettings.applyNowMember;
+            widgetCache.set(productInfo, widgetHtml);
     } else if(member && productLimit && atLimit == '') {
         console.log('Member Limit')
         widgetData = await apolloClient.query({
@@ -347,7 +370,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                 }
             }`, variables: productInfo
             });
-            widgetHtml = widgetData.data.widgetSettings.applyNowMemberLimit
+            widgetHtml = widgetData.data.widgetSettings.applyNowMemberLimit;
+            widgetCache.set(productInfo, widgetHtml);
     } else {
         console.log('DATA');
         widgetData = await apolloClient.query({
@@ -359,9 +383,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                 }
             }`, variables: productInfo
             });
-            widgetHtml = widgetData.data.widgetSettings.applyNow
+            widgetHtml = widgetData.data.widgetSettings.applyNow;
+            widgetCache.set(productInfo, widgetHtml);
     }
 
+    console.timeEnd('WIDGET LOGIC');
+    console.time('REDIRECT LOGIC') 
     // Perform Redirect if needed
 
     if (product.minorMemberApplyNowURL == '' && type == 'start') {
@@ -412,7 +439,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     } else {
         console.log('NO ELSE');
         
+        console.timeEnd('REDIRECT LOGIC') 
     }
+
 
     return getNextServerSideProps(context, {
         Page: Component,
