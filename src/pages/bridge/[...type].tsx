@@ -33,7 +33,12 @@ import { GetServerSidePropsContext } from 'next';
 import { getNextServerSideProps } from '@faustwp/core';
 import apolloClient from 'apolloClient';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Container from 'components/Blocks/Container';
+import Columns from 'components/Blocks/Columns';
+import Column from 'components/Blocks/Column';
+import { bridgeFlowSettingsContext } from 'context/bridgeFlowSettings';
 
 export default function Component(props) {
 
@@ -71,6 +76,10 @@ export default function Component(props) {
     const activeAlerts = getActiveAlerts();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalContent, setModalContent] = useState(null);    
+
+    const [bridgeFlowSettings, setBridgeFlowSettings] = useState({
+        preApplicationFormId: props?.data?.bridgeFlow?.bridgeFlowSettings?.preApplicationFormId?.[0] || null
+    });
 
     return (
         <>
@@ -143,13 +152,15 @@ export default function Component(props) {
                 />
 
 
-                <div id="page" className="container site">
-                    <main id="main" className="content content-single">
-                        <article className="entry-content">
-                            {parseHtml(widget?.toString() || '')}
-                        </article>
-                    </main>
-                </div>
+                <bridgeFlowSettingsContext.Provider value={{ bridgeFlowSettings, setBridgeFlowSettings }}>
+                    <div id="page" className="container site">
+                        <main id="main" className="content content-single">
+                            <article className="entry-content">
+                                {parseHtml(widget?.toString() || '')}                            
+                            </article>
+                        </main>
+                    </div>
+                </bridgeFlowSettingsContext.Provider>
             </span>
 
         {/* <Footer copyrightHolder={footerText} menuItems={footerMenu} logo={siteLogo} footerUtilities={footerUtilities} footerAppIcons={footerAppIcons} footerSocialIcons={footerSocialIcons} /> */}
@@ -188,36 +199,40 @@ Component.variables = (props) => {
     query GetHomePageData(
       $footerLocation: MenuLocationEnum
     ) {
-      generalSettings {
-        ...BlogInfoFragment
-      }
-      headerSettings {
-        headerUtilities
-        headerUtilitiesMobile
-        headerButtons
-        headerButtonsMobile
-      }
-      footerSettings {
-        footerUtilities
-        footerAppIcons
-        footerSocialIcons
-      }
-      thirdPartySettings {
-        ...ThirdPartySettingsFragment
-      }
-  
-      cxAlerts: cXAlerts {
-          edges {
-            node{
-              ...AlertsFragment
-            }
-          }
-      }
-      footerMenuItems: menuItems(where: { location: $footerLocation }, first: 255) {
-        nodes {
-          ...NavigationMenuItemFragment
+        generalSettings {
+            ...BlogInfoFragment
         }
-      }
+        headerSettings {
+            headerUtilities
+            headerUtilitiesMobile
+            headerButtons
+            headerButtonsMobile
+        }
+        footerSettings {
+            footerUtilities
+            footerAppIcons
+            footerSocialIcons
+        }
+        thirdPartySettings {
+            ...ThirdPartySettingsFragment
+        }
+        bridgeFlow {
+            bridgeFlowSettings {
+                preApplicationFormId
+            }
+        }
+        cxAlerts: cXAlerts {
+            edges {
+                node{
+                ...AlertsFragment
+                }
+            }
+        }
+        footerMenuItems: menuItems(where: { location: $footerLocation }, first: 255) {
+            nodes {
+            ...NavigationMenuItemFragment
+            }
+        }
     }
   `;
   
@@ -233,6 +248,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const scenario = query.scenario || '';
     const productQuestion = query.productQuestion || '';
     const loanPurpose = query.loanPurpose || '';
+    const mlPrep = query.mlPrep || '';
 
     
     // Check product cache first
@@ -279,7 +295,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         member,
         scenario,
         loanPurpose,
-        productQuestion
+        productQuestion,
+        mlPrep
     };
 
 
@@ -312,7 +329,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyStartFragment}
-            query getApplyStart($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String) {
+            query getApplyStart($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String) {
                 widgetSettings {
                     ...ApplyStartFragment
                 }
@@ -326,7 +343,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowMinorFragment}
-            query getApplyNowMinor($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String) {
+            query getApplyNowMinor($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String) {
                 widgetSettings {
                     ...ApplyNowMinorFragment
                 }
@@ -338,7 +355,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowProductFragment}
-            query ApplyNowProduct($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String) {
+            query ApplyNowProduct($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String) {
                 widgetSettings {
                     ...ApplyNowProductFragment
                 }
@@ -351,7 +368,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowMemberFragment}
-            query ApplyNowMember($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String) {
+            query ApplyNowMember($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String) {
                 widgetSettings {
                     ...ApplyNowMemberFragment
                 }
@@ -364,7 +381,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowMemberLimitFragment}
-            query ApplyNowMemberLimit($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String) {
+            query ApplyNowMemberLimit($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String) {
                 widgetSettings {
                     ...ApplyNowMemberLimitFragment
                 }
@@ -377,7 +394,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowFragment}
-            query getApplyNow($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String) {
+            query getApplyNow($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String) {
                 widgetSettings {
                     ...ApplyNowFragment
                 }

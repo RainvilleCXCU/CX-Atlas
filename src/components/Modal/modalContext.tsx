@@ -18,7 +18,10 @@ export const isModalOpenContext = createContext<IisModalOpenContext>(isModalOpen
  */
 interface ModalContent {
     title?;
+    titleClass?;
     copy?;
+    copyClass?;
+    centerText?;
     bodyTakeover?;
     continueLink?;
     continueText?;
@@ -26,6 +29,7 @@ interface ModalContent {
     cancelUrl?;
     forceAction?;
     html?;
+    component?;
     target?;
     children?;
     classNames?;

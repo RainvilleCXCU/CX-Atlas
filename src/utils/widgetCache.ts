@@ -13,6 +13,7 @@ interface WidgetParams {
     scenario?: any;
     loanPurpose?: any;
     productQuestion?: any;
+    mlPrep?: any;
 }
 
 interface CacheEntry {
@@ -30,8 +31,8 @@ class WidgetCache {
      * Generate cache key from widget parameters
      */
     generateKey(params: WidgetParams): string {
-        const { account, type, minor, member, productcode, atLimit, scenario, loanPurpose, productQuestion } = params;
-        return `widget_${account}_${type}_${minor}_${member}_${productcode}_${atLimit}_${scenario}_${loanPurpose}_${productQuestion}`;
+        const { account, type, minor, member, productcode, atLimit, scenario, loanPurpose, productQuestion, mlPrep } = params;
+        return `widget_${account}_${type}_${minor}_${member}_${productcode}_${atLimit}_${scenario}_${loanPurpose}_${productQuestion}_${mlPrep}`;
     }
 
     /**
