@@ -1,4 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
+import Input from 'react-phone-number-input/input'
 import { parseHtml } from "lib/parser";
 import { Store } from "context/store";
 
@@ -33,6 +34,7 @@ function NFField({ id, form, type = 'text', name, label, value, label_pos = "lab
     const [edited, setEdited] = useState(false);
     const [isValid, setValid] = useState(false);
     const [val, setVal] = useState(null);
+    const [phoneValue, setPhoneValue] = useState<string>('')
 
         
     const validateUSPhoneNumber = (phone) => {
@@ -218,7 +220,20 @@ function NFField({ id, form, type = 'text', name, label, value, label_pos = "lab
                         {type === 'html' && content &&
                             parseHtml(content)
                         }
-                        {type !== 'textarea' && type !== 'button' && type !== 'html'  && type !== 'submit' && type !== 'listradio' && type !== 'listselect' && type !== 'checkbox' &&
+                        {type === 'phone' &&
+                            <Input
+                                country="US"
+                                ref={fieldRef}
+                                value={phoneValue}
+                                maxLength={14}
+                                onChange={(value) => {
+                                    const phoneVal = value || '';
+                                    setPhoneValue(phoneVal);
+                                    setFieldVal(phoneVal);
+                                }}
+                                name={name || `nf-field-${id}`} id={name || `nf-field-${id}`} aria-invalid="false" aria-describedby={`nf-error-${id}`} onBlur={validateField} className={`ninja-forms-field nf-element`} aria-labelledby={`nf-label-field-${id}`} aria-required={required ? 'true' : 'false'} required={required} autoComplete="tel" />
+                        }
+                        {type !== 'phone' && type !== 'textarea' && type !== 'button' && type !== 'html'  && type !== 'submit' && type !== 'listradio' && type !== 'listselect' && type !== 'checkbox' &&
                             <input type={type === 'phone' ? 'tel' : type === 'checkbox' ? 'checkbox' : 'text'} ref={fieldRef} data-field-id={id} name={name || `nf-field-${id}`} id={name || `nf-field-${id}`} aria-invalid="false" aria-describedby={`nf-error-${id}`} onChange={changeField} onBlur={type !== 'checkbox' ? validateField : null} className={`ninja-forms-field nf-element ${element_classes}${type === 'checkbox' && fieldVal ? ' nf-checked' : ''}`} aria-labelledby={`nf-label-field-${id}`} aria-required={required ? 'true' : 'false'} required={required} autoComplete="given-name" />
                         }
                     </div>
