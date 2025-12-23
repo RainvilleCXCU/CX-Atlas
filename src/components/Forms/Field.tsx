@@ -1,4 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
+import Input from 'react-phone-number-input/input'
 import { parseHtml } from "lib/parser";
 import { Store } from "context/store";
 
@@ -15,12 +16,13 @@ export interface Props {
     container_classes?: string;
     element_classes?: string;
     error_message?: string;
+    value?: string;
     submitNum?
     options?
     formSettings?
 }
 
-function NFField({ id, form, type = 'text', name, label, label_pos = "label-above", container_classes, options, element_classes, description, content, formSettings, required = false, error_message, submitNum }: Props): JSX.Element {
+function NFField({ id, form, type = 'text', name, label, value, label_pos = "label-above", container_classes, options, element_classes, description, content, formSettings, required = false, error_message, submitNum }: Props): JSX.Element {
 
     const fieldRef = useRef(null);
     const [fieldVal, setFieldVal] = useState(null);
@@ -32,6 +34,31 @@ function NFField({ id, form, type = 'text', name, label, label_pos = "label-abov
     const [edited, setEdited] = useState(false);
     const [isValid, setValid] = useState(false);
     const [val, setVal] = useState(null);
+    const [phoneValue, setPhoneValue] = useState<string>('')
+
+        
+    const validateUSPhoneNumber = (phone) => {
+        
+        const cleaned = phone.replace(/[^\d+]/g, '');
+        
+        // Check if it matches US phone number patterns
+        const patterns = [
+            /^\d{10}$/,           // 1234567890
+            /^1\d{10}$/,          // 11234567890
+            /^\+1\d{10}$/         // +11234567890
+        ];
+        
+        // Additional validation: area code and exchange cannot start with 0 or 1
+        if (patterns.some(pattern => pattern.test(cleaned))) {
+            const digits = cleaned.replace(/^\+?1/, ''); // Remove country code
+            const areaCode = parseInt(digits.substring(0, 3));
+            const exchange = parseInt(digits.substring(3, 6));
+            
+            return areaCode >= 200 && exchange >= 200;
+        }
+        
+        return false;
+    }
 
     const validateField = () => {
         setErrorMessage(null);
@@ -39,10 +66,15 @@ function NFField({ id, form, type = 'text', name, label, label_pos = "label-abov
         console.log('Validate');
         console.log(fieldVal);
         console.log(required)
+        console.log(type);
         if((fieldVal === null || fieldVal === '' || fieldVal === false) && required) {
             setEdited(true);
             error = formSettings.validateRequiredField;
         } else {
+            if(type == 'phone') {
+                console.log('Validate Phone');
+                validateUSPhoneNumber(fieldVal) ? console.log('valid phone') : (error = 'Enter a vaild phone number', setEdited(true));
+            }
             if(name === 'email' && !emailValid.test(fieldVal)) {
                 setEdited(true);
                 error = formSettings.changeEmailErrorMsg;
@@ -153,24 +185,24 @@ function NFField({ id, form, type = 'text', name, label, label_pos = "label-abov
                 <div id={`nf-field-${id}-wrap`} className={`field-wrap ${type}-wrap${type === 'listradio' ? ' list-wrap list-radio-wrap' : ""}${type === 'listselect' ? ' list-wrap list-select-wrap' : ""}${errorMessage ? ' nf-fail nf-error' : ''}${(edited && !errorMessage) ? ' nf-pass' : ''}`} data-field-id={id}>
                     {type !== 'button' && type !== 'submit' &&
                         <div className="nf-field-label">
-                                <label htmlFor={`nf-field-${id}`} id={`nf-label-field-${id}`} className={`${type === 'checkbox' && fieldVal ? ' nf-checked-label' : ''}`}>
-                                    {label} {required && <span className="ninja-forms-req-symbol">*</span> }
+                                <label htmlFor={name && name !== '' ? name : `nf-field-${id}`} id={`nf-label-field-${id}`} className={`${type === 'checkbox' && fieldVal ? ' nf-checked-label' : ''}`}>
+                                    {parseHtml(label)} {required && <span className="ninja-forms-req-symbol">*</span> }
                                 </label>
                         </div>
                     }
                     <div className="nf-field-element">
                         {type === 'button' || type === 'submit' && 
-                            <input ref={fieldRef} className={`ninja-forms-field nf-element ${element_classes}`} type={type} value={label}></input>
+                            <button ref={fieldRef} className={`ninja-forms-field nf-element ${element_classes}`} type={type}>{label}</button>
                         }
                         {type === 'checkbox' &&
-                            <input type={'checkbox'} ref={fieldRef} data-field-id={id} name={name || `nf-field-${id}`} id={name || `nf-field-${id}`} aria-invalid="false" aria-describedby={`nf-error-${id}`} onChange={changeField} className={`ninja-forms-field nf-element ${element_classes}${type === 'checkbox' && fieldVal ? ' nf-checked' : ''}`} aria-labelledby={`nf-label-field-${id}`} aria-required={required ? 'true' : 'false'} required={required}/>
+                            <input type={'checkbox'} ref={fieldRef} data-field-id={id} value={value || ''} name={name || `nf-field-${id}`} id={name || `nf-field-${id}`} aria-invalid="false" aria-describedby={`nf-error-${id}`} onChange={changeField} className={`ninja-forms-field nf-element ${element_classes}${type === 'checkbox' && fieldVal ? ' nf-checked' : ''}`} aria-labelledby={`nf-label-field-${id}`} aria-required={required ? 'true' : 'false'} required={required}/>
                         }
                         {type === 'listradio' && 
                             <ul>
                                 {options && options.map(({label, value, selected}, index) => (
                                     <li key={`nf-field-${id}-${index}`}>
-                                        <input type="radio" id={`nf-field-${id}-${index}`} value={value} ref={fieldRef} name={name || `nf-field-${id}`} aria-describedby={`nf-error-${id}-${index}`} className={`ninja-forms-field nf-element`} aria-labelledby={`nf-label-field-${id}`} onChange={changeField} aria-required={required ? 'true' : 'false'} required={required} />
-                                        <label htmlFor={`nf-field-${id}-${index}`} id={`nf-label-class-field-${id}`} className={val === value ? 'nf-checked-label' : ''}>{label}</label>
+                                        <input type="radio" id={`nf-field-${id}-${index}`} value={value || ''} ref={fieldRef} name={name || `nf-field-${id}`} aria-describedby={`nf-error-${id}-${index}`} className={`ninja-forms-field nf-element`} aria-labelledby={`nf-label-field-${id}`} onChange={changeField} aria-required={required ? 'true' : 'false'} required={required} />
+                                        <label htmlFor={name && name !== '' ? name : `nf-field-${id}-${index}`} id={`nf-label-class-field-${id}`} className={val === value ? 'nf-checked-label' : ''}>{label}</label>
                                     </li>
                                 ))}
                             </ul>
@@ -185,10 +217,23 @@ function NFField({ id, form, type = 'text', name, label, label_pos = "label-abov
                         {type === 'textarea' && 
                             <textarea ref={fieldRef} data-field-id={id} name={name || `nf-field${id}`} aria-invalid="false" aria-describedby={`nf-error-${id}`} onChange={changeField} onBlur={validateField} className={`ninja-forms-field nf-element ${element_classes}`} aria-labelledby={`nf-label-field-${id}`}  aria-required={required ? 'true' : 'false'} required={required}></textarea>
                         }
-                        {type === 'html' && 
+                        {type === 'html' && content &&
                             parseHtml(content)
                         }
-                        {type !== 'textarea' && type !== 'button' && type !== 'html'  && type !== 'submit' && type !== 'listradio' && type !== 'listselect' && type !== 'checkbox' &&
+                        {type === 'phone' &&
+                            <Input
+                                country="US"
+                                ref={fieldRef}
+                                value={phoneValue}
+                                maxLength={14}
+                                onChange={(value) => {
+                                    const phoneVal = value || '';
+                                    setPhoneValue(phoneVal);
+                                    setFieldVal(phoneVal);
+                                }}
+                                name={name || `nf-field-${id}`} id={name || `nf-field-${id}`} aria-invalid="false" aria-describedby={`nf-error-${id}`} onBlur={validateField} className={`ninja-forms-field nf-element`} aria-labelledby={`nf-label-field-${id}`} aria-required={required ? 'true' : 'false'} required={required} autoComplete="tel" />
+                        }
+                        {type !== 'phone' && type !== 'textarea' && type !== 'button' && type !== 'html'  && type !== 'submit' && type !== 'listradio' && type !== 'listselect' && type !== 'checkbox' &&
                             <input type={type === 'phone' ? 'tel' : type === 'checkbox' ? 'checkbox' : 'text'} ref={fieldRef} data-field-id={id} name={name || `nf-field-${id}`} id={name || `nf-field-${id}`} aria-invalid="false" aria-describedby={`nf-error-${id}`} onChange={changeField} onBlur={type !== 'checkbox' ? validateField : null} className={`ninja-forms-field nf-element ${element_classes}${type === 'checkbox' && fieldVal ? ' nf-checked' : ''}`} aria-labelledby={`nf-label-field-${id}`} aria-required={required ? 'true' : 'false'} required={required} autoComplete="given-name" />
                         }
                     </div>
