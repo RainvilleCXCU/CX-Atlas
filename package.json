@@ -30,7 +30,8 @@
     "react-canvas-confetti": "^2.0.7",
     "react-cookie": "^8.0.1",
     "react-equal-height": "^1.2.2",
-    "react-helmet": "^6.1.0"
+    "react-helmet": "^6.1.0",
+    "react-phone-number-input": "^3.4.14"
   },
   "devDependencies": {
     "@googlemaps/react-wrapper": "^1.1.35",

@@ -2,32 +2,32 @@ import { gql } from '@apollo/client';
 
 export const ApplyStartFragment = gql`
   fragment ApplyStartFragment on WidgetSettings {
-    applyStart(account: $account, minor: $minor, productcode: $productcode, atLimit: $atLimit, member: $member, scenario: $scenario, loanPurpose: $loanPurpose, productQuestion: $productQuestion)
+    applyStart(account: $account, minor: $minor, productcode: $productcode, atLimit: $atLimit, member: $member, scenario: $scenario, loanPurpose: $loanPurpose, productQuestion: $productQuestion, mlPrep: $mlPrep)
   }
 `;
 export const ApplyNowFragment = gql`
   fragment ApplyNowFragment on WidgetSettings {
-    applyNow(account: $account, minor: $minor, productcode: $productcode, atLimit: $atLimit, member: $member, scenario: $scenario, loanPurpose: $loanPurpose, productQuestion: $productQuestion)
+    applyNow(account: $account, minor: $minor, productcode: $productcode, atLimit: $atLimit, member: $member, scenario: $scenario, loanPurpose: $loanPurpose, productQuestion: $productQuestion, mlPrep: $mlPrep)
   }
 `;
 export const ApplyNowProductFragment = gql`
   fragment ApplyNowProductFragment on WidgetSettings {
-    applyNowProductQuestion(account: $account, minor: $minor, productcode: $productcode, atLimit: $atLimit, member: $member, scenario: $scenario, loanPurpose: $loanPurpose, productQuestion: $productQuestion)
+    applyNowProductQuestion(account: $account, minor: $minor, productcode: $productcode, atLimit: $atLimit, member: $member, scenario: $scenario, loanPurpose: $loanPurpose, productQuestion: $productQuestion, mlPrep: $mlPrep)
   }
 `;
 export const ApplyNowMinorFragment = gql`
   fragment ApplyNowMinorFragment on WidgetSettings {
-    applyNowMinor(account: $account, minor: $minor, productcode: $productcode, atLimit: $atLimit, member: $member, scenario: $scenario, loanPurpose: $loanPurpose, productQuestion: $productQuestion)
+    applyNowMinor(account: $account, minor: $minor, productcode: $productcode, atLimit: $atLimit, member: $member, scenario: $scenario, loanPurpose: $loanPurpose, productQuestion: $productQuestion, mlPrep: $mlPrep)
   }
 `;
 export const ApplyNowMemberFragment = gql`
   fragment ApplyNowMemberFragment on WidgetSettings {
-    applyNowMember(account: $account, minor: $minor, productcode: $productcode, atLimit: $atLimit, member: $member, scenario: $scenario, loanPurpose: $loanPurpose, productQuestion: $productQuestion)
+    applyNowMember(account: $account, minor: $minor, productcode: $productcode, atLimit: $atLimit, member: $member, scenario: $scenario, loanPurpose: $loanPurpose, productQuestion: $productQuestion, mlPrep: $mlPrep)
   }
 `;
 export const ApplyNowMemberLimitFragment = gql`
   fragment ApplyNowMemberLimitFragment on WidgetSettings {
-    applyNowMemberLimit(account: $account, minor: $minor, productcode: $productcode, atLimit: $atLimit, member: $member, scenario: $scenario, loanPurpose: $loanPurpose, productQuestion: $productQuestion)
+    applyNowMemberLimit(account: $account, minor: $minor, productcode: $productcode, atLimit: $atLimit, member: $member, scenario: $scenario, loanPurpose: $loanPurpose, productQuestion: $productQuestion, mlPrep: $mlPrep)
   }
 `;
 

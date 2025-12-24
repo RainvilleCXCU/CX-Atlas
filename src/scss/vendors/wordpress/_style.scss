@@ -63,7 +63,7 @@ input[type="submit"],
 	}
 }
 
-button:hover,
+button:not(.cx-button):hover,
 input[type="button"]:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
@@ -77,11 +77,11 @@ a.added_to_cart:hover {
 	cursor: pointer;
 }
 
-button:focus,
+button:not(.cx-button):focus,
 input[type="button"]:focus,
 input[type="reset"]:focus,
 input[type="submit"]:focus,
-button:active,
+button:not(.cx-button):active,
 input[type="button"]:active,
 input[type="reset"]:active,
 input[type="submit"]:active,

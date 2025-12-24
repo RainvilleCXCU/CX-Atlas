@@ -1,65 +1,81 @@
-import { gql } from '@apollo/client';
-import * as MENUS from '../constants/menus';
-import { BlogInfoFragment } from '../fragments/GeneralSettings';
-import { AlertFragment } from '../fragments/Alerts';
-import { NavigationMenuItemFragment } from '../fragments/MenuItems';
-import { ThirdPartySettingsFragment } from 'fragments/ThirdParty';
-import { parseHtml } from 'lib/parser';
-import RelatedPosts from 'components/Posts/relatedPosts';
-import Image from 'next/image';
-import { Fragment } from 'react';
-import Link from 'next/link';
-import dynamic from 'next/dynamic';
-const BaseLayout = dynamic(() => import('components/layout'));
+import { gql } from "@apollo/client";
+import * as MENUS from "../constants/menus";
+import { BlogInfoFragment } from "../fragments/GeneralSettings";
+import { AlertFragment } from "../fragments/Alerts";
+import { NavigationMenuItemFragment } from "../fragments/MenuItems";
+import { ThirdPartySettingsFragment } from "fragments/ThirdParty";
+import { parseHtml } from "lib/parser";
+import RelatedPosts from "components/Posts/relatedPosts";
+import Image from "next/image";
+import { Fragment } from "react";
+import Link from "next/link";
+import dynamic from "next/dynamic";
+const BaseLayout = dynamic(() => import("components/layout"));
 export default function Component(props) {
-  const { title, content, databaseId, featuredImage, categories } = props?.data?.post ?? { title: '' };
+  const { title, content, databaseId, featuredImage, categories } = props?.data
+    ?.post ?? { title: "" };
   const relatedPosts = props?.data?.relatedPosts;
   const { blogtop, blogSidebar } = props?.data?.widgetSettings;
+  const disclaimer = props?.data?.blogDisclaimer?.blogDisclaimerFields?.disclaimer;
 
   return (
     <>
-    <BaseLayout props={props}>
-      <div id="page" className="container site">
-        <main className="content single-post">
-          <article id={`post-${databaseId}`} className="post post-content">        
-            <aside className="sidebar">
-              {/* {databaseId &&
+      <BaseLayout props={props}>
+        <div id="page" className="container site">
+          <main className="content single-post">
+            <article id={`post-${databaseId}`} className="post post-content">
+              <aside className="sidebar">
+                {/* {databaseId &&
                 <RelatedPosts relatedPosts={relatedPosts} />
               } */}
-              {blogSidebar &&
-                parseHtml(blogSidebar)
-              }
-            </aside>
-            <div className='post-content'>
-              <header className='entry-header'>
-                {featuredImage && featuredImage?.node?.sourceUrl && 
-                  <div className='featured-image'>
-                    <img src={featuredImage?.node.sourceUrl?.replace(/^(?:\/\/|[^\/]+)*\//gi, '/')} alt='' width={featuredImage.node.mediaDetails.width} height={featuredImage.node.mediaDetails.height} />
-                  </div>
-                }
-                <h1>{title}</h1>
-                {categories &&
-                  <div className='categories'>
-                    {categories.nodes.map((category, index) => (
-                      <Fragment key={category.name}>
-                        {category.uri &&
-                          <><Link href={category.uri}>{category.name}</Link>{index < categories.nodes.length - 1 ? ', ' : ''}</>
-                        }
-                      </Fragment>
-                    ))}
-                  </div>}
-              </header>
-              <div className='entry-content'>
-                { content && 
-                    parseHtml(content.toString())
-                }
-			          {/* <div id="cx-qt-feedback" className="blog-post"></div> */}
+                {blogSidebar && parseHtml(blogSidebar)}
+              </aside>
+              <div className="post-content">
+                <header className="entry-header">
+                  {featuredImage && featuredImage?.node?.sourceUrl && (
+                    <div className="featured-image">
+                      <img
+                        src={featuredImage?.node.sourceUrl?.replace(
+                          /^(?:\/\/|[^\/]+)*\//gi,
+                          "/"
+                        )}
+                        alt=""
+                        width={featuredImage.node.mediaDetails.width}
+                        height={featuredImage.node.mediaDetails.height}
+                      />
+                    </div>
+                  )}
+                  <h1>{title}</h1>
+                  {categories && (
+                    <div className="categories">
+                      {categories.nodes.map((category, index) => (
+                        <Fragment key={category.name}>
+                          {category.uri && (
+                            <>
+                              <Link href={category.uri}>{category.name}</Link>
+                              {index < categories.nodes.length - 1 ? ", " : ""}
+                            </>
+                          )}
+                        </Fragment>
+                      ))}
+                    </div>
+                  )}
+                </header>
+                <div className="entry-content">
+                  {content && parseHtml(content.toString())}
+                  {/* <div id="cx-qt-feedback" className="blog-post"></div> */}
+                </div>
+                <hr />
+                <em id="disclaimer">
+                  {disclaimer !== null && disclaimer !== undefined
+                    ? parseHtml(disclaimer)
+                    : "This content is intended to provide general information and shouldn’t be considered legal, tax, or financial advice. It’s always a good idea to consult a tax or financial advisor for specific information on how certain laws apply to your situation and about your individual financial situation."}
+                </em>
               </div>
-            </div>
-          </article>
-        </main>
-      </div>
-    </BaseLayout>
+            </article>
+          </main>
+        </div>
+      </BaseLayout>
     </>
   );
 }
@@ -88,50 +104,50 @@ Component.query = gql`
         templateName
       }
       seo {
-          canonical
-          metaDesc
-          breadcrumbs {
-            text,
-            url
-          }
-          opengraphDescription
-          opengraphModifiedTime
-          opengraphPublishedTime
-          opengraphType
-          opengraphUrl
-          title
-          opengraphSiteName
-          metaRobotsNofollow
-          metaRobotsNoindex
-          opengraphImage {
-            mimeType
-            mediaItemUrl
-            mediaDetails {
-              height
-              width
-            }
+        canonical
+        metaDesc
+        breadcrumbs {
+          text
+          url
+        }
+        opengraphDescription
+        opengraphModifiedTime
+        opengraphPublishedTime
+        opengraphType
+        opengraphUrl
+        title
+        opengraphSiteName
+        metaRobotsNofollow
+        metaRobotsNoindex
+        opengraphImage {
+          mimeType
+          mediaItemUrl
+          mediaDetails {
+            height
+            width
           }
         }
+      }
       author {
         node {
           name
         }
       }
       categories {
-          nodes {
-              name
-              uri
-          }
+        nodes {
+          name
+          uri
+        }
       }
       featuredImage {
         node {
-            id
-            sourceUrl
-            altText
-            mediaDetails {
-                width
-                height
-            }
+          id
+          sourceUrl
+          altText
+          mediaDetails {
+            width
+            height
+          }
         }
       }
     }
@@ -154,8 +170,8 @@ Component.query = gql`
       footerSocialIcons
     }
     widgetSettings {
-        blogtop
-        blogSidebar
+      blogtop
+      blogSidebar
     }
     thirdPartySettings {
       ...ThirdPartySettingsFragment
@@ -166,26 +182,39 @@ Component.query = gql`
         ...AlertsFragment
       }
     }
-    footerMenuItems: menuItems(where: { location: $footerLocation }, first: 255) {
+    footerMenuItems: menuItems(
+      where: { location: $footerLocation }
+      first: 255
+    ) {
       nodes {
         ...NavigationMenuItemFragment
       }
     }
-    headerMenuItems: menuItems(where: { location: $headerLocation }, first: 255) {
+    headerMenuItems: menuItems(
+      where: { location: $headerLocation }
+      first: 255
+    ) {
       nodes {
         ...NavigationMenuItemFragment
+      }
+    }
+    blogDisclaimer {
+      blogDisclaimerFields {
+        disclaimer
       }
     }
   }
 `;
 
 Component.variables = ({ databaseId }, ctx) => {
-  console.log('Variables');
-  console.log(ctx)
+  console.log("Variables");
+  console.log(ctx);
   return {
     id: String(databaseId),
     databaseId,
-    searchEngine: process.env.NEXT_PUBLIC_SEARCH_APPLIANCE ? process.env.NEXT_PUBLIC_SEARCH_APPLIANCE : '',
+    searchEngine: process.env.NEXT_PUBLIC_SEARCH_APPLIANCE
+      ? process.env.NEXT_PUBLIC_SEARCH_APPLIANCE
+      : "",
     headerLocation: MENUS.PRIMARY_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION,
     asPreview: ctx?.asPreview,
