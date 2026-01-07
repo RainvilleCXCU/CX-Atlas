@@ -446,7 +446,7 @@ input[type="submit"],
 	}
 }
 
-button:not(.cx-button):hover,
+button:not(.cx-button):not(.cx-accordion__button):hover,
 input[type="button"]:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
@@ -460,11 +460,12 @@ a.added_to_cart:hover {
 	cursor: pointer;
 }
 
-button:not(.cx-button):focus,
+button:not(.cx-button):not(.cx-accordion__button):focus,
 input[type="button"]:focus,
 input[type="reset"]:focus,
 input[type="submit"]:focus,
 button:active,
+button:not(.cx-button):not(.cx-accordion__button):active,
 input[type="button"]:active,
 input[type="reset"]:active,
 input[type="submit"]:active,
