@@ -53,7 +53,7 @@ const Footer = ({ copyrightHolder = "", title, logo, desktopLogo, mobileLogo, de
 		<footer className="cx-footer">
 			<section className="cx-footer__header">
 				<div className="cx-footer__wrapper">
-					<Logo title={logoText} logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} width={240} />
+					<Logo title={logoText} logo={logo} desktopLogo={desktopLogo} mobileLogo={mobileLogo} desktopLogoWidth={desktopLogoWidth} mobileLogoWidth={mobileLogoWidth} width={170} />
 				</div>
 			</section>
 			<section className="cx-footer__main-nav">
