@@ -59,7 +59,8 @@ function Alert({ id = 'alertdefault', alerts }: AlertProps): JSX.Element {
     useEffect(() => {
         console.log('Loaded alertClosed from cookies:', cookies.alertClosed);
         if(cookies.alertClosed) {
-            const alertsClosedFromCookies = cookies.alertClosed;
+            console.log(`closed alert type: ${typeof(cookies.alertClosed)}`);
+            const alertsClosedFromCookies = typeof(cookies.alertClosed) === 'number' ? [cookies.alertClosed] : cookies.alertClosed;
             setAlertsClosed([
                 ...alertsClosed,
                 ...alertsClosedFromCookies
