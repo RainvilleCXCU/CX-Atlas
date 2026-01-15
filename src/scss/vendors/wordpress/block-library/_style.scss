@@ -484,6 +484,10 @@
   overflow:clip;
   padding:1em;
   position:relative;
+  margin: 0 !important;
+  width: 101vw;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .wp-block-cover .has-background-dim:not([class*=-background-color]),.wp-block-cover-image .has-background-dim:not([class*=-background-color]),.wp-block-cover-image.has-background-dim:not([class*=-background-color]),.wp-block-cover.has-background-dim:not([class*=-background-color]){
   background-color:#000;
@@ -589,6 +593,7 @@
   color:inherit;
   width:100%;
   z-index:1;
+  max-width: 1350px;
 }
 .wp-block-cover h1:where(:not(.has-text-color)),.wp-block-cover h2:where(:not(.has-text-color)),.wp-block-cover h3:where(:not(.has-text-color)),.wp-block-cover h4:where(:not(.has-text-color)),.wp-block-cover h5:where(:not(.has-text-color)),.wp-block-cover h6:where(:not(.has-text-color)),.wp-block-cover p:where(:not(.has-text-color)),.wp-block-cover-image h1:where(:not(.has-text-color)),.wp-block-cover-image h2:where(:not(.has-text-color)),.wp-block-cover-image h3:where(:not(.has-text-color)),.wp-block-cover-image h4:where(:not(.has-text-color)),.wp-block-cover-image h5:where(:not(.has-text-color)),.wp-block-cover-image h6:where(:not(.has-text-color)),.wp-block-cover-image p:where(:not(.has-text-color)){
   color:inherit;
