@@ -1,7 +1,11 @@
-import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client";
+
+const httpLink = new HttpLink({
+    uri: process.env.NEXT_PUBLIC_WORDPRESS_URL + '/graphql',
+});
 
 const apolloClient = new ApolloClient({
-    uri: process.env.NEXT_PUBLIC_WORDPRESS_URL + '?graphql',
+    link: httpLink,
     cache: new InMemoryCache(),
 });
 

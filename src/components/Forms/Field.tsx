@@ -27,7 +27,10 @@ function NFField({ id, form, type = 'text', name, label, value, label_pos = "lab
     const fieldRef = useRef(null);
     const [fieldVal, setFieldVal] = useState(null);
     const [ subNum, setSubNum ] = useState(0);
-    const emailValid = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'i');
+    const emailValid = new RegExp(/^[\w.+-]+@[\w.-]+\.\w{2,}$/, 'i');
+    
+    // With + invalid chars
+    // const emailValid = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'i');
     
     const [state, setState] = useContext(Store);
     const [errorMessage, setErrorMessage] = useState(null);

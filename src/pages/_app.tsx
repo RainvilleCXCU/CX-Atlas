@@ -7,6 +7,7 @@ import type { AppProps } from 'next/app';
 import { pageview } from '../lib/routing';
 import Bowser from "bowser";
 import { CookiesProvider } from 'react-cookie';
+import Head from 'next/head';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
 
@@ -44,12 +45,17 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   }, [])
 
   return (
-    <FaustProvider pageProps={pageProps}>
-      <Provider>
-        <CookiesProvider>
-          <Component {...pageProps} key={router.asPath} />
-        </CookiesProvider>
-      </Provider>
-    </FaustProvider>
+    <>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      <FaustProvider pageProps={pageProps}>
+        <Provider>
+          <CookiesProvider>
+            <Component {...pageProps} key={router.asPath} />
+          </CookiesProvider>
+        </Provider>
+      </FaustProvider>
+    </>
   );
 }
