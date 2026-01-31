@@ -38,6 +38,7 @@ import { getNextServerSideProps, getNextStaticProps } from "@faustwp/core";
 import dynamic from "next/dynamic";
 import Locations from "components/Locations/view";
 import { GetServerSidePropsContext } from "next";
+import { getActiveAlerts } from "utils/alerts";
 export default function Page() {
   const props = useQuery(Page.query, {
     variables: Page.variables(),
@@ -95,28 +96,7 @@ export default function Page() {
   // const [isLoading, setLoading] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
-  const getActiveAlerts = () => {
-    const now = new Date();
-    // Get alerts for the current page
-    const pageAlerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
-    // Get alerts that have "active" selected
-    const activeAlerts = pageAlerts.filter(alert => alert.active == true);
-    // Get alerts that are within the start and end date
-    const alertsWithinDates = activeAlerts.filter(alert => {
-        // Replace space with T to make it a valid date string
-        const formattedStart = alert.startDate.replace(" ", "T");
-        const formattedEnd = alert.endDate.replace(" ", "T");
-        // Convert to Date object
-        const startDate = new Date(formattedStart);
-        const endDate = new Date(formattedEnd);
-        // Check if current date is within the start and end date
-        if (startDate < now && endDate > now) {
-            return alert;
-        }
-    });
-    return alertsWithinDates;
-  };
-  const activeAlerts = getActiveAlerts();
+  const activeAlerts = getActiveAlerts(props?.data?.cxAlerts?.nodes || [], databaseId);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const { setLocationSettings } = useContext(locationSettingsContext);
@@ -172,15 +152,12 @@ export default function Page() {
         {isModalOpen && modalContent &&
           <Modal />
         }
-      {
-        activeAlerts.length > 0 &&
-        <Alert alerts={activeAlerts} />
-      }
       <Loading />
       <Header
         title={siteTitle}
         description={siteDescription}
         logo={siteLogo}
+        activeAlerts={activeAlerts}
         desktopLogo={siteDesktopLogo}
         desktopLogoWidth={siteDesktopLogoWidth}
         mobileLogo={siteMobileLogo}

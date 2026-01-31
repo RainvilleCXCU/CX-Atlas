@@ -4,13 +4,21 @@ export const AlertFragment = gql`
   fragment AlertsFragment on CXAlert {
         active
         type
+        darkMode
+        iconPosition
+        heading
         displayPages
+        doNotDisplayPages
         databaseId
-        ctaButtonText
-        ctaButtonUrl
         name
         message
         startDate
         endDate
+        disableDismiss
+        noIcon
+        ctas {
+          ctaButtonText
+          ctaButtonUrl
+        }
 	  }
 `;

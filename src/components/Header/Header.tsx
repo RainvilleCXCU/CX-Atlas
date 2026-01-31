@@ -1,10 +1,12 @@
-import { memo, useState, useEffect } from 'react';
+import { memo, useState, useEffect, useCallback, useRef } from 'react';
 import UtilityNav from './UtilityNav';
 import Logo from 'components/Logo';
 import { useRouter } from 'next/router';
 import Navigation from './Navigation';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import Alert from 'components/Alerts/Alert';
+import { h } from 'preact';
 
 interface CTAProps {
   buttonColor: string;
@@ -30,6 +32,7 @@ interface Props {
   menuItems?;
   headerSettings?;
   template?: string;
+  activeAlerts?: Array<any>;
   ctas?: Array<CTAProps>;
 }
 
@@ -50,61 +53,121 @@ const Header = ({
   menuItems,
   headerSettings,
   template,
+  activeAlerts,
   ctas
 }: Props): JSX.Element => {
 
   const { asPath } = useRouter();
 
   const [navOpen, setNavOpen] = useState(false);
+  const elementRefs = useRef<{
+    header?: HTMLElement | null;
+    pageContent?: HTMLElement | null;
+    smartBanner?: HTMLElement | null;
+    alertBanner?: HTMLElement | null;
+  }>({});
+  const lastScrollTop = useRef(0);
+  const resizeTimeoutId = useRef<NodeJS.Timeout | null>(null);
 
-  // hide/show the mobile header on scroll
-  useEffect(() => {
-    let lastScrollTop = 0;
-    const header = document.querySelector('.cx-header');
-    const pageContent = document.querySelector('#page') ? document.querySelector('#page') : document.querySelector('#main');
+  const throttledHandleResize = useCallback(() => {
+    if (resizeTimeoutId.current) {
+      clearTimeout(resizeTimeoutId.current);
+    }
     
-
-    const handleScroll = () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const scrollThreshold = header.classList.contains('smartbanner-push-body') ? 160 : 80;
-      if (window.innerWidth < 992) {
-        if (scrollTop > lastScrollTop) { // scrolling down
-          if (scrollTop > scrollThreshold) {
-            header.style.transform = 'translateY(-100%)';
-          }
-        } else { // scrolling up          
-          header.style.transform = 'translateY(0)';
-          header.style.position = 'fixed';
-          pageContent.style.paddingTop = document.querySelector('.cx-header').classList.contains('smartbanner-push-body') ? '160px' : '80px';
-        }
-      }
-
-      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-    };
-
-    // if the window is resized to a width greater than 992px, reset the inline styles
-    const handleResize = () => {
-      if (window.innerWidth >= 992) {
+    resizeTimeoutId.current = setTimeout(() => {
+      const { header, pageContent } = elementRefs.current;
+      if (window.innerWidth >= 992 && header) {
         header.style.cssText = ''; 
-        if (pageContent.style.paddingTop === '80px') {
+        if (pageContent && pageContent.style.paddingTop === header.clientHeight + 'px') {
           pageContent.style.cssText = ''; 
         }
       }
+    }, 100);
+  }, []);
+
+  // hide/show the mobile header on scroll
+  useEffect(() => {
+    elementRefs.current = {
+      header: document.querySelector('.cx-header'),
+      pageContent: document.querySelector('#page') || document.querySelector('#main'),
+      smartBanner: document.querySelector('.smartbanner-container'),
+      alertBanner: document.querySelector('#alert-banner')
     };
 
-    window.addEventListener('scroll', handleScroll); // add scroll event listener
-    window.addEventListener('resize', handleResize); // add window resize event listener
+    const handleScroll = () => {
+      const { header, pageContent, smartBanner, alertBanner } = elementRefs.current;
+      if (!header) return;
 
-    //cleanup
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      let headerHeight = header.clientHeight;
+      if (smartBanner) {
+        headerHeight += smartBanner.clientHeight;
+      }
+      
+      const alertBannerHeight = alertBanner ? alertBanner.clientHeight : 0;
+      const scrollThreshold = headerHeight;
+      
+      if (window.innerWidth < 992) {
+        // At the very top, keep everything relative
+        if (scrollTop <= alertBannerHeight) {
+          header.style.position = 'relative';
+          header.style.transform = 'translateY(0)';
+          header.style.top = 'auto';
+          if (pageContent) {
+            pageContent.style.paddingTop = '0px';
+          }
+          return;
+        }
+        
+        if (scrollTop > lastScrollTop.current) {
+          // Scrolling down
+          if (scrollTop > scrollThreshold + alertBannerHeight) {
+            header.style.transform = 'translateY(-100%)';
+          }
+        } else {
+          // Scrolling up - make header fixed and position appropriately
+          header.style.transform = 'translateY(0)';
+          header.style.position = 'fixed';
+          
+          // Position header based on whether alert is in view
+          const alertTopPosition = alertBannerHeight - scrollTop;
+          if (alertTopPosition > 0 && alertBannerHeight > 0) {
+            // Alert is partially or fully visible
+            header.style.top = `${alertTopPosition}px`;
+          } else {
+            // Alert is out of view, header at top
+            header.style.top = '0px';
+          }
+          
+          if (pageContent) {
+            pageContent.style.paddingTop = `${headerHeight}px`;
+          }
+        }
+      }
+
+      lastScrollTop.current = scrollTop <= 0 ? 0 : scrollTop;
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', throttledHandleResize);
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', throttledHandleResize);
+      if (resizeTimeoutId.current) {
+        clearTimeout(resizeTimeoutId.current);
+      }
     };
-  }, []);
+  }, [throttledHandleResize]);
   
 
   return (
-    <header className={`cx-header${navOpen ? ' nav-open' : ''}`}>
+    <>
+    {
+        activeAlerts?.length > 0 &&
+        <Alert alerts={activeAlerts} />
+    }
+    <header className={`cx-header${navOpen ? ' nav-open' : ''}`}>      
       {(showLogo || showUtilityNav) &&
         <section className="cx-header__util-nav cx-header__desktop">
           <div className="cx-header__wrapper">
@@ -136,6 +199,7 @@ const Header = ({
           </section >
         }
     </header >
+    </>
   );
 }
 

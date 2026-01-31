@@ -2,31 +2,32 @@ import { Store } from "context/store";
 import { parseHtml } from "lib/parser";
 import { useContext, useEffect, useState, Fragment } from "react";
 import { useCookies } from "react-cookie";
+import { Alert as AlertType } from "utils/alerts";
 
 export interface AlertProps {
-  id?;
-  alerts?;
+  id?: string;
+  alerts?: AlertType[];
 }
 
 function Alert({ id = "alertdefault", alerts }: AlertProps): JSX.Element {
   const [loaded, setLoaded] = useState(false);
   const [cookies, setCookie] = useCookies(["alertClosed"]);
   const [state] = useContext(Store);
-  const [alertsClosed, setAlertsClosed] = useState([]);
+  const [alertsClosed, setAlertsClosed] = useState<string[]>([]);
 
-  const showAlert = (id) => {
+  const showAlert = (id: string | number | undefined) => {
     return (
       loaded && id !== undefined && alertsClosed.indexOf(id?.toString()) < 0
     );
   };
-  const closeAlert = (e) => {
+  const closeAlert = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const alertName = e.target.dataset.alertName;
+    const alertName = (e.target as HTMLButtonElement).dataset.alertName;
 
     console.log("Closing alert:", alertName);
 
     // Handle the existing cookie value properly
-    let existingClosed = [];
+    let existingClosed: string[] = [];
 
     if (cookies.alertClosed) {
       if (typeof cookies.alertClosed === "string") {
@@ -57,14 +58,22 @@ function Alert({ id = "alertdefault", alerts }: AlertProps): JSX.Element {
     setAlertsClosed(newClosed);
   };
 
+  const ctaColor = {
+    warning: "-warning",
+    event: "-warning",
+    notice: "",
+  }
+
   useEffect(() => {
     console.log("Loaded alertClosed from cookies:", cookies.alertClosed);
     if (cookies.alertClosed) {
       console.log(`closed alert type: ${typeof cookies.alertClosed}`);
-      const alertsClosedFromCookies =
+      const alertsClosedFromCookies: string[] =
         typeof cookies.alertClosed === "number"
-          ? [cookies.alertClosed]
-          : cookies.alertClosed;
+          ? [cookies.alertClosed.toString()]
+          : Array.isArray(cookies.alertClosed) 
+          ? cookies.alertClosed
+          : [cookies.alertClosed];
       setAlertsClosed([...alertsClosed, ...alertsClosedFromCookies]);
     }
     setLoaded(true);
@@ -79,27 +88,38 @@ function Alert({ id = "alertdefault", alerts }: AlertProps): JSX.Element {
           <Fragment key={`${post?.name}-${index}`}>
             <div
               id="alert-banner"
-              className={`cx-alert${
+              className={`cx-alert cx-text--x-small${
                 post.type ? ` cx-alert__type--${post.type}` : ""
+              }${post.darkMode ? ` cx-alert__type--${post.type}-darkmode` : ""
               }${showAlert(post.databaseId) ? " show" : " hidden"}`}
             >
-              <button
-                className="cx-alert__close"
-                onClick={closeAlert}
-                data-alert-name={post.databaseId}
-              >
-                &times;
-              </button>
-              <p className="cx-alert__message title">
-                <div className="cx-alert__message-content">
-                  <div>{parseHtml(post.message ?? "")}</div>
-                  {post.ctaButtonText && (
-                    <a href={post.ctaButtonUrl} className="cx-alert__cta">
-                      {post.ctaButtonText}
-                    </a>
-                  )}
-                </div>
-              </p>
+              {!post.disableDismiss &&
+                <button
+                  className="cx-alert__close"
+                  onClick={closeAlert}
+                  data-alert-name={post.databaseId}
+                >
+                  &times;
+                </button>
+              }
+              <div className={`cx-alert__message cx-text--x-small title${post.noIcon ? ' no-icon' : ''}`}>
+                <span className="cx-alert__message-content">
+                  <span>
+                    {post.heading && <div className="cx-alert__message-heading no-margin--top cx-text--weight-bold">{post.heading}</div>}
+                    <p className="no-margin">{parseHtml(post.message ?? "")}</p>
+                  </span>
+                  { post.ctas && post.ctas.length > 0 &&
+                    <p className="cx-alert__ctas">
+                     {
+                     post.ctas.map((cta, ctaIndex) => (
+                        <a href={cta.ctaButtonUrl} className={`cx-button cx-button--compact slim-margin--horizontal-right slim-margin--vertical-top ${ctaIndex == 0 ? `cx-button--outlined${ctaColor[post.type]}` : `cx-button--color${ctaColor[post.type]}`}`} key={`alert-cta-${ctaIndex}`}>
+                          {cta.ctaButtonText}
+                        </a>
+                      ))}
+                    </p>
+                  }
+                </span>
+              </div>
             </div>
           </Fragment>
         ))}
