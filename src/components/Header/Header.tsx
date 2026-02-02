@@ -3,10 +3,8 @@ import UtilityNav from './UtilityNav';
 import Logo from 'components/Logo';
 import { useRouter } from 'next/router';
 import Navigation from './Navigation';
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import Alert from 'components/Alerts/Alert';
-import { h } from 'preact';
 
 interface CTAProps {
   buttonColor: string;
@@ -64,7 +62,7 @@ const Header = ({
     header?: HTMLElement | null;
     pageContent?: HTMLElement | null;
     smartBanner?: HTMLElement | null;
-    alertBanner?: HTMLElement | null;
+    alertBanner?: NodeListOf<HTMLElement> | null;
   }>({});
   const lastScrollTop = useRef(0);
   const resizeTimeoutId = useRef<NodeJS.Timeout | null>(null);
@@ -91,7 +89,7 @@ const Header = ({
       header: document.querySelector('.cx-header'),
       pageContent: document.querySelector('#page') || document.querySelector('#main'),
       smartBanner: document.querySelector('.smartbanner-container'),
-      alertBanner: document.querySelector('#alert-banner')
+      alertBanner: document.querySelectorAll('#alert-banner')
     };
 
     const handleScroll = () => {
@@ -104,7 +102,7 @@ const Header = ({
         headerHeight += smartBanner.clientHeight;
       }
       
-      const alertBannerHeight = alertBanner ? alertBanner.clientHeight : 0;
+      const alertBannerHeight = alertBanner ? Array.from(alertBanner).reduce((total, banner) => total + banner.clientHeight, 0) : 0;
       const scrollThreshold = headerHeight;
       
       if (window.innerWidth < 992) {
