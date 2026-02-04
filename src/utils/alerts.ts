@@ -18,6 +18,7 @@ export interface Alert {
     ctas?: Array<{
         ctaButtonText: string;
         ctaButtonUrl: string;
+        ctaButtonType?: string;
     }>;
 }
 

@@ -19,6 +19,7 @@ export const AlertFragment = gql`
         ctas {
           ctaButtonText
           ctaButtonUrl
+          ctaButtonType
         }
 	  }
 `;

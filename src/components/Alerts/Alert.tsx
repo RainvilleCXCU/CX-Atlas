@@ -109,10 +109,10 @@ function Alert({ id = "alertdefault", alerts }: AlertProps): JSX.Element {
                     <p className="no-margin">{parseHtml(post.message ?? "")}</p>
                   </span>
                   { post.ctas && post.ctas.length > 0 &&
-                    <p className="cx-alert__ctas">
+                    <p className="cx-alert__ctas no-margin--vertical-bottom">
                      {
                      post.ctas.map((cta, ctaIndex) => (
-                        <a href={cta.ctaButtonUrl} className={`cx-button cx-button--compact slim-margin--horizontal-right slim-margin--vertical-top ${ctaIndex == 0 ? `cx-button--outlined${ctaColor[post.type]}` : `cx-button--color${ctaColor[post.type]}`}`} key={`alert-cta-${ctaIndex}`}>
+                        <a href={cta.ctaButtonUrl} className={`cx-button cx-button--compact slim-margin--horizontal-right no-margin--vertical-top cx-button--${cta?.ctaButtonType == 'filled' || cta?.ctaButtonType == null ? 'color' : cta?.ctaButtonType}${ctaColor[post.type]}`} key={`alert-cta-${ctaIndex}`}>
                           {cta.ctaButtonText}
                         </a>
                       ))}
