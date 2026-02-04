@@ -285,7 +285,7 @@ Page.query = gql`
       locationsNoResults
     }
 
-    cxAlerts: cXAlerts {
+    cxAlerts: cXAlerts(first: 50) {
       nodes {
         ...AlertsFragment
       }

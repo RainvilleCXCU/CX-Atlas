@@ -104,9 +104,11 @@ function Alert({ id = "alertdefault", alerts }: AlertProps): JSX.Element {
               }
               <div className={`cx-alert__message cx-text--x-small title${post.noIcon ? ' no-icon' : ''}`}>
                 <span className="cx-alert__message-content">
-                  <span>
-                    {post.heading && <div className="cx-alert__message-heading no-margin--top cx-text--weight-bold">{post.heading}</div>}
-                    <p className="no-margin">{parseHtml(post.message ?? "")}</p>
+                  <span className="cx-flex__elm">
+                    <span className="cx-alert__message-text">
+                      {post.heading && <div className="cx-alert__message-heading no-margin--top cx-text--weight-bold">{post.heading}</div>}
+                      <p className="no-margin">{parseHtml(post.message ?? "")}</p>
+                    </span>
                   </span>
                   { post.ctas && post.ctas.length > 0 &&
                     <p className="cx-alert__ctas no-margin--vertical-bottom">

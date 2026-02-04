@@ -198,7 +198,7 @@ Component.variables = (props) => {
                 preApplicationFormId
             }
         }
-        cxAlerts: cXAlerts {
+        cxAlerts: cXAlerts(first: 50) {
             edges {
                 node{
                 ...AlertsFragment

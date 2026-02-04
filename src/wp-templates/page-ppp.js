@@ -111,7 +111,7 @@ Component.query = gql`
       ...ThirdPartySettingsFragment
     }
 
-    cxAlerts: cXAlerts {
+    cxAlerts: cXAlerts(first: 50) {
       nodes {
         ...AlertsFragment
       }
