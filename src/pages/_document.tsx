@@ -9,7 +9,6 @@ class CXDoc extends Document {
       <Html
         lang="en-us">
         <Head>
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
           <style>{`body { display: block !important }`}</style>
           <link href='https://www.googletagmanager.com' rel='dns-prefetch' />
           <link href={process.env.NEXT_PUBLIC_WORDPRESS_URL} rel='dns-prefetch' />
