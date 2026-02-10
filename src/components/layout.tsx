@@ -64,7 +64,7 @@ const BaseLayout: FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle, t
     const ctaInfo = props?.data?.page?.ctaPage ?? props?.data?.postPreview?.ctaPage ?? null;
 
 
-    let { title = '', content, seo = {}, link = '', featuredImage, databaseId = '', details } = props?.data?.page ?? props?.data?.post ?? props?.data?.location ?? props?.data?.category ?? {
+    let { title = '', content, seo = {}, link = '', featuredImage, databaseId = '', details } = props?.data?.page ?? props?.data?.post ?? props?.data?.location ?? props?.data?.category ?? props.data?.postPreview ?? props.data?.locationsPreview ?? {
         title: '',
         seo: {},
         link: '',
