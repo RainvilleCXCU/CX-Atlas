@@ -26,6 +26,7 @@ import Head from "next/head";
 import { AlertFragment } from 'fragments/Alerts';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
+import { getActiveAlerts } from 'utils/alerts';
 
 export default function Component(props) {
 
@@ -65,28 +66,8 @@ export default function Component(props) {
     props?.data?.footerSettings;
 
   const { scheduler } = props?.data?.widgetSettings;
-  const getActiveAlerts = () => {
-    const now = new Date();
-    // Get alerts for the current page
-    const pageAlerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
-    // Get alerts that have "active" selected
-    const activeAlerts = pageAlerts.filter(alert => alert.active == true);
-    // Get alerts that are within the start and end date
-    const alertsWithinDates = activeAlerts.filter(alert => {
-        // Replace space with T to make it a valid date string
-        const formattedStart = alert.startDate.replace(" ", "T");
-        const formattedEnd = alert.endDate.replace(" ", "T");
-        // Convert to Date object
-        const startDate = new Date(formattedStart);
-        const endDate = new Date(formattedEnd);
-        // Check if current date is within the start and end date
-        if (startDate < now && endDate > now) {
-            return alert;
-        }
-    });
-    return alertsWithinDates;
-  };
-  const activeAlerts = getActiveAlerts();
+
+  const activeAlerts = getActiveAlerts(props?.data?.cxAlerts?.nodes || [], databaseId);
     // const productName = product && product !== ':path*' ? product.charAt(0).toUpperCase() + product.slice(1) : '';
     const productName = props.product && props.product !== ':path*' ? props.product.split('-').map(word => { 
         return word.charAt(0).toUpperCase() + word.slice(1)
@@ -121,10 +102,6 @@ export default function Component(props) {
         {isModalOpen && modalContent &&
           <Modal />
         }
-      {
-        activeAlerts.length > 0 &&
-        <Alert alerts={activeAlerts} />
-      }
       <Loading />
       <Header
         title={title}
@@ -221,7 +198,7 @@ Component.query = gql`
       ...ThirdPartySettingsFragment
     }
 
-    cxAlerts: cXAlerts {
+    cxAlerts: cXAlerts(first: 50) {
       edges {
         node {
           ...AlertsFragment
