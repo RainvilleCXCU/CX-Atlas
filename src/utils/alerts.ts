@@ -31,13 +31,13 @@ export const getActiveAlerts = (alerts: Alert[] = [], databaseId?: string | numb
     const isActive = (alert: Alert): boolean => {
         return alert.active === true || alert.active === "1";
     };
-    
+    console.log(JSON.stringify(alerts));    
     // First filter by active status
     const activeAlerts = alerts.filter(isActive);
     console.log("Active alerts:", activeAlerts.length);
     
-    if (!databaseId) {
-        return activeAlerts;
+    if (!databaseId || databaseId == '' || activeAlerts.length === 0) {
+        return [];
     }
     
     // Get alerts for the current page
@@ -61,6 +61,8 @@ export const getActiveAlerts = (alerts: Alert[] = [], databaseId?: string | numb
     
     // Get alerts that are within the start and end date
     const alertsWithinDates = pageAlerts.filter(alert => {
+        console.log("Checking alert date range for alert:", alert.databaseId);
+        console.log("Alert startDate:", alert.startDate, "endDate:", alert.endDate);
         if (!alert.startDate || !alert.endDate) {
             console.log("Alert missing date range:", alert);
             return false;

@@ -14,7 +14,7 @@ const ReadMore = ({ children, devices, className = "" }:ReadMoreProps) => {
 
   const handleClick = () => {
     setBioExpanded(!bioExpanded);
-    readMoreButtonRef.current.innerText = bioExpanded ? "Read more" : "Read less";
+    readMoreButtonRef.current.innerHTML = bioExpanded ? "Read more" : "Read less";
     readMoreButtonRef.current.classList.toggle("expanded");
   };
 
@@ -43,6 +43,7 @@ const ReadMore = ({ children, devices, className = "" }:ReadMoreProps) => {
     <div className={`cx-readmore ${className}`}>
         <p
             ref={bioTextRef}
+            className="cx-transition__max-height"
             style={{
             maxHeight: bioExpanded ? `${bioTextRef.current.scrollHeight}px` : "126px",
             maskImage: bioExpanded ? "unset" : "linear-gradient(to bottom, black, black, transparent)",
