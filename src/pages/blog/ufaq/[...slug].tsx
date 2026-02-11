@@ -8,12 +8,25 @@ import { getNextServerSideProps } from "@faustwp/core";
 import { GetServerSidePropsContext } from "next";
 import { AlertFragment } from 'fragments/Alerts';
 import BaseLayout from 'components/layout';
+import { useRouter } from 'next/router';
 
 export default function Component(props) {
   
   const { blogtop, blogSidebar } = props?.data?.widgetSettings;
 
   const {content, title, id} = props?.data.faqBySlug;
+  const router = useRouter();
+
+  // Force clear loading immediately during render
+  if (typeof window !== 'undefined') {
+  setTimeout(() => {
+      if (router?.events) {
+      console.log('Clearing loading via immediate setTimeout');
+      router.events.emit('routeChangeComplete', window.location.pathname);
+      router.events.emit('routeChangeError', window.location.pathname);
+      }
+  }, 0);
+  }
 
   return (
     <BaseLayout props={props}>
