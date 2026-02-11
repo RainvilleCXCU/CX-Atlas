@@ -28,6 +28,7 @@ import Loading from 'components/common/loading';
 import { parseHtml } from 'lib/parser';
 import { Suspense, FC } from 'react';
 import SmartBannerComponent from './Device/SmartAppBanner';
+import { getActiveAlerts } from 'utils/alerts';
 // const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:true});
 // const Loading = dynamic(() => import('components/common/loading'), {ssr:true});
 interface BaseLayoutProps {
@@ -63,7 +64,7 @@ const BaseLayout: FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle, t
     const ctaInfo = props?.data?.page?.ctaPage ?? props?.data?.postPreview?.ctaPage ?? null;
 
 
-    let { title = '', content, seo = {}, link = '', featuredImage, databaseId = '', details } = props?.data?.page ?? props?.data?.post ?? props?.data?.location ?? props?.data?.category ?? {
+    let { title = '', content, seo = {}, link = '', featuredImage, databaseId = '', details } = props?.data?.page ?? props?.data?.post ?? props?.data?.location ?? props?.data?.category ?? props.data?.postPreview ?? props.data?.locationsPreview ?? {
         title: '',
         seo: {},
         link: '',
@@ -71,29 +72,7 @@ const BaseLayout: FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle, t
     };
     const headerSettings = props?.data?.headerSettings; 
     const { footerUtilities, footerAppIcons, footerSocialIcons } = props?.data?.footerSettings;
-
-    const getActiveAlerts = () => {
-        const now = new Date();
-        // Get alerts for the current page
-        const pageAlerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
-        // Get alerts that have "active" selected
-        const activeAlerts = pageAlerts.filter(alert => alert.active == true);
-        // Get alerts that are within the start and end date
-        const alertsWithinDates = activeAlerts.filter(alert => {
-            // Replace space with T to make it a valid date string
-            const formattedStart = alert.startDate.replace(" ", "T");
-            const formattedEnd = alert.endDate.replace(" ", "T");
-            // Convert to Date object
-            const startDate = new Date(formattedStart);
-            const endDate = new Date(formattedEnd);
-            // Check if current date is within the start and end date
-            if (startDate < now && endDate > now) {
-                return alert;
-            }
-        });
-        return alertsWithinDates;
-    };
-    const activeAlerts = getActiveAlerts();
+    const activeAlerts = getActiveAlerts(props?.data?.cxAlerts?.nodes ?? [], databaseId);
     
     title = pageTitle ? pageTitle : title;
 	return (
@@ -138,11 +117,6 @@ const BaseLayout: FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle, t
             id={clarityId}
             enabled={clarityEnabled} />
         }
-                
-            {
-                activeAlerts.length > 0 &&
-                <Alert alerts={activeAlerts} />
-            }
                     <Loading />
                     {
                         parseHtml(bodyTop)
@@ -161,6 +135,7 @@ const BaseLayout: FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle, t
                             mobileLogo={siteMobileLogo}
                             mobileLogoWidth={siteMobileLogoWidth}
                             menuItems={primaryMenu}
+                            activeAlerts={activeAlerts}
                             headerSettings={headerSettings}
 
                             showButtons={template.toLowerCase() === 'full width' || template.toLowerCase() === 'default'}
@@ -172,7 +147,6 @@ const BaseLayout: FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle, t
                             ctas={ctaInfo?.ctas ? ctaInfo.ctas : false}
                         />
                     }
-
                     <Suspense fallback={<Loading />}>
                         {children}
                     </Suspense>

@@ -187,7 +187,7 @@ Component.query = gql`
       }
     }
 
-    cxAlerts: cXAlerts {
+    cxAlerts: cXAlerts(first: 50) {
         edges {
           node{
             ...AlertsFragment
@@ -275,7 +275,7 @@ if(process.env.NEXT_PUBLIC_SEARCH_APPLIANCE === 'searchwp' || !process.env.NEXT_
       }
     }
 
-    cxAlerts: cXAlerts {
+    cxAlerts: cXAlerts(first: 50) {
         edges {
           node{
             ...AlertsFragment
