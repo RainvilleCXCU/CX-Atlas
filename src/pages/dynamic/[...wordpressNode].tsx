@@ -13,7 +13,7 @@ export default function Page(props) {
     const router = useRouter();
   
     // Force clear loading immediately during render
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_DISABLE_TERM_REDIRECTS !== 'true') {
       setTimeout(() => {
         if (router?.events) {
           console.log('Clearing loading via immediate setTimeout');

@@ -98,7 +98,7 @@ Component.query = gql`
     $footerLocation: MenuLocationEnum
   ) {
     # contentNodes(offset: $offset, postsPerPage: $postsPerPage, terms: $searchTerm) {
-    searchRedirect(searchTerm: $searchTerm)
+    ${process.env.NEXT_PUBLIC_DISABLE_TERM_REDIRECTS !== 'true' ? 'searchRedirect(searchTerm: $searchTerm)' : '# Redirects disabled'}
     contentNodes(where: {search: $searchTerm, offsetPagination: {offset: $offset, size: $postsPerPage}}) {
       nodes {
         ... on Page {
@@ -230,7 +230,7 @@ if(process.env.NEXT_PUBLIC_SEARCH_APPLIANCE === 'searchwp' || !process.env.NEXT_
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
   ) {
-    searchRedirect(searchTerm: $searchTerm)
+    ${process.env.NEXT_PUBLIC_DISABLE_TERM_REDIRECTS !== 'true' ? 'searchRedirect(searchTerm: $searchTerm)' : '# Redirects disabled'}
     searchwp(offset: $offset, postsPerPage: $postsPerPage, terms: $searchTerm) {
       results {
         id
@@ -316,7 +316,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     let redirect: string | undefined;
     redirect = result.props.data.searchRedirect;
 
-    if (redirect) {
+    if (redirect && process.env.NEXT_PUBLIC_DISABLE_TERM_REDIRECTS !== 'true') {
       const cleanRedirect = redirect.replace(process.env.NEXT_PUBLIC_WORDPRESS_URL || '', '');
       return {
         redirect: {

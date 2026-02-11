@@ -81,7 +81,7 @@ export default function Component(props) {
   // Force clear loading immediately during render
   if (typeof window !== 'undefined') {
   setTimeout(() => {
-      if (router?.events) {
+    if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_DISABLE_TERM_REDIRECTS !== 'true') {
       console.log('Clearing loading via immediate setTimeout');
       router.events.emit('routeChangeComplete', window.location.pathname);
       router.events.emit('routeChangeError', window.location.pathname);
