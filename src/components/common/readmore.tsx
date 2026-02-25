@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 interface ReadMoreProps {
-	children: string;
+	  children: string;
     devices?: string;
     className: string;
 }
@@ -43,7 +43,7 @@ const ReadMore = ({ children, devices, className = "" }:ReadMoreProps) => {
     <div className={`cx-readmore ${className}`}>
         <p
             ref={bioTextRef}
-            className="cx-transition__max-height"
+            className="cx-transition__max-height no-margin--vertical-bottom"
             style={{
             maxHeight: bioExpanded ? `${bioTextRef.current.scrollHeight}px` : "126px",
             maskImage: bioExpanded ? "unset" : "linear-gradient(to bottom, black, black, transparent)",
@@ -51,13 +51,13 @@ const ReadMore = ({ children, devices, className = "" }:ReadMoreProps) => {
         >
             {children}
         </p>
-        <button
-            className={`cx-button cx-block u-margin-center cx-button--text cx-button--compact read_more_button ${devices && devices !== 'all' ? 'cx-hidden__desktop cx-hidden__tablet' : ''}`}
+        <a
+            className={`read_more_button center cx-text--small cx-text--weight-semi-bold ${devices && devices !== 'all' ? 'cx-hidden__desktop cx-hidden__tablet' : ''}`}
             ref={readMoreButtonRef}
             onClick={handleClick}
         >
             Read more
-        </button>
+        </a>
     </div>
   );
 };
