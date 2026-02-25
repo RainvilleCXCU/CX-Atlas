@@ -39,11 +39,11 @@ function LocationDetails(): JSX.Element {
 	};
 
 	//scroll the accordion summary into view when clicked
-	const handleSummaryClick = (e) => {
-		setTimeout(() => {
-			e.target.scrollIntoView({ behavior: "smooth", block: "start" });
-		}, 0);
-	};
+	// const handleSummaryClick = (e) => {
+	// 	setTimeout(() => {
+	// 		e.target.scrollIntoView({ behavior: "smooth", block: "start" });
+	// 	}, 0);
+	// };
 
 	return (
 		<div
@@ -150,7 +150,6 @@ function LocationDetails(): JSX.Element {
 						<details open>
 							<summary 
 								className="gb-accordion-title"
-								onClick={handleSummaryClick}
 							>
 								<span className="wpsl-hours cx-h5">
 									Hours of Operation (CT)
@@ -213,7 +212,6 @@ function LocationDetails(): JSX.Element {
 						<details>
 							<summary 
 								className="gb-accordion-title"
-								onClick={handleSummaryClick}
 							>
 								<span className="wpsl-hours cx-h5">Holiday Hours</span>
 							</summary>
@@ -232,7 +230,6 @@ function LocationDetails(): JSX.Element {
 							<details>
 								<summary 
 									className="gb-accordion-title"
-									onClick={handleSummaryClick}
 								>
 									<span className="wpsl-hours cx-h5">
 										Services &amp; Amenities
