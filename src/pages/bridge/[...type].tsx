@@ -34,7 +34,7 @@ import { getNextServerSideProps } from '@faustwp/core';
 import apolloClient from 'apolloClient';
 import dynamic from 'next/dynamic';
 import { useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/router";
 import Container from 'components/Blocks/Container';
 import Columns from 'components/Blocks/Columns';
 import Column from 'components/Blocks/Column';
@@ -60,6 +60,18 @@ export default function Component(props) {
     const [bridgeFlowSettings, setBridgeFlowSettings] = useState({
         preApplicationFormId: props?.data?.bridgeFlow?.bridgeFlowSettings?.preApplicationFormId?.[0] || null
     });
+    const router = useRouter();
+
+    // Force clear loading immediately during render
+    if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_DISABLE_TERM_REDIRECTS !== 'true') {
+    setTimeout(() => {
+        if (router?.events) {
+        console.log('Clearing loading via immediate setTimeout');
+        router.events.emit('routeChangeComplete', window.location.pathname);
+        router.events.emit('routeChangeError', window.location.pathname);
+        }
+    }, 0);
+    }
 
     return (
         <>

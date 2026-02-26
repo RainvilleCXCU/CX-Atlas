@@ -145,7 +145,7 @@ function Locations({ locationSettings, siteLogo, location, noResults }: Props): 
                 : locationSettings.startLatlng?.split[","]
                 ? locationSettings.startLatlng?.split[","][1]
                 : 0);
-              setLongitude(location.coords.longitude);
+              setLongitude(location?.coords.longitude);
               fetchLocations({
                 lat: locationSettings.startLatlng?.split[","]
                   ? locationSettings.startLatlng?.split[","][0]

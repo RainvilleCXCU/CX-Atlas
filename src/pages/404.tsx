@@ -14,6 +14,7 @@ const SearchBar = dynamic(() => import('components/Search/SearchBar'));
 import Link from 'next/link';
 import BaseLayout from '../components/layout';
 import Head from "next/head";
+import { useRouter } from 'next/router';
 export default function Component(props) {
 
   if (props.loading) {
@@ -21,6 +22,18 @@ export default function Component(props) {
   }
   
   const { title } = props?.data?.generalSettings;
+  const router = useRouter();
+
+  // Force clear loading immediately during render
+    if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_DISABLE_TERM_REDIRECTS !== 'true') {
+  setTimeout(() => {
+      if (router?.events) {
+      console.log('Clearing loading via immediate setTimeout');
+      router.events.emit('routeChangeComplete', window.location.pathname);
+      router.events.emit('routeChangeError', window.location.pathname);
+      }
+  }, 0);
+  }
 
   return (
     <BaseLayout props={props}>

@@ -24,6 +24,7 @@ const AppLinks = dynamic(() => import("components/Device/AppLinks"), {ssr: false
 import Address from "components/Map/address";
 import MBHIPRO from "components/Hours/MBHIPRO";
 import MLButton from "components/Buttons/ML";
+import ReadMore from "components/common/readmore";
 // import ToggleContent from "components/ContentToggle/Content";
 // import ToggleContentLink from "components/ContentToggle/ContentToggleLink";
 // import ToggleContentSelect from "components/ContentToggle/ContentToggleSelect";
@@ -291,6 +292,12 @@ export const parseHtml = (html) => {
                 if(attribs?.['data-acf-block'] == 'map') {
                     return (
                         <Address locationData={attribs?.['data-location-data']} getDirectionsText={attribs?.['data-directions-button-text']} showDirectionsButton={JSON.parse(attribs?.['data-show-button'])} />
+                    )
+                }
+                if(attribs?.['data-acf-block'] == 'cx-readmore') {
+                    return (
+                        <ReadMore {...attributesToProps(attribs)}
+                        devices={attribs?.['data-devices']}>{domToReact(children, options)}</ReadMore>
                     )
                 }
             }

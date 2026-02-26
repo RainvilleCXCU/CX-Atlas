@@ -27,6 +27,7 @@ import { AlertFragment } from 'fragments/Alerts';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { getActiveAlerts } from 'utils/alerts';
+import { useRouter } from 'next/router';
 
 export default function Component(props) {
 
@@ -75,6 +76,7 @@ export default function Component(props) {
   const title = `Schedule a Call${productName ? ' about ' : ''}${productName ? productName.replace('-', ' ') : ''} - ${siteTitle}`;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  
   return (
     <>
 		<Head>

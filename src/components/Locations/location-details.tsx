@@ -38,6 +38,13 @@ function LocationDetails(): JSX.Element {
 		setShowDetails(false);
 	};
 
+	//scroll the accordion summary into view when clicked
+	// const handleSummaryClick = (e) => {
+	// 	setTimeout(() => {
+	// 		e.target.scrollIntoView({ behavior: "smooth", block: "start" });
+	// 	}, 0);
+	// };
+
 	return (
 		<div
 			id={`wpsl-branch-details${isMobile}`}
@@ -141,7 +148,9 @@ function LocationDetails(): JSX.Element {
 
 					<div className="wp-block-genesis-blocks-gb-accordion cx-accordion__brand gb-block-accordion wpsl-location--section">
 						<details open>
-							<summary className="gb-accordion-title">
+							<summary 
+								className="gb-accordion-title"
+							>
 								<span className="wpsl-hours cx-h5">
 									Hours of Operation (CT)
 								</span>
@@ -201,7 +210,9 @@ function LocationDetails(): JSX.Element {
 
 					<div className="wp-block-genesis-blocks-gb-accordion cx-accordion__brand gb-block-accordion wpsl-location--section">
 						<details>
-							<summary className="gb-accordion-title">
+							<summary 
+								className="gb-accordion-title"
+							>
 								<span className="wpsl-hours cx-h5">Holiday Hours</span>
 							</summary>
 							<div className="gb-accordion-text">
@@ -217,7 +228,9 @@ function LocationDetails(): JSX.Element {
 					{selectedLocation?.services &&
 						<div className="wp-block-genesis-blocks-gb-accordion cx-accordion__brand gb-block-accordion wpsl-location--section">
 							<details>
-								<summary className="gb-accordion-title">
+								<summary 
+									className="gb-accordion-title"
+								>
 									<span className="wpsl-hours cx-h5">
 										Services &amp; Amenities
 									</span>
