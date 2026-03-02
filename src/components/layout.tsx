@@ -73,7 +73,6 @@ const BaseLayout: FC<BaseLayoutProps> = ({ props, children = <></>, pageTitle, t
     const headerSettings = props?.data?.headerSettings; 
     const { footerUtilities, footerAppIcons, footerSocialIcons } = props?.data?.footerSettings;
     const activeAlerts = getActiveAlerts(props?.data?.cxAlerts?.nodes ?? [], databaseId);
-    console.log("BaseLayout DatabaseId:", databaseId);
     
     title = pageTitle ? pageTitle : title;
 	return (

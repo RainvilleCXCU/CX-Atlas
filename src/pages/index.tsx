@@ -8,7 +8,6 @@ import { useRouter } from 'next/router';
 export default function Page(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
-
   return (
     <isModalOpenContext.Provider value={{ isModalOpen, setIsModalOpen }}>
       <modalContentContext.Provider value={{modalContent, setModalContent}}>
