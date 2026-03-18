@@ -174,7 +174,7 @@ export const parseHtml = (html) => {
             // Equal Height
             else if (attribs?.['data-equal-height']) {
                 return (
-                    <EqualHeightContainer tagName={name} name={attribs['data-equal-height']} classNames={attribs.class} styles={attribs?.style} {...attributesToProps(attribs)}>{domToReact(children, options)}</EqualHeightContainer>
+                    <EqualHeightContainer tagName={name} name={attribs['data-equal-height']} classNames={attribs.class} {...attributesToProps(attribs)}>{domToReact(children, options)}</EqualHeightContainer>
                 )
             }
             else if (attribs?.class?.includes("cx-equal-height__")) {
