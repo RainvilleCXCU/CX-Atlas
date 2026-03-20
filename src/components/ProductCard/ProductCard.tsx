@@ -38,11 +38,6 @@ export default function ProductCard({ attribs, children }) {
     }
   };
 
-  // If not mobile or if the data-mobile-collapse attribute is present, render children as normal without accordion behavior
-  if (!isMobile || attribs["data-mobile-collapse"] === "") {
-    return <div {...attribs}>{children}</div>;
-  }
-
   // For mobile, we want to extract the content of the "top-section" div for the summary,
   // and render the rest in the details section.
   const { filteredChildren, summaryContent } = useMemo(() => {
@@ -73,6 +68,11 @@ export default function ProductCard({ attribs, children }) {
     const filtered = React.Children.toArray(children).map(removeTopSection).filter(Boolean);
     return { filteredChildren: filtered, summaryContent: summaryNodes };
   }, [children]);
+
+  // If not mobile or if the data-mobile-collapse attribute is present, render children as normal without accordion behavior
+  if (!isMobile || attribs["data-mobile-collapse"] === "") {
+    return <div {...attribs}>{children}</div>;
+  }
 
   return (
     <div {...attribs}>
