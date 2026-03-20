@@ -50,6 +50,7 @@ const Scheduler = dynamic(() => import("components/Salesforce/scheduler"), {ssr:
 const Tooltip = dynamic(() => import("components/Tooltip/Tooltip"), {ssr: false});
 const CXBio = dynamic(() => import("components/CXBio/Bio"), {ssr: false});
 const Confetti = dynamic(() => import("components/Confetti/Confetti"), {ssr: false});
+const ProductCard = dynamic(() => import("components/ProductCard/ProductCard"), {ssr: false});
 
 const findChildren = (element, att, value) => {
     let children = [];
@@ -431,6 +432,12 @@ export const parseHtml = (html) => {
             else if(attribs?.class?.includes('confetti')) {
                 return (
                     <Confetti attribs={attributesToProps(attribs)}/>
+                )
+            }
+            // Product Card
+            else if(attribs?.class?.includes('product-card')) {
+                return (
+                    <ProductCard attribs={attributesToProps(attribs)}>{domToReact(children, options)}</ProductCard>
                 )
             }
 
