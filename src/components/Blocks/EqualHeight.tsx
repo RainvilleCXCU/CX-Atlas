@@ -6,7 +6,8 @@ export interface Props {
     tagName?,
     props?,
     children?,
-    classNames?
+    classNames?,
+    styles?
 }
 
 function EqualHeightContainer({
@@ -14,7 +15,8 @@ function EqualHeightContainer({
     tagName = 'div',
     props = '',
     classNames = '',
-    children = <></>
+    children = <></>,
+    styles = {}
 }: Props): JSX.Element {
 
     const [isSSR, setIsSSR] = useState(true);
@@ -31,7 +33,7 @@ function EqualHeightContainer({
     
     const isDesktopOrLaptop = true;
 
-    const element = createElement(tagName, { ...props, className: classNames }, children);
+    const element = createElement(tagName, { ...props, className: classNames, style: styles }, children);
     return (
         <>
         { !isSSR &&

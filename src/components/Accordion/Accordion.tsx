@@ -34,7 +34,8 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
         const pathWithoutHash = window.location.pathname + window.location.search;
         
         // Replace current URL without the hash
-        router.replace(pathWithoutHash, undefined, { shallow: true });
+        // router.replace(pathWithoutHash, undefined, { shallow: true, scroll: false });
+        window.history.replaceState(null, '', pathWithoutHash);
       }
       return false;
     }
