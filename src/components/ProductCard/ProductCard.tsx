@@ -43,15 +43,6 @@ export default function ProductCard({ attribs, children }) {
   const { filteredChildren, summaryContent } = useMemo(() => {
     const summaryNodes: React.ReactNode[] = [];
 
-    // find the <h3> element within the "top-section" div and replace it with an <h4>
-    const replaceH3WithH4 = (node: React.ReactNode): React.ReactNode => {
-      if (!React.isValidElement(node)) return node;
-      if (node.type === "h3") {
-        return React.createElement("h4", { ...node.props }, node.props.children);
-      }
-      return node;
-    };
-
     const removeTopSection = (node: React.ReactNode) => {
       if (!React.isValidElement(node)) return node;
 
@@ -59,8 +50,7 @@ export default function ProductCard({ attribs, children }) {
       if (node.type === "div") {
         const className = node.props.className;
         if (typeof className === "string" && className.split(" ").includes("top-section")) {
-          const transformed = React.Children.toArray(node.props.children).map(replaceH3WithH4);
-          summaryNodes.push(...transformed);
+          summaryNodes.push(...React.Children.toArray(node.props.children));
           return null;
         }
       }
