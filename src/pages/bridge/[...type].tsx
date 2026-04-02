@@ -251,16 +251,18 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                   nodes {
                     id
                     title
-                    displayName
-                    memberApplyNowURL
-                    memberQuickApplyURL
-                    memberQuickApplyMobileURL
-                    minorMemberApplyNowURL
-                    minorNonMemberApplyNowURL
-                    nonMemberApplyNowURL
-                    hasProductQuestion
-                    productPageURL
-                    limitedProductCodes                    
+                    productFields {
+                        displayName
+                        memberApplyNowURL
+                        memberQuickApplyURL
+                        memberQuickApplyMobileURL
+                        minorMemberApplyNowURL
+                        minorNonMemberApplyNowURL
+                        nonMemberApplyNowURL
+                        hasProductQuestion
+                        productPageURL
+                        limitedProductCodes
+                    }               
                   }
                 }
               }
@@ -268,7 +270,21 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             variables: { title: $account }
         });
         
-        product = data.products.nodes[0];
+        product = {
+            id : data.products.nodes[0].id,
+            title : data.products.nodes[0].title,
+            displayName : data.products.nodes[0].productFields.displayName,
+            memberApplyNowURL : data.products.nodes[0].productFields.memberApplyNowURL,
+            memberQuickApplyURL : data.products.nodes[0].productFields.memberQuickApplyURL,
+            memberQuickApplyMobileURL : data.products.nodes[0].productFields.memberQuickApplyMobileURL,
+            minorMemberApplyNowURL : data.products.nodes[0].productFields.minorMemberApplyNowURL,
+            minorNonMemberApplyNowURL : data.products.nodes[0].productFields.minorNonMemberApplyNowURL,
+            nonMemberApplyNowURL : data.products.nodes[0].productFields.nonMemberApplyNowURL,
+            hasProductQuestion : data.products.nodes[0].productFields.hasProductQuestion,
+            productPageURL : data.products.nodes[0].productFields.productPageURL,
+            limitedProductCodes : data.products.nodes[0].productFields.limitedProductCodes
+        };
+        
         if (product) {
             productCache.set($account, product);
         }
