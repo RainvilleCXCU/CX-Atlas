@@ -25,6 +25,7 @@ import Address from "components/Map/address";
 import MBHIPRO from "components/Hours/MBHIPRO";
 import MLButton from "components/Buttons/ML";
 import ReadMore from "components/common/readmore";
+import CTABar from "components/CTABar/ctabar";
 // import ToggleContent from "components/ContentToggle/Content";
 // import ToggleContentLink from "components/ContentToggle/ContentToggleLink";
 // import ToggleContentSelect from "components/ContentToggle/ContentToggleSelect";
@@ -299,6 +300,13 @@ export const parseHtml = (html) => {
                     return (
                         <ReadMore {...attributesToProps(attribs)}
                         devices={attribs?.['data-devices']}>{domToReact(children, options)}</ReadMore>
+                    )
+                }
+                if(attribs?.['data-acf-block'] == 'cta-bar') {
+                    return (
+                        <CTABar id={attribs?.id} classNames={attribs?.class} animationSpeed={attribs?.['data-animation-speed']} disableDismiss={attribs?.['data-disable-dismiss'] === 'true' ? true : false}  position={attribs?.['data-position']} topThreshold={attribs?.['data-top-threshold']} bottomThreshold={attribs?.['data-bottom-threshold']}>
+                            {domToReact(children, options)}
+                        </CTABar>
                     )
                 }
             }
