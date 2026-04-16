@@ -5,19 +5,49 @@ export interface CTAProps {
   id?: string;
   animationSpeed?: number;
   disableDismiss?: boolean;
-  topThreshold?: number;
-  bottomThreshold?: number;
+  scrollDownEnterThreshold?: number;
+  scrollDownExitThreshold?: number;
+  scrollUpEnterThreshold?: number;
+  scrollUpExitThreshold?: number;
   position?: string;
   children?: React.ReactNode;
+  stayVisible?: boolean;
+  expandBottomSiblings?: number;
+  hideAboveOffset?: number;
 }
 
-function CTABar({ id = "CTABar", animationSpeed = 300, disableDismiss = false, position = "bottom", topThreshold = 0.1, bottomThreshold = 0.1, children = <></> }: CTAProps): JSX.Element {
+function CTABar({ 
+  id = "CTABar", 
+  animationSpeed = 300, 
+  disableDismiss = false, 
+  position = "bottom", 
+  scrollDownEnterThreshold = 50,
+  scrollDownExitThreshold = 90,
+  scrollUpEnterThreshold = 90,
+  scrollUpExitThreshold = 50,
+  stayVisible = false, 
+  expandBottomSiblings = 0, 
+  hideAboveOffset, 
+  children = <></> 
+}: CTAProps): JSX.Element {
   const router = useRouter();
   const pageURI = router.asPath;
   const stickyId = `${id}-${pageURI.replace(/[^a-zA-Z0-9]/g, '-')}`;
 
   return (
-    <Sticky id={stickyId} position={position} disableDismiss={disableDismiss} animationSpeed={animationSpeed} topThreshold={topThreshold} bottomThreshold={bottomThreshold}>
+    <Sticky 
+      id={stickyId} 
+      position={position} 
+      disableDismiss={disableDismiss} 
+      animationSpeed={animationSpeed} 
+      scrollDownEnterThreshold={scrollDownEnterThreshold}
+      scrollDownExitThreshold={scrollDownExitThreshold}
+      scrollUpEnterThreshold={scrollUpEnterThreshold}
+      scrollUpExitThreshold={scrollUpExitThreshold}
+      stayVisible={stayVisible} 
+      expandBottomSiblings={expandBottomSiblings} 
+      hideAboveOffset={hideAboveOffset}
+    >
       {children}
     </Sticky>
   );
