@@ -446,7 +446,7 @@ input[type="submit"],
 	}
 }
 
-button:not(.cx-button):not(.cx-accordion__button):not(.cx-alert__close):hover,
+button:not(.cx-button):not(.cx-accordion__button):not(.cx-close):not(.cx-alert__close):hover,
 input[type="button"]:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
