@@ -17,10 +17,11 @@ const GET_FORM_DATA = gql`
 export interface Props {
     id?: string;
     href?: string;
+    glValue?: string;
     isMinor?: boolean;
 }
 
-function MLForm({ id, href, isMinor = false }: Props): JSX.Element {
+function MLForm({ id, href, glValue, isMinor = false }: Props): JSX.Element {
     const formRef = useRef(null);
     const [state, setState] = useContext(Store);
 
@@ -133,6 +134,7 @@ function MLForm({ id, href, isMinor = false }: Props): JSX.Element {
         console.log('Form is valid - proceeding with submission');
         const formData = new FormData(e.target);
         const opt_out = formData.get('Opt_out');
+        formData.append('gl_value', glValue || '');
         const isOptedOut = opt_out !== null;
         e.target.action += `&opt_out=${isOptedOut}`;
         e.target.submit();
