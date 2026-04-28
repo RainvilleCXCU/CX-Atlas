@@ -313,7 +313,7 @@ export const parseHtml = (html) => {
             // Toggle Content
             else if (attribs?.['data-toggle-content']) {
                 return (
-                    <ToggleContent attribs={attribs}>{domToReact(children, options)}</ToggleContent>
+                    <ToggleContent device={attribs?.['data-toggle-device']} attribs={attribs}>{domToReact(children, options)}</ToggleContent>
                 )
             }
             else if (attribs?.['data-vimeo-id']) {
