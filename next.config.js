@@ -421,6 +421,40 @@ let nextConfig = {
                 },
               ],
         },
+        {
+          source:"/:path*",
+          destination:"/dynamic/:path*",
+          has: [
+            {
+              type:"query",
+              key:"referralsource",
+              value:"fb-mopur-260430.*"
+            }
+          ],
+          missing: [
+            {
+              type:"query",
+              key:"preview"
+            }
+          ]
+        },
+        {
+          source:"/:path*",
+          destination:"/dynamic/:path*",
+          has: [
+            {
+              type:"query",
+              key:"referralsource",
+              value:"fb-morefi-260430.*"
+            }
+          ],
+          missing: [
+            {
+              type:"query",
+              key:"preview"
+            }
+          ]
+        },
         
         // {
         //     source: '/meet/loans:path*',
