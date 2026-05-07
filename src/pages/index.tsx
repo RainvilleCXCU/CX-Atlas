@@ -3,6 +3,7 @@ import { useState } from "react";
 const Modal = dynamic(() => import("components/Modal/modal"));
 import {isModalOpenContext, modalContentContext} from 'components/Modal/modalContext';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 
 export default function Page(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -217,6 +217,10 @@ let nextConfig = {
           source: "/meet/:path*",
           destination: "/meet/?productType=:path*",
         },
+        {
+          source: "/robots.txt",
+          destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/robots.txt`,
+        },
         // {
         //     source: '/about/media-center/:catId{/}?',
         //     destination: '/about/media-center/?catId=:catId',
@@ -325,6 +329,17 @@ let nextConfig = {
           has: [
             {
               type: "query",
+              key: "utm_campaign",
+              value: "(fall|sticky|staticbold|staticcomp)"
+            },
+          ],
+        },
+        {
+          source: "/:path*",
+          destination: "/dynamic/:path*",
+          has: [
+            {
+              type: "query",
               key: "template",
               value: "(cta_header|no_header|slim_header)"
             },
@@ -406,8 +421,40 @@ let nextConfig = {
                 },
               ],
         },
-
-
+        {
+          source:"/:path*",
+          destination:"/dynamic/:path*",
+          has: [
+            {
+              type:"query",
+              key:"referralsource",
+              value:"fb-mopur-260430.*"
+            }
+          ],
+          missing: [
+            {
+              type:"query",
+              key:"preview"
+            }
+          ]
+        },
+        {
+          source:"/:path*",
+          destination:"/dynamic/:path*",
+          has: [
+            {
+              type:"query",
+              key:"referralsource",
+              value:"fb-morefi-260430.*"
+            }
+          ],
+          missing: [
+            {
+              type:"query",
+              key:"preview"
+            }
+          ]
+        },
         
         // {
         //     source: '/meet/loans:path*',

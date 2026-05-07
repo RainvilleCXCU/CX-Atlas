@@ -4,16 +4,29 @@ import { BlogInfoFragment } from "../../../fragments/GeneralSettings";
 import { NavigationMenuItemFragment } from 'fragments/MenuItems';
 import { ThirdPartySettingsFragment } from 'fragments/ThirdParty';
 import { parseHtml } from "lib/parser";
-import { getNextServerSideProps } from "@faustwp/core";
-import { GetServerSidePropsContext } from "next";
+import { getNextStaticProps } from "@faustwp/core";
+import { GetStaticPropsContext } from "next";
 import { AlertFragment } from 'fragments/Alerts';
 import BaseLayout from 'components/layout';
+import { useRouter } from 'next/router';
 
 export default function Component(props) {
   
   const { blogtop, blogSidebar } = props?.data?.widgetSettings;
 
   const {content, title, id} = props?.data.faqBySlug;
+  const router = useRouter();
+
+  // Force clear loading immediately during render
+    if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_DISABLE_TERM_REDIRECTS !== 'true') {
+  setTimeout(() => {
+      if (router?.events) {
+      console.log('Clearing loading via immediate setTimeout');
+      router.events.emit('routeChangeComplete', window.location.pathname);
+      router.events.emit('routeChangeError', window.location.pathname);
+      }
+  }, 0);
+  }
 
   return (
     <BaseLayout props={props}>
@@ -45,8 +58,10 @@ export default function Component(props) {
   );
 }
 Component.variables = (params) => {
+  // Handle both static and dynamic contexts, ensuring slug is always valid
+  const slug = params?.params?.slug?.[0] || params?.params?.query?.slug?.[0] || null;  
   return {
-    slug: params.query.slug[0],
+    slug: slug,
     headerLocation: MENUS.PRIMARY_LOCATION,
     footerLocation: MENUS.FOOTER_LOCATION
   };
@@ -57,7 +72,7 @@ Component.query = gql`
   ${NavigationMenuItemFragment}
   ${ThirdPartySettingsFragment}
   ${AlertFragment}
-  query GetMediaCenterData(
+  query GetFAQ(
     $slug: String
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
@@ -92,7 +107,7 @@ Component.query = gql`
       ...ThirdPartySettingsFragment
     }
 
-    cxAlerts: cXAlerts {
+    cxAlerts: cXAlerts(first: 50) {
       edges {
         node {
           ...AlertsFragment
@@ -118,14 +133,32 @@ Component.query = gql`
   }
 `;
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-    const { req, res, query } = context;
+export async function getStaticPaths() {
+  // For now, we'll use fallback: 'blocking' to generate pages on-demand
+  // In the future, you could query all FAQ slugs here if needed
+  return {
+    paths: [],
+    fallback: 'blocking'
+  };
+}
 
-    return getNextServerSideProps(context, {
+export async function getStaticProps(context: GetStaticPropsContext) {
+    const { params } = context;
+
+    // Ensure slug is always defined to avoid serialization errors
+    const sanitizedParams = {
+        ...params,
+        slug: params?.slug || null
+    };
+
+    return getNextStaticProps(context, {
         Page: Component,
         props: {
-            query
-        }
+            query: sanitizedParams
+        },
+        revalidate: process.env.NEXT_PUBLIC_PAGE_REVALIDATION
+          ? parseInt(process.env.NEXT_PUBLIC_PAGE_REVALIDATION)
+          : 60 // Default revalidation of 60 seconds
     });
 }
 

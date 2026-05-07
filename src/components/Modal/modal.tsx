@@ -32,7 +32,9 @@ function Modal({
   };
   const {
       title,
+      titleClass,
       copy,
+      copyClass,
       continueLink,
       continueText,
       target,
@@ -40,22 +42,29 @@ function Modal({
       cancelText,
       cancelUrl,
       forceAction,
-      html
+      centerText,
+      html,
+      component
   } = modalContent || {
     title: 'Title',
+    titelClass: '',
     copy: 'Copy',
+    copyClass: '',
     continueLink: null,
     continueText: "Continue",
     cancelText: "Cancel",
     bodyTakeover: false,
     cancelUrl: null,
+    centerText: false,
     forceAction: false,
     target: '_blank',
-    html: ''
+    html: '',
+    component: <></>
   }
 
   useEffect(() => {
-    setHeaderHeight(document.querySelector('.cx-header').clientHeight)
+    setHeaderHeight(document.querySelector('.cx-header').clientHeight);
+    isModalOpen && bodyTakeover ? document.querySelector('#page.container.site').classList.add('cx-hidden') : document.querySelector('#page.container.site').classList.remove('cx-hidden');
   })
 
   return (
@@ -65,13 +74,14 @@ function Modal({
           <div className="cx-container-modal__content">
             <button className={`cx-button--close${forceAction ? ' cx-hidden' : ''}`} onClick={closeModal}></button>
             <span>
-              <h3 className="no-margin--top">{title}</h3>
+              <h3 className={`no-margin--top${centerText ? ' center' : ''}${titleClass ? ` ${titleClass}` : ''}`}>{title}</h3>
               {copy && 
-                <p>{copy}</p>
+                <p className={copyClass ? `${copyClass}` : ''}>{copy}</p>
               }
               {html && 
                 parseHtml(html)
               }
+              {component && component}
               <div className="cx-container-modal__buttons">
                 {cancelText && (
                   <Link

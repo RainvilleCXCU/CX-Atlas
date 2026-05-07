@@ -10,16 +10,21 @@ import { getNextServerSideProps, getNextStaticProps } from '@faustwp/core';
 import { GetServerSidePropsContext, GetStaticPropsContext } from 'next';
 
 import { gql } from '@apollo/client';
-import { useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
+import React from 'react';
 import Categories from 'components/Posts/categories';
 import BaseLayout from 'components/layout';
+// import { redirect } from 'next/dist/server/api-utils';
 
 const POSTS_PER_PAGE = 5;
 
 export default function Component(props) {
-  const { query = {} } = useRouter();
+  console.log('Search Component rendering - props:', props);
+  
+  const router = useRouter();
+  const { query = {} } = router;
   const { title, content, seo, link, featuredImage } = props?.data?.page ?? { title: '' };
-  let results, total ;
+  let results, total;
   if(process.env.NEXT_PUBLIC_SEARCH_APPLIANCE === 'searchwp' || !process.env.NEXT_PUBLIC_SEARCH_APPLIANCE) {
     results = props.data.searchwp.results || [];
     total = props.data.searchwp.total;
@@ -28,6 +33,7 @@ export default function Component(props) {
     results = props.data.contentNodes.nodes || [];
     total = props.data.contentNodes.pageInfo.offsetPagination.total;
   }
+
   const currentPage = query?.page ? parseInt(query?.page.toString()) : 1;
   const search = query.s;
   const categories = props?.data?.categories;
@@ -37,7 +43,7 @@ export default function Component(props) {
 			<main id="main" className="content content-index container">
           <div id="post-wrap" className='cx-search__wrapper search'>
             <div className='cx-search__results'>
-              <SearchBar /> 
+              <SearchBar />
                {results.map((post) => (
                 <SearchListing
                     key={post.id ? `post-listing=${post.id}` : ''}
@@ -92,6 +98,7 @@ Component.query = gql`
     $footerLocation: MenuLocationEnum
   ) {
     # contentNodes(offset: $offset, postsPerPage: $postsPerPage, terms: $searchTerm) {
+    ${process.env.NEXT_PUBLIC_DISABLE_TERM_REDIRECTS !== 'true' ? 'searchRedirect(searchTerm: $searchTerm)' : '# Redirects disabled'}
     contentNodes(where: {search: $searchTerm, offsetPagination: {offset: $offset, size: $postsPerPage}}) {
       nodes {
         ... on Page {
@@ -187,7 +194,7 @@ Component.query = gql`
       }
     }
 
-    cxAlerts: cXAlerts {
+    cxAlerts: cXAlerts(first: 50) {
         edges {
           node{
             ...AlertsFragment
@@ -223,6 +230,7 @@ if(process.env.NEXT_PUBLIC_SEARCH_APPLIANCE === 'searchwp' || !process.env.NEXT_
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
   ) {
+    ${process.env.NEXT_PUBLIC_DISABLE_TERM_REDIRECTS !== 'true' ? 'searchRedirect(searchTerm: $searchTerm)' : '# Redirects disabled'}
     searchwp(offset: $offset, postsPerPage: $postsPerPage, terms: $searchTerm) {
       results {
         id
@@ -275,7 +283,7 @@ if(process.env.NEXT_PUBLIC_SEARCH_APPLIANCE === 'searchwp' || !process.env.NEXT_
       }
     }
 
-    cxAlerts: cXAlerts {
+    cxAlerts: cXAlerts(first: 50) {
         edges {
           node{
             ...AlertsFragment
@@ -299,7 +307,25 @@ if(process.env.NEXT_PUBLIC_SEARCH_APPLIANCE === 'searchwp' || !process.env.NEXT_
 
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  return getNextServerSideProps(context, {
+  const result = await getNextServerSideProps(context, {
       Page: Component,
   });
+
+  // Handle redirect if it exists
+  if ('props' in result && result.props?.data) {
+    let redirect: string | undefined;
+    redirect = result.props.data.searchRedirect;
+
+    if (redirect && process.env.NEXT_PUBLIC_DISABLE_TERM_REDIRECTS !== 'true') {
+      const cleanRedirect = redirect.replace(process.env.NEXT_PUBLIC_WORDPRESS_URL || '', '');
+      return {
+        redirect: {
+          destination: cleanRedirect,
+          permanent: false,
+        },
+      };
+    }
+  }
+
+  return result;
 }

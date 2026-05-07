@@ -5,10 +5,12 @@ import { useState } from "react";
 const Modal = dynamic(() => import("components/Modal/modal"));
 import {isModalOpenContext, modalContentContext} from 'components/Modal/modalContext';
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 
 export default function Page(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  
   return (
     <isModalOpenContext.Provider value={{ isModalOpen, setIsModalOpen }}>
       <modalContentContext.Provider value={{modalContent, setModalContent}}>
@@ -23,6 +25,18 @@ export default function Page(props) {
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const { query } = ctx;
+  
+  // Set multiple cache headers for Atlas/Cloudflare
+  ctx.res.setHeader('Cache-Control', 'private, no-cache, no-store, max-age=0, must-revalidate');
+  ctx.res.setHeader('CDN-Cache-Control', 'no-store');
+  ctx.res.setHeader('Cloudflare-CDN-Cache-Control', 'no-store');
+  ctx.res.setHeader('Surrogate-Control', 'no-store');
+  ctx.res.setHeader('Pragma', 'no-cache');
+  ctx.res.setHeader('Expires', '0');
+  
+  // Vary header is CRITICAL for Atlas
+  ctx.res.setHeader('Vary', 'Accept-Encoding');
+
   ctx.resolvedUrl = ctx.resolvedUrl.replace('/dynamic','');
   ctx.resolvedUrl = ctx.resolvedUrl.replace('&post_type=wpsl_stores','');
   let paramString = '';
@@ -36,11 +50,11 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   
   return getWordPressProps({
     ctx,
-    revalidate: 1,
     props: {
       query
     },
     extra: {
+      isDynamic: true,
       query: {
         page: getPageNum(ctx.params.wordpressNode),
         params: paramString,

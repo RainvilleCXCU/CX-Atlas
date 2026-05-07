@@ -33,7 +33,9 @@ function LinkLibrary({ cat_ids, children = <></> }: Props): JSX.Element {
     }, [router.query.page]);
 
     useEffect(() => {
-        if(cat == '') {
+        console.log('CAT!!!!!!');
+        console.log(cat);
+        if((cat == '' || cat === undefined) && !router.query.preview) {
             console.log('NO ACTIVE ID!!!!')
             router.push(`/about/media-center/${cat_ids[0].id}`, undefined, {shallow:true});
         } else {

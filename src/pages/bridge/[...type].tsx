@@ -23,6 +23,8 @@ import {
     ApplyNowProductFragment
 } from '../../fragments/ApplyWidgets';
 import { parseHtml } from 'lib/parser';
+import productCache from '../../utils/productCache';
+import widgetCache from '../../utils/widgetCache';
 const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});
 const Modal = dynamic(() => import("components/Modal/modal"));
 import {isModalOpenContext, modalContentContext} from 'components/Modal/modalContext';
@@ -31,7 +33,13 @@ import { GetServerSidePropsContext } from 'next';
 import { getNextServerSideProps } from '@faustwp/core';
 import apolloClient from 'apolloClient';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { useRouter } from "next/router";
+import Container from 'components/Blocks/Container';
+import Columns from 'components/Blocks/Columns';
+import Column from 'components/Blocks/Column';
+import { bridgeFlowSettingsContext } from 'context/bridgeFlowSettings';
+import { getActiveAlerts } from 'utils/alerts';
 
 export default function Component(props) {
 
@@ -45,30 +53,25 @@ export default function Component(props) {
     // const { footerUtilities, footerAppIcons, footerSocialIcons } = props?.data?.footerSettings;
     
     widget ? widget?.replace(/account=none/gi, `account=${product.title.replace(' ', '-').toLowerCase()}`) : '';
-    const getActiveAlerts = () => {
-        const now = new Date();
-        // Get alerts for the current page
-        const pageAlerts = props?.data?.cxAlerts?.nodes?.filter(alert => alert.displayPages.includes(databaseId.toString())) || [];
-        // Get alerts that have "active" selected
-        const activeAlerts = pageAlerts.filter(alert => alert.active == true);
-        // Get alerts that are within the start and end date
-        const alertsWithinDates = activeAlerts.filter(alert => {
-            // Replace space with T to make it a valid date string
-            const formattedStart = alert.startDate.replace(" ", "T");
-            const formattedEnd = alert.endDate.replace(" ", "T");
-            // Convert to Date object
-            const startDate = new Date(formattedStart);
-            const endDate = new Date(formattedEnd);
-            // Check if current date is within the start and end date
-            if (startDate < now && endDate > now) {
-                return alert;
-            }
-        });
-        return alertsWithinDates;
-    };
-    const activeAlerts = getActiveAlerts();
+    const activeAlerts = getActiveAlerts(props?.data?.cxAlerts?.nodes ?? [], databaseId);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalContent, setModalContent] = useState(null);    
+
+    const [bridgeFlowSettings, setBridgeFlowSettings] = useState({
+        preApplicationFormId: props?.data?.bridgeFlow?.bridgeFlowSettings?.preApplicationFormId?.[0] || null
+    });
+    const router = useRouter();
+
+    // Force clear loading immediately during render
+    if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_DISABLE_TERM_REDIRECTS !== 'true') {
+    setTimeout(() => {
+        if (router?.events) {
+        console.log('Clearing loading via immediate setTimeout');
+        router.events.emit('routeChangeComplete', window.location.pathname);
+        router.events.emit('routeChangeError', window.location.pathname);
+        }
+    }, 0);
+    }
 
     return (
         <>
@@ -118,10 +121,6 @@ export default function Component(props) {
         {isModalOpen && modalContent &&
           <Modal />
         }
-            {
-                activeAlerts.length > 0 &&
-                    <Alert alerts={activeAlerts} />
-            }
 			<Loading /> 
             <span id='cx-bridge'>
                 <Header
@@ -129,6 +128,7 @@ export default function Component(props) {
                     description={siteDescription}
                     logo={siteLogo}
                     desktopLogo={siteDesktopLogo}
+                    activeAlerts={activeAlerts}
                     desktopLogoWidth={siteDesktopLogoWidth}
                     mobileLogo={siteMobileLogo}
                     mobileLogoWidth={siteMobileLogoWidth}
@@ -141,13 +141,15 @@ export default function Component(props) {
                 />
 
 
-                <div id="page" className="container site">
-                    <main id="main" className="content content-single">
-                        <article className="entry-content">
-                            {parseHtml(widget?.toString() || '')}
-                        </article>
-                    </main>
-                </div>
+                <bridgeFlowSettingsContext.Provider value={{ bridgeFlowSettings, setBridgeFlowSettings }}>
+                    <div id="page" className="container site">
+                        <main id="main" className="content content-single">
+                            <article className="entry-content">
+                                {parseHtml(widget?.toString() || '')}                            
+                            </article>
+                        </main>
+                    </div>
+                </bridgeFlowSettingsContext.Provider>
             </span>
 
         {/* <Footer copyrightHolder={footerText} menuItems={footerMenu} logo={siteLogo} footerUtilities={footerUtilities} footerAppIcons={footerAppIcons} footerSocialIcons={footerSocialIcons} /> */}
@@ -186,36 +188,40 @@ Component.variables = (props) => {
     query GetHomePageData(
       $footerLocation: MenuLocationEnum
     ) {
-      generalSettings {
-        ...BlogInfoFragment
-      }
-      headerSettings {
-        headerUtilities
-        headerUtilitiesMobile
-        headerButtons
-        headerButtonsMobile
-      }
-      footerSettings {
-        footerUtilities
-        footerAppIcons
-        footerSocialIcons
-      }
-      thirdPartySettings {
-        ...ThirdPartySettingsFragment
-      }
-  
-      cxAlerts: cXAlerts {
-          edges {
-            node{
-              ...AlertsFragment
-            }
-          }
-      }
-      footerMenuItems: menuItems(where: { location: $footerLocation }, first: 255) {
-        nodes {
-          ...NavigationMenuItemFragment
+        generalSettings {
+            ...BlogInfoFragment
         }
-      }
+        headerSettings {
+            headerUtilities
+            headerUtilitiesMobile
+            headerButtons
+            headerButtonsMobile
+        }
+        footerSettings {
+            footerUtilities
+            footerAppIcons
+            footerSocialIcons
+        }
+        thirdPartySettings {
+            ...ThirdPartySettingsFragment
+        }
+        bridgeFlow {
+            bridgeFlowSettings {
+                preApplicationFormId
+            }
+        }
+        cxAlerts: cXAlerts(first: 50) {
+            edges {
+                node{
+                ...AlertsFragment
+                }
+            }
+        }
+        footerMenuItems: menuItems(where: { location: $footerLocation }, first: 255) {
+            nodes {
+            ...NavigationMenuItemFragment
+            }
+        }
     }
   `;
   
@@ -231,33 +237,61 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const scenario = query.scenario || '';
     const productQuestion = query.productQuestion || '';
     const loanPurpose = query.loanPurpose || '';
+    const mlPrep = query.mlPrep || '';
 
-    const { data } = await apolloClient.query({
-        query: gql`
-        query Products {
-            products(where: {title: "${$account}"}) {
-              edges {
-                node {
+    
+    // Check product cache first
+    let product = productCache.get($account);
+    
+    if (!product) {
+        const { data } = await apolloClient.query({
+            query: gql`
+            query ProductByTitle($title: String!) {
+                products(where: {title: $title}, first: 1) {
+                  nodes {
                     id
                     title
-                    displayName
-                    memberApplyNowURL
-                    memberQuickApplyURL
-                    memberQuickApplyMobileURL
-                    minorMemberApplyNowURL
-                    minorNonMemberApplyNowURL
-                    nonMemberApplyNowURL
-                    hasProductQuestion
-                    productPageURL
-                    limitedProductCodes                    
+                    productFields {
+                        displayName
+                        memberApplyNowURL
+                        memberQuickApplyURL
+                        memberQuickApplyMobileURL
+                        minorMemberApplyNowURL
+                        minorNonMemberApplyNowURL
+                        nonMemberApplyNowURL
+                        hasProductQuestion
+                        productPageURL
+                        limitedProductCodes
+                    }               
+                  }
                 }
               }
-            }
-          }
-      `,
-    });
+          `,
+            variables: { title: $account }
+        });
+        
+        product = {
+            id : data.products.nodes[0].id,
+            title : data.products.nodes[0].title,
+            displayName : data.products.nodes[0].productFields.displayName,
+            memberApplyNowURL : data.products.nodes[0].productFields.memberApplyNowURL,
+            memberQuickApplyURL : data.products.nodes[0].productFields.memberQuickApplyURL,
+            memberQuickApplyMobileURL : data.products.nodes[0].productFields.memberQuickApplyMobileURL,
+            minorMemberApplyNowURL : data.products.nodes[0].productFields.minorMemberApplyNowURL,
+            minorNonMemberApplyNowURL : data.products.nodes[0].productFields.minorNonMemberApplyNowURL,
+            nonMemberApplyNowURL : data.products.nodes[0].productFields.nonMemberApplyNowURL,
+            hasProductQuestion : data.products.nodes[0].productFields.hasProductQuestion,
+            productPageURL : data.products.nodes[0].productFields.productPageURL,
+            limitedProductCodes : data.products.nodes[0].productFields.limitedProductCodes
+        };
+        
+        if (product) {
+            productCache.set($account, product);
+        }
+    } else {
+        console.log('PRODUCT CACHED!');
+    }
 
-    const product = data.products.edges[0]?.node;
     const productInfo = { 
         account: product?.title,
         minor,
@@ -266,16 +300,17 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         member,
         scenario,
         loanPurpose,
-        productQuestion
+        productQuestion,
+        mlPrep
     };
 
 
-    const productLimit = productcode !== '' && product.limitedProductCodes.includes(productcode);
+    const productLimit = productcode !== '' && product.limitedProductCodes.includes(String(productcode));
 
     let widgetData;
     let widgetHtml = '';
 
-    if (data.products.edges.length == 0) {
+    if (!product) {
         console.log('No Product');
         return getNextServerSideProps(context, {
             Page: Component,
@@ -286,82 +321,96 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         });
     }
     
+    console.time('WIDGET LOGIC');
 
-    // GET WIDGET
-    if(type && type == 'start' && (!minor || minor == '')) {
+    // GET WIDGET - Check cache first
+    let cachedWidget = widgetCache.get(productInfo);
+    
+    if (cachedWidget) {
+        console.log('WIDGET CACHED!');
+        widgetHtml = cachedWidget;
+    } else if(type && type == 'start' && (!minor || minor == '')) {
         console.log(`Start ${JSON.stringify(productInfo)}`)
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyStartFragment}
-            query getApplyStart($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String) {
+            query getApplyStart($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String) {
                 widgetSettings {
                     ...ApplyStartFragment
                 }
             }`, 
                 variables: productInfo
             });
-        widgetHtml = widgetData.data.widgetSettings.applyStart
+        widgetHtml = widgetData.data.widgetSettings.applyStart;
+        widgetCache.set(productInfo, widgetHtml);
     } else if(minor == 'yes') {
         console.log('YES')
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowMinorFragment}
-            query getApplyNowMinor($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String) {
+            query getApplyNowMinor($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String) {
                 widgetSettings {
                     ...ApplyNowMinorFragment
                 }
             }`,variables: productInfo
             });
-            widgetHtml = widgetData.data.widgetSettings.applyNowMinor
+            widgetHtml = widgetData.data.widgetSettings.applyNowMinor;
+            widgetCache.set(productInfo, widgetHtml);
     } else if(productQuestion && product?.hasProductQuestion) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowProductFragment}
-            query ApplyNowProduct($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String) {
+            query ApplyNowProduct($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String) {
                 widgetSettings {
                     ...ApplyNowProductFragment
                 }
             }`, variables: productInfo
             });
-            widgetHtml = widgetData.data.widgetSettings.applyNowProductQuestion
+            widgetHtml = widgetData.data.widgetSettings.applyNowProductQuestion;
+            widgetCache.set(productInfo, widgetHtml);
     } else if(member && !productLimit) {
         console.log('Member')
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowMemberFragment}
-            query ApplyNowMember($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String) {
+            query ApplyNowMember($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String) {
                 widgetSettings {
                     ...ApplyNowMemberFragment
                 }
             }`, variables: productInfo
             });
-            widgetHtml = widgetData.data.widgetSettings.applyNowMember
+            widgetHtml = widgetData.data.widgetSettings.applyNowMember;
+            widgetCache.set(productInfo, widgetHtml);
     } else if(member && productLimit && atLimit == '') {
         console.log('Member Limit')
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowMemberLimitFragment}
-            query ApplyNowMemberLimit($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String) {
+            query ApplyNowMemberLimit($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String) {
                 widgetSettings {
                     ...ApplyNowMemberLimitFragment
                 }
             }`, variables: productInfo
             });
-            widgetHtml = widgetData.data.widgetSettings.applyNowMemberLimit
+            widgetHtml = widgetData.data.widgetSettings.applyNowMemberLimit;
+            widgetCache.set(productInfo, widgetHtml);
     } else {
         console.log('DATA');
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowFragment}
-            query getApplyNow($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String) {
+            query getApplyNow($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String) {
                 widgetSettings {
                     ...ApplyNowFragment
                 }
             }`, variables: productInfo
             });
-            widgetHtml = widgetData.data.widgetSettings.applyNow
+            widgetHtml = widgetData.data.widgetSettings.applyNow;
+            widgetCache.set(productInfo, widgetHtml);
     }
 
+    console.timeEnd('WIDGET LOGIC');
+    console.time('REDIRECT LOGIC') 
     // Perform Redirect if needed
 
     if (product.minorMemberApplyNowURL == '' && type == 'start') {
@@ -412,7 +461,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     } else {
         console.log('NO ELSE');
         
+        console.timeEnd('REDIRECT LOGIC') 
     }
+
 
     return getNextServerSideProps(context, {
         Page: Component,

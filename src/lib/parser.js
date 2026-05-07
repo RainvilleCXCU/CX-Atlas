@@ -24,6 +24,8 @@ const AppLinks = dynamic(() => import("components/Device/AppLinks"), {ssr: false
 import Address from "components/Map/address";
 import MBHIPRO from "components/Hours/MBHIPRO";
 import MLButton from "components/Buttons/ML";
+import ReadMore from "components/common/readmore";
+import CTABar from "components/CTABar/ctabar";
 // import ToggleContent from "components/ContentToggle/Content";
 // import ToggleContentLink from "components/ContentToggle/ContentToggleLink";
 // import ToggleContentSelect from "components/ContentToggle/ContentToggleSelect";
@@ -49,6 +51,7 @@ const Scheduler = dynamic(() => import("components/Salesforce/scheduler"), {ssr:
 const Tooltip = dynamic(() => import("components/Tooltip/Tooltip"), {ssr: false});
 const CXBio = dynamic(() => import("components/CXBio/Bio"), {ssr: false});
 const Confetti = dynamic(() => import("components/Confetti/Confetti"), {ssr: false});
+const ProductCard = dynamic(() => import("components/ProductCard/ProductCard"), {ssr: false});
 
 const findChildren = (element, att, value) => {
     let children = [];
@@ -293,11 +296,24 @@ export const parseHtml = (html) => {
                         <Address locationData={attribs?.['data-location-data']} getDirectionsText={attribs?.['data-directions-button-text']} showDirectionsButton={JSON.parse(attribs?.['data-show-button'])} />
                     )
                 }
+                if(attribs?.['data-acf-block'] == 'cx-readmore') {
+                    return (
+                        <ReadMore {...attributesToProps(attribs)}
+                        devices={attribs?.['data-devices']}>{domToReact(children, options)}</ReadMore>
+                    )
+                }
+                if(attribs?.['data-acf-block'] == 'cta-bar') {
+                    return (
+                        <CTABar id={attribs?.id} classNames={attribs?.class} animationSpeed={attribs?.['data-animation-speed']} disableDismiss={attribs?.['data-disable-dismiss'] === 'true' ? true : false}  position={attribs?.['data-position']} scrollDownEnterThreshold={attribs?.['data-scroll-down-enter-threshold']} scrollDownExitThreshold={attribs?.['data-scroll-down-exit-threshold']} scrollUpEnterThreshold={attribs?.['data-scroll-up-enter-threshold']} scrollUpExitThreshold={attribs?.['data-scroll-up-exit-threshold']} expandBottomSiblings={attribs?.['data-extend-bottom-siblings']} stayVisible={attribs?.['data-stay-sticky'] === 'true' ? true : false}>
+                            {domToReact(children, options)}
+                        </CTABar>
+                    )
+                }
             }
             // Toggle Content
             else if (attribs?.['data-toggle-content']) {
                 return (
-                    <ToggleContent attribs={attribs}>{domToReact(children, options)}</ToggleContent>
+                    <ToggleContent device={attribs?.['data-toggle-device']} attribs={attribs}>{domToReact(children, options)}</ToggleContent>
                 )
             }
             else if (attribs?.['data-vimeo-id']) {
@@ -424,6 +440,12 @@ export const parseHtml = (html) => {
             else if(attribs?.class?.includes('confetti')) {
                 return (
                     <Confetti attribs={attributesToProps(attribs)}/>
+                )
+            }
+            // Product Card
+            else if(attribs?.class?.includes('product-card')) {
+                return (
+                    <ProductCard attribs={attributesToProps(attribs)}>{domToReact(children, options)}</ProductCard>
                 )
             }
 

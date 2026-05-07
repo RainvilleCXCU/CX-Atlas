@@ -9,7 +9,6 @@ class CXDoc extends Document {
       <Html
         lang="en-us">
         <Head>
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
           <style>{`body { display: block !important }`}</style>
           <link href='https://www.googletagmanager.com' rel='dns-prefetch' />
           <link href={process.env.NEXT_PUBLIC_WORDPRESS_URL} rel='dns-prefetch' />
@@ -24,37 +23,6 @@ class CXDoc extends Document {
               <meta name="smartbanner:button-url-google" content="https://android/application-url"/>
               <meta name="smartbanner:enabled-platforms" content="android,ios" />
               <meta name="apple-itunes-app" content="app-id=895555570"></meta>
-            </>
-          }
-
-          
-
-          {process.env.NEXT_PUBLIC_NOFONTS !== 'true' && 
-            <>
-              <link href='https://cloud.typography.com' rel='dns-prefetch' />
-              <link
-                rel="preload"
-                href={`https://cloud.typography.com/6914618/${process.env.NEXT_PUBLIC_CLOUD_FONT || '7711232'}/css/fonts.css`}
-                as="style"
-              />
-              <link
-                rel="stylesheet"
-                href={`https://cloud.typography.com/6914618/${process.env.NEXT_PUBLIC_CLOUD_FONT || '7711232'}/css/fonts.css`}
-              />
-            </>
-          }
-          
-          {process.env.NEXT_PUBLIC_HOSTED_FONTS == 'true' &&
-            <>
-              <link
-                rel="preload"
-                href={`/856897/9F6C645B2367EC4D3.css`}
-                as="style"
-              />
-              <link
-                rel="stylesheet"
-                href={`/856897/9F6C645B2367EC4D3.css`}
-              />
             </>
           }
           

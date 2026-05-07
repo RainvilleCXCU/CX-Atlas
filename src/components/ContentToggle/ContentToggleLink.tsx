@@ -17,18 +17,13 @@ function ToggleContentLink({
 }: Props): JSX.Element {
   const { toggleContent, setToggleContent } = useContext(toggleContentContext);
   const linkRef = useRef<HTMLAnchorElement>(null);
-  const {push, isReady} = useRouter();
 
   const toggleContentClick = e => {
     e.preventDefault();
     const target = linkRef?.current?.href.split('#')[1];
     console.log(`Target: ${target}`)
     setToggleContent(target);
-    // setState(state => ({
-    //     ...state,
-    //     toggleContent: target
-    // }));
-    push(`#${target}`, undefined, {shallow: true});
+    window.history.replaceState(null, '', `#${target}`);
   }
 
   useEffect(() => {
