@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
+import { capitalizeWords } from "utils/text";
 
 interface CXCalcProps {
     children?;
@@ -133,6 +134,12 @@ const Scheduler = ({
             if (reviewPage.querySelector('h2').innerHTML != reviewHeading) {
                 reviewPage.querySelector('h2').innerHTML = reviewHeading;
             }
+            if (reviewPage.tagName !== 'H1') {
+                const h1 = document.createElement('h1');
+                h1.textContent = reviewPage.querySelector('h2').textContent;
+                h1.className = reviewPage.querySelector('h2').className;
+                reviewPage.querySelector('h2').parentNode.replaceChild(h1, reviewPage.querySelector('h2'));
+            }
         }
 
         const updateResourcePage = () => {
@@ -146,6 +153,12 @@ const Scheduler = ({
                 resourceTimeSlotHeading.childNodes[0].textContent = 'Select day and time with';
             } else if (resourceTimeSlotHeading && resourceTimeSlotHeading.innerHTML.includes('Select Service Appointment Time')) {
                 resourceTimeSlotHeading.childNodes[0].textContent = 'Select day and time';
+            }
+            if (resourceTimeSlotHeading && resourceTimeSlotHeading.tagName !== 'H1') {
+                const h1 = document.createElement('h1');
+                h1.textContent = resourceTimeSlotHeading.textContent;
+                h1.className = resourceTimeSlotHeading.className;
+                resourceTimeSlotHeading.parentNode.replaceChild(h1, resourceTimeSlotHeading);
             }
 
             const resourceSlotWelcome = lightningNode.querySelector('.runtime_appointmentbookingResourceSlot .slds-welcome-mat__info-content .slds-text-heading--small');
@@ -161,6 +174,7 @@ const Scheduler = ({
                     const node = query.productType ? lightningNode.querySelector(`[title="${query.productType.toString().replaceAll('-', ' ')}" i]`) : null;
                     const autoResource = lightningNode.querySelector('h2[title*="automatically assign" i]');
                     const finishTextHTML = lightningNode.querySelector('.runtime_appointmentbookingFlowConfirm h2');
+                    const workTypePage = lightningNode.querySelector('.runtime_appointmentbookingFlowWorkType');
                     const reviewPageForm = lightningNode.querySelector('.runtime_appointmentbookingFlowReview .slds-form');
                     const resourcePage = lightningNode.querySelector('.runtime_appointmentbookingResourceList');
 
@@ -177,6 +191,15 @@ const Scheduler = ({
                     }
                     if (groupHeading && groupHeading.innerHTML != selectSubjectText) {
                         groupHeading.innerHTML = selectSubjectText;
+                    }
+
+                    if (workTypePage) {
+                        if (groupHeading && groupHeading.tagName !== 'H1') {
+                            const h1 = document.createElement('h1');
+                            h1.textContent = `${selectSubjectText} ${capitalizeWords(query?.productType.toString().replace('-', ' '))}`;
+                            h1.className = groupHeading.className;
+                            groupHeading.parentNode.replaceChild(h1, groupHeading);
+                        }
                     }
 
                     if (resourcePage) {
@@ -289,11 +312,12 @@ const Scheduler = ({
                             }
                         );
                     }, appUrl,
-                    function(error) {
+                    null,
+                    function(error: unknown) {
                        // Prevent default behavior
                         // You can optionally log the error or display it in your own UI
                         console.error("Lightning error:", error);
-                        
+
                         // Find and remove any auraErrorMessage elements that were added
                         setTimeout(() => {
                         const errorElements = document.querySelectorAll('.auraErrorMessage');
