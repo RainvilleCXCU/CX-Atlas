@@ -48,6 +48,7 @@ const Scheduler = ({
     if (singleProductName[singleProductName.length - 1] === 's' && !singleProductName.endsWith('ss')) {
         singleProductName = singleProductName.slice(0, -1);
     }
+    selectSubjectText = selectSubjectText.replace('[productName]', singleProductName);
     const viewAll = () => {
         const viewAllBtn = document.getElementById('show_more_types');
         for (const elem of document.querySelectorAll('.runtime_appointmentbookingFlowWorkType .slds-form-element__control .slds-m-top_small')) {
@@ -181,12 +182,12 @@ const Scheduler = ({
                             document.getElementById('show_more_types').style.display = 'block';
                         }
                     }
-                    if (groupHeading && groupHeading.innerHTML != selectSubjectText) {
-                        groupHeading.innerHTML = selectSubjectText;
-                    }
+                    // if (groupHeading && groupHeading.innerHTML != selectSubjectText) {
+                    //     groupHeading.innerHTML = selectSubjectText;
+                    // }
                     
                     if(!selectSubjectPage) {
-                        selectSubjectPage.querySelector('h1').classList.add('hidden');
+                        document.querySelector('h1').classList.add('hidden');
                     }
 
                     if (resourcePage) {
@@ -336,7 +337,7 @@ const Scheduler = ({
                 <h1 className="cx-h3 cx-text--weight-book center">
                     {
                         singleProductName !== ':path*' ?
-                        `${selectSubjectText} ${singleProductName} to discuss`
+                        selectSubjectText
                             : 'Select accounts and loans to discuss'
                     }
                 </h1>
