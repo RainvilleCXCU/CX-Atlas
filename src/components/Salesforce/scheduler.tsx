@@ -49,6 +49,7 @@ const Scheduler = ({
         singleProductName = singleProductName.slice(0, -1);
     }
     selectSubjectText = selectSubjectText.replace('[productName]', singleProductName);
+    selectSubjectText = selectSubjectText.replace('[productNamePlural]', query.productType ? capitalizeWords(query.productType.toString().replace('-', ' ')) : '');
     const viewAll = () => {
         const viewAllBtn = document.getElementById('show_more_types');
         for (const elem of document.querySelectorAll('.runtime_appointmentbookingFlowWorkType .slds-form-element__control .slds-m-top_small')) {
@@ -182,9 +183,9 @@ const Scheduler = ({
                             document.getElementById('show_more_types').style.display = 'block';
                         }
                     }
-                    // if (groupHeading && groupHeading.innerHTML != selectSubjectText) {
-                    //     groupHeading.innerHTML = selectSubjectText;
-                    // }
+                    if (groupHeading && groupHeading.innerHTML != selectSubjectText) {
+                        groupHeading.innerHTML = '';
+                    }
                     
                     if(!selectSubjectPage) {
                         document.querySelector('h1').classList.add('hidden');
