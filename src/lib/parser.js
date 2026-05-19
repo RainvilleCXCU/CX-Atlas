@@ -47,6 +47,7 @@ const DynamicRateTableInput = dynamic(() => import("components/Calculator/Dynami
 const DynamicRateTable = dynamic(() => import("components/Calculator/DynamicRateTable"), {ssr: false});
 const DynamicProductCalculatorInput = dynamic(() => import("components/Dynamic Product Calculator Input/DynamicProductCalculatorInput"), {ssr: false});
 const DynamicProductCalculatorOutput = dynamic(() => import("components/Dynamic Product Calculator Output/DynamicProductCalculatorOutput"), {ssr: true});
+const SliderCalculator = dynamic(() => import("components/SliderCalculator/SliderCalculator"), {ssr: true});
 const Scheduler = dynamic(() => import("components/Salesforce/scheduler"), {ssr: true});
 const Tooltip = dynamic(() => import("components/Tooltip/Tooltip"), {ssr: false});
 const CXBio = dynamic(() => import("components/CXBio/Bio"), {ssr: false});
@@ -366,6 +367,12 @@ export const parseHtml = (html) => {
             else if(attribs?.id?.includes('dynamic-product-calculator-output__checking')) {
                 return (
                     <div {...attributesToProps(attribs)}><DynamicProductCalculatorOutput>{domToReact(children, options)}</DynamicProductCalculatorOutput></div>
+                )
+            } 
+            // Slider Calculator
+            else if(attribs?.class?.includes('cx-slider-calculator')) {
+                return (
+                    <div {...attributesToProps(attribs)}><SliderCalculator>{domToReact(children, options)}</SliderCalculator></div>
                 )
             } 
 
