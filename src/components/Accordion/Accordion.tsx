@@ -10,9 +10,13 @@ interface AccordionProps {
   startOpen?: string;
   id?: string;
   classNames?: string;
+  style?: any;
+  contentBackground?: string;
+  accordionIconSrc?: string;
+  showDetails?: boolean;
 }
 
-const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = '', isOpen = false, id, stayOpen = 'false', startOpen = 'false'}) => {
+const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = '', isOpen = false, id, stayOpen = 'false', startOpen = 'false', style = '', contentBackground = '', accordionIconSrc = '', showDetails = false }) => {
     const [isAccordionOpen, setIsAccordionOpen] = useState(startOpen === 'true');
     const [contentHeight, setContentHeight] = useState(0);
     const contentRef = useRef<HTMLDivElement>(null);
@@ -86,9 +90,17 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
   }, []);
 
   return (
-    <div className={`cx-accordion__brand ${classNames}${isAccordionOpen ? ' is-open' : ''}`}>
+    <div className={`cx-accordion__brand ${classNames}${isAccordionOpen ? ' is-open' : ''}`} style={style}>
       <div className="accordion-header" onClick={openHandler} id={id}>
-        <summary className={`gb-accordion-title${isAccordionOpen ? ' is-open' : ''}`}>{title}</summary>
+        <summary className={`gb-accordion-title${isAccordionOpen ? ' is-open' : ''}`}>
+          {accordionIconSrc && (
+            <img src={accordionIconSrc} className="gb-accordion-icon" />
+          )}
+          {title}
+          {showDetails && (
+            <span className="show-details">{isAccordionOpen ? 'Hide details' : 'Show details'}</span>
+          )}
+        </summary>
       </div>
       <div
         className="accordion-content"
@@ -98,6 +110,7 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
           gridTemplateRows: `${contentHeight}fr`,
           overflow: 'hidden',
           transition: 'grid-template-rows 0.3s ease',
+          background: contentBackground,
         }}
       >
         <div className="gb-accordion-content-wrapper" style={{overflow: "hidden"}}>
