@@ -255,7 +255,7 @@ export const parseHtml = (html) => {
                             startOpen={attribs?.['data-start-open']}
                             title={attribs?.['data-encodedheading'] ? parseHtml(Buffer.from(attribs?.['data-encodedheading'], 'base64').toString()): ''}
                             classNames={attribs?.class}
-                            style={attribs?.style}
+                            borderStyle={attribs?.['data-border-style'] ? JSON.parse(attribs['data-border-style']) : undefined}
                             id={attribs?.['data-accordion-id']}
                             contentBackground={attribs?.['data-content-background']}
                             accordionIconSrc={attribs?.['data-accordion-icon-src']}
