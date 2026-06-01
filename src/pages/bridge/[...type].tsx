@@ -412,8 +412,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     console.timeEnd('WIDGET LOGIC');
     console.time('REDIRECT LOGIC') 
     // Perform Redirect if needed
-
-    if (product.minorMemberApplyNowURL == '' && type == 'start') {
+    console.log('Has Minor URL: ' + (product?.minorMemberApplyNowURL != '') + product?.minorMemberApplyNowURL);
+    if ((!product.minorMemberApplyNowURL || product.minorMemberApplyNowURL == '') && type == 'start') {
         console.log('Minor accounts not available');
         return getNextServerSideProps(context, {
             Page: Component,
@@ -422,7 +422,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                 permanent: true,
             }
         });
-    } else if (!minor && product.minorMemberApplyNowURL != '' && type != 'start') {
+    } else if (!minor && (product.minorMemberApplyNowURL && product.minorMemberApplyNowURL != '') && type != 'start') {
         console.log('Start Over');
         return getNextServerSideProps(context, {
             Page: Component,
@@ -440,7 +440,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                 permanent: false,
             }
         });
-    } else if (minor && minor == 'yes' && product.minorMemberApplyNowURL == '' && type == 'now') {
+    } else if (minor && minor == 'yes' && (!product.minorMemberApplyNowURL || product.minorMemberApplyNowURL == '') && type == 'now') {
         console.log('Change Minor to now, not available');
         return getNextServerSideProps(context, {
             Page: Component,
@@ -449,7 +449,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                 permanent: true,
             }
         });
-    } else if (minor && minor != 'na' && product.minorMemberApplyNowURL == '' && type == 'now' && !member) {
+    } else if (minor && minor != 'na' && (!product.minorMemberApplyNowURL || product.minorMemberApplyNowURL == '') && type == 'now' && !member) {
         console.log('Change Minor to now, not available');
         return getNextServerSideProps(context, {
             Page: Component,
