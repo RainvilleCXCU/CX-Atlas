@@ -11,9 +11,10 @@ const isProd = process.env.NODE_ENV === "production";
 const cspReportUri = process.env.CSP_REPORT_URI || "";
 const isTruthy = (v) => ["1", "true", "yes"].includes((v || "").toLowerCase());
 const cspReportOnly = isTruthy(process.env.CSP_REPORT_ONLY);
-const wpOrigin = process.env.NEXT_PUBLIC_WORDPRESS_URL
-  ? new URL(process.env.NEXT_PUBLIC_WORDPRESS_URL).origin
-  : "";
+let wpOrigin = [process.env.NEXT_PUBLIC_WORDPRESS_URL]
+  ? [new URL(process.env.NEXT_PUBLIC_WORDPRESS_URL).origin]
+  : [];
+wpOrigin.push('https://*.connexuscu.org'); // Allowlist for WordPress-hosted assets (e.g. media) that may be on a different subdomain than the main site
 const cspHeaderKey = cspReportOnly
   ? "Content-Security-Policy-Report-Only"
   : "Content-Security-Policy";
@@ -124,14 +125,14 @@ function buildContentSecurityPolicy() {
     "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
     "connect-src": [
       "'self'",
-      ...(wpOrigin ? [wpOrigin] : []),
+      ...(wpOrigin ? wpOrigin : []),
       ...(isProd ? [] : ["ws:", "wss:", "http://localhost:*"]),
     ],
     "img-src": [
       "'self'",
       "data:",
       "blob:",
-      ...(wpOrigin ? [wpOrigin] : []),
+      ...(wpOrigin ? wpOrigin : []),
     ],
     "style-src": ["'self'", "'unsafe-inline'"],
     "font-src": ["'self'", "data:"],
