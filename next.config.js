@@ -96,8 +96,9 @@ const THIRD_PARTY_CSP = {
     "script-src": [
       "https://cdn.personyze.com",
       "https://counter.personyze.com",
+      "https://*.personyze.com",
     ],
-    "connect-src": ["https://counter.personyze.com"],
+    "connect-src": ["https://counter.personyze.com", "https://*.personyze.com"],
     "img-src": ["https://*.personyze.com"],
   },
   CSP_DISABLE_SALESFORCE: {
