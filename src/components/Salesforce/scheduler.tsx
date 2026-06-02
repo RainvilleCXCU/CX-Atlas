@@ -8,6 +8,7 @@ interface CXCalcProps {
     flowId?;
     appUrl?;
     viewMoreButton?;
+    selectProductTypeText?;
     selectSubjectText?;
     selectResourceText?;
     anyResourceText?;
@@ -27,6 +28,7 @@ const Scheduler = ({
     flowId = '',
     appUrl = '',
     viewMoreButton = '',
+    selectProductTypeText = '',
     selectSubjectText = '',
     selectResourceText = '',
     anyResourceText = '',
@@ -339,7 +341,7 @@ const Scheduler = ({
                     {
                         singleProductName !== ':path*' ?
                         selectSubjectText
-                            : 'Select accounts and loans to discuss'
+                            : selectProductTypeText ? selectProductTypeText : 'Select accounts and loans to discuss'
                     }
                 </h1>
             }

@@ -416,6 +416,7 @@ export const parseHtml = (html) => {
                         flowId = {attribs['data-flowid']}
                         appUrl = {attribs['data-appurl']}
                         viewMoreButton = {attribs['data-viewmorebutton']}
+                        selectProductTypeText = {attribs['data-selectproducttypetext']}
                         selectSubjectText = {attribs['data-selectsubjecttext']}
                         selectResourceText = {attribs['data-selectresourcetext']}
                         anyResourceText = {attribs['data-anyresourcetext']}
