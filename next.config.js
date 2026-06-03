@@ -69,9 +69,14 @@ const THIRD_PARTY_CSP = {
     ],
   },
   CSP_DISABLE_SPECTRUM: {
-    "script-src": ["https://tag.brandcdn.com", "https://*.brandcdn.com"],
-    "connect-src": ["https://*.brandcdn.com"],
-    "img-src": ["https://*.brandcdn.com"],
+    "script-src": [
+      "https://tag.brandcdn.com",
+      "https://*.brandcdn.com",
+      "https://tag.simpli.fi",
+      "https://*.simpli.fi",
+    ],
+    "connect-src": ["https://*.brandcdn.com", "https://*.simpli.fi"],
+    "img-src": ["https://*.brandcdn.com", "https://*.simpli.fi"],
   },
   CSP_DISABLE_Q1: {
     "script-src": ["https://js.adsrvr.org"],
@@ -101,6 +106,29 @@ const THIRD_PARTY_CSP = {
     ],
     "connect-src": ["https://counter.personyze.com", "https://*.personyze.com"],
     "img-src": ["https://*.personyze.com"],
+  },
+  CSP_DISABLE_GOOGLE_MAPS: {
+    "script-src": ["https://maps.googleapis.com", "https://maps.gstatic.com"],
+    "connect-src": ["https://maps.googleapis.com"],
+    "img-src": [
+      "https://maps.googleapis.com",
+      "https://maps.gstatic.com",
+      "https://*.googleapis.com",
+      "https://*.gstatic.com",
+      "https://*.ggpht.com",
+      "https://*.google.com",
+    ],
+    "frame-src": ["https://www.google.com"],
+    "style-src": ["https://fonts.googleapis.com"],
+    "font-src": ["https://fonts.gstatic.com"],
+  },
+  CSP_DISABLE_NICE_CHAT: {
+    "script-src": ["https://*.niceincontact.com"],
+    "connect-src": ["https://*.niceincontact.com", "wss://*.niceincontact.com"],
+    "img-src": ["https://*.niceincontact.com"],
+    "frame-src": ["https://*.niceincontact.com"],
+    "style-src": ["https://*.niceincontact.com"],
+    "media-src": ["https://*.niceincontact.com"],
   },
   CSP_DISABLE_SALESFORCE: {
     "script-src": [
@@ -132,6 +160,11 @@ function buildContentSecurityPolicy() {
       "'self'",
       "data:",
       "blob:",
+      // Allow any https image source. Third-party tags (e.g. Spectrum/Simpli.fi
+      // cookie-sync) fire fire-and-forget tracking pixels at many ad-partner
+      // domains via new Image(); enumerating them is unmaintainable, and images
+      // can only signal via their URL, they can't read page data.
+      "https:",
       ...(wpOrigin ? wpOrigin : []),
     ],
     "style-src": ["'self'", "'unsafe-inline'"],
