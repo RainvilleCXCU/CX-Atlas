@@ -144,6 +144,8 @@ const THIRD_PARTY_CSP = {
     ],
     "frame-src": ["https://*.my.site.com", "https://*.lightning.force.com"],
     "img-src": ["https://*.salesforce.com", "https://*.force.com"],
+    "style-src": ["https://*.my.site.com", "https://*.lightning.force.com"],
+    "font-src": ["https://*.my.site.com", "https://*.lightning.force.com"],
   },
 };
 
