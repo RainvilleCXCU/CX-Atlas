@@ -125,8 +125,8 @@ export default function Component(props) {
       <div id="page" className="container site">
           <main id="main" className="content content-single">
               <article className="entry-content">
-                        {parseHtml(scheduler?.toString() || '')}
-            </article>
+                  {parseHtml(scheduler?.toString() || '')}
+              </article>
         </main>
       </div>
 
