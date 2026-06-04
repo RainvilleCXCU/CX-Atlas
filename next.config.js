@@ -483,6 +483,12 @@ let nextConfig = {
               key: "prso-lg",
             },
           ],
+          missing: [
+            {
+              type:"query",
+              key:"preview"
+            }
+          ]
         },
         {
           source: "/:path*",
@@ -493,6 +499,12 @@ let nextConfig = {
               key: "prso-img",
             },
           ],
+          missing: [
+            {
+              type:"query",
+              key:"preview"
+            }
+          ]
         },
         {
           source: "/:path*",
@@ -503,6 +515,12 @@ let nextConfig = {
               key: "prso-cta-lm",
             },
           ],
+          missing: [
+            {
+              type:"query",
+              key:"preview"
+            }
+          ]
         },
         {
           source: "/:path*",
@@ -513,6 +531,12 @@ let nextConfig = {
               key: "dyn-content",
             },
           ],
+          missing: [
+            {
+              type:"query",
+              key:"preview"
+            }
+          ]
         },
         {
           source: "/:path*",
@@ -545,6 +569,12 @@ let nextConfig = {
               key: "goal",
             },
           ],
+          missing: [
+            {
+              type:"query",
+              key:"preview"
+            }
+          ]
         },
         {
           source: "/:path*",
