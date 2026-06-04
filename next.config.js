@@ -152,7 +152,7 @@ const THIRD_PARTY_CSP = {
 function buildContentSecurityPolicy() {
   const directives = {
     "default-src": ["'self'"],
-    "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+    "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'", ...(wpOrigin ? wpOrigin : [])],
     "connect-src": [
       "'self'",
       ...(wpOrigin ? wpOrigin : []),
@@ -169,8 +169,8 @@ function buildContentSecurityPolicy() {
       "https:",
       ...(wpOrigin ? wpOrigin : []),
     ],
-    "style-src": ["'self'", "'unsafe-inline'"],
-    "font-src": ["'self'", "data:"],
+    "style-src": ["'self'", "'unsafe-inline'", ...(wpOrigin ? wpOrigin : [])],
+    "font-src": ["'self'", "data:", ...(wpOrigin ? wpOrigin : [])],
     "frame-src": ["'self'"],
     "frame-ancestors": ["'none'"],
   };
