@@ -47,7 +47,8 @@ const DynamicRateTableInput = dynamic(() => import("components/Calculator/Dynami
 const DynamicRateTable = dynamic(() => import("components/Calculator/DynamicRateTable"), {ssr: false});
 const DynamicProductCalculatorInput = dynamic(() => import("components/Dynamic Product Calculator Input/DynamicProductCalculatorInput"), {ssr: false});
 const DynamicProductCalculatorOutput = dynamic(() => import("components/Dynamic Product Calculator Output/DynamicProductCalculatorOutput"), {ssr: true});
-const Scheduler = dynamic(() => import("components/Salesforce/scheduler"), {ssr: false});
+const SliderCalculator = dynamic(() => import("components/SliderCalculator/SliderCalculator"), {ssr: true});
+const Scheduler = dynamic(() => import("components/Salesforce/scheduler"), {ssr: true});
 const Tooltip = dynamic(() => import("components/Tooltip/Tooltip"), {ssr: false});
 const CXBio = dynamic(() => import("components/CXBio/Bio"), {ssr: false});
 const Confetti = dynamic(() => import("components/Confetti/Confetti"), {ssr: false});
@@ -254,7 +255,11 @@ export const parseHtml = (html) => {
                             startOpen={attribs?.['data-start-open']}
                             title={attribs?.['data-encodedheading'] ? parseHtml(Buffer.from(attribs?.['data-encodedheading'], 'base64').toString()): ''}
                             classNames={attribs?.class}
+                            borderStyle={attribs?.['data-border-style'] ? JSON.parse(attribs['data-border-style']) : undefined}
                             id={attribs?.['data-accordion-id']}
+                            contentBackground={attribs?.['data-content-background']}
+                            accordionIconSrc={attribs?.['data-accordion-icon-src']}
+                            showDetails={attribs?.['data-show-details']}
                             content={attribs?.['data-encodedcontent'] ? parseHtml(Buffer.from(attribs?.['data-encodedcontent'], 'base64').toString()): ''}
                         />
                     )
@@ -368,6 +373,12 @@ export const parseHtml = (html) => {
                     <div {...attributesToProps(attribs)}><DynamicProductCalculatorOutput>{domToReact(children, options)}</DynamicProductCalculatorOutput></div>
                 )
             } 
+            // Slider Calculator
+            else if(attribs?.class?.includes('cx-slider-calculator')) {
+                return (
+                    <div {...attributesToProps(attribs)}><SliderCalculator>{domToReact(children, options)}</SliderCalculator></div>
+                )
+            } 
 
             // Datatrac
             else if (attribs?.['datatrac-wrapper']) {
@@ -405,6 +416,7 @@ export const parseHtml = (html) => {
                         flowId = {attribs['data-flowid']}
                         appUrl = {attribs['data-appurl']}
                         viewMoreButton = {attribs['data-viewmorebutton']}
+                        selectProductTypeText = {attribs['data-selectproducttypetext']}
                         selectSubjectText = {attribs['data-selectsubjecttext']}
                         selectResourceText = {attribs['data-selectresourcetext']}
                         anyResourceText = {attribs['data-anyresourcetext']}
