@@ -9,6 +9,17 @@ class CXDoc extends Document {
       <Html
         lang="en-us">
         <Head>
+          {/* 
+            DEV ONLY: LocalWP's domain router does not forward Next.js's hot-reload
+            WebSocket (/_next/webpack-hmr)
+          */}
+          {process.env.NODE_ENV === 'development' && (
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `(function(){if(window.__hmrStubbed)return;window.__hmrStubbed=true;var R=window.WebSocket;if(!R)return;function F(){var s=this;this.readyState=1;setTimeout(function(){if(typeof s.onopen==='function')s.onopen({});},0);}F.prototype.OPEN=1;F.prototype.send=function(){};F.prototype.close=function(){};F.prototype.addEventListener=function(){};F.prototype.removeEventListener=function(){};function W(u,p){if(typeof u==='string'&&u.indexOf('webpack-hmr')!==-1){console.warn('[dev] HMR socket stubbed (LocalWP proxy workaround) - page will NOT auto-reload; refresh manually to see changes.');return new F();}return new R(u,p);}W.prototype=R.prototype;W.OPEN=R.OPEN;W.CONNECTING=R.CONNECTING;W.CLOSING=R.CLOSING;W.CLOSED=R.CLOSED;window.WebSocket=W;})();`,
+              }}
+            />
+          )}
           <style>{`body { display: block !important }`}</style>
           <link href='https://www.googletagmanager.com' rel='dns-prefetch' />
           <link href={process.env.NEXT_PUBLIC_WORDPRESS_URL} rel='dns-prefetch' />
