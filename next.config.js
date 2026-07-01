@@ -94,9 +94,9 @@ const THIRD_PARTY_CSP = {
       "https://www.youtube.com",
       "https://www.youtube-nocookie.com",
     ],
-    "media-src": ["https://player.vimeo.com", "https://*.vimeocdn.com"],
+    "media-src": ["https://*.vimeo.com", "https://*.vimeocdn.com"],
     "img-src": ["https://i.vimeocdn.com", "https://i.ytimg.com"],
-    "connect-src": ["https://player.vimeo.com"],
+    "connect-src": ["https://*.vimeo.com"],
   },
   CSP_DISABLE_PERSONYZE: {
     "script-src": [
@@ -157,6 +157,10 @@ function buildContentSecurityPolicy() {
       "'self'",
       ...(wpOrigin ? wpOrigin : []),
       ...(isProd ? [] : ["ws:", "wss:", "http://localhost:*"]),
+    ],
+    "media-src": [
+      "'self'",
+      ...(wpOrigin ? wpOrigin : []),
     ],
     "img-src": [
       "'self'",
