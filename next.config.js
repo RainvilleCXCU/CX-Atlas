@@ -96,7 +96,7 @@ const THIRD_PARTY_CSP = {
     ],
     "media-src": ["https://*.vimeo.com", "https://*.vimeocdn.com"],
     "img-src": ["https://i.vimeocdn.com", "https://i.ytimg.com"],
-    "connect-src": ["https://*.vimeo.com"],
+    "connect-src": ["https://vimeo.com"],
   },
   CSP_DISABLE_PERSONYZE: {
     "script-src": [
