@@ -221,6 +221,14 @@ function LocationDetails(): JSX.Element {
 		.join("");
 	const hoursTableHtml = `<table class="mabel-bhi-businesshours"><tbody>${headingRowHtml}${dayRowsHtml}</tbody></table>`;
 
+	// Whether the special-message block has content to show.
+	const showSpecialMessage = Boolean(
+		selectedLocation?.special_message_type &&
+			selectedLocation?.special_message_type !== "none" &&
+			(selectedLocation?.special_message_title ||
+				selectedLocation?.special_message)
+	);
+
 	return (
 		<div
 			id={`wpsl-branch-details${isMobile}`}
@@ -284,22 +292,18 @@ function LocationDetails(): JSX.Element {
 					Location Details
 				</div>{" "}
 				<div className="cx-location-details__content">
-					{/* render the special message section if a special message exists on the location */}
-					{selectedLocation?.special_message_type && 
-					selectedLocation?.special_message_type !== "none" &&
-					(selectedLocation?.special_message_title || selectedLocation?.special_message) && 
-					(
-						<div
-							className={`cx-location-details__content--message cx-location-details__content--message-${selectedLocation?.special_message_type}`}
-						>
-							<h4 className="title no-margin">
-								{selectedLocation?.special_message_title}
-							</h4>
-							<div className="cx-location-details__content--message-content">
-								{selectedLocation?.special_message}
-							</div>
+					<div
+						className={`cx-location-details__content--message cx-location-details__content--message-${
+							selectedLocation?.special_message_type || "none"
+						}${showSpecialMessage ? "" : " cx-hidden"}`}
+					>
+						<h4 className="title no-margin">
+							{selectedLocation?.special_message_title ?? ""}
+						</h4>
+						<div className="cx-location-details__content--message-content">
+							{selectedLocation?.special_message ?? ""}
 						</div>
-					)}
+					</div>
 					<div className="cx-branch-content__header wpsl-location--section">
 						<div className="cx-location-listing__item--address">
 							<span className="wpsl-name">
@@ -357,32 +361,29 @@ function LocationDetails(): JSX.Element {
 							</div>
 						</details>
 					</div>
-					{selectedLocation?.services &&
-						<div className="wp-block-genesis-blocks-gb-accordion cx-accordion__brand gb-block-accordion wpsl-location--section">
-							<details>
-								<summary 
-									className="gb-accordion-title"
-								>
-									<span className="wpsl-hours cx-h5">
-										Services &amp; Amenities
-									</span>
-								</summary>
-								<div className="gb-accordion-text">
-									<span className="wpsl-services">
-										{selectedLocation?.services ? (
-											<div
-												dangerouslySetInnerHTML={{
-													__html: selectedLocation?.services,
-												}}
-											/>
-										) : (
-											"Unavailable"
-										)}
-									</span>
-								</div>
-							</details>
-						</div>
-					}
+					<div
+						className={`wp-block-genesis-blocks-gb-accordion cx-accordion__brand gb-block-accordion wpsl-location--section${
+							selectedLocation?.services ? "" : " cx-hidden"
+						}`}
+					>
+						<details>
+							<summary
+								className="gb-accordion-title"
+							>
+								<span className="wpsl-hours cx-h5">
+									Services &amp; Amenities
+								</span>
+							</summary>
+							<div className="gb-accordion-text">
+								<span
+									className="wpsl-services"
+									dangerouslySetInnerHTML={{
+										__html: selectedLocation?.services ?? "",
+									}}
+								/>
+							</div>
+						</details>
+					</div>
 
 					<div className="cx-location-content__footer u-is-hidden">
 						<div className="cx-location-content__footer--btn">
