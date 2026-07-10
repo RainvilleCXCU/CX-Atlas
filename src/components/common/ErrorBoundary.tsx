@@ -1,8 +1,4 @@
-// A minimal error boundary. It exists primarily to contain client-side DOM
-// reconciliation crashes (e.g. React's `insertBefore` NotFoundError when a
-// third-party DOM mutator such as Personyze rearranges nodes React manages) so
-// they take down only the wrapped widget instead of blanking the whole page
-// with Next.js's "Application error" screen.
+// A minimal error boundary. It exists primarily to contain client-side DOM reconciliation crashes
 import { Component, ErrorInfo, ReactNode } from "react";
 
 interface Props {
