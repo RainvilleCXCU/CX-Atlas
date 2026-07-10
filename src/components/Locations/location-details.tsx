@@ -311,8 +311,9 @@ function LocationDetails(): JSX.Element {
 							</span>
 							<span className="wpsl-street">{selectedLocation?.address}</span>
 							<span>
-								{selectedLocation?.city}, {selectedLocation?.state}{" "}
-								{selectedLocation?.zip}
+								<span>{selectedLocation?.city ?? ""}</span>,{" "}
+								<span>{selectedLocation?.state ?? ""}</span>{" "}
+								<span>{selectedLocation?.zip ?? ""}</span>
 							</span>
 						</div>
 						<div className="cx-location-listing__item--icon">
