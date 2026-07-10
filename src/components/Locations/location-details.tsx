@@ -102,6 +102,15 @@ function parseHoursTable(html?: string): Record<string, string> {
 	return hours;
 }
 
+// Escape plain-text values that get interpolated into the hours-table HTML string below.
+function escapeHtml(value: string): string {
+	return value
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;");
+}
+
 function LocationDetails(): JSX.Element {
 	const { showDetails, setShowDetails } = useContext(showDetailsContext);
 	const { selectedLocation } = useContext(selectedLocationContext);
@@ -181,6 +190,36 @@ function LocationDetails(): JSX.Element {
 		{ heading: "Lobby", hours: lobbyHours },
 		{ heading: "Drive-thru", hours: driveThruHours },
 	].filter((column) => Object.keys(column.hours).length > 0);
+
+	// Build the hours table as a single HTML string
+	const headingRowHtml =
+		hourColumns.length > 0
+			? `<tr><td class="mabel-bhi-day">&nbsp;</td>${hourColumns
+					.map(
+						(column) =>
+							`<td class="wpsl-hours-heading">${escapeHtml(column.heading)}</td>`
+					)
+					.join("")}</tr>`
+			: "";
+	const dayRowsHtml = orderedDayIndices
+		.map((dayIndex, i) => {
+			const dayKey = fullDays[dayIndex];
+			const holiday = upcomingHolidays[dayKey];
+			const rowAttrs = i === 0 ? ' class="mbhi-is-current"' : "";
+			const dayCell = `<td class="mabel-bhi-day">${escapeHtml(
+				dayLabels[dayIndex]
+			)}</td>`;
+			const valueCells = holiday
+				? `<td colspan="${hourColumns.length}"><span class="wpsl-holiday-notice">${escapeHtml(
+						holiday
+					)}</span></td>`
+				: hourColumns
+						.map((column) => `<td>${column.hours[dayKey] ?? ""}</td>`)
+						.join("");
+			return `<tr${rowAttrs}>${dayCell}${valueCells}</tr>`;
+		})
+		.join("");
+	const hoursTableHtml = `<table class="mabel-bhi-businesshours"><tbody>${headingRowHtml}${dayRowsHtml}</tbody></table>`;
 
 	return (
 		<div
@@ -293,50 +332,10 @@ function LocationDetails(): JSX.Element {
 								</span>
 							</summary>
 							<div className="gb-accordion-text">
-								<div className="wpsl-hours-wrapper">
-									<table
-										className="mabel-bhi-businesshours"
-									>
-										<tbody>
-											{hourColumns.length > 0 && (
-												<tr>
-													<td className="mabel-bhi-day">&nbsp;</td>
-													{hourColumns.map((column) => (
-														<td key={column.heading} className="wpsl-hours-heading">
-															{column.heading}
-														</td>
-													))}
-												</tr>
-											)}
-											{orderedDayIndices.map((dayIndex, i) => {
-												const dayKey = fullDays[dayIndex];
-												const holiday = upcomingHolidays[dayKey];
-												return (
-													<tr
-														key={dayKey}
-														className={i === 0 ? "mbhi-is-current" : undefined}
-													>
-														<td className="mabel-bhi-day">{dayLabels[dayIndex]}</td>
-														{holiday ? (
-															<td colSpan={hourColumns.length}>
-																<span className="wpsl-holiday-notice">{holiday}</span>
-															</td>
-														) : (
-															hourColumns.map((column) => (
-																<td
-																	key={column.heading}
-																	dangerouslySetInnerHTML={{
-																		__html: column.hours[dayKey] ?? "",
-																	}}
-																/>
-															))
-														)}
-													</tr>
-												);
-											})}
-										</tbody>
-									</table>
-								</div>
+								<div
+									className="wpsl-hours-wrapper"
+									dangerouslySetInnerHTML={{ __html: hoursTableHtml }}
+								/>
 							</div>
 						</details>
 					</div>
