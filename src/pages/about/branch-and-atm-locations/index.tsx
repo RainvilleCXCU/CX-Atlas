@@ -37,6 +37,7 @@ import { useRouter } from "next/router";
 import { getNextServerSideProps, getNextStaticProps } from "@faustwp/core";
 import dynamic from "next/dynamic";
 import Locations from "components/Locations/view";
+import ErrorBoundary from "components/common/ErrorBoundary";
 import { GetServerSidePropsContext } from "next";
 import { getActiveAlerts } from "utils/alerts";
 export default function Page() {
@@ -195,7 +196,15 @@ export default function Page() {
                 <Container align="full">
                   <Columns classNames={`no-margin`}>
                     <Column>
-                      <Locations location={location} noResults={widgetSettings?.locationsNoResults} locationSettings={locationSettings} siteLogo={siteLogo} />
+                      <ErrorBoundary
+                        fallback={
+                          <div className="wpsl-no-results-msg cx-text--md cx-text--weight-md">
+                            We&rsquo;re having trouble loading the locations map right now. Please refresh the page to try again.
+                          </div>
+                        }
+                      >
+                        <Locations location={location} noResults={widgetSettings?.locationsNoResults} locationSettings={locationSettings} siteLogo={siteLogo} />
+                      </ErrorBoundary>
                     </Column>
                   </Columns>
                 </Container>

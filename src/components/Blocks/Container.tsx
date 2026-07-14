@@ -5,18 +5,24 @@ export interface Props {
     children?
     classNames?
     style?
+    id?
 }
 
 function Container({
     align = '',
     style = {},
     children = <></>,
-    classNames
-}: Props): JSX.Element {    
+    classNames,
+    id
+}: Props): JSX.Element {
 
   return (
-    <div className={`wp-block-genesis-blocks-gb-container${ align === 'full' ? ' alignfull' : ''} gb-block-container ${classNames}`} style={style}>
-        <EqualHeight timeout={0} animationSpeed={0}>{children}</EqualHeight>
+    <div
+      className={`wp-block-genesis-blocks-gb-container${align === 'full' ? ' alignfull' : ''} gb-block-container ${classNames}`}
+      style={style}
+      {...(id ? {id} : {})} // Spread the id prop if it exists
+    >
+      <EqualHeight timeout={0} animationSpeed={0}>{children}</EqualHeight>
     </div>
   );
 }

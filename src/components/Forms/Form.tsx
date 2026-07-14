@@ -3,6 +3,7 @@ import { parseHtml } from "lib/parser";
 import NFField from "./Field";
 import { Store } from "context/store";
 import { gql, useQuery } from "@apollo/client";
+import apolloClient from "apolloClient";
 import { Helmet } from 'react-helmet';
 
 export interface Props {
@@ -25,6 +26,9 @@ function Form({ id }: Props): JSX.Element {
 
 
 
+    // Use the standalone Apollo client (plain HttpLink) so this query is sent as
+    // a POST. The default Faust client uses automatic persisted queries with
+    // useGETForHashedQueries, which forces GET and can't be overridden per-query.
     const FormQuery = useQuery(gql`
     query GetFormData($id: String!) {
         getForm(formId: $id) {
@@ -32,8 +36,9 @@ function Form({ id }: Props): JSX.Element {
             fields
             ajaxNonce
         }
-        
+
     }`, {
+        client: apolloClient,
         variables: {
             id: id
         }

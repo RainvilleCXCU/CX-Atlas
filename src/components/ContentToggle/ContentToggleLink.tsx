@@ -17,6 +17,7 @@ function ToggleContentLink({
 }: Props): JSX.Element {
   const { toggleContent, setToggleContent } = useContext(toggleContentContext);
   const linkRef = useRef<HTMLAnchorElement>(null);
+  const router = useRouter();
 
   const toggleContentClick = e => {
     e.preventDefault();
@@ -27,26 +28,32 @@ function ToggleContentLink({
   }
 
   useEffect(() => {
-    if(!toggleContent) {
-        if(document?.location?.hash && document?.location?.hash === '#' + linkRef?.current?.href?.split('#')[1]) {        
-            const target = linkRef?.current?.href.split('#')[1];
-            console.log(`Target: ${target}`)
+    // Sync the active content to the URL: match the hash if present, otherwise
+    // fall back to the default. Re-runs on navigation (including browser
+    // back/forward) so a stale selection doesn't persist across route changes.
+    const applyFromLocation = () => {
+        const target = linkRef?.current?.href?.split('#')[1];
+        if(!target) return;
+        if(document?.location?.hash === '#' + target) {
             setToggleContent(target);
-            // setState(state => ({
-            //     ...state,
-            //     toggleContent: target
-            // }));
-        } else if(attribs?.['data-content-default']) {
-            const target = linkRef?.current?.href.split('#')[1];
-            console.log(`Target: ${target}`)
+        } else if(!document?.location?.hash && attribs?.['data-content-default']) {
             setToggleContent(target);
-            // setState(state => ({
-            //     ...state,
-            //     toggleContent: target
-            // }));
         }
-    }
-  }, [toggleContent])
+    };
+
+    applyFromLocation();
+
+    router.events.on('routeChangeComplete', applyFromLocation);
+    router.events.on('hashChangeComplete', applyFromLocation);
+    window.addEventListener('hashchange', applyFromLocation);
+    window.addEventListener('popstate', applyFromLocation);
+    return () => {
+        router.events.off('routeChangeComplete', applyFromLocation);
+        router.events.off('hashChangeComplete', applyFromLocation);
+        window.removeEventListener('hashchange', applyFromLocation);
+        window.removeEventListener('popstate', applyFromLocation);
+    };
+  }, [])
   
   return (
     <>

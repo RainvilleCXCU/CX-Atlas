@@ -102,6 +102,15 @@ function parseHoursTable(html?: string): Record<string, string> {
 	return hours;
 }
 
+// Escape plain-text values that get interpolated into the hours-table HTML string below.
+function escapeHtml(value: string): string {
+	return value
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;");
+}
+
 function LocationDetails(): JSX.Element {
 	const { showDetails, setShowDetails } = useContext(showDetailsContext);
 	const { selectedLocation } = useContext(selectedLocationContext);
@@ -182,6 +191,44 @@ function LocationDetails(): JSX.Element {
 		{ heading: "Drive-thru", hours: driveThruHours },
 	].filter((column) => Object.keys(column.hours).length > 0);
 
+	// Build the hours table as a single HTML string
+	const headingRowHtml =
+		hourColumns.length > 0
+			? `<tr><td class="mabel-bhi-day">&nbsp;</td>${hourColumns
+					.map(
+						(column) =>
+							`<td class="wpsl-hours-heading">${escapeHtml(column.heading)}</td>`
+					)
+					.join("")}</tr>`
+			: "";
+	const dayRowsHtml = orderedDayIndices
+		.map((dayIndex, i) => {
+			const dayKey = fullDays[dayIndex];
+			const holiday = upcomingHolidays[dayKey];
+			const rowAttrs = i === 0 ? ' class="mbhi-is-current"' : "";
+			const dayCell = `<td class="mabel-bhi-day">${escapeHtml(
+				dayLabels[dayIndex]
+			)}</td>`;
+			const valueCells = holiday
+				? `<td colspan="${hourColumns.length}"><span class="wpsl-holiday-notice">${escapeHtml(
+						holiday
+					)}</span></td>`
+				: hourColumns
+						.map((column) => `<td>${column.hours[dayKey] ?? ""}</td>`)
+						.join("");
+			return `<tr${rowAttrs}>${dayCell}${valueCells}</tr>`;
+		})
+		.join("");
+	const hoursTableHtml = `<table class="mabel-bhi-businesshours"><tbody>${headingRowHtml}${dayRowsHtml}</tbody></table>`;
+
+	// Whether the special-message block has content to show.
+	const showSpecialMessage = Boolean(
+		selectedLocation?.special_message_type &&
+			selectedLocation?.special_message_type !== "none" &&
+			(selectedLocation?.special_message_title ||
+				selectedLocation?.special_message)
+	);
+
 	return (
 		<div
 			id={`wpsl-branch-details${isMobile}`}
@@ -245,22 +292,18 @@ function LocationDetails(): JSX.Element {
 					Location Details
 				</div>{" "}
 				<div className="cx-location-details__content">
-					{/* render the special message section if a special message exists on the location */}
-					{selectedLocation?.special_message_type && 
-					selectedLocation?.special_message_type !== "none" &&
-					(selectedLocation?.special_message_title || selectedLocation?.special_message) && 
-					(
-						<div
-							className={`cx-location-details__content--message cx-location-details__content--message-${selectedLocation?.special_message_type}`}
-						>
-							<h4 className="title no-margin">
-								{selectedLocation?.special_message_title}
-							</h4>
-							<div className="cx-location-details__content--message-content">
-								{selectedLocation?.special_message}
-							</div>
+					<div
+						className={`cx-location-details__content--message cx-location-details__content--message-${
+							selectedLocation?.special_message_type || "none"
+						}${showSpecialMessage ? "" : " cx-hidden"}`}
+					>
+						<h4 className="title no-margin">
+							{selectedLocation?.special_message_title ?? ""}
+						</h4>
+						<div className="cx-location-details__content--message-content">
+							{selectedLocation?.special_message ?? ""}
 						</div>
-					)}
+					</div>
 					<div className="cx-branch-content__header wpsl-location--section">
 						<div className="cx-location-listing__item--address">
 							<span className="wpsl-name">
@@ -268,8 +311,9 @@ function LocationDetails(): JSX.Element {
 							</span>
 							<span className="wpsl-street">{selectedLocation?.address}</span>
 							<span>
-								{selectedLocation?.city}, {selectedLocation?.state}{" "}
-								{selectedLocation?.zip}
+								<span>{selectedLocation?.city ?? ""}</span>,{" "}
+								<span>{selectedLocation?.state ?? ""}</span>{" "}
+								<span>{selectedLocation?.zip ?? ""}</span>
 							</span>
 						</div>
 						<div className="cx-location-listing__item--icon">
@@ -293,50 +337,10 @@ function LocationDetails(): JSX.Element {
 								</span>
 							</summary>
 							<div className="gb-accordion-text">
-								<div className="wpsl-hours-wrapper">
-									<table
-										className="mabel-bhi-businesshours"
-									>
-										<tbody>
-											{hourColumns.length > 0 && (
-												<tr>
-													<td className="mabel-bhi-day">&nbsp;</td>
-													{hourColumns.map((column) => (
-														<td key={column.heading} className="wpsl-hours-heading">
-															{column.heading}
-														</td>
-													))}
-												</tr>
-											)}
-											{orderedDayIndices.map((dayIndex, i) => {
-												const dayKey = fullDays[dayIndex];
-												const holiday = upcomingHolidays[dayKey];
-												return (
-													<tr
-														key={dayKey}
-														className={i === 0 ? "mbhi-is-current" : undefined}
-													>
-														<td className="mabel-bhi-day">{dayLabels[dayIndex]}</td>
-														{holiday ? (
-															<td colSpan={hourColumns.length}>
-																<span className="wpsl-holiday-notice">{holiday}</span>
-															</td>
-														) : (
-															hourColumns.map((column) => (
-																<td
-																	key={column.heading}
-																	dangerouslySetInnerHTML={{
-																		__html: column.hours[dayKey] ?? "",
-																	}}
-																/>
-															))
-														)}
-													</tr>
-												);
-											})}
-										</tbody>
-									</table>
-								</div>
+								<div
+									className="wpsl-hours-wrapper"
+									dangerouslySetInnerHTML={{ __html: hoursTableHtml }}
+								/>
 							</div>
 						</details>
 					</div>
@@ -358,32 +362,29 @@ function LocationDetails(): JSX.Element {
 							</div>
 						</details>
 					</div>
-					{selectedLocation?.services &&
-						<div className="wp-block-genesis-blocks-gb-accordion cx-accordion__brand gb-block-accordion wpsl-location--section">
-							<details>
-								<summary 
-									className="gb-accordion-title"
-								>
-									<span className="wpsl-hours cx-h5">
-										Services &amp; Amenities
-									</span>
-								</summary>
-								<div className="gb-accordion-text">
-									<span className="wpsl-services">
-										{selectedLocation?.services ? (
-											<div
-												dangerouslySetInnerHTML={{
-													__html: selectedLocation?.services,
-												}}
-											/>
-										) : (
-											"Unavailable"
-										)}
-									</span>
-								</div>
-							</details>
-						</div>
-					}
+					<div
+						className={`wp-block-genesis-blocks-gb-accordion cx-accordion__brand gb-block-accordion wpsl-location--section${
+							selectedLocation?.services ? "" : " cx-hidden"
+						}`}
+					>
+						<details>
+							<summary
+								className="gb-accordion-title"
+							>
+								<span className="wpsl-hours cx-h5">
+									Services &amp; Amenities
+								</span>
+							</summary>
+							<div className="gb-accordion-text">
+								<span
+									className="wpsl-services"
+									dangerouslySetInnerHTML={{
+										__html: selectedLocation?.services ?? "",
+									}}
+								/>
+							</div>
+						</details>
+					</div>
 
 					<div className="cx-location-content__footer u-is-hidden">
 						<div className="cx-location-content__footer--btn">
