@@ -7,6 +7,192 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
 
+const isProd = process.env.NODE_ENV === "production";
+const cspReportUri = process.env.CSP_REPORT_URI || "";
+const isTruthy = (v) => ["1", "true", "yes"].includes((v || "").toLowerCase());
+const cspReportOnly = isTruthy(process.env.CSP_REPORT_ONLY);
+let wpOrigin = [process.env.NEXT_PUBLIC_WORDPRESS_URL]
+  ? [new URL(process.env.NEXT_PUBLIC_WORDPRESS_URL).origin]
+  : [];
+wpOrigin.push('https://*.connexuscu.org'); // Allowlist for WordPress-hosted assets (e.g. media) that may be on a different subdomain than the main site
+const cspHeaderKey = cspReportOnly
+  ? "Content-Security-Policy-Report-Only"
+  : "Content-Security-Policy";
+
+// Per-vendor CSP additions. Included by default; disable individually via env var
+// (e.g. CSP_DISABLE_GTM=true). Each entry contributes only to the directives it needs.
+const THIRD_PARTY_CSP = {
+  CSP_DISABLE_GTM: {
+    "script-src": [
+      "https://www.googletagmanager.com",
+      "https://www.google-analytics.com",
+      "https://ssl.google-analytics.com",
+    ],
+    "connect-src": [
+      "https://www.google-analytics.com",
+      "https://*.analytics.google.com",
+      "https://*.googletagmanager.com",
+      "https://stats.g.doubleclick.net",
+    ],
+    "img-src": [
+      "https://www.googletagmanager.com",
+      "https://www.google-analytics.com",
+      "https://stats.g.doubleclick.net",
+    ],
+    "frame-src": ["https://td.doubleclick.net"],
+  },
+  CSP_DISABLE_QUALTRICS: {
+    "script-src": [
+      "https://*.qualtrics.com",
+      "https://*.siteintercept.qualtrics.com",
+    ],
+    "connect-src": ["https://*.qualtrics.com"],
+    "img-src": ["https://*.qualtrics.com"],
+  },
+  CSP_DISABLE_CLARITY: {
+    "script-src": ["https://www.clarity.ms", "https://*.clarity.ms"],
+    "connect-src": ["https://*.clarity.ms", "https://c.bing.com"],
+    "img-src": ["https://*.clarity.ms", "https://c.bing.com"],
+  },
+  CSP_DISABLE_SITEIMPROVE: {
+    "script-src": [
+      "https://*.siteimproveanalytics.com",
+      "https://*.siteimproveanalytics.io",
+    ],
+    "connect-src": [
+      "https://*.siteimproveanalytics.com",
+      "https://*.siteimproveanalytics.io",
+    ],
+    "img-src": [
+      "https://*.siteimproveanalytics.com",
+      "https://*.siteimproveanalytics.io",
+    ],
+  },
+  CSP_DISABLE_SPECTRUM: {
+    "script-src": [
+      "https://tag.brandcdn.com",
+      "https://*.brandcdn.com",
+      "https://tag.simpli.fi",
+      "https://*.simpli.fi",
+    ],
+    "connect-src": ["https://*.brandcdn.com", "https://*.simpli.fi"],
+    "img-src": ["https://*.brandcdn.com", "https://*.simpli.fi"],
+  },
+  CSP_DISABLE_Q1: {
+    "script-src": ["https://js.adsrvr.org"],
+    "connect-src": ["https://insight.adsrvr.org", "https://js.adsrvr.org"],
+    "img-src": [
+      "https://insight.adsrvr.org",
+      "https://*.adsrvr.org",
+      "https://*.pro-market.net",
+    ],
+    "frame-src": ["https://insight.adsrvr.org", "https://*.adsrvr.org"],
+  },
+  CSP_DISABLE_VIDEO_EMBEDS: {
+    "frame-src": [
+      "https://player.vimeo.com",
+      "https://www.youtube.com",
+      "https://www.youtube-nocookie.com",
+    ],
+    "media-src": ["https://*.vimeo.com", "https://*.vimeocdn.com"],
+    "img-src": ["https://i.vimeocdn.com", "https://i.ytimg.com"],
+    "connect-src": ["https://vimeo.com"],
+  },
+  CSP_DISABLE_PERSONYZE: {
+    "script-src": [
+      "https://cdn.personyze.com",
+      "https://counter.personyze.com",
+      "https://*.personyze.com",
+    ],
+    "connect-src": ["https://counter.personyze.com", "https://*.personyze.com"],
+    "img-src": ["https://*.personyze.com"],
+  },
+  CSP_DISABLE_GOOGLE_MAPS: {
+    "script-src": ["https://maps.googleapis.com", "https://maps.gstatic.com"],
+    "connect-src": ["https://maps.googleapis.com"],
+    "img-src": [
+      "https://maps.googleapis.com",
+      "https://maps.gstatic.com",
+      "https://*.googleapis.com",
+      "https://*.gstatic.com",
+      "https://*.ggpht.com",
+      "https://*.google.com",
+    ],
+    "frame-src": ["https://www.google.com"],
+    "style-src": ["https://fonts.googleapis.com"],
+    "font-src": ["https://fonts.gstatic.com"],
+  },
+  CSP_DISABLE_NICE_CHAT: {
+    "script-src": ["https://*.niceincontact.com"],
+    "connect-src": ["https://*.niceincontact.com", "wss://*.niceincontact.com"],
+    "img-src": ["https://*.niceincontact.com"],
+    "frame-src": ["https://*.niceincontact.com"],
+    "style-src": ["https://*.niceincontact.com"],
+    "media-src": ["https://*.niceincontact.com"],
+  },
+  CSP_DISABLE_SALESFORCE: {
+    "script-src": [
+      "https://*.my.site.com",
+      "https://*.lightning.force.com",
+      "https://*.force.com",
+      "https://*.salesforce.com",
+    ],
+    "connect-src": [
+      "https://*.my.site.com",
+      "https://*.lightning.force.com",
+      "https://*.salesforce.com",
+    ],
+    "frame-src": ["https://*.my.site.com", "https://*.lightning.force.com"],
+    "img-src": ["https://*.salesforce.com", "https://*.force.com"],
+    "style-src": ["https://*.my.site.com", "https://*.lightning.force.com"],
+    "font-src": ["https://*.my.site.com", "https://*.lightning.force.com"],
+  },
+};
+
+function buildContentSecurityPolicy() {
+  const directives = {
+    "default-src": ["'self'"],
+    "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'", ...(wpOrigin ? wpOrigin : [])],
+    "connect-src": [
+      "'self'",
+      ...(wpOrigin ? wpOrigin : []),
+      ...(isProd ? [] : ["ws:", "wss:", "http://localhost:*"]),
+    ],
+    "media-src": [
+      "'self'",
+      ...(wpOrigin ? wpOrigin : []),
+    ],
+    "img-src": [
+      "'self'",
+      "data:",
+      "blob:",
+      // Allow any https image source. Third-party tags (e.g. Spectrum/Simpli.fi
+      // cookie-sync) fire fire-and-forget tracking pixels at many ad-partner
+      // domains via new Image(); enumerating them is unmaintainable, and images
+      // can only signal via their URL, they can't read page data.
+      "https:",
+      ...(wpOrigin ? wpOrigin : []),
+    ],
+    "style-src": ["'self'", "'unsafe-inline'", ...(wpOrigin ? wpOrigin : [])],
+    "font-src": ["'self'", "data:", ...(wpOrigin ? wpOrigin : [])],
+    "frame-src": ["'self'"],
+    "frame-ancestors": ["'none'"],
+  };
+
+  for (const [envKey, additions] of Object.entries(THIRD_PARTY_CSP)) {
+    if (isTruthy(process.env[envKey])) continue;
+    for (const [directive, sources] of Object.entries(additions)) {
+      directives[directive] = [...(directives[directive] || []), ...sources];
+    }
+  }
+
+  if (cspReportUri) directives["report-uri"] = [cspReportUri];
+
+  return Object.entries(directives)
+    .map(([key, values]) => `${key} ${[...new Set(values)].join(" ")}`)
+    .join("; ");
+}
+
 /**
  * @type {import('next').NextConfig}
  **/
@@ -23,6 +209,15 @@ let nextConfig = {
             value: 'max-age=63072000; includeSubDomains; preload'
           }
         ]
+      },
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: cspHeaderKey,
+            value: buildContentSecurityPolicy(),
+          },
+        ],
       },
       {
         source: '/mdr:path*',
@@ -292,6 +487,12 @@ let nextConfig = {
               key: "prso-lg",
             },
           ],
+          missing: [
+            {
+              type:"query",
+              key:"preview"
+            }
+          ]
         },
         {
           source: "/:path*",
@@ -302,6 +503,12 @@ let nextConfig = {
               key: "prso-img",
             },
           ],
+          missing: [
+            {
+              type:"query",
+              key:"preview"
+            }
+          ]
         },
         {
           source: "/:path*",
@@ -312,6 +519,12 @@ let nextConfig = {
               key: "prso-cta-lm",
             },
           ],
+          missing: [
+            {
+              type:"query",
+              key:"preview"
+            }
+          ]
         },
         {
           source: "/:path*",
@@ -320,6 +533,23 @@ let nextConfig = {
             {
               type: "query",
               key: "dyn-content",
+            },
+          ],
+          missing: [
+            {
+              type:"query",
+              key:"preview"
+            }
+          ]
+        },
+        {
+          source: "/:path*",
+          destination: "/dynamic/:path*",
+          has: [
+            {
+              type: "query",
+              key: "utm_campaign",
+              value: "(fall|sticky|staticbold|staticcomp)"
             },
           ],
         },
@@ -354,6 +584,12 @@ let nextConfig = {
               key: "goal",
             },
           ],
+          missing: [
+            {
+              type:"query",
+              key:"preview"
+            }
+          ]
         },
         {
           source: "/:path*",

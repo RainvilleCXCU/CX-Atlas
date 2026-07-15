@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
+import { capitalizeWords } from "utils/text";
 
 interface CXCalcProps {
     children?;
@@ -7,6 +8,7 @@ interface CXCalcProps {
     flowId?;
     appUrl?;
     viewMoreButton?;
+    selectProductTypeText?;
     selectSubjectText?;
     selectResourceText?;
     anyResourceText?;
@@ -26,6 +28,7 @@ const Scheduler = ({
     flowId = '',
     appUrl = '',
     viewMoreButton = '',
+    selectProductTypeText = '',
     selectSubjectText = '',
     selectResourceText = '',
     anyResourceText = '',
@@ -43,6 +46,12 @@ const Scheduler = ({
     const initialized = useRef(false);
     const [flowLoaded, setFlowLoaded] = useState([]);
     let showAll = query.productType === undefined && query.productFilters === undefined;
+    let singleProductName = query.productType ? capitalizeWords(query.productType.toString().replace('-', ' ')) : '';
+    if (singleProductName[singleProductName.length - 1] === 's' && !singleProductName.endsWith('ss')) {
+        singleProductName = singleProductName.slice(0, -1);
+    }
+    selectSubjectText = selectSubjectText.replace('[productName]', singleProductName);
+    selectSubjectText = selectSubjectText.replace('[productNamePlural]', query.productType ? capitalizeWords(query.productType.toString().replace('-', ' ')) : '');
     const viewAll = () => {
         const viewAllBtn = document.getElementById('show_more_types');
         for (const elem of document.querySelectorAll('.runtime_appointmentbookingFlowWorkType .slds-form-element__control .slds-m-top_small')) {
@@ -163,6 +172,7 @@ const Scheduler = ({
                     const finishTextHTML = lightningNode.querySelector('.runtime_appointmentbookingFlowConfirm h2');
                     const reviewPageForm = lightningNode.querySelector('.runtime_appointmentbookingFlowReview .slds-form');
                     const resourcePage = lightningNode.querySelector('.runtime_appointmentbookingResourceList');
+                    const selectSubjectPage = lightningNode.querySelector('.runtime_appointmentbookingFlowWorkType');
 
                     if (!showAll) {
                         for (const elem of document.querySelectorAll('.runtime_appointmentbookingFlowWorkType .slds-form-element__control .slds-m-top_small')) {
@@ -176,7 +186,11 @@ const Scheduler = ({
                         }
                     }
                     if (groupHeading && groupHeading.innerHTML != selectSubjectText) {
-                        groupHeading.innerHTML = selectSubjectText;
+                        groupHeading.innerHTML = '';
+                    }
+                    
+                    if(!selectSubjectPage) {
+                        document.querySelector('h1').classList.add('hidden');
                     }
 
                     if (resourcePage) {
@@ -289,11 +303,12 @@ const Scheduler = ({
                             }
                         );
                     }, appUrl,
-                    function(error) {
+                    null,
+                    function(error: unknown) {
                        // Prevent default behavior
                         // You can optionally log the error or display it in your own UI
                         console.error("Lightning error:", error);
-                        
+
                         // Find and remove any auraErrorMessage elements that were added
                         setTimeout(() => {
                         const errorElements = document.querySelectorAll('.auraErrorMessage');
@@ -320,6 +335,16 @@ const Scheduler = ({
 
     return (
         <>
+            {
+                selectSubjectText !== '' && 
+                <h1 className="cx-h3 cx-text--weight-book center">
+                    {
+                        singleProductName !== ':path*' ?
+                        selectSubjectText
+                            : selectProductTypeText ? selectProductTypeText : 'Select accounts and loans to discuss'
+                    }
+                </h1>
+            }
             <div id="lightningLocator"></div>
             {
                 query.productType &&
