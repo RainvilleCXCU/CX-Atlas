@@ -21,7 +21,7 @@ class CXDoc extends Document {
               }}
             />
           )}
-          <style>{`body { display: block !important }`}</style>
+          {/* <style>{`body { display: block !important }`}</style> */}
           <link href='https://www.googletagmanager.com' rel='dns-prefetch' />
           <link href={process.env.NEXT_PUBLIC_WORDPRESS_URL} rel='dns-prefetch' />
           {
