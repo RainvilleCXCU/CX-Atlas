@@ -49,6 +49,32 @@ const THIRD_PARTY_CSP = {
     "connect-src": ["https://*.qualtrics.com"],
     "img-src": ["https://*.qualtrics.com"],
   },
+  CSP_DISABLE_VWO: {
+    "script-src": [
+      "*.wingify.com",
+      "*.wingify.net"
+    ],
+    "connect-src": [
+      "*.wingify.com",
+      "*.wingify.net"
+    ],
+    "img-src": [
+      "*.wingify.com",
+      "*.wingify.net"
+    ],
+    "frame-src": [
+      "*.wingify.com",
+      "*.wingify.net"
+    ],
+    "style-src": [
+      "*.wingify.com",
+      "*.wingify.net",
+      "*.wingify.io"
+    ],
+    "font-src": [
+      "*.wingify.io",
+    ]
+  },
   CSP_DISABLE_CLARITY: {
     "script-src": ["https://www.clarity.ms", "https://*.clarity.ms"],
     "connect-src": ["https://*.clarity.ms", "https://c.bing.com"],
