@@ -56,7 +56,7 @@ class CXDoc extends Document {
                   process.env.NEXT_PUBLIC_styleguideVersion || "latest"}/cxcuatlas.css${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`} />
             </>
           }
-          <WingifyScript accountId="1256673" />
+          <WingifyScript accountId="1256673" type="ASYNC" />
         </Head>
         <body>
           <Main />
