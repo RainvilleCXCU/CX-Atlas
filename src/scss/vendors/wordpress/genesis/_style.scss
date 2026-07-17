@@ -1816,6 +1816,39 @@ Page Navigation
 	vertical-align: middle;
 	height: 50px;
 }
+.pagination {
+	&--variant-green {
+		.nav-links {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 10px;
+			a, span {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				background: #FFF;
+				color: #333;
+				padding: 0;
+				border-radius: 10.049px;
+				line-height: normal;
+				height: 40px;
+				width: 40px;
+				border: 1.256px solid #F1F1F1;
+				background: #FFF;
+				text-decoration: none;
+				&.current:visited, &:visited {
+					color: #333;
+				}
+				&.current, &:hover {
+					background: #084039;
+					color: #fff;
+					text-decoration: none;
+				}
+			}
+		}
+	}
+}
 
 @media (max-width: 600px) {
 	.pagination a,

@@ -36,10 +36,11 @@ export interface PaginationProps {
   buffer?: number;
   querys?: string;
   shallow?: boolean;
+  variant?: string;
   clickHandler?
 }
 
-export default function Pagination({ totalResults, currentPage = 1, basePath, perPage = 5, buffer = 2, querys = '', shallow = false, clickHandler }: PaginationProps) {
+export default function Pagination({ totalResults, currentPage = 1, basePath, perPage = 5, buffer = 2, querys = '', shallow = false, clickHandler, variant }: PaginationProps) {
   const prevPage = currentPage - 1 > 1 ? currentPage - 1 : 1;
   const nextPage = currentPage + 1;
 
@@ -87,7 +88,7 @@ export default function Pagination({ totalResults, currentPage = 1, basePath, pe
   }
 
   return (
-    <nav className="pagination navigation" aria-label="Pagination">
+    <nav className={`pagination navigation${variant ? ` pagination--variant-${variant}` : ''}`} aria-label="Pagination">
       <div className="nav-links">
         {hasPrevious && (
           <PreviousPageNavigation href={previousPageUrl} shallow={useShallow} onClick={() => {

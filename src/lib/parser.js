@@ -399,6 +399,11 @@ export const parseHtml = (html) => {
                     <LinkLibrary cat_ids={JSON.parse(attribs?.['data-link-library-cats'])} {...attributesToProps(attribs)}>{domToReact(children, options)}</LinkLibrary>
                 )
             }
+            else if(attribs?.['data-encoded-link-library-list']) {
+                return (
+                    <LinkLibrary slug={attribs?.['data-slug']} encodedList={JSON.parse(Buffer.from(attribs?.['data-encoded-link-library-list'], 'base64'))} {...attributesToProps(attribs)}>{domToReact(children, options)}</LinkLibrary>
+                )
+            }
 
             // Form
             else if(attribs?.class?.includes('nf-form-cont')) {
