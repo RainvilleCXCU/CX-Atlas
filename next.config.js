@@ -425,6 +425,10 @@ let nextConfig = {
           destination: "/about/media-center/:catId/?page=:page",
         },
         // {
+        //   source: "/news-room/page/:page?",
+        //   destination: "/news-room/?page=:page",
+        // },
+        // {
         //     source: '/blog/category/:categoryName{/}?',
         //     destination: '/blog/category/:categoryName/?categoryName=:categoryName',
         // },
