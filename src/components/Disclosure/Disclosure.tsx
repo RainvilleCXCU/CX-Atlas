@@ -91,10 +91,20 @@ function Disclosure({ attribs, children }) {
 
 	useEffect(() => {
 		if (hash) {
+
+			const wrapper = disclosureWrapper.current.querySelector(".disclosure_wrapper");
+			const container = disclosureWrapper.current.querySelector(".disclosure_container");
+			const expandButton = disclosureWrapper.current.querySelector("#disclosureButton");
 			// We want to reset if the hash has changed
 			if (hashRef.current !== hash) {
 				hashRef.current = hash;
 				scrolledRef.current = false;
+			}
+
+			if(hashRef.current === 'disclosures' && !wrapper.classList.contains('expanded')) {
+				wrapper.classList.toggle("expanded");
+				container.classList.toggle("expanded");
+				expandButton.innerHTML = expandButton.innerHTML === "+ Expand" ? "- Collapse" : "+ Expand";
 			}
 
 			// only attempt to scroll if we haven't yet (this could have just reset above if hash changed)

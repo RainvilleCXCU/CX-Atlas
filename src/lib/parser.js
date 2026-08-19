@@ -253,13 +253,20 @@ export const parseHtml = (html) => {
                         <Accordion
                             stayOpen={attribs?.['data-stay-open']}
                             startOpen={attribs?.['data-start-open']}
+                            preHeading={attribs?.['data-pre-heading'] ?? ''}
                             title={attribs?.['data-encodedheading'] ? parseHtml(Buffer.from(attribs?.['data-encodedheading'], 'base64').toString()): ''}
                             classNames={attribs?.class}
                             borderStyle={attribs?.['data-border-style'] ? JSON.parse(attribs['data-border-style']) : undefined}
+                            borderStyleOpen={attribs?.['data-border-style-open'] ? JSON.parse(attribs['data-border-style-open']) : undefined}
+                            borderColorOpen={attribs?.['data-border-color-open'] ?? ''}
+                            useTitleBackground={attribs?.['data-use-title-background'] === 'true'}
+                            detailsBackground={attribs?.['data-details-background'] ?? ''}
                             id={attribs?.['data-accordion-id']}
                             contentBackground={attribs?.['data-content-background']}
                             accordionIconSrc={attribs?.['data-accordion-icon-src']}
-                            showDetails={attribs?.['data-show-details']}
+                            accordionIconOpenSrc={attribs?.['data-accordion-icon-open-src']}
+                            showDetailsText={attribs?.['data-show-details-text'] ?? ''}
+                            hideDetailsText={attribs?.['data-hide-details-text'] ?? ''}
                             content={attribs?.['data-encodedcontent'] ? parseHtml(Buffer.from(attribs?.['data-encodedcontent'], 'base64').toString()): ''}
                         />
                     )
@@ -397,6 +404,11 @@ export const parseHtml = (html) => {
             else if(attribs?.['data-link-library-cats']) {
                 return (
                     <LinkLibrary cat_ids={JSON.parse(attribs?.['data-link-library-cats'])} {...attributesToProps(attribs)}>{domToReact(children, options)}</LinkLibrary>
+                )
+            }
+            else if(attribs?.['data-encoded-link-library-list']) {
+                return (
+                    <LinkLibrary slug={attribs?.['data-slug']} encodedList={JSON.parse(Buffer.from(attribs?.['data-encoded-link-library-list'], 'base64'))} {...attributesToProps(attribs)}>{domToReact(children, options)}</LinkLibrary>
                 )
             }
 

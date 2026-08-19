@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 interface AccordionProps {
   title: string;
+  preHeading?: string;
   content: string;
   isOpen?: boolean;
   stayOpen?: string;
@@ -11,12 +12,18 @@ interface AccordionProps {
   id?: string;
   classNames?: string;
   borderStyle?: React.CSSProperties;
+  borderStyleOpen?: React.CSSProperties;
+  borderColorOpen?: string;
+  useTitleBackground?: boolean;
+  detailsBackground?: string;
   contentBackground?: string;
   accordionIconSrc?: string;
-  showDetails?: boolean;
+  accordionIconOpenSrc?: string;
+  showDetailsText?: string;
+  hideDetailsText?: string;
 }
 
-const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = '', isOpen = false, id, stayOpen = 'false', startOpen = 'false', borderStyle = {}, contentBackground = '', accordionIconSrc = '', showDetails = false }) => {
+const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', preHeading = '', content = '', isOpen = false, id, stayOpen = 'false', startOpen = 'false', borderStyle = {}, borderStyleOpen = {}, borderColorOpen = '', useTitleBackground = false, detailsBackground = '', contentBackground = '', accordionIconSrc = '', accordionIconOpenSrc = '', showDetailsText = '', hideDetailsText = '' }) => {
     const [isAccordionOpen, setIsAccordionOpen] = useState(startOpen === 'true');
     const [contentHeight, setContentHeight] = useState(0);
     const contentRef = useRef<HTMLDivElement>(null);
@@ -90,15 +97,23 @@ const Accordion: FC<AccordionProps> = ({ classNames = '', title = '', content = 
   }, []);
 
   return (
-    <div className={`cx-accordion__brand ${classNames}${isAccordionOpen ? ' is-open' : ''}`} style={borderStyle}>
-      <div className="accordion-header" onClick={openHandler} id={id}>
+    <div className={`cx-accordion__brand ${classNames}${isAccordionOpen ? ' is-open' : ''}`} style={isAccordionOpen ? borderStyleOpen : borderStyle}>
+      <div className={`accordion-header${useTitleBackground ? ' use-title-background' : ''}`} onClick={openHandler} id={id} style={isAccordionOpen && borderColorOpen ? { backgroundColor: borderColorOpen } : undefined}>
         <summary className={`gb-accordion-title${isAccordionOpen ? ' is-open' : ''}`}>
           {accordionIconSrc && (
-            <img src={accordionIconSrc} className="gb-accordion-icon" />
+            <img src={isAccordionOpen ? (accordionIconOpenSrc || accordionIconSrc) : accordionIconSrc} className="gb-accordion-icon" />
           )}
-          {title}
-          {showDetails && (
-            <span className="show-details">{isAccordionOpen ? 'Hide details' : 'Show details'}</span>
+          <span className="heading-group">
+            {preHeading && (
+              <span className="pre-heading">{preHeading}</span>
+            )}
+            <span className={`heading${preHeading ? ' bold-text' : ''}`}>{title}</span>
+          </span>
+          {showDetailsText && (
+            <span
+              className={`show-details${detailsBackground && !isAccordionOpen ? ' has-background-color' : ''}`}
+              style={detailsBackground && !isAccordionOpen ? { backgroundColor: detailsBackground } : undefined}
+            >{isAccordionOpen ? hideDetailsText : showDetailsText}</span>
           )}
         </summary>
       </div>
