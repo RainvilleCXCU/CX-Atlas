@@ -3,6 +3,7 @@ import MobileNav from './MobileNav';
 import MenuNavigation from 'components/Navigation/Navbar';
 import Link from 'next/link';
 import { trackMember } from 'utils/tracking';
+import { parseHtml } from 'lib/parser';
 interface NavigationProps {
     navOpen?: boolean,
     setNavOpen,
@@ -40,13 +41,18 @@ export default function Navigation(props: NavigationProps) {
                   {showNavigation &&
                     <MenuNavigation device="Desktop" menuItems={menuItems} menuOpen={false} setNavOpen={setNavOpen} /> || <div></div>
                   }
-                  {showButtons &&
+                  {showButtons && (
                     <div>
-                      <Link href="/pay-my-loan/" prefetch={false} className="cx-button cx-button--compact cx-button--text cx-button--outlined-positive" type="button" onClick={trackMember}>Pay my loan
-                      </Link>
-                      <Link href="/mdr?loc=LStUVVkwNi1DO1c1Tj0nLTYsQGBgCmAK&login=desktop" prefetch={false} className="cx-button cx-button--compact cx-button--color-positive" onClick={trackMember}>Log in</Link>
-                    </div>
-                  }
+                    { headerSettings?.headerButtons ?
+                      parseHtml(headerSettings?.headerButtons) :
+                      <>
+                        <Link href="/pay-my-loan/" prefetch={false} className="cx-button cx-button--compact cx-button--text cx-button--outlined-positive" type="button" onClick={trackMember}>Pay my loan
+                        </Link>
+                        <Link href="/mdr?loc=LStUVVkwNi1DO1c1Tj0nLTYsQGBgCmAK&login=desktop" prefetch={false} className="cx-button cx-button--compact cx-button--color-positive" onClick={trackMember}>Log in</Link>
+                      </>
+            }
+                  </div>
+                  )}
                 </div>
               </nav>
             }

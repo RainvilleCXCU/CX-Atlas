@@ -3,6 +3,7 @@ import * as MENUS from "../../constants/menus";
 import { BlogInfoFragment } from "../../fragments/GeneralSettings";
 import { NavigationMenuItemFragment } from 'fragments/MenuItems';
 import { ThirdPartySettingsFragment } from 'fragments/ThirdParty';
+import { HeaderSettingsFragment } from 'fragments/HeaderSettings';
 const GTM = dynamic(() => import('components/ThirdParty/gtm'), {ssr:false});
 const Personyze = dynamic(() => import('components/ThirdParty/personyze'), {ssr:false});
 const HotJar = dynamic(() => import('components/ThirdParty/hotjar'), {ssr:false});
@@ -175,6 +176,7 @@ Component.query = gql`
   ${NavigationMenuItemFragment}
   ${ThirdPartySettingsFragment}
   ${AlertFragment}
+  ${HeaderSettingsFragment}
   query GetMediaCenterData(
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
@@ -183,10 +185,7 @@ Component.query = gql`
       ...BlogInfoFragment
     }
     headerSettings {
-      headerUtilities
-      headerUtilitiesMobile
-      headerButtons
-      headerButtonsMobile
+      ...HeaderSettingsFragment
     }
     footerSettings {
       footerUtilities

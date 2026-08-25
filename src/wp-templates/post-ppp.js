@@ -5,6 +5,7 @@ import { AlertFragment } from '../fragments/Alerts';
 import { NavigationMenuItemFragment } from '../fragments/MenuItems';
 import { parseHtml } from 'lib/parser';
 import { ThirdPartySettingsFragment } from 'fragments/ThirdParty';
+import { HeaderSettingsFragment } from 'fragments/HeaderSettings';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import RelatedPosts from 'components/Posts/relatedPosts';
@@ -83,6 +84,7 @@ Component.query = gql`
   ${NavigationMenuItemFragment}
   ${ThirdPartySettingsFragment}
   ${AlertFragment}
+  ${HeaderSettingsFragment}
   query GetPagePreviewData(
     $pageId: String
     $cache: String
@@ -154,10 +156,7 @@ Component.query = gql`
       ...BlogInfoFragment
     }
     headerSettings {
-      headerUtilities
-      headerUtilitiesMobile
-      headerButtons
-      headerButtonsMobile
+      ...HeaderSettingsFragment
     }
     footerSettings {
       footerUtilities
