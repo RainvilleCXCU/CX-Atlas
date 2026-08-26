@@ -3,6 +3,7 @@ import * as MENUS from "../../../constants/menus";
 import { BlogInfoFragment } from "../../../fragments/GeneralSettings";
 import { NavigationMenuItemFragment } from 'fragments/MenuItems';
 import { ThirdPartySettingsFragment } from 'fragments/ThirdParty';
+import { HeaderSettingsFragment } from 'fragments/HeaderSettings';
 import { parseHtml } from "lib/parser";
 import { getNextStaticProps } from "@faustwp/core";
 import { GetStaticPropsContext } from "next";
@@ -72,6 +73,7 @@ Component.query = gql`
   ${NavigationMenuItemFragment}
   ${ThirdPartySettingsFragment}
   ${AlertFragment}
+  ${HeaderSettingsFragment}
   query GetFAQ(
     $slug: String
     $headerLocation: MenuLocationEnum
@@ -81,10 +83,7 @@ Component.query = gql`
       ...BlogInfoFragment
     }
     headerSettings {
-      headerUtilities
-      headerUtilitiesMobile
-      headerButtons
-      headerButtonsMobile
+      ...HeaderSettingsFragment
     }
     footerSettings {
       footerUtilities

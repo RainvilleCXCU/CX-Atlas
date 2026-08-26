@@ -3,6 +3,7 @@ import { BlogInfoFragment } from "../../../fragments/GeneralSettings";
 import { AlertFragment } from '../../../fragments/Alerts';
 import { NavigationMenuItemFragment } from 'fragments/MenuItems';
 import { ThirdPartySettingsFragment } from 'fragments/ThirdParty';
+import { HeaderSettingsFragment } from 'fragments/HeaderSettings';
 const GTM = dynamic(() => import('components/ThirdParty/gtm'), {ssr:false});
 const Personyze = dynamic(() => import('components/ThirdParty/personyze'), {ssr:false});
 const HotJar = dynamic(() => import('components/ThirdParty/hotjar'), {ssr:false});
@@ -258,6 +259,7 @@ Page.query = gql`
   ${NavigationMenuItemFragment}
   ${ThirdPartySettingsFragment}
   ${AlertFragment}
+  ${HeaderSettingsFragment}
   query GetLocationPageData(
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
@@ -266,10 +268,7 @@ Page.query = gql`
       ...BlogInfoFragment
     }
     headerSettings {
-      headerUtilities
-      headerUtilitiesMobile
-      headerButtons
-      headerButtonsMobile
+      ...HeaderSettingsFragment
     }
     footerSettings {
       footerUtilities

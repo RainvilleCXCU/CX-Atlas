@@ -5,6 +5,7 @@ import { BlogInfoFragment } from '../fragments/GeneralSettings';
 import { AlertFragment } from 'fragments/Alerts';
 import { NavigationMenuItemFragment } from 'fragments/MenuItems';
 import { ThirdPartySettingsFragment } from 'fragments/ThirdParty';
+import { HeaderSettingsFragment } from 'fragments/HeaderSettings';
 import { getNextStaticProps } from '@faustwp/core';
 import { GetStaticPropsContext } from 'next';
 import Container from 'components/Blocks/Container';
@@ -238,6 +239,7 @@ Component.query = gql`
   ${NavigationMenuItemFragment}
   ${ThirdPartySettingsFragment}
   ${AlertFragment}
+  ${HeaderSettingsFragment}
   query Get404(
     $headerLocation: MenuLocationEnum
     $footerLocation: MenuLocationEnum
@@ -246,10 +248,7 @@ Component.query = gql`
       ...BlogInfoFragment
     }
     headerSettings {
-      headerUtilities
-      headerUtilitiesMobile
-      headerButtons
-      headerButtonsMobile
+      ...HeaderSettingsFragment
     }
     footerSettings {
       footerUtilities
