@@ -4,6 +4,7 @@ import { BlogInfoFragment } from "../fragments/GeneralSettings";
 import { AlertFragment } from "../fragments/Alerts";
 import { NavigationMenuItemFragment } from "../fragments/MenuItems";
 import { ThirdPartySettingsFragment } from "fragments/ThirdParty";
+import { HeaderSettingsFragment } from "fragments/HeaderSettings";
 import { parseHtml } from "lib/parser";
 import RelatedPosts from "components/Posts/relatedPosts";
 import Image from "next/image";
@@ -85,6 +86,7 @@ Component.query = gql`
   ${NavigationMenuItemFragment}
   ${ThirdPartySettingsFragment}
   ${AlertFragment}
+  ${HeaderSettingsFragment}
   query GetPost(
     $databaseId: ID!
     $id: String
@@ -159,10 +161,7 @@ Component.query = gql`
       ...BlogInfoFragment
     }
     headerSettings {
-      headerUtilities
-      headerUtilitiesMobile
-      headerButtons
-      headerButtonsMobile
+      ...HeaderSettingsFragment
     }
     footerSettings {
       footerUtilities

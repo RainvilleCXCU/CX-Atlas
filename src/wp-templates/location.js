@@ -5,6 +5,7 @@ import { AlertFragment } from '../fragments/Alerts';
 import { NavigationMenuItemFragment } from '../fragments/MenuItems';
 import { parseHtml } from 'lib/parser';
 import { ThirdPartySettingsFragment } from 'fragments/ThirdParty';
+import { HeaderSettingsFragment } from 'fragments/HeaderSettings';
 import dynamic from 'next/dynamic';
 import { useContext, useEffect, useState } from 'react';
 import { locationSettingsContext } from 'components/Locations/locationsContext';
@@ -54,6 +55,7 @@ Component.query = gql`
   ${NavigationMenuItemFragment}
   ${ThirdPartySettingsFragment}
   ${AlertFragment}
+  ${HeaderSettingsFragment}
   query GetPageData(
     $uri: ID!
     $headerLocation: MenuLocationEnum
@@ -131,10 +133,7 @@ Component.query = gql`
       ...BlogInfoFragment
     }
     headerSettings {
-      headerUtilities
-      headerUtilitiesMobile
-      headerButtons
-      headerButtonsMobile
+      ...HeaderSettingsFragment
     }
     footerSettings {
       footerUtilities

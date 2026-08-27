@@ -4,6 +4,7 @@ import { BlogInfoFragment } from '../../fragments/GeneralSettings';
 import { AlertFragment } from '../../fragments/Alerts';
 import { NavigationMenuItemFragment } from 'fragments/MenuItems';
 import { ThirdPartySettingsFragment } from 'fragments/ThirdParty';
+import { HeaderSettingsFragment } from 'fragments/HeaderSettings';
 const GTM = dynamic(() => import('components/ThirdParty/gtm'), {ssr:false});
 const Personyze = dynamic(() => import('components/ThirdParty/personyze'), {ssr:false});
 const HotJar = dynamic(() => import('components/ThirdParty/hotjar'), {ssr:false});
@@ -185,6 +186,7 @@ Component.variables = (props) => {
     ${NavigationMenuItemFragment}
     ${ThirdPartySettingsFragment}
     ${AlertFragment}
+    ${HeaderSettingsFragment}
     query GetHomePageData(
       $footerLocation: MenuLocationEnum
     ) {
@@ -192,10 +194,7 @@ Component.variables = (props) => {
             ...BlogInfoFragment
         }
         headerSettings {
-            headerUtilities
-            headerUtilitiesMobile
-            headerButtons
-            headerButtonsMobile
+            ...HeaderSettingsFragment
         }
         footerSettings {
             footerUtilities

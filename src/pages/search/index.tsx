@@ -3,6 +3,7 @@ import { BlogInfoFragment } from '../../fragments/GeneralSettings';
 import { AlertFragment } from 'fragments/Alerts';
 import { NavigationMenuItemFragment } from 'fragments/MenuItems';
 import { ThirdPartySettingsFragment } from 'fragments/ThirdParty';
+import { HeaderSettingsFragment } from 'fragments/HeaderSettings';
 import Pagination from 'components/Pagination';
 import SearchBar from 'components/Search/SearchBar';
 import SearchListing from 'components/Search/Listing';
@@ -90,6 +91,7 @@ Component.query = gql`
   ${NavigationMenuItemFragment}
   ${ThirdPartySettingsFragment}
   ${AlertFragment}
+  ${HeaderSettingsFragment}
   query GetSearchData(
     $searchTerm: String!
     $offset: Int!
@@ -173,10 +175,7 @@ Component.query = gql`
       ...BlogInfoFragment
     }
     headerSettings {
-      headerUtilities
-      headerUtilitiesMobile
-      headerButtons
-      headerButtonsMobile
+      ...HeaderSettingsFragment
     }
     footerSettings {
       footerUtilities
@@ -223,6 +222,7 @@ if(process.env.NEXT_PUBLIC_SEARCH_APPLIANCE === 'searchwp' || !process.env.NEXT_
   ${NavigationMenuItemFragment}
   ${ThirdPartySettingsFragment}
   ${AlertFragment}
+  ${HeaderSettingsFragment}
   query GetSearchData(
     $searchTerm: String!
     $offset: String!
@@ -262,10 +262,7 @@ if(process.env.NEXT_PUBLIC_SEARCH_APPLIANCE === 'searchwp' || !process.env.NEXT_
       ...BlogInfoFragment
     }
     headerSettings {
-      headerUtilities
-      headerUtilitiesMobile
-      headerButtons
-      headerButtonsMobile
+      ...HeaderSettingsFragment
     }
     footerSettings {
       footerUtilities

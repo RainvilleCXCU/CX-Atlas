@@ -4,6 +4,7 @@ import { BlogInfoFragment } from '../fragments/GeneralSettings';
 import { AlertFragment } from '../fragments/Alerts';
 import { NavigationMenuItemFragment } from '../fragments/MenuItems';
 import { ThirdPartySettingsFragment } from 'fragments/ThirdParty';
+import { HeaderSettingsFragment } from 'fragments/HeaderSettings';
 import dynamic from 'next/dynamic';
 const BaseLayout = dynamic(() => import('components/layout'));
 import { parseHtml } from 'lib/parser';
@@ -40,6 +41,7 @@ Component.query = gql`
   ${NavigationMenuItemFragment}
   ${ThirdPartySettingsFragment}
   ${AlertFragment}
+  ${HeaderSettingsFragment}
   query GetHomePageData(
     $databaseId: ID!
     $headerLocation: MenuLocationEnum
@@ -88,10 +90,7 @@ Component.query = gql`
       ...BlogInfoFragment
     }
     headerSettings {
-      headerUtilities
-      headerUtilitiesMobile
-      headerButtons
-      headerButtonsMobile
+      ...HeaderSettingsFragment
     }
     footerSettings {
       footerUtilities
