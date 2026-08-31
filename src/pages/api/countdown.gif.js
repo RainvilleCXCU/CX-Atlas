@@ -17,7 +17,10 @@ import { isIpAllowed } from '../../lib/ip-allowlist';
  *   loop    extra repeats after the first play, then freeze on the last frame
  *           (default 1 → plays, loops once more, then holds the final frame).
  *           Use "infinite" (or -1) to loop forever without freezing.
- *   bg, panel, digit, label, accent   hex colors (with or without #)
+ *   bg      page background — hex color (with or without #), or
+ *           "transparent"/"none" to let the countdown sit directly on the
+ *           email background (default: opaque)
+ *   panel, digit, label, accent   hex colors (with or without #)
  *   font    "smooth" (default, anti-aliased vector font) or "pixel"/"bitmap"
  *           for the blocky 5x7 bitmap font
  *   labels  comma-separated unit labels (default "DAYS,HRS,MINS,SECS")

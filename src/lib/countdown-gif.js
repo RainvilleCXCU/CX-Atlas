@@ -626,29 +626,37 @@ function generateCountdownGif(opts) {
     palette.push(rgb);
     return palette.length - 1;
   };
-  const digitRamp = buildRamp(PANEL, DIGIT); // digits on panels
-  const labelRamp = buildRamp(BG, LABEL); // labels on page bg
-  const colonRamp = buildRamp(PANEL, ACCENT); // colon separators on panels
 
-  // Banner styling for the expired + end-card frames. Each has a configurable
-  // text color and background. The expired banner defaults to a transparent
-  // background with white text; the end card defaults to an opaque #006939
-  // (the makeBanner fallback below) with white text, since it's meant to read
-  // as a clean closing card rather than blend into the email background. A
-  // transparent background needs a reserved transparent palette index (added
-  // once, shared) and disposal method 2 in the encoder.
+  // Whether the page background — the area around/between panels, including
+  // where the colon separators and unit labels sit — is transparent, plus the
+  // expired/end-card banner backgrounds. Any of these needs a reserved
+  // transparent palette index (added once, shared) and disposal method 2 in
+  // the encoder. The page background defaults to opaque, unlike the expired
+  // banner, so existing callers that never asked for transparency keep
+  // rendering exactly as before.
+  const bgTransparent = bgIsTransparent(opts.bg, false);
   const expiredBgT = bgIsTransparent(opts.expiredBg);
   const endBgT = bgIsTransparent(opts.endBg, false);
   let TRANSPARENT = -1;
-  if (expiredBgT || endBgT) {
+  if (bgTransparent || expiredBgT || endBgT) {
     TRANSPARENT = pushColor(palette[BG].slice()); // RGB = page bg for non-transparent-aware viewers
   }
+  const pageFillIndex = bgTransparent ? TRANSPARENT : BG;
+
+  const digitRamp = buildRamp(PANEL, DIGIT); // digits on panels
+  // Labels and colon separators are drawn directly on the page background,
+  // not on a panel. Over a transparent background there's no color to blend
+  // AA edges into, so — like the banner text below — threshold coverage
+  // instead of a smooth ramp.
+  const labelRamp = bgTransparent ? [TRANSPARENT, LABEL, LABEL] : buildRamp(BG, LABEL);
+  const colonRamp = bgTransparent ? [TRANSPARENT, ACCENT, ACCENT] : buildRamp(BG, ACCENT);
+
   // Build a banner: fill index + coverage ramp. Over a transparent background,
   // GIF has no partial alpha, so we threshold coverage (a short ramp) instead of
   // blending into the unknown email background.
-  function makeBanner(bgTransparent, bgHex, textHex) {
+  function makeBanner(transparent, bgHex, textHex) {
     const textIdx = pushColor(hexToRgb(textHex, [255, 255, 255]));
-    if (bgTransparent) return { bgIdx: TRANSPARENT, ramp: [TRANSPARENT, textIdx, textIdx] };
+    if (transparent) return { bgIdx: TRANSPARENT, ramp: [TRANSPARENT, textIdx, textIdx] };
     const bgIdx = pushColor(hexToRgb(bgHex, [0, 105, 57]));
     return { bgIdx, ramp: buildRamp(bgIdx, textIdx) };
   }
@@ -701,7 +709,7 @@ function generateCountdownGif(opts) {
 
   function renderFrame(msRemaining) {
     if (msRemaining <= 0) return renderBanner(expiredText, expiredBanner);
-    const r = new Raster(width, height, BG);
+    const r = new Raster(width, height, pageFillIndex);
     const { days, hours, mins, secs } = breakdown(msRemaining);
     const values = [pad2(days), pad2(hours), pad2(mins), pad2(secs)];
 
@@ -786,15 +794,18 @@ function generateCountdownGif(opts) {
   const netscapeLoop = loopInfinite ? 0 : -1;
   const gif = new GifWriter(width, height, palette, netscapeLoop, TRANSPARENT);
 
-  // Build the ordered frame list first. A countdown frame is opaque unless the
-  // target has passed and the expired banner uses a transparent background; the
-  // optional end card is transparent when its background is. Assembling the list
-  // up front lets us look ahead when choosing disposal (a frame that precedes a
-  // transparent frame must clear to the page, not leave stale pixels behind).
+  // Build the ordered frame list first. A countdown frame is transparent when
+  // either the page background is transparent, or the target has passed and
+  // the expired banner uses a transparent background (those are independent
+  // settings — expiredBgT only applies once renderFrame has switched to the
+  // banner). The optional end card is transparent when its own background is.
+  // Assembling the list up front lets us look ahead when choosing disposal (a
+  // frame that precedes a transparent frame must clear to the page, not leave
+  // stale pixels behind).
   const list = []; // { data, delay, transparent }
   const pushCountdown = (remaining, delay) => {
     const expired = remaining <= 0;
-    list.push({ data: renderFrame(remaining), delay, transparent: expired && expiredBgT });
+    list.push({ data: renderFrame(remaining), delay, transparent: expired ? expiredBgT : bgTransparent });
   };
 
   if (loopInfinite) {

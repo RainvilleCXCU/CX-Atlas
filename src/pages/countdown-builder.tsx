@@ -75,6 +75,7 @@ type State = {
   loopMode: 'freeze' | 'infinite';
   repeats: number;
   font: 'smooth' | 'pixel';
+  bgTransparent: boolean;
   bg: string;
   panel: string;
   digit: string;
@@ -112,6 +113,7 @@ export default function CountdownBuilder() {
     loopMode: 'freeze',
     repeats: 0,
     font: 'smooth',
+    bgTransparent: false,
     bg: DEFAULTS.bg,
     panel: DEFAULTS.panel,
     digit: DEFAULTS.digit,
@@ -301,7 +303,13 @@ export default function CountdownBuilder() {
 
             <Section title="Colors">
               <div className="cgb-swatches">
-                <ColorField label="Background" value={s.bg} onChange={(v) => set('bg', v)} />
+                <BgField
+                  label="Background"
+                  transparent={s.bgTransparent}
+                  onTransparent={(v) => set('bgTransparent', v)}
+                  value={s.bg}
+                  onChange={(v) => set('bg', v)}
+                />
                 <ColorField label="Panel" value={s.panel} onChange={(v) => set('panel', v)} />
                 <ColorField label="Digits" value={s.digit} onChange={(v) => set('digit', v)} />
                 <ColorField label="Labels" value={s.label} onChange={(v) => set('label', v)} />
@@ -502,7 +510,7 @@ function buildQuery(s: State): { to: string; query: string } {
   p.set('loop', s.loopMode === 'infinite' ? 'infinite' : String(s.repeats));
   p.set('font', s.font);
 
-  p.set('bg', clean(s.bg));
+  p.set('bg', s.bgTransparent ? 'transparent' : clean(s.bg));
   p.set('panel', clean(s.panel));
   p.set('digit', clean(s.digit));
   p.set('label', clean(s.label));
