@@ -163,6 +163,9 @@ export default function CountdownBuilder() {
   const fullUrl = origin ? `${origin}${path}` : path;
   const previewSrc = `${path}${query ? '&' : '?'}_=${refreshKey}`;
   const imgSnippet = `<img src="${fullUrl}" width="${s.w}" height="${s.h}" alt="Countdown timer" style="display:block;border:0;outline:none;" />`;
+  const tokenImgSnippet = token
+    ? `<img src="${token.url}" width="${s.w}" height="${s.h}" alt="Countdown timer" style="display:block;border:0;outline:none;" />`
+    : '';
 
   const copy = async (text: string, label: string) => {
     try {
@@ -464,6 +467,12 @@ export default function CountdownBuilder() {
                   <textarea readOnly rows={3} value={token.url} />
                   <button className="cgb-btn cgb-btn-primary" onClick={() => copy(token.url, 'tok')}>
                     {copied === 'tok' ? 'Copied!' : 'Copy obfuscated URL'}
+                  </button>
+                  <Field label="Email <img> snippet">
+                    <textarea readOnly rows={4} value={tokenImgSnippet} />
+                  </Field>
+                  <button className="cgb-btn" onClick={() => copy(tokenImgSnippet, 'tokimg')}>
+                    {copied === 'tokimg' ? 'Copied!' : 'Copy snippet'}
                   </button>
                 </>
               )}
