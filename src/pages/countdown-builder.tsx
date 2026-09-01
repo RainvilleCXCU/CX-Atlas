@@ -688,9 +688,9 @@ const STYLES = `
 .cgb-muted { color: #9aa3a8; font-size: 13px; }
 .cgb-btn { width: 100%; padding: 9px 14px; border: 1px solid #cdd5da; border-radius: 6px;
   background: #fff; color: #1a2024; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
-.cgb-btn:hover:not(:disabled) { background: #f0f2f4; }
+.cgb-btn:hover:not(:disabled), .cgb-btn:active:not(:disabled), .cgb-btn:focus:not(:disabled) { background: #f0f2f4; color: #1a2024 !important;}
 .cgb-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 .cgb-btn-primary { background: #006939; border-color: #006939; color: #fff; }
-.cgb-btn-primary:hover:not(:disabled) { background: #00542e; }
+.cgb-btn-primary:hover:not(:disabled) { background: #00542e; color: #fff !important; }
 .cgb-err { color: #b3261e; font-size: 12px; margin: 8px 0 0; }
 `;
