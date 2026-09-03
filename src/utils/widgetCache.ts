@@ -36,9 +36,20 @@ class WidgetCache {
     }
 
     /**
+     * Whether caching is enabled. Set DISABLE_WIDGET_CACHE=true to bypass the cache.
+     */
+    private isEnabled(): boolean {
+        return process.env.DISABLE_WIDGET_CACHE !== 'true';
+    }
+
+    /**
      * Get cached widget HTML
      */
     get(params: WidgetParams): string | null {
+        if (!this.isEnabled()) {
+            return null;
+        }
+
         const key = this.generateKey(params);
         const cached = this.cache.get(key);
         
@@ -59,6 +70,10 @@ class WidgetCache {
      * Set widget HTML in cache
      */
     set(params: WidgetParams, html: string): void {
+        if (!this.isEnabled()) {
+            return;
+        }
+
         const key = this.generateKey(params);
         
         // Implement LRU eviction if at max size
