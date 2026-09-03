@@ -6,7 +6,12 @@ import { isIpAllowed } from '../../lib/ip-allowlist';
  *
  * Because email clients strip JavaScript, embed this as a plain <img> and it
  * counts down live: every open re-requests the URL, and we send no-cache
- * headers so it is regenerated against the current server clock each time.
+ * headers so it is regenerated against the current server clock each time —
+ * until the target date has passed, at which point every frame renders the
+ * same expired banner regardless of "now" (the end card, if configured, no
+ * longer appears once the countdown starts already expired — see
+ * countdown-gif.js), so the response becomes cacheable and we send long-lived
+ * cache headers instead.
  *
  * Query params:
  *   to      required. Target time — ISO 8601 (e.g. 2026-12-31T23:59:59-06:00)
@@ -102,9 +107,10 @@ export default function handler(req, res) {
   }
 
   try {
+    const nowMs = Date.now();
     const gif = generateCountdownGif({
       targetMs,
-      nowMs: Date.now(),
+      nowMs,
       frames: q.frames,
       width: q.w,
       height: q.h,
@@ -125,13 +131,26 @@ export default function handler(req, res) {
       endBg: q.endbg,
     });
 
-    // Never cache — each open must reflect the live server time.
     res.setHeader('Content-Type', 'image/gif');
     res.setHeader('Content-Length', gif.length);
-    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
-    res.setHeader('CDN-Cache-Control', 'no-store');
-    res.setHeader('Pragma', 'no-cache');
-    res.setHeader('Expires', '0');
+
+    if (targetMs <= nowMs) {
+      // Past the target date every frame renders the same expired/end-card
+      // banner regardless of the exact "now", so the output is deterministic
+      // for this URL from here on — safe (and desirable) to cache long-term
+      // instead of paying to regenerate identical bytes on every open.
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+      res.setHeader('CDN-Cache-Control', 'public, max-age=31536000, immutable');
+      res.removeHeader('Pragma');
+      res.setHeader('Expires', new Date(nowMs + 31536000000).toUTCString());
+    } else {
+      // Before the target, each open must reflect the live server clock.
+      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+      res.setHeader('CDN-Cache-Control', 'no-store');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+    }
+
     return res.status(200).send(gif);
   } catch (err) {
     res.setHeader('Cache-Control', 'no-store');

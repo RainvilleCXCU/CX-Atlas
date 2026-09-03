@@ -784,7 +784,11 @@ function generateCountdownGif(opts) {
 
   const startRemaining = opts.targetMs - opts.nowMs;
   const endText = typeof opts.endText === 'string' && opts.endText.trim() ? opts.endText.trim() : null;
-  const showEndCard = !!endText && !loopInfinite; // an infinite loop never "ends", so no end card
+  // An infinite loop never "ends", so no end card. Nor does an open that starts
+  // already past the target — the end card is a one-time closing frame for a
+  // countdown that reaches zero *during* this render, not a permanent label for
+  // an already-expired countdown (which should just hold on the expired banner).
+  const showEndCard = !!endText && !loopInfinite && startRemaining > 0;
   const FREEZE = 1; // disposal "do not dispose" for the final freeze frame
 
   // Finite loops inline the countdown repeats and OMIT the loop extension
