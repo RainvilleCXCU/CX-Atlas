@@ -21,7 +21,7 @@ function AppLinks({
     androidAppLink = 'https://play.google.com/store/apps/details?id=com.alkamitech.connexus',
     iosAppLink = 'https://apple.co/3qSq3u6',
     showQRCode = true,
-    qrCode ='/images/appsQRCode.svg',
+    qrCode ='/images/mobile-app-qr-code-70.svg',
     appOpeningText = 'App is available on the ',
     attribs,
     children = <></>,

@@ -4,6 +4,7 @@ import { BlogInfoFragment } from '../fragments/GeneralSettings';
 import { AlertFragment } from '../fragments/Alerts';
 import { NavigationMenuItemFragment } from '../fragments/MenuItems';
 import { ThirdPartySettingsFragment } from 'fragments/ThirdParty';
+import { HeaderSettingsFragment } from 'fragments/HeaderSettings';
 import { parseHtml } from 'lib/parser';
 import { useRouter } from 'next/router';
 import Posts from '../components/Posts/listing';
@@ -164,6 +165,7 @@ Page.query = gql`
   ${NavigationMenuItemFragment}
   ${ThirdPartySettingsFragment}
   ${AlertFragment}
+  ${HeaderSettingsFragment}
   query GetPosts(
     $page: Int
     $headerLocation: MenuLocationEnum
@@ -232,10 +234,7 @@ Page.query = gql`
       ...BlogInfoFragment
     }
     headerSettings {
-      headerUtilities
-      headerUtilitiesMobile
-      headerButtons
-      headerButtonsMobile
+      ...HeaderSettingsFragment
     }
     footerSettings {
       footerUtilities

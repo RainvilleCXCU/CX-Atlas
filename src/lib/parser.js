@@ -14,8 +14,11 @@ import { trackMember } from "utils/tracking";
 
 const Vimeo = dynamic(() => import("components/Video/vimeo"), {ssr: false});
 const Step = dynamic(() => import("components/Steps/Step"), {ssr: false});
-// const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
-import ExternalLink from "components/ExternalLinks/links";
+// ExternalLinks/links.tsx imports Products/Member.tsx, which imports
+// parseHtml from this file to render admin-authored widget content — a
+// static import here would close that into a cycle. Dynamic import defers
+// resolution past this module's own synchronous setup, breaking the cycle.
+const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
 import MarketingCloudForm from "components/Salesforce/cloudpage";
 import SwiperContainer from "components/Blocks/MobileScroll";
 import ProductFinder from "components/ProductFinder/finder";
@@ -26,6 +29,7 @@ import MBHIPRO from "components/Hours/MBHIPRO";
 import MLButton from "components/Buttons/ML";
 import ReadMore from "components/common/readmore";
 import CTABar from "components/CTABar/ctabar";
+import { Suspense } from "react";
 // import ToggleContent from "components/ContentToggle/Content";
 // import ToggleContentLink from "components/ContentToggle/ContentToggleLink";
 // import ToggleContentSelect from "components/ContentToggle/ContentToggleSelect";
@@ -67,7 +71,7 @@ const findChildren = (element, att, value) => {
     isChild(element, att, value);
     return children;
 }
-const whitelistRegex = new RegExp(`(.local)|(wpenginepowered.)|(wpengine.com)|(connexuscu.org)|(mortgagewebcenter)|(meridianlink)|(loanspq)|(myworkdayjobs)|(issuu)|(az1.qualtrics)|(docusign)|(billerpayments)|(tel:)|(mailto:)|(javascript:)`, "i");
+const whitelistRegex = new RegExp(`(.local)|(wpenginepowered.)|(wpengine.com)|(connexuscu.org)|(mortgagewebcenter)|(meridianlink)|(loanspq)|(mantl.com)|(alkamitech.com)|(myworkdayjobs)|(issuu)|(az1.qualtrics)|(docusign)|(billerpayments)|(tel:)|(mailto:)|(javascript:)`, "i");
 
 export const parseHtml = (html) => {
         const options = {
@@ -103,6 +107,16 @@ export const parseHtml = (html) => {
                 }
                 return (
                     <MLButton href={href} classNames={attribs?.class} target={attribs?.targets}>{domToReact(children, options)}</MLButton>
+                )
+            }
+            else if(name === 'a' && attribs?.href?.includes('applicationType=mantl')) {
+                return (
+                    <ExternalLink ariaLabel={attribs?.['aria-label']} href={attribs?.href} classNames={attribs?.class}>{domToReact(children, options)}</ExternalLink>
+                )
+            }
+            else if(name === 'a' && attribs?.href?.includes('/mdr')) {
+                return (
+                    <ExternalLink ariaLabel={attribs?.['aria-label']} href={attribs?.href} classNames={attribs?.class}>{domToReact(children, options)}</ExternalLink>
                 )
             }
             // Cisco Chat Button
@@ -223,7 +237,11 @@ export const parseHtml = (html) => {
             // DinkyTown Calc
             else if (attribs?.['data-calculator-name']) {
                 return (
-                    <Calculator calculatorName={attribs['data-calculator-name']}></Calculator>
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <div style={{minHeight: '500px'}}>
+                            <Calculator calculatorName={attribs['data-calculator-name']}></Calculator>
+                        </div>
+                    </Suspense>
                 )
             }
             // Content Toggle Link
