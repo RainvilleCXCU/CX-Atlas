@@ -4,7 +4,7 @@ import NFField from "./Field";
 import { Store } from "context/store";
 import { gql, useQuery } from "@apollo/client";
 import apolloClient from "apolloClient";
-import { Helmet } from 'react-helmet';
+import Head from "next/head";
 
 export interface Props {
     id: string;
@@ -76,28 +76,7 @@ function Form({ id }: Props): JSX.Element {
     useEffect(() => {
         console.log('Form Effect')
         getForm(id);
-
-        const linkElement = document.createElement("link");
-          linkElement.setAttribute("rel", "stylesheet");
-          linkElement.setAttribute("type", "text/css");
-          linkElement.setAttribute(
-            "href",
-            "/wp-content/plugins/ninja-forms/assets/css/display-opinions-light.css?ver=6.2.4"
-          );
-          document.head.prepend(linkElement);
-
-          const fonts = document.createElement("link");
-          fonts.setAttribute("rel", "stylesheet");
-          fonts.setAttribute("type", "text/css");
-          fonts.setAttribute(
-              "href",
-              "/wp-content/plugins/ninja-forms/assets/css/font-awesome.min.css?ver=6.2.4"
-            );
-            document.head.prepend(fonts);
-
-          
-
-          setLinkElementLoaded(true)
+        setLinkElementLoaded(true)
     }, [id])
 
     const submitForm = e => {
@@ -148,6 +127,27 @@ function Form({ id }: Props): JSX.Element {
     }
 
     return (
+        <>
+        {/*
+            These were previously injected with document.head.prepend(), which
+            put them at the front of <head> — inside the region next/head
+            reclaims positionally — and never removed them, re-adding a pair on
+            every `id` change. Declaring them here keeps them managed and keyed.
+        */}
+        <Head>
+            <link
+                key="nf-display-opinions-light"
+                rel="stylesheet"
+                type="text/css"
+                href="/wp-content/plugins/ninja-forms/assets/css/display-opinions-light.css?ver=6.2.4"
+            />
+            <link
+                key="nf-font-awesome"
+                rel="stylesheet"
+                type="text/css"
+                href="/wp-content/plugins/ninja-forms/assets/css/font-awesome.min.css?ver=6.2.4"
+            />
+        </Head>
         <div id="nf-form-1-cont" className="nf-form-cont" aria-live="polite" aria-labelledby="nf-form-title-1" aria-describedby="nf-form-errors-1" role="form">
             
             <span id="nf-form-title-1" className="nf-form-title">
@@ -197,6 +197,7 @@ function Form({ id }: Props): JSX.Element {
                 }
             </div>
         </div>
+        </>
     );
 }
 
