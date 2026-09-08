@@ -41,10 +41,11 @@ import Columns from 'components/Blocks/Columns';
 import Column from 'components/Blocks/Column';
 import { bridgeFlowSettingsContext } from 'context/bridgeFlowSettings';
 import { getActiveAlerts } from 'utils/alerts';
+import Member from 'components/Products/Member';
 
 export default function Component(props) {
 
-    const { product, type, minor, member, widget } = props;
+    const { product, type, minor, member, widget, memberWidgetHtml } = props;
     const { title: siteTitle, description: siteDescription, logo: siteLogo, desktopLogo: siteDesktopLogo, mobileLogo: siteMobileLogo, desktopLogoWidth: siteDesktopLogoWidth, mobileLogoWidth: siteMobileLogoWidth, logoTitleText: siteLogoText, footerText: footerText, databaseId: databaseId } =
       props?.data?.generalSettings;
     const { clarityEnabled, clarityId, gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
@@ -146,7 +147,11 @@ export default function Component(props) {
                     <div id="page" className="container site">
                         <main id="main" className="content content-single">
                             <article className="entry-content">
-                                {parseHtml(widget?.toString() || '')}                            
+                                {
+                                    product.applicationSystem && product.applicationSystem.includes('mantl') ?
+                                        <Member widgetHtml={memberWidgetHtml} /> :
+                                        parseHtml(widget?.toString() || '')
+                                }                            
                             </article>
                         </main>
                     </div>
@@ -228,6 +233,7 @@ Component.variables = (props) => {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
     const { query,  } = context;
     const $account = query.account?.toString().replace('-', ' ');
+    const $productcode = query.productcode?.toString() || '';
     const type = query.type[0] || '';
     const minor = query.minor || '';
     const member = query.member || '';
@@ -237,6 +243,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const productQuestion = query.productQuestion || '';
     const loanPurpose = query.loanPurpose || '';
     const mlPrep = query.mlPrep || '';
+
+    console.log('QUERY: ' + JSON.stringify(query));
+    console.log($account);
 
     
     // Check product cache first
@@ -261,6 +270,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                         hasProductQuestion
                         productPageURL
                         limitedProductCodes
+                        applicationSystem
                     }               
                   }
                 }
@@ -281,7 +291,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             nonMemberApplyNowURL : data.products.nodes[0].productFields.nonMemberApplyNowURL,
             hasProductQuestion : data.products.nodes[0].productFields.hasProductQuestion,
             productPageURL : data.products.nodes[0].productFields.productPageURL,
-            limitedProductCodes : data.products.nodes[0].productFields.limitedProductCodes
+            limitedProductCodes : data.products.nodes[0].productFields.limitedProductCodes,
+            applicationSystem : data.products.nodes[0].productFields.applicationSystem
         };
         
         if (product) {
@@ -464,6 +475,19 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     }
 
 
+    let memberWidgetHtml = '';
+    if (product.applicationSystem && product.applicationSystem.includes('mantl')) {
+        const memberWidgetData = await apolloClient.query({
+            query: gql`
+            query MantlMemberScreen($account: String, $productCode: String) {
+                widgetSettings {
+                    mantlMemberScreen(account: $account, productCode: $productCode)
+                }
+            }`, variables: { account: product.title, productCode: $productcode }
+        });
+        memberWidgetHtml = memberWidgetData.data.widgetSettings.mantlMemberScreen;
+    }
+
     return getNextServerSideProps(context, {
         Page: Component,
         props: {
@@ -471,7 +495,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             type,
             minor,
             member,
-            widget: widgetHtml
+            widget: widgetHtml,
+            memberWidgetHtml
         }
     });
 }

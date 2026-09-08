@@ -21,6 +21,22 @@ body.is-navigating .loader-wrapper {
     border-radius: 1rem;
   }
 
+  // Renders inline wherever it's placed instead of the page-wide fixed
+  // overlay above — for use inside a specific container (e.g. Modal
+  // content) where the overlay's own stacking context would otherwise
+  // render behind that container's.
+  &--embedded {
+    display: flex;
+    position: relative;
+    z-index: auto;
+    top: auto;
+    left: auto;
+    width: 100%;
+    height: auto;
+    min-height: 12rem;
+    background: transparent;
+  }
+
   // @keyframes fade {
   //     from { opacity: 0; }
   //     to   { opacity: 0.7; }

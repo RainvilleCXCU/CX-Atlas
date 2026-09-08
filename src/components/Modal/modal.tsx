@@ -42,8 +42,10 @@ function Modal({
       cancelText,
       cancelUrl,
       forceAction,
+      maxWidth,
       centerText,
       html,
+      hideButtons,
       component
   } = modalContent || {
     title: 'Title',
@@ -57,8 +59,10 @@ function Modal({
     cancelUrl: null,
     centerText: false,
     forceAction: false,
+    maxWidth: null,
     target: '_blank',
     html: '',
+    hideButtons: false,
     component: <></>
   }
 
@@ -71,7 +75,7 @@ function Modal({
     <>
         <div style={bodyTakeover ? {top: headerHeight} : {}} className={`cx-container-modal--force-close${isModalOpen ? '' : ' cx-modal__hidden'} cx-container-modal${bodyTakeover ? '--bodytakeover' : '--fixed'}`}>
           <div className={`cx-container-modal__modal-bg ${bodyTakeover ? ' cx-hidden' : ''}`} onClick={forceAction ? closeModal : () => {}}></div>
-          <div className="cx-container-modal__content">
+          <div className="cx-container-modal__content" style={maxWidth ? {maxWidth: maxWidth} : {}}>
             <button className={`cx-button--close${forceAction ? ' cx-hidden' : ''}`} onClick={closeModal}></button>
             <span>
               <h3 className={`no-margin--top${centerText ? ' center' : ''}${titleClass ? ` ${titleClass}` : ''}`}>{title}</h3>
@@ -82,37 +86,39 @@ function Modal({
                 parseHtml(html)
               }
               {component && component}
-              <div className="cx-container-modal__buttons">
-                {cancelText && (
-                  <Link
-                    href={cancelUrl ?? '#'}
-                    onClick={closeModal}
-                    className="cx-button cx-button--outlined cx-button--compact cx-button--fullwidth"
-                  >
-                    {cancelText}
-                  </Link>
-                )}
-                {continueLink && whitelistRegex.test(continueLink) === false && continueLink[0] !== '/' && continueLink[0] !== '#' && (
-                  <a
-                    href={continueLink}
-                    onClick={closeModal}
-                    target={target}
-                    className="cx-button cx-button--compact cx-button--fullwidth"
-                  >
-                    {continueText}
-                  </a>
-                )}
-                {continueLink && whitelistRegex.test(continueLink) == true && (
-                  <Link
-                    href={continueLink}
-                    onClick={closeModal}
-                    target={target}
-                    className="cx-button cx-button--compact cx-button--fullwidth"
-                  >
-                    {continueText}
-                  </Link>
-                )}
-              </div>
+              {!hideButtons && (  
+                <div className="cx-container-modal__buttons">
+                  {cancelText && (
+                    <Link
+                      href={cancelUrl ?? '#'}
+                      onClick={closeModal}
+                      className="cx-button cx-button--outlined cx-button--compact cx-button--fullwidth"
+                    >
+                      {cancelText}
+                    </Link>
+                  )}
+                  {continueLink && whitelistRegex.test(continueLink) === false && continueLink[0] !== '/' && continueLink[0] !== '#' && (
+                    <a
+                      href={continueLink}
+                      onClick={closeModal}
+                      target={target}
+                      className="cx-button cx-button--compact cx-button--fullwidth"
+                    >
+                      {continueText}
+                    </a>
+                  )}
+                  {continueLink && whitelistRegex.test(continueLink) == true && (
+                    <Link
+                      href={continueLink}
+                      onClick={closeModal}
+                      target={target}
+                      className="cx-button cx-button--compact cx-button--fullwidth"
+                    >
+                      {continueText}
+                    </Link>
+                  )}
+                </div>
+              )}
             </span>
           </div>
         </div>

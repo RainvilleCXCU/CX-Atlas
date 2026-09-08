@@ -16,6 +16,7 @@ interface Product {
     hasProductQuestion: boolean;
     productPageURL: string;
     limitedProductCodes: string[];
+    applicationSystem: string;
 }
 
 interface ProductCacheEntry {

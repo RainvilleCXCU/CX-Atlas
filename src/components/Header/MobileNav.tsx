@@ -8,6 +8,12 @@ import { useCookies } from "react-cookie";
 import { trackMember } from "utils/tracking";
 import SearchBar from "components/Search/SearchBar";
 import { clear } from "console";
+import dynamic from "next/dynamic";
+
+// See the comment in lib/parser.js: a plain static import here can lose a
+// race with links.tsx's own circular import of lib/parser.js depending on
+// which module happens to be required first.
+const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
 
 export default function MobileNav({
   links,
@@ -145,23 +151,21 @@ export default function MobileNav({
             ) : (
               <>
                 <li className="nav-item cx-nav__item">
-                  <Link
-                    className="nav-link cx-nav__link cx-nav__link--primary"
+                  <ExternalLink
+                    classNames="nav-link cx-nav__link cx-nav__link--primary track-member"
                     href="/mdr?loc=LStUVVkwNi1DO1c1Tj0nLTYsQGBgCmAK&login=mobile"
-                    onClick={trackMember}
                   >
                     Log in
-                  </Link>
+                  </ExternalLink>
                 </li>
                 <li className="nav-item cx-nav__item">
-                  <Link
+                  <ExternalLink
                     href="/pay-my-loan/"
                     // passHref
-                    className="nav-link cx-nav__link cx-nav__link--primary"
-                    onClick={trackMember}
+                    classNames="nav-link cx-nav__link cx-nav__link--primary track-member"
                   >
                     Pay my loan Member
-                  </Link>
+                  </ExternalLink>
                 </li>
               </>
             )}
