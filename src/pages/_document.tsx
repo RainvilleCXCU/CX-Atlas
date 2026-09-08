@@ -1,7 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import { files } from "../lib/externalFiles";
 import { addJSAsset } from "lib/enqueuedFiles";
-import { WingifyScript } from "wingify-smartcode-nextjs";
 
 
 class CXDoc extends Document {
@@ -56,7 +55,6 @@ class CXDoc extends Document {
                   process.env.NEXT_PUBLIC_styleguideVersion || "latest"}/cxcuatlas.css${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`} />
             </>
           }
-          <WingifyScript accountId="1256673" type="ASYNC" />
         </Head>
         <body>
           <Main />

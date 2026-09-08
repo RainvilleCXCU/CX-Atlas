@@ -42,7 +42,7 @@ export interface MemberProps {
   disclosure?: string;
   widgetHtml?: string;
   account?: string;
-  productCode?: string;
+  productcode?: string;
 }
 
 const defaultExisting: MemberOptionProps = {
@@ -60,9 +60,9 @@ const defaultNew: MemberOptionProps = {
 };
 
 const MANTL_MEMBER_SCREEN_QUERY = gql`
-  query MantlMemberScreen($account: String, $productCode: String) {
+  query MantlMemberScreen($account: String, $productcode: String) {
     widgetSettings {
-      mantlMemberScreen(account: $account, productCode: $productCode)
+      mantlMemberScreen(account: $account, productcode: $productcode)
     }
   }
 `;
@@ -76,11 +76,11 @@ function Member({
   disclosure = "Federally insured by NCUA",
   widgetHtml: widgetHtmlProp,
   account,
-  productCode,
+  productcode,
 }: MemberProps): JSX.Element {
   const hasWidgetHtmlProp = widgetHtmlProp !== undefined;
   const { data, loading } = useQuery(MANTL_MEMBER_SCREEN_QUERY, {
-    variables: { account, productCode },
+    variables: { account, productcode },
     skip: hasWidgetHtmlProp,
   });
   const isDeciding = !hasWidgetHtmlProp && loading;
@@ -98,7 +98,7 @@ function Member({
 
   if (widgetHtml) {
     console.log("Rendering WordPress-authored member screen content:", widgetHtml);
-    console.log("Product code:", productCode);
+    console.log("Product code:", productcode);
     return <>{parseHtml(widgetHtml)}</>;
   }
 
