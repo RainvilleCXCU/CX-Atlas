@@ -25,9 +25,9 @@ function ExternalLink({
       if(linkRef.current && linkRef.current.href.includes('applicationType=mantl')) {
           console.log('OPEN AOS')
           const account = new URL(linkRef.current.href).searchParams.get('account') ?? undefined;
-          const productCode = new URL(linkRef.current.href).searchParams.get('productCode') ?? undefined;
+          const productCode = new URL(linkRef.current.href).searchParams.get('productcode') ?? undefined;
           setModalContent({
-            component: <Member account={account} productCode={productCode} />,
+            component: <Member account={account} productcode={productCode} />,
             maxWidth: '861px'
           })
           setIsModalOpen(true);

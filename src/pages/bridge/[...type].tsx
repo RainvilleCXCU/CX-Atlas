@@ -479,11 +479,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     if (product.applicationSystem && product.applicationSystem.includes('mantl')) {
         const memberWidgetData = await apolloClient.query({
             query: gql`
-            query MantlMemberScreen($account: String, $productCode: String) {
+            query MantlMemberScreen($account: String, $productcode: String) {
                 widgetSettings {
-                    mantlMemberScreen(account: $account, productCode: $productCode)
+                    mantlMemberScreen(account: $account, productcode: $productcode)
                 }
-            }`, variables: { account: product.title, productCode: $productcode }
+            }`, variables: { account: product.title, productcode: $productcode }
         });
         memberWidgetHtml = memberWidgetData.data.widgetSettings.mantlMemberScreen;
     }
