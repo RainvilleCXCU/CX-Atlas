@@ -8,17 +8,19 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 const Modal = dynamic(() => import("components/Modal/modal"));
 import {isModalOpenContext, modalContentContext} from 'components/Modal/modalContext';
+import GlobalMantlLinkHandler from 'components/ExternalLinks/GlobalMantlLinkHandler';
 import dynamic from "next/dynamic";
 
 export default function Page(props) {
   console.log('WordPressNode Page component rendering');
-  
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
 
   return (
     <isModalOpenContext.Provider value={{ isModalOpen, setIsModalOpen }}>
       <modalContentContext.Provider value={{modalContent, setModalContent}}>
+        <GlobalMantlLinkHandler />
         {isModalOpen && modalContent &&
           <Modal />
         }
