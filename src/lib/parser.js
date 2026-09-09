@@ -97,7 +97,7 @@ export const parseHtml = (html) => {
                 return;
             }
             // ML Referral Source
-            else if(name === 'a' && !attribs?.class?.includes('cx-mlskip') && (attribs?.href?.includes('loanspq') || attribs?.href?.includes('meridianlink'))) {
+            else if(name === 'a' && !attribs?.class?.includes('cx-mlskip') && (attribs?.href?.includes('loanspq') || attribs?.href?.includes('meridianlink.com'))) {
                 let href = attribs.href;
                 if(cookies?.referralsource && cookies?.referralsource !== ''){
                     const currDestReferral = getQueryVariable('referralsource', attribs?.href);
