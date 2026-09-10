@@ -59,7 +59,7 @@ const defaultNew: MemberOptionProps = {
   href: "https://connexus-credit-union-ss.uat.mantl.com/products",
 };
 
-const MANTL_MEMBER_SCREEN_QUERY = gql`
+export const MANTL_MEMBER_SCREEN_QUERY = gql`
   query MantlMemberScreen($account: String, $productcode: String) {
     widgetSettings {
       mantlMemberScreen(account: $account, productcode: $productcode)
