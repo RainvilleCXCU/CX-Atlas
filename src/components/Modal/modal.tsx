@@ -71,6 +71,17 @@ function Modal({
     isModalOpen && bodyTakeover ? document.querySelector('#page.container.site').classList.add('cx-hidden') : document.querySelector('#page.container.site').classList.remove('cx-hidden');
   })
 
+  // Modal only mounts while open (see the `{isModalOpen && modalContent && <Modal />}`
+  // guard around it on every page), so locking scroll for the component's whole
+  // mount/unmount lifetime — rather than keying off `isModalOpen` itself — is what
+  // reliably unlocks it again on close. This targets <html>, not <body>: the
+  // genesis reset (_style.scss) puts `overflow-y: scroll` on html, so html is
+  // the element that actually scrolls the page.
+  useEffect(() => {
+    document.documentElement.classList.add('cx-modal-open');
+    return () => document.documentElement.classList.remove('cx-modal-open');
+  }, [])
+
   return (
     <>
         <div style={bodyTakeover ? {top: headerHeight} : {}} className={`cx-container-modal--force-close${isModalOpen ? '' : ' cx-modal__hidden'} cx-container-modal${bodyTakeover ? '--bodytakeover' : '--fixed'}`}>

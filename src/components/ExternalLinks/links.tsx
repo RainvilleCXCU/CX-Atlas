@@ -1,6 +1,5 @@
-import DBLogin from "components/DigitalBanking/Login";
 import { isModalOpenContext, modalContentContext } from "components/Modal/modalContext";
-import Member from "components/Products/Member";
+import useMantlMemberModal from "components/ExternalLinks/useMantlMemberModal";
 import { useContext, useRef } from "react";
 
 export interface Props {
@@ -19,18 +18,13 @@ function ExternalLink({
     const linkRef = useRef<HTMLAnchorElement>(null);
     const {setIsModalOpen} = useContext(isModalOpenContext);
     const {setModalContent} = useContext(modalContentContext);
-  
+    const openMantlModal = useMantlMemberModal();
+
     const handleClick = e => {
       e.preventDefault();
       if(linkRef.current && linkRef.current.href.includes('applicationType=mantl')) {
           console.log('OPEN AOS')
-          const account = new URL(linkRef.current.href).searchParams.get('account') ?? undefined;
-          const productCode = new URL(linkRef.current.href).searchParams.get('productcode') ?? undefined;
-          setModalContent({
-            component: <Member account={account} productcode={productCode} />,
-            maxWidth: '861px'
-          })
-          setIsModalOpen(true);
+          openMantlModal(linkRef.current.href);
       } else if(linkRef.current && linkRef.current.href.includes('/mdr?')) {
         console.log('DB Login')
         //   setModalContent({
