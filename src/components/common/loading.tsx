@@ -120,7 +120,7 @@ function Loading({ type = 'lines', embedded = false, show = false }: { type?: st
     );
   }
 
-  if (!isLoading) return null;
+  if (!isLoading && !state?.mantlLoading) return null;
 
   return (
     <div className="loader-wrapper">
