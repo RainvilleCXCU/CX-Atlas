@@ -164,7 +164,7 @@ export default function MobileNav({
                     // passHref
                     classNames="nav-link cx-nav__link cx-nav__link--primary track-member"
                   >
-                    Pay my loan Member
+                    Pay my loan
                   </ExternalLink>
                 </li>
               </>
