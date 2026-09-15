@@ -246,13 +246,20 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const loanPurpose = query.loanPurpose || '';
     const mlPrep = query.mlPrep || '';
 
-    console.log('QUERY: ' + JSON.stringify(query));
-    console.log($account);
+    if (!$account) {
+        console.log('No Account');
+        return getNextServerSideProps(context, {
+            Page: Component,
+            redirect: {
+                destination: `/open-an-account/`,
+                permanent: false,
+            }
+        });
+    }
 
-    
     // Check product cache first
     let product = productCache.get($account);
-    
+
     if (!product) {
         const { data } = await apolloClient.query({
             query: gql`
