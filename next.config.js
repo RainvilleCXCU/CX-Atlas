@@ -272,7 +272,7 @@ let nextConfig = {
         // which makes a trailing slash significant: without the `{/}?` group
         // below, "/applystart" matches but "/applystart/" doesn't (only
         // "/applystart/<more-path>" does, since :path* covers that case).
-        source: "/apply:type(start|now)/:path*{/}?",
+        source: "/apply:type(-start|-now)/:path*{/}?",
         destination: "/open-an-account/",
         missing: [
           {
@@ -435,7 +435,7 @@ let nextConfig = {
           destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/cxlib/:path*`,
         },
         {
-          source: "/apply-:type/:path*",
+          source: "/apply-:type(start|now)/:path*",
           destination: "/bridge/:type/",
         },
         {
