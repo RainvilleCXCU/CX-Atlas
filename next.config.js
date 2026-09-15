@@ -268,7 +268,11 @@ let nextConfig = {
     const wpRedirects = await fetchWordPressRedirects({ type: "url" });
     return [
       {
-        source: "/apply:type/:path*",
+        // Next compiles redirect sources with path-to-regexp's `strict: true`,
+        // which makes a trailing slash significant: without the `{/}?` group
+        // below, "/applystart" matches but "/applystart/" doesn't (only
+        // "/applystart/<more-path>" does, since :path* covers that case).
+        source: "/apply:type(start|now)/:path*{/}?",
         destination: "/open-an-account/",
         missing: [
           {
