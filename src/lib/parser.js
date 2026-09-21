@@ -97,11 +97,11 @@ export const parseHtml = (html) => {
                 return;
             }
             // ML Referral Source
-            else if(name === 'a' && !attribs?.class?.includes('cx-mlskip') && (attribs?.href?.includes('mantl.com') || attribs?.href?.includes('open.connexuscu.org') || attribs?.href?.includes('loanspq') || attribs?.href?.includes('meridianlink.com'))) {
+            else if(name === 'a' && !attribs?.class?.includes('cx-mlskip') && (attribs?.href?.includes('mantl.com') || attribs?.href?.includes('mantl-uat') || attribs?.href?.includes('open.connexuscu.org') || attribs?.href?.includes('loanspq') || attribs?.href?.includes('meridianlink.com'))) {
                 let href = attribs.href;
                 const mantlReferral = process.env.NEXT_PUBLIC_MANTL_REFERRAL || 'utm_source';
-                const linkSource = attribs?.href?.includes('mantl.com') || attribs?.href.includes('open.connexuscu.org') ? 'mantl' : attribs?.href?.includes('loanspq') || attribs?.href?.includes('meridianlink.com') ? 'meridianlink' : '';
-                const referrerParam = (attribs?.href?.includes('mantl.com') || attribs?.href?.includes('open.connexuscu.org')) ? mantlReferral : 'referrersource';
+                const linkSource = attribs?.href?.includes('mantl.com') || attribs?.href.includes('open.connexuscu.org') || attribs?.href?.includes('mantl-uat') ? 'mantl' : attribs?.href?.includes('loanspq') || attribs?.href?.includes('meridianlink.com') ? 'meridianlink' : '';
+                const referrerParam = (linkSource == 'mantl') ? mantlReferral : 'referrersource';
                 if(cookies?.referralsource && cookies?.referralsource !== ''){
                     const currDestReferral = getQueryVariable('referralsource', attribs?.href);
                     if (currDestReferral) {
@@ -125,6 +125,12 @@ export const parseHtml = (html) => {
                             }
                         }
                     }
+                }
+                if(linkSource === 'mantl' && !attribs?.href?.includes('applicationType=mantl')) {
+                    console.log('The mantl link is missing the applicationType=mantl parameter. Please add this to the link in order for the referral source to be passed correctly.');
+                    href = href.replace('referralsource', mantlReferral);
+                } else {
+                    console.log('Not Mantl link, no need to check for applicationType=mantl parameter.');
                 }
                 return (
                     <MLButton href={href} classNames={attribs?.class} target={attribs?.targets}>{domToReact(children, options)}</MLButton>

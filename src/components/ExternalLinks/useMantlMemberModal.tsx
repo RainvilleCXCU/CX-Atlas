@@ -31,6 +31,7 @@ function useMantlMemberModal(): (href: string) => void {
     const url = new URL(href, window.location.origin);
     const account = url.searchParams.get('account') ?? undefined;
     const productcode = url.searchParams.get('productcode') ?? undefined;
+    const referralsource = url.searchParams.get('referralsource') ?? undefined;
 
     setState((prev) => ({ ...prev, mantlLoading: true }));
     document.body.classList.add('is-navigating');
@@ -39,7 +40,7 @@ function useMantlMemberModal(): (href: string) => void {
       setState((prev) => ({ ...prev, mantlLoading: false }));
       document.body.classList.remove('is-navigating');
       setModalContent({
-        component: <Member widgetHtml={widgetHtml} account={account} productcode={productcode} />,
+        component: <Member widgetHtml={widgetHtml} account={account} productcode={productcode} referralsource={referralsource} />,
         maxWidth: '861px'
       });
       setIsModalOpen(true);
@@ -48,7 +49,7 @@ function useMantlMemberModal(): (href: string) => void {
     client
       .query({
         query: MANTL_MEMBER_SCREEN_QUERY,
-        variables: { account, productcode },
+        variables: { account, productcode, referralsource },
         fetchPolicy: 'network-only',
       })
       .then((result) => openWith(result?.data?.widgetSettings?.mantlMemberScreen ?? null))
