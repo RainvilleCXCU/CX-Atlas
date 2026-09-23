@@ -20,6 +20,7 @@ import { parseHtml } from "lib/parser";
 const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});
 const Modal = dynamic(() => import("components/Modal/modal"));
 import {isModalOpenContext, modalContentContext} from 'components/Modal/modalContext';
+import GlobalMantlLinkHandler from 'components/ExternalLinks/GlobalMantlLinkHandler';
 import Loading from "components/common/loading";
 import Head from "next/head";
 import { useState, useContext } from "react";
@@ -163,6 +164,7 @@ export default function Page() {
         
     <isModalOpenContext.Provider value={{ isModalOpen, setIsModalOpen }}>
       <modalContentContext.Provider value={{modalContent, setModalContent}}>
+        <GlobalMantlLinkHandler />
         {isModalOpen && modalContent &&
           <Modal />
         }

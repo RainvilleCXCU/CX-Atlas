@@ -49,6 +49,32 @@ const THIRD_PARTY_CSP = {
     "connect-src": ["https://*.qualtrics.com"],
     "img-src": ["https://*.qualtrics.com"],
   },
+  CSP_DISABLE_VWO: {
+    "script-src": [
+      "*.wingify.com",
+      "*.wingify.net"
+    ],
+    "connect-src": [
+      "*.wingify.com",
+      "*.wingify.net"
+    ],
+    "img-src": [
+      "*.wingify.com",
+      "*.wingify.net"
+    ],
+    "frame-src": [
+      "*.wingify.com",
+      "*.wingify.net"
+    ],
+    "style-src": [
+      "*.wingify.com",
+      "*.wingify.net",
+      "*.wingify.io"
+    ],
+    "font-src": [
+      "*.wingify.io",
+    ]
+  },
   CSP_DISABLE_CLARITY: {
     "script-src": ["https://www.clarity.ms", "https://*.clarity.ms"],
     "connect-src": ["https://*.clarity.ms", "https://c.bing.com"],
@@ -242,7 +268,11 @@ let nextConfig = {
     const wpRedirects = await fetchWordPressRedirects({ type: "url" });
     return [
       {
-        source: "/apply:type/:path*",
+        // Next compiles redirect sources with path-to-regexp's `strict: true`,
+        // which makes a trailing slash significant: without the `{/}?` group
+        // below, "/applystart" matches but "/applystart/" doesn't (only
+        // "/applystart/<more-path>" does, since :path* covers that case).
+        source: "/apply:type(-start|-now)/:path*{/}?",
         destination: "/open-an-account/",
         missing: [
           {
@@ -405,7 +435,7 @@ let nextConfig = {
           destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/cxlib/:path*`,
         },
         {
-          source: "/apply-:type/:path*",
+          source: "/apply-:type(start|now)/:path*",
           destination: "/bridge/:type/",
         },
         {
@@ -545,6 +575,17 @@ let nextConfig = {
               key:"preview"
             }
           ]
+        },
+        {
+          source: "/:path*",
+          destination: "/dynamic/:path*",
+          has: [
+            {
+              type: "query",
+              key: "utm_campaign",
+              value: "(fall|sticky|staticbold|staticcomp)"
+            },
+          ],
         },
         {
           source: "/:path*",

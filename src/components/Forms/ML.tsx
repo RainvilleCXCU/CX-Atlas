@@ -1,5 +1,6 @@
 import { useContext, useEffect, useRef, useState, useMemo, useCallback } from "react";
 import NFField from "./Field";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { gql, useQuery } from "@apollo/client";
 import apolloClient from "apolloClient";
@@ -145,31 +146,29 @@ function MLForm({ id, href, glValue, isMinor = false }: Props): JSX.Element {
         e.target.submit();
     }, [validateAllFields]);
 
-    useEffect(() => {
-        if(!isLinkElementLoaded) {
-            const linkElement = document.createElement("link");
-            linkElement.setAttribute("rel", "stylesheet");
-            linkElement.setAttribute("type", "text/css");
-            linkElement.setAttribute(
-                "href",
-                "/wp-content/plugins/ninja-forms/assets/css/display-opinions-light.css?ver=6.2.4"
-            );
-            document.head.prepend(linkElement);
-
-            const fonts = document.createElement("link");
-            fonts.setAttribute("rel", "stylesheet");
-            fonts.setAttribute("type", "text/css");
-            fonts.setAttribute(
-                "href",
-                "/wp-content/plugins/ninja-forms/assets/css/font-awesome.min.css?ver=6.2.4"
-            );
-            document.head.prepend(fonts);
-
-            setLinkElementLoaded(true);
-        }
-    }, [id])
-
     return (
+        <>
+        {/*
+            These were previously injected with document.head.prepend(), which
+            put them at the front of <head> — inside the region next/head
+            reclaims positionally — and never removed them. Declaring them here
+            keeps them managed and keyed. The keys match Forms/Form.tsx so the
+            two form components share one copy rather than each adding a pair.
+        */}
+        <Head>
+            <link
+                key="nf-display-opinions-light"
+                rel="stylesheet"
+                type="text/css"
+                href="/wp-content/plugins/ninja-forms/assets/css/display-opinions-light.css?ver=6.2.4"
+            />
+            <link
+                key="nf-font-awesome"
+                rel="stylesheet"
+                type="text/css"
+                href="/wp-content/plugins/ninja-forms/assets/css/font-awesome.min.css?ver=6.2.4"
+            />
+        </Head>
         <div id="nf-form-1-cont" className="nf-form-cont" aria-live="polite" aria-labelledby="nf-form-title-1" aria-describedby="nf-form-errors-1" role="form">
             
             {/* <span id="nf-form-title-1" className="nf-form-title center">
@@ -212,6 +211,7 @@ function MLForm({ id, href, glValue, isMinor = false }: Props): JSX.Element {
                 </div>
             </div>
         </div>
+        </>
     );
 }
 

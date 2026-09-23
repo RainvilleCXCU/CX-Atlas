@@ -29,6 +29,7 @@ import widgetCache from '../../utils/widgetCache';
 const Alert = dynamic(() => import('components/Alerts/Alert'), {ssr:false});
 const Modal = dynamic(() => import("components/Modal/modal"));
 import {isModalOpenContext, modalContentContext} from 'components/Modal/modalContext';
+import GlobalMantlLinkHandler from 'components/ExternalLinks/GlobalMantlLinkHandler';
 import Loading from 'components/common/loading';
 import { GetServerSidePropsContext } from 'next';
 import { getNextServerSideProps } from '@faustwp/core';
@@ -41,10 +42,11 @@ import Columns from 'components/Blocks/Columns';
 import Column from 'components/Blocks/Column';
 import { bridgeFlowSettingsContext } from 'context/bridgeFlowSettings';
 import { getActiveAlerts } from 'utils/alerts';
+import Member from 'components/Products/Member';
 
 export default function Component(props) {
 
-    const { product, type, minor, member, widget } = props;
+    const { product, type, minor, member, widget, memberWidgetHtml } = props;
     const { title: siteTitle, description: siteDescription, logo: siteLogo, desktopLogo: siteDesktopLogo, mobileLogo: siteMobileLogo, desktopLogoWidth: siteDesktopLogoWidth, mobileLogoWidth: siteMobileLogoWidth, logoTitleText: siteLogoText, footerText: footerText, databaseId: databaseId } =
       props?.data?.generalSettings;
     const { clarityEnabled, clarityId, gtmId, gtmEnabled, hotjarEnabled, hotjarId, personyzeDomains, personyzeEnabled, personyzeId, spectrumId, spectrumEnabled, qualtricsId, qualtricsEnabled, siteimproveId, siteimproveEnabled } = props?.data?.thirdPartySettings;
@@ -119,10 +121,11 @@ export default function Component(props) {
               
     <isModalOpenContext.Provider value={{ isModalOpen, setIsModalOpen }}>
       <modalContentContext.Provider value={{modalContent, setModalContent}}>
+        <GlobalMantlLinkHandler />
         {isModalOpen && modalContent &&
           <Modal />
         }
-			<Loading /> 
+			<Loading />
             <span id='cx-bridge'>
                 <Header
                     title={title}
@@ -146,7 +149,11 @@ export default function Component(props) {
                     <div id="page" className="container site">
                         <main id="main" className="content content-single">
                             <article className="entry-content">
-                                {parseHtml(widget?.toString() || '')}                            
+                                {
+                                    product.applicationSystem && product.applicationSystem.includes('mantl') ?
+                                        <Member widgetHtml={memberWidgetHtml} /> :
+                                        parseHtml(widget?.toString() || '')
+                                }                            
                             </article>
                         </main>
                     </div>
@@ -228,20 +235,33 @@ Component.variables = (props) => {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
     const { query,  } = context;
     const $account = query.account?.toString().replace('-', ' ');
+    const $productcode = query.productcode?.toString() || '';
     const type = query.type[0] || '';
     const minor = query.minor || '';
     const member = query.member || '';
     const productcode = query.productcode || '';
+    const promocode = query.promocode || '';
+    const referralsource = query.referralsource || '';
     const atLimit = query.atLimit || '';
     const scenario = query.scenario || '';
     const productQuestion = query.productQuestion || '';
     const loanPurpose = query.loanPurpose || '';
     const mlPrep = query.mlPrep || '';
 
-    
+    if (!$account) {
+        console.log('No Account');
+        return getNextServerSideProps(context, {
+            Page: Component,
+            redirect: {
+                destination: `/open-an-account/`,
+                permanent: false,
+            }
+        });
+    }
+
     // Check product cache first
     let product = productCache.get($account);
-    
+
     if (!product) {
         const { data } = await apolloClient.query({
             query: gql`
@@ -261,6 +281,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                         hasProductQuestion
                         productPageURL
                         limitedProductCodes
+                        applicationSystem
                     }               
                   }
                 }
@@ -281,7 +302,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             nonMemberApplyNowURL : data.products.nodes[0].productFields.nonMemberApplyNowURL,
             hasProductQuestion : data.products.nodes[0].productFields.hasProductQuestion,
             productPageURL : data.products.nodes[0].productFields.productPageURL,
-            limitedProductCodes : data.products.nodes[0].productFields.limitedProductCodes
+            limitedProductCodes : data.products.nodes[0].productFields.limitedProductCodes,
+            applicationSystem : data.products.nodes[0].productFields.applicationSystem
         };
         
         if (product) {
@@ -295,6 +317,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         account: product?.title,
         minor,
         productcode,
+        promocode,
         atLimit,
         member,
         scenario,
@@ -325,7 +348,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     // GET WIDGET - Check cache first
     let cachedWidget = widgetCache.get(productInfo);
     
-    if (cachedWidget) {
+    if (cachedWidget && process.env.NEXT_PUBLIC_DISABLE_WIDGET_CACHE !== 'true') {
         console.log('WIDGET CACHED!');
         widgetHtml = cachedWidget;
     } else if(type && type == 'start' && (!minor || minor == '')) {
@@ -333,7 +356,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyStartFragment}
-            query getApplyStart($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String) {
+            query getApplyStart($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promocode: String) {
                 widgetSettings {
                     ...ApplyStartFragment
                 }
@@ -347,7 +370,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowMinorFragment}
-            query getApplyNowMinor($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String) {
+            query getApplyNowMinor($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promocode: String) {
                 widgetSettings {
                     ...ApplyNowMinorFragment
                 }
@@ -359,7 +382,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowProductFragment}
-            query ApplyNowProduct($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String) {
+            query ApplyNowProduct($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promocode: String) {
                 widgetSettings {
                     ...ApplyNowProductFragment
                 }
@@ -372,7 +395,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowMemberFragment}
-            query ApplyNowMember($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String) {
+            query ApplyNowMember($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promocode: String) {
                 widgetSettings {
                     ...ApplyNowMemberFragment
                 }
@@ -385,7 +408,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowMemberLimitFragment}
-            query ApplyNowMemberLimit($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String) {
+            query ApplyNowMemberLimit($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promocode: String) {
                 widgetSettings {
                     ...ApplyNowMemberLimitFragment
                 }
@@ -398,7 +421,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowFragment}
-            query getApplyNow($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String) {
+            query getApplyNow($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promocode: String) {
                 widgetSettings {
                     ...ApplyNowFragment
                 }
@@ -464,6 +487,21 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     }
 
 
+    let memberWidgetHtml = '';
+    if (product.applicationSystem && product.applicationSystem.includes('mantl')) {
+        console.log('Fetching Mantl Member Widget');
+        console.log('Referral Source:', referralsource);
+        const memberWidgetData = await apolloClient.query({
+            query: gql`
+            query MantlMemberScreen($account: String, $productcode: String, $promocode: String, $referralsource: String) {
+                widgetSettings {
+                    mantlMemberScreen(account: $account, productcode: $productcode, promocode: $promocode, referralsource: $referralsource)
+                }
+            }`, variables: { account: product.title, productcode: $productcode, promocode: promocode, referralsource: referralsource }
+        });
+        memberWidgetHtml = memberWidgetData.data.widgetSettings.mantlMemberScreen;
+    }
+
     return getNextServerSideProps(context, {
         Page: Component,
         props: {
@@ -471,7 +509,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             type,
             minor,
             member,
-            widget: widgetHtml
+            widget: widgetHtml,
+            memberWidgetHtml
         }
     });
 }

@@ -1,5 +1,12 @@
+import dynamic from "next/dynamic";
 import Logo from "components/Logo";
 import Link from "next/link";
+
+// A plain static import here can lose a race with links.tsx's own circular
+// import of lib/parser.js (see the comment in lib/parser.js) depending on
+// which module happens to be required first — deferring past this module's
+// own synchronous setup avoids that.
+const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
 
 interface CTAProps {
   buttonColor: string;
@@ -49,12 +56,12 @@ export default function MobileHeader(props: MobileHeader) {
       {showNav && (
         <div className="cx-nav__mobile-buttons">
           {!navOpen && (
-            <Link
+            <ExternalLink
               href="/mdr?loc=LStUVVkwNi1DO1c1Tj0nLTYsQGBgCmAK&login=mobile"
-              className="cx-button cx-button--compact cx-button--color-positive"
+              classNames="cx-button cx-button--compact cx-button--color-positive track-member"
             >
               Log in
-            </Link>
+            </ExternalLink>
           )}
           <button
             className={`cx-navbar-toggler${

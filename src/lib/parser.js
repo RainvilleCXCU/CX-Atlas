@@ -14,8 +14,11 @@ import { trackMember } from "utils/tracking";
 
 const Vimeo = dynamic(() => import("components/Video/vimeo"), {ssr: false});
 const Step = dynamic(() => import("components/Steps/Step"), {ssr: false});
-// const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
-import ExternalLink from "components/ExternalLinks/links";
+// ExternalLinks/links.tsx imports Products/Member.tsx, which imports
+// parseHtml from this file to render admin-authored widget content — a
+// static import here would close that into a cycle. Dynamic import defers
+// resolution past this module's own synchronous setup, breaking the cycle.
+const ExternalLink = dynamic(() => import("components/ExternalLinks/links"));
 import MarketingCloudForm from "components/Salesforce/cloudpage";
 import SwiperContainer from "components/Blocks/MobileScroll";
 import ProductFinder from "components/ProductFinder/finder";
@@ -26,6 +29,7 @@ import MBHIPRO from "components/Hours/MBHIPRO";
 import MLButton from "components/Buttons/ML";
 import ReadMore from "components/common/readmore";
 import CTABar from "components/CTABar/ctabar";
+import { Suspense } from "react";
 // import ToggleContent from "components/ContentToggle/Content";
 // import ToggleContentLink from "components/ContentToggle/ContentToggleLink";
 // import ToggleContentSelect from "components/ContentToggle/ContentToggleSelect";
@@ -67,7 +71,7 @@ const findChildren = (element, att, value) => {
     isChild(element, att, value);
     return children;
 }
-const whitelistRegex = new RegExp(`(.local)|(wpenginepowered.)|(wpengine.com)|(connexuscu.org)|(mortgagewebcenter)|(meridianlink)|(loanspq)|(myworkdayjobs)|(issuu)|(az1.qualtrics)|(docusign)|(billerpayments)|(tel:)|(mailto:)|(javascript:)`, "i");
+const whitelistRegex = new RegExp(`(.local)|(wpenginepowered.)|(wpengine.com)|(connexuscu.org)|(mortgagewebcenter)|(meridianlink)|(loanspq)|(mantl.com)|(alkamitech.com)|(myworkdayjobs)|(issuu)|(az1.qualtrics)|(docusign)|(billerpayments)|(tel:)|(mailto:)|(javascript:)`, "i");
 
 export const parseHtml = (html) => {
         const options = {
@@ -93,16 +97,53 @@ export const parseHtml = (html) => {
                 return;
             }
             // ML Referral Source
-            else if(name === 'a' && !attribs?.class?.includes('cx-mlskip') && (attribs?.href?.includes('loanspq') || attribs?.href?.includes('meridianlink'))) {
+            else if(name === 'a' && !attribs?.class?.includes('cx-mlskip') && (attribs?.href?.includes('mantl.com') || attribs?.href?.includes('mantl-uat') || attribs?.href?.includes('open.connexuscu.org') || attribs?.href?.includes('loanspq') || attribs?.href?.includes('meridianlink.com'))) {
                 let href = attribs.href;
+                const mantlReferral = process.env.NEXT_PUBLIC_MANTL_REFERRAL || 'utm_source';
+                const linkSource = attribs?.href?.includes('mantl.com') || attribs?.href.includes('open.connexuscu.org') || attribs?.href?.includes('mantl-uat') ? 'mantl' : attribs?.href?.includes('loanspq') || attribs?.href?.includes('meridianlink.com') ? 'meridianlink' : '';
+                const referrerParam = (linkSource == 'mantl') ? mantlReferral : 'referrersource';
                 if(cookies?.referralsource && cookies?.referralsource !== ''){
                     const currDestReferral = getQueryVariable('referralsource', attribs?.href);
                     if (currDestReferral) {
-                        href = attribs?.href.replace(currDestReferral, cookies?.referralsource);
+                        if(linkSource === 'mantl') {
+                            href = attribs?.href.replace('referralsource=' + currDestReferral, referrerParam + '=' + cookies?.referralsource);
+                        } else if(linkSource === 'meridianlink') {
+                            href = attribs?.href.replace(currDestReferral, cookies?.referralsource);
+                        }
+                    } else {
+                        if (attribs?.href.includes('?')) {
+                            if(linkSource === 'mantl') {
+                                href = `${attribs?.href}&${referrerParam}=${cookies?.referralsource}`;
+                            } else if(linkSource === 'meridianlink') {
+                                href = `${attribs?.href}&referralsource=${cookies?.referralsource}`;
+                            }
+                        } else {
+                            if(linkSource === 'mantl') {
+                                href = `${attribs?.href}?${referrerParam}=${cookies?.referralsource}`;
+                            } else if(linkSource === 'meridianlink') {
+                                href = `${attribs?.href}?referralsource=${cookies?.referralsource}`;
+                            }
+                        }
                     }
+                }
+                if(linkSource === 'mantl' && !attribs?.href?.includes('applicationType=mantl')) {
+                    console.log('The mantl link is missing the applicationType=mantl parameter. Please add this to the link in order for the referral source to be passed correctly.');
+                    href = href.replace('referralsource', mantlReferral);
+                } else {
+                    console.log('Not Mantl link, no need to check for applicationType=mantl parameter.');
                 }
                 return (
                     <MLButton href={href} classNames={attribs?.class} target={attribs?.targets}>{domToReact(children, options)}</MLButton>
+                )
+            }
+            else if(name === 'a' && attribs?.href?.includes('applicationType=mantl')) {
+                return (
+                    <ExternalLink ariaLabel={attribs?.['aria-label']} href={attribs?.href} classNames={attribs?.class}>{domToReact(children, options)}</ExternalLink>
+                )
+            }
+            else if(name === 'a' && attribs?.href?.includes('/mdr')) {
+                return (
+                    <ExternalLink ariaLabel={attribs?.['aria-label']} href={attribs?.href} classNames={attribs?.class}>{domToReact(children, options)}</ExternalLink>
                 )
             }
             // Cisco Chat Button
@@ -223,7 +264,11 @@ export const parseHtml = (html) => {
             // DinkyTown Calc
             else if (attribs?.['data-calculator-name']) {
                 return (
-                    <Calculator calculatorName={attribs['data-calculator-name']}></Calculator>
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <div style={{minHeight: '500px'}}>
+                            <Calculator calculatorName={attribs['data-calculator-name']}></Calculator>
+                        </div>
+                    </Suspense>
                 )
             }
             // Content Toggle Link

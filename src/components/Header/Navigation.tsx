@@ -4,6 +4,12 @@ import MenuNavigation from 'components/Navigation/Navbar';
 import Link from 'next/link';
 import { trackMember } from 'utils/tracking';
 import { parseHtml } from 'lib/parser';
+import dynamic from 'next/dynamic';
+
+// See the comment in lib/parser.js: a plain static import here can lose a
+// race with links.tsx's own circular import of lib/parser.js depending on
+// which module happens to be required first.
+const ExternalLink = dynamic(() => import('components/ExternalLinks/links'));
 interface NavigationProps {
     navOpen?: boolean,
     setNavOpen,
@@ -43,16 +49,16 @@ export default function Navigation(props: NavigationProps) {
                   }
                   {showButtons && (
                     <div>
-                    { headerSettings?.headerButtons ?
+                    {headerSettings?.headerButtons ?
                       parseHtml(headerSettings?.headerButtons) :
                       <>
-                        <Link href="/pay-my-loan/" prefetch={false} className="cx-button cx-button--compact cx-button--text cx-button--outlined-positive" type="button" onClick={trackMember}>Pay my loan
-                        </Link>
-                        <Link href="/mdr?loc=LStUVVkwNi1DO1c1Tj0nLTYsQGBgCmAK&login=desktop" prefetch={false} className="cx-button cx-button--compact cx-button--color-positive" onClick={trackMember}>Log in</Link>
+                        <ExternalLink href="/pay-my-loan/" classNames="cx-button cx-button--compact cx-button--text cx-button--outlined-positive track-member">Pay my loan
+                        </ExternalLink>
+                        <ExternalLink href="/mdr?loc=LStUVVkwNi1DO1c1Tj0nLTYsQGBgCmAK&login=desktop" classNames="cx-button cx-button--compact cx-button--color-positive track-memver">Log in</ExternalLink>
                       </>
-            }
-                  </div>
-                  )}
+                    }
+                    </div>)
+                  }
                 </div>
               </nav>
             }

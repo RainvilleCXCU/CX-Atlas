@@ -65,87 +65,108 @@ const SEO = ({
 
 	canonicalURL = process.env.NEXT_PUBLIC_FRONTEND_URL ? canonicalURL.replace(process.env.NEXT_PUBLIC_WORDPRESS_URL, process.env.NEXT_PUBLIC_FRONTEND_URL) : canonicalURL;
 
+	// Every tag below carries a `key`. next/head only auto-dedupes on the
+	// METATYPES list — "name", "httpEquiv", "charSet", "itemProp" — so the
+	// `property` tags (all the og:* / article:* ones) get no dedup at all
+	// without one, and would duplicate unconditionally if a second <Head>
+	// rendered them. Keys also cover <link> and <script>, which have no
+	// automatic dedup either. Keep them unique and stable.
 	return (
 		<Head>
-			<title>{`${title} - ${ogSite_Name}`}</title>
-			<meta name="description" content={metaDesc} />
-			<meta name="robots" content={`${metaRobotsNoindex}, ${metaRobotsNofollow}`} />			
+			<title key="title">{`${title} - ${ogSite_Name}`}</title>
+			<meta key="description" name="description" content={metaDesc} />
+			<meta key="robots" name="robots" content={`${metaRobotsNoindex}, ${metaRobotsNofollow}`} />
 			<link
+				key="canonical"
 				rel="canonical"
 				href={canonicalURL}
 				className="yoast-seo-meta-tag"
 			></link>
 			<meta
+				key="og:locale"
 				property="og:locale"
 				content={ogLocale}
 				className="yoast-seo-meta-tag"
 			></meta>
 			<meta
+				key="og:type"
 				property="og:type"
 				content={ogType}
 				className="yoast-seo-meta-tag"
 			></meta>
 			<meta
+				key="og:title"
 				property="og:title"
 				content={ogTitle}
 				className="yoast-seo-meta-tag"
 			></meta>
 			<meta
+				key="og:description"
 				property="og:description"
 				content={ogDescription}
 				className="yoast-seo-meta-tag"
 			></meta>
 			<meta
+				key="og:url"
 				property="og:url"
 				content={ogURL}
 				className="yoast-seo-meta-tag"
 			></meta>
 			<meta
+				key="og:site_name"
 				property="og:site_name"
 				content={ogSite_Name}
 				className="yoast-seo-meta-tag"
 			></meta>
 			<meta
+				key="article:modified_time"
 				property="article:modified_time"
 				content={modified_time}
 				className="yoast-seo-meta-tag"
 			></meta>
 			<meta
+				key="og:image"
 				property="og:image"
 				content={ogImage}
 				className="yoast-seo-meta-tag"
 			></meta>
 			<meta
+				key="og:image:width"
 				property="og:image:width"
 				content={ogImageWidth}
 				className="yoast-seo-meta-tag"
 			></meta>
 			<meta
+				key="og:image:height"
 				property="og:image:height"
 				content={ogImageHeight}
 				className="yoast-seo-meta-tag"
 			></meta>
 			<meta
+				key="og:image:type"
 				property="og:image:type"
 				content={ogImageType}
 				className="yoast-seo-meta-tag"
 			></meta>
 			<meta
+				key="twitter:card"
 				name="twitter:card"
 				content={twitter_card}
 				className="yoast-seo-meta-tag"
 			></meta>
 			<meta
+				key="twitter:label1"
 				name="twitter:label1"
 				content={twitter_label1}
 				className="yoast-seo-meta-tag"
 			></meta>
 			<meta
+				key="twitter:data1"
 				name="twitter:data1"
 				content={twitter_data1}
 				className="yoast-seo-meta-tag"
 			></meta>
-			<script type="application/ld+json" className="yoast-schema-graph"
+			<script key="yoast-schema-graph" type="application/ld+json" className="yoast-schema-graph"
 				dangerouslySetInnerHTML={{
 					__html: `{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"${canonicalURL}","url":"${canonicalURL}","name":"${title} - ${title}","isPartOf":{"@id":"https://www.connexuscu.org/#website"},"primaryImageOfPage":{"@id":"${canonicalURL}#primaryimage"},"image":{"@id":"${canonicalURL}#primaryimage"},"thumbnailUrl":"${ogImage}","datePublished":"${published_time}","dateModified":"${modified_time}","description":"${metaDesc}","breadcrumb":{"@id":"${canonicalURL}#breadcrumb"},"inLanguage":"${ogLocale}","potentialAction":[{"@type":"ReadAction","target":["${canonicalURL}"]}]},{"@type":"ImageObject","inLanguage":"${ogLocale}","@id":"${canonicalURL}#primaryimage","url":"${ogImage}","contentUrl":"${ogImage}","width":${ogImageWidth},"height":${ogImageHeight}},{"@type":"BreadcrumbList","@id":"${ogURL}#breadcrumb","itemListElement":[${itemListElementArray}]},{"@type":"WebSite","@id":"https://www.connexuscu.org/#website","url":"https://www.connexuscu.org/","name":"Connexus Credit Union","description":"High Yields, Low Rates, Online Services","publisher":{"@id":"https://www.connexuscu.org/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.connexuscu.org/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"${ogLocale}"},{"@type":"Organization","@id":"https://www.connexuscu.org/#organization","name":"Connexus Credit Union","url":"https://www.connexuscu.org/","logo":{"@type":"ImageObject","inLanguage":"${ogLocale}","@id":"https://www.connexuscu.org/#/schema/logo/image/","url":"${logo}","contentUrl":"${logo}","width":145,"height":54,"caption":"Connexus Credit Union"},"image":{"@id":"https://www.connexuscu.org/#/schema/logo/image/"}}
 					${
@@ -169,7 +190,6 @@ const SEO = ({
 				}} 
 			/>
 		</Head>
-		
 	);
 };
 

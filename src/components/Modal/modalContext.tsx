@@ -28,7 +28,9 @@ interface ModalContent {
     cancelText?;
     cancelUrl?;
     forceAction?;
+    maxWidth?;
     html?;
+    hideButtons?;
     component?;
     target?;
     children?;

@@ -1,3 +1,11 @@
+// Locks the page behind the modal backdrop while it's open (toggled on
+// document.documentElement from components/Modal/modal.tsx). Targets html,
+// not body: the genesis reset puts `overflow-y: scroll` on html, so html is
+// the element that actually scrolls the page.
+html.cx-modal-open {
+    overflow: hidden;
+    height: 100%;
+}
 .modal.cx-modal {
     display: block;
     visibility: hidden;
