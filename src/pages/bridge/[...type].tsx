@@ -241,6 +241,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const member = query.member || '';
     const productcode = query.productcode || '';
     const promocode = query.promocode || '';
+    const referralsource = query.referralsource || '';
     const atLimit = query.atLimit || '';
     const scenario = query.scenario || '';
     const productQuestion = query.productQuestion || '';
@@ -347,7 +348,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     // GET WIDGET - Check cache first
     let cachedWidget = widgetCache.get(productInfo);
     
-    if (cachedWidget) {
+    if (cachedWidget && process.env.NEXT_PUBLIC_DISABLE_WIDGET_CACHE !== 'true') {
         console.log('WIDGET CACHED!');
         widgetHtml = cachedWidget;
     } else if(type && type == 'start' && (!minor || minor == '')) {
@@ -488,13 +489,15 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
     let memberWidgetHtml = '';
     if (product.applicationSystem && product.applicationSystem.includes('mantl')) {
+        console.log('Fetching Mantl Member Widget');
+        console.log('Referral Source:', referralsource);
         const memberWidgetData = await apolloClient.query({
             query: gql`
-            query MantlMemberScreen($account: String, $productcode: String, $promocode: String) {
+            query MantlMemberScreen($account: String, $productcode: String, $promocode: String, $referralsource: String) {
                 widgetSettings {
-                    mantlMemberScreen(account: $account, productcode: $productcode, promocode: $promocode)
+                    mantlMemberScreen(account: $account, productcode: $productcode, promocode: $promocode, referralsource: $referralsource)
                 }
-            }`, variables: { account: product.title, productcode: $productcode, promocode: promocode }
+            }`, variables: { account: product.title, productcode: $productcode, promocode: promocode, referralsource: referralsource }
         });
         memberWidgetHtml = memberWidgetData.data.widgetSettings.mantlMemberScreen;
     }
