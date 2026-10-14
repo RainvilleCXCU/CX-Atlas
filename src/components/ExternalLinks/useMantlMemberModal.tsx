@@ -31,7 +31,7 @@ function useMantlMemberModal(): (href: string) => void {
     const url = new URL(href, window.location.origin);
     const account = url.searchParams.get('account') ?? undefined;
     const productcode = url.searchParams.get('productcode') ?? undefined;
-    const promocode = url.searchParams.get('promocode') ?? 'TEST';
+    const promocode = url.searchParams.get('promocode') ?? undefined;
     const referralsource = url.searchParams.get('referralsource') ?? undefined;
 
     setState((prev) => ({ ...prev, mantlLoading: true }));
