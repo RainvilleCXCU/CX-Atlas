@@ -27,7 +27,12 @@ export const getQueryVariable = (variable, url) => {
   //     url = temp;
   // }
   // console.log(url.search)
-  var query = url.split('?')[1];
+  var querySplit = url.split('?');
+  console.log('querySplit', querySplit)
+  if (querySplit.length < 2) {
+    return false;
+  }
+  var query = querySplit[1];
   var vars = query.split("&");
   for (var i = 0; i < vars.length; i++) {
       var pair = vars[i].split("=");

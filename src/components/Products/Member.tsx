@@ -43,6 +43,7 @@ export interface MemberProps {
   widgetHtml?: string;
   account?: string;
   productcode?: string;
+  promocode?: string;
   referralsource?: string;
 }
 
@@ -61,9 +62,9 @@ const defaultNew: MemberOptionProps = {
 };
 
 export const MANTL_MEMBER_SCREEN_QUERY = gql`
-  query MantlMemberScreen($account: String, $productcode: String, $referralsource: String) {
+  query MantlMemberScreen($account: String, $productcode: String, $referralsource: String, $promocode: String) {
     widgetSettings {
-      mantlMemberScreen(account: $account, productcode: $productcode, referralsource: $referralsource)
+      mantlMemberScreen(account: $account, productcode: $productcode, referralsource: $referralsource, promocode: $promocode)
     }
   }
 `;
@@ -78,11 +79,12 @@ function Member({
   widgetHtml: widgetHtmlProp,
   account,
   productcode,
+  promocode,
   referralsource
 }: MemberProps): JSX.Element {
   const hasWidgetHtmlProp = widgetHtmlProp !== undefined;
   const { data, loading } = useQuery(MANTL_MEMBER_SCREEN_QUERY, {
-    variables: { account, productcode, referralsource},
+    variables: { account, productcode, referralsource, promocode },
     skip: hasWidgetHtmlProp,
   });
   const isDeciding = !hasWidgetHtmlProp && loading;
