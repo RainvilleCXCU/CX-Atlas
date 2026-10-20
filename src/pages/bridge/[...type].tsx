@@ -240,7 +240,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const minor = query.minor || '';
     const member = query.member || '';
     const productcode = query.productcode || '';
-    const promocode = query.promocode || '';
+    const promoCode = query.promoCode || '';
     const referralsource = query.referralsource || '';
     const atLimit = query.atLimit || '';
     const scenario = query.scenario || '';
@@ -317,7 +317,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         account: product?.title,
         minor,
         productcode,
-        promocode,
+        promoCode,
         atLimit,
         member,
         scenario,
@@ -356,7 +356,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyStartFragment}
-            query getApplyStart($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promocode: String) {
+            query getApplyStart($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promoCode: String) {
                 widgetSettings {
                     ...ApplyStartFragment
                 }
@@ -370,7 +370,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowMinorFragment}
-            query getApplyNowMinor($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promocode: String) {
+            query getApplyNowMinor($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promoCode: String) {
                 widgetSettings {
                     ...ApplyNowMinorFragment
                 }
@@ -382,7 +382,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowProductFragment}
-            query ApplyNowProduct($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promocode: String) {
+            query ApplyNowProduct($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promoCode: String) {
                 widgetSettings {
                     ...ApplyNowProductFragment
                 }
@@ -395,7 +395,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowMemberFragment}
-            query ApplyNowMember($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promocode: String) {
+            query ApplyNowMember($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promoCode: String) {
                 widgetSettings {
                     ...ApplyNowMemberFragment
                 }
@@ -408,7 +408,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowMemberLimitFragment}
-            query ApplyNowMemberLimit($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promocode: String) {
+            query ApplyNowMemberLimit($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promoCode: String) {
                 widgetSettings {
                     ...ApplyNowMemberLimitFragment
                 }
@@ -421,7 +421,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetData = await apolloClient.query({
             query: gql`
             ${ApplyNowFragment}
-            query getApplyNow($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promocode: String) {
+            query getApplyNow($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promoCode: String) {
                 widgetSettings {
                     ...ApplyNowFragment
                 }
@@ -493,11 +493,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         console.log('Referral Source:', referralsource);
         const memberWidgetData = await apolloClient.query({
             query: gql`
-            query MantlMemberScreen($account: String, $productcode: String, $promocode: String, $referralsource: String) {
+            query MantlMemberScreen($account: String, $productcode: String, $promoCode: String, $referralsource: String) {
                 widgetSettings {
-                    mantlMemberScreen(account: $account, productcode: $productcode, promocode: $promocode, referralsource: $referralsource)
+                    mantlMemberScreen(account: $account, productcode: $productcode, promoCode: $promoCode, referralsource: $referralsource)
                 }
-            }`, variables: { account: product.title, productcode: $productcode, promocode: promocode, referralsource: referralsource }
+            }`, variables: { account: product.title, productcode: $productcode, promoCode: promoCode, referralsource: referralsource }
         });
         memberWidgetHtml = memberWidgetData.data.widgetSettings.mantlMemberScreen;
     }
