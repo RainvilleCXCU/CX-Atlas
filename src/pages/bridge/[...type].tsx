@@ -234,7 +234,7 @@ Component.variables = (props) => {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
     const { query,  } = context;
-    const $account = query.account?.toString().replace('-', ' ');
+    const $account = query.account?.toString().replace(/-/g, ' ');
     const $productcode = query.productcode?.toString() || '';
     const type = query.type[0] || '';
     const minor = query.minor || '';
@@ -289,7 +289,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
           `,
             variables: { title: $account }
         });
-        
+        console.log('PRODUCTS');
+        console.log($account);
+        console.log(query.account);
         product = {
             id : data.products.nodes[0].id,
             title : data.products.nodes[0].title,
