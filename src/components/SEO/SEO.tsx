@@ -69,9 +69,18 @@ const SEO = ({
 	// METATYPES list — "name", "httpEquiv", "charSet", "itemProp" — so the
 	// `property` tags (all the og:* / article:* ones) get no dedup at all
 	// without one, and would duplicate unconditionally if a second <Head>
-	// rendered them. Keys also cover <link> and <script>, which have no
-	// automatic dedup either. Keep them unique and stable.
+	// rendered them. Keys also cover <link>, which has no automatic dedup
+	// either. Keep them unique and stable.
+	//
+	// The JSON-LD <script> is deliberately rendered OUTSIDE <Head> (in the body,
+	// which Google supports). Vendor snippets (GTM, Clarity, and tags GTM loads)
+	// do `insertBefore(document.getElementsByTagName('script')[0])`; if the first
+	// script in the document is a next/head-managed one, the vendor script lands
+	// inside next/head's tracked tags and breaks cleanup on client navigation,
+	// leaving duplicated meta tags behind (production only, where GTM loads the
+	// most tags). Keep <Head> free of <script> tags.
 	return (
+		<>
 		<Head>
 			<title key="title">{`${title} - ${ogSite_Name}`}</title>
 			<meta key="description" name="description" content={metaDesc} />
@@ -166,7 +175,8 @@ const SEO = ({
 				content={twitter_data1}
 				className="yoast-seo-meta-tag"
 			></meta>
-			<script key="yoast-schema-graph" type="application/ld+json" className="yoast-schema-graph"
+		</Head>
+		<script type="application/ld+json" className="yoast-schema-graph"
 				dangerouslySetInnerHTML={{
 					__html: `{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"${canonicalURL}","url":"${canonicalURL}","name":"${title} - ${title}","isPartOf":{"@id":"https://www.connexuscu.org/#website"},"primaryImageOfPage":{"@id":"${canonicalURL}#primaryimage"},"image":{"@id":"${canonicalURL}#primaryimage"},"thumbnailUrl":"${ogImage}","datePublished":"${published_time}","dateModified":"${modified_time}","description":"${metaDesc}","breadcrumb":{"@id":"${canonicalURL}#breadcrumb"},"inLanguage":"${ogLocale}","potentialAction":[{"@type":"ReadAction","target":["${canonicalURL}"]}]},{"@type":"ImageObject","inLanguage":"${ogLocale}","@id":"${canonicalURL}#primaryimage","url":"${ogImage}","contentUrl":"${ogImage}","width":${ogImageWidth},"height":${ogImageHeight}},{"@type":"BreadcrumbList","@id":"${ogURL}#breadcrumb","itemListElement":[${itemListElementArray}]},{"@type":"WebSite","@id":"https://www.connexuscu.org/#website","url":"https://www.connexuscu.org/","name":"Connexus Credit Union","description":"High Yields, Low Rates, Online Services","publisher":{"@id":"https://www.connexuscu.org/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.connexuscu.org/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"${ogLocale}"},{"@type":"Organization","@id":"https://www.connexuscu.org/#organization","name":"Connexus Credit Union","url":"https://www.connexuscu.org/","logo":{"@type":"ImageObject","inLanguage":"${ogLocale}","@id":"https://www.connexuscu.org/#/schema/logo/image/","url":"${logo}","contentUrl":"${logo}","width":145,"height":54,"caption":"Connexus Credit Union"},"image":{"@id":"https://www.connexuscu.org/#/schema/logo/image/"}}
 					${
@@ -189,7 +199,7 @@ const SEO = ({
 					}` : ''}]}`
 				}} 
 			/>
-		</Head>
+		</>
 	);
 };
 
