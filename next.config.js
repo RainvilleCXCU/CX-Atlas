@@ -766,6 +766,13 @@ let nextConfig = {
   experimental: {
     // webVitalsAttribution:  process.env.NODE_ENV !== "production" ? ["CLS", "LCP", "FCP"] : [],
     scrollRestoration: true,
+    // Track next/head tags with a <meta name="next-head"> marker before each
+    // tag instead of the default positional `next-head-count` scheme. With the
+    // positional scheme, any third-party script inserted into <head> (GTM,
+    // Clarity, and the tags GTM loads all insertBefore the first <script>)
+    // shifts the managed region, and the shifted-out tags (og:title etc.)
+    // are never cleaned up on client navigation.
+    strictNextHead: true,
     optimizePackageImports: [
       "@apollo/client",
       "@faustwp/cli",
