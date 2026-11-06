@@ -46,6 +46,12 @@ phases:
       - git checkout ${ENVIRONMENT}      
       - cd ../
       - rsync -r --exclude './${EXTERNAL_REPO_NAME}/*' ./* ./${EXTERNAL_REPO_NAME}
+      # The copy above never deletes, so files removed or renamed here linger in
+      # the deploy repo (e.g. src/middleware.ts after the rename to src/proxy.ts,
+      # which fails the Next 16 build). Mirror src/ exactly, and drop the
+      # ESLint 8 config replaced by eslint.config.mjs.
+      - rsync -r --delete ./src/ ./${EXTERNAL_REPO_NAME}/src/
+      - rm -f ./${EXTERNAL_REPO_NAME}/.eslintrc
       - cd ./${EXTERNAL_REPO_NAME}     
 
       - ls
