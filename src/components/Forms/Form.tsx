@@ -2,7 +2,8 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { parseHtml } from "lib/parser";
 import NFField from "./Field";
 import { Store } from "context/store";
-import { gql, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
+import { useQuery } from "@apollo/client/react";
 import apolloClient from "apolloClient";
 import Head from "next/head";
 
@@ -10,7 +11,7 @@ export interface Props {
     id: string;
 }
 
-function Form({ id }: Props): JSX.Element {
+function Form({ id }: Props): React.JSX.Element {
     const [state, setState] = useContext(Store);
     const formRef = useRef(null);
 
@@ -20,7 +21,7 @@ function Form({ id }: Props): JSX.Element {
     const [nonce, setNonce] = useState('');
     const [ formId, setFormId ] = useState('');
     const [isLinkElementLoaded, setLinkElementLoaded] = useState(false)
-    // const formData = useQuery().getForm({
+    // const formData = useQuery<any>().getForm({
     //     formId: id.toString()
     // });
 
@@ -29,7 +30,7 @@ function Form({ id }: Props): JSX.Element {
     // Use the standalone Apollo client (plain HttpLink) so this query is sent as
     // a POST. The default Faust client uses automatic persisted queries with
     // useGETForHashedQueries, which forces GET and can't be overridden per-query.
-    const FormQuery = useQuery(gql`
+    const FormQuery = useQuery<any>(gql`
     query GetFormData($id: String!) {
         getForm(formId: $id) {
             settings

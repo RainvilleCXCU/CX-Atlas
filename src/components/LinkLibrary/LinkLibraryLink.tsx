@@ -8,7 +8,7 @@ export interface Props {
     children
 }
 
-function LinkLibraryLink({ date, url, category, template = 'slim', description, pill, children = <></> }: Props): JSX.Element {
+function LinkLibraryLink({ date, url, category, template = 'slim', description, pill, children = <></> }: Props): React.JSX.Element {
 
     return (
         <>

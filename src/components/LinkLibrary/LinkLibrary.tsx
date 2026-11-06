@@ -16,7 +16,7 @@ export interface Props {
     children
 }
 
-function LinkLibrary({ cat_ids = null, encodedList = null, slug = null, children = <></> }: Props): JSX.Element {
+function LinkLibrary({ cat_ids = null, encodedList = null, slug = null, children = <></> }: Props): React.JSX.Element {
     const [state, setState] = useContext(Store);
     const [activeCat, setActiveCat] = useState(null);
     const [currPage, setCurrPage] = useState('1');

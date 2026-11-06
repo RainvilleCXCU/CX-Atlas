@@ -22,7 +22,7 @@ function Modal({
 //   cancelText = "Cancel",
   children = <></>,
   classNames = "",
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
   const { isModalOpen, setIsModalOpen } = useContext(isModalOpenContext);
   const { modalContent, setModalContent } = useContext(modalContentContext);
   const [ headerHeight, setHeaderHeight ] = useState(0);

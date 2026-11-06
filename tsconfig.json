@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "downlevelIteration": true,
+    "target": "ES2017",
     "lib": [
       "dom",
       "dom.iterable",
@@ -14,24 +13,22 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
-    "baseUrl": "./src",
+    "jsx": "react-jsx",
     "paths": {
-      "react": ["./node_modules/preact/compat/"],
-      "react/jsx-runtime": ["./node_modules/preact/jsx-runtime"],
-      "react-dom": ["./node_modules/preact/compat/"],
-      "react-dom/*": ["./node_modules/preact/compat/*"]
+      "*": ["./src/*"]
     },
+    "types": ["node", "jest", "google.maps"],
     "incremental": true
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "src/pages/api/revalidate.js"  ],
+    "**/*.tsx",
+    "src/pages/api/revalidate.js"
+  ],
   "exclude": [
     "node_modules"
   ]

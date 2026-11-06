@@ -20,8 +20,8 @@ function Arrow({
     style = {},
     children = <></>,
     classNames
-}: Props): JSX.Element {    
-    const transition = { duration: duration, delay: delay, ease: 'linear'}
+}: Props): React.JSX.Element {    
+    const transition = { duration: duration, delay: delay, ease: 'linear' as const }
     const routes = {
         bottomArc: "M 8 8 C 30 20, 70 20, 95 12",
         topArc : "M 8 12 C 30 0, 70 0, 95 6",

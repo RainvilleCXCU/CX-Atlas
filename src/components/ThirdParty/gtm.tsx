@@ -19,7 +19,7 @@ export interface Props {
  */
 function GTM({
   enabled = false, id
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
   if (!enabled || !id) return <></>;
 
   return (

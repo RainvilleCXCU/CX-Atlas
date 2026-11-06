@@ -4,7 +4,7 @@ interface CXCalcProps {
     children;
 }
 
-const DynamicRateTable = ({ children = <></>}: CXCalcProps): JSX.Element => {
+const DynamicRateTable = ({ children = <></>}: CXCalcProps): React.JSX.Element => {
     const initialized = useRef(false);
     const [calcsLoaded, setCalcsLoaded] = useState([]);
 

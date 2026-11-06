@@ -19,7 +19,7 @@ function Personyze({
 	enabled = false,
 	id,
 	domains
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
 	if (!enabled || !id) return <></>;
 
 	if (process.env.NEXT_PUBLIC_PERSONYZE_HIDE != 'true') {

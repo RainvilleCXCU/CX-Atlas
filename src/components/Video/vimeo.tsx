@@ -16,7 +16,7 @@ function Vimeo({
     app_id = '58746',
     badge = false,
     responsive = true
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
     const [isLoaded, setIsLoaded] = useState(false);
 
     // const embedVimeo = (

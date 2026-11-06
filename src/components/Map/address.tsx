@@ -15,7 +15,7 @@ const Address = ({
     locationData,
     showDirectionsButton = true,
     getDirectionsText = 'Get Directions'
-}: Props): JSX.Element   => {
+}: Props): React.JSX.Element   => {
     const { locationSettings } = useContext(locationSettingsContext);
     const branch = JSON.parse(atob(locationData));
     return (

@@ -13,7 +13,7 @@ function ToggleContentSelect({
   attribs,
   children = <></>,
   classNames = "",
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
   const { toggleContent, setToggleContent } = useContext(toggleContentContext);
   const selectRef = useRef<HTMLSelectElement>(null);
   const { push } = useRouter();

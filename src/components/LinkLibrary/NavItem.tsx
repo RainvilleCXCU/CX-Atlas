@@ -11,7 +11,7 @@ export interface Props {
     type: string
 }
 
-function LinkLibraryCatLinks({ categories, type = 'link' }: Props): JSX.Element {
+function LinkLibraryCatLinks({ categories, type = 'link' }: Props): React.JSX.Element {
     const [state, setState] = useContext(Store);
     const router = useRouter();
 

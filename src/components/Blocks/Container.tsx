@@ -14,7 +14,7 @@ function Container({
     children = <></>,
     classNames,
     id
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
 
   return (
     <div

@@ -3,6 +3,16 @@ import InfoBox from "./infobox";
 import { Store } from "context/store";
 import { selectedLocationContext, showDetailsContext } from "components/Locations/locationsContext";
 
+/*
+ * WP Store Locator default marker images. Plugin 3.x moved them from
+ * img/markers/ to assets/img/frontend/markers/. Production still runs a 2.x
+ * plugin, so addMarker() tries the 3.x path first and falls back to the legacy
+ * one when the image fails to load. Drop the fallback once every WordPress
+ * environment runs plugin 3.x.
+ */
+const WPSL_MARKER_PATH = '/wp-content/plugins/wp-store-locator/assets/img/frontend/markers/';
+const WPSL_LEGACY_MARKER_PATH = '/wp-content/plugins/wp-store-locator/img/markers/';
+
 interface MapProps {
     id?: string,
 	title?: string,
@@ -12,7 +22,7 @@ interface MapProps {
     locationSettings
 }
 
-function Map({ id="wpsl-gmap", title = 'Categories', lat, lng, locationSettings = null, markers }: MapProps): JSX.Element {
+function Map({ id="wpsl-gmap", title = 'Categories', lat, lng, locationSettings = null, markers }: MapProps): React.JSX.Element {
 
 	const [state, setState] = useContext(Store);
 
@@ -246,18 +256,23 @@ function Map({ id="wpsl-gmap", title = 'Categories', lat, lng, locationSettings 
 
     const addMarker = ( latLng, storeId, infoWindowData, draggable, infoWindow ) => {
         let url;
+        // Default marker file from the plugin settings (e.g. "red.png"); null for custom marker URLs.
+        let defaultMarkerFile = null;
         if ( storeId === 0 ) {
             infoWindowData = {
                 store: locationSettings.startPoint
             };
-    
-            url = `/wp-content/plugins/wp-store-locator/img/markers/${locationSettings.startMarker}`;
+
+            defaultMarkerFile = locationSettings.startMarker;
         } else if ( typeof infoWindowData.alternateMarkerUrl !== "undefined" && infoWindowData.alternateMarkerUrl ) {
             url = infoWindowData.alternateMarkerUrl;
         // } else if ( typeof infoWindowData.categoryMarkerUrl !== "undefined" && infoWindowData.categoryMarkerUrl ) {
         //     url = infoWindowData.categoryMarkerUrl;
         } else {
-            url = `/wp-content/plugins/wp-store-locator/img/markers/${locationSettings.storeMarker}`;
+            defaultMarkerFile = locationSettings.storeMarker;
+        }
+        if ( defaultMarkerFile ) {
+            url = `${WPSL_MARKER_PATH}${defaultMarkerFile}`;
         }
         const mapIcon = {
             url: url,
@@ -271,8 +286,15 @@ function Map({ id="wpsl-gmap", title = 'Categories', lat, lng, locationSettings 
             optimized: true, //fixes markers flashing while bouncing
             title: 'Start',
             icon: mapIcon
-        });	
-        
+        });
+
+        // Plugin 2.x images live at the legacy path; switch the icon over if the 3.x path 404s.
+        if ( defaultMarkerFile ) {
+            const probe = new Image();
+            probe.onerror = () => marker.setIcon( { ...mapIcon, url: `${WPSL_LEGACY_MARKER_PATH}${defaultMarkerFile}` } );
+            probe.src = url;
+        }
+
         google.maps.event.addListener( marker, "click",( function( currentMap ) {
             return function() {
                 

@@ -22,7 +22,7 @@ interface Props {
 	footerSocialIcons?;
 }
 
-const Footer = ({ copyrightHolder = "", title, logo, desktopLogo, mobileLogo, desktopLogoWidth, mobileLogoWidth, logoText, menuItems, footerUtilities, footerAppIcons, footerSocialIcons }: Props): JSX.Element => {
+const Footer = ({ copyrightHolder = "", title, logo, desktopLogo, mobileLogo, desktopLogoWidth, mobileLogoWidth, logoText, menuItems, footerUtilities, footerAppIcons, footerSocialIcons }: Props): React.JSX.Element => {
 	const year = new Date().getFullYear();
 
 	// copies the routing number to the clipboard

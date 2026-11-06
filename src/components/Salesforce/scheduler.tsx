@@ -40,7 +40,7 @@ const Scheduler = ({
     finishText = '',
     finishImage = '',
     profileImage = '',
-}: CXCalcProps): JSX.Element => {
+}: CXCalcProps): React.JSX.Element => {
     const {query} = useRouter();
     
     const initialized = useRef(false);

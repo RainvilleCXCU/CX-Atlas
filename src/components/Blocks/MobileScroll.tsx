@@ -18,7 +18,7 @@ function SwiperContainer({
     classNames,
     columns = 1,
     mobileSwipe = true
-}: Props): JSX.Element {    
+}: Props): React.JSX.Element {    
   const divElement = useRef(null);
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const isActive = (index) => {

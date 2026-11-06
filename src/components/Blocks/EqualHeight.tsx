@@ -17,16 +17,16 @@ function EqualHeightContainer({
     classNames = '',
     children = <></>,
     styles = {}
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
 
     const [isSSR, setIsSSR] = useState(true);
-    const { setForceUpdate } = useContext(EqualHeightContext);
+    const { forceUpdate } = useContext(EqualHeightContext);
 
     useEffect(() => {
         if(document) {
             setIsSSR(false);
             setTimeout(() => {
-                setForceUpdate((value: boolean) => !value)
+                forceUpdate()
             },10);
         }
     }, []);

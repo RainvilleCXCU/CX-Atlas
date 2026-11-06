@@ -25,7 +25,7 @@ function ToggleContent({
   children = <></>,
   classNames = "",
   device = "all"
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
   const {toggleContent, setToggleContent} = useContext(toggleContentContext);
   const target = attribs?.['data-toggle-content'];
   const [deviceType, setDeviceType] = useState<string>("desktop");

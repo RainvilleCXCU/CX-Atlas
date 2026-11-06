@@ -53,7 +53,7 @@ const Header = ({
   template,
   activeAlerts,
   ctas
-}: Props): JSX.Element => {
+}: Props): React.JSX.Element => {
 
   const { asPath } = useRouter();
 

@@ -17,7 +17,7 @@ function Conditional({
     comparisonKey = '',
     comparisonValue = '',
     isDefault = false
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
     const [isSSR, setIsSSR] = useState(true);
     const [cookies, setCookie ] = useCookies([comparisonKey]);
     const [displayContent, setDisplayContent] = useState(false);

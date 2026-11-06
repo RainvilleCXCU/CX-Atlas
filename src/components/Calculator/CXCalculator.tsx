@@ -4,7 +4,7 @@ interface CXCalcProps {
     children;
 }
 
-const CXCalc = ({ children = <></>}: CXCalcProps): JSX.Element => {
+const CXCalc = ({ children = <></>}: CXCalcProps): React.JSX.Element => {
     const initialized = useRef(false);
     const [calcsLoaded, setCalcsLoaded] = useState([]);
 

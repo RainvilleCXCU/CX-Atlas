@@ -30,7 +30,7 @@ function Sticky({
   stayVisible = false, 
   expandBottomSiblings = 0, 
   hideAboveOffset = 90 
-}: StickyProps): JSX.Element {
+}: StickyProps): React.JSX.Element {
   const [loaded, setLoaded] = useState(false);
   const [cookies, setCookie] = useCookies(["stickyClosed"]);
   const [alertsClosed, setAlertsClosed] = useState<string[]>([]);

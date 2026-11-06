@@ -29,7 +29,7 @@ function CTABar({
   expandBottomSiblings = 0, 
   hideAboveOffset, 
   children = <></> 
-}: CTAProps): JSX.Element {
+}: CTAProps): React.JSX.Element {
   const router = useRouter();
   const pageURI = router.asPath;
   const stickyId = `${id}-${pageURI.replace(/[^a-zA-Z0-9]/g, '-')}`;

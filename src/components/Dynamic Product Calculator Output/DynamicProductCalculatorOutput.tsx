@@ -6,7 +6,7 @@ interface CXCalcProps {
 
 const DynamicProductCalculatorOutput = ({
   children = <></>,
-}: CXCalcProps): JSX.Element => {
+}: CXCalcProps): React.JSX.Element => {
   const initialized = useRef(false);
   const [calcsLoaded, setCalcsLoaded] = useState([]);
 

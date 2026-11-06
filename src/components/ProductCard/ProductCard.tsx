@@ -43,8 +43,10 @@ export default function ProductCard({ attribs, children }) {
   const { filteredChildren, summaryContent } = useMemo(() => {
     const summaryNodes: React.ReactNode[] = [];
 
-    const removeTopSection = (node: React.ReactNode) => {
-      if (!React.isValidElement(node)) return node;
+    const removeTopSection = (child: React.ReactNode) => {
+      if (!React.isValidElement(child)) return child;
+      // React 19 types element props as `unknown`; these are plain DOM/JSX props.
+      const node = child as React.ReactElement<any>;
 
       // Check if this node is the "top-section" div and if so, extract its children for the summary
       if (node.type === "div") {

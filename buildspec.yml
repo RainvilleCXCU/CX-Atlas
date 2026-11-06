@@ -8,7 +8,7 @@ env:
 phases:
   install:
     runtime-versions:
-      nodejs: 22.4.1  # Specify the Node.js version you want to use
+      nodejs: 24  # Node 24 LTS (matches package.json engines)
     commands:
       - echo Installing dependencies...
       - npm install

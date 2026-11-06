@@ -26,7 +26,7 @@ function AppLinks({
     attribs,
     children = <></>,
     classNames = "",
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
 
     const { siteSettings } = useContext(siteSettingsContext);
     

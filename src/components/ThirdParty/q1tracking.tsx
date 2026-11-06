@@ -14,7 +14,7 @@ export interface Props {
 function Q1Tracking({
   enabled = false,
   id
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
   if (!enabled || !id) return <></>;
 
   return (

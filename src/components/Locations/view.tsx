@@ -40,7 +40,7 @@ export interface Props {
     }
 }
 
-function Locations({ locationSettings, siteLogo, location, noResults }: Props): JSX.Element {
+function Locations({ locationSettings, siteLogo, location, noResults }: Props): React.JSX.Element {
     const { push, isReady } = useRouter();
 
 

@@ -29,7 +29,8 @@ import {
   selectedLocationContext,
   locationSettingsContext,
 } from "components/Locations/locationsContext";
-import { gql, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
+import { useQuery } from "@apollo/client/react";
 import PageTitle from "components/Blocks/PageTitle";
 import Container from "components/Blocks/Container";
 import Columns from "components/Blocks/Columns";
@@ -43,7 +44,7 @@ import ErrorBoundary from "components/common/ErrorBoundary";
 import { GetServerSidePropsContext } from "next";
 import { getActiveAlerts } from "utils/alerts";
 export default function Page() {
-  const props = useQuery(Page.query, {
+  const props = useQuery<any>(Page.query, {
     variables: Page.variables(),
   });
   const { query = {} } = useRouter();

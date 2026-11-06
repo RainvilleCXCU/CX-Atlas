@@ -47,7 +47,7 @@ export function getStaticProps(ctx) {
 
 export async function getStaticPaths() {
   // Get all Paths in Header Navigation
-  const NavData = await apolloClient.query({
+  const NavData = await apolloClient.query<any>({
     query: gql`
     ${NavigationMenuItemFragment}
     query GetMenuItems(
@@ -74,7 +74,7 @@ export async function getStaticPaths() {
    */
   let pages, posts = [];
 
-  const pathData = await apolloClient.query({
+  const pathData = await apolloClient.query<any>({
     query: gql`
       query GetAllPagesAndPages {
         pages(first: 255, where: {status: PUBLISH}) {

@@ -20,7 +20,7 @@ function MLButton({
     target,
     children = <></>,
     classNames = ''
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
     const [ showForm, setShowForm ] = useState(false);
     const {setIsModalOpen} = useContext(isModalOpenContext);
     const {setModalContent} = useContext(modalContentContext);

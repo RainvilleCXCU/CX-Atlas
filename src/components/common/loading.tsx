@@ -10,7 +10,7 @@ import { Store } from "context/store";
  * stacking context. Visibility in that mode is controlled directly via
  * `show`, and none of the route-listener/global-state wiring below runs.
  */
-function Loading({ type = 'lines', embedded = false, show = false }: { type?: string; embedded?: boolean; show?: boolean }): JSX.Element {
+function Loading({ type = 'lines', embedded = false, show = false }: { type?: string; embedded?: boolean; show?: boolean }): React.JSX.Element {
   const [isLoading, setIsLoading] = useState(false);
   const [state, setState] = useContext(Store);
   const loadingTimerRef = useRef<NodeJS.Timeout | null>(null);

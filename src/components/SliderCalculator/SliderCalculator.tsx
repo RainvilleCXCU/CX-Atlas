@@ -4,7 +4,7 @@ interface CXCalcProps {
   children;
 }
 
-const SliderCalculator = ({children = <></>}: CXCalcProps): JSX.Element => {
+const SliderCalculator = ({children = <></>}: CXCalcProps): React.JSX.Element => {
   const initialized = useRef(false);
   const [calcsLoaded, setCalcsLoaded] = useState([]);
 

@@ -3,7 +3,8 @@ import { Store } from "context/store";
 import LinkLibraryLink from "./LinkLibraryLink";
 import dateFormat from 'dateformat';
 const Pagination = dynamic(() => import('components/Pagination'))
-import { gql, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
+import { useQuery } from "@apollo/client/react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 
@@ -17,14 +18,14 @@ export interface Props {
     slug?: string
 }
 
-function LinkLibraryList({ category = null, encodedList = null, slug }: Props): JSX.Element {
+function LinkLibraryList({ category = null, encodedList = null, slug }: Props): React.JSX.Element {
     const [state, setState] = useContext(Store);
     const [activeCat, setActiveCat] = useState(null)
     const postPerPage = 7;
     const router = useRouter();
     let LinkQuery;
     if(!encodedList) {
-        LinkQuery = useQuery(gql`
+        LinkQuery = useQuery<any>(gql`
         query GetLinkData($id: Float!) {
             linkLibraryByCatId(catId: $id) {
                 id

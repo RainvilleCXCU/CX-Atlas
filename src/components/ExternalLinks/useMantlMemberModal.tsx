@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useApolloClient } from "@apollo/client";
+import { useApolloClient } from "@apollo/client/react";
 import { isModalOpenContext, modalContentContext } from "components/Modal/modalContext";
 import { Store } from "context/store";
 import Member, { MANTL_MEMBER_SCREEN_QUERY } from "components/Products/Member";
@@ -48,7 +48,7 @@ function useMantlMemberModal(): (href: string) => void {
     };
 
     client
-      .query({
+      .query<any>({
         query: MANTL_MEMBER_SCREEN_QUERY,
         variables: { account, productcode, referralsource, promoCode },
         fetchPolicy: 'network-only',

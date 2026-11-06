@@ -2,7 +2,8 @@ import { useContext, useEffect, useRef, useState, useMemo, useCallback } from "r
 import NFField from "./Field";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { gql, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
+import { useQuery } from "@apollo/client/react";
 import apolloClient from "apolloClient";
 import { Store } from "context/store";
 
@@ -23,7 +24,7 @@ export interface Props {
     isMinor?: boolean;
 }
 
-function MLForm({ id, href, glValue, isMinor = false }: Props): JSX.Element {
+function MLForm({ id, href, glValue, isMinor = false }: Props): React.JSX.Element {
     const formRef = useRef(null);
     const [state, setState] = useContext(Store);
 
@@ -44,7 +45,7 @@ function MLForm({ id, href, glValue, isMinor = false }: Props): JSX.Element {
     // Standalone Apollo client (plain HttpLink) so this query is a POST — the
     // default Faust client uses persisted queries + GET, which can't be
     // overridden per-query.
-    const FormQuery = useQuery(GET_FORM_DATA, {
+    const FormQuery = useQuery<any>(GET_FORM_DATA, {
         client: apolloClient,
         variables: { id },
         skip: !id,

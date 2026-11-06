@@ -34,7 +34,7 @@ function Posts({
   currentPage = 1,
   postInfo,
   blogSidebar
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <section {...(id && { id })} className='blog-wrapper'>

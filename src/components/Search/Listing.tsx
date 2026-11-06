@@ -14,7 +14,7 @@ export interface Props {
     categories?;
 }
 
-function SearchListing({ id, title, content, url = '', featuredImage, categories, type }: Props): JSX.Element {
+function SearchListing({ id, title, content, url = '', featuredImage, categories, type }: Props): React.JSX.Element {
     const typeLabels = {
         'page': 'Page',
         'post': 'Blog Post',

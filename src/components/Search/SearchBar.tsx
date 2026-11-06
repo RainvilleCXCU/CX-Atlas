@@ -5,7 +5,7 @@ export interface Props {
 	showBtn?: boolean;
 }
 
-function SearchBar({ showBtn = true }: Props): JSX.Element {
+function SearchBar({ showBtn = true }: Props): React.JSX.Element {
 	const searchInlineRef = useRef(null);
 	const { push, query } = useRouter();
 	const { searchCursor, s = "" } = query;

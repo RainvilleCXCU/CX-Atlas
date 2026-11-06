@@ -14,7 +14,7 @@ function ExternalLink({
     children = <></>,
     ariaLabel = null,
     classNames = ''
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
     const linkRef = useRef<HTMLAnchorElement>(null);
     const {setIsModalOpen} = useContext(isModalOpenContext);
     const {setModalContent} = useContext(modalContentContext);

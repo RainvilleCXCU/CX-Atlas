@@ -111,7 +111,7 @@ function escapeHtml(value: string): string {
 		.replace(/"/g, "&quot;");
 }
 
-function LocationDetails(): JSX.Element {
+function LocationDetails(): React.JSX.Element {
 	const { showDetails, setShowDetails } = useContext(showDetailsContext);
 	const { selectedLocation } = useContext(selectedLocationContext);
 	const [isMobile, setIsMobile] = useState("");

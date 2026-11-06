@@ -3,6 +3,8 @@ import { files } from "../lib/externalFiles";
 import { addJSAsset } from "lib/enqueuedFiles";
 
 
+const STYLEGUIDE_HREF = `/wp-content/themes/CXCU/assets/${process.env.NEXT_PUBLIC_styleguideVersion || "latest"}/cxcuatlas.css${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`;
+
 class CXDoc extends Document {
   render() {
     return (
@@ -37,26 +39,21 @@ class CXDoc extends Document {
             </>
           }
           
-          <link
-            rel="preload"
-            href={`/_next/static/css/styles.css${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`}
-            as="style"
-          />
-          <link rel="stylesheet" href={`/_next/static/css/styles.css${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`} />
+          {/*
+            Site styles (src/scss/main.scss) are imported in _app.tsx and emitted
+            by Next's CSS pipeline, which places its <link> tags after this
+            document's own <Head> children. The style guide must keep loading
+            AFTER the site styles (it used to follow the old styles.css link),
+            so it is only preloaded here and applied at the top of <body> below.
+          */}
           {process.env.NEXT_PUBLIC_DISABLE_STYLEGUIDE !== 'true' &&
-            <>
-              <link
-                rel="preload"
-                href={`/wp-content/themes/CXCU/assets/${
-                  process.env.NEXT_PUBLIC_styleguideVersion || "latest"}/cxcuatlas.css${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`}
-                as="style"
-              />
-              <link rel="stylesheet" href={`/wp-content/themes/CXCU/assets/${
-                  process.env.NEXT_PUBLIC_styleguideVersion || "latest"}/cxcuatlas.css${process.env.NEXT_PUBLIC_CACHE ? "?cache=" + process.env.NEXT_PUBLIC_CACHE : '' }`} />
-            </>
+            <link rel="preload" href={STYLEGUIDE_HREF} as="style" />
           }
         </Head>
         <body>
+          {process.env.NEXT_PUBLIC_DISABLE_STYLEGUIDE !== 'true' &&
+            <link rel="stylesheet" href={STYLEGUIDE_HREF} />
+          }
           <Main />
           <NextScript />
           {files.js.map((sheet) => {

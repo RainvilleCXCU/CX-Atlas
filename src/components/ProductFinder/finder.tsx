@@ -15,7 +15,7 @@ function ProductFinder({
     submitText,
     selectText,
     attribs
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
         
 const products = JSON.parse(atob(productData));
 const selectRef = useRef(null);

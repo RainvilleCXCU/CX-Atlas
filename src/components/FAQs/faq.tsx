@@ -7,7 +7,7 @@ export interface Props {
 	isOpen?: boolean;
 }
 
-function FAQ({ id, title, content, isOpen }: Props): JSX.Element {
+function FAQ({ id, title, content, isOpen }: Props): React.JSX.Element {
 	
 	return (
 		<div className="cx-faq_wrapper">

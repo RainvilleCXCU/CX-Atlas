@@ -14,7 +14,7 @@ function ToggleContentLink({
   attribs,
   children = <></>,
   classNames = "",
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
   const { toggleContent, setToggleContent } = useContext(toggleContentContext);
   const linkRef = useRef<HTMLAnchorElement>(null);
   const router = useRouter();

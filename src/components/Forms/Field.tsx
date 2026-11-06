@@ -22,7 +22,7 @@ export interface Props {
     formSettings?
 }
 
-function NFField({ id, form, type = 'text', name, label, value, label_pos = "label-above", container_classes, options, element_classes, description, content, formSettings, required = false, error_message, submitNum }: Props): JSX.Element {
+function NFField({ id, form, type = 'text', name, label, value, label_pos = "label-above", container_classes, options, element_classes, description, content, formSettings, required = false, error_message, submitNum }: Props): React.JSX.Element {
 
     const fieldRef = useRef(null);
     const [fieldVal, setFieldVal] = useState(null);

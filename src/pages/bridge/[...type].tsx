@@ -263,7 +263,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     let product = productCache.get($account);
 
     if (!product) {
-        const { data } = await apolloClient.query({
+        const { data } = await apolloClient.query<any>({
             query: gql`
             query ProductByTitle($title: String!) {
                 products(where: {title: $title}, first: 1) {
@@ -355,7 +355,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetHtml = cachedWidget;
     } else if(type && type == 'start' && (!minor || minor == '')) {
         console.log(`Start ${JSON.stringify(productInfo)}`)
-        widgetData = await apolloClient.query({
+        widgetData = await apolloClient.query<any>({
             query: gql`
             ${ApplyStartFragment}
             query getApplyStart($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promoCode: String) {
@@ -369,7 +369,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         widgetCache.set(productInfo, widgetHtml);
     } else if(minor == 'yes') {
         console.log('YES')
-        widgetData = await apolloClient.query({
+        widgetData = await apolloClient.query<any>({
             query: gql`
             ${ApplyNowMinorFragment}
             query getApplyNowMinor($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promoCode: String) {
@@ -381,7 +381,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             widgetHtml = widgetData.data.widgetSettings.applyNowMinor;
             widgetCache.set(productInfo, widgetHtml);
     } else if(productQuestion && product?.hasProductQuestion) {
-        widgetData = await apolloClient.query({
+        widgetData = await apolloClient.query<any>({
             query: gql`
             ${ApplyNowProductFragment}
             query ApplyNowProduct($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promoCode: String) {
@@ -394,7 +394,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             widgetCache.set(productInfo, widgetHtml);
     } else if(member && !productLimit) {
         console.log('Member')
-        widgetData = await apolloClient.query({
+        widgetData = await apolloClient.query<any>({
             query: gql`
             ${ApplyNowMemberFragment}
             query ApplyNowMember($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promoCode: String) {
@@ -407,7 +407,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             widgetCache.set(productInfo, widgetHtml);
     } else if(member && productLimit && atLimit == '') {
         console.log('Member Limit')
-        widgetData = await apolloClient.query({
+        widgetData = await apolloClient.query<any>({
             query: gql`
             ${ApplyNowMemberLimitFragment}
             query ApplyNowMemberLimit($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promoCode: String) {
@@ -420,7 +420,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
             widgetCache.set(productInfo, widgetHtml);
     } else {
         console.log('DATA');
-        widgetData = await apolloClient.query({
+        widgetData = await apolloClient.query<any>({
             query: gql`
             ${ApplyNowFragment}
             query getApplyNow($account: String, $minor: String, $productcode: String, $atLimit: String, $member: String, $scenario: String, $loanPurpose: String, $productQuestion: String, $mlPrep: String, $promoCode: String) {
@@ -493,7 +493,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     if (product.applicationSystem && product.applicationSystem.includes('mantl')) {
         console.log('Fetching Mantl Member Widget');
         console.log('Referral Source:', referralsource);
-        const memberWidgetData = await apolloClient.query({
+        const memberWidgetData = await apolloClient.query<any>({
             query: gql`
             query MantlMemberScreen($account: String, $productcode: String, $promoCode: String, $referralsource: String) {
                 widgetSettings {

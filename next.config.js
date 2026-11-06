@@ -2,7 +2,6 @@
 const path = require("path");
 const { withFaust, getWpHostname } = require("@faustwp/core");
 const { fetchWordPressRedirects } = require("./src/utils/redirects");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
@@ -225,6 +224,10 @@ function buildContentSecurityPolicy() {
 
 let nextConfig = {
   reactStrictMode: false,
+  // Route sources: Next 16 rejects a repeating `:path*` that has no "/" prefix
+  // (e.g. "/mdr:path*"). Next 14 compiled those to `^/mdr([^/]+?)*$`, i.e. the
+  // literal prefix plus any characters except "/", so they are written as
+  // `:path([^/]*)`, which matches exactly the same URLs.
   async headers() {
     return [
       {
@@ -246,7 +249,7 @@ let nextConfig = {
         ],
       },
       {
-        source: '/mdr:path*',
+        source: '/mdr:path([^/]*)',
         headers: [
           {
             key: 'Cache-Control',
@@ -283,7 +286,7 @@ let nextConfig = {
         permanent: false,
       },
       {
-        source: '/mobileapp:path*',
+        source: '/mobileapp:path([^/]*)',
         has: [
           {
             type: 'header',
@@ -295,7 +298,7 @@ let nextConfig = {
         destination: 'https://play.google.com/store/apps/details?id=com.alkamitech.connexus',
       },
       {
-        source: '/mobileapp:path*',
+        source: '/mobileapp:path([^/]*)',
         has: [
           {
             type: 'header',
@@ -308,7 +311,7 @@ let nextConfig = {
         destination: 'https://apple.co/3qSq3u6',
       },
       {
-        source: '/mobileapp:path*',
+        source: '/mobileapp:path([^/]*)',
         permanent: false,
         destination: '/services/digital-banking',
       },
@@ -399,11 +402,11 @@ let nextConfig = {
           ]
         },
         {
-          source: "/mdr/create:path*",
+          source: "/mdr/create:path([^/]*)",
           destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/mdr/create/:path*/`,
         },
         {
-          source: "/mdr:path*",
+          source: "/mdr:path([^/]*)",
           destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/mdr/:path*/`,
         },
         {
@@ -415,7 +418,7 @@ let nextConfig = {
           destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp-includes/:path*`,
         },
         {
-          source: "/wp-login.php:path*",
+          source: "/wp-login.php:path([^/]*)",
           destination: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp-login.php:path*`,
         },
         {
@@ -762,140 +765,35 @@ let nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === "production" && process.env.REMOVE_CONSOLE !== 'false',
   },
-  swcMinify: true,
   experimental: {
     // webVitalsAttribution:  process.env.NODE_ENV !== "production" ? ["CLS", "LCP", "FCP"] : [],
     scrollRestoration: true,
-    // Track next/head tags with a <meta name="next-head"> marker before each
-    // tag instead of the default positional `next-head-count` scheme. With the
-    // positional scheme, any third-party script inserted into <head> (GTM,
-    // Clarity, and the tags GTM loads all insertBefore the first <script>)
-    // shifts the managed region, and the shifted-out tags (og:title etc.)
-    // are never cleaned up on client navigation.
-    strictNextHead: true,
     optimizePackageImports: [
       "@apollo/client",
       "@faustwp/cli",
       "@faustwp/core",
       "dateformat",
-      "preact",
-      "preact-render-to-string",
       "react-cookie",
       "react-equal-height",
     ],
   },
 
+  // Global styles are imported in src/pages/_app.tsx and compiled by Next's
+  // built-in Sass support. There is intentionally no custom `webpack` function:
+  // Next 16 builds with Turbopack and refuses to build when one is present.
+  // (Removed: the Preact alias, the MiniCssExtractPlugin `styles.css` entry,
+  // and the custom splitChunks groups. Turbopack does its own chunking.)
+  // Pin the workspace root: a stray package-lock.json one directory up
+  // (connexusspa/) otherwise makes Turbopack guess the wrong root.
+  turbopack: {
+    root: __dirname,
+  },
+
   sassOptions: {
     outputStyle: "compressed",
-  },
-  webpack: (config, { dev, isServer }) => {
-    if (!process.env.USE_REACT) {
-      Object.assign(config.resolve.alias, {
-        "react/jsx-runtime.js": "preact/compat/jsx-runtime",
-        react: "preact/compat",
-        "react-dom/test-utils": "preact/test-utils",
-        "react-dom": "preact/compat",
-      });
-    }
-    const originalEntry = config.entry;
-    config.entry = async () => {
-      const entries = await originalEntry();
-    
-      return {
-        ...entries,
-        'styles': {
-          import: './src/scss/main.scss',
-          dependOn: undefined,
-          filename: 'styles'
-        },
-      };
-    };
-
-    
-    config.plugins.push(
-        new MiniCssExtractPlugin({
-          filename: `static/css/styles.css`,
-          chunkFilename: "static/css/styles.css",
-        }),)
-    config.resolve.extensions.push('.scss');
-    config.resolve.extensions.push('.css');
-    console.log(JSON.stringify(config.entry))
-    config.module.rules.push(
-        {
-            test: /\.(scss|css)$/,
-            exclude: /node_modules/,
-            use: [
-                MiniCssExtractPlugin.loader,
-                {
-                    loader: "css-loader",
-                    options: {
-                        esModule: false,
-                        sourceMap: true,
-                    },
-                },
-                {
-                    loader: "sass-loader",
-                    options: {
-                        sassOptions: (loaderContext) => {            
-                            return {
-                                outputStyle: 'compressed',
-                            };
-                          },
-                        sourceMap:
-                            process.env.NODE_ENV !== "production"
-                                ? true
-                                : false
-                    },
-                },
-            ],
-        },);
-
-    /** Chunking */
-if (!isServer && !process.env.PREVENT_SPLIT_CHUNK) {
-      config.optimization.splitChunks = {
-        chunks: 'all',
-        minSize: 20000,
-        minRemainingSize: 0,
-        minChunks: 1,
-        maxAsyncRequests: 30,
-        maxInitialRequests: 30,
-        enforceSizeThreshold: 50000,
-        cacheGroups: {
-          default: {
-            minChunks: 2,
-            priority: -20,
-            reuseExistingChunk: true,
-          },
-          defaultVendors: {
-            test: /[\\/]node_modules[\\/]/,
-            priority: -10,
-            reuseExistingChunk: true,
-          },
-          next: {
-            test: /[\\/]node_modules[\\/](next)/,
-            priority: -10,
-            name: 'next',
-            enforce: true,
-          },
-          // GraphQL and Apollo
-          graphql: {
-            test: /[\\/]node_modules[\\/](@apollo|graphql|@graphql-tools)[\\/]/,
-            name: 'graphql',
-            priority: 25,
-            enforce: true,
-          },
-          // FaustWP specific
-          faust: {
-            test: /[\\/]node_modules[\\/]@faustwp[\\/]/,
-            name: 'faust',
-            priority: 25,
-            enforce: true,
-          },
-        },
-      };
-    }
-
-    return config;
+    // main.scss still uses @import throughout; silence Dart Sass's @import
+    // deprecation noise until the partials are migrated to @use.
+    silenceDeprecations: ["import", "global-builtin", "color-functions", "slash-div", "legacy-js-api"],
   },
 };
 module.exports = withFaust(withBundleAnalyzer(nextConfig));

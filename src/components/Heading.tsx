@@ -10,7 +10,7 @@ function Heading({
   level = 'h1',
   children,
   className,
-}: HeadingProps): JSX.Element {
+}: HeadingProps): React.JSX.Element {
   const H = ({ ...props }: HTMLAttributes<HTMLHeadingElement>) =>
     createElement(level, props, children);
 

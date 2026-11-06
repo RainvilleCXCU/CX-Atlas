@@ -13,7 +13,7 @@ function PageTitle({
   heading,
   image,
   body
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
   return (
     <div className={`cx-page-title${color ? ` cx-page-title--${color}` : ''}`}>
         <div className="cx-page-title__grid">

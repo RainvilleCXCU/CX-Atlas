@@ -7,7 +7,7 @@ export interface Props {
 	logo: string;
 }
 
-function LocationListings({ data, distanceUnit, logo }: Props): JSX.Element {
+function LocationListings({ data, distanceUnit, logo }: Props): React.JSX.Element {
 
 	return (
 		<ul id="store-list" className="accordion-collapse collapse show">

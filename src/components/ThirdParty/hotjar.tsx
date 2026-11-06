@@ -9,7 +9,7 @@ export interface Props {
 function HotJar({
   enabled = false,
   id
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
   const [loaded, setLoaded] = useState(false);
   const [loadScriptTimer, setLoadScriptTimer] = useState(null);
   const [eventAdded, setEventAdded] = useState(false);

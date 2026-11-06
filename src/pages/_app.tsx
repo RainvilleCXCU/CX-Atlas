@@ -1,4 +1,6 @@
 import '../faust.config';
+// Global site styles, compiled by Next's built-in Sass support.
+import '../scss/main.scss';
 import { FaustProvider } from '@faustwp/core';
 import { useEffect } from 'react';
 import Provider from '../provider/store';

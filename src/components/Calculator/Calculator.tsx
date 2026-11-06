@@ -3,7 +3,7 @@ interface Props {
 	calculatorName: string;
 }
 
-const Calculator = ({ calculatorName }: Props): JSX.Element => {
+const Calculator = ({ calculatorName }: Props): React.JSX.Element => {
 		const initialized = useRef(false);
 		const [calcsLoaded, setCalcsLoaded] = useState([])
 	

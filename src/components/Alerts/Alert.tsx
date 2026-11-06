@@ -9,7 +9,7 @@ export interface AlertProps {
   alerts?: AlertType[];
 }
 
-function Alert({ id = "alertdefault", alerts }: AlertProps): JSX.Element {
+function Alert({ id = "alertdefault", alerts }: AlertProps): React.JSX.Element {
   const [loaded, setLoaded] = useState(false);
   const [cookies, setCookie] = useCookies(["alertClosed"]);
   const [state] = useContext(Store);

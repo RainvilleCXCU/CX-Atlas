@@ -8,7 +8,7 @@ function Columns({
     align = '',
     children = <></>,
     classNames = ''
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
     return (
         <div className={`wp-block-columns is-layout-flex${align === 'full' ? ' alignfull' : ''} ${classNames}`}>
             {children}

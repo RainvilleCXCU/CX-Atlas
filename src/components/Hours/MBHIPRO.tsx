@@ -15,7 +15,7 @@ function MBHIPRO({
     children = <></>,
     classNames = '',
     code
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
     const [isHoursOpen, setIsHoursOpen] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
     useEffect(() => {

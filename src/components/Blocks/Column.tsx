@@ -6,7 +6,7 @@ export interface Props {
 function Column({
     children = <></>,
     classNames = ''
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
     return (
         <div className={`wp-block-column is-layout-flow ${classNames}`}>
             {children}

@@ -21,7 +21,7 @@
 //     style = {},
 //     children = <></>,
 //     classNames
-// }: Props): JSX.Element {    
+// }: Props): React.JSX.Element {    
 //   return (
 //     <motion.div
 //       className="card-container"

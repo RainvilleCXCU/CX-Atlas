@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { gql, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
+import { useQuery } from "@apollo/client/react";
 import { parseHtml } from "lib/parser";
 import Loading from "components/common/loading";
 import Form from "components/Forms/Form";
@@ -23,9 +24,9 @@ export interface MemberProps {
 function DBLogin({
   id = "db-login",
   widgetHtml: widgetHtmlProp
-}: MemberProps): JSX.Element {
+}: MemberProps): React.JSX.Element {
   const hasWidgetHtmlProp = widgetHtmlProp !== undefined;
-//   const { data, loading } = useQuery(DB_LOGIN_SCREEN_QUERY, {
+//   const { data, loading } = useQuery<any>(DB_LOGIN_SCREEN_QUERY, {
 //     skip: hasWidgetHtmlProp,
 //   });
 

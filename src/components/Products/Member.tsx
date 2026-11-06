@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { gql, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
+import { useQuery } from "@apollo/client/react";
 import { parseHtml } from "lib/parser";
 import Loading from "components/common/loading";
 import { trackMember } from "utils/tracking";
@@ -81,9 +82,9 @@ function Member({
   productcode,
   promoCode,
   referralsource
-}: MemberProps): JSX.Element {
+}: MemberProps): React.JSX.Element {
   const hasWidgetHtmlProp = widgetHtmlProp !== undefined;
-  const { data, loading } = useQuery(MANTL_MEMBER_SCREEN_QUERY, {
+  const { data, loading } = useQuery<any>(MANTL_MEMBER_SCREEN_QUERY, {
     variables: { account, productcode, referralsource, promoCode },
     skip: hasWidgetHtmlProp,
   });
@@ -173,7 +174,7 @@ function MemberLink({
   className?: string;
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   children?: React.ReactNode;
-}): JSX.Element {
+}): React.JSX.Element {
   if (/^https?:\/\//i.test(href)) {
     return (
       <a href={href} className={className} onClick={onClick} rel="noopener">
@@ -190,7 +191,7 @@ function MemberLink({
 }
 
 // Icons inherit their colour from the surrounding rule via currentColor.
-function GroupIcon(): JSX.Element {
+function GroupIcon(): React.JSX.Element {
   return (
     <svg viewBox="0 0 24 24" width="24" height="24" fill="none" focusable="false">
       <circle cx="12" cy="7.5" r="2.6" fill="currentColor" />
@@ -208,7 +209,7 @@ function GroupIcon(): JSX.Element {
   );
 }
 
-function MemberIcon(): JSX.Element {
+function MemberIcon(): React.JSX.Element {
   return (
     <svg viewBox="0 0 24 24" width="28" height="28" fill="none" focusable="false">
       <circle cx="11" cy="7" r="3.4" stroke="currentColor" strokeWidth="1.6" />
@@ -229,7 +230,7 @@ function MemberIcon(): JSX.Element {
   );
 }
 
-function NewMemberIcon(): JSX.Element {
+function NewMemberIcon(): React.JSX.Element {
   return (
     <svg viewBox="0 0 24 24" width="28" height="28" fill="none" focusable="false">
       <circle cx="10.5" cy="7.5" r="3.6" fill="currentColor" />
@@ -248,7 +249,7 @@ function NewMemberIcon(): JSX.Element {
   );
 }
 
-function ShieldIcon(): JSX.Element {
+function ShieldIcon(): React.JSX.Element {
   return (
     <svg
       viewBox="0 0 24 24"

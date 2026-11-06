@@ -31,7 +31,7 @@ export interface Props {
 	logo?: string;
 }
 
-function LocationListing({listing, unit = 'km', logo = ''}: Props): JSX.Element {
+function LocationListing({listing, unit = 'km', logo = ''}: Props): React.JSX.Element {
 	const { setShowDetails } = useContext(showDetailsContext);
 	const { setSelectedLocation } = useContext(selectedLocationContext);
     const [state, setState] = useContext(Store);
